@@ -23,8 +23,8 @@ pwrss.t.2means(mu1, mu2 = 0, margin = 0,
 \arguments{
   \item{mu1}{expected mean in the first group}
   \item{mu2}{expected mean in the second group}
-  \item{sd1}{pooled standard devation in the first group}
-  \item{sd2}{pooled standard devation in the second group}
+  \item{sd1}{standard devation in the first group}
+  \item{sd2}{standard devation in the second group}
   \item{kappa}{n1/n2}
   \item{paired}{if \code{TRUE} paired samples t test}
   \item{paired.r}{correlation between the two repeated measures (e.g., pretest and posttest)}
