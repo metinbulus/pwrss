@@ -1,4 +1,4 @@
-# pwrss: Power and Sample size Calculation Tools
+# pwrss: Power and Sample Size Calculation Tools
 
 Statistical power and minimum required sample size calculations for 
 (1) testing a proportion (one-sample) against a constant, 
