@@ -12,4 +12,5 @@ Statistical power and minimum required sample size calculations for
 - (9) testing an eta-squared or f-squared (for main and interaction effects) against zero in analysis of variance (ANOVA) (could be one-way, two-way, and three-way), 
 - (10) testing an eta-squared or f-squared (for main and interaction effects) against zero in analysis of covariance (ANCOVA) (could be one-way, two-way, and three-way), 
 - (11) testing an eta-squared or f-squared (for between, within, and interaction effects) against zero in one-way repeated measures analysis of variance (RM-ANOVA) (with non-sphericity correction and repeated measures correlation).
+
 Alternative hypothesis can be formulated as "not equal", "less", "greater", "non-inferior", "superior", or "equivalent" in (1), (2), (3), and (4); as "not equal", "less", or "greater" in (5) and (6); but always as "greater" in (7), (8), (9), (10), and (11).
