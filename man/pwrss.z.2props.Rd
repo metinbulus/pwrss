@@ -8,7 +8,7 @@
 }
 
 \usage{
-pwrss.z.2props(p1, p2, margin = 0, kappa = 1, alpha = 0.05,
+pwrss.z.2props(p1, p2, margin = 0, arcsin.trans = TRUE, kappa = 1, alpha = 0.05,
                alternative = c("not equal","greater","less",
                                "equivalent","non-inferior","superior"),
                n2 = NULL, power = NULL)
@@ -17,6 +17,7 @@ pwrss.z.2props(p1, p2, margin = 0, kappa = 1, alpha = 0.05,
 \arguments{
   \item{p1}{expected proportion in the first group}
   \item{p2}{expected proportion in the second group}
+  \item{arcsin.trans}{if \code{TRUE} uses arcsin transformation (default), if \code{FALSE} uses normal approximation}
   \item{kappa}{n1/n2}
   \item{n2}{sample size in the second group}
   \item{power}{statistical power \eqn{(1-\beta)}}

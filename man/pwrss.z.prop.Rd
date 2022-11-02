@@ -9,7 +9,7 @@ Calculates statistical power or minimum required sample size (only one can be NU
 }
 
 \usage{
-pwrss.z.prop(p, p0 = 0, margin = 0, alpha = 0.05,
+pwrss.z.prop(p, p0 = 0, margin = 0, arcsin.trans = TRUE, alpha = 0.05,
              alternative = c("not equal","greater","less",
                              "equivalent","non-inferior","superior"),
              n = NULL, power = NULL)
@@ -18,6 +18,7 @@ pwrss.z.prop(p, p0 = 0, margin = 0, alpha = 0.05,
 \arguments{
   \item{p}{expected proportion}
   \item{p0}{constant to be tested against (a proportion)}
+  \item{arcsin.trans}{if \code{TRUE} uses arcsin transformation (default), if \code{FALSE} uses normal approximation}
   \item{n}{sample size}
   \item{power}{statistical power \eqn{(1-\beta)}}
   \item{alpha}{probability of type I error.}
