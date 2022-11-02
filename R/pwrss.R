@@ -1,35 +1,54 @@
-pwrss.z.prop <- function (p, p0 = 0, margin = 0,
+pwrss.z.prop <- function (p, p0 = 0, margin = 0, arcsin.trans = TRUE,
                           alpha = 0.05,
                           alternative = c("not equal", "greater", "less",
                                           "equivalent", "non-inferior", "superior"),
                           n = NULL, power = NULL)
 {
-  if (length(alternative) > 1)
-    alternative <- alternative[1]
-  if (is.null(n) & is.null(power))
-    stop("`n` and `power` cannot be `NULL` at the same time",
-         call. = FALSE)
-  if (!is.null(n) & !is.null(power))
-    stop("one of the `n` or `power` should be `NULL`",
-         call. = FALSE)
-  if (!is.null(n) & is.null(power))
-    requested <- "power"
-  if (is.null(n) & !is.null(power))
-    requested <- "n"
+
+  alternative <- match.arg(alternative)
+
+  if (is.null(n) & is.null(power)) stop("`n` and `power` cannot be `NULL` at the same time", call. = FALSE)
+  if (!is.null(n) & !is.null(power)) stop("one of the `n` or `power` should be `NULL`", call. = FALSE)
+  if ((alternative == "not equal" | alternative == "not equal" | alternative == "not equal") & margin != 0) warning("`margin` argument is ignored", call. = FALSE)
+  if (alternative == "superior" & margin < 0) warning("expecting `margin > 0`", call. = FALSE)
+  if (alternative == "non-inferior" & margin > 0) warning("expecting `margin < 0`", call. = FALSE)
+  if (alternative == "greater" & (p < p0)) stop("alternative = 'greater' but p < p0", call. = FALSE)
+  if (alternative == "less" & (p > p0)) stop("alternative = 'less' but p > p0", call. = FALSE)
+
+  if(arcsin.trans) {
+    var.num <- 1
+    ifelse(margin < 0, sign <- -1, sign <- 1)
+    margin <- abs(margin)
+    h <- switch(alternative,
+                `not equal` = 2*asin(sqrt(p)) - 2*asin(sqrt(p0)),
+                `greater` = 2*asin(sqrt(p)) - 2*asin(sqrt(p0)),
+                `less` = 2*asin(sqrt(p)) - 2*asin(sqrt(p0)),
+                `non-inferior` = 2*asin(sqrt(p)) - 2*asin(sqrt(p0)) - sign*2*asin(sqrt(margin)),
+                `superior` = 2*asin(sqrt(p)) - 2*asin(sqrt(p0)) - sign*2*asin(sqrt(margin)),
+                `equivalent` = abs(2*asin(sqrt(p)) - 2*asin(sqrt(p0))) - sign*2*asin(sqrt(margin)))
+    cat(" Approach: Arcsine transformation \n")
+  } else {
+    var.num <- p * (1 - p)
+    h <- switch(alternative,
+                `not equal` = p - p0,
+                `greater` = p - p0,
+                `less` = p - p0,
+                `non-inferior` = p - p0 - margin,
+                `superior` = p - p0 - margin,
+                `equivalent` = abs(p - p0) - margin)
+    cat(" Approach: Normal approximation \n")
+  }
 
   if (alternative == "not equal") {
 
-    if (margin != 0)
-      warning("`margin` argument is ignored")
-
-    HA_H0 <- p - p0
     if (is.null(n)) {
       beta <- 1 - power
       M <- qnorm(alpha / 2, lower.tail = FALSE) + qnorm(beta, lower.tail = FALSE)
-      n = M^2 * p * (1 - p) / (HA_H0)^2
+      n <- M^2 * var.num / h^2
+      lambda <- h / sqrt(var.num / n)
     }
     if (is.null(power)) {
-      lambda = (HA_H0) / sqrt(p * (1 - p) / n)
+      lambda <- h / sqrt(var.num / n)
       power <- 1 - pnorm(qnorm(alpha / 2, lower.tail = FALSE), lambda) +
         pnorm(-qnorm(alpha / 2, lower.tail = FALSE), lambda)
     }
@@ -38,56 +57,49 @@ pwrss.z.prop <- function (p, p0 = 0, margin = 0,
   else if (alternative == "greater" | alternative ==
            "less") {
 
-    if (margin != 0)
-      warning("`margin` argument is ignored")
-    if (alternative == "greater" & (p < p0))
-      stop("alternative = 'greater' but p < p0",
-           call. = FALSE)
-    if (alternative == "less" & (p > p0))
-      stop("alternative = 'less' but p > p0", call. = FALSE)
 
-    HA_H0 <- p - p0
     if (is.null(n)) {
       beta <- 1 - power
       M <- qnorm(alpha, lower.tail = FALSE) + qnorm(beta, lower.tail = FALSE)
-      n = M^2 * p * (1 - p) / (HA_H0)^2
+      n <- M^2 * var.num / h^2
+      lambda <- h / sqrt(var.num / n)
+
     }
     if (is.null(power)) {
-      lambda = (HA_H0) / sqrt(p * (1 - p) / n)
+      lambda <- h / sqrt(var.num / n)
       power <- 1 - pnorm(qnorm(alpha, lower.tail = FALSE), lambda)
+
     }
 
   }
   else if (alternative == "non-inferior" | alternative ==
            "superior") {
 
-    if (alternative == "superior" & margin < 0)
-      warning("expecting `margin > 0`", call. = FALSE)
-    if (alternative == "non-inferior" & margin > 0)
-      warning("expecting `margin < 0`", call. = FALSE)
-
-    HA_H0 <- p - p0 - margin
     if (is.null(n)) {
       beta <- 1 - power
       M <- qnorm(alpha, lower.tail = FALSE) + qnorm(beta, lower.tail = FALSE)
-      n = M^2 * p * (1 - p) / (HA_H0)^2
+      n <- M^2 * var.num / h^2
+      lambda <- h / sqrt(var.num / n)
+
     }
     if (is.null(power)) {
-      lambda = (HA_H0) / sqrt(p * (1 - p) / n)
+      lambda <- h / sqrt(var.num / n)
       power <- 1 - pnorm(qnorm(alpha, lower.tail = FALSE), lambda)
     }
 
   } else if (alternative == "equivalent") {
 
-    HA_H0 <- abs(p - p0) - margin
     if (is.null(n)) {
       beta <- 1 - power
       M <- qnorm(alpha, lower.tail = FALSE) + qnorm(beta / 2, lower.tail = FALSE)
-      n = M^2 * p * (1 - p) / (HA_H0)^2
+      n <- M^2 * var.num / h^2
+      lambda <- h / sqrt(var.num / n)
+
     }
     if (is.null(power)) {
-      lambda = HA_H0 / sqrt(p * (1 - p) / n)
+      lambda <- h / sqrt(var.num / n)
       power <- 2*(1 - pnorm(qnorm(alpha, lower.tail = FALSE), lambda)) - 1
+      if(power < 0) stop("design is not feasible", call. = FALSE)
     }
 
   } else {
@@ -95,10 +107,8 @@ pwrss.z.prop <- function (p, p0 = 0, margin = 0,
          call. = FALSE)
   }
 
-  ncp <- HA_H0 / sqrt(p * (1 - p) / n)
-  hypothesis <- alternative
   cat(" One proportion compared to a constant (one sample z test) \n",
-      switch(hypothesis,
+      switch(alternative,
              `not equal` = "H0: p = p0 \n HA: p != p0 \n",
              `greater` = "H0: p <= p0 \n HA: p > p0 \n",
              `less` = "H0: p >= p0 \n HA: p < p0 \n",
@@ -110,103 +120,146 @@ pwrss.z.prop <- function (p, p0 = 0, margin = 0,
       " n =", ceiling(n), "\n",
       "------------------------------ \n",
       "Alternative =", dQuote(alternative),"\n",
-      "Non-centrality parameter =", round(ncp, 3), "\n",
+      "Non-centrality parameter =", round(lambda, 3), "\n",
       "Type I error rate =", round(alpha, 3), "\n",
       "Type II error rate =", round(1 - power, 3), "\n")
 
-  invisible(structure(list(parms = list(p = p, p0 = p0,
+  invisible(structure(list(parms = list(p = p, p0 = p0, arcsin.trans = arcsin.trans,
                                         alpha = alpha, margin = margin, alternative = alternative),
                            test = "z",
-                           ncp = ncp,
+                           ncp = lambda,
                            power = power,
                            n = n),
                       class = c("pwrss", "z")))
 }
 
-pwrss.z.2props <- function (p1, p2, margin = 0,
+pwrss.z.2props <- function (p1, p2, margin = 0, arcsin.trans = TRUE,
                             kappa = 1, alpha = 0.05,
                             alternative = c("not equal", "greater", "less",
                                             "equivalent", "non-inferior", "superior"),
                             n2 = NULL, power = NULL)
 {
-  if (length(alternative) > 1)
-    alternative <- alternative[1]
-  if (is.null(n2) & is.null(power))
-    stop("`n2` and `power` cannot be `NULL` at the same time",
-         call. = FALSE)
-  if (!is.null(n2) & !is.null(power))
-    stop("one of the `n2` or `power` should be `NULL`",
-         call. = FALSE)
-  if (!is.null(n2) & is.null(power))
-    requested <- "power"
-  if (is.null(n2) & !is.null(power))
-    requested <- "n2"
+
+  alternative <- match.arg(alternative)
+
+  if (is.null(n2) & is.null(power)) stop("`n2` and `power` cannot be `NULL` at the same time", call. = FALSE)
+  if (!is.null(n2) & !is.null(power)) stop("one of the `n2` or `power` should be `NULL`", call. = FALSE)
+  if ((alternative == "not equal" | alternative == "not equal" | alternative == "not equal") & margin != 0)
+    warning("`margin` argument is ignored", call. = FALSE)
+  if (alternative == "superior" & margin < 0) warning("expecting `margin > 0`", call. = FALSE)
+  if (alternative == "non-inferior" & margin > 0) warning("expecting `margin < 0`", call. = FALSE)
+  if (alternative == "greater" & (p1 < p2)) stop("alternative = 'greater' but p1 < p2", call. = FALSE)
+  if (alternative == "less" & (p1 > p2)) stop("alternative = 'less' but p1 > p2", call. = FALSE)
+
+  if(arcsin.trans) {
+    ifelse(margin < 0, sign <- -1, sign <- 1)
+    margin <- abs(margin)
+    h <- switch(alternative,
+                `not equal` = 2*asin(sqrt(p1)) - 2*asin(sqrt(p2)),
+                `greater` = 2*asin(sqrt(p1)) - 2*asin(sqrt(p2)),
+                `less` = 2*asin(sqrt(p1)) - 2*asin(sqrt(p2)),
+                `non-inferior` = 2*asin(sqrt(p1)) - 2*asin(sqrt(p2)) - sign*2*asin(sqrt(margin)),
+                `superior` = 2*asin(sqrt(p1)) - 2*asin(sqrt(p2)) - sign*2*asin(sqrt(margin)),
+                `equivalent` = abs(2*asin(sqrt(p1)) - 2*asin(sqrt(p2))) - sign*2*asin(sqrt(margin)))
+    cat(" Approach: Arcsine transformation \n")
+  } else {
+    h <- switch(alternative,
+                `not equal` = p1 - p2,
+                `greater` = p1 - p2,
+                `less` = p1 - p2,
+                `non-inferior` = p1 - p2 - margin,
+                `superior` = p1 - p2 - margin,
+                `equivalent` = abs(p1 - p2) - margin)
+    cat(" Approach: Normal approximation \n")
+  }
 
   if (alternative == "not equal") {
-    if (margin != 0)
-      warning("`margin` argument is ignored")
 
-    HA_H0 <- p1 - p2
     if (is.null(n2)) {
       beta <- 1 - power
       # kappa = n1/n2
       M <- qnorm(alpha / 2, lower.tail = FALSE) + qnorm(beta, lower.tail = FALSE)
-      n1 = M^2 * (p1 * (1 - p1) + p2 * (1 - p2) * kappa) / (HA_H0)^2
-      n2 <- n1 / kappa
+      if(arcsin.trans) {
+        n2 <- (M^2 / h^2) * (kappa + 1) / kappa
+        n1 <- kappa * n2
+        lambda = h / sqrt(1 / n1 + 1 / n2)
+      } else {
+        n1 = M^2 * (p1 * (1 - p1) + p2 * (1 - p2) * kappa) / h^2
+        n2 <- n1 / kappa
+        lambda = h / sqrt(p1 * (1 - p1) / n1 + p2 * (1 - p2) / n2)
+      }
+
     }
     if (is.null(power)) {
       # kappa = n1/n2
       n1 <- kappa*n2
-      lambda = (HA_H0) / sqrt(p1 * (1 - p1) / n1 + p2 * (1 - p2) / n2)
+
+      if(arcsin.trans) {
+        lambda = h / sqrt(1 / n1 + 1 / n2)
+      } else {
+        lambda = h / sqrt(p1 * (1 - p1) / n1 + p2 * (1 - p2) / n2)
+      }
+
       power <- 1 - pnorm(qnorm(alpha / 2, lower.tail = FALSE), lambda) +
         pnorm(-qnorm(alpha / 2, lower.tail = FALSE), lambda)
     }
 
   }
-  else if (alternative == "greater" | alternative ==
-           "less") {
-    if (margin != 0)
-      warning("`margin` argument is ignored")
-    if (alternative == "greater" & (p1 < p2))
-      stop("alternative = 'greater' but p1 < p2",
-           call. = FALSE)
-    if (alternative == "less" & (p1 > p2))
-      stop("alternative = 'less' but p1 > p2", call. = FALSE)
+  else if (alternative == "greater" | alternative == "less") {
 
-    HA_H0 <- p1 - p2
     if (is.null(n2)) {
       beta <- 1 - power
       M <- qnorm(alpha, lower.tail = FALSE) + qnorm(beta, lower.tail = FALSE)
-      n1 = M^2 * (p1 * (1 - p1) + p2 * (1 - p2) * kappa) / (HA_H0)^2
-      n2 <- n1 / kappa
+      if(arcsin.trans) {
+        n2 <- (M^2 / h^2) * (kappa + 1) / kappa
+        n1 <- kappa * n2
+        lambda = h / sqrt(1 / n1 + 1 / n2)
+      } else {
+        n1 = M^2 * (p1 * (1 - p1) + p2 * (1 - p2) * kappa) / h^2
+        n2 <- n1 / kappa
+        lambda = h / sqrt(p1 * (1 - p1) / n1 + p2 * (1 - p2) / n2)
+      }
     }
     if (is.null(power)) {
       # kappa = n1/n2
       n1 <- kappa*n2
-      lambda = (HA_H0) / sqrt(p1 * (1 - p1) / n1 + p2 * (1 - p2) / n2)
+
+      if(arcsin.trans) {
+        lambda = h / sqrt(1 / n1 + 1 / n2)
+      } else {
+        lambda = h / sqrt(p1 * (1 - p1) / n1 + p2 * (1 - p2) / n2)
+      }
+
       if(alternative == "less") lambda <- abs(lambda)
       power <- 1 - pnorm(qnorm(alpha, lower.tail = FALSE), lambda)
     }
 
   }
-  else if (alternative == "non-inferior" | alternative ==
-           "superior") {
-    if (alternative == "superior" & margin < 0)
-      warning("expecting `margin > 0`", call. = FALSE)
-    if (alternative == "non-inferior" & margin > 0)
-      warning("expecting `margin < 0`", call. = FALSE)
+  else if (alternative == "non-inferior" | alternative == "superior") {
 
-    HA_H0 <- p1 - p2 - margin
     if (is.null(n2)) {
       beta <- 1 - power
       M <- qnorm(alpha, lower.tail = FALSE) + qnorm(beta, lower.tail = FALSE)
-      n1 = M^2 * (p1 * (1 - p1) + p2 * (1 - p2) * kappa) / (HA_H0)^2
-      n2 <- n1 / kappa
+      if(arcsin.trans) {
+        n2 <- (M^2 / h^2) * (kappa + 1) / kappa
+        n1 <- kappa * n2
+        lambda = h / sqrt(1 / n1 + 1 / n2)
+      } else {
+        n1 = M^2 * (p1 * (1 - p1) + p2 * (1 - p2) * kappa) / h^2
+        n2 <- n1 / kappa
+        lambda = h / sqrt(p1 * (1 - p1) / n1 + p2 * (1 - p2) / n2)
+      }
     }
     if (is.null(power)) {
       # kappa = n1/n2
       n1 <- kappa*n2
-      lambda = (HA_H0) / sqrt(p1 * (1 - p1) / n1 + p2 * (1 - p2) / n2)
+
+      if(arcsin.trans) {
+        lambda = h / sqrt(1 / n1 + 1 / n2)
+      } else {
+        lambda = h / sqrt(p1 * (1 - p1) / n1 + p2 * (1 - p2) / n2)
+      }
+
       if(alternative == "non-inferior") lambda <- abs(lambda)
       power <- 1 - pnorm(qnorm(alpha, lower.tail = FALSE), lambda)
     }
@@ -218,13 +271,26 @@ pwrss.z.2props <- function (p1, p2, margin = 0,
     if (is.null(n2)) {
       beta <- 1 - power
       M <- qnorm(alpha, lower.tail = FALSE) + qnorm(beta / 2, lower.tail = FALSE)
-      n1 = M^2 * (p1 * (1 - p1) + p2 * (1 - p2) * kappa) / (HA_H0)^2
-      n2 <- n1 / kappa
+      if(arcsin.trans) {
+        n2 <- (M^2 / h^2) * (kappa + 1) / kappa
+        n1 <- kappa * n2
+        lambda = h / sqrt(1 / n1 + 1 / n2)
+      } else {
+        n1 = M^2 * (p1 * (1 - p1) + p2 * (1 - p2) * kappa) / h^2
+        n2 <- n1 / kappa
+        lambda = h / sqrt(p1 * (1 - p1) / n1 + p2 * (1 - p2) / n2)
+      }
     }
     if (is.null(power)) {
       # kappa = n1/n2
       n1 <- kappa*n2
-      lambda = (HA_H0) / sqrt(p1 * (1 - p1) / n1 + p2 * (1 - p2) / n2)
+
+      if(arcsin.trans) {
+        lambda = h / sqrt(1 / n1 + 1 / n2)
+      } else {
+        lambda = h / sqrt(p1 * (1 - p1) / n1 + p2 * (1 - p2) / n2)
+      }
+
       power <- 2*(1 - pnorm(qnorm(alpha, lower.tail = FALSE), lambda)) - 1
     }
 
@@ -234,36 +300,32 @@ pwrss.z.2props <- function (p1, p2, margin = 0,
          call. = FALSE)
   }
 
-  ncp <- HA_H0 / sqrt(p1 * (1 - p1) / n1 + p2 * (1 - p2) / n2)
-  hypothesis <- alternative
   cat(" Difference between two proportions (independent samples z test) \n",
-      switch(hypothesis,
-             `not equal` = "H0: p = p0 \n HA: p != p0 \n",
-             `greater` = "H0: p <= p0 \n HA: p > p0 \n",
-             `less` = "H0: p >= p0 \n HA: p < p0 \n",
-             `non-inferior` = "H0: p - p0 <= margin \n HA: p - p0 > margin \n",
-             `superior` = "H0: p - p0 <= margin \n HA: p - p0 > margin \n",
-             `equivalent` = "H0: |p - p0| >= margin \n HA: |p - p0| < margin \n"),
+      switch(alternative,
+             `not equal` = "H0: p1 = p2 \n HA: p1 != p2 \n",
+             `greater` = "H0: p1 = p2 \n HA: p1 > p2 \n",
+             `less` = "H0: p1 = p2 \n HA: p1 < p2 \n",
+             `non-inferior` = "H0: p1 - p2 <= margin \n HA: p1 - p2 > margin \n",
+             `superior` = "H0: p1 - p2 <= margin \n HA: p1 - p2 > margin \n",
+             `equivalent` = "H0: |p1 - p2| >= margin \n HA: |p1 - p2| < margin \n"),
       "------------------------------ \n",
       " Statistical power =", round(power, 3), "\n",
       " n1 =", ceiling(n1), "\n",
       " n2 =", ceiling(n2), "\n",
       "------------------------------ \n",
       "Alternative =", dQuote(alternative),"\n",
-      "Non-centrality parameter =", round(ncp, 3), "\n",
+      "Non-centrality parameter =", round(lambda, 3), "\n",
       "Type I error rate =", round(alpha, 3), "\n",
       "Type II error rate =", round(1 - power, 3), "\n")
 
-  invisible(structure(list(parms = list(p1 = p1, p2 = p2, kappa = kappa,
-                                        alpha = alpha,
-                                        margin = margin, alternative = alternative),
+  invisible(structure(list(parms = list(p1 = p1, p2 = p2, kappa = kappa, arcsin.trans = arcsin.trans,
+                                        alpha = alpha, margin = margin, alternative = alternative),
                            test = "z",
-                           ncp = ncp,
+                           ncp = lambda,
                            power = power,
                            n = c(n1 = n1, n2 = n2)),
                       class = c("pwrss", "z")))
 }
-
 
 pwrss.z.mean <- function (mu, sd = 1, mu0 = 0, margin = 0, alpha = 0.05,
                           alternative = c("not equal", "greater", "less",
@@ -366,8 +428,8 @@ pwrss.z.mean <- function (mu, sd = 1, mu0 = 0, margin = 0, alpha = 0.05,
   cat(" One mean compared to a constant (one sample z test) \n",
       switch(hypothesis,
              `not equal` = "H0: mu = mu0 \n HA: mu != mu0 \n",
-             `greater` = "H0: mu <= mu0 \n HA: mu > mu0 \n",
-             `less` = "H0: mu >= mu0 \n HA: mu < mu0 \n",
+             `greater` = "H0: mu = mu0 \n HA: mu > mu0 \n",
+             `less` = "H0: mu = mu0 \n HA: mu < mu0 \n",
              `non-inferior` = "H0: mu - mu0 <= margin \n HA: mu - mu0 > margin \n",
              `superior` = "H0: mu - mu0 <= margin \n HA: mu - mu0 > margin \n",
              `equivalent` = "H0: |mu - mu0| >= margin \n HA: |mu - mu0| < margin \n"),
@@ -504,8 +566,8 @@ pwrss.z.2means <- function (mu1, mu2 = 0, sd1 = 1, sd2 = sd1, margin = 0,
   cat(" Difference between two means (independent samples z test) \n",
       switch(hypothesis,
              `not equal` = "H0: mu1 = mu2 \n HA: mu1 != mu2 \n",
-             `greater` = "H0: mu1 <= mu2 \n HA: mu1 > mu2 \n",
-             `less` = "H0: mu1 >= mu2 \n HA: mu1 < mu2 \n",
+             `greater` = "H0: mu1 = mu2 \n HA: mu1 > mu2 \n",
+             `less` = "H0: mu1 = mu2 \n HA: mu1 < mu2 \n",
              `non-inferior` = "H0: mu1 - mu2 <= margin \n HA: mu1 - mu2 > margin \n",
              `superior` = "H0: mu1 - mu2 <= margin \n HA: mu1 - mu2 > margin \n",
              `equivalent` = "H0: |mu1 - mu2| >= margin \n HA: |mu1 - mu2| < margin \n"),
@@ -835,8 +897,8 @@ pwrss.t.2means <- function (mu1, mu2 = 0, margin = 0,
              " Difference between two means (independent samples t test) \n"),
       switch(hypothesis,
              `not equal` = "H0: mu1 = mu2 \n HA: mu1 != mu2 \n",
-             `greater` = "H0: mu1 <= mu2 \n HA: mu1 > mu2 \n",
-             `less` = "H0: mu1 >= mu2 \n HA: mu1 < mu2 \n",
+             `greater` = "H0: mu1 = mu2 \n HA: mu1 > mu2 \n",
+             `less` = "H0: mu1 = mu2 \n HA: mu1 < mu2 \n",
              `non-inferior` = "H0: mu1 - mu2 <= margin \n HA: mu1 - mu2 > margin \n",
              `superior` = "H0: mu1 - mu2 <= margin \n HA: mu1 - mu2 > margin \n",
              `equivalent` = "H0: |mu1 - mu2| >= margin \n HA: |mu1 - mu2| < margin \n"),
@@ -941,8 +1003,8 @@ pwrss.z.corr <- function (r = 0.50, r0 = 0, alpha = 0.05,
   cat(" One correlation compared to a constant (one sample z test) \n",
       switch(hypothesis,
              `not equal` = "H0: r = r0 \n HA: r != r0 \n",
-             `greater` = "H0: r <= r0 \n HA: r > r0 \n",
-             `less` = "H0: r >= r0 \n HA: r < r0 \n"),
+             `greater` = "H0: r = r0 \n HA: r > r0 \n",
+             `less` = "H0: r = r0 \n HA: r < r0 \n"),
       "------------------------------ \n",
       " Statistical power =", round(power, 3), "\n",
       " n =", ceiling(n), "\n",
@@ -1041,8 +1103,8 @@ pwrss.z.2corrs <- function (r1 = 0.50, r2 = 0.30,
   cat(" Difference between two correlations (independent samples z test) \n",
       switch(hypothesis,
              `not equal` = "H0: r1 = r2 \n HA: r1 != r2 \n",
-             `greater` = "H0: r1 <= r2 \n HA: r1 > r2 \n",
-             `less` = "H0: r1 >= r2 \n HA: r1 < r2 \n"),
+             `greater` = "H0: r1 = r2 \n HA: r1 > r2 \n",
+             `less` = "H0: r1 = r2 \n HA: r1 < r2 \n"),
       "------------------------------ \n",
       " Statistical power =", round(power, 3), "\n",
       " n1 =", ceiling(n1), "\n",
