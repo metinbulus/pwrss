@@ -12,7 +12,7 @@ Calculates statistical power or minimum required sample size (only one can be NU
 pwrss.z.2corrs(r1 = 0.50, r2 = 0.30,
                alpha = 0.05, kappa = 1,
                alternative = c("not equal","greater","less"),
-               n2 = NULL, power = NULL)
+               n2 = NULL, power = NULL, verbose = TRUE)
 }
 
 \arguments{
@@ -23,6 +23,7 @@ pwrss.z.2corrs(r1 = 0.50, r2 = 0.30,
   \item{power}{statistical power \eqn{(1-\beta)}}
   \item{alpha}{probability of type I error.}
   \item{alternative}{direction or type of the hypothesis test: "not equal", "greater", or "less"}
+  \item{verbose}{if \code{FALSE} no output is printed on the console}
 }
 
 \value{
@@ -39,5 +40,5 @@ pwrss.z.2corrs(r1 = .20, r2 = 0.30, power = .80)
 }
 
 \references{
-
+Add references.
 }

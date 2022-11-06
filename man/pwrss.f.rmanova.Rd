@@ -13,7 +13,7 @@ pwrss.f.rmanova(eta2 = 0.10, f2 = eta2/(1 - eta2),
                 repmeasures.r = 0.50, n.levels = 2, n.measurements = 2,
                 epsilon = 1, alpha = 0.05,
                 type = c("between","within","interaction"),
-                n = NULL, power = NULL)
+                n = NULL, power = NULL, verbose = TRUE)
 
 }
 
@@ -28,6 +28,7 @@ pwrss.f.rmanova(eta2 = 0.10, f2 = eta2/(1 - eta2),
   \item{power}{statistical power \eqn{(1-\beta)}}
   \item{alpha}{probability of type I error}
   \item{type}{the effect to be tested: "between", "within", or "interaction"}
+  \item{verbose}{if \code{FALSE} no output is printed on the console}
 }
 
 \value{
@@ -59,5 +60,5 @@ pwrss.f.rmanova(eta2 = 0.10,  n.levels = 2, n.measurements = 3,
 }
 
 \references{
-
+Add references.
 }

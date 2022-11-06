@@ -2,7 +2,7 @@ pwrss.z.prop <- function (p, p0 = 0, margin = 0, arcsin.trans = TRUE,
                           alpha = 0.05,
                           alternative = c("not equal", "greater", "less",
                                           "equivalent", "non-inferior", "superior"),
-                          n = NULL, power = NULL)
+                          n = NULL, power = NULL, verbose = TRUE)
 {
 
   alternative <- match.arg(alternative)
@@ -26,7 +26,7 @@ pwrss.z.prop <- function (p, p0 = 0, margin = 0, arcsin.trans = TRUE,
                 `non-inferior` = 2*asin(sqrt(p)) - 2*asin(sqrt(p0)) - sign*2*asin(sqrt(margin)),
                 `superior` = 2*asin(sqrt(p)) - 2*asin(sqrt(p0)) - sign*2*asin(sqrt(margin)),
                 `equivalent` = abs(2*asin(sqrt(p)) - 2*asin(sqrt(p0))) - sign*2*asin(sqrt(margin)))
-    cat(" Approach: Arcsine transformation \n")
+    if(verbose) cat(" Approach: Arcsine transformation \n")
   } else {
     var.num <- p * (1 - p)
     h <- switch(alternative,
@@ -36,7 +36,7 @@ pwrss.z.prop <- function (p, p0 = 0, margin = 0, arcsin.trans = TRUE,
                 `non-inferior` = p - p0 - margin,
                 `superior` = p - p0 - margin,
                 `equivalent` = abs(p - p0) - margin)
-    cat(" Approach: Normal approximation \n")
+    if(verbose) cat(" Approach: Normal approximation \n")
   }
 
   if (alternative == "not equal") {
@@ -107,25 +107,27 @@ pwrss.z.prop <- function (p, p0 = 0, margin = 0, arcsin.trans = TRUE,
          call. = FALSE)
   }
 
-  cat(" One proportion compared to a constant (one sample z test) \n",
-      switch(alternative,
-             `not equal` = "H0: p = p0 \n HA: p != p0 \n",
-             `greater` = "H0: p <= p0 \n HA: p > p0 \n",
-             `less` = "H0: p >= p0 \n HA: p < p0 \n",
-             `non-inferior` = "H0: p - p0 <= margin \n HA: p - p0 > margin \n",
-             `superior` = "H0: p - p0 <= margin \n HA: p - p0 > margin \n",
-             `equivalent` = "H0: |p - p0| >= margin \n HA: |p - p0| < margin \n"),
-      "------------------------------ \n",
-      " Statistical power =", round(power, 3), "\n",
-      " n =", ceiling(n), "\n",
-      "------------------------------ \n",
-      "Alternative =", dQuote(alternative),"\n",
-      "Non-centrality parameter =", round(lambda, 3), "\n",
-      "Type I error rate =", round(alpha, 3), "\n",
-      "Type II error rate =", round(1 - power, 3), "\n")
+  if(verbose) {
+    cat(" One proportion compared to a constant (one sample z test) \n",
+        switch(alternative,
+               `not equal` = "H0: p = p0 \n HA: p != p0 \n",
+               `greater` = "H0: p = p0 \n HA: p > p0 \n",
+               `less` = "H0: p = p0 \n HA: p < p0 \n",
+               `non-inferior` = "H0: p - p0 <= margin \n HA: p - p0 > margin \n",
+               `superior` = "H0: p - p0 <= margin \n HA: p - p0 > margin \n",
+               `equivalent` = "H0: |p - p0| >= margin \n HA: |p - p0| < margin \n"),
+        "------------------------------ \n",
+        " Statistical power =", round(power, 3), "\n",
+        " n =", ceiling(n), "\n",
+        "------------------------------ \n",
+        "Alternative =", dQuote(alternative),"\n",
+        "Non-centrality parameter =", round(lambda, 3), "\n",
+        "Type I error rate =", round(alpha, 3), "\n",
+        "Type II error rate =", round(1 - power, 3), "\n")
+  }
 
   invisible(structure(list(parms = list(p = p, p0 = p0, arcsin.trans = arcsin.trans,
-                                        alpha = alpha, margin = margin, alternative = alternative),
+                                        alpha = alpha, margin = margin, alternative = alternative, verbose = verbose),
                            test = "z",
                            ncp = lambda,
                            power = power,
@@ -137,7 +139,7 @@ pwrss.z.2props <- function (p1, p2, margin = 0, arcsin.trans = TRUE,
                             kappa = 1, alpha = 0.05,
                             alternative = c("not equal", "greater", "less",
                                             "equivalent", "non-inferior", "superior"),
-                            n2 = NULL, power = NULL)
+                            n2 = NULL, power = NULL, verbose = TRUE)
 {
 
   alternative <- match.arg(alternative)
@@ -161,7 +163,7 @@ pwrss.z.2props <- function (p1, p2, margin = 0, arcsin.trans = TRUE,
                 `non-inferior` = 2*asin(sqrt(p1)) - 2*asin(sqrt(p2)) - sign*2*asin(sqrt(margin)),
                 `superior` = 2*asin(sqrt(p1)) - 2*asin(sqrt(p2)) - sign*2*asin(sqrt(margin)),
                 `equivalent` = abs(2*asin(sqrt(p1)) - 2*asin(sqrt(p2))) - sign*2*asin(sqrt(margin)))
-    cat(" Approach: Arcsine transformation \n")
+    if(verbose) cat(" Approach: Arcsine transformation \n")
   } else {
     h <- switch(alternative,
                 `not equal` = p1 - p2,
@@ -170,7 +172,7 @@ pwrss.z.2props <- function (p1, p2, margin = 0, arcsin.trans = TRUE,
                 `non-inferior` = p1 - p2 - margin,
                 `superior` = p1 - p2 - margin,
                 `equivalent` = abs(p1 - p2) - margin)
-    cat(" Approach: Normal approximation \n")
+    if(verbose) cat(" Approach: Normal approximation \n")
   }
 
   if (alternative == "not equal") {
@@ -292,6 +294,7 @@ pwrss.z.2props <- function (p1, p2, margin = 0, arcsin.trans = TRUE,
       }
 
       power <- 2*(1 - pnorm(qnorm(alpha, lower.tail = FALSE), lambda)) - 1
+      if(power < 0) stop("design is not feasible", call. = FALSE)
     }
 
   }
@@ -300,26 +303,28 @@ pwrss.z.2props <- function (p1, p2, margin = 0, arcsin.trans = TRUE,
          call. = FALSE)
   }
 
-  cat(" Difference between two proportions (independent samples z test) \n",
-      switch(alternative,
-             `not equal` = "H0: p1 = p2 \n HA: p1 != p2 \n",
-             `greater` = "H0: p1 = p2 \n HA: p1 > p2 \n",
-             `less` = "H0: p1 = p2 \n HA: p1 < p2 \n",
-             `non-inferior` = "H0: p1 - p2 <= margin \n HA: p1 - p2 > margin \n",
-             `superior` = "H0: p1 - p2 <= margin \n HA: p1 - p2 > margin \n",
-             `equivalent` = "H0: |p1 - p2| >= margin \n HA: |p1 - p2| < margin \n"),
-      "------------------------------ \n",
-      " Statistical power =", round(power, 3), "\n",
-      " n1 =", ceiling(n1), "\n",
-      " n2 =", ceiling(n2), "\n",
-      "------------------------------ \n",
-      "Alternative =", dQuote(alternative),"\n",
-      "Non-centrality parameter =", round(lambda, 3), "\n",
-      "Type I error rate =", round(alpha, 3), "\n",
-      "Type II error rate =", round(1 - power, 3), "\n")
+  if(verbose) {
+    cat(" Difference between two proportions (independent samples z test) \n",
+        switch(alternative,
+               `not equal` = "H0: p1 = p2 \n HA: p1 != p2 \n",
+               `greater` = "H0: p1 = p2 \n HA: p1 > p2 \n",
+               `less` = "H0: p1 = p2 \n HA: p1 < p2 \n",
+               `non-inferior` = "H0: p1 - p2 <= margin \n HA: p1 - p2 > margin \n",
+               `superior` = "H0: p1 - p2 <= margin \n HA: p1 - p2 > margin \n",
+               `equivalent` = "H0: |p1 - p2| >= margin \n HA: |p1 - p2| < margin \n"),
+        "------------------------------ \n",
+        " Statistical power =", round(power, 3), "\n",
+        " n1 =", ceiling(n1), "\n",
+        " n2 =", ceiling(n2), "\n",
+        "------------------------------ \n",
+        "Alternative =", dQuote(alternative),"\n",
+        "Non-centrality parameter =", round(lambda, 3), "\n",
+        "Type I error rate =", round(alpha, 3), "\n",
+        "Type II error rate =", round(1 - power, 3), "\n")
+  }
 
   invisible(structure(list(parms = list(p1 = p1, p2 = p2, kappa = kappa, arcsin.trans = arcsin.trans,
-                                        alpha = alpha, margin = margin, alternative = alternative),
+                                        alpha = alpha, margin = margin, alternative = alternative, verbose = verbose),
                            test = "z",
                            ncp = lambda,
                            power = power,
@@ -330,7 +335,7 @@ pwrss.z.2props <- function (p1, p2, margin = 0, arcsin.trans = TRUE,
 pwrss.z.mean <- function (mu, sd = 1, mu0 = 0, margin = 0, alpha = 0.05,
                           alternative = c("not equal", "greater", "less",
                                           "equivalent", "non-inferior", "superior"),
-                          n = NULL, power = NULL)
+                          n = NULL, power = NULL, verbose = TRUE)
 {
   if (length(alternative) > 1)
     alternative <- alternative[1]
@@ -415,6 +420,7 @@ pwrss.z.mean <- function (mu, sd = 1, mu0 = 0, margin = 0, alpha = 0.05,
     if (is.null(power)) {
       lambda = (HA_H0) / sqrt(sd^2 / n)
       power <- 2*(1 - pnorm(qnorm(alpha, lower.tail = FALSE), lambda)) - 1
+      if(power < 0) stop("design is not feasible", call. = FALSE)
     }
 
   }
@@ -425,25 +431,28 @@ pwrss.z.mean <- function (mu, sd = 1, mu0 = 0, margin = 0, alpha = 0.05,
 
   ncp <- (HA_H0) / sqrt(sd^2 / n)
   hypothesis <- alternative
-  cat(" One mean compared to a constant (one sample z test) \n",
-      switch(hypothesis,
-             `not equal` = "H0: mu = mu0 \n HA: mu != mu0 \n",
-             `greater` = "H0: mu = mu0 \n HA: mu > mu0 \n",
-             `less` = "H0: mu = mu0 \n HA: mu < mu0 \n",
-             `non-inferior` = "H0: mu - mu0 <= margin \n HA: mu - mu0 > margin \n",
-             `superior` = "H0: mu - mu0 <= margin \n HA: mu - mu0 > margin \n",
-             `equivalent` = "H0: |mu - mu0| >= margin \n HA: |mu - mu0| < margin \n"),
-      "------------------------------ \n",
-      " Statistical power =", round(power, 3), "\n",
-      " n =", ceiling(n), "\n",
-      "------------------------------ \n",
-      "Alternative =", dQuote(alternative),"\n",
-      "Non-centrality parameter =", round(ncp, 3), "\n",
-      "Type I error rate =", round(alpha, 3), "\n",
-      "Type II error rate =", round(1 - power, 3), "\n")
+
+  if(verbose) {
+    cat(" One mean compared to a constant (one sample z test) \n",
+        switch(hypothesis,
+               `not equal` = "H0: mu = mu0 \n HA: mu != mu0 \n",
+               `greater` = "H0: mu = mu0 \n HA: mu > mu0 \n",
+               `less` = "H0: mu = mu0 \n HA: mu < mu0 \n",
+               `non-inferior` = "H0: mu - mu0 <= margin \n HA: mu - mu0 > margin \n",
+               `superior` = "H0: mu - mu0 <= margin \n HA: mu - mu0 > margin \n",
+               `equivalent` = "H0: |mu - mu0| >= margin \n HA: |mu - mu0| < margin \n"),
+        "------------------------------ \n",
+        " Statistical power =", round(power, 3), "\n",
+        " n =", ceiling(n), "\n",
+        "------------------------------ \n",
+        "Alternative =", dQuote(alternative),"\n",
+        "Non-centrality parameter =", round(ncp, 3), "\n",
+        "Type I error rate =", round(alpha, 3), "\n",
+        "Type II error rate =", round(1 - power, 3), "\n")
+  }
 
   invisible(structure(list(parms = list(mu = mu, sd = sd, mu0 = mu0,
-                                        alpha = alpha, margin = margin, alternative = alternative),
+                                        alpha = alpha, margin = margin, alternative = alternative, verbose = verbose),
                            test = "z",
                            ncp = ncp,
                            power = power,
@@ -451,13 +460,11 @@ pwrss.z.mean <- function (mu, sd = 1, mu0 = 0, margin = 0, alpha = 0.05,
                       class = c("pwrss", "z")))
 }
 
-pwrss.z.mean(mu = 0.50, power = 0.90, alternative = "equivalent")
-
 pwrss.z.2means <- function (mu1, mu2 = 0, sd1 = 1, sd2 = sd1, margin = 0,
                             kappa = 1, alpha = 0.05,
                             alternative = c("not equal", "greater", "less",
                                             "equivalent", "non-inferior", "superior"),
-                            n2 = NULL, power = NULL)
+                            n2 = NULL, power = NULL, verbose = TRUE)
 {
   # sd1 <- sd2 <- sd # pooled standard devation
   if (length(alternative) > 1)
@@ -553,6 +560,7 @@ pwrss.z.2means <- function (mu1, mu2 = 0, sd1 = 1, sd2 = sd1, margin = 0,
       n1 <- n2 * kappa
       lambda = (HA_H0) / sqrt(sd1^2 / n1 + sd2^2 / n2)
       power <- 2*(1 - pnorm(qnorm(alpha, lower.tail = FALSE), lambda)) - 1
+      if(power < 0) stop("design is not feasible", call. = FALSE)
     }
 
   }
@@ -563,26 +571,29 @@ pwrss.z.2means <- function (mu1, mu2 = 0, sd1 = 1, sd2 = sd1, margin = 0,
   n1 <- kappa * n2
   ncp <- (HA_H0) / sqrt(sd1^2 / n1 + sd2^2 / n2)
   hypothesis <- alternative
-  cat(" Difference between two means (independent samples z test) \n",
-      switch(hypothesis,
-             `not equal` = "H0: mu1 = mu2 \n HA: mu1 != mu2 \n",
-             `greater` = "H0: mu1 = mu2 \n HA: mu1 > mu2 \n",
-             `less` = "H0: mu1 = mu2 \n HA: mu1 < mu2 \n",
-             `non-inferior` = "H0: mu1 - mu2 <= margin \n HA: mu1 - mu2 > margin \n",
-             `superior` = "H0: mu1 - mu2 <= margin \n HA: mu1 - mu2 > margin \n",
-             `equivalent` = "H0: |mu1 - mu2| >= margin \n HA: |mu1 - mu2| < margin \n"),
-      "------------------------------ \n",
-      " Statistical power =", round(power, 3), "\n",
-      " n1 =", ceiling(n1), "\n",
-      " n2 =", ceiling(n2), "\n",
-      "------------------------------ \n",
-      "Alternative =", dQuote(alternative),"\n",
-      "Non-centrality parameter =", round(ncp, 3), "\n",
-      "Type I error rate =", round(alpha, 3), "\n",
-      "Type II error rate =", round(1 - power, 3), "\n")
+
+  if(verbose) {
+    cat(" Difference between two means (independent samples z test) \n",
+        switch(hypothesis,
+               `not equal` = "H0: mu1 = mu2 \n HA: mu1 != mu2 \n",
+               `greater` = "H0: mu1 = mu2 \n HA: mu1 > mu2 \n",
+               `less` = "H0: mu1 = mu2 \n HA: mu1 < mu2 \n",
+               `non-inferior` = "H0: mu1 - mu2 <= margin \n HA: mu1 - mu2 > margin \n",
+               `superior` = "H0: mu1 - mu2 <= margin \n HA: mu1 - mu2 > margin \n",
+               `equivalent` = "H0: |mu1 - mu2| >= margin \n HA: |mu1 - mu2| < margin \n"),
+        "------------------------------ \n",
+        " Statistical power =", round(power, 3), "\n",
+        " n1 =", ceiling(n1), "\n",
+        " n2 =", ceiling(n2), "\n",
+        "------------------------------ \n",
+        "Alternative =", dQuote(alternative),"\n",
+        "Non-centrality parameter =", round(ncp, 3), "\n",
+        "Type I error rate =", round(alpha, 3), "\n",
+        "Type II error rate =", round(1 - power, 3), "\n")
+  }
 
   invisible(structure(list(parms = list(mu1 = mu1, mu2 = mu2, sd1 = sd1, sd2 = sd2, kappa = kappa, alpha = alpha,
-                                        margin = margin, alternative = alternative),
+                                        margin = margin, alternative = alternative, verbose = verbose),
                            test = "z",
                            ncp = ncp,
                            power = power,
@@ -604,7 +615,7 @@ pwrss.t.2means <- function (mu1, mu2 = 0, margin = 0,
                             alpha = 0.05, welch.df = FALSE,
                             alternative = c("not equal", "greater", "less",
                                             "equivalent", "non-inferior", "superior"),
-                            n2 = NULL, power = NULL)
+                            n2 = NULL, power = NULL, verbose = TRUE)
 {
   welch_df <- function(sd1, sd2, n1, n2) {
     (sd1^2 / n1 + sd2^2 / n2)^2 /
@@ -875,6 +886,7 @@ pwrss.t.2means <- function (mu1, mu2 = 0, margin = 0,
       }
 
       power <- 2 * (1 - pt(qt(alpha, df = df, ncp = 0, lower.tail = FALSE), df = df, ncp = lambda)) - 1
+      if(power < 0) stop("design is not feasible", call. = FALSE)
     }
 
   }
@@ -892,34 +904,36 @@ pwrss.t.2means <- function (mu1, mu2 = 0, margin = 0,
   ifelse(paired, n <- n2, n <- c(n1 = n1, n2 = n2))
 
   hypothesis <- alternative
-  cat(ifelse(paired,
-             " Difference between two means (paired samples t test) \n",
-             " Difference between two means (independent samples t test) \n"),
-      switch(hypothesis,
-             `not equal` = "H0: mu1 = mu2 \n HA: mu1 != mu2 \n",
-             `greater` = "H0: mu1 = mu2 \n HA: mu1 > mu2 \n",
-             `less` = "H0: mu1 = mu2 \n HA: mu1 < mu2 \n",
-             `non-inferior` = "H0: mu1 - mu2 <= margin \n HA: mu1 - mu2 > margin \n",
-             `superior` = "H0: mu1 - mu2 <= margin \n HA: mu1 - mu2 > margin \n",
-             `equivalent` = "H0: |mu1 - mu2| >= margin \n HA: |mu1 - mu2| < margin \n"),
-      "------------------------------ \n",
-      " Statistical power =", round(power, 3), "\n",
-      if(paired) {
-        c(" n =", ceiling(n))
-      } else {
-        c(" n1 =", ceiling(n1), "\n  n2 =", ceiling(n2))
-      }, "\n",
-      "------------------------------ \n",
-      "Alternative =", dQuote(alternative),"\n",
-      "Degrees of freedom =", round(df, 2), "\n",
-      "Non-centrality parameter =", round(ncp, 3), "\n",
-      "Type I error rate =", round(alpha, 3), "\n",
-      "Type II error rate =", round(1 - power, 3), "\n")
 
+  if(verbose) {
+    cat(ifelse(paired,
+               " Difference between two means (paired samples t test) \n",
+               " Difference between two means (independent samples t test) \n"),
+        switch(hypothesis,
+               `not equal` = "H0: mu1 = mu2 \n HA: mu1 != mu2 \n",
+               `greater` = "H0: mu1 = mu2 \n HA: mu1 > mu2 \n",
+               `less` = "H0: mu1 = mu2 \n HA: mu1 < mu2 \n",
+               `non-inferior` = "H0: mu1 - mu2 <= margin \n HA: mu1 - mu2 > margin \n",
+               `superior` = "H0: mu1 - mu2 <= margin \n HA: mu1 - mu2 > margin \n",
+               `equivalent` = "H0: |mu1 - mu2| >= margin \n HA: |mu1 - mu2| < margin \n"),
+        "------------------------------ \n",
+        " Statistical power =", round(power, 3), "\n",
+        if(paired) {
+          c(" n =", ceiling(n))
+        } else {
+          c(" n1 =", ceiling(n1), "\n  n2 =", ceiling(n2))
+        }, "\n",
+        "------------------------------ \n",
+        "Alternative =", dQuote(alternative),"\n",
+        "Degrees of freedom =", round(df, 2), "\n",
+        "Non-centrality parameter =", round(ncp, 3), "\n",
+        "Type I error rate =", round(alpha, 3), "\n",
+        "Type II error rate =", round(1 - power, 3), "\n")
+  }
 
   invisible(structure(list(parms = list(mu1 = mu1, mu2 = mu2, sd1 = sd1, sd2 = sd2, kappa = kappa, welch.df = welch.df,
                                         paired = paired, paired.r = paired.r,
-                                        alpha = alpha, margin = margin, alternative = alternative),
+                                        alpha = alpha, margin = margin, alternative = alternative, verbose = verbose),
                            test = "t",
                            df = df,
                            ncp =  ncp,
@@ -931,7 +945,7 @@ pwrss.t.2means <- function (mu1, mu2 = 0, margin = 0,
 
 pwrss.z.corr <- function (r = 0.50, r0 = 0, alpha = 0.05,
                           alternative = c("not equal", "greater", "less"),
-                          n = NULL, power = NULL)
+                          n = NULL, power = NULL, verbose = TRUE)
 {
   if (length(alternative) > 1)
     alternative <- alternative[1]
@@ -1000,21 +1014,24 @@ pwrss.z.corr <- function (r = 0.50, r0 = 0, alpha = 0.05,
 
   ncp <- (z - z0) / sqrt(1 / (n - 3))
   hypothesis <- alternative
-  cat(" One correlation compared to a constant (one sample z test) \n",
-      switch(hypothesis,
-             `not equal` = "H0: r = r0 \n HA: r != r0 \n",
-             `greater` = "H0: r = r0 \n HA: r > r0 \n",
-             `less` = "H0: r = r0 \n HA: r < r0 \n"),
-      "------------------------------ \n",
-      " Statistical power =", round(power, 3), "\n",
-      " n =", ceiling(n), "\n",
-      "------------------------------ \n",
-      "Alternative =", dQuote(alternative),"\n",
-      "Non-centrality parameter =", round(ncp, 3), "\n",
-      "Type I error rate =", round(alpha, 3), "\n",
-      "Type II error rate =", round(1 - power, 3), "\n")
 
-  invisible(structure(list(parms = list(r = r, r0 = r0, alpha = alpha, alternative = alternative),
+  if(verbose) {
+    cat(" One correlation compared to a constant (one sample z test) \n",
+        switch(hypothesis,
+               `not equal` = "H0: r = r0 \n HA: r != r0 \n",
+               `greater` = "H0: r = r0 \n HA: r > r0 \n",
+               `less` = "H0: r = r0 \n HA: r < r0 \n"),
+        "------------------------------ \n",
+        " Statistical power =", round(power, 3), "\n",
+        " n =", ceiling(n), "\n",
+        "------------------------------ \n",
+        "Alternative =", dQuote(alternative),"\n",
+        "Non-centrality parameter =", round(ncp, 3), "\n",
+        "Type I error rate =", round(alpha, 3), "\n",
+        "Type II error rate =", round(1 - power, 3), "\n")
+  }
+
+  invisible(structure(list(parms = list(r = r, r0 = r0, alpha = alpha, alternative = alternative, verbose = verbose),
                            test = "z",
                            ncp = ncp,
                            power = power,
@@ -1027,7 +1044,7 @@ pwrss.z.corr <- function (r = 0.50, r0 = 0, alpha = 0.05,
 pwrss.z.2corrs <- function (r1 = 0.50, r2 = 0.30,
                             alpha = 0.05, kappa = 1,
                             alternative = c("not equal", "greater", "less"),
-                            n2 = NULL, power = NULL)
+                            n2 = NULL, power = NULL, verbose = TRUE)
 {
   if (length(alternative) > 1)
     alternative <- alternative[1]
@@ -1100,22 +1117,25 @@ pwrss.z.2corrs <- function (r1 = 0.50, r2 = 0.30,
 
   ncp <- (z1 - z2) / sqrt(1 / (n1 - 3) + 1 / (n2 - 3))
   hypothesis <- alternative
-  cat(" Difference between two correlations (independent samples z test) \n",
-      switch(hypothesis,
-             `not equal` = "H0: r1 = r2 \n HA: r1 != r2 \n",
-             `greater` = "H0: r1 = r2 \n HA: r1 > r2 \n",
-             `less` = "H0: r1 = r2 \n HA: r1 < r2 \n"),
-      "------------------------------ \n",
-      " Statistical power =", round(power, 3), "\n",
-      " n1 =", ceiling(n1), "\n",
-      " n2 =", ceiling(n2), "\n",
-      "------------------------------ \n",
-      "Alternative =", dQuote(alternative),"\n",
-      "Non-centrality parameter =", round(ncp, 3), "\n",
-      "Type I error rate =", round(alpha, 3), "\n",
-      "Type II error rate =", round(1 - power, 3), "\n")
 
-  invisible(structure(list(parms = list(r1 = r1, r2 = r2, kappa = kappa, alpha = alpha, alternative = alternative),
+  if(verbose) {
+    cat(" Difference between two correlations (independent samples z test) \n",
+        switch(hypothesis,
+               `not equal` = "H0: r1 = r2 \n HA: r1 != r2 \n",
+               `greater` = "H0: r1 = r2 \n HA: r1 > r2 \n",
+               `less` = "H0: r1 = r2 \n HA: r1 < r2 \n"),
+        "------------------------------ \n",
+        " Statistical power =", round(power, 3), "\n",
+        " n1 =", ceiling(n1), "\n",
+        " n2 =", ceiling(n2), "\n",
+        "------------------------------ \n",
+        "Alternative =", dQuote(alternative),"\n",
+        "Non-centrality parameter =", round(ncp, 3), "\n",
+        "Type I error rate =", round(alpha, 3), "\n",
+        "Type II error rate =", round(1 - power, 3), "\n")
+  }
+
+  invisible(structure(list(parms = list(r1 = r1, r2 = r2, kappa = kappa, alpha = alpha, alternative = alternative, verbose = verbose),
                            test = "z",
                            ncp = ncp,
                            power = power,
@@ -1133,7 +1153,7 @@ pwrss.z.2corrs <- function (r1 = 0.50, r2 = 0.30,
 # specify k > m to get the test of r2 change from a change of zero
 pwrss.f.reg <- function (r2 = 0.10, f2 = r2 /(1 - r2),
                          k = 4, m = k, alpha = 0.05,
-                         n = NULL, power = NULL)
+                         n = NULL, power = NULL, verbose = TRUE)
 {
   if (is.null(n) & is.null(power))
     stop("`n` and `power` cannot be `NULL` at the same time",
@@ -1165,22 +1185,25 @@ pwrss.f.reg <- function (r2 = 0.10, f2 = r2 /(1 - r2),
   ncp <- f2 * n
   df1 <- m
   df2 <- n - k - 1
-  cat(ifelse(m == k,
-             " R-squared compared to 0 in linear regression (F test) \n",
-             " R-squared change in hierarchical linear regression (F test) \n"),
-      "H0: r2 = 0 \n HA: r2 > 0 \n",
-      "------------------------------ \n",
-      " Statistical power =", round(power, 3), "\n",
-      " n =", ceiling(n), "\n",
-      "------------------------------ \n",
-      "Numerator degrees of freedom =", round(df1, 3), "\n",
-      "Denominator degrees of freedom =", round(df2, 3), "\n",
-      "Non-centrality parameter =", round(ncp, 3), "\n",
-      "Type I error rate =", round(alpha, 3), "\n",
-      "Type II error rate =", round(1 - power, 3), "\n")
+
+  if(verbose) {
+    cat(ifelse(m == k,
+               " R-squared compared to 0 in linear regression (F test) \n",
+               " R-squared change in hierarchical linear regression (F test) \n"),
+        "H0: r2 = 0 \n HA: r2 > 0 \n",
+        "------------------------------ \n",
+        " Statistical power =", round(power, 3), "\n",
+        " n =", ceiling(n), "\n",
+        "------------------------------ \n",
+        "Numerator degrees of freedom =", round(df1, 3), "\n",
+        "Denominator degrees of freedom =", round(df2, 3), "\n",
+        "Non-centrality parameter =", round(ncp, 3), "\n",
+        "Type I error rate =", round(alpha, 3), "\n",
+        "Type II error rate =", round(1 - power, 3), "\n")
+  }
 
   invisible(structure(list(parms = list(r2 = r2, k = k, m = m, f2 = f2,
-                                        n = ceiling(n), power = power, alpha = alpha),
+                                        n = ceiling(n), power = power, alpha = alpha, verbose = verbose),
                            test = "F",
                            df1 = df1,
                            df2 = df2,
@@ -1196,7 +1219,7 @@ pwrss.f.reg <- function (r2 = 0.10, f2 = r2 /(1 - r2),
 pwrss.f.ancova <- function(eta2 = 0.01, f2 = eta2 / (1 - eta2),
                            n.way = length(n.levels),
                            n.levels = 2, n.covariates = 0, alpha = 0.05,
-                           n = NULL, power = NULL)
+                           n = NULL, power = NULL, verbose = TRUE)
 {
   if (is.null(n) & is.null(power))
     stop("`n` and `power` cannot be `NULL` at the same time",
@@ -1240,20 +1263,22 @@ pwrss.f.ancova <- function(eta2 = 0.01, f2 = eta2 / (1 - eta2),
     n.way <- nway
   }
 
-  cat(" ", switch(n.way,
-                  `1` = "One",
-                  `2` = "Two",
-                  `3` = "Three"),
-      ifelse(n.covariates > 0,
-             "-way Analysis of Covariance (ANCOVA) \n ",
-             "-way Analysis of Variance (ANOVA) \n "),
-      " H0: 'eta2' or 'f2' = 0 \n  HA: 'eta2' or 'f2' > 0 \n ------------------------------------\n",
-      switch(n.way,
-             `1` = c(" Factor A: ", n.levels, " levels \n"),
-             `2` = c(" Factor A: ", n.levels[1], " levels \n", " Factor B: ", n.levels[2], " levels \n"),
-             `3` = c(" Factor A: ", n.levels[1], " levels \n", " Factor B: ", n.levels[2], " levels \n", " Factor C: ", n.levels[3], " levels \n")),
-      " ------------------------------------\n",
-      sep = "")
+  if(verbose) {
+    cat(" ", switch(n.way,
+                    `1` = "One",
+                    `2` = "Two",
+                    `3` = "Three"),
+        ifelse(n.covariates > 0,
+               "-way Analysis of Covariance (ANCOVA) \n ",
+               "-way Analysis of Variance (ANOVA) \n "),
+        " H0: 'eta2' or 'f2' = 0 \n  HA: 'eta2' or 'f2' > 0 \n ------------------------------------\n",
+        switch(n.way,
+               `1` = c(" Factor A: ", n.levels, " levels \n"),
+               `2` = c(" Factor A: ", n.levels[1], " levels \n", " Factor B: ", n.levels[2], " levels \n"),
+               `3` = c(" Factor A: ", n.levels[1], " levels \n", " Factor B: ", n.levels[2], " levels \n", " Factor C: ", n.levels[3], " levels \n")),
+        " ------------------------------------\n",
+        sep = "")
+  }
 
   if( n.way == 1) {
 
@@ -1262,20 +1287,28 @@ pwrss.f.ancova <- function(eta2 = 0.01, f2 = eta2 / (1 - eta2),
       n <- ss(df1 = df1, n.groups = n.groups, n.covariates = n.covariates, f2 = f2, alpha = alpha, power = power)
       df2 <- n - n.groups - n.covariates
       ncp <- n*f2
-      cat(" Given eta2 =", round(eta2, 3), "or f2 =", round(f2, 3), "\n",
-          " Total n =", ceiling(n), "\n ------------------------------------\n",
-          "Numerator degrees of freedom = ", round(df1, 2), "\n",
-          "Denominator degrees of freedom =", round(df2, 2),"\n",
-          "Non-centrality parameter =", round(ncp, 2),"\n")
+
+      if(verbose) {
+        cat(" Given eta2 =", round(eta2, 3), "or f2 =", round(f2, 3), "\n",
+            " Total n =", ceiling(n), "\n ------------------------------------\n",
+            "Numerator degrees of freedom = ", round(df1, 2), "\n",
+            "Denominator degrees of freedom =", round(df2, 2),"\n",
+            "Non-centrality parameter =", round(ncp, 2),"\n")
+      }
+
     } else if (requested == "power") {
       power <- pwr(df1 = df1, n = n, n.groups = n.groups, n.covariates = n.covariates, f2 = f2, alpha = alpha)
       df2 <- n - n.groups - n.covariates
       ncp <- n*f2
-      cat(" Given eta2 =", round(eta2, 3), "or f2 =", round(f2, 3), "\n",
-          " Statistical power =", round(power, 3), "\n ------------------------------------\n",
-          "Numerator degrees of freedom = ", round(df1, 2), "\n",
-          "Denominator degrees of freedom =", round(df2, 2),"\n",
-          "Non-centrality parameter =", round(ncp, 2),"\n")
+
+      if(verbose) {
+        cat(" Given eta2 =", round(eta2, 3), "or f2 =", round(f2, 3), "\n",
+            " Statistical power =", round(power, 3), "\n ------------------------------------\n",
+            "Numerator degrees of freedom = ", round(df1, 2), "\n",
+            "Denominator degrees of freedom =", round(df2, 2),"\n",
+            "Non-centrality parameter =", round(ncp, 2),"\n")
+      }
+
     } else {
       stop("Invalid 'n' or 'power'", call. = FALSE)
     }
@@ -1306,13 +1339,17 @@ pwrss.f.ancova <- function(eta2 = 0.01, f2 = eta2 / (1 - eta2),
       power <- c(A = power,
                  B = power,
                  AxB = power)
-      cat(" Given eta2 =", round(eta2, 3), "or f2 =", round(f2, 3), "\n",
-          " Total n =", ceiling(ss.f1), "(for A) \n",
-          " Total n =", ceiling(ss.f2), "(for B) \n",
-          " Total n =", ceiling(ss.f1f2), "(for A x B) \n ------------------------------------\n",
-          "Numerator degrees of freedom = ", round(df1, 2), "\n",
-          "Denominator degrees of freedom =", round(df2, 2),"\n",
-          "Non-centrality parameter =", round(ncp, 2),"\n")
+
+      if(verbose) {
+        cat(" Given eta2 =", round(eta2, 3), "or f2 =", round(f2, 3), "\n",
+            " Total n =", ceiling(ss.f1), "(for A) \n",
+            " Total n =", ceiling(ss.f2), "(for B) \n",
+            " Total n =", ceiling(ss.f1f2), "(for A x B) \n ------------------------------------\n",
+            "Numerator degrees of freedom = ", round(df1, 2), "\n",
+            "Denominator degrees of freedom =", round(df2, 2),"\n",
+            "Non-centrality parameter =", round(ncp, 2),"\n")
+      }
+
     } else if (requested == "power") {
       pwr.f1 <- pwr(df1 = df1.f1, n = n, n.groups = n.groups, n.covariates = n.covariates, f2 = f2, alpha = alpha)
       pwr.f2 <- pwr(df1 = df1.f2, n = n, n.groups = n.groups, n.covariates = n.covariates, f2 = f2, alpha = alpha)
@@ -1329,13 +1366,16 @@ pwrss.f.ancova <- function(eta2 = 0.01, f2 = eta2 / (1 - eta2),
       power <- c(A = pwr.f1,
                  B = pwr.f2,
                  AxB = pwr.f1f2)
-      cat(" Given eta2 =", round(eta2, 3), "or f2 =", round(f2, 3), "\n",
-          " Statistical power =", round(pwr.f1, 3), "(for A) \n",
-          " Statistical power =", round(pwr.f2, 3), "(for B) \n",
-          " Statistical power =", round(pwr.f1f2, 3), "(for A x B) \n ------------------------------------\n",
-          "Numerator degrees of freedom = ", round(df1, 2), "\n",
-          "Denominator degrees of freedom =", round(df2, 2),"\n",
-          "Non-centrality parameter =", round(ncp, 2),"\n")
+
+      if(verbose) {
+        cat(" Given eta2 =", round(eta2, 3), "or f2 =", round(f2, 3), "\n",
+            " Statistical power =", round(pwr.f1, 3), "(for A) \n",
+            " Statistical power =", round(pwr.f2, 3), "(for B) \n",
+            " Statistical power =", round(pwr.f1f2, 3), "(for A x B) \n ------------------------------------\n",
+            "Numerator degrees of freedom = ", round(df1, 2), "\n",
+            "Denominator degrees of freedom =", round(df2, 2),"\n",
+            "Non-centrality parameter =", round(ncp, 2),"\n")
+      }
 
     } else {
 
@@ -1397,17 +1437,21 @@ pwrss.f.ancova <- function(eta2 = 0.01, f2 = eta2 / (1 - eta2),
                  AxC = power,
                  BxC = power,
                  AxBxC = power)
-      cat(" Given eta2 =", round(eta2, 3), "or f2 =", round(f2, 3), "\n",
-          " Total n =", ceiling(ss.f1), "(for A) \n",
-          " Total n =", ceiling(ss.f2), "(for B) \n",
-          " Total n =", ceiling(ss.f3), "(for C) \n",
-          " Total n =", ceiling(ss.f1f2), "(for A x B) \n",
-          " Total n =", ceiling(ss.f1f3), "(for A x C) \n",
-          " Total n =", ceiling(ss.f2f3), "(for B x C) \n",
-          " Total n =", ceiling(ss.f1f2f3), "(for A x B x C) \n ------------------------------------\n",
-          "Numerator degrees of freedom = ", round(df1, 2), "\n",
-          "Denominator degrees of freedom =", round(df2, 2),"\n",
-          "Non-centrality parameter =", round(ncp, 2),"\n")
+
+      if(verbose) {
+        cat(" Given eta2 =", round(eta2, 3), "or f2 =", round(f2, 3), "\n",
+            " Total n =", ceiling(ss.f1), "(for A) \n",
+            " Total n =", ceiling(ss.f2), "(for B) \n",
+            " Total n =", ceiling(ss.f3), "(for C) \n",
+            " Total n =", ceiling(ss.f1f2), "(for A x B) \n",
+            " Total n =", ceiling(ss.f1f3), "(for A x C) \n",
+            " Total n =", ceiling(ss.f2f3), "(for B x C) \n",
+            " Total n =", ceiling(ss.f1f2f3), "(for A x B x C) \n ------------------------------------\n",
+            "Numerator degrees of freedom = ", round(df1, 2), "\n",
+            "Denominator degrees of freedom =", round(df2, 2),"\n",
+            "Non-centrality parameter =", round(ncp, 2),"\n")
+      }
+
     } else if (requested == "power") {
       pwr.f1 <- pwr(df1 = df1.f1, n = n, n.groups = n.groups, n.covariates = n.covariates, f2 = f2, alpha = alpha)
       pwr.f2 <- pwr(df1 = df1.f2, n = n, n.groups = n.groups, n.covariates = n.covariates, f2 = f2, alpha = alpha)
@@ -1444,17 +1488,21 @@ pwrss.f.ancova <- function(eta2 = 0.01, f2 = eta2 / (1 - eta2),
               AxC = n,
               BxC = n,
               AxBxC = n)
-      cat(" Given eta2 =", round(eta2, 3), "or f2 =", round(f2, 3), "\n",
-          " Statistical power =", round(pwr.f1, 3), "(for A) \n",
-          " Statistical power =", round(pwr.f2, 3), "(for B) \n",
-          " Statistical power =", round(pwr.f3, 3), "(for C) \n",
-          " Statistical power =", round(pwr.f1f2, 3), "(for A x B) \n",
-          " Statistical power =", round(pwr.f1f3, 3), "(for A x C) \n",
-          " Statistical power =", round(pwr.f2f3, 3), "(for B x C) \n",
-          " Statistical power =", round(pwr.f1f2f3, 3), "(for A x B x C) \n ------------------------------------\n",
-          "Numerator degrees of freedom = ", round(df1, 2), "\n",
-          "Denominator degrees of freedom =", round(df2, 2),"\n",
-          "Non-centrality parameter =", round(ncp, 2),"\n")
+
+      if(verbose) {
+        cat(" Given eta2 =", round(eta2, 3), "or f2 =", round(f2, 3), "\n",
+            " Statistical power =", round(pwr.f1, 3), "(for A) \n",
+            " Statistical power =", round(pwr.f2, 3), "(for B) \n",
+            " Statistical power =", round(pwr.f3, 3), "(for C) \n",
+            " Statistical power =", round(pwr.f1f2, 3), "(for A x B) \n",
+            " Statistical power =", round(pwr.f1f3, 3), "(for A x C) \n",
+            " Statistical power =", round(pwr.f2f3, 3), "(for B x C) \n",
+            " Statistical power =", round(pwr.f1f2f3, 3), "(for A x B x C) \n ------------------------------------\n",
+            "Numerator degrees of freedom = ", round(df1, 2), "\n",
+            "Denominator degrees of freedom =", round(df2, 2),"\n",
+            "Non-centrality parameter =", round(ncp, 2),"\n")
+      }
+
     } else {
 
       stop("Invalid 'n' or 'power'", call. = FALSE)
@@ -1468,7 +1516,7 @@ pwrss.f.ancova <- function(eta2 = 0.01, f2 = eta2 / (1 - eta2),
   }
 
   invisible(structure(list(parms = list(eta2 = eta2, f2 = f2, n.way = n.way, n.levels = n.levels,
-                                        n.covariates = n.covariates, alpha = alpha),
+                                        n.covariates = n.covariates, alpha = alpha, verbose = verbose),
                            test = "F",
                            df1 = df1,
                            df2 = df2,
@@ -1485,7 +1533,7 @@ pwrss.f.rmanova <- function (eta2 = 0.10, f2 = eta2/(1 - eta2),
                              repmeasures.r = 0.50, n.levels = 2, n.measurements = 2,
                              epsilon = 1, alpha = 0.05,
                              type = c("between", "within", "interaction"),
-                             n = NULL, power = NULL)
+                             n = NULL, power = NULL, verbose = TRUE)
 {
   if (length(type > 1)) type <- type[1]
   effect <- type
@@ -1579,25 +1627,28 @@ pwrss.f.rmanova <- function (eta2 = 0.10, f2 = eta2/(1 - eta2),
   }
 
   ncp <- f2 * n * epsilon
-  cat(" One-way repeated measures analysis of variance (F test) \n",
-      "H0: eta2 = 0 (or f2 = 0) \n HA: eta2 > 0 (or f2 > 0) \n",
-      "------------------------------ \n",
-      "Number of levels (groups) =", n.levels, "\n",
-      "Number of measurement time points =",n.measurements, "\n",
-      "------------------------------ \n",
-      " Statistical power =", round(power, 3), "\n",
-      " Total n =", ceiling(n), "\n",
-      "------------------------------ \n",
-      "Type of the effect =", dQuote(effect), "\n",
-      "Numerator degrees of freedom =", round(df1, 3), "\n",
-      "Denominator degrees of freedom =", round(df2, 3), "\n",
-      "Non-centrality parameter =", round(ncp, 3), "\n",
-      "Type I error rate =", round(alpha, 3), "\n",
-      "Type II error rate =", round(1 - power, 3), "\n")
+
+  if(verbose) {
+    cat(" One-way repeated measures analysis of variance (F test) \n",
+        "H0: eta2 = 0 (or f2 = 0) \n HA: eta2 > 0 (or f2 > 0) \n",
+        "------------------------------ \n",
+        "Number of levels (groups) =", n.levels, "\n",
+        "Number of measurement time points =",n.measurements, "\n",
+        "------------------------------ \n",
+        " Statistical power =", round(power, 3), "\n",
+        " Total n =", ceiling(n), "\n",
+        "------------------------------ \n",
+        "Type of the effect =", dQuote(effect), "\n",
+        "Numerator degrees of freedom =", round(df1, 3), "\n",
+        "Denominator degrees of freedom =", round(df2, 3), "\n",
+        "Non-centrality parameter =", round(ncp, 3), "\n",
+        "Type I error rate =", round(alpha, 3), "\n",
+        "Type II error rate =", round(1 - power, 3), "\n")
+  }
 
   invisible(structure(list(parms = list(f2 = f2, n.levels = n.levels,
                                         n.measurements = n.measurements, repmeasures.r = repmeasures.r,
-                                        epsilon = epsilon, alpha = alpha),
+                                        epsilon = epsilon, alpha = alpha, verbose = verbose),
                            test = "F",
                            df1 = df1,
                            df2 = df2,
@@ -1717,6 +1768,7 @@ power.t.test <- function(ncp, df, alpha, alternative,
     xbeta <- c(xbeta0, rev(xbeta0))
     ybeta <- c(ybeta0, rep(0, length(ybeta0)))
     polygon(x = xbeta, y = ybeta, col = adjustcolor(4, alpha.f = 0.3), border = NA)
+
   }
 
   return(power)
@@ -1756,6 +1808,7 @@ power.z.test <- function(ncp, alpha, alternative,
   }
 
   if(plot) {
+
     alpha <- round(alpha, 3)
     zalpha <- round(zalpha, 2)
     ncp <- round(ncp, 2)
@@ -1828,6 +1881,7 @@ power.z.test <- function(ncp, alpha, alternative,
     xbeta <- c(xbeta0, rev(xbeta0))
     ybeta <- c(ybeta0, rep(0, length(ybeta0)))
     polygon(x = xbeta, y = ybeta, col = adjustcolor(4, alpha.f = 0.3), border = NA)
+
   }
 
   return(power)
@@ -1852,6 +1906,7 @@ power.f.test <- function(ncp, df1, df2, alpha,
               df1 = df1, df2 = df2, ncp = ncp, lower.tail = FALSE)
 
   if(plot) {
+
     alpha <- round(alpha, 3)
     falpha <- round(falpha, 2)
     ncp <- round(ncp, 2)
@@ -1922,14 +1977,17 @@ power.f.test <- function(ncp, df1, df2, alpha,
     xbeta <- c(xbeta0, rev(xbeta0))
     ybeta <- c(ybeta0, rep(0, length(ybeta0)))
     polygon(x = xbeta, y = ybeta, col = adjustcolor(4, alpha.f = 0.3), border = NA)
-  }
 
+  }
 
   return(power)
 
 }
 
-plot.pwrss <- function(x) {
+plot.pwrss <- function(x, ...) {
+
+  default.pars <- par(no.readonly = TRUE)
+
   if(all(c("pwrss","t") %in% class(x))) {
     power.t.test(ncp = abs(x$ncp),
                  df = x$df,
@@ -2013,4 +2071,6 @@ plot.pwrss <- function(x) {
   } else {
     stop("not an object of the type 'pwrss'", call. = FALSE)
   }
+
+  on.exit(par(default.pars))
 }

@@ -14,7 +14,7 @@ pwrss.z.2means(mu1, mu2 = 0, sd1 = 1, sd2 = sd1, margin = 0,
                kappa = 1, alpha = 0.05,
                alternative = c("not equal","greater","less",
                                "equivalent","non-inferior","superior"),
-               n2 = NULL, power = NULL)
+               n2 = NULL, power = NULL, verbose = TRUE)
 
 }
 
@@ -29,6 +29,7 @@ pwrss.z.2means(mu1, mu2 = 0, sd1 = 1, sd2 = sd1, margin = 0,
   \item{alpha}{probability of type I error.}
   \item{margin}{non-inferority, superiority, or equivalence margin (margin = mu1 - mu2) }
   \item{alternative}{direction or type of the hypothesis test: "not equal", "greater", "less", "equivalent", "non-inferior", or "superior"}
+  \item{verbose}{if \code{FALSE} no output is printed on the console}
 }
 
 \value{
@@ -68,5 +69,5 @@ pwrss.z.2means(mu1 = 0.40, mu2 = 0.20,
 }
 
 \references{
-
+Add references.
 }

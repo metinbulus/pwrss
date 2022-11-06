@@ -11,7 +11,7 @@
 pwrss.z.2props(p1, p2, margin = 0, arcsin.trans = TRUE, kappa = 1, alpha = 0.05,
                alternative = c("not equal","greater","less",
                                "equivalent","non-inferior","superior"),
-               n2 = NULL, power = NULL)
+               n2 = NULL, power = NULL, verbose = TRUE)
 }
 
 \arguments{
@@ -24,6 +24,7 @@ pwrss.z.2props(p1, p2, margin = 0, arcsin.trans = TRUE, kappa = 1, alpha = 0.05,
   \item{alpha}{probability of type I error.}
   \item{margin}{non-inferority, superiority, or equivalence margin (margin = p1 - p2)}
   \item{alternative}{direction or type of the hypothesis test: "not equal", "greater", "less", "equivalent", "non-inferior", or "superior"}
+  \item{verbose}{if \code{FALSE} no output is printed on the console}
 }
 
 \value{
@@ -61,5 +62,5 @@ pwrss.z.2props(p1 = 0.65, p2 = 0.85, power = 0.80,
 }
 
 \references{
-
+Add references.
 }

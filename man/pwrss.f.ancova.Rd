@@ -13,7 +13,7 @@ Calculates statistical power or minimum required sample size for One-way/Two-way
 pwrss.f.ancova(eta2 = 0.01, f2 = eta2 / (1 - eta2),
                n.way = length(n.levels),
                n.levels = 2, n.covariates = 0, alpha = 0.05,
-               n = NULL, power = NULL)
+               n = NULL, power = NULL, verbose = TRUE)
 
 }
 
@@ -26,6 +26,7 @@ pwrss.f.ancova(eta2 = 0.01, f2 = eta2 / (1 - eta2),
   \item{n}{total sample size}
   \item{power}{statistical power \eqn{(1-\beta)}}
   \item{alpha}{probability of type I error}
+  \item{verbose}{if \code{FALSE} no output is printed on the console}
 }
 
 \value{
@@ -78,5 +79,5 @@ pwrss.f.ancova(n.levels = c(2,3,2), n.covariates = 1,
 }
 
 \references{
-
+Add references.
 }

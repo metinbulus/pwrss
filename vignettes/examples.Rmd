@@ -35,9 +35,30 @@ library(pwrss)
   
   Alternative hypothesis can be formulated as "not equal", "less", "greater",  "non-inferior", "superior", or "equivalent" in `(1)`, `(2)`, `(3)`, and `(4)`;
   as "not equal", "less", or "greater" in `(5)` and `(6)`; but always as "greater" in `(7)`, `(8)`, `(9)`, `(10)`, and `(11)`. 
+  
+**Generic Functions for _z_, _t_, and _F_ tests**
 
+These generic functions calculate and return statistical power along with optional plots for Type I and Type II error rates (as long as the test statistic and degrees of freedom is known). They can be useful for calculating statistical power after data analysis. 
+```{r, message = FALSE, fig.width = 7, fig.height = 5, results = FALSE}
+power.t.test(ncp = 1.96, df = 99, alpha = 0.05, alternative = "equivalent")
+power.z.test(ncp = 1.96, alpha = 0.05, alternative = "equivalent")
+power.f.test(ncp = 2, df1 = 2, df2 = 98, alpha = 0.05)
 
-** One-way, Two-way, and Three-way Analysis of Variance (ANOVA) or Analysis of Covariance (ANCOVA)**
+```
+
+`plot()` function (S3 method) is a wrapper around the generic functions above. 
+```{r, message = FALSE, fig.width = 7, fig.height = 5, results = FALSE}
+design <- pwrss.t.2means(mu1 = 0.20, margin = -0.05, paired = TRUE,
+                         power = 0.80, alternative = "non-inferior")
+plot(design)
+
+design <- pwrss.f.ancova(eta2 = 0.10, n.levels = c(2,3),
+                         power = .80)
+plot(design)
+
+```
+
+**One-way, Two-way, and Three-way Analysis of Variance (ANOVA) or Analysis of Covariance (ANCOVA)**
 
 ```{r, message = FALSE, fig.width = 7, fig.height = 5, results = TRUE}
 
@@ -64,7 +85,7 @@ pwrss.f.ancova(n.levels = c(2,3,2), n.covariates = 1,
 
 ```
 
-** One-way Repeated Measures Analysis of Variance (RM-ANOVA)**
+**One-way Repeated Measures Analysis of Variance (RM-ANOVA)**
 
 ```{r, message = FALSE, fig.width = 7, fig.height = 5, results = TRUE}
 

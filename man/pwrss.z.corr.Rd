@@ -11,7 +11,7 @@ Calculates statistical power or minimum required sample size (only one can be NU
 \usage{
 pwrss.z.corr(r = 0.50, r0 = 0, alpha = 0.05,
              alternative = c("not equal","greater","less"),
-             n = NULL, power = NULL)
+             n = NULL, power = NULL, verbose = TRUE)
 }
 
 \arguments{
@@ -21,6 +21,7 @@ pwrss.z.corr(r = 0.50, r0 = 0, alpha = 0.05,
   \item{power}{statistical power \eqn{(1-\beta)}}
   \item{alpha}{probability of type I error.}
   \item{alternative}{direction or type of the hypothesis test: "not equal", "greater", or "less"}
+  \item{verbose}{if \code{FALSE} no output is printed on the console}
 }
 
 \value{
@@ -37,5 +38,5 @@ pwrss.z.corr(r = .20, power = .80, alternative = "not equal")
 }
 
 \references{
-
+Add references.
 }

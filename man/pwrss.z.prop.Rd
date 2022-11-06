@@ -12,7 +12,7 @@ Calculates statistical power or minimum required sample size (only one can be NU
 pwrss.z.prop(p, p0 = 0, margin = 0, arcsin.trans = TRUE, alpha = 0.05,
              alternative = c("not equal","greater","less",
                              "equivalent","non-inferior","superior"),
-             n = NULL, power = NULL)
+             n = NULL, power = NULL, verbose = TRUE)
 }
 
 \arguments{
@@ -24,6 +24,7 @@ pwrss.z.prop(p, p0 = 0, margin = 0, arcsin.trans = TRUE, alpha = 0.05,
   \item{alpha}{probability of type I error.}
   \item{margin}{non-inferority, superiority, or equivalence margin (margin = p - p0)}
   \item{alternative}{direction or type of the hypothesis test: "not equal", "greater", "less", "equivalent", "non-inferior", or "superior"}
+  \item{verbose}{if \code{FALSE} no output is printed on the console}
 }
 
 \value{
@@ -61,5 +62,5 @@ pwrss.z.prop(p = 0.05, p0 = 0.02, power = 0.80,
 }
 
 \references{
-
+Add references.
 }

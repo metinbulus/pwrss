@@ -16,7 +16,7 @@ pwrss.t.2means(mu1, mu2 = 0, margin = 0,
                alpha = 0.05, welch.df = FALSE,
                alternative = c("not equal","greater","less",
                                "equivalent","non-inferior","superior"),
-               n2 = NULL, power = NULL)
+               n2 = NULL, power = NULL, verbose = TRUE)
 
 }
 
@@ -34,6 +34,7 @@ pwrss.t.2means(mu1, mu2 = 0, margin = 0,
   \item{welch.df}{if \code{TRUE} uses Welch degrees of freedom adjustment when groups sizes or variances are not equal (applies to independent samples t test)}
   \item{margin}{non-inferority, superiority, or equivalence margin (margin = mu1 - mu2) }
   \item{alternative}{direction or type of the hypothesis test: "not equal", "greater", "less", "equivalent", "non-inferior", or "superior"}
+  \item{verbose}{if \code{FALSE} no output is printed on the console}
 }
 
 \value{
@@ -93,5 +94,5 @@ pwrss.t.2means(mu1 = 0.40, mu2 = 0.20, paired = TRUE,
 }
 
 \references{
-
+Add references.
 }

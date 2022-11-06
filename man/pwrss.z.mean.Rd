@@ -11,7 +11,7 @@ Calculates statistical power or minimum required sample size (only one can be NU
 pwrss.z.mean(mu, sd = 1, mu0 = 0, margin = 0, alpha = 0.05,
              alternative = c("not equal","greater","less",
                              "equivalent","non-inferior","superior"),
-             n = NULL, power = NULL)
+             n = NULL, power = NULL, verbose = TRUE)
 }
 
 \arguments{
@@ -23,6 +23,7 @@ pwrss.z.mean(mu, sd = 1, mu0 = 0, margin = 0, alpha = 0.05,
   \item{alpha}{probability of type I error.}
   \item{margin}{non-inferority, superiority, or equivalence margin (margin = p - p0)}
   \item{alternative}{direction or type of the hypothesis test: "not equal", "greater", "less", "equivalent", "non-inferior", or "superior"}
+  \item{verbose}{if \code{FALSE} no output is printed on the console}
 }
 
 \value{
@@ -60,5 +61,5 @@ pwrss.z.mean(mu = 0.40, mu0 = 0.20, sd = 1,
 }
 
 \references{
-
+Add references.
 }

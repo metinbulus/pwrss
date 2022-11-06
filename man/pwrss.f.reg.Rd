@@ -11,7 +11,7 @@ Calculates statistical power or minimum required sample size (only one can be NU
 \usage{
 pwrss.f.reg(r2 = 0.10, f2 = r2 /(1 - r2),
             k = 4, m = k, alpha = 0.05,
-            n = NULL, power = NULL)
+            n = NULL, power = NULL, verbose = TRUE)
 }
 
 \arguments{
@@ -21,7 +21,8 @@ pwrss.f.reg(r2 = 0.10, f2 = r2 /(1 - r2),
   \item{m}{(number of predictors in the subset of interest}
   \item{n}{sample size}
   \item{power}{statistical power \eqn{(1-\beta)}}
-  \item{alpha}{probability of type I error.}
+  \item{alpha}{probability of type I error}
+  \item{verbose}{if \code{FALSE} no output is printed on the console}
 }
 
 \value{
@@ -40,5 +41,5 @@ pwrss.f.reg(k = 3, power = 0.80, r2 = 0.20)
 }
 
 \references{
-
+Add references.
 }
