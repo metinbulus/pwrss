@@ -15,7 +15,7 @@ power.z.test(ncp, alpha, alternative,
 \arguments{
   \item{ncp}{non-centrality parameter (lambda)}
   \item{alpha}{probability of type I error}
-  \item{alternative}{direction or type of the hypothesis test: "not equal", "greater", "less", "equivalent", "non-inferior", or "superior"}
+  \item{alternative}{direction or type of the hypothesis test: "not equal", "greater", "less", "equivalent", "non-inferior", or "superior". This information is needed only for power calculation}
   \item{plot}{if \code{TRUE} plots Type I and Type II error plots}
   \item{plot.main}{title}
   \item{plot.sub}{subtitle}

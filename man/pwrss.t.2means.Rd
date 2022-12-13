@@ -34,7 +34,7 @@ pwrss.t.2means(mu1, mu2 = 0, margin = 0,
   \item{welch.df}{if \code{TRUE} uses Welch degrees of freedom adjustment when groups sizes or variances are not equal (applies to independent samples t test)}
   \item{margin}{non-inferority, superiority, or equivalence margin (margin = mu1 - mu2) }
   \item{alternative}{direction or type of the hypothesis test: "not equal", "greater", "less", "equivalent", "non-inferior", or "superior"}
-  \item{verbose}{if \code{FALSE} no output is printed on the console}
+  \item{verbose}{if \code{FALSE} no output is printed on the console. Useful for simulation, plotting, and whatnot}
 }
 
 \value{

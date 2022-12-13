@@ -24,7 +24,7 @@ pwrss.z.2props(p1, p2, margin = 0, arcsin.trans = TRUE, kappa = 1, alpha = 0.05,
   \item{alpha}{probability of type I error.}
   \item{margin}{non-inferority, superiority, or equivalence margin (margin = p1 - p2)}
   \item{alternative}{direction or type of the hypothesis test: "not equal", "greater", "less", "equivalent", "non-inferior", or "superior"}
-  \item{verbose}{if \code{FALSE} no output is printed on the console}
+  \item{verbose}{if \code{FALSE} no output is printed on the console. Useful for simulation, plotting, and whatnot}
 }
 
 \value{

@@ -21,7 +21,7 @@ pwrss.z.corr(r = 0.50, r0 = 0, alpha = 0.05,
   \item{power}{statistical power \eqn{(1-\beta)}}
   \item{alpha}{probability of type I error.}
   \item{alternative}{direction or type of the hypothesis test: "not equal", "greater", or "less"}
-  \item{verbose}{if \code{FALSE} no output is printed on the console}
+  \item{verbose}{if \code{FALSE} no output is printed on the console. Useful for simulation, plotting, and whatnot}
 }
 
 \value{

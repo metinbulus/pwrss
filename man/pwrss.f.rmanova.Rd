@@ -28,7 +28,7 @@ pwrss.f.rmanova(eta2 = 0.10, f2 = eta2/(1 - eta2),
   \item{power}{statistical power \eqn{(1-\beta)}}
   \item{alpha}{probability of type I error}
   \item{type}{the effect to be tested: "between", "within", or "interaction"}
-  \item{verbose}{if \code{FALSE} no output is printed on the console}
+  \item{verbose}{if \code{FALSE} no output is printed on the console. Useful for simulation, plotting, and whatnot}
 }
 
 \value{
