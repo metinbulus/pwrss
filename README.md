@@ -1,34 +1,9 @@
 <h2> Statistical Power and Sample Size Calculation Tools </h2>
 
-
-:::: {style="display: flex;"}
-
-::: {}
-To install, load, and use pwrss in R: <br>
-`install.packages("pwrss")`  <br>
+To install, load, and use the development version of the pwrss in R: <br>
+`library(devtools)` <br>
+`install_github("metinbulus/pwrss")`  <br>
 `library(pwrss)` <br>
-
-<img src = "vignettes/hex.png" height = %100 width = 100%></img>
-:::
-
-::: {}
-<p>&nbsp;</p>
-:::
-
-::: {}
-Alternatively calculations can be performed using links below: 
-
-| Language | User Interface |
-|:----------|:---------------|
-| English  | [https://pwrss.shinyapps.io/index/](https://pwrss.shinyapps.io/index/) |
-| English  | [https://pwrss.shinyapps.io/lang-en/](https://pwrss.shinyapps.io/lang-en/) |
-| Turkish  | [https://pwrss.shinyapps.io/lang-tr/](https://pwrss.shinyapps.io/lang-tr/) |
-
-[<img src = "vignettes/app.png" height = %100 width = 100%></img>](https://pwrss.shinyapps.io/index/)
-
-:::
-
-::::
 
 pwrss R package allows statistical power and minimum required sample size calculations for 
 
@@ -53,7 +28,7 @@ pwrss R package allows statistical power and minimum required sample size calcul
 
 - Bulus, M. (2023). pwrss: Statistical Power and Sample Size Calculation Tools. R package version 0.3.1. https://CRAN.R-project.org/package=pwrss
 
-- Bulus, M., & Polat, C. (2023). pwrss R paketi ile istatistiksel güç analizi [Statistical power analysis with pwrss R package]. Ahi Evran Üniversitesi Kirsehir Egitim Fakültesi Dergisi, 24(3), 2207-2328. https://osf.io/ua5fc/download/
+- Bulus, M., & Polat, C. (2023). pwrss R paketi ile istatistiksel gÃ¼Ã§ analizi [Statistical power analysis with pwrss R package]. Ahi Evran Ãœniversitesi Kirsehir Egitim FakÃ¼ltesi Dergisi, 24(3), 2207-2328. https://osf.io/ua5fc/download/
 
 
 
