@@ -1,3 +1,8 @@
+### Changes in pwrss v0.3.2
+  - alternative = "less" now produce correct power rates in `pwrss.z.prop()` function. Thanks to Leszek Gawarecki for reporting the issue. 
+  - the default for p0 argument in `pwrss.chisq.gofit()` can now be overwritten. Thanks to Kate Crespi for reporting the issue. 
+  - type 1 and type 2 error plots show and print correct power estimates for two-tailed tests when effect size is near zero. Thanks to dpnichols811 (GitHub profile handle) and Adrian Olszewski for reporting the issue. 
+
 ### Changes in pwrss v0.3.1
   - more detailed vignette (typo fixes)
   - added web application links (shiny dashboards)
