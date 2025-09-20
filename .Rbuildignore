@@ -1,0 +1,11 @@
+^docs$
+^LICENSE$
+^pkgdown$
+^README\.md$
+^README\.Rmd$
+^\.github$
+^\.lintr$
+^.*\.Rproj$
+^\.Rproj\.user$
+^_pkgdown\.yml$
+^codemeta\.json$

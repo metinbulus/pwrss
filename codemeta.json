@@ -1,0 +1,96 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "identifier": "pwrss",
+  "description": " The 'pwrss' R package provides flexible and comprehensive functions for statistical power and minimum required sample size calculations across a wide range of commonly used hypothesis tests in psychological, biomedical, and social sciences.",
+  "name": "pwrss: Statistical Power and Sample Size Calculation Tools",
+  "license": "https://spdx.org/licenses/GPL-3.0",
+  "version": "1.0.0",
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "R",
+    "url": "https://r-project.org"
+  },
+  "runtimePlatform": "R version 4.5.1 (2025-06-13)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Metin",
+      "familyName": "Bulus",
+      "email": "bulusmetin@gmail.com"
+    }
+  ],
+  "contributor": [
+    {
+      "@type": "Person",
+      "givenName": "Sebastian",
+      "familyName": "Jentschke",
+      "email": "sebastian.jentschke@uib.no"
+    }
+  ],
+  "maintainer": [
+    {
+      "@type": "Person",
+      "givenName": "Metin",
+      "familyName": "Bulus",
+      "email": "bulusmetin@gmail.com"
+    }
+  ],
+  "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "knitr",
+      "name": "knitr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=knitr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rmarkdown",
+      "name": "rmarkdown",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
+    }
+  ],
+  "softwareRequirements": {
+    "SystemRequirements": null
+  },
+  "fileSize": "1242.397KB",
+  "citation": [
+    {
+      "@type": "SoftwareSourceCode",
+      "datePublished": "2025",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": "Metin",
+          "familyName": "Bulus"
+        }
+      ],
+      "name": "{pwrss}: Statistical Power and Sample Size Calculation Tools",
+      "url": "https://doi.org/10.32614/CRAN.package.pwrss",
+      "description": "R package version 1.0.0"
+    }
+  ],
+  "codeRepository": "https://github.com/sjentsch/pwrss",
+  "releaseNotes": "https://github.com/sjentsch/pwrss/blob/master/NEWS.md",
+  "readme": "https://github.com/sjentsch/pwrss/blob/main/README.md",
+  "developmentStatus": "https://www.repostatus.org/#active",
+  "relatedLink": "https://CRAN.R-project.org/package=pwrss"
+}
