@@ -4,18 +4,25 @@ Type: Package
 Title: Statistical Power and Sample Size Calculation Tools
 Authors@R: c(person(given = "Metin",     family = "Bulus",     email = "bulusmetin@gmail.com",       role = c("aut", "cre")),
              person(given = "Sebastian", family = "Jentschke", email = "sebastian.jentschke@uib.no", role = c("ctb")))
+Maintainer: Metin Bulus <bulusmetin@gmail.com>
 Date: 2025-09-13
 Description:
   The 'pwrss' R package provides flexible and comprehensive functions for
   statistical power and minimum required sample size calculations across a wide
   range of commonly used hypothesis tests in psychological, biomedical, and
   social sciences.
-Suggests: knitr, rmarkdown
-VignetteBuilder: knitr
-ByteCompile: yes
-LazyLoad: yes
 License: GPL (>= 3)
-Maintainer: Metin Bulus <bulusmetin@gmail.com>
-RoxygenNote: 7.3.3
-Encoding: UTF-8
 Language: en-US
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+VignetteBuilder: knitr
+URL: https://metinbulus.github.io/pwrss
+BugReports: https://github.com/metinbulus/pwrss/issues
+Depends: R (>= 3.5.0)
+Suggests: knitr,
+          rmarkdown,
+          testthat (>= 3.0.0)
+Config/testthat/edition: 3
+ByteCompile: yes

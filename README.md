@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# pwrss <a href="https://sjentsch.github.io/pwrss/"><img src="vignettes/hex.png" align="right" width="20%" /></a>
+# pwrss <a href="https://metinbulus.github.io/pwrss/"><img src="vignettes/hex.png" align="right" width="20%" /></a>
 
 <!---
 <br clear="all">
@@ -15,21 +15,21 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 [![License](https://img.shields.io/badge/License-GPL%20v3-green.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![Downloads](https://cranlogs.r-pkg.org/badges/pwrss?color=brightgreen)](https://cran.r-project.org/package=pwrss)
 [![Last
-commit](https://img.shields.io/github/last-commit/sjentsch/pwrss?logo=GitHub)](https://github.com/sjentsch/pwrss)
+commit](https://img.shields.io/github/last-commit/metinbulus/pwrss?logo=GitHub)](https://github.com/metinbulus/pwrss)
 [![Register an
-issue](https://img.shields.io/github/issues/sjentsch/pwrss?color=%23fa251e&logo=GitHub)](https://github.com/sjentsch/pwrss/issues)
+issue](https://img.shields.io/github/issues/metinbulus/pwrss?color=%23fa251e&logo=GitHub)](https://github.com/metinbulus/pwrss/issues)
 <!---
-[![R-hub](https://github.com/sjentsch/pwrss/actions/workflows/rhub.yaml/badge.svg)](https://github.com/sjentsch/pwrss/actions/workflows/rhub.yaml)
-[![R-CMD-check](https://github.com/sjentsch/pwrss/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sjentsch/pwrss/actions/workflows/R-CMD-check.yaml)
-[![CI](https://github.com/sjentsch/pwrss/actions/workflows/CI.yml/badge.svg)](https://github.com/sjentsch/pwrss/actions/workflows/CI.yml)
-[![pkgcheck](https://github.com/sjentsch/pwrss/workflows/pkgcheck/badge.svg)](https://github.com/sjentsch/pwrss/actions?query=workflow%3Apkgcheck)
-[![Codecov coverage](https://codecov.io/gh/sjentsch/pwrss/branch/main/graph/badge.svg)](https://app.codecov.io/gh/sjentsch/pwrss?branch=main)
+[![R-hub](https://github.com/metinbulus/pwrss/actions/workflows/rhub.yaml/badge.svg)](https://github.com/metinbulus/pwrss/actions/workflows/rhub.yaml)
+[![R-CMD-check](https://github.com/metinbulus/pwrss/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/metinbulus/pwrss/actions/workflows/R-CMD-check.yaml)
+[![CI](https://github.com/metinbulus/pwrss/actions/workflows/CI.yml/badge.svg)](https://github.com/metinbulus/pwrss/actions/workflows/CI.yml)
+[![pkgcheck](https://github.com/metinbulus/pwrss/workflows/pkgcheck/badge.svg)](https://github.com/metinbulus/pwrss/actions?query=workflow%3Apkgcheck)
+[![Codecov coverage](https://codecov.io/gh/metinbulus/pwrss/branch/main/graph/badge.svg)](https://app.codecov.io/gh/metinbulus/pwrss?branch=main)
 --->
-[![Documentation](https://img.shields.io/badge/documentation-is_here-blue)](https://sjentsch.github.io/pwrss/)
+[![Documentation](https://img.shields.io/badge/documentation-is_here-blue)](https://metinbulus.github.io/pwrss/)
 <!-- badges: end -->
 
 <!---
-[//]: [![Build Status](https://app.travis-ci.com/sjentsch/pwrss.svg?branch=main)](https://app.travis-ci.com/sjentsch/pwrss)
+[//]: [![Build Status](https://app.travis-ci.com/metinbulus/pwrss.svg?branch=main)](https://app.travis-ci.com/metinbulus/pwrss)
 --->
 <head>
 <!-- Google tag (gtag.js) -->
@@ -5015,8 +5015,8 @@ power.z.mediation(beta.a = 0.25,
 #> ---------------------------------------------------
 #>   Sample Size          = 300
 #>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error         = 0.436
-#>   Statistical Power    = 0.564  <<
+#>   Type 2 Error         = 0.394
+#>   Statistical Power    = 0.606  <<
 ```
 
 ## Covariate Adjustment
@@ -6282,7 +6282,7 @@ License </a>.
 
 ------------------------------------------------------------------------
 
-[Changelog](https://github.com/sjentsch/pwrss/blob/main/NEWS.md)
+[Changelog](https://github.com/metinbulus/pwrss/blob/main/NEWS.md)
 
 ## Authors
 
@@ -6291,7 +6291,7 @@ Jentschke](https://www.uib.no/en/persons/Sebastian.Jentschke)
 
 ## License
 
-[GPL 3](https://github.com/sjentsch/pwrss/blob/main/LICENSE)
+[GPL 3](https://github.com/metinbulus/pwrss/blob/main/LICENSE)
 
 <!---
 ## Giving back
