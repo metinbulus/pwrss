@@ -20,6 +20,7 @@
 
 # RStudio files
 .Rproj.user/
+*.Rproj
 
 # produced vignettes
 vignettes/*.html
@@ -48,3 +49,18 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 docs
+
+# R bookdown stack
+# R package: bookdown caching files
+/*_files/
+
+# knitr and R markdown default cache directories
+*_cache/
+/cache/
+
+# CRAN submission file
+CRAN-SUBMISSION
+
+# other files
+Meta/
+/Meta/
