@@ -1,4 +1,9 @@
-url: ~
+url: metinbulus.github.io/pwrss
+repo:
+  url:
+    home: https://github.com/metinbulus/pwrss/
+    source: https://github.com/metinbulus/pwrss/blob/main/
+    issue: https://github.com/metinbulus/pwrss/issues/
+  branch: main
 template:
   bootstrap: 5
-
