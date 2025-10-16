@@ -1,11 +1,8 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+# pwrss <a href="https://metinbulus.github.io/pwrss/"><img src="man/figures/hex.png" align="right" width="20%" alt="Package Logo"/></a>
 
-# pwrss <a href="https://metinbulus.github.io/pwrss/"><img src="vignettes/hex.png" align="right" width="20%" /></a>
-
-<!---
 <br clear="all">
---->
+
 <!-- badges: start -->
 
 [![CRAN](https://www.r-pkg.org/badges/version/pwrss)](https://cran.r-project.org/package=pwrss)
@@ -18,31 +15,26 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 commit](https://img.shields.io/github/last-commit/metinbulus/pwrss?logo=GitHub)](https://github.com/metinbulus/pwrss)
 [![Register an
 issue](https://img.shields.io/github/issues/metinbulus/pwrss?color=%23fa251e&logo=GitHub)](https://github.com/metinbulus/pwrss/issues)
+[![Documentation](https://img.shields.io/badge/documentation-is_here-blue)](https://metinbulus.github.io/pwrss/)
 <!---
 [![R-hub](https://github.com/metinbulus/pwrss/actions/workflows/rhub.yaml/badge.svg)](https://github.com/metinbulus/pwrss/actions/workflows/rhub.yaml)
 [![R-CMD-check](https://github.com/metinbulus/pwrss/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/metinbulus/pwrss/actions/workflows/R-CMD-check.yaml)
 [![CI](https://github.com/metinbulus/pwrss/actions/workflows/CI.yml/badge.svg)](https://github.com/metinbulus/pwrss/actions/workflows/CI.yml)
 [![pkgcheck](https://github.com/metinbulus/pwrss/workflows/pkgcheck/badge.svg)](https://github.com/metinbulus/pwrss/actions?query=workflow%3Apkgcheck)
 [![Codecov coverage](https://codecov.io/gh/metinbulus/pwrss/branch/main/graph/badge.svg)](https://app.codecov.io/gh/metinbulus/pwrss?branch=main)
---->
-[![Documentation](https://img.shields.io/badge/documentation-is_here-blue)](https://metinbulus.github.io/pwrss/)
-<!-- badges: end -->
+---> <!-- badges: end -->
 
 <!---
 [//]: [![Build Status](https://app.travis-ci.com/metinbulus/pwrss.svg?branch=main)](https://app.travis-ci.com/metinbulus/pwrss)
 --->
-<head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-047X5R7P7R"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 &#10;  gtag('config', 'G-047X5R7P7R');
 </script>
-</head>
 <style type="text/css">
-&#10;div.tocify {
+div.tocify {
   width: 30%;
   max-width: 260px;
   max-height: 100%;
@@ -60,10 +52,9 @@ issue](https://img.shields.io/github/issues/metinbulus/pwrss?color=%23fa251e&log
   padding-left: 70px;
   text-indent: 0;
 }
-&#10;
 </style>
 
-<div style="background-color:rgb(255, 165, 90); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(255, 165, 90); padding: 20px 20px 1px; border-radius:5px;">
 
 <p>
 The original tutorial was published on CRAN and can be accessed at:
@@ -72,6 +63,8 @@ The original tutorial was published on CRAN and can be accessed at:
 
 </div>
 
+<br>
+
 Install and load pwrss R package:
 
 ``` r
@@ -79,15 +72,15 @@ install.packages("pwrss")
 library(pwrss)
 ```
 
-<br> <img src="hex.png" width="150" />
-
 If you find the package and related material useful please cite as:
 
-<div style="background-color:rgb(245, 245, 245); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(245, 245, 245); padding: 20px 20px 1px; border-radius:5px;">
 
+<p>
 Bulus, M., & Jentschke, S. (2025). pwrss: Statistical Power and Sample
 Size Calculation Tools. R package version 1.0.0.
 <https://doi.org/10.32614/CRAN.package.pwrss>
+</p>
 
 </div>
 
@@ -111,9 +104,7 @@ Please send any bug reports, feedback, or questions to [bulusmetin
 
 # Generic
 
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 
 These generic functions compute and return statistical power with the
 option to generate Type I and Type II error plots when test statistics
@@ -183,7 +174,7 @@ power.t.test(ncp = -3.519, # t-value for hp variable
              plot = TRUE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" style="display: block; margin: auto;" />
 
     #> +--------------------------------------------------+
     #> |                POWER CALCULATION                 |
@@ -364,7 +355,7 @@ power.z.test(mean = -3.994, # z-value for wool B
              plot = TRUE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" style="display: block; margin: auto;" />
 
     #> +--------------------------------------------------+
     #> |                POWER CALCULATION                 |
@@ -445,7 +436,7 @@ power.z.test(ncp = ncp,
              plot = TRUE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" style="display: block; margin: auto;" />
 
     #> +--------------------------------------------------+
     #> |                POWER CALCULATION                 |
@@ -656,7 +647,7 @@ power.chisq.test(ncp = 18.463,
                  plot = TRUE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-15-1.png" width="100%" style="display: block; margin: auto;" />
 
     #> +--------------------------------------------------+
     #> |                POWER CALCULATION                 |
@@ -727,7 +718,7 @@ power.binom.test(size = n.total, # number of eruptions
                  plot = TRUE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-16-1.png" width="100%" style="display: block; margin: auto;" />
 
     #> +--------------------------------------------------+
     #> |                POWER CALCULATION                 |
@@ -909,7 +900,7 @@ power.t.student(d = 0.20, power = 0.80) |>
   plot()
 ```
 
-<img src="man/figures/README-unnamed-chunk-17-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-20-1.png" width="100%" style="display: block; margin: auto;" />
 
 NOTE: In earlier versions of the {pwrss} package, the `plot()` function
 generated multiple panel plots for ANCOVA designs and mediation models.
@@ -920,9 +911,7 @@ one effect at a time.
 
 # Means (T-Test)
 
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 
 ## Independent Samples T-Test
 
@@ -1097,13 +1086,15 @@ as `margin = -0.05` may still support a conclusion of non-inferiority.
 What is the minimum required sample size to detect an effect size of d =
 0.20 under this criterion?
 
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 
 When higher values of an outcome is better the margin usually takes
 NEGATIVE values; whereas when lower values of the outcome is better
 margin usually takes POSITIVE values.
 
 </div>
+
+<br>
 
 ``` r
 # parametric (an example report is provided below)
@@ -1218,13 +1209,15 @@ as small as `margin = 0.05` may be considered sufficient to claim
 superiority. What is the minimum required sample size to detect an
 effect size of d = 0.20 under this criterion?
 
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 
 When higher values of an outcome is better margin usually takes POSITIVE
 values; whereas when lower values of the outcome is better margin
 usually takes NEGATIVE values.
 
 </div>
+
+<br>
 
 ``` r
 # parametric (an example report is provided below)
@@ -1709,13 +1702,15 @@ no change (`d = 0`). The `d - null.d` difference can be as small as
 non-inferior. What is the minimum required sample size under this
 criterion?
 
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 
 When higher values of an outcome is better the margin usually takes
 NEGATIVE values; whereas when lower values of the outcome is better
 margin usually takes POSITIVE values.
 
 </div>
+
+<br>
 
 ``` r
 # parametric (an example report is provided below)
@@ -1814,13 +1809,15 @@ matched in-person group. The researcher is interested in a modest change
 `margin = 0.10` but the online format will still be considered as
 superior. What is the minimum required sample size under this criterion?
 
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 
 When higher values of an outcome is better margin usually takes POSITIVE
 values; whereas when lower values of the outcome is better margin
 usually takes NEGATIVE values.
 
 </div>
+
+<br>
 
 ``` r
 # parametric (an example report is provided below)
@@ -2466,9 +2463,7 @@ of 74 participants are needed.
 
 # Proportions (Z-Test)
 
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 
 ## One-Sample
 
@@ -2706,7 +2701,7 @@ exists. Group may exist naturally (females - males, urban - rural, etc.)
 or formed by the researcher (new - standard drug, intervention -
 control, etc.).
 
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 
 Cohen’s h is a standard effect size metric for power analyses with
 proportions; it is calculated on arcsine-transformed success
@@ -2719,7 +2714,7 @@ yields power calculations that are acceptably accurate.
 
 </div>
 
-Here is an example that compares the two approach:
+Here is an example that compares the two approaches:
 
 ``` r
 # z-test approach
@@ -2790,7 +2785,7 @@ meaningful which warrants attention. The research division plan a
 one-sided test with a significance level of 0.05 and 0.80 power. What is
 the minimum required sample size under this criterion?
 
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 
 A key difficulty in planning studies of proportion differences is that a
 fixed absolute gap translates to different Cohen’s h values depending on
@@ -2811,6 +2806,8 @@ approach in power analysis. The actual probability may not be anywhere
 near 50% and that is fine.
 
 </div>
+
+<br>
 
 ``` r
 power.z.twoprops(prob1 = 0.15,
@@ -3360,9 +3357,7 @@ power.exact.twoprops(prob1 = 0.50,
 
 # Correlations (Z-Test)
 
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 
 ## One-Sample
 
@@ -3420,7 +3415,7 @@ analysis indicated that a minimum of 593 students would be sufficient.
 
 ## Independent Samples
 
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 
 Cohen’s q is a standard effect size metric for power analyses with
 correlations; it is calculated on Fisher’s z-transformed correlations.
@@ -3432,6 +3427,8 @@ familiar t-test framework yields sample size calculations that are
 acceptably accurate.
 
 </div>
+
+<br>
 
 Here is an example that compares the two approach:
 
@@ -3486,7 +3483,7 @@ power.t.student(d = 0.1023972, power = 0.80)
 #>   Statistical Power      = 0.8
 ```
 
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 
 A key difficulty in planning studies of correlation differences is that
 a fixed absolute gap translates to different Cohen’s q values depending
@@ -3502,6 +3499,8 @@ decrease is of interest - is a conservative approach in power analysis.
 The actual correlation may not be anywhere near 0 and that is fine.
 
 </div>
+
+<br>
 
 **Example**: A research team is examining whether the association
 between parental support and academic achievement is stronger in low
@@ -3787,9 +3786,7 @@ students.
 
 # Regression: Linear (F- and T-Test)
 
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 
 ## Omnibus F-Test
 
@@ -3808,9 +3805,7 @@ intercept) is different from zero (or $R^2$ is greater than zero).
 using $X_{1}$, $X_{2}$, and $X_{2}$ variables (can be a combination of
 binary or continuous).
 
-$$\begin{eqnarray}
-  Y & = & \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \thicksim N(0, \sigma^2) \newline
-  \end{eqnarray}$$
+$$Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \sim N(0, \sigma ^ 2)$$
 
 We are interested in a minimum $R^2$ = 0.10. What is the minimum
 required sample size?
@@ -3907,9 +3902,9 @@ variance. The full model includes five predictors in total (k.total =
 variance of $\Delta R^2 = 0.10$. What is the minimum required sample
 size under these criteria?
 
-$$\begin{eqnarray}
-  Y & = & \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + \beta_{4}X_{4} + \beta_{5}X_{5} + r, \quad r \thicksim N(0,\sigma^2) \newline
-  \end{eqnarray}$$
+$$
+Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + \beta_{4}X_{4} + \beta_{5}X_{5} + r, \quad r \sim N(0, \sigma ^ 2)
+$$
 
 ``` r
 power.f.regression(r.squared.change = 0.10,
@@ -4011,9 +4006,9 @@ $X_{2}$, and $X_{2}$ variables (can be a combination of binary or
 continuous). We are mainly interested in the effect of $X_{1}$ and
 expect a standardized regression coefficient of $\beta_{1} = 0.20$.
 
-$$\begin{eqnarray}
-  Y & = & \beta_{0} + \color{red} {\beta_{1} X_{1}} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \thicksim N(0, \sigma ^ 2) \newline
-  \end{eqnarray}$$
+$$
+Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \sim N(0, \sigma ^ 2)
+$$
 
 Again, we are expecting that these three variables explain 30% of the
 variance in the outcome ($R^2 = 0.30$). What is the minimum required
@@ -4136,13 +4131,15 @@ intervention is `beta = 0.10`. The `beta - null.beta` is expected to be
 positive and should be at least -0.05 (`margin = -0.05`). What is the
 minimum required sample size?
 
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 
 This is the case when higher values of an outcome is better. When lower
 values of an outcome is better the `beta - null.beta` difference is
 expected to be NEGATIVE and the `margin` takes POSITIVE values.
 
 </div>
+
+<br>
 
 ``` r
 p <- 0.50
@@ -4186,13 +4183,15 @@ intervention is `beta = 0.10`. The `beta - null.beta` is expected to be
 positive and should be at least 0.05 (`margin = 0.05`). What is the
 minimum required sample size?
 
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 
 This is the case when higher values of an outcome is better. When lower
 values of an outcome is better `beta - null.beta` difference is expected
 to be NEGATIVE and the `margin` takes NEGATIVE values.
 
 </div>
+
+<br>
 
 ``` r
 p <- 0.50
@@ -4318,9 +4317,7 @@ power.t.regression(beta = 0.20,
 
 # Regression: Logistic (Wald’s Z-Test)
 
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 
 In logistic regression a binary outcome variable (0 / 1: failure /
 success, dead / alive, absent / present) is modeled by predicting
@@ -4333,9 +4330,7 @@ predictor; whereas under null it is same as the $P_0$. A model with one
 main predictor ($X_1$) and two other covariates ($X_2$ and $X_3$) can be
 constructed as
 
-$$\begin{eqnarray}
-  ln(\frac{P_1}{1 - P_1}) & = & \beta_{0} + \color{red} {\beta_{1} X_{1}} + \beta_{2}X_{2} + \beta_{3}X_{3} \newline
-  \end{eqnarray}$$
+$$ln(\frac{P_1}{1 - P_1}) = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3}$$
 
 where <br> $$\beta_0 = ln(\frac{P_0}{1 - P_0})$$ <br>
 $$\beta_1 = ln(\frac{P_1}{1 - P_1} / \frac{P_0}{1 - P_0})$$ <br> Odds
@@ -4596,9 +4591,7 @@ power.z.logistic(beta1 = -0.4626,
 
 # Regression: Poisson (Wald’s Z-Test)
 
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 
 In Poisson regression a count outcome variable (e.g. number of hospital
 / store / website visits, number of absence / dead / purchase in a day /
@@ -4607,9 +4600,9 @@ logarithmic transformation (natural logarithm of rates). A model with
 one main predictor ($X_1$) and two other covariates ($X_2$ and $X_3$)
 can be constructed as
 
-$$\begin{eqnarray}
-  ln(\lambda) & = & \beta_{0} + \color{red} {\beta_{1} X_{1}} + \beta_{2}X_{2} + \beta_{3}X_{3} \newline
-  \end{eqnarray}$$
+$$
+ln(\lambda) = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3}
+$$
 
 where $exp(\beta_0)$ is the base incidence rate. <br>
 $$\beta_1 = ln(\frac{\lambda(X_1=1)}{\lambda(X_1=0)})$$ <br> Incidence
@@ -4804,24 +4797,23 @@ power.z.poisson(base.rate = exp(0.50),
 
 # Regression: Mediation (Z-Test)
 
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 
 A simple mediation model can be constructed as in the figure.
 
 <figure>
-<img src="med.png" alt="Simple Mediation Model" />
-<figcaption aria-hidden="true"><strong>Simple Mediation
-Model</strong></figcaption>
+<img src="reference/figures/med.png" alt="Simple Mediation Model" />
+<figcaption aria-hidden="true">Simple Mediation Model</figcaption>
 </figure>
 
 Regression models take the form of
 
-$$\begin{eqnarray}
-  M & = & \beta_{0M} + \color{red} {\beta_a} X + e\newline
-  Y & = & \beta_{0Y} + \color{red} {\beta_b} M + \color{red}{\beta_{cp}} X + \epsilon \newline
-  \end{eqnarray}$$
+$$
+\begin{eqnarray}
+M & = & \beta_{0M} + \beta_{a} X + e \\
+Y & = & \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
+\end{eqnarray}
+$$
 
 *Y* is the outcome, *M* is the mediator, and *X* is the main predictor.
 The indirect effect is the product of $\beta_a$ and $\beta_b$ path
@@ -5015,8 +5007,8 @@ power.z.mediation(beta.a = 0.25,
 #> ---------------------------------------------------
 #>   Sample Size          = 300
 #>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error         = 0.394
-#>   Statistical Power    = 0.606  <<
+#>   Type 2 Error         = 0.418
+#>   Statistical Power    = 0.582  <<
 ```
 
 ## Covariate Adjustment
@@ -5104,9 +5096,7 @@ power.z.mediation(beta.a = 0.25,
 
 # ANOVA (F-Test)
 
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 
 In a one-way ANOVA, a researcher might be interested in comparing the
 means of several groups (levels of a factor) with respect to a
@@ -5294,9 +5284,7 @@ NOTE: Keppel procedure allows only one-way ANOVA.
 
 # ANOVA: Mixed-Effects (F-Test)
 
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 
 **The group (between) effect**: A researcher might be interested in
 comparing the means of several groups (levels of a factor) with respect
@@ -5518,8 +5506,6 @@ power.f.mixed.anova(eta.squared = 0.05,
                     alpha = 0.05,
                     rho.within = NA,
                     effect = "between")
-#> Warning: Assuming that 'eta.squared' and 'null.eta.squared' are already
-#> adjusted for within-subject correlation.
 #> +--------------------------------------------------+
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
@@ -5581,9 +5567,7 @@ power.f.mixed.anova(eta.squared = 0.05,
 
 # ANCOVA (F-Test)
 
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 
 ## Effect Size as Input
 
@@ -5621,12 +5605,11 @@ power.f.ancova(eta.squared = 0.048,
 #>   Statistical Power      = 0.801
 ```
 
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px;">
-
-`k.covariates` argument has trivial effect on the results. The
-difference between ANOVA and ANCOVA procedure depends on whether the
-effect (`eta.squared`) is unadjusted or covariate-adjusted.
-
+\<div style = “background-color:rgb(188, 224, 247); padding: 20px 20px
+1px; border-radius:5px;\> `k.covariates` argument has trivial effect on
+the results. The difference between ANOVA and ANCOVA procedure depends
+on whether the effect (`eta.squared`) is unadjusted or
+covariate-adjusted.
 </div>
 
 ### Two-way
@@ -5852,6 +5835,8 @@ power.f.ancova.shieh(mu.vector = c(0.30, 0.09, 0.05, 0.245), # vector of adjuste
 ```
 
 # Planned Contrasts (T-Test)
+
+<hr>
 
 ## Dummy Coding
 
@@ -6108,9 +6093,7 @@ power.t.contrasts(design)
 
 # Independence (Chi-square Test)
 
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 
 ## Vector of k Cells
 
@@ -6262,23 +6245,14 @@ power.chisq.gof(w = 0.03022008,
 #>   Statistical Power      = 0.8
 ```
 
-<br> <br>
+<br><br>
 
-<div style="background-color:rgb(245, 245, 245); padding:5px 5px 5px 5px; margin:2px 0px 10px 0px;">
+<div style="background-color:rgb(245, 245, 245); padding: 20px 20px 1px; border-radius:5px;">
 
 Please send any bug reports, feedback or questions to [bulusmetin \[at\]
 gmail.com](mailto:bulusmetin@gmail.com).
 
 </div>
-
-–o– <br>
-
-This work is licensed under a
-<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
-Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
-License </a>.
-
-[![License](license.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 ------------------------------------------------------------------------
 
@@ -6286,15 +6260,17 @@ License </a>.
 
 ## Authors
 
-[Metin Bulus](https://orcid.org/0000-0003-4348-6322) [Sebastian
+[Metin Bulus](https://orcid.org/0000-0003-4348-6322)<br> [Sebastian
 Jentschke](https://www.uib.no/en/persons/Sebastian.Jentschke)
 
 ## License
 
-[GPL 3](https://github.com/metinbulus/pwrss/blob/main/LICENSE)
+This work is licensed under the [GPL
+3](https://github.com/metinbulus/pwrss/blob/main/LICENSE).
 
 <!---
-## Giving back
+[![License](reference/figures/license.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+&#10;## Giving back
 &#10;If you find this package helpful, please consider donating to the jamovi project (via
 the Patreon-link on the left side).
 If you can't give money, but would like to support us in another way, you may contribute

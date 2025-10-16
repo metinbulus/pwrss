@@ -2,8 +2,6 @@
 output: github_document
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -13,10 +11,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-# pwrss <a href="https://metinbulus.github.io/pwrss/"><img src="vignettes/hex.png" align="right" width="20%" /></a>
-<!---
+# pwrss <a href="https://metinbulus.github.io/pwrss/"><img src="man/figures/hex.png" align="right" width="20%" alt="Package Logo"/></a>
 <br clear="all">
---->
 
 <!-- badges: start -->
 [![CRAN](https://www.r-pkg.org/badges/version/pwrss)](https://cran.r-project.org/package=pwrss)
@@ -25,6 +21,7 @@ knitr::opts_chunk$set(
 [![Downloads](https://cranlogs.r-pkg.org/badges/pwrss?color=brightgreen)](https://cran.r-project.org/package=pwrss)
 [![Last commit](https://img.shields.io/github/last-commit/metinbulus/pwrss?logo=GitHub)](https://github.com/metinbulus/pwrss)
 [![Register an issue](https://img.shields.io/github/issues/metinbulus/pwrss?color=%23fa251e&logo=GitHub)](https://github.com/metinbulus/pwrss/issues)
+[![Documentation](https://img.shields.io/badge/documentation-is_here-blue)](https://metinbulus.github.io/pwrss/)
 <!---
 [![R-hub](https://github.com/metinbulus/pwrss/actions/workflows/rhub.yaml/badge.svg)](https://github.com/metinbulus/pwrss/actions/workflows/rhub.yaml)
 [![R-CMD-check](https://github.com/metinbulus/pwrss/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/metinbulus/pwrss/actions/workflows/R-CMD-check.yaml)
@@ -32,7 +29,6 @@ knitr::opts_chunk$set(
 [![pkgcheck](https://github.com/metinbulus/pwrss/workflows/pkgcheck/badge.svg)](https://github.com/metinbulus/pwrss/actions?query=workflow%3Apkgcheck)
 [![Codecov coverage](https://codecov.io/gh/metinbulus/pwrss/branch/main/graph/badge.svg)](https://app.codecov.io/gh/metinbulus/pwrss?branch=main)
 --->
-[![Documentation](https://img.shields.io/badge/documentation-is_here-blue)](https://metinbulus.github.io/pwrss/)
 <!-- badges: end -->
 
 <!---
@@ -50,15 +46,17 @@ knitr::opts_chunk$set(
 
 ## Authors
 
-[Metin Bulus](https://orcid.org/0000-0003-4348-6322)
+[Metin Bulus](https://orcid.org/0000-0003-4348-6322)<br>
 [Sebastian Jentschke](https://www.uib.no/en/persons/Sebastian.Jentschke)
 
 
 ## License
 
-[GPL 3](https://github.com/metinbulus/pwrss/blob/main/LICENSE)
+This work is licensed under the [GPL 3](https://github.com/metinbulus/pwrss/blob/main/LICENSE).
 
 <!---
+[![License](reference/figures/license.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
 ## Giving back
 
 If you find this package helpful, please consider donating to the jamovi project (via
