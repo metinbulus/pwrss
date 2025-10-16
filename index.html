@@ -2105,6 +2105,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 <p>Cohen’s h is a standard effect size metric for power analyses with proportions; it is calculated on arcsine-transformed success probabilities. Although h plays the same role for proportions that Cohen’s d plays for means, the practical gap between a z-test for proportions and an independent-samples t-test for continuous data is usually negligible - sample size estimates rarely vary by more than one or two units. Consequently, applying the familiar t-test framework yields power calculations that are acceptably accurate.</p>
 </div>
+<p><br></p>
 <p>Here is an example that compares the two approaches:</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># z-test approach</span></span>
@@ -2586,7 +2587,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <p>Cohen’s q is a standard effect size metric for power analyses with correlations; it is calculated on Fisher’s z-transformed correlations. Although q plays the same role for correlations that Cohen’s d plays for means, the practical gap between a z-test for correlations and an independent-samples t-test is usually negligible - sample size estimates rarely vary by more than one or two units. Consequently, applying the familiar t-test framework yields sample size calculations that are acceptably accurate.</p>
 </div>
 <p><br></p>
-<p>Here is an example that compares the two approach:</p>
+<p>Here is an example that compares the two approaches:</p>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># z-test approach</span></span>
 <span><span class="fu"><a href="reference/correlations.two.html">power.z.twocors</a></span><span class="op">(</span>rho1 <span class="op">=</span> <span class="fl">0.20</span>, rho2 <span class="op">=</span> <span class="fl">0.10</span>, power <span class="op">=</span> <span class="fl">.80</span><span class="op">)</span></span>
@@ -3822,8 +3823,8 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ---------------------------------------------------</span></span>
 <span><span class="co">#&gt;   Sample Size          = 300</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error         = 0.418</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.582  &lt;&lt;</span></span></code></pre></div>
+<span><span class="co">#&gt;   Type 2 Error         = 0.421</span></span>
+<span><span class="co">#&gt;   Statistical Power    = 0.579  &lt;&lt;</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="covariate-adjustment">Covariate Adjustment<a class="anchor" aria-label="anchor" href="#covariate-adjustment"></a>
@@ -4312,7 +4313,8 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt;   Type 1 Error (alpha)   = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)    = 0.199</span></span>
 <span><span class="co">#&gt;   Statistical Power      = 0.801</span></span></code></pre></div>
-&lt;div style = “background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;&gt; <code>k.covariates</code> argument has trivial effect on the results. The difference between ANOVA and ANCOVA procedure depends on whether the effect (<code>eta.squared</code>) is unadjusted or covariate-adjusted.
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
+<p><code>k.covariates</code> argument has trivial effect on the results. The difference between ANOVA and ANCOVA procedure depends on whether the effect (<code>eta.squared</code>) is unadjusted or covariate-adjusted.</p>
 </div>
 </div>
 <div class="section level3">
@@ -4513,7 +4515,7 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt;   Statistical Power      = 0.802</span></span></code></pre></div>
 </div>
 </div>
-
+</div>
 <div class="section level1">
 <h1 id="planned-contrasts-t-test">Planned Contrasts (T-Test)<a class="anchor" aria-label="anchor" href="#planned-contrasts-t-test"></a>
 </h1>
