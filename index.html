@@ -53,26 +53,22 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="pwrss-">pwrss <a href="https://metinbulus.github.io/pwrss/"><img src="articles/hex.png" align="right" width="20%"></a>
+<div class="page-header"><h1 id="pwrss-">pwrss <a href="https://metinbulus.github.io/pwrss/"><img src="reference/figures/hex.png" align="right" width="20%" alt="Package Logo"></a>
 <a class="anchor" aria-label="anchor" href="#pwrss-"></a>
 </h1></div>
-<!---
-<br clear="all">
---->
+<p><br clear="all"></p>
 <!-- badges: start -->
 
 <!---
 [//]: [![Build Status](https://app.travis-ci.com/metinbulus/pwrss.svg?branch=main)](https://app.travis-ci.com/metinbulus/pwrss)
 --->
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-047X5R7P7R"></script><script>
+<script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 &#10;  gtag('config', 'G-047X5R7P7R');
 </script><style type="text/css">
-&#10;div.tocify {
+div.tocify {
   width: 30%;
   max-width: 260px;
   max-height: 100%;
@@ -90,21 +86,22 @@
   padding-left: 70px;
   text-indent: 0;
 }
-&#10;
 </style>
-<div style="background-color:rgb(255, 165, 90); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(255, 165, 90); padding: 20px 20px 1px; border-radius:5px;">
 <p>
 The original tutorial was published on CRAN and can be accessed at: <a href="https://cran.rstudio.com/web/packages/pwrss/vignettes/examples.html" class="external-link">https://cran.rstudio.com/web/packages/pwrss/vignettes/examples.html</a>
 </p>
 </div>
+<p><br></p>
 <p>Install and load pwrss R package:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pwrss"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://metinbulus.github.io/pwrss">pwrss</a></span><span class="op">)</span></span></code></pre></div>
-<p><br><img src="hex.png" width="150"></p>
 <p>If you find the package and related material useful please cite as:</p>
-<div style="background-color:rgb(245, 245, 245); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
-<p>Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size Calculation Tools. R package version 1.0.0. <a href="https://doi.org/10.32614/CRAN.package.pwrss" class="external-link uri">https://doi.org/10.32614/CRAN.package.pwrss</a></p>
+<div style="background-color:rgb(245, 245, 245); padding: 20px 20px 1px; border-radius:5px;">
+<p>
+Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size Calculation Tools. R package version 1.0.0. <a href="https://doi.org/10.32614/CRAN.package.pwrss" class="external-link uri">https://doi.org/10.32614/CRAN.package.pwrss</a>
+</p>
 </div>
 <p><strong>Acknowledgments</strong></p>
 <p>This open-source project has benefited from users who have taken the time to report typos and identify bugs. I would like to acknowledge those who have helped improve the accuracy and quality of the project by reporting these issues. If I have missed anyone who has provided similar feedback, please let me know.</p>
@@ -115,9 +112,7 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <div class="section level1">
 <h1 id="generic">Generic<a class="anchor" aria-label="anchor" href="#generic"></a>
 </h1>
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 <p>These generic functions compute and return statistical power with the option to generate Type I and Type II error plots when test statistics and degrees of freedom are available. Users can input test statistics manually, valuable for custom designs outside the {pwrss} package’s scope, or extract them from statistical software output. This flexibility proves particularly advantageous since test statistics and degrees of freedom are typically accessible from programs like jamovi, JASP, SAS, SPSS, or Stata.</p>
 <p>Power calculations can be performed by entering the test statistic through the ncp or mean arguments. Post-hoc power estimates derived this way provide a sensitivity analysis, revealing the evidential strength of a study’s sample size relative to the observed effect size. This approach offers valuable insights for large samples, where effect estimates demonstrate greater stability. However, for small samples, where effect size estimates exhibit higher variability, post-hoc power requires cautious interpretation.</p>
 <div class="section level2">
@@ -166,7 +161,7 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <span>             alpha <span class="op">=</span> <span class="fl">0.05</span>, <span class="co"># type 1 error rate</span></span>
 <span>             alternative <span class="op">=</span> <span class="st">"two.sided"</span>,</span>
 <span>             plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-9-1.png" width="100%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt; |                POWER CALCULATION                 |</span></span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt; +--------------------------------------------------+</span></span>
@@ -304,7 +299,7 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <span>             alpha <span class="op">=</span> <span class="fl">0.05</span>, <span class="co"># type 1 error rate</span></span>
 <span>             alternative <span class="op">=</span> <span class="st">"two.sided"</span>,</span>
 <span>             plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-8-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-11-1.png" width="100%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt; |                POWER CALCULATION                 |</span></span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; +--------------------------------------------------+</span></span>
@@ -358,7 +353,7 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <span>             alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>             alternative <span class="op">=</span> <span class="st">"two.sided"</span>,</span>
 <span>             plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-9-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-12-1.png" width="100%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt; |                POWER CALCULATION                 |</span></span>
 <span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co">#&gt; +--------------------------------------------------+</span></span>
@@ -545,7 +540,7 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <span>                 df <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>                 alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>                 plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-12-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-15-1.png" width="100%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co">#&gt; |                POWER CALCULATION                 |</span></span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#&gt; +--------------------------------------------------+</span></span>
@@ -607,7 +602,7 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <span>                 alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>                 alternative <span class="op">=</span> <span class="st">"one.sided"</span>,</span>
 <span>                 plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-13-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-16-1.png" width="100%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="co">#&gt; |                POWER CALCULATION                 |</span></span>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt; +--------------------------------------------------+</span></span>
@@ -756,7 +751,7 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/means.student.welch.html">power.t.student</a></span><span class="op">(</span>d <span class="op">=</span> <span class="fl">0.20</span>, power <span class="op">=</span> <span class="fl">0.80</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-17-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-20-1.png" width="100%" style="display: block; margin: auto;"></p>
 <p>NOTE: In earlier versions of the {pwrss} package, the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> function generated multiple panel plots for ANCOVA designs and mediation models. This feature is no longer supported, as the updated functions now return one effect at a time.</p>
 <p><br><br></p>
 </div>
@@ -764,9 +759,7 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <div class="section level1">
 <h1 id="means-t-test">Means (T-Test)<a class="anchor" aria-label="anchor" href="#means-t-test"></a>
 </h1>
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 <div class="section level2">
 <h2 id="independent-samples-t-test">Independent Samples T-Test<a class="anchor" aria-label="anchor" href="#independent-samples-t-test"></a>
 </h2>
@@ -884,9 +877,10 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <h3 id="non-inferiority">Non-Inferiority<a class="anchor" aria-label="anchor" href="#non-inferiority"></a>
 </h3>
 <p>A non-inferiority trial, which may evaluate the effectiveness of a new program, drug, or product, tests whether the mean outcome in the treatment group is not unacceptably worse than that in the conventional-treatment or placebo group, based on a pre-specified non-inferiority margin. For instance, a <code>d - null.d</code> difference as small as <code>margin = -0.05</code> may still support a conclusion of non-inferiority. What is the minimum required sample size to detect an effect size of d = 0.20 under this criterion?</p>
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 <p>When higher values of an outcome is better the margin usually takes NEGATIVE values; whereas when lower values of the outcome is better margin usually takes POSITIVE values.</p>
 </div>
+<p><br></p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># parametric (an example report is provided below)</span></span>
 <span><span class="fu"><a href="reference/means.student.welch.html">power.t.student</a></span><span class="op">(</span>d <span class="op">=</span> <span class="fl">0.20</span>,</span>
@@ -983,9 +977,10 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <h3 id="superiority">Superiority<a class="anchor" aria-label="anchor" href="#superiority"></a>
 </h3>
 <p>A superiority trial evaluates whether a new program, drug, or product leads to a meaningfully better mean outcome in the treatment group compared to a conventional treatment or placebo group, based on a pre-specified superiority margin. For example, a <code>d - null.d</code> difference as small as <code>margin = 0.05</code> may be considered sufficient to claim superiority. What is the minimum required sample size to detect an effect size of d = 0.20 under this criterion?</p>
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 <p>When higher values of an outcome is better margin usually takes POSITIVE values; whereas when lower values of the outcome is better margin usually takes NEGATIVE values.</p>
 </div>
+<p><br></p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># parametric (an example report is provided below)</span></span>
 <span><span class="fu"><a href="reference/means.student.welch.html">power.t.student</a></span><span class="op">(</span>d <span class="op">=</span> <span class="fl">0.20</span>,</span>
@@ -1365,9 +1360,10 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <h3 id="non-inferiority-1">Non-inferiority<a class="anchor" aria-label="anchor" href="#non-inferiority-1"></a>
 </h3>
 <p>Consider the <a href="#paired-t-parametric">earlier example</a>, but now with a focus on a different outcome: perceived group cohesion. To evaluate whether the new format preserves the perceived group cohesion, researchers plan to conduct a non-inferiority test to assess whether perceived group cohesion ratings in the online group is not meaningfully worse than that of the matched in-person group. The researcher expects no change (<code>d = 0</code>). The <code>d - null.d</code> difference can be as small as <code>margin = -0.10</code> but the online format will still be considered as non-inferior. What is the minimum required sample size under this criterion?</p>
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 <p>When higher values of an outcome is better the margin usually takes NEGATIVE values; whereas when lower values of the outcome is better margin usually takes POSITIVE values.</p>
 </div>
+<p><br></p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># parametric (an example report is provided below)</span></span>
 <span><span class="fu"><a href="reference/means.student.welch.html">power.t.student</a></span><span class="op">(</span>d <span class="op">=</span> <span class="fl">0</span>,</span>
@@ -1436,9 +1432,10 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 </h3>
 <p>Consider the <a href="#paired-t-parametric">earlier example</a>, but now with a focus on a different outcome: psychological safety. While maintaining core therapeutic outcomes is important, the online format may offer additional advantages. One such outcome is psychological safety, which is defined as the comfort in expressing thoughts, emotions, and personal experiences during group sessions without fear of judgment or rejection. To evaluate whether the online format enhances this dimension, researchers plan to recruit a new group of clients beginning online therapy and match them to a historical sample of previous clients who completed the same program in person. Matching is done based on baseline symptom severity, age, gender, and diagnosis.</p>
 <p>A superiority test is conducted to assess whether psychological safety ratings are meaningfully higher in the online group compared to the matched in-person group. The researcher is interested in a modest change (<code>d = 0.20</code>), and <code>d - null.d</code> difference can be as small as <code>margin = 0.10</code> but the online format will still be considered as superior. What is the minimum required sample size under this criterion?</p>
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 <p>When higher values of an outcome is better margin usually takes POSITIVE values; whereas when lower values of the outcome is better margin usually takes NEGATIVE values.</p>
 </div>
+<p><br></p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># parametric (an example report is provided below)</span></span>
 <span><span class="fu"><a href="reference/means.student.welch.html">power.t.student</a></span><span class="op">(</span>d <span class="op">=</span> <span class="fl">0.20</span>,</span>
@@ -1926,9 +1923,7 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <div class="section level1">
 <h1 id="proportions-z-test">Proportions (Z-Test)<a class="anchor" aria-label="anchor" href="#proportions-z-test"></a>
 </h1>
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 <div class="section level2">
 <h2 id="one-sample">One-Sample<a class="anchor" aria-label="anchor" href="#one-sample"></a>
 </h2>
@@ -2107,10 +2102,10 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <h2 id="independent-samples">Independent Samples<a class="anchor" aria-label="anchor" href="#independent-samples"></a>
 </h2>
 <p>An independent samples proportion test compares the proportion of “successes” between two distinct groups (groups are not related, paired, or matched) to determine whether a statistically significant difference exists. Group may exist naturally (females - males, urban - rural, etc.) or formed by the researcher (new - standard drug, intervention - control, etc.).</p>
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 <p>Cohen’s h is a standard effect size metric for power analyses with proportions; it is calculated on arcsine-transformed success probabilities. Although h plays the same role for proportions that Cohen’s d plays for means, the practical gap between a z-test for proportions and an independent-samples t-test for continuous data is usually negligible - sample size estimates rarely vary by more than one or two units. Consequently, applying the familiar t-test framework yields power calculations that are acceptably accurate.</p>
 </div>
-<p>Here is an example that compares the two approach:</p>
+<p>Here is an example that compares the two approaches:</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># z-test approach</span></span>
 <span><span class="fu"><a href="reference/proportions.twoprops.html">power.z.twoprops</a></span><span class="op">(</span>prob1 <span class="op">=</span> <span class="fl">0.60</span>, prob2 <span class="op">=</span> <span class="fl">0.50</span>,</span>
@@ -2167,9 +2162,10 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <h3 id="approximate-1">Approximate<a class="anchor" aria-label="anchor" href="#approximate-1"></a>
 </h3>
 <p><strong>Example</strong>: A pharmaceutical company is investigating a new medication intended to treat generalized anxiety disorder. While its anti-anxiety efficacy is being evaluated elsewhere, early case reports suggest that daytime sleepiness - recorded as a binary outcome (present vs. absent) - may occur more frequently in women than in men. To verify this potential gender-specific side effect, researchers will enroll equal numbers of male and female patients, administer the drug for four weeks, and document whether each participant experiences clinically significant daytime sleepiness. A five percent difference is considered clinically meaningful which warrants attention. The research division plan a one-sided test with a significance level of 0.05 and 0.80 power. What is the minimum required sample size under this criterion?</p>
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 <p>A key difficulty in planning studies of proportion differences is that a fixed absolute gap translates to different Cohen’s h values depending on where it falls on the 0 - 1 scale. A change from 50% to 55% (near the midpoint) yields a very small h and thus demands extremely large samples, whereas the same 5% increase from 1% to 6% produces a much larger h and requires far fewer participants. For that reason, it is essential to anchor the power analysis to a realistic baseline proportion, ideally drawn from administrative or historical data. For planning purposes, we will assume that roughly 10% of patients taking the current standard medication experience daytime sleepiness. We will use this 10% figure as the reference rate when estimating the sample size needed to detect any gender-specific increase with the new drug. In many cases, researchers lack prior information about the event probabilities. Using 50% as the reference point for one group - against which an increase or decrease is of interest - is a conservative approach in power analysis. The actual probability may not be anywhere near 50% and that is fine.</p>
 </div>
+<p><br></p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/proportions.twoprops.html">power.z.twoprops</a></span><span class="op">(</span>prob1 <span class="op">=</span> <span class="fl">0.15</span>,</span>
 <span>                 prob2 <span class="op">=</span> <span class="fl">0.10</span>,</span>
@@ -2550,9 +2546,7 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <div class="section level1">
 <h1 id="correlations-z-test">Correlations (Z-Test)<a class="anchor" aria-label="anchor" href="#correlations-z-test"></a>
 </h1>
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 <div class="section level2">
 <h2 id="one-sample-1">One-Sample<a class="anchor" aria-label="anchor" href="#one-sample-1"></a>
 </h2>
@@ -2588,9 +2582,10 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <div class="section level2">
 <h2 id="independent-samples-1">Independent Samples<a class="anchor" aria-label="anchor" href="#independent-samples-1"></a>
 </h2>
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 <p>Cohen’s q is a standard effect size metric for power analyses with correlations; it is calculated on Fisher’s z-transformed correlations. Although q plays the same role for correlations that Cohen’s d plays for means, the practical gap between a z-test for correlations and an independent-samples t-test is usually negligible - sample size estimates rarely vary by more than one or two units. Consequently, applying the familiar t-test framework yields sample size calculations that are acceptably accurate.</p>
 </div>
+<p><br></p>
 <p>Here is an example that compares the two approach:</p>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># z-test approach</span></span>
@@ -2641,9 +2636,10 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <span><span class="co">#&gt;   Type 1 Error (alpha)   = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)    = 0.200</span></span>
 <span><span class="co">#&gt;   Statistical Power      = 0.8</span></span></code></pre></div>
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 <p>A key difficulty in planning studies of correlation differences is that a fixed absolute gap translates to different Cohen’s q values depending on where it falls on the -1 to 1 scale. A change from 10% to 20% yields a small q and thus demands a larger samples, whereas the same 10% increase from 50% to 60% produces a larger q which requires fewer participants. For that reason, it is essential to anchor the power analysis to a realistic baseline correlation, ideally drawn from administrative or historical data. In many cases, researchers lack prior information about the population correlations. Using 0 correlation as the reference point for one group - against which an increase or decrease is of interest - is a conservative approach in power analysis. The actual correlation may not be anywhere near 0 and that is fine.</p>
 </div>
+<p><br></p>
 <p><strong>Example</strong>: A research team is examining whether the association between parental support and academic achievement is stronger in low socio-economic status (SES) schools compared to high-SES schools. If confirmed, they intend to recommend targeted interventions to enhance parental involvement specifically in low-SES settings. To determine the required sample size, the researchers anticipate a small but meaningful difference between the two correlations. They consider a minimum meaningful difference of 0.10 - representing the difference between a correlation of 0 and 0.10 in the worst-case scenario - which corresponds to a small effect size (Cohen’s q = 0.10). Researchers plan to use a one-sided test with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math> = 0.05 and 0.80 power. What is the minimum required sample size under these criteria?</p>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/correlations.two.html">power.z.twocors</a></span><span class="op">(</span>rho1 <span class="op">=</span> <span class="fl">0.10</span>,</span>
@@ -2839,9 +2835,7 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <div class="section level1">
 <h1 id="regression-linear-f--and-t-test">Regression: Linear (F- and T-Test)<a class="anchor" aria-label="anchor" href="#regression-linear-f--and-t-test"></a>
 </h1>
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 <div class="section level2">
 <h2 id="omnibus-f-test">Omnibus F-Test<a class="anchor" aria-label="anchor" href="#omnibus-f-test"></a>
 </h2>
@@ -2851,9 +2845,7 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 </h3>
 <p>The omnibus F-test in multiple linear regression is used to evaluate whether the model as a whole explains a statistically significant portion of variance in the outcome variable. The null hypothesis states that all regression coefficients (except the intercept) are equal to zero which means none of the predictors contributes meaningfully to explaining the outcome variable (or <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>R</mi><mn>2</mn></msup><annotation encoding="application/x-tex">R^2</annotation></semantics></math> is equal to zero). Alternative hypothesis states that at least some regression coefficients (except the intercept) is different from zero (or <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>R</mi><mn>2</mn></msup><annotation encoding="application/x-tex">R^2</annotation></semantics></math> is greater than zero).</p>
 <p><strong>Example</strong>: Assume that we want to predict a continuous variable <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math> using <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_{1}</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>2</mn></msub><annotation encoding="application/x-tex">X_{2}</annotation></semantics></math>, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>2</mn></msub><annotation encoding="application/x-tex">X_{2}</annotation></semantics></math> variables (can be a combination of binary or continuous).</p>
-<p><span class="math display">$$\begin{eqnarray}
-  Y &amp; = &amp; \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \thicksim N(0, \sigma^2) \newline
-  \end{eqnarray}$$</span></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><msub><mi>X</mi><mn>1</mn></msub><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><msub><mi>X</mi><mn>2</mn></msub><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><msub><mi>X</mi><mn>3</mn></msub><mo>+</mo><mi>r</mi><mo>,</mo><mspace width="1.0em"></mspace><mi>r</mi><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><msup><mi>σ</mi><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \sim N(0, \sigma ^ 2)</annotation></semantics></math></p>
 <p>We are interested in a minimum <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>R</mi><mn>2</mn></msup><annotation encoding="application/x-tex">R^2</annotation></semantics></math> = 0.10. What is the minimum required sample size?</p>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/regression.linear.f.html">power.f.regression</a></span><span class="op">(</span>r.squared <span class="op">=</span> <span class="fl">0.10</span>,</span>
@@ -2918,9 +2910,9 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Δ</mi><msup><mi>R</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\Delta R^2</annotation></semantics></math> &gt; 0<a class="anchor" aria-label="anchor" href="#delta-r2--0"></a>
 </h3>
 <p><strong>Example</strong>: Assume that we want to test the incremental contribution of two additional predictors (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>4</mn></msub><annotation encoding="application/x-tex">X_{4}</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>5</mn></msub><annotation encoding="application/x-tex">X_{5}</annotation></semantics></math>) to an existing regression model. That is, we are testing whether adding these two predictors (k.tested = 2) results in a significant increase in explained variance. The full model includes five predictors in total (k.total = 5). We are interested in detecting a meaningful increase in explained variance of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Δ</mi><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.10</mn></mrow><annotation encoding="application/x-tex">\Delta R^2 = 0.10</annotation></semantics></math>. What is the minimum required sample size under these criteria?</p>
-<p><span class="math display">$$\begin{eqnarray}
-  Y &amp; = &amp; \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + \beta_{4}X_{4} + \beta_{5}X_{5} + r, \quad r \thicksim N(0,\sigma^2) \newline
-  \end{eqnarray}$$</span></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><msub><mi>X</mi><mn>1</mn></msub><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><msub><mi>X</mi><mn>2</mn></msub><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><msub><mi>X</mi><mn>3</mn></msub><mo>+</mo><msub><mi>β</mi><mn>4</mn></msub><msub><mi>X</mi><mn>4</mn></msub><mo>+</mo><msub><mi>β</mi><mn>5</mn></msub><msub><mi>X</mi><mn>5</mn></msub><mo>+</mo><mi>r</mi><mo>,</mo><mspace width="1.0em"></mspace><mi>r</mi><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><msup><mi>σ</mi><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + \beta_{4}X_{4} + \beta_{5}X_{5} + r, \quad r \sim N(0, \sigma ^ 2)
+</annotation></semantics></math></p>
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/regression.linear.f.html">power.f.regression</a></span><span class="op">(</span>r.squared.change <span class="op">=</span> <span class="fl">0.10</span>,</span>
 <span>                   k.total <span class="op">=</span> <span class="fl">5</span>, <span class="co"># number of total predictors</span></span>
@@ -2989,9 +2981,9 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <h3 id="standardized-input">Standardized Input<a class="anchor" aria-label="anchor" href="#standardized-input"></a>
 </h3>
 <p>In the earlier example, assume that we want to predict a continuous variable <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math> using a continuous predictor <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_{1}</annotation></semantics></math> but control for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>2</mn></msub><annotation encoding="application/x-tex">X_{2}</annotation></semantics></math>, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>2</mn></msub><annotation encoding="application/x-tex">X_{2}</annotation></semantics></math> variables (can be a combination of binary or continuous). We are mainly interested in the effect of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_{1}</annotation></semantics></math> and expect a standardized regression coefficient of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mn>1</mn></msub><mo>=</mo><mn>0.20</mn></mrow><annotation encoding="application/x-tex">\beta_{1} = 0.20</annotation></semantics></math>.</p>
-<p><span class="math display">$$\begin{eqnarray}
-  Y &amp; = &amp; \beta_{0} + \color{red} {\beta_{1} X_{1}} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \thicksim N(0, \sigma ^ 2) \newline
-  \end{eqnarray}$$</span></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><msub><mi>X</mi><mn>1</mn></msub><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><msub><mi>X</mi><mn>2</mn></msub><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><msub><mi>X</mi><mn>3</mn></msub><mo>+</mo><mi>r</mi><mo>,</mo><mspace width="1.0em"></mspace><mi>r</mi><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><msup><mi>σ</mi><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \sim N(0, \sigma ^ 2)
+</annotation></semantics></math></p>
 <p>Again, we are expecting that these three variables explain 30% of the variance in the outcome (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.30</mn></mrow><annotation encoding="application/x-tex">R^2 = 0.30</annotation></semantics></math>). What is the minimum required sample size? It is sufficient to provide standardized regression coefficient for <code>beta</code> because <code>sd.predictor = 1</code> and <code>sd.outcome = 1</code> by default.</p>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/regression.linear.t.html">power.t.regression</a></span><span class="op">(</span>beta <span class="op">=</span> <span class="fl">0.20</span>,</span>
@@ -3088,9 +3080,10 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <h3 id="non-inferiority-3">Non-inferiority<a class="anchor" aria-label="anchor" href="#non-inferiority-3"></a>
 </h3>
 <p>The intervention is expected to be non-inferior to some earlier or other interventions. Assume that the effect of an earlier or some other intervention is <code>beta = 0.10</code>. The <code>beta - null.beta</code> is expected to be positive and should be at least -0.05 (<code>margin = -0.05</code>). What is the minimum required sample size?</p>
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 <p>This is the case when higher values of an outcome is better. When lower values of an outcome is better the <code>beta - null.beta</code> difference is expected to be NEGATIVE and the <code>margin</code> takes POSITIVE values.</p>
 </div>
+<p><br></p>
 <div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">0.50</span></span>
 <span><span class="va">sd.predictor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">p</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">p</span><span class="op">)</span><span class="op">)</span></span>
@@ -3128,9 +3121,10 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <h3 id="superiority-2">Superiority<a class="anchor" aria-label="anchor" href="#superiority-2"></a>
 </h3>
 <p>The intervention is expected to be superior to some earlier or other interventions. Assume that the effect of an earlier or some other intervention is <code>beta = 0.10</code>. The <code>beta - null.beta</code> is expected to be positive and should be at least 0.05 (<code>margin = 0.05</code>). What is the minimum required sample size?</p>
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px; border-radius:5px;">
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 <p>This is the case when higher values of an outcome is better. When lower values of an outcome is better <code>beta - null.beta</code> difference is expected to be NEGATIVE and the <code>margin</code> takes NEGATIVE values.</p>
 </div>
+<p><br></p>
 <div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">0.50</span></span>
 <span><span class="va">sd.predictor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">p</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">p</span><span class="op">)</span><span class="op">)</span></span>
@@ -3247,13 +3241,9 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <div class="section level1">
 <h1 id="regression-logistic-walds-z-test">Regression: Logistic (Wald’s Z-Test)<a class="anchor" aria-label="anchor" href="#regression-logistic-walds-z-test"></a>
 </h1>
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 <p>In logistic regression a binary outcome variable (0 / 1: failure / success, dead / alive, absent / present) is modeled by predicting probability of being in group 1 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>P</mi><mn>1</mn></msub><annotation encoding="application/x-tex">P_1</annotation></semantics></math>) via logit transformation (natural logarithm of odds). The base probability <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>P</mi><mn>0</mn></msub><annotation encoding="application/x-tex">P_0</annotation></semantics></math> is the overall probability of being in group 1 without influence of predictors in the model (null). Under alternative hypothesis, the probability of being in group 1 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>P</mi><mn>1</mn></msub><annotation encoding="application/x-tex">P_1</annotation></semantics></math>) deviate from <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>P</mi><mn>0</mn></msub><annotation encoding="application/x-tex">P_0</annotation></semantics></math> depending on the value of the predictor; whereas under null it is same as the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>P</mi><mn>0</mn></msub><annotation encoding="application/x-tex">P_0</annotation></semantics></math>. A model with one main predictor (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_1</annotation></semantics></math>) and two other covariates (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>2</mn></msub><annotation encoding="application/x-tex">X_2</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>3</mn></msub><annotation encoding="application/x-tex">X_3</annotation></semantics></math>) can be constructed as</p>
-<p><span class="math display">$$\begin{eqnarray}
-  ln(\frac{P_1}{1 - P_1}) &amp; = &amp; \beta_{0} + \color{red} {\beta_{1} X_{1}} + \beta_{2}X_{2} + \beta_{3}X_{3} \newline
-  \end{eqnarray}$$</span></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>n</mi><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><msub><mi>P</mi><mn>1</mn></msub><mrow><mn>1</mn><mo>−</mo><msub><mi>P</mi><mn>1</mn></msub></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><msub><mi>X</mi><mn>1</mn></msub><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><msub><mi>X</mi><mn>2</mn></msub><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><msub><mi>X</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">ln(\frac{P_1}{1 - P_1}) = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3}</annotation></semantics></math></p>
 <p>where <br><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mn>0</mn></msub><mo>=</mo><mi>l</mi><mi>n</mi><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><msub><mi>P</mi><mn>0</mn></msub><mrow><mn>1</mn><mo>−</mo><msub><mi>P</mi><mn>0</mn></msub></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\beta_0 = ln(\frac{P_0}{1 - P_0})</annotation></semantics></math><br><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mn>1</mn></msub><mo>=</mo><mi>l</mi><mi>n</mi><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><msub><mi>P</mi><mn>1</mn></msub><mrow><mn>1</mn><mo>−</mo><msub><mi>P</mi><mn>1</mn></msub></mrow></mfrac><mi>/</mi><mfrac><msub><mi>P</mi><mn>0</mn></msub><mrow><mn>1</mn><mo>−</mo><msub><mi>P</mi><mn>0</mn></msub></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\beta_1 = ln(\frac{P_1}{1 - P_1} / \frac{P_0}{1 - P_0})</annotation></semantics></math><br> Odds ratio is defined as <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mi>R</mi><mo>=</mo><mi>e</mi><mi>x</mi><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>β</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><msub><mi>P</mi><mn>1</mn></msub><mrow><mn>1</mn><mo>−</mo><msub><mi>P</mi><mn>1</mn></msub></mrow></mfrac><mi>/</mi><mfrac><msub><mi>P</mi><mn>0</mn></msub><mrow><mn>1</mn><mo>−</mo><msub><mi>P</mi><mn>0</mn></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">OR = exp(\beta_1) = \frac{P_1}{1 - P_1} / \frac{P_0}{1 - P_0}</annotation></semantics></math><br></p>
 <p><strong>Example</strong>:</p>
 <p>Assume</p>
@@ -3476,13 +3466,11 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <div class="section level1">
 <h1 id="regression-poisson-walds-z-test">Regression: Poisson (Wald’s Z-Test)<a class="anchor" aria-label="anchor" href="#regression-poisson-walds-z-test"></a>
 </h1>
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 <p>In Poisson regression a count outcome variable (e.g. number of hospital / store / website visits, number of absence / dead / purchase in a day / week / month) is modeled by predicting incidence rate (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>) via logarithmic transformation (natural logarithm of rates). A model with one main predictor (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_1</annotation></semantics></math>) and two other covariates (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>2</mn></msub><annotation encoding="application/x-tex">X_2</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>3</mn></msub><annotation encoding="application/x-tex">X_3</annotation></semantics></math>) can be constructed as</p>
-<p><span class="math display">$$\begin{eqnarray}
-  ln(\lambda) &amp; = &amp; \beta_{0} + \color{red} {\beta_{1} X_{1}} + \beta_{2}X_{2} + \beta_{3}X_{3} \newline
-  \end{eqnarray}$$</span></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>n</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>λ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><msub><mi>X</mi><mn>1</mn></msub><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><msub><mi>X</mi><mn>2</mn></msub><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><msub><mi>X</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">
+ln(\lambda) = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3}
+</annotation></semantics></math></p>
 <p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi><mi>x</mi><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>β</mi><mn>0</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">exp(\beta_0)</annotation></semantics></math> is the base incidence rate. <br><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mn>1</mn></msub><mo>=</mo><mi>l</mi><mi>n</mi><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mrow><mi>λ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>=</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>λ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>=</mo><mn>0</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\beta_1 = ln(\frac{\lambda(X_1=1)}{\lambda(X_1=0)})</annotation></semantics></math><br> Incidence rate ratio is defined as <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi><mi>x</mi><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>β</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mi>λ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>=</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>λ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>=</mo><mn>0</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac></mrow><annotation encoding="application/x-tex">exp(\beta_1) = \frac{\lambda(X_1=1)}{\lambda(X_1=0)}</annotation></semantics></math><br></p>
 <p>Assume</p>
 <ul>
@@ -3659,16 +3647,17 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <div class="section level1">
 <h1 id="regression-mediation-z-test">Regression: Mediation (Z-Test)<a class="anchor" aria-label="anchor" href="#regression-mediation-z-test"></a>
 </h1>
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 <p>A simple mediation model can be constructed as in the figure.</p>
-<figure><img src="med.png" alt="Simple Mediation Model"><figcaption aria-hidden="true"><strong>Simple Mediation Model</strong>
+<figure><img src="reference/figures/med.png" alt="Simple Mediation Model"><figcaption aria-hidden="true">
+Simple Mediation Model
 </figcaption></figure><p>Regression models take the form of</p>
-<p><span class="math display">$$\begin{eqnarray}
-  M &amp; = &amp; \beta_{0M} + \color{red} {\beta_a} X + e\newline
-  Y &amp; = &amp; \beta_{0Y} + \color{red} {\beta_b} M + \color{red}{\beta_{cp}} X + \epsilon \newline
-  \end{eqnarray}$$</span></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mi>M</mi></mtd><mtd columnalign="center" style="text-align: center"><mo>=</mo></mtd><mtd columnalign="left" style="text-align: left"><msub><mi>β</mi><mrow><mn>0</mn><mi>M</mi></mrow></msub><mo>+</mo><msub><mi>β</mi><mi>a</mi></msub><mi>X</mi><mo>+</mo><mi>e</mi></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mi>Y</mi></mtd><mtd columnalign="center" style="text-align: center"><mo>=</mo></mtd><mtd columnalign="left" style="text-align: left"><msub><mi>β</mi><mrow><mn>0</mn><mi>Y</mi></mrow></msub><mo>+</mo><msub><mi>β</mi><mi>b</mi></msub><mi>M</mi><mo>+</mo><msub><mi>β</mi><mrow><mi>c</mi><mi>p</mi></mrow></msub><mi>X</mi><mo>+</mo><mi>ϵ</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{eqnarray}
+M &amp; = &amp; \beta_{0M} + \beta_{a} X + e \\
+Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
+\end{eqnarray}
+</annotation></semantics></math></p>
 <p><em>Y</em> is the outcome, <em>M</em> is the mediator, and <em>X</em> is the main predictor. The indirect effect is the product of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>β</mi><mi>a</mi></msub><annotation encoding="application/x-tex">\beta_a</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>β</mi><mi>b</mi></msub><annotation encoding="application/x-tex">\beta_b</annotation></semantics></math> path coefficients. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>β</mi><mrow><mi>c</mi><mi>p</mi></mrow></msub><annotation encoding="application/x-tex">\beta_{cp}</annotation></semantics></math> is the path coefficient for the direct effect. Path coefficients can be standardized or unstandardized. They are presumed to be standardized by default because the main predictor, mediator, and outcome all have standard deviations of <code>sd.predictor = 1</code>, <code>sd.mediator = 1</code>, and <code>sd.outcome = 1</code> in the function. Standard deviations should be specified for unstandardized path coefficients (you can find these values in descriptive tables in reports / publications).</p>
 <div class="section level2">
 <h2 id="continuous-predictor">Continuous Predictor<a class="anchor" aria-label="anchor" href="#continuous-predictor"></a>
@@ -3833,8 +3822,8 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <span><span class="co">#&gt; ---------------------------------------------------</span></span>
 <span><span class="co">#&gt;   Sample Size          = 300</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error         = 0.394</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.606  &lt;&lt;</span></span></code></pre></div>
+<span><span class="co">#&gt;   Type 2 Error         = 0.418</span></span>
+<span><span class="co">#&gt;   Statistical Power    = 0.582  &lt;&lt;</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="covariate-adjustment">Covariate Adjustment<a class="anchor" aria-label="anchor" href="#covariate-adjustment"></a>
@@ -3910,9 +3899,7 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <div class="section level1">
 <h1 id="anova-f-test">ANOVA (F-Test)<a class="anchor" aria-label="anchor" href="#anova-f-test"></a>
 </h1>
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 <p>In a one-way ANOVA, a researcher might be interested in comparing the means of several groups (levels of a factor) with respect to a continuous variable. In a one-way ANCOVA, they may want to adjust means for covariates. Furthermore, they may want to inspect interaction between two or three factors (two-way or three-way ANOVA), or adjust interaction for covariates (two-way or three-way ANCOVA). The following examples illustrate how to determine minimum required sample size for such designs.</p>
 <div class="section level2">
 <h2 id="effect-size-as-input">Effect Size as Input<a class="anchor" aria-label="anchor" href="#effect-size-as-input"></a>
@@ -4071,9 +4058,7 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <div class="section level1">
 <h1 id="anova-mixed-effects-f-test">ANOVA: Mixed-Effects (F-Test)<a class="anchor" aria-label="anchor" href="#anova-mixed-effects-f-test"></a>
 </h1>
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 <p><strong>The group (between) effect</strong>: A researcher might be interested in comparing the means of several groups (levels of a factor) with respect to an outcome variable (continuous) after controlling for the effect of time. The time effect can be thought as the improvement / grow / loss / deterioration in the outcome variable that happens naturally or due to unknown causes.</p>
 <p><strong>The time (within) effect</strong>: A researcher might be interested in comparing the means of several time points with respect to the outcome variable after controlling for the group effect. In other words, the change across time points is not due to the group membership but due to the improvement / grow / loss / deterioration in the outcome variable that happens naturally or due to unknown causes.</p>
 <p><strong>The group x time interaction</strong>: A researcher might suspect that means across groups and means across time points are not independent from each other. The amount of improvement / grow / loss / deterioration in the outcome variable depends the group membership.</p>
@@ -4237,8 +4222,6 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <span>                    alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>                    rho.within <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>                    effect <span class="op">=</span> <span class="st">"between"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Assuming that 'eta.squared' and 'null.eta.squared' are already</span></span>
-<span><span class="co">#&gt; adjusted for within-subject correlation.</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span><span class="co">#&gt; |             SAMPLE SIZE CALCULATION              |</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
@@ -4296,9 +4279,7 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <div class="section level1">
 <h1 id="ancova-f-test">ANCOVA (F-Test)<a class="anchor" aria-label="anchor" href="#ancova-f-test"></a>
 </h1>
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 <div class="section level2">
 <h2 id="effect-size-as-input-1">Effect Size as Input<a class="anchor" aria-label="anchor" href="#effect-size-as-input-1"></a>
 </h2>
@@ -4331,8 +4312,7 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <span><span class="co">#&gt;   Type 1 Error (alpha)   = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)    = 0.199</span></span>
 <span><span class="co">#&gt;   Statistical Power      = 0.801</span></span></code></pre></div>
-<div style="background-color:rgb(188, 224, 247); padding:2px 10px 2px 10px; margin:2px 0px 10px 0px;">
-<p><code>k.covariates</code> argument has trivial effect on the results. The difference between ANOVA and ANCOVA procedure depends on whether the effect (<code>eta.squared</code>) is unadjusted or covariate-adjusted.</p>
+&lt;div style = “background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;&gt; <code>k.covariates</code> argument has trivial effect on the results. The difference between ANOVA and ANCOVA procedure depends on whether the effect (<code>eta.squared</code>) is unadjusted or covariate-adjusted.
 </div>
 </div>
 <div class="section level3">
@@ -4533,10 +4513,11 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <span><span class="co">#&gt;   Statistical Power      = 0.802</span></span></code></pre></div>
 </div>
 </div>
-</div>
+
 <div class="section level1">
 <h1 id="planned-contrasts-t-test">Planned Contrasts (T-Test)<a class="anchor" aria-label="anchor" href="#planned-contrasts-t-test"></a>
 </h1>
+<hr>
 <div class="section level2">
 <h2 id="dummy-coding">Dummy Coding<a class="anchor" aria-label="anchor" href="#dummy-coding"></a>
 </h2>
@@ -4793,9 +4774,7 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <div class="section level1">
 <h1 id="independence-chi-square-test">Independence (Chi-square Test)<a class="anchor" aria-label="anchor" href="#independence-chi-square-test"></a>
 </h1>
-<div style="background-color:rgb(247, 247, 247); box-shadow: 4px 4px 4px rgb(220, 220, 220); padding:3px 3px 3px 3px; margin-top:0px; margin-bottom:10px;">
-
-</div>
+<hr>
 <div class="section level2">
 <h2 id="vector-of-k-cells">Vector of k Cells<a class="anchor" aria-label="anchor" href="#vector-of-k-cells"></a>
 </h2>
@@ -4926,26 +4905,24 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <span><span class="co">#&gt;   Type 2 Error (beta)    = 0.200</span></span>
 <span><span class="co">#&gt;   Statistical Power      = 0.8</span></span></code></pre></div>
 <p><br><br></p>
-<div style="background-color:rgb(245, 245, 245); padding:5px 5px 5px 5px; margin:2px 0px 10px 0px;">
+<div style="background-color:rgb(245, 245, 245); padding: 20px 20px 1px; border-radius:5px;">
 <p>Please send any bug reports, feedback or questions to <a href="mailto:bulusmetin@gmail.com">bulusmetin [at] gmail.com</a>.</p>
 </div>
-<p>–o– <br></p>
-<p>This work is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="external-link"> Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License </a>.</p>
-<p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="external-link"><img src="license.png" alt="License"></a></p>
 <hr>
 <p><a href="https://github.com/metinbulus/pwrss/blob/main/NEWS.md" class="external-link">Changelog</a></p>
 </div>
 <div class="section level2">
 <h2 id="authors">Authors<a class="anchor" aria-label="anchor" href="#authors"></a>
 </h2>
-<p><a href="https://orcid.org/0000-0003-4348-6322" class="external-link">Metin Bulus</a> <a href="https://www.uib.no/en/persons/Sebastian.Jentschke" class="external-link">Sebastian Jentschke</a></p>
+<p><a href="https://orcid.org/0000-0003-4348-6322" class="external-link">Metin Bulus</a><br><a href="https://www.uib.no/en/persons/Sebastian.Jentschke" class="external-link">Sebastian Jentschke</a></p>
 </div>
 <div class="section level2">
 <h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
 </h2>
-<p><a href="https://github.com/metinbulus/pwrss/blob/main/LICENSE" class="external-link">GPL 3</a></p>
+<p>This work is licensed under the <a href="https://github.com/metinbulus/pwrss/blob/main/LICENSE" class="external-link">GPL 3</a>.</p>
 <!---
-## Giving back
+[![License](reference/figures/license.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+&#10;## Giving back
 &#10;If you find this package helpful, please consider donating to the jamovi project (via
 the Patreon-link on the left side).
 If you can't give money, but would like to support us in another way, you may contribute
