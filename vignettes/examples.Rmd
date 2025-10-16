@@ -7,14 +7,12 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 output:
-# rmarkdown::html_vignette:
   rmarkdown::html_document:
     # theme: cerulean  # or united, cosmo, readable, lumen, etc.
     toc: true
     number_sections: true
     toc_float: true
     toc_depth: 3
-    keep_md: TRUE  
 ---
 
 ```{r, include = FALSE}
@@ -2103,7 +2101,7 @@ power.f.ancova(eta.squared = 0.048,
                alpha = 0.05)
 ```
 
-<div style = "background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;>
+<div style = "background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 `k.covariates` argument has trivial effect on the results. The difference between ANOVA and ANCOVA procedure depends on whether the effect (`eta.squared`) is unadjusted or covariate-adjusted.</div>
 
 ### Two-way
