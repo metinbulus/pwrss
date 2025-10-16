@@ -2714,6 +2714,8 @@ yields power calculations that are acceptably accurate.
 
 </div>
 
+<br>
+
 Here is an example that compares the two approaches:
 
 ``` r
@@ -3430,7 +3432,7 @@ acceptably accurate.
 
 <br>
 
-Here is an example that compares the two approach:
+Here is an example that compares the two approaches:
 
 ``` r
 # z-test approach
@@ -5007,8 +5009,8 @@ power.z.mediation(beta.a = 0.25,
 #> ---------------------------------------------------
 #>   Sample Size          = 300
 #>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error         = 0.418
-#>   Statistical Power    = 0.582  <<
+#>   Type 2 Error         = 0.421
+#>   Statistical Power    = 0.579  <<
 ```
 
 ## Covariate Adjustment
@@ -5605,11 +5607,12 @@ power.f.ancova(eta.squared = 0.048,
 #>   Statistical Power      = 0.801
 ```
 
-\<div style = “background-color:rgb(188, 224, 247); padding: 20px 20px
-1px; border-radius:5px;\> `k.covariates` argument has trivial effect on
-the results. The difference between ANOVA and ANCOVA procedure depends
-on whether the effect (`eta.squared`) is unadjusted or
-covariate-adjusted.
+<div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
+
+`k.covariates` argument has trivial effect on the results. The
+difference between ANOVA and ANCOVA procedure depends on whether the
+effect (`eta.squared`) is unadjusted or covariate-adjusted.
+
 </div>
 
 ### Two-way
