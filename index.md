@@ -30,9 +30,9 @@ feedback, please let me know.
 
 Error reports from (alphabetic order):  
 Adrian Olszewski (bug report); Catherine (Kate) Crespi (bug report);
-dpnichols811 (GitHub profile) (bug report); Fred Oswald (typo report);
-Jarrod Hadfield (bug report); Leszek Gawarecki (typo report); Roland
-Thijs (typo report)
+dpnichols811 (GitHub profile, bug report); Fred Oswald (typo report);
+Jarrod Hadfield (bug report); Leszek Gawarecki (typo report); liegepr
+(GitHub profile, bug report); Roland Thijs (typo report)
 
 Please send any bug reports, feedback, or questions to [bulusmetin
 \[at\] gmail.com](mailto:bulusmetin@gmail.com)

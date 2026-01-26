@@ -204,7 +204,7 @@ contrast.object <- factorial.contrasts(factor.levels = 3,
 contrast.object$model.matrix
 #>   (Intercept)           A.L        A.Q
 #> 1           1 -7.071068e-01  0.4082483
-#> 2           1 -7.850462e-17 -0.8164966
+#> 2           1 -9.073800e-17 -0.8164966
 #> 3           1  7.071068e-01  0.4082483
 #> attr(,"assign")
 #> [1] 0 1 1
@@ -212,7 +212,7 @@ contrast.object$model.matrix
 #> attr(,"contrasts")$A
 #>              .L         .Q
 #> 1 -7.071068e-01  0.4082483
-#> 2 -7.850462e-17 -0.8164966
+#> 2 -9.073800e-17 -0.8164966
 #> 3  7.071068e-01  0.4082483
 #> 
 
