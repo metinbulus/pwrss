@@ -111,27 +111,27 @@ power.t.test(ncp = -3.519, # t-value for hp variable
              plot = TRUE)
 ```
 
-![](reference/figures/README-unnamed-chunk-9-1.png)
+![](reference/figures/README-unnamed-chunk-8-1.png)
 
 ``` R
 #> +--------------------------------------------------+
 #> |                POWER CALCULATION                 |
 #> +--------------------------------------------------+
 #> 
-#> Generic T-Test
+#> Generic t-Test
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : ncp = null.ncp 
-#>   H1 (Alt. Claim) : ncp != null.ncp 
+#> ----------------------------------------------------
+#>   H0 (Null)        : ncp  = null.ncp
+#>   H1 (Alternative) : ncp != null.ncp
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.075
-#>   Statistical Power      = 0.925  <<
+#> ----------------------------------------------------
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.075
+#>   Statistical Power    = 0.925  <<
 ```
 
 **Report**: The post-hoc power analysis showed that a sample of 32 cars
@@ -215,20 +215,20 @@ power.t.test(ncp = ncp,
 #> |                POWER CALCULATION                 |
 #> +--------------------------------------------------+
 #> 
-#> Generic T-Test
+#> Generic t-Test
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : ncp <= null.ncp 
-#>   H1 (Alt. Claim) : ncp > null.ncp 
+#> ----------------------------------------------------
+#>   H0 (Null)        : ncp <= null.ncp
+#>   H1 (Alternative) : ncp  > null.ncp
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.104
-#>   Statistical Power      = 0.896  <<
+#> ----------------------------------------------------
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.104
+#>   Statistical Power    = 0.896  <<
 ```
 
 **Report**: A power analysis was conducted to assess whether a sample of
@@ -293,24 +293,24 @@ power.z.test(mean = -3.994, # z-value for wool B
              plot = TRUE)
 ```
 
-![](reference/figures/README-unnamed-chunk-11-1.png)
+![](reference/figures/README-unnamed-chunk-10-1.png)
 
 ``` R
 #> +--------------------------------------------------+
 #> |                POWER CALCULATION                 |
 #> +--------------------------------------------------+
 #> 
-#> Generic Z-Test
+#> Generic z-Test
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : mean = null.mean 
-#>   H1 (Alt. Claim) : mean != null.mean 
+#> ----------------------------------------------------
+#>   H0 (Null)        : mean  = null.mean
+#>   H1 (Alternative) : mean != null.mean
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.021
 #>   Statistical Power    = 0.979  <<
@@ -369,30 +369,30 @@ z.std.error <- sqrt(1.06 / (n - 3))
 ncp <- (z.rs - z.null.rs) / z.std.error
 
 # calculate power
-power.z.test(ncp = ncp,
+power.z.test(mean = ncp,
              alpha = 0.05,
              alternative = "two.sided",
              plot = TRUE)
 ```
 
-![](reference/figures/README-unnamed-chunk-12-1.png)
+![](reference/figures/README-unnamed-chunk-11-1.png)
 
 ``` R
 #> +--------------------------------------------------+
 #> |                POWER CALCULATION                 |
 #> +--------------------------------------------------+
 #> 
-#> Generic Z-Test
+#> Generic z-Test
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : mean = null.mean 
-#>   H1 (Alt. Claim) : mean != null.mean 
+#> ----------------------------------------------------
+#>   H0 (Null)        : mean  = null.mean
+#>   H1 (Alternative) : mean != null.mean
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.158
 #>   Statistical Power    = 0.842  <<
@@ -457,18 +457,18 @@ power.f.test(ncp = 10.71, # non-centrality under alternative
 #> 
 #> Generic F-Test
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : ncp = null.ncp 
-#>   H1 (Alt. Claim) : ncp > null.ncp 
+#> ----------------------------------------------------
+#>   H0 (Null)        : ncp = 0
+#>   H1 (Alternative) : ncp > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.115
-#>   Statistical Power      = 0.885  <<
+#> ----------------------------------------------------
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.115
+#>   Statistical Power    = 0.885  <<
 ```
 
 **Report**: The post-hoc power analysis showed that a sample of 31 trees
@@ -522,18 +522,18 @@ power.chisq.test(ncp = 138.29, # X-squared
 #> 
 #> Generic Chi-square Test
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim)   : ncp = null.ncp 
-#>   H1 (Alt. Claim)   : ncp > null.ncp 
+#> ----------------------------------------------------
+#>   H0 (Null)        : ncp = ncp.null
+#>   H1 (Alternative) : ncp > ncp.null
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.000
-#>   Statistical Power      = 1  <<
+#> ----------------------------------------------------
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.000
+#>   Statistical Power    = 1.000  <<
 ```
 
 **Report**: The post-hoc power analysis showed that a sample of 592
@@ -588,7 +588,7 @@ power.chisq.test(ncp = 18.463,
                  plot = TRUE)
 ```
 
-![](reference/figures/README-unnamed-chunk-15-1.png)
+![](reference/figures/README-unnamed-chunk-14-1.png)
 
 ``` R
 #> +--------------------------------------------------+
@@ -597,18 +597,18 @@ power.chisq.test(ncp = 18.463,
 #> 
 #> Generic Chi-square Test
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim)   : ncp = null.ncp 
-#>   H1 (Alt. Claim)   : ncp > null.ncp 
+#> ----------------------------------------------------
+#>   H0 (Null)        : ncp = ncp.null
+#>   H1 (Alternative) : ncp > ncp.null
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.010
-#>   Statistical Power      = 0.99  <<
+#> ----------------------------------------------------
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.010
+#>   Statistical Power    = 0.990  <<
 ```
 
 **Report**: The post-hoc power analysis indicated that a sample of 248
@@ -661,7 +661,7 @@ power.binom.test(size = n.total, # number of eruptions
                  plot = TRUE)
 ```
 
-![](reference/figures/README-unnamed-chunk-16-1.png)
+![](reference/figures/README-unnamed-chunk-15-1.png)
 
 ``` R
 #> +--------------------------------------------------+
@@ -670,18 +670,18 @@ power.binom.test(size = n.total, # number of eruptions
 #> 
 #> Generic Binomial Test
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : prob <= null.prob 
-#>   H1 (Alt. Claim) : prob > null.prob 
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob <= null.prob
+#>   H1 (Alternative) : prob  > null.prob
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Type 1 Error (alpha)   = 0.039
-#>   Type 2 Error (beta)    = 0.001
-#>   Statistical Power      = 0.999  <<
+#> ----------------------------------------------------
+#>   Type 1 Error (alpha) = 0.039
+#>   Type 2 Error (beta)  = 0.001
+#>   Statistical Power    = 0.999  <<
 ```
 
 **Report**: The post-hoc power analysis indicated that a sample of 272
@@ -717,20 +717,20 @@ power.binom.test(size = 85632, # number of tosses needed
 #> 
 #> Generic Binomial Test
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : prob <= min(null.prob) or 
-#>                     prob >= max(null.prob) 
-#>   H1 (Alt. Claim) : prob > min(null.prob) and 
-#>                     prob < max(null.prob) 
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob <= min(null.prob) or
+#>                      prob >= max(null.prob)
+#>   H1 (Alternative) : prob  > min(null.prob) and
+#>                      prob  < max(null.prob)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8  <<
+#> ----------------------------------------------------
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800  <<
 ```
 
 **Report 1**: Power analysis indicated that at least 85,632 coin tosses
@@ -766,20 +766,20 @@ power.binom.test(size = 16424, # number of replications needed
 #> 
 #> Generic Binomial Test
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : prob <= min(null.prob) or 
-#>                     prob >= max(null.prob) 
-#>   H1 (Alt. Claim) : prob > min(null.prob) and 
-#>                     prob < max(null.prob) 
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob <= min(null.prob) or
+#>                      prob >= max(null.prob)
+#>   H1 (Alternative) : prob  > min(null.prob) and
+#>                      prob  < max(null.prob)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Type 1 Error (alpha)   = 0.049
-#>   Type 2 Error (beta)    = 0.198
-#>   Statistical Power      = 0.802  <<
+#> ----------------------------------------------------
+#>   Type 1 Error (alpha) = 0.049
+#>   Type 2 Error (beta)  = 0.198
+#>   Statistical Power    = 0.802  <<
 ```
 
 To reliably detect a power rate of 0.80:
@@ -806,20 +806,20 @@ power.binom.test(size = 55011, # number of replications needed
 #> 
 #> Generic Binomial Test
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : prob <= min(null.prob) or 
-#>                     prob >= max(null.prob) 
-#>   H1 (Alt. Claim) : prob > min(null.prob) and 
-#>                     prob < max(null.prob) 
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob <= min(null.prob) or
+#>                      prob >= max(null.prob)
+#>   H1 (Alternative) : prob  > min(null.prob) and
+#>                      prob  < max(null.prob)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801  <<
+#> ----------------------------------------------------
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801  <<
 ```
 
 **Report 2**: Power analysis indicated that at least 16,424 replications
@@ -846,7 +846,7 @@ power.t.student(d = 0.20, power = 0.80) |>
   plot()
 ```
 
-![](reference/figures/README-unnamed-chunk-20-1.png)
+![](reference/figures/README-unnamed-chunk-19-1.png)
 
 NOTE: In earlier versions of the {pwrss} package, the
 [`plot()`](https://rdrr.io/r/graphics/plot.default.html) function
@@ -891,19 +891,19 @@ power.t.student(d = -0.20,
 #> 
 #> Student's T-Test (Independent Samples)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d >= 0 
-#>   H1 (Alt. Claim) : d - null.d < 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d >= 0
+#>   H1 (Alternative) : d - null.d  < 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 310 and 310  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 310 and 310  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 
 # account for attrition
 inflate.sample(n = 310, rate = 0) # control
@@ -943,19 +943,19 @@ power.t.welch(d = 0.20,
 #> 
 #> Welch's T-Test (Independent Samples)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d = 0 
-#>   H1 (Alt. Claim) : d - null.d != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d  = 0
+#>   H1 (Alternative) : d - null.d != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 517 and 259  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801
+#> ----------------------------------------------------
+#>   Sample Size          = 518 and 259  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 ```
 
 **Report**: We conducted a power analysis to determine the required
@@ -994,19 +994,19 @@ power.np.wilcoxon(d = 0.20,
 #>   Method       : Guenther
 #>   Distribution : Normal
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d = 0 
-#>   H1 (Alt. Claim) : d - null.d != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d  = 0
+#>   H1 (Alternative) : d - null.d != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 412 and 412  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 412 and 412  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 
 inflate.sample(n = 412, rate = 0.05) # treatment
 #> 434
@@ -1054,19 +1054,19 @@ power.t.student(d = 0.20,
 #> 
 #> Student's T-Test (Independent Samples)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d <= margin 
-#>   H1 (Alt. Claim) : d - null.d > margin 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d <= margin
+#>   H1 (Alternative) : d - null.d  > margin
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 199 and 199  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801
+#> ----------------------------------------------------
+#>   Sample Size          = 199 and 199  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 
 # consider 0.05 attrition rate
 inflate.sample(n = 398, rate = 0.05)
@@ -1086,19 +1086,19 @@ power.t.welch(d = 0.20,
 #> 
 #> Welch's T-Test (Independent Samples)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d <= margin 
-#>   H1 (Alt. Claim) : d - null.d > margin 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d <= margin
+#>   H1 (Alternative) : d - null.d  > margin
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 238 and 119  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 238 and 119  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 
 # non-parametric
 power.np.wilcoxon(d = 0.20,
@@ -1117,19 +1117,19 @@ power.np.wilcoxon(d = 0.20,
 #>   Method       : Guenther
 #>   Distribution : Normal
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d <= margin 
-#>   H1 (Alt. Claim) : d - null.d > margin 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d <= margin
+#>   H1 (Alternative) : d - null.d  > margin
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 208 and 208  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801
+#> ----------------------------------------------------
+#>   Sample Size          = 208 and 208  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 ```
 
 **Report**: We conducted a power analysis to determine the required
@@ -1173,19 +1173,19 @@ power.t.student(d = 0.20,
 #> 
 #> Student's T-Test (Independent Samples)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d <= margin 
-#>   H1 (Alt. Claim) : d - null.d > margin 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d <= margin
+#>   H1 (Alternative) : d - null.d  > margin
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 552 and 552  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801
+#> ----------------------------------------------------
+#>   Sample Size          = 552 and 552  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 
 # consider 0.05 attrition rate
 inflate.sample(n = 1104, rate = 0.05)
@@ -1205,19 +1205,19 @@ power.t.welch(d = 0.20,
 #> 
 #> Welch's T-Test (Independent Samples)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d <= margin 
-#>   H1 (Alt. Claim) : d - null.d > margin 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d <= margin
+#>   H1 (Alternative) : d - null.d  > margin
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 662 and 331  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 662 and 331  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 
 # non-parametric
 power.np.wilcoxon(d = 0.20,
@@ -1236,19 +1236,19 @@ power.np.wilcoxon(d = 0.20,
 #>   Method       : Guenther
 #>   Distribution : Normal
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d <= margin 
-#>   H1 (Alt. Claim) : d - null.d > margin 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d <= margin
+#>   H1 (Alternative) : d - null.d  > margin
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 578 and 578  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801
+#> ----------------------------------------------------
+#>   Sample Size          = 578 and 578  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 ```
 
 **Report**: We conducted a power analysis to determine the required
@@ -1285,21 +1285,21 @@ power.t.student(d = 0,
 #> 
 #> Student's T-Test (Independent Samples)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d <= min(margin) or 
-#>                     d - null.d >= max(margin) 
-#>   H1 (Alt. Claim) : d - null.d > min(margin) and 
-#>                     d - null.d < max(margin) 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d <= min(margin) or
+#>                      d - null.d >= max(margin)
+#>   H1 (Alternative) : d - null.d  > min(margin) and
+#>                      d - null.d  < max(margin)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 1714 and 1714  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 1714 and 1714  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 
 # consider 0.05 attrition rate
 inflate.sample(n = 3428, rate = 0.05)
@@ -1319,21 +1319,21 @@ power.t.welch(d = 0,
 #> 
 #> Welch's T-Test (Independent Samples)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d <= min(margin) or 
-#>                     d - null.d >= max(margin) 
-#>   H1 (Alt. Claim) : d - null.d > min(margin) and 
-#>                     d - null.d < max(margin) 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d <= min(margin) or
+#>                      d - null.d >= max(margin)
+#>   H1 (Alternative) : d - null.d  > min(margin) and
+#>                      d - null.d  < max(margin)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 2056 and 1028  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 2056 and 1028  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 
 # non-parametric
 power.np.wilcoxon(d = 0,
@@ -1352,21 +1352,21 @@ power.np.wilcoxon(d = 0,
 #>   Method       : Guenther
 #>   Distribution : Normal
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d <= min(margin) or 
-#>                     d - null.d >= max(margin) 
-#>   H1 (Alt. Claim) : d - null.d > min(margin) and 
-#>                     d - null.d < max(margin) 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d >= min(margin) and
+#>                      d - null.d <= max(margin)
+#>   H1 (Alternative) : d - null.d  < min(margin) or
+#>                      d - null.d  > max(margin)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 1795 and 1795  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 1795 and 1795  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 ```
 
 **Report**: We conducted a power analysis to determine the required
@@ -1406,21 +1406,21 @@ power.t.student(d = 0.20,
 #> 
 #> Student's T-Test (Independent Samples)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim  : d - null.d >= min(margin) and 
-#>                     d - null.d <= max(margin) 
-#>   H1 (Alt. Claim) : d - null.d < min(margin) or 
-#>                     d - null.d > max(margin) 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d >= min(margin) and
+#>                      d - null.d <= max(margin)
+#>   H1 (Alternative) : d - null.d  < min(margin) or
+#>                      d - null.d  > max(margin)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 700 and 700  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 700 and 700  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 
 # consider 0.05 attrition rate
 inflate.sample(n = 1400, rate = 0.05)
@@ -1440,21 +1440,21 @@ power.t.welch(d = 0.20,
 #> 
 #> Welch's T-Test (Independent Samples)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim  : d - null.d >= min(margin) and 
-#>                     d - null.d <= max(margin) 
-#>   H1 (Alt. Claim) : d - null.d < min(margin) or 
-#>                     d - null.d > max(margin) 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d >= min(margin) and
+#>                      d - null.d <= max(margin)
+#>   H1 (Alternative) : d - null.d  < min(margin) or
+#>                      d - null.d  > max(margin)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 841 and 421  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801
+#> ----------------------------------------------------
+#>   Sample Size          = 842 and 421  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 
 # non-parametric
 power.np.wilcoxon(d = 0.20,
@@ -1473,21 +1473,21 @@ power.np.wilcoxon(d = 0.20,
 #>   Method       : Guenther
 #>   Distribution : Normal
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim  : d - null.d >= min(margin) and 
-#>                     d - null.d <= max(margin) 
-#>   H1 (Alt. Claim) : d - null.d < min(margin) or 
-#>                     d - null.d > max(margin) 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d >= min(margin) and
+#>                      d - null.d <= max(margin)
+#>   H1 (Alternative) : d - null.d  < min(margin) or
+#>                      d - null.d  > max(margin)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 733 and 733  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 733 and 733  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 ```
 
 **Report**: We conducted a power analysis to determine the required
@@ -1542,19 +1542,19 @@ power.t.student(d = 0.20,
 #> 
 #> Student's T-Test (Paired Samples)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d = 0 
-#>   H1 (Alt. Claim) : d - null.d != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d  = 0
+#>   H1 (Alternative) : d - null.d != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 199  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.198
-#>   Statistical Power      = 0.802
+#> ----------------------------------------------------
+#>   Sample Size          = 199  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.198
+#>   Statistical Power    = 0.802
 
 # consider an attrition rate of 0.05
 inflate.sample(n = 199, rate = 0.05)
@@ -1598,19 +1598,19 @@ power.np.wilcoxon(d = 0.20,
 #>   Method       : Guenther
 #>   Distribution : Normal
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d = 0 
-#>   H1 (Alt. Claim) : d - null.d != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d  = 0
+#>   H1 (Alternative) : d - null.d != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 208  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801
+#> ----------------------------------------------------
+#>   Sample Size          = 208  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 
 # consider an attrition rate of 0.05
 inflate.sample(n = 208, rate = 0.05)
@@ -1662,19 +1662,19 @@ power.t.student(d = 0,
 #> 
 #> Student's T-Test (Paired Samples)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d <= margin 
-#>   H1 (Alt. Claim) : d - null.d > margin 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d <= margin
+#>   H1 (Alternative) : d - null.d  > margin
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 619  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 619  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 
 # consider 0.05 attrition rate
 inflate.sample(n = 619, rate = 0.05)
@@ -1696,19 +1696,19 @@ power.np.wilcoxon(d = 0,
 #>   Method       : Guenther
 #>   Distribution : Normal
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d <= margin 
-#>   H1 (Alt. Claim) : d - null.d > margin 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d <= margin
+#>   H1 (Alternative) : d - null.d  > margin
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 648  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 648  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 ```
 
 **Report**: We conducted a power analysis to determine the required
@@ -1765,19 +1765,19 @@ power.t.student(d = 0.20,
 #> 
 #> Student's T-Test (Paired Samples)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d <= margin 
-#>   H1 (Alt. Claim) : d - null.d > margin 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d <= margin
+#>   H1 (Alternative) : d - null.d  > margin
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 627  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 627  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 
 # consider 0.05 attrition rate
 inflate.sample(n = 627, rate = 0.05)
@@ -1799,19 +1799,19 @@ power.np.wilcoxon(d = 0.20,
 #>   Method       : Guenther
 #>   Distribution : Normal
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d <= margin 
-#>   H1 (Alt. Claim) : d - null.d > margin 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d <= margin
+#>   H1 (Alternative) : d - null.d  > margin
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 657  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 657  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 ```
 
 **Report**: We conducted a power analysis to determine the required
@@ -1866,21 +1866,21 @@ power.t.student(d = 0,
 #> 
 #> Student's T-Test (Paired Samples)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d <= min(margin) or 
-#>                     d - null.d >= max(margin) 
-#>   H1 (Alt. Claim) : d - null.d > min(margin) and 
-#>                     d - null.d < max(margin) 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d <= min(margin) or
+#>                      d - null.d >= max(margin)
+#>   H1 (Alternative) : d - null.d  > min(margin) and
+#>                      d - null.d  < max(margin)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 858  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 858  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 
 # consider 0.05 attrition rate
 inflate.sample(n = 858, rate = 0.05)
@@ -1902,21 +1902,21 @@ power.np.wilcoxon(d = 0,
 #>   Method       : Guenther
 #>   Distribution : Normal
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d <= min(margin) or 
-#>                     d - null.d >= max(margin) 
-#>   H1 (Alt. Claim) : d - null.d > min(margin) and 
-#>                     d - null.d < max(margin) 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d >= min(margin) and
+#>                      d - null.d <= max(margin)
+#>   H1 (Alternative) : d - null.d  < min(margin) or
+#>                      d - null.d  > max(margin)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 898  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 898  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 ```
 
 **Report**: We conducted a power analysis to determine the required
@@ -1961,21 +1961,21 @@ power.t.student(d = -0.20,
 #> 
 #> Student's T-Test (Paired Samples)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim  : d - null.d >= min(margin) and 
-#>                     d - null.d <= max(margin) 
-#>   H1 (Alt. Claim) : d - null.d < min(margin) or 
-#>                     d - null.d > max(margin) 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d >= min(margin) and
+#>                      d - null.d <= max(margin)
+#>   H1 (Alternative) : d - null.d  < min(margin) or
+#>                      d - null.d  > max(margin)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 797  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 797  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 
 # consider 0.05 attrition rate
 inflate.sample(n = 797, rate = 0.05)
@@ -1997,21 +1997,21 @@ power.np.wilcoxon(d = -0.20,
 #>   Method       : Guenther
 #>   Distribution : Normal
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim  : d - null.d >= min(margin) and 
-#>                     d - null.d <= max(margin) 
-#>   H1 (Alt. Claim) : d - null.d < min(margin) or 
-#>                     d - null.d > max(margin) 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d >= min(margin) and
+#>                      d - null.d <= max(margin)
+#>   H1 (Alternative) : d - null.d  < min(margin) or
+#>                      d - null.d  > max(margin)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 370  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 370  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 ```
 
 **Report**: We conducted a power analysis to determine the required
@@ -2063,19 +2063,19 @@ power.t.student(d = 0.40,
 #> 
 #> Student's T-Test (One Sample)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d = 0 
-#>   H1 (Alt. Claim) : d - null.d != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d  = 0
+#>   H1 (Alternative) : d - null.d != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 52  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.192
-#>   Statistical Power      = 0.808
+#> ----------------------------------------------------
+#>   Sample Size          = 52  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.192
+#>   Statistical Power    = 0.808
 ```
 
 **Report**: We conducted a power analysis to determine the required
@@ -2114,19 +2114,19 @@ power.np.wilcoxon(d = -0.20,
 #>   Method       : Guenther
 #>   Distribution : Normal
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d = 0 
-#>   H1 (Alt. Claim) : d - null.d != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d  = 0
+#>   H1 (Alternative) : d - null.d != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 208  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801
+#> ----------------------------------------------------
+#>   Sample Size          = 208  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 ```
 
 **Report**: We conducted a power analysis to determine the required
@@ -2161,19 +2161,19 @@ power.t.student(d = 0.40,
 #> 
 #> Student's T-Test (One Sample)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d <= margin 
-#>   H1 (Alt. Claim) : d - null.d > margin 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d <= margin
+#>   H1 (Alternative) : d - null.d  > margin
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 72  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801
+#> ----------------------------------------------------
+#>   Sample Size          = 72  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 
 # non-parametric
 power.np.wilcoxon(d = 0.40,
@@ -2191,19 +2191,19 @@ power.np.wilcoxon(d = 0.40,
 #>   Method       : Guenther
 #>   Distribution : Normal
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d <= margin 
-#>   H1 (Alt. Claim) : d - null.d > margin 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d <= margin
+#>   H1 (Alternative) : d - null.d  > margin
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 76  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.196
-#>   Statistical Power      = 0.804
+#> ----------------------------------------------------
+#>   Sample Size          = 76  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.196
+#>   Statistical Power    = 0.804
 ```
 
 **Report**: We conducted a power analysis to determine the required
@@ -2246,21 +2246,21 @@ power.t.student(d = d,
 #> 
 #> Student's T-Test (One Sample)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d <= min(margin) or 
-#>                     d - null.d >= max(margin) 
-#>   H1 (Alt. Claim) : d - null.d > min(margin) and 
-#>                     d - null.d < max(margin) 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d <= min(margin) or
+#>                      d - null.d >= max(margin)
+#>   H1 (Alternative) : d - null.d  > min(margin) and
+#>                      d - null.d  < max(margin)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 14  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.174
-#>   Statistical Power      = 0.826
+#> ----------------------------------------------------
+#>   Sample Size          = 14  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.174
+#>   Statistical Power    = 0.826
 
 # non-parametric
 power.np.wilcoxon(d = d,
@@ -2278,21 +2278,21 @@ power.np.wilcoxon(d = d,
 #>   Method       : Guenther
 #>   Distribution : Normal
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d <= min(margin) or 
-#>                     d - null.d >= max(margin) 
-#>   H1 (Alt. Claim) : d - null.d > min(margin) and 
-#>                     d - null.d < max(margin) 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d >= min(margin) and
+#>                      d - null.d <= max(margin)
+#>   H1 (Alternative) : d - null.d  < min(margin) or
+#>                      d - null.d  > max(margin)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 14  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.196
-#>   Statistical Power      = 0.804
+#> ----------------------------------------------------
+#>   Sample Size          = 14  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.196
+#>   Statistical Power    = 0.804
 ```
 
 **Report**: We conducted a power analysis to determine the required
@@ -2335,21 +2335,21 @@ power.t.student(d = d,
 #> 
 #> Student's T-Test (One Sample)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim  : d - null.d >= min(margin) and 
-#>                     d - null.d <= max(margin) 
-#>   H1 (Alt. Claim) : d - null.d < min(margin) or 
-#>                     d - null.d > max(margin) 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d >= min(margin) and
+#>                      d - null.d <= max(margin)
+#>   H1 (Alternative) : d - null.d  < min(margin) or
+#>                      d - null.d  > max(margin)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 74  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.198
-#>   Statistical Power      = 0.802
+#> ----------------------------------------------------
+#>   Sample Size          = 74  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.198
+#>   Statistical Power    = 0.802
 
 # non-parametric
 power.np.wilcoxon(d = d,
@@ -2367,21 +2367,21 @@ power.np.wilcoxon(d = d,
 #>   Method       : Guenther
 #>   Distribution : Normal
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim  : d - null.d >= min(margin) and 
-#>                     d - null.d <= max(margin) 
-#>   H1 (Alt. Claim) : d - null.d < min(margin) or 
-#>                     d - null.d > max(margin) 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d >= min(margin) and
+#>                      d - null.d <= max(margin)
+#>   H1 (Alternative) : d - null.d  < min(margin) or
+#>                      d - null.d  > max(margin)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 78  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.196
-#>   Statistical Power      = 0.804
+#> ----------------------------------------------------
+#>   Sample Size          = 78  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.196
+#>   Statistical Power    = 0.804
 ```
 
 **Report**: We conducted a power analysis to determine the required
@@ -2439,19 +2439,19 @@ power.z.oneprop(prob = 0.80, # probability of success under alternative
 #>   Arcsine Transformation : FALSE
 #>   Standard Error         : Calculated From Null
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim)        : prob - null.prob >= 0
-#>   H1 (Alt. Claim)        : prob - null.prob < 0
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob - null.prob >= 0
+#>   H1 (Alternative) : prob - null.prob  < 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size           = 69  <<
-#>   Type 1 Error (alpha)  = 0.050
-#>   Type 2 Error (beta)   = 0.200
-#>   Statistical Power     = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 69  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 ```
 
 **Report**: We conducted a power analysis to determine the required
@@ -2485,19 +2485,19 @@ power.z.oneprop(prob = 0.80, # probability of success under alternative
 #>   Arcsine Transformation : TRUE
 #>   Standard Error         : Calculated From Null
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim)        : prob - null.prob >= 0
-#>   H1 (Alt. Claim)        : prob - null.prob < 0
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob - null.prob >= 0
+#>   H1 (Alternative) : prob - null.prob  < 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size           = 54  <<
-#>   Type 1 Error (alpha)  = 0.050
-#>   Type 2 Error (beta)   = 0.197
-#>   Statistical Power     = 0.803
+#> ----------------------------------------------------
+#>   Sample Size          = 54  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.197
+#>   Statistical Power    = 0.803
 ```
 
 **Continuity correction**:
@@ -2524,19 +2524,19 @@ power.z.oneprop(prob = 0.80, # probability of success under alternative
 #>   Arcsine Transformation : FALSE
 #>   Standard Error         : Calculated From Null
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim)        : prob - null.prob >= 0
-#>   H1 (Alt. Claim)        : prob - null.prob < 0
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob - null.prob >= 0
+#>   H1 (Alternative) : prob - null.prob  < 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size           = 79  <<
-#>   Type 1 Error (alpha)  = 0.050
-#>   Type 2 Error (beta)   = 0.198
-#>   Statistical Power     = 0.802
+#> ----------------------------------------------------
+#>   Sample Size          = 79  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.198
+#>   Statistical Power    = 0.802
 ```
 
 **Calculate the standard error using the probability of success under
@@ -2567,19 +2567,19 @@ power.z.oneprop(prob = 0.80, # probability of success under alternative
 #>   Arcsine Transformation : FALSE
 #>   Standard Error         : Calculated From Alternative
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim)        : prob - null.prob >= 0
-#>   H1 (Alt. Claim)        : prob - null.prob < 0
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob - null.prob >= 0
+#>   H1 (Alternative) : prob - null.prob  < 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size           = 99  <<
-#>   Type 1 Error (alpha)  = 0.050
-#>   Type 2 Error (beta)   = 0.200
-#>   Statistical Power     = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 99  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 ```
 
 ### Exact (Binomial)
@@ -2605,19 +2605,19 @@ power.exact.oneprop(prob = 0.002, # probability of success under alternative
 #> 
 #>   Method                 : Exact
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim)        : prob - null.prob <= 0
-#>   H1 (Alt. Claim)        : prob - null.prob > 0
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob - null.prob <= 0
+#>   H1 (Alternative) : prob - null.prob  > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size           = 804  <<
-#>   Type 1 Error (alpha)  = 0.050
-#>   Type 2 Error (beta)   = 0.200
-#>   Statistical Power     = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 804  <<
+#>   Type 1 Error (alpha) = 0.000
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 ```
 
 **Report**: We conducted a power analysis to determine the required
@@ -2657,17 +2657,17 @@ power.z.twoprops(prob1 = 0.60, prob2 = 0.50,
 #> 
 #> Independent Proportions
 #> 
-#>   Method          : Normal Approximation
+#>   Method : Normal Approximation
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : prob1 - prob2 = 0 
-#>   H1 (Alt. Claim) : prob1 - prob2 != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob1 - prob2  = 0
+#>   H1 (Alternative) : prob1 - prob2 != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 388 and 388  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -2686,19 +2686,19 @@ power.t.student(d = 0.2013579, power = 0.80)
 #> 
 #> Student's T-Test (Independent Samples)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d = 0 
-#>   H1 (Alt. Claim) : d - null.d != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d  = 0
+#>   H1 (Alternative) : d - null.d != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 389 and 389  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801
+#> ----------------------------------------------------
+#>   Sample Size          = 389 and 389  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 ```
 
 ### Approximate
@@ -2748,21 +2748,21 @@ power.z.twoprops(prob1 = 0.15,
 #> 
 #> Independent Proportions
 #> 
-#>   Method          : Normal Approximation
+#>   Method : Normal Approximation
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : prob1 - prob2 <= 0 
-#>   H1 (Alt. Claim) : prob1 - prob2 > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob1 - prob2 <= 0
+#>   H1 (Alternative) : prob1 - prob2  > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 540 and 540  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.8
+#>   Statistical Power    = 0.800
 ```
 
 **Report**: We conducted a power analysis to determine the required
@@ -2787,21 +2787,21 @@ power.z.twoprops(prob1 = 0.15,
 #> 
 #> Independent Proportions
 #> 
-#>   Method          : Normal Approximation
+#>   Method : Normal Approximation
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : prob1 - prob2 <= 0 
-#>   H1 (Alt. Claim) : prob1 - prob2 > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob1 - prob2 <= 0
+#>   H1 (Alternative) : prob1 - prob2  > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 536 and 536  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.8
+#>   Statistical Power    = 0.800
 ```
 
 **Continuity correction**:
@@ -2819,21 +2819,21 @@ power.z.twoprops(prob1 = 0.15,
 #> 
 #> Independent Proportions
 #> 
-#>   Method          : Normal Approximation
+#>   Method : Normal Approximation
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : prob1 - prob2 <= 0 
-#>   H1 (Alt. Claim) : prob1 - prob2 > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob1 - prob2 <= 0
+#>   H1 (Alternative) : prob1 - prob2  > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 580 and 580  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.8
+#>   Statistical Power    = 0.800
 ```
 
 **Calculate the standard error using the unpooled standard deviations**:
@@ -2851,21 +2851,21 @@ power.z.twoprops(prob1 = 0.15,
 #> 
 #> Independent Proportions
 #> 
-#>   Method          : Normal Approximation
+#>   Method : Normal Approximation
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : prob1 - prob2 <= 0 
-#>   H1 (Alt. Claim) : prob1 - prob2 > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob1 - prob2 <= 0
+#>   H1 (Alternative) : prob1 - prob2  > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 538 and 538  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.8
+#>   Statistical Power    = 0.800
 ```
 
 ### Exact (Fisher)
@@ -2898,21 +2898,21 @@ power.exact.twoprops(prob1 = 0.60,
 #> 
 #> Independent Proportions
 #> 
-#>   Method          : Fisher's Exact
+#>   Method : Fisher's Exact
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : prob1 - prob2 <= 0 
-#>   H1 (Alt. Claim) : prob1 - prob2 > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob1 - prob2 <= 0
+#>   H1 (Alternative) : prob1 - prob2  > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size          = 278 and 278  <<
+#> ----------------------------------------------------
+#>   Sample Size          = 321 and 321  <<
 #>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.000
-#>   Statistical Power    = 1
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 ```
 
 **Report**: We conducted a power analysis to estimate the required
@@ -2951,21 +2951,21 @@ power.z.twoprops(prob1 = 0.01,
 #> 
 #> Independent Proportions
 #> 
-#>   Method          : Normal Approximation
+#>   Method : Normal Approximation
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : prob1 - prob2 >= margin 
-#>   H1 (Alt. Claim) : prob1 - prob2 < margin 
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob1 - prob2 >= margin
+#>   H1 (Alternative) : prob1 - prob2  < margin
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 457 and 457  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.8
+#>   Statistical Power    = 0.800
 
 # consider 5% attrition rate
 inflate.sample(n = 914, rate = 0.05)
@@ -3011,21 +3011,21 @@ power.z.twoprops(prob1 = 0.45,
 #> 
 #> Independent Proportions
 #> 
-#>   Method          : Normal Approximation
+#>   Method : Normal Approximation
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : prob1 - prob2 >= margin 
-#>   H1 (Alt. Claim) : prob1 - prob2 < margin 
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob1 - prob2 >= margin
+#>   H1 (Alternative) : prob1 - prob2  < margin
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 1926 and 1926  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.8
+#>   Statistical Power    = 0.800
 
 # consider 5% attrition rate
 inflate.sample(n = 3852, rate = 0.05)
@@ -3085,23 +3085,23 @@ power.z.twoprops(prob1 = 0.10,
 #> 
 #> Independent Proportions
 #> 
-#>   Method          : Normal Approximation
+#>   Method : Normal Approximation
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : prob1 - prob2 <= min(margin) or 
-#>                     prob1 - prob2 >= max(margin) 
-#>   H1 (Alt. Claim) : prob1 - prob2 > min(margin) and 
-#>                     prob1 - prob2 < max(margin) 
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob1 - prob2 <= min(margin) or
+#>                      prob1 - prob2 >= max(margin)
+#>   H1 (Alternative) : prob1 - prob2  > min(margin) and
+#>                      prob1 - prob2  < max(margin)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 3854 and 3854  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.8
+#>   Statistical Power    = 0.800
 ```
 
 **Report**: We conducted a power analysis to estimate the minimum
@@ -3144,23 +3144,23 @@ power.z.twoprops(prob1 = 0.13,
 #> 
 #> Independent Proportions
 #> 
-#>   Method          : Normal Approximation
+#>   Method : Normal Approximation
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : prob1 - prob2 >= min(margin) and 
-#>                     prob1 - prob2 <= max(margin) 
-#>   H1 (Alt. Claim) : prob1 - prob2 < min(margin) or 
-#>                     prob1 - prob2 > max(margin) 
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob1 - prob2 >= min(margin) and
+#>                      prob1 - prob2 <= max(margin)
+#>   H1 (Alternative) : prob1 - prob2  < min(margin) or
+#>                      prob1 - prob2  > max(margin)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 3992 and 3992  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.8
+#>   Statistical Power    = 0.800
 ```
 
 **Report**: We conducted a power analysis to estimate the minimum
@@ -3213,17 +3213,17 @@ power.z.twoprops(prob1 = 0.50,
 #> 
 #> Paired Proportions
 #> 
-#>   Method          : Normal Approximation
+#>   Method : Normal Approximation
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : prob10 - prob01 = 0
-#>   H1 (Alt. Claim) : prob10 - prob01 != 0
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob10 - prob01  = 0
+#>   H1 (Alternative) : prob10 - prob01 != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Paired Sample Size   = 200  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.196
@@ -3265,17 +3265,17 @@ power.exact.twoprops(prob1 = 0.50,
 #> 
 #> Paired Proportions
 #> 
-#>   Method          : McNemar's Exact
+#>   Method : McNemar's Exact
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : prob10 - prob01 = 0
-#>   H1 (Alt. Claim) : prob10 - prob01 != 0
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob10 - prob01  = 0
+#>   H1 (Alternative) : prob10 - prob01 != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Paired Sample Size   = 213  <<
 #>   Type 1 Error (alpha) = 0.030
 #>   Type 2 Error (beta)  = 0.195
@@ -3314,21 +3314,21 @@ power.z.onecor(rho = 0.20,
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> One-Sample Correlation 
+#> One-Sample Correlation
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : rho -  null.rho <= 0
-#>   H1 (Alt. Claim) : rho -  null.rho > 0
+#> ----------------------------------------------------
+#>   H0 (Null)        : rho - null.rho <= 0
+#>   H1 (Alternative) : rho - null.rho  > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 593  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.8
+#>   Statistical Power    = 0.800
 ```
 
 **Report**: We conducted a power analysis to estimate the minimum
@@ -3362,21 +3362,21 @@ power.z.twocors(rho1 = 0.20, rho2 = 0.10, power = .80)
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> Independent Correlations 
+#> Independent Correlations
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : rho1 - rho2 = 0
-#>   H1 (Alt. Claim) : rho1 - rho2 != 0
+#> ----------------------------------------------------
+#>   H0 (Null)        : rho1 - rho2  = 0
+#>   H1 (Alternative) : rho1 - rho2 != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 1501 and 1501  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.8
+#>   Statistical Power    = 0.800
 
 # find Cohen's q
 cors.to.q(rho1 = 0.20, rho2 = 0.10)
@@ -3391,19 +3391,19 @@ power.t.student(d = 0.1023972, power = 0.80)
 #> 
 #> Student's T-Test (Independent Samples)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d = 0 
-#>   H1 (Alt. Claim) : d - null.d != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d  = 0
+#>   H1 (Alternative) : d - null.d != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 1499 and 1499  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 1499 and 1499  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 ```
 
 A key difficulty in planning studies of correlation differences is that
@@ -3444,21 +3444,21 @@ power.z.twocors(rho1 = 0.10,
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> Independent Correlations 
+#> Independent Correlations
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : rho1 - rho2 <= 0
-#>   H1 (Alt. Claim) : rho1 - rho2 > 0
+#> ----------------------------------------------------
+#>   H0 (Null)        : rho1 - rho2 <= 0
+#>   H1 (Alternative) : rho1 - rho2  > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 1232 and 1232  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.8
+#>   Statistical Power    = 0.800
 
 # calculate Cohen's h
 cors.to.q(rho1 = 0.10, rho2 = 0)
@@ -3476,19 +3476,19 @@ power.t.student(d = 0.1003353,
 #> 
 #> Student's T-Test (Independent Samples)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : d - null.d <= 0 
-#>   H1 (Alt. Claim) : d - null.d > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : d - null.d <= 0
+#>   H1 (Alternative) : d - null.d  > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 1229 and 1229  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 1229 and 1229  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 ```
 
 **Report**: We conducted a power analysis to estimate the minimum
@@ -3556,21 +3556,21 @@ power.z.twocors.steiger(rho12 = 0.50,
 #> 
 #> Dependent Correlations
 #> 
-#>   Common Index    : TRUE
+#>   Common Index : TRUE
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : rho12 - rho13 <= 0
-#>   H1 (Alt. Claim) : rho12 - rho13 > 0
+#> ----------------------------------------------------
+#>   H0 (Null)        : rho12 - rho13 <= 0
+#>   H1 (Alternative) : rho12 - rho13  > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 286  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.8
+#>   Statistical Power    = 0.800
 
 # calculate the effect size
 cors.to.q(rho1 = 0.40, rho2 = 0.50)
@@ -3656,21 +3656,21 @@ power.z.twocors.steiger(rho12 = 0.50, # cor(V1, V2)
 #> 
 #> Dependent Correlations
 #> 
-#>   Common Index    : FALSE
+#>   Common Index : FALSE
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : rho12 - rho34 >= 0
-#>   H1 (Alt. Claim) : rho12 - rho34 < 0
+#> ----------------------------------------------------
+#>   H0 (Null)        : rho12 - rho34 >= 0
+#>   H1 (Alternative) : rho12 - rho34  < 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 317  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.8
+#>   Statistical Power    = 0.800
 
 # calculate the effect size
 cors.to.q(rho1 = 0.60, rho2 = 0.50)
@@ -3742,15 +3742,15 @@ power.f.regression(r.squared = 0.10,
 #> 
 #> Linear Regression (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : R-squared = 0 
-#>   H1 (Alt. Claim) : R-squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : R-squared = 0
+#>   H1 (Alternative) : R-squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 103  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.196
@@ -3786,19 +3786,19 @@ power.f.regression(r.squared = 0.10,
 #> 
 #> Linear Regression (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : 0 <= R-squared <= margin 
-#>   H1 (Alt. Claim) : R-squared > margin 
+#> ----------------------------------------------------
+#>   H0 (Null)        : 0 <= R-squared <= margin
+#>   H1 (Alternative) : R-squared > margin
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 612  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.8
+#>   Statistical Power    = 0.800
 ```
 
 **Report**: We conducted a power analysis to determine the minimum
@@ -3836,15 +3836,15 @@ power.f.regression(r.squared.change = 0.10,
 #> 
 #> Hierarchical Linear Regression (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : Change in R-squared = 0 
-#>   H1 (Alt. Claim) : Change in R-squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : Change in R-squared = 0
+#>   H1 (Alternative) : Change in R-squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 90  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -3886,15 +3886,15 @@ power.f.regression(r.squared.change = 0.10,
 #> 
 #> Hierarchical Linear Regression (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : 0 <= Change in R-squared <= margin 
-#>   H1 (Alt. Claim) : Change in R-squared > margin 
+#> ----------------------------------------------------
+#>   H0 (Null)        : 0 <= Change in R-squared <= margin
+#>   H1 (Alternative) : Change in R-squared > margin
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 606  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -3945,19 +3945,19 @@ power.t.regression(beta = 0.20,
 #> 
 #> Linear Regression Coefficient (T-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : beta - null.beta = 0 
-#>   H1 (Alt. Claim) : beta - null.beta != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : beta - null.beta  = 0
+#>   H1 (Alternative) : beta - null.beta != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 140  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error           = 0.198
-#>   Statistical Power      = 0.802
+#> ----------------------------------------------------
+#>   Sample Size          = 140  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.198
+#>   Statistical Power    = 0.802
 ```
 
 ### Unstandardized Input
@@ -3983,19 +3983,19 @@ power.t.regression(beta = 0.60,
 #> 
 #> Linear Regression Coefficient (T-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : beta - null.beta = 0 
-#>   H1 (Alt. Claim) : beta - null.beta != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : beta - null.beta  = 0
+#>   H1 (Alternative) : beta - null.beta != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 140  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error           = 0.198
-#>   Statistical Power      = 0.802
+#> ----------------------------------------------------
+#>   Sample Size          = 140  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.198
+#>   Statistical Power    = 0.802
 ```
 
 If the main predictor is binary (e.g. treatment / control), the
@@ -4024,19 +4024,19 @@ power.t.regression(beta = 0.20,
 #> 
 #> Linear Regression Coefficient (T-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : beta - null.beta = 0 
-#>   H1 (Alt. Claim) : beta - null.beta != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : beta - null.beta  = 0
+#>   H1 (Alternative) : beta - null.beta != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 552  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error           = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 552  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 ```
 
 ### Non-inferiority
@@ -4072,19 +4072,19 @@ power.t.regression(beta = 0.20,
 #> 
 #> Linear Regression Coefficient (T-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : beta - null.beta <= margin 
-#>   H1 (Alt. Claim) : beta - null.beta >  margin 
+#> ----------------------------------------------------
+#>   H0 (Null)        : beta - null.beta <= margin
+#>   H1 (Alternative) : beta - null.beta  > margin
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 770  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error           = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 770  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 ```
 
 ### Superiority
@@ -4120,19 +4120,19 @@ power.t.regression(beta = 0.20,
 #> 
 #> Linear Regression Coefficient (T-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : beta - null.beta <= margin 
-#>   H1 (Alt. Claim) : beta - null.beta >  margin 
+#> ----------------------------------------------------
+#>   H0 (Null)        : beta - null.beta <= margin
+#>   H1 (Alternative) : beta - null.beta  > margin
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 6934  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error           = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 6934  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 ```
 
 ### Equivalence
@@ -4162,21 +4162,21 @@ power.t.regression(beta = 0.20,
 #> 
 #> Linear Regression Coefficient (T-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : beta - null.beta <= min(margin) or 
-#>                     beta - null.beta >= max(margin) 
-#>   H1 (Alt. Claim) : beta - null.beta > min(margin) and 
-#>                     beta - null.beta < max(margin)
+#> ----------------------------------------------------
+#>   H0 (Null)        : beta - null.beta <= min(margin) or
+#>                      beta - null.beta >= max(margin)
+#>   H1 (Alternative) : beta - null.beta  > min(margin) and
+#>                      beta - null.beta  < max(margin)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 9593  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error           = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 9593  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 ```
 
 ### Minimum Effect
@@ -4204,21 +4204,21 @@ power.t.regression(beta = 0.20,
 #> 
 #> Linear Regression Coefficient (T-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : beta - null.beta >= min(margin) and 
-#>                     beta - null.beta <= max(margin) 
-#>   H1 (Alt. Claim) : beta - null.beta < min(margin) or 
-#>                     beta - null.beta > max(margin) 
+#> ----------------------------------------------------
+#>   H0 (Null)        : beta - null.beta >= min(margin) and
+#>                      beta - null.beta <= max(margin)
+#>   H1 (Alternative) : beta - null.beta  < min(margin) or
+#>                      beta - null.beta  > max(margin)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Sample Size            = 981  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error           = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 981  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 ```
 
   
@@ -4285,15 +4285,15 @@ power.z.logistic(prob = 0.10,
 #>   Method          : Demidenko (Variance Corrected)
 #>   Predictor Dist. : Normal
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : Odds Ratio = 1
-#>   H1 (Alt. Claim) : Odds Ratio != 1
+#> ----------------------------------------------------
+#>   H0 (Null)        : Odds Ratio (OR)  = 1
+#>   H1 (Alternative) : Odds Ratio (OR) != 1
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 365  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -4321,15 +4321,15 @@ power.z.logistic(odds.ratio = 0.6296,
 #>   Method          : Demidenko (Variance Corrected)
 #>   Predictor Dist. : Normal
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : Odds Ratio = 1
-#>   H1 (Alt. Claim) : Odds Ratio != 1
+#> ----------------------------------------------------
+#>   H0 (Null)        : Odds Ratio (OR)  = 1
+#>   H1 (Alternative) : Odds Ratio (OR) != 1
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 365  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -4357,15 +4357,15 @@ power.z.logistic(beta1 = -0.4626,
 #>   Method          : Demidenko (Variance Corrected)
 #>   Predictor Dist. : Normal
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : Odds Ratio = 1
-#>   H1 (Alt. Claim) : Odds Ratio != 1
+#> ----------------------------------------------------
+#>   H0 (Null)        : Odds Ratio (OR)  = 1
+#>   H1 (Alternative) : Odds Ratio (OR) != 1
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 365  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -4399,19 +4399,19 @@ power.z.logistic(beta1 = -0.4626,
 #>   Method          : Demidenko (Variance Corrected)
 #>   Predictor Dist. : Normal
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : Odds Ratio = 1
-#>   H1 (Alt. Claim) : Odds Ratio != 1
+#> ----------------------------------------------------
+#>   H0 (Null)        : Odds Ratio (OR)  = 1
+#>   H1 (Alternative) : Odds Ratio (OR) != 1
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 591  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.8
+#>   Statistical Power    = 0.800
 ```
 
 **Change the distribution family of predictor X**:
@@ -4438,19 +4438,19 @@ power.z.logistic(beta1 = -0.4626,
 #>   Method          : Demidenko (Variance Corrected)
 #>   Predictor Dist. : Bernoulli
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : Odds Ratio = 1
-#>   H1 (Alt. Claim) : Odds Ratio != 1
+#> ----------------------------------------------------
+#>   H0 (Null)        : Odds Ratio (OR)  = 1
+#>   H1 (Alternative) : Odds Ratio (OR) != 1
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 1723  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.8
+#>   Statistical Power    = 0.800
 ```
 
 **Change the treatment group allocation rate of the binary predictor X**
@@ -4483,19 +4483,19 @@ power.z.logistic(beta1 = -0.4626,
 #>   Method          : Demidenko (Variance Corrected)
 #>   Predictor Dist. : Bernoulli
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : Odds Ratio = 1
-#>   H1 (Alt. Claim) : Odds Ratio != 1
+#> ----------------------------------------------------
+#>   H0 (Null)        : Odds Ratio (OR)  = 1
+#>   H1 (Alternative) : Odds Ratio (OR) != 1
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 1826  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.8
+#>   Statistical Power    = 0.800
 ```
 
   
@@ -4548,19 +4548,19 @@ power.z.poisson(beta0 = 0.50,
 #>   Method          : Demidenko (Variance Corrected)
 #>   Predictor Dist. : Normal
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : Rate Ratio = 1 
-#>   H1 (Alt. Claim) : Rate Ratio != 1 
+#> ----------------------------------------------------
+#>   H0 (Null)        : Rate Ratio (RR)  = 1
+#>   H1 (Alternative) : Rate Ratio (RR) != 1
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 474  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.8
+#>   Statistical Power    = 0.800
 ```
 
 ## Rate Ratio Specification
@@ -4581,19 +4581,19 @@ power.z.poisson(base.rate = exp(0.50),
 #>   Method          : Demidenko (Variance Corrected)
 #>   Predictor Dist. : Normal
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : Rate Ratio = 1 
-#>   H1 (Alt. Claim) : Rate Ratio != 1 
+#> ----------------------------------------------------
+#>   H0 (Null)        : Rate Ratio (RR)  = 1
+#>   H1 (Alternative) : Rate Ratio (RR) != 1
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 474  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.8
+#>   Statistical Power    = 0.800
 ```
 
 ## Change Distribution
@@ -4618,15 +4618,15 @@ power.z.poisson(base.rate = exp(0.50),
 #>   Method          : Demidenko (Variance Corrected)
 #>   Predictor Dist. : Normal
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : Rate Ratio = 1 
-#>   H1 (Alt. Claim) : Rate Ratio != 1 
+#> ----------------------------------------------------
+#>   H0 (Null)        : Rate Ratio (RR)  = 1
+#>   H1 (Alternative) : Rate Ratio (RR) != 1
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 40  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -4652,19 +4652,19 @@ power.z.poisson(base.rate = exp(0.50),
 #>   Method          : Demidenko (Variance Corrected)
 #>   Predictor Dist. : Bernoulli
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : Rate Ratio = 1 
-#>   H1 (Alt. Claim) : Rate Ratio != 1 
+#> ----------------------------------------------------
+#>   H0 (Null)        : Rate Ratio (RR)  = 1
+#>   H1 (Alternative) : Rate Ratio (RR) != 1
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 2003  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.8
+#>   Statistical Power    = 0.800
 ```
 
 **Change treatment group allocation rate of the binary predictor X**
@@ -4688,19 +4688,19 @@ power.z.poisson(base.rate = exp(0.50),
 #>   Method          : Demidenko (Variance Corrected)
 #>   Predictor Dist. : Bernoulli
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : Rate Ratio = 1 
-#>   H1 (Alt. Claim) : Rate Ratio != 1 
+#> ----------------------------------------------------
+#>   H0 (Null)        : Rate Ratio (RR)  = 1
+#>   H1 (Alternative) : Rate Ratio (RR) != 1
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 2095  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.8
+#>   Statistical Power    = 0.800
 ```
 
   
@@ -4712,7 +4712,7 @@ power.z.poisson(base.rate = exp(0.50),
 
 A simple mediation model can be constructed as in the figure.
 
-![Simple Mediation Model](reference/figures/med.png)
+![Simple Mediation Model](./figures/med.png)
 
 Simple Mediation Model
 
@@ -4758,20 +4758,20 @@ power.z.mediation(beta.a = 0.25,
 #> 
 #> Indirect Effect in a Mediation Model
 #> 
-#>   Method            : Sobel
+#>   Method : Sobel
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim)   : beta[a*b] = 0 
-#>   H1 (Alt. Claim)   : beta[a*b] != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : beta[a*b]  = 0
+#>   H1 (Alternative) : beta[a*b] != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 244  <<
 #>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error         = 0.199
+#>   Type 2 Error (beta)  = 0.199
 #>   Statistical Power    = 0.801
 ```
 
@@ -4797,20 +4797,20 @@ power.z.mediation(beta.a = 0.25,
 #> 
 #> Indirect Effect in a Mediation Model
 #> 
-#>   Method            : Sobel
+#>   Method : Sobel
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim)   : beta[a*b] = 0 
-#>   H1 (Alt. Claim)   : beta[a*b] != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : beta[a*b]  = 0
+#>   H1 (Alternative) : beta[a*b] != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 252  <<
 #>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error         = 0.199
+#>   Type 2 Error (beta)  = 0.199
 #>   Statistical Power    = 0.801
 ```
 
@@ -4836,20 +4836,20 @@ power.z.mediation(beta.a = 0.25,
 #> 
 #> Indirect Effect in a Mediation Model
 #> 
-#>   Method            : Sobel
+#>   Method : Sobel
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim)   : beta[a*b] = 0 
-#>   H1 (Alt. Claim)   : beta[a*b] != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : beta[a*b]  = 0
+#>   H1 (Alternative) : beta[a*b] != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 615  <<
 #>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error         = 0.199
+#>   Type 2 Error (beta)  = 0.199
 #>   Statistical Power    = 0.801
 ```
 
@@ -4861,6 +4861,9 @@ Joint and Monte Carlo tests are only available when power is requested.
 # binary X
 p <- 0.50 # proportion of subjects in one of the groups
 sd.predictor <- sqrt(p * (1 - p))
+
+# set seed to ensure the same results throughout different runs of examples.Rmd
+set.seed(1)
 
 power.z.mediation(beta.a = 0.25,
                   beta.b = 0.25,
@@ -4874,20 +4877,20 @@ power.z.mediation(beta.a = 0.25,
 #> 
 #> Indirect Effect in a Mediation Model
 #> 
-#>   Method            : Joint
+#>   Method : Joint
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim)   : beta[a*b] = 0 
-#>   H1 (Alt. Claim)   : beta[a*b] != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : beta[a*b]  = 0
+#>   H1 (Alternative) : beta[a*b] != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 300
 #>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error         = 0.416
+#>   Type 2 Error (beta)  = 0.416
 #>   Statistical Power    = 0.584  <<
 
 power.z.mediation(beta.a = 0.25,
@@ -4902,21 +4905,21 @@ power.z.mediation(beta.a = 0.25,
 #> 
 #> Indirect Effect in a Mediation Model
 #> 
-#>   Method            : Monte Carlo
+#>   Method : Monte Carlo
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim)   : beta[a*b] = 0 
-#>   H1 (Alt. Claim)   : beta[a*b] != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : beta[a*b]  = 0
+#>   H1 (Alternative) : beta[a*b] != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 300
 #>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error         = 0.421
-#>   Statistical Power    = 0.579  <<
+#>   Type 2 Error (beta)  = 0.406
+#>   Statistical Power    = 0.594  <<
 ```
 
 ## Covariate Adjustment
@@ -4941,20 +4944,20 @@ power.z.mediation(beta.a = 0.25,
 #> 
 #> Indirect Effect in a Mediation Model
 #> 
-#>   Method            : Sobel
+#>   Method : Sobel
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim)   : beta[a*b] = 0 
-#>   H1 (Alt. Claim)   : beta[a*b] != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : beta[a*b]  = 0
+#>   H1 (Alternative) : beta[a*b] != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 189  <<
 #>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error         = 0.199
+#>   Type 2 Error (beta)  = 0.199
 #>   Statistical Power    = 0.801
 ```
 
@@ -4983,20 +4986,20 @@ power.z.mediation(beta.a = 0.25,
 #> 
 #> Indirect Effect in a Mediation Model
 #> 
-#>   Method            : Sobel
+#>   Method : Sobel
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim)   : beta[a*b] = 0 
-#>   H1 (Alt. Claim)   : beta[a*b] != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : beta[a*b]  = 0
+#>   H1 (Alternative) : beta[a*b] != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>   Sample Size          = 559  <<
 #>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error         = 0.199
+#>   Type 2 Error (beta)  = 0.199
 #>   Statistical Power    = 0.801
 ```
 
@@ -5036,19 +5039,19 @@ power.f.ancova(eta.squared = 0.059,
 #> 
 #> One-way Analysis of Variance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : eta.squared = 0 
-#>   H1 (Alt. Claim) : eta.squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : eta.squared = 0
+#>   H1 (Alternative) : eta.squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 128  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.197
-#>   Statistical Power      = 0.803
+#> ----------------------------------------------------
+#>   Total Sample Size    = 128  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.197
+#>   Statistical Power    = 0.803
 ```
 
 ### Two-way
@@ -5069,19 +5072,19 @@ power.f.ancova(eta.squared = 0.03,
 #> 
 #> Two-way Analysis of Variance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : eta.squared = 0 
-#>   H1 (Alt. Claim) : eta.squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : eta.squared = 0
+#>   H1 (Alternative) : eta.squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 256  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Total Sample Size    = 256  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 ```
 
 ### Three-way
@@ -5103,19 +5106,19 @@ power.f.ancova(eta.squared = 0.02,
 #> 
 #> Three-way Analysis of Variance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : eta.squared = 0 
-#>   H1 (Alt. Claim) : eta.squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : eta.squared = 0
+#>   H1 (Alternative) : eta.squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 480  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.196
-#>   Statistical Power      = 0.804
+#> ----------------------------------------------------
+#>   Total Sample Size    = 480  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.196
+#>   Statistical Power    = 0.804
 ```
 
 ### Practical Effects
@@ -5138,19 +5141,19 @@ power.f.ancova(eta.squared = 0.02,
 #> 
 #> Three-way Analysis of Variance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : 0 <= eta.squared <= null.eta.squared 
-#>   H1 (Alt. Claim) : eta.squared > null.eta.squared
+#> ----------------------------------------------------
+#>   H0 (Null)        : 0 <= eta.squared <= null.eta.squared
+#>   H1 (Alternative) : eta.squared > null.eta.squared
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 3516  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801
+#> ----------------------------------------------------
+#>   Total Sample Size    = 3516  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 ```
 
 ## Means and SDs as Input
@@ -5173,19 +5176,19 @@ power.f.ancova.keppel(mu.vector = c(0.50, 0), # vector of means
 #> 
 #> One-way Analysis of Variance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : eta.squared = 0 
-#>   H1 (Alt. Claim) : eta.squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : eta.squared = 0
+#>   H1 (Alternative) : eta.squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 128  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801
+#> ----------------------------------------------------
+#>   Total Sample Size    = 128  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 ```
 
 NOTE: Keppel procedure allows only one-way ANOVA.
@@ -5238,19 +5241,19 @@ power.f.mixed.anova(eta.squared = 0.059,
 #> 
 #> Analysis of Variance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : eta.squared = 0 
-#>   H1 (Alt. Claim) : eta.squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : eta.squared = 0
+#>   H1 (Alternative) : eta.squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 128  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.197
-#>   Statistical Power      = 0.803
+#> ----------------------------------------------------
+#>   Total Sample Size    = 128  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.197
+#>   Statistical Power    = 0.803
 ```
 
 ## Time Effect (Within)
@@ -5277,19 +5280,19 @@ power.f.mixed.anova(eta.squared = 0.022,
 #> 
 #> Repeated Measures Analysis of Variance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : eta.squared = 0 
-#>   H1 (Alt. Claim) : eta.squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : eta.squared = 0
+#>   H1 (Alternative) : eta.squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 90  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.196
-#>   Statistical Power      = 0.804
+#> ----------------------------------------------------
+#>   Total Sample Size    = 90  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.196
+#>   Statistical Power    = 0.804
 ```
 
 ## Group x Time Interaction
@@ -5317,19 +5320,19 @@ power.f.mixed.anova(eta.squared = 0.038,
 #> 
 #> Mixed-Effects Analysis of Variance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : eta.squared = 0 
-#>   H1 (Alt. Claim) : eta.squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : eta.squared = 0
+#>   H1 (Alternative) : eta.squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 152  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.197
-#>   Statistical Power      = 0.803
+#> ----------------------------------------------------
+#>   Total Sample Size    = 152  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.197
+#>   Statistical Power    = 0.803
 ```
 
 A researcher is expecting a difference of Cohen’s *d* = 0.30 between
@@ -5352,19 +5355,19 @@ power.f.mixed.anova(eta.squared = 0.022,
 #> 
 #> Mixed-Effects Analysis of Variance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : eta.squared = 0 
-#>   H1 (Alt. Claim) : eta.squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : eta.squared = 0
+#>   H1 (Alternative) : eta.squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 90  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.196
-#>   Statistical Power      = 0.804
+#> ----------------------------------------------------
+#>   Total Sample Size    = 90  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.196
+#>   Statistical Power    = 0.804
 ```
 
 The rationale for inspecting the interaction is that the benefit of the
@@ -5389,19 +5392,19 @@ power.f.mixed.anova(eta.squared = 0.01,
 #> 
 #> Mixed-Effects Analysis of Variance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : eta.squared = 0 
-#>   H1 (Alt. Claim) : eta.squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : eta.squared = 0
+#>   H1 (Alternative) : eta.squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 198  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.196
-#>   Statistical Power      = 0.804
+#> ----------------------------------------------------
+#>   Total Sample Size    = 198  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.196
+#>   Statistical Power    = 0.804
 ```
 
 ## Adjusted Eta-squared
@@ -5423,19 +5426,19 @@ power.f.mixed.anova(eta.squared = 0.05,
 #> 
 #> Mixed-Effects Analysis of Variance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : eta.squared = 0 
-#>   H1 (Alt. Claim) : eta.squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : eta.squared = 0
+#>   H1 (Alternative) : eta.squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 152  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.198
-#>   Statistical Power      = 0.802
+#> ----------------------------------------------------
+#>   Total Sample Size    = 152  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.198
+#>   Statistical Power    = 0.802
 ```
 
 ## Practical Effects
@@ -5460,19 +5463,19 @@ power.f.mixed.anova(eta.squared = 0.05,
 #> 
 #> Mixed-Effects Analysis of Variance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : 0 <= eta.squared <= null.eta.squared 
-#>   H1 (Alt. Claim) : eta.squared > null.eta.squared
+#> ----------------------------------------------------
+#>   H0 (Null)        : 0 <= eta.squared <= null.eta.squared
+#>   H1 (Alternative) : eta.squared > null.eta.squared
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 380  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801
+#> ----------------------------------------------------
+#>   Total Sample Size    = 380  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 ```
 
   
@@ -5503,19 +5506,19 @@ power.f.ancova(eta.squared = 0.048,
 #> 
 #> One-way Analysis of Covariance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : eta.squared = 0 
-#>   H1 (Alt. Claim) : eta.squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : eta.squared = 0
+#>   H1 (Alternative) : eta.squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 158  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801
+#> ----------------------------------------------------
+#>   Total Sample Size    = 158  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 ```
 
 `k.covariates` argument has trivial effect on the results. The
@@ -5540,19 +5543,19 @@ power.f.ancova(eta.squared = 0.02,
 #> 
 #> Two-way Analysis of Covariance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : eta.squared = 0 
-#>   H1 (Alt. Claim) : eta.squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : eta.squared = 0
+#>   H1 (Alternative) : eta.squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 388  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801
+#> ----------------------------------------------------
+#>   Total Sample Size    = 388  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 ```
 
 ### Three-way
@@ -5574,19 +5577,19 @@ power.f.ancova(eta.squared = 0.01,
 #> 
 #> Three-way Analysis of Covariance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : eta.squared = 0 
-#>   H1 (Alt. Claim) : eta.squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : eta.squared = 0
+#>   H1 (Alternative) : eta.squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 960  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801
+#> ----------------------------------------------------
+#>   Total Sample Size    = 960  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 ```
 
 ### Practical Effects
@@ -5610,19 +5613,19 @@ power.f.ancova(eta.squared = 0.048,
 #> 
 #> One-way Analysis of Covariance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : 0 <= eta.squared <= null.eta.squared 
-#>   H1 (Alt. Claim) : eta.squared > null.eta.squared
+#> ----------------------------------------------------
+#>   H0 (Null)        : 0 <= eta.squared <= null.eta.squared
+#>   H1 (Alternative) : eta.squared > null.eta.squared
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 410  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801
+#> ----------------------------------------------------
+#>   Total Sample Size    = 410  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 ```
 
 ## Means and SDs as Input
@@ -5649,19 +5652,19 @@ power.f.ancova.keppel(mu.vector = c(0.318, 0), # vector of adjusted means
 #> 
 #> One-way Analysis of Covariance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : eta.squared = 0 
-#>   H1 (Alt. Claim) : eta.squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : eta.squared = 0
+#>   H1 (Alternative) : eta.squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 158  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.198
-#>   Statistical Power      = 0.802
+#> ----------------------------------------------------
+#>   Total Sample Size    = 158  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.198
+#>   Statistical Power    = 0.802
 ```
 
 NOTE: Keppel procedure allows only one-way ANOVA.
@@ -5690,19 +5693,19 @@ power.f.ancova.shieh(mu.vector = c(0.318, 0), # vector of adjusted means
 #> 
 #> One-way Analysis of Covariance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : eta.squared = 0 
-#>   H1 (Alt. Claim) : eta.squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : eta.squared = 0
+#>   H1 (Alternative) : eta.squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 160  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.195
-#>   Statistical Power      = 0.805
+#> ----------------------------------------------------
+#>   Total Sample Size    = 160  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.195
+#>   Statistical Power    = 0.805
 ```
 
 ### Two-way
@@ -5730,19 +5733,19 @@ power.f.ancova.shieh(mu.vector = c(0.30, 0.09, 0.05, 0.245), # vector of adjuste
 #> 
 #> Two-way Analysis of Covariance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : eta.squared = 0 
-#>   H1 (Alt. Claim) : eta.squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : eta.squared = 0
+#>   H1 (Alternative) : eta.squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 388  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.198
-#>   Statistical Power      = 0.802
+#> ----------------------------------------------------
+#>   Total Sample Size    = 388  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.198
+#>   Statistical Power    = 0.802
 ```
 
 # Planned Contrasts (T-Test)
@@ -5776,19 +5779,19 @@ design <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), # marginal means
 #> 
 #> One-way Analysis of Covariance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : eta.squared = 0 
-#>   H1 (Alt. Claim) : eta.squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : eta.squared = 0
+#>   H1 (Alternative) : eta.squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 1245  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801
+#> ----------------------------------------------------
+#>   Total Sample Size    = 1245  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 
 # power of planned contrasts, adjusted for alpha level
 power.t.contrasts(design, adjust.alpha = "fdr")
@@ -5798,15 +5801,15 @@ power.t.contrasts(design, adjust.alpha = "fdr")
 #> 
 #> Multiple Contrast Analyses (T-Tests)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : psi = 0 
-#>   H1 (Alt. Claim) : psi != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : psi  = 0
+#>   H1 (Alternative) : psi != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>  contr comparison   psi      d    ncp n.total power
 #>      1  A1 <=> A3 -0.05 -0.071 -1.018    1245 0.111
 #>      2  A2 <=> A3  0.10  0.141  2.036    1245 0.418
@@ -5839,19 +5842,19 @@ design <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), # marginal means
 #> 
 #> One-way Analysis of Covariance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : eta.squared = 0 
-#>   H1 (Alt. Claim) : eta.squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : eta.squared = 0
+#>   H1 (Alternative) : eta.squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 1245  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801
+#> ----------------------------------------------------
+#>   Total Sample Size    = 1245  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 
 # power of planned contrasts
 power.t.contrasts(design)
@@ -5861,15 +5864,15 @@ power.t.contrasts(design)
 #> 
 #> Multiple Contrast Analyses (T-Tests)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : psi = 0 
-#>   H1 (Alt. Claim) : psi != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : psi  = 0
+#>   H1 (Alternative) : psi != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>  contr   comparison    psi      d    ncp n.total power
 #>      1    A2 <=> A1  0.075  0.106  3.055    1245 0.863
 #>      2 A3 <=> A1 A2 -0.008 -0.012 -0.588    1245 0.090
@@ -5902,19 +5905,19 @@ design <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), # marginal means
 #> 
 #> One-way Analysis of Covariance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : eta.squared = 0 
-#>   H1 (Alt. Claim) : eta.squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : eta.squared = 0
+#>   H1 (Alternative) : eta.squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 1245  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801
+#> ----------------------------------------------------
+#>   Total Sample Size    = 1245  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 
 # power of the planned contrasts
 power.t.contrasts(design)
@@ -5924,15 +5927,15 @@ power.t.contrasts(design)
 #> 
 #> Multiple Contrast Analyses (T-Tests)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : psi = 0 
-#>   H1 (Alt. Claim) : psi != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : psi  = 0
+#>   H1 (Alternative) : psi != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>  contr   comparison    psi      d    ncp n.total power
 #>      1    A3 <=> A1  0.035  0.050  1.018    1245 0.174
 #>      2 A1 A3 <=> A2 -0.102 -0.144 -2.939    1245 0.836
@@ -5964,19 +5967,19 @@ design <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), # marginal means
 #> 
 #> One-way Analysis of Covariance (F-Test)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : eta.squared = 0 
-#>   H1 (Alt. Claim) : eta.squared > 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : eta.squared = 0
+#>   H1 (Alternative) : eta.squared > 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 1245  <<
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.199
-#>   Statistical Power      = 0.801
+#> ----------------------------------------------------
+#>   Total Sample Size    = 1245  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 
 # power of the planned contrasts
 power.t.contrasts(design)
@@ -5986,15 +5989,15 @@ power.t.contrasts(design)
 #> 
 #> Multiple Contrast Analyses (T-Tests)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim) : psi = 0 
-#>   H1 (Alt. Claim) : psi != 0 
+#> ----------------------------------------------------
+#>   H0 (Null)        : psi  = 0
+#>   H1 (Alternative) : psi != 0
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #>  contr   comparison    psi      d    ncp n.total power
 #>      1 A1 <=> A2 A3 -0.100 -0.141 -2.351    1245 0.652
 #>      2 A1 A2 <=> A3  0.025  0.035  0.588    1245 0.090
@@ -6038,19 +6041,19 @@ power.chisq.gof(w = 0.44,
 #> 
 #> Chi-Square Test for Goodness-of-Fit or Independence
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim)   : P[i,j] = P0[i,j] for all (i,j) 
-#>   H1 (Alt. Claim)   : P[i,j] != P0[i,j] for some (i,j)
+#> ----------------------------------------------------
+#>   H0 (Null)        : P[i,j]  = P0[i,j] for all (i,j)
+#>   H1 (Alternative) : P[i,j] != P0[i,j] for some (i,j)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 41  << 
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.196
-#>   Statistical Power      = 0.804
+#> ----------------------------------------------------
+#>   Sample Size          = 41  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.196
+#>   Statistical Power    = 0.804
 ```
 
 ## Contingency Table: 2 x 2
@@ -6090,19 +6093,19 @@ power.chisq.gof(w = 0.1302134,
 #> 
 #> Chi-Square Test for Goodness-of-Fit or Independence
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim)   : P[i,j] = P0[i,j] for all (i,j) 
-#>   H1 (Alt. Claim)   : P[i,j] != P0[i,j] for some (i,j)
+#> ----------------------------------------------------
+#>   H0 (Null)        : P[i,j]  = P0[i,j] for all (i,j)
+#>   H1 (Alternative) : P[i,j] != P0[i,j] for some (i,j)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 463  << 
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 463  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 ```
 
 ## Contingency Table: j x k
@@ -6142,19 +6145,19 @@ power.chisq.gof(w = 0.03022008,
 #> 
 #> Chi-Square Test for Goodness-of-Fit or Independence
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Hypotheses
-#> ---------------------------------------------------
-#>   H0 (Null Claim)   : P[i,j] = P0[i,j] for all (i,j) 
-#>   H1 (Alt. Claim)   : P[i,j] != P0[i,j] for some (i,j)
+#> ----------------------------------------------------
+#>   H0 (Null)        : P[i,j]  = P0[i,j] for all (i,j)
+#>   H1 (Alternative) : P[i,j] != P0[i,j] for some (i,j)
 #> 
-#> ---------------------------------------------------
+#> ----------------------------------------------------
 #> Results
-#> ---------------------------------------------------
-#>   Total Sample Size      = 13069  << 
-#>   Type 1 Error (alpha)   = 0.050
-#>   Type 2 Error (beta)    = 0.200
-#>   Statistical Power      = 0.8
+#> ----------------------------------------------------
+#>   Sample Size          = 13069  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 ```
 
   

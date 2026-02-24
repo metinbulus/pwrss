@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">pwrss</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,6 +37,18 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.2.0" id="changes-in-pwrss-v120">Changes in pwrss v1.2.0<a class="anchor" aria-label="anchor" href="#changes-in-pwrss-v120"></a></h2>
+<ul><li>Added unit tests for all procedures</li>
+<li>Added <code>clean.parms</code>, unifying how the input parameters in the results list are returned</li>
+<li>Added further input checks so that all input parameters are checked</li>
+<li>Simplified code in <code>power.z.logistic</code> and <code>power.z.poisson</code>
+</li>
+<li>Corrected formula for Hsieh et al. (1998) in <code>power.z.logistic</code>
+</li>
+<li>Added <code>target.effect</code> to determine effect of interest in <code>power.f.ancova</code>
+</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.0" id="changes-in-pwrss-v100">Changes in pwrss v1.0.0<a class="anchor" aria-label="anchor" href="#changes-in-pwrss-v100"></a></h2><p class="text-muted">CRAN release: 2025-09-16</p>
 <ul><li>Addition 1: ANCOVA procedures with means and contrasts (Shieh)</li>
 <li>Addition 2: Exact tests for proportions (Fisher &amp; McNemar)</li>
@@ -52,11 +64,11 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.2" id="changes-in-pwrss-v032-not-released-to-cran">Changes in pwrss v0.3.2 (not released to CRAN)<a class="anchor" aria-label="anchor" href="#changes-in-pwrss-v032-not-released-to-cran"></a></h2>
-<ul><li>alternative = “less” now produce correct power rates in <code><a href="../reference/proportions.oneprop.html">pwrss.z.prop()</a></code> function. Thanks to Leszek Gawarecki for reporting the issue.</li>
-<li>The default for p0 argument in <code><a href="../reference/proportions.gof.html">pwrss.chisq.gofit()</a></code> can now be overwritten. Thanks to Kate Crespi for reporting the issue.</li>
+<ul><li>alternative = “less” now produce correct power rates in <code><a href="../reference/power.z.oneprop.html">pwrss.z.prop()</a></code> function. Thanks to Leszek Gawarecki for reporting the issue.</li>
+<li>The default for p0 argument in <code><a href="../reference/power.chisq.gof.html">pwrss.chisq.gofit()</a></code> can now be overwritten. Thanks to Kate Crespi for reporting the issue.</li>
 <li>Type 1 and type 2 error plots show and print correct power estimates for two-tailed tests when effect size is near zero. Thanks to dpnichols811 (GitHub profile handle) and Adrian Olszewski for reporting the issue.</li>
 <li>
-<code><a href="../reference/correlations.one.html">pwrss.z.corr()</a></code> print correct errors with alternative = “greater” when in fact it is less (or vice versa). Thanks to Jarrod Hadfield for reporting the issue.</li>
+<code><a href="../reference/power.z.onecor.html">pwrss.z.corr()</a></code> print correct errors with alternative = “greater” when in fact it is less (or vice versa). Thanks to Jarrod Hadfield for reporting the issue.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.1" id="changes-in-pwrss-v031">Changes in pwrss v0.3.1<a class="anchor" aria-label="anchor" href="#changes-in-pwrss-v031"></a></h2><p class="text-muted">CRAN release: 2023-04-11</p>
@@ -66,16 +78,16 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.0" id="changes-in-pwrss-v030">Changes in pwrss v0.3.0<a class="anchor" aria-label="anchor" href="#changes-in-pwrss-v030"></a></h2><p class="text-muted">CRAN release: 2023-03-12</p>
-<ul><li>Added <code><a href="../reference/means.wilcoxon.html">pwrss.np.2means()</a></code>, <code><a href="../reference/regression.logistic.html">pwrss.z.logreg()</a></code>, <code><a href="../reference/regression.poisson.html">pwrss.z.poisreg()</a></code>, <code><a href="../reference/proportions.gof.html">pwrss.chisq.gofit()</a></code>, and generic <code><a href="../reference/generic.chisq.test.html">power.chisq.test()</a></code> functions</li>
+<ul><li>Added <code><a href="../reference/power.np.wilcoxon.html">pwrss.np.2means()</a></code>, <code><a href="../reference/power.z.logistic.html">pwrss.z.logreg()</a></code>, <code><a href="../reference/power.z.poisson.html">pwrss.z.poisreg()</a></code>, <code><a href="../reference/power.chisq.gof.html">pwrss.chisq.gofit()</a></code>, and generic <code><a href="../reference/power.chisq.test.html">power.chisq.test()</a></code> functions</li>
 <li>Improvements to <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> function</li>
 <li>Improvements to documentation</li>
-<li>Improvements to <code><a href="../reference/regression.mediation.html">pwrss.z.med()</a></code> and <code><a href="../reference/ancova.html">pwrss.f.ancova()</a></code> console print</li>
+<li>Improvements to <code><a href="../reference/power.z.mediation.html">pwrss.z.med()</a></code> and <code><a href="../reference/power.f.ancova.html">pwrss.f.ancova()</a></code> console print</li>
 <li>More detailed and comprehensive examples in vignette</li>
 <li>Bug fixes (Welch’s t test)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.0" id="changes-in-pwrss-v020">Changes in pwrss v0.2.0<a class="anchor" aria-label="anchor" href="#changes-in-pwrss-v020"></a></h2><p class="text-muted">CRAN release: 2022-12-14</p>
-<ul><li>Added <code><a href="../reference/regression.linear.t.html">pwrss.t.reg()</a></code> and <code><a href="../reference/regression.mediation.html">pwrss.z.med()</a></code> functions</li>
+<ul><li>Added <code><a href="../reference/power.t.regression.html">pwrss.t.reg()</a></code> and <code><a href="../reference/power.z.mediation.html">pwrss.z.med()</a></code> functions</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="pwrss-v010">pwrss v0.1.0<a class="anchor" aria-label="anchor" href="#pwrss-v010"></a></h2><p class="text-muted">CRAN release: 2022-11-09</p>
@@ -86,7 +98,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Metin Bulus.</p>
+  <p>Developed by Metin Bulus, Sebastian Jentschke.</p>
 </div>
 
 <div class="pkgdown-footer-right">
