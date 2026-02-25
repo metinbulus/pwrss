@@ -8,17 +8,17 @@ mean difference with confidence intervals. While results typically differ by
 only a few units, these distinctions can be particularly consequential in
 studies with small sample sizes or high-risk interventions.
 Formulas are validated using Monte Carlo simulations (see Bulus, 2024),
-G*Power, http://powerandsamplesize.com/, and tables in the PASS
-documentation. One key difference between PASS and pwrss lies in how
-they handle non-inferiority and superiority tests-that is, one-sided tests
-defined by a negligible effect margin (implemented as of this version). PASS
-shifts the test statistic so that the null hypothesis assumes a zero effect,
-treating the negligible margin as part of the alternative hypothesis. As a
-result, the test statistic is evaluated against a central distribution. In
-contrast, pwrss treats the negligible effect as the true null value,
-and the test statistic is evaluated under a non-central distribution. This
-leads to slight differences up to third decimal place. To get the same
-results, reflect the margin in null.d and specify margin = 0.
+G*Power, and tables in the PASS documentation. One key difference between
+PASS and pwrss lies in how they handle non-inferiority and
+superiority tests-that is, one-sided tests defined by a negligible effect
+margin (implemented as of this version). PASS shifts the test statistic so
+that the null hypothesis assumes a zero effect, treating the negligible
+margin as part of the alternative hypothesis. As a result, the test
+statistic is evaluated against a central distribution. In contrast,
+pwrss treats the negligible effect as the true null value, and the
+test statistic is evaluated under a non-central distribution. This leads to
+slight differences up to third decimal place. To get the same results,
+reflect the margin in null.d and specify margin = 0.
 Equivalence tests are implemented in line with Bulus and Polat (2023), Chow
 et al. (2018) and Lakens (2017)."><meta property="og:description" content="Calculates power or sample size (only one can be NULL at a time) for Welch's
 t-Tests. Welch's T-Test implementation relies on formulas proposed by Bulus
@@ -29,17 +29,17 @@ mean difference with confidence intervals. While results typically differ by
 only a few units, these distinctions can be particularly consequential in
 studies with small sample sizes or high-risk interventions.
 Formulas are validated using Monte Carlo simulations (see Bulus, 2024),
-G*Power, http://powerandsamplesize.com/, and tables in the PASS
-documentation. One key difference between PASS and pwrss lies in how
-they handle non-inferiority and superiority tests-that is, one-sided tests
-defined by a negligible effect margin (implemented as of this version). PASS
-shifts the test statistic so that the null hypothesis assumes a zero effect,
-treating the negligible margin as part of the alternative hypothesis. As a
-result, the test statistic is evaluated against a central distribution. In
-contrast, pwrss treats the negligible effect as the true null value,
-and the test statistic is evaluated under a non-central distribution. This
-leads to slight differences up to third decimal place. To get the same
-results, reflect the margin in null.d and specify margin = 0.
+G*Power, and tables in the PASS documentation. One key difference between
+PASS and pwrss lies in how they handle non-inferiority and
+superiority tests-that is, one-sided tests defined by a negligible effect
+margin (implemented as of this version). PASS shifts the test statistic so
+that the null hypothesis assumes a zero effect, treating the negligible
+margin as part of the alternative hypothesis. As a result, the test
+statistic is evaluated against a central distribution. In contrast,
+pwrss treats the negligible effect as the true null value, and the
+test statistic is evaluated under a non-central distribution. This leads to
+slight differences up to third decimal place. To get the same results,
+reflect the margin in null.d and specify margin = 0.
 Equivalence tests are implemented in line with Bulus and Polat (2023), Chow
 et al. (2018) and Lakens (2017)."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -89,17 +89,17 @@ mean difference with confidence intervals. While results typically differ by
 only a few units, these distinctions can be particularly consequential in
 studies with small sample sizes or high-risk interventions.</p>
 <p>Formulas are validated using Monte Carlo simulations (see Bulus, 2024),
-G*Power, <a href="http://powerandsamplesize.com/" class="external-link">http://powerandsamplesize.com/</a>, and tables in the PASS
-documentation. One key difference between PASS and <code>pwrss</code> lies in how
-they handle non-inferiority and superiority tests-that is, one-sided tests
-defined by a negligible effect margin (implemented as of this version). PASS
-shifts the test statistic so that the null hypothesis assumes a zero effect,
-treating the negligible margin as part of the alternative hypothesis. As a
-result, the test statistic is evaluated against a central distribution. In
-contrast, <code>pwrss</code> treats the negligible effect as the true null value,
-and the test statistic is evaluated under a non-central distribution. This
-leads to slight differences up to third decimal place. To get the same
-results, reflect the margin in <code>null.d</code> and specify <code>margin = 0</code>.</p>
+G*Power, and tables in the PASS documentation. One key difference between
+PASS and <code>pwrss</code> lies in how they handle non-inferiority and
+superiority tests-that is, one-sided tests defined by a negligible effect
+margin (implemented as of this version). PASS shifts the test statistic so
+that the null hypothesis assumes a zero effect, treating the negligible
+margin as part of the alternative hypothesis. As a result, the test
+statistic is evaluated against a central distribution. In contrast,
+<code>pwrss</code> treats the negligible effect as the true null value, and the
+test statistic is evaluated under a non-central distribution. This leads to
+slight differences up to third decimal place. To get the same results,
+reflect the margin in <code>null.d</code> and specify <code>margin = 0</code>.</p>
 <p>Equivalence tests are implemented in line with Bulus and Polat (2023), Chow
 et al. (2018) and Lakens (2017).</p>
     </div>

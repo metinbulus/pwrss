@@ -1,7 +1,7 @@
 # Practical Power Analysis in R
 
 The original tutorial was published on CRAN and can be accessed at:
-<https://cran.rstudio.com/web/packages/pwrss/vignettes/examples.html>
+<https://cran.r-project.org/package=pwrss/vignettes/examples.html>
 
   
 
