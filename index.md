@@ -111,7 +111,7 @@ power.t.test(ncp = -3.519, # t-value for hp variable
              plot = TRUE)
 ```
 
-![](reference/figures/README-unnamed-chunk-8-1.png)
+![](reference/figures/README-unnamed-chunk-7-1.png)
 
 ``` R
 #> +--------------------------------------------------+
@@ -293,7 +293,7 @@ power.z.test(mean = -3.994, # z-value for wool B
              plot = TRUE)
 ```
 
-![](reference/figures/README-unnamed-chunk-10-1.png)
+![](reference/figures/README-unnamed-chunk-9-1.png)
 
 ``` R
 #> +--------------------------------------------------+
@@ -375,7 +375,7 @@ power.z.test(mean = ncp,
              plot = TRUE)
 ```
 
-![](reference/figures/README-unnamed-chunk-11-1.png)
+![](reference/figures/README-unnamed-chunk-10-1.png)
 
 ``` R
 #> +--------------------------------------------------+
@@ -588,7 +588,7 @@ power.chisq.test(ncp = 18.463,
                  plot = TRUE)
 ```
 
-![](reference/figures/README-unnamed-chunk-14-1.png)
+![](reference/figures/README-unnamed-chunk-13-1.png)
 
 ``` R
 #> +--------------------------------------------------+
@@ -661,7 +661,7 @@ power.binom.test(size = n.total, # number of eruptions
                  plot = TRUE)
 ```
 
-![](reference/figures/README-unnamed-chunk-15-1.png)
+![](reference/figures/README-unnamed-chunk-14-1.png)
 
 ``` R
 #> +--------------------------------------------------+
@@ -846,7 +846,7 @@ power.t.student(d = 0.20, power = 0.80) |>
   plot()
 ```
 
-![](reference/figures/README-unnamed-chunk-19-1.png)
+![](reference/figures/README-unnamed-chunk-18-1.png)
 
 NOTE: In earlier versions of the {pwrss} package, the
 [`plot()`](https://rdrr.io/r/graphics/plot.default.html) function

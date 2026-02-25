@@ -109,7 +109,7 @@ power.t.test(ncp = -3.519, # t-value for hp variable
              plot = TRUE)
 ```
 
-![](examples_files/figure-html/unnamed-chunk-4-1.png)
+![](examples_files/figure-html/unnamed-chunk-3-1.png)
 
     #> +--------------------------------------------------+
     #> |                POWER CALCULATION                 |
@@ -289,7 +289,7 @@ power.z.test(mean = -3.994, # z-value for wool B
              plot = TRUE)
 ```
 
-![](examples_files/figure-html/unnamed-chunk-6-1.png)
+![](examples_files/figure-html/unnamed-chunk-5-1.png)
 
     #> +--------------------------------------------------+
     #> |                POWER CALCULATION                 |
@@ -369,7 +369,7 @@ power.z.test(mean = ncp,
              plot = TRUE)
 ```
 
-![](examples_files/figure-html/unnamed-chunk-7-1.png)
+![](examples_files/figure-html/unnamed-chunk-6-1.png)
 
     #> +--------------------------------------------------+
     #> |                POWER CALCULATION                 |
@@ -580,7 +580,7 @@ power.chisq.test(ncp = 18.463,
                  plot = TRUE)
 ```
 
-![](examples_files/figure-html/unnamed-chunk-10-1.png)
+![](examples_files/figure-html/unnamed-chunk-9-1.png)
 
     #> +--------------------------------------------------+
     #> |                POWER CALCULATION                 |
@@ -651,7 +651,7 @@ power.binom.test(size = n.total, # number of eruptions
                  plot = TRUE)
 ```
 
-![](examples_files/figure-html/unnamed-chunk-11-1.png)
+![](examples_files/figure-html/unnamed-chunk-10-1.png)
 
     #> +--------------------------------------------------+
     #> |                POWER CALCULATION                 |
@@ -834,7 +834,7 @@ power.t.student(d = 0.20, power = 0.80) |>
   plot()
 ```
 
-![](examples_files/figure-html/unnamed-chunk-15-1.png)
+![](examples_files/figure-html/unnamed-chunk-14-1.png)
 
 NOTE: In earlier versions of the {pwrss} package, the
 [`plot()`](https://rdrr.io/r/graphics/plot.default.html) function
