@@ -450,7 +450,8 @@ power.t.student <- function(d, null.d = 0, margin = 0,
                            null.ncp = null.ncp,
                            t.alpha = t.alpha,
                            power = power,
-                           n = n),
+                           n = n,
+                           n.total = sum(n)),
                       class = c("pwrss", "t", "student")))
 
 } # power.t.student()
@@ -712,7 +713,8 @@ power.t.welch <- function(d, null.d = 0, margin = 0,
                            null.ncp = null.ncp,
                            t.alpha = t.alpha,
                            power = power,
-                           n = n),
+                           n = n,
+                           n.total = sum(n)),
                       class = c("pwrss", "t", "welch")))
 
 } # power.t.welch()
