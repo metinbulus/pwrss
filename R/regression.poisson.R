@@ -342,20 +342,34 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL,
       vcf <- NA
     }
 
-    var.obj <- var.beta(beta0 = beta0, beta1 = beta1, distribution = distribution)
-    var.beta0 <- var.obj$var.beta0
-    var.beta1 <- var.obj$var.beta1
-
     # non-centrality parameter and standard deviation of the non-centrality parameter under alternative
     # Signorini, D. F. (1991). Sample size for poisson regression. Biometrika, 78, 446-450.
     # Demidenko, E. (2007). Sample size determination for logistic regression revisited. Statistics in Medicine, 26, 3385-3397.
-    if (method == "signorini") {
-      ncp <- beta1 / sqrt(var.beta0 / (n * (1 - r.squared.predictor) * mean.exposure))
-      sd.ncp <- sqrt(var.beta1 / var.beta0)
-    } else {
+    if(method == "signorini") {
+      if(tolower(distribution$dist) == "normal") {
+        mean <- distribution$mean
+        sd <- distribution$sd
+        var.beta0 <- 1 / sd^2
+        var.beta1 <- exp(-(beta1 * mean + beta1^2 * sd^2 / 2)) / sd^2 
+        ncp <- beta1 / sqrt(var.beta0 / (n * (1 - r.squared.predictor) * mean.exposure))
+        sd.ncp <- sqrt(var.beta1 / var.beta0)
+      } else if(tolower(distribution$dist) %in% c("binomial", "bernoulli")) {
+        ifelse(tolower(distribution$dist) == "bernoulli", size <- 1, size <- distribution$size)
+        prob <- distribution$prob
+        var.beta0 <- 1 / (prob * (1 - prob))
+        var.beta1 <- 1 / (1 - prob) + 1 / (prob * exp(beta1))
+        ncp <- beta1 * sqrt(exp(beta0) * n * (1 - r.squared.predictor) * mean.exposure / var.beta0)
+        sd.ncp <- sqrt(var.beta1 / var.beta0)
+      } else {
+        stop("Distribution type is not supported by the Signorini procedure", call. = FALSE)
+      }
+    } else { # signorini
+      var.obj <- var.beta(beta0 = beta0, beta1 = beta1, distribution = distribution)
+      var.beta0 <- var.obj$var.beta0
+      var.beta1 <- var.obj$var.beta1
       ncp <- beta1 / sqrt(var.beta1 / (n * (1 - r.squared.predictor) * mean.exposure))
       sd.ncp <- sqrt((vcf * var.beta0 + (1 - vcf) * var.beta1) / var.beta1)
-    } # method
+    } # demidenko and demidenko(vc)
 
     pwr.obj <- power.z.test(mean = ncp, sd = sd.ncp, null.mean = 0,
                             alpha = alpha, alternative = alternative,
