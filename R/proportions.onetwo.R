@@ -79,6 +79,8 @@ power.exact.oneprop <- function(prob, null.prob = 0.50,
   check.logical(utf)
   verbose <- ensure_verbose(verbose)
   requested <- check.n_power(n, power)
+  
+  if(prob %in% c(0, 1)) stop("'prob' should be > 0 and < 1", call. = FALSE)
 
   ss.exact <- function(prob, null.prob, power, alpha, alternative) {
 
@@ -313,6 +315,8 @@ power.z.oneprop <- function(prob, null.prob = 0.50,
   check.logical(arcsine, correct, ceiling, utf)
   verbose <- ensure_verbose(verbose)
   requested <- check.n_power(n, power)
+  
+  if(prob %in% c(0, 1)) stop("'prob' should be > 0 and < 1", call. = FALSE)
 
   if (alternative == "two.one.sided" && std.error == "null") {
     std.error <- "alternative"
