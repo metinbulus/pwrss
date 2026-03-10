@@ -5,7 +5,8 @@
 
     RC <- switch(requested,
                  `n` =     "           \033[34m SAMPLE SIZE CALCULATION \033[0m              ",
-                 `power` = "               \033[34m POWER CALCULATION \033[0m                ")
+                 `power` = "               \033[34m POWER CALCULATION \033[0m                ",
+                 `mde` =   "     \033[34m MINIMUM DETECTABLE EFFECT CALCULATION \033[0m      ")
 
     paste0(paste0("\u2554", strrep("\u2550", 50), "\u2557", "\n"),
            paste0("\u2551", RC,                   "\u2551", "\n"),
@@ -15,7 +16,8 @@
 
     RC <- switch(requested,
                  `n` =     "             SAMPLE SIZE CALCULATION              ",
-                 `power` = "                POWER CALCULATION                 ")
+                 `power` = "                POWER CALCULATION                 ",
+                 `mde` =   "      MINIMUM DETECTABLE EFFECT CALCULATION       ")
 
     paste0(paste0("+", strrep("-", 50), "+", "\n"),
            paste0("|", RC,              "|", "\n"),
@@ -162,7 +164,20 @@
   else
     c_a <- rep("", 5)
 
-  sprintf("  %sStatistical Power%s = %.*f%s%s%s%s\n\n", c_a[1], strrep(" ", ifelse(utf, 1, 3)), digits, x$power, c_a[2], c_a[3], c_a[4], c_a[5])
+  sprintf("  %sStatistical Power%s = %.*f%s%s%s%s\n", c_a[1], strrep(" ", ifelse(utf, 1, 3)), digits, x$power, c_a[2], c_a[3], c_a[4], c_a[5])
+}
+
+# assembles / formats the "Minimum Detectable Effect" line
+.eline <- function(x, utf = FALSE, digits = 3) {
+  # if "power" is requested, c_a[1 / 2] and c_a[3 / 5] are used for coloring (in utf) and empty for ascii; c_a[4] is used for <<
+  if (x$requested == "mde" && utf)
+    c_a <- c("\033[34m", "\033[0m", "  \033[1;35m", "\u25C4\u25C4", "\033[0m")
+  else if (x$requested == "mde" && !utf)
+    c_a <- c("",         "",        "  ",           "<<",           "")
+  else
+    c_a <- rep("", 5)
+  
+  sprintf("  %sMin Detectable Effect%s = %.*f%s%s%s%s\n", c_a[1], strrep(" ", ifelse(utf, 1, 3)), digits, x$mde, c_a[2], c_a[3], c_a[4], c_a[5])
 }
 
 .results <- function(x, utf = FALSE, digits = 3) {
@@ -171,7 +186,8 @@
          .nline(x, utf, digits),
          sprintf("  Type 1 Error %s = %.*f\n", ifelse(utf, "(\u03B1)  ", "(alpha)"), digits, x$alpha),
          sprintf("  Type 2 Error %s = %.*f\n", ifelse(utf, "(\u03B2)  ", "(beta) "), digits, 1 - x$power),
-         .pline(x, utf, digits))
+         .pline(x, utf, digits),
+         .eline(x, utf, digits))
 }
 
 .defs <- function(defs_mtx, utf = FALSE) {

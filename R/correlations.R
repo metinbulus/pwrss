@@ -753,3 +753,441 @@ pwrss.z.corr <- function(r = 0.50, r0 = 0, alpha = 0.05,
   invisible(onecor.obj)
 
 } # pwrss.z.corr()
+
+##############################
+# one correlation exact test #
+##############################
+
+#' Power Analysis for One-Sample Correlation (Exact)
+#'
+#' @description
+#' Calculates power, sample size, or minimum detectable correlation (only one can be NULL at a time) to test a
+#' (Pearson) correlation against a constant using exact method described in Barabesi and Greco (2002).
+#'
+#' Formulas are validated using G*Power.
+#'
+#' @aliases power.exact.onecor 
+#'
+#'
+#' @param rho         correlation.
+#' @param null.rho    correlation when null is true. Only 0 is allowed for now.
+#' @param n           sample size.
+#' @param power       statistical power, defined as the probability of
+#'                    correctly rejecting a false null hypothesis, denoted as
+#'                    \eqn{1 - \beta}.
+#' @param alpha       type 1 error rate, defined as the probability of
+#'                    incorrectly rejecting a true null hypothesis, denoted as
+#'                    \eqn{\alpha}.
+#' @param alternative character; the direction or type of the hypothesis test:
+#'                    "two.sided" or "one.sided".
+#' @param verbose     \code{1} by default (returns test, hypotheses, and
+#'                    results), if \code{2} a more detailed output is given
+#'                    (plus key parameters and definitions), if \code{0} no
+#'                    output is printed on the console.
+#' @param utf         logical; whether the output should show Unicode
+#'                    characters (if encoding allows for it). \code{FALSE} by
+#'                    default.
+#'
+#' @return
+#'   \item{parms}{list of parameters used in calculation.}
+#'   \item{test}{type of the statistical test (Z-Test)}
+#'   \item{rho.alpha}{critical value(s).}
+#'   \item{mde}{minimum detectable correlation.}
+#'   \item{power}{statistical power\eqn{(1-\beta)}.}
+#'   \item{n}{sample size.}
+#'
+#' @references
+#'   Barabesi & Greco (2002): A note on the exact computation of the Student t, 
+#'   Snecdor F and sample correlation coefficient distribution function. 
+#'   The Statistician, 51(Part 1), 105-110. 
+#'
+#'
+#' @examples
+#' # expected correlation is 0.20 and it is different from 0
+#' # it could be 0.20 as well as -0.20
+#' power.exact.onecor(rho = 0.20,
+#'                power = 0.80,
+#'                alpha = 0.05,
+#'                alternative = "two.sided")
+#'
+#' # expected correlation is 0.20 and it is greater than 0
+#' power.exact.onecor(rho = 0.20, null.rho = 0.10,
+#'                power = 0.80,
+#'                alpha = 0.05,
+#'                alternative = "one.sided")
+#'
+#'
+#' @export power.exact.onecor
+power.exact.onecor <- function(rho = NULL, null.rho = 0,
+                               n = NULL, n.max = 500, power = NULL, alpha = 0.05,
+                               alternative = c("two.sided", "one.sided"),
+                               verbose = 1, utf = FALSE) {
+  
+  alternative <- tolower(match.arg(alternative))
+  func.parms <- clean.parms(as.list(environment()))
+  
+  if (null.rho != 0) stop("'null.rho' cannot be different from 0 at the moment", call. = FALSE)
+  if (!is.null(rho)) check.correlation(rho, null.rho)
+  if (!is.null(n)) check.sample.size(n)
+  if (!is.null(power)) check.proportion(power)
+  if(sum(c(is.null(rho), is.null(n), is.null(power))) > 1) 
+    stop("Excatly one of the 'rho', 'power', and 'n' can be NULL", call. = FALSE)
+  
+  check.proportion(alpha)
+  check.logical(utf)
+  verbose <- ensure_verbose(verbose)
+  
+  if(is.null(rho)) requested <- "mde"
+  if(is.null(n)) requested <- "n"
+  if(is.null(power)) requested <- "power"
+  
+  # functions 
+  # step 1: L recursion
+  L.seq <- function(r, rho, K.max) {
+    if (abs(r) >= 1) stop("L.seq: need |r| < 1.")
+    if (abs(rho) >= 1) stop("L.seq: need |rho| < 1.")
+    if (K.max < 0) stop("L.seq: K.max must be >= 0.")
+    
+    c1 <- 1 - (r^2) * (rho^2)                
+    c2 <- (1 - r^2) * (1 - rho^2)             
+    
+    if (c1 < 0 && c1 > -1e-14) c1 <- 0
+    if (c2 < 0 && c2 > -1e-14) c2 <- 0
+    if (c1 <= 0) stop("L.seq: c1 <= 0 (numerical instability).")
+    
+    L <- numeric(K.max + 1)
+    
+    # L0
+    L[1] <- acos(-r * rho) / sqrt(c1)
+    
+    # L1
+    if (K.max >= 1) {
+      L[2] <- (sqrt(c2) / c1) * (r * rho * L[1] + 1)
+    }
+    
+    # recursion for k >= 2 
+    if (K.max >= 2) {
+      for (k in 2:K.max) {
+        L[k + 1] <- ((2 * k - 1) / k) * (r * rho * sqrt(c2) / c1) * L[k] + # L_{k-1}
+          ((k - 1) / k) * (c2 / c1) * L[k - 1] # L_{k-2}
+      }
+    }
+    
+    return(L) # L[1]=L0, L[2]=L1, ...
+    
+  }
+  
+  # step 2: exact CDF F
+  FR.exact <- function(r, rho, n) {
+    
+    if (n < 3) stop("FR.exact: need n >= 3.")
+    if (abs(r) >= 1) stop("FR.exact: need |r| < 1.")
+    if (abs(rho) >= 1) stop("FR.exact: need |rho| < 1.")
+    
+    K.max <- max(n - 3, 1)
+    L <- L.seq(r, rho, K.max)
+    
+    if (n %% 2 == 0) {
+      # n even:
+      upper.even <- n/2 - 2
+      upper.odd  <- n/2 - 1
+      
+      sum.even <- 0
+      if (upper.even >= 0) {
+        idx <- 0:upper.even
+        sum.even <- sum(L[2 * idx + 1])   # L_{2i} -> 2i+1
+      }
+      
+      sum.odd <- 0
+      if (upper.odd >= 1) {
+        idx <- 1:upper.odd
+        sum.odd <- sum(L[2 * idx])        # L_{2i-1} -> 2i
+      }
+      
+      out <- (1/pi) * (
+        acos(rho) +
+          r * sqrt(1 - rho^2) * sum.even -
+          rho * sqrt(1 - r^2) * sum.odd
+      )
+      
+    } else {
+      # n odd:
+      upper <- (n - 3) / 2
+      
+      sum.odd <- 0
+      if (upper >= 1) {
+        idx <- 1:upper
+        sum.odd <- sum(L[2 * idx])        # L_{2i-1} -> 2i
+      }
+      
+      sum.even <- 0
+      if (upper >= 0) {
+        idx <- 0:upper
+        sum.even <- sum(L[2 * idx + 1])   # L_{2i} -> 2i+1
+      }
+      
+      out <- (1/pi) * (
+        acos(-r) +
+          r * sqrt(1 - rho^2) * sum.odd -
+          rho * sqrt(1 - r^2) * sum.even
+      )
+    }
+    
+    min(max(out, 0), 1)
+  }
+  
+  # step 3: exact critical values 
+  crit.r.two.sided <- function(n, alpha = 0.05) {
+    target <- function(crit) {
+      FR.exact(-crit, rho = 0, n = n) + (1 - FR.exact(crit, rho = 0, n = n)) - alpha
+    }
+    uniroot(target, lower = 1e-10, upper = 1 - 1e-10)$root
+  }
+  
+  crit.r.one.sided.upper <- function(n, alpha = 0.05) {
+    target <- function(crit) (1 - FR.exact(crit, rho = 0, n = n)) - alpha
+    uniroot(target, lower = 1e-10, upper = 1 - 1e-10)$root
+  }
+  
+  crit.r.one.sided.lower <- function(n, alpha = 0.05) {
+    target <- function(crit) FR.exact(crit, rho = 0, n = n) - alpha
+    uniroot(target, lower = -1 + 1e-10, upper = -1e-10)$root
+  }
+  
+  # power
+  pwr.exact.rho <- function(n, rho, alpha = 0.05,
+                            alternative = c("two.sided", "greater", "less")) {
+    alternative <- match.arg(alternative)
+    
+    if (alternative == "two.sided") {
+      crit <- crit.r.two.sided(n, alpha)
+      pwr <- FR.exact(-crit, rho = rho, n = n) + (1 - FR.exact(crit, rho = rho, n = n))
+    }
+    
+    if (alternative == "greater") {
+      crit <- crit.r.one.sided.upper(n, alpha)
+      pwr <- 1 - FR.exact(crit, rho = rho, n = n)
+    }
+    
+    if (alternative == "less") {
+      crit <- crit.r.one.sided.lower(n, alpha)
+      pwr <- FR.exact(crit, rho = rho, n = n)
+    }
+    
+    return(list(power = pwr, crit = crit, alternative = alternative,
+                alpha = alpha, n = n, rho = rho))
+    
+  } #  pwr.exact.rho
+  
+  # minimum sample size
+  ss.exact.rho <- function(rho, alpha = 0.05, power = 0.80,
+                           alternative = c("two.sided", "greater", "less"),
+                           n.min = 3, n.max = 500,
+                           verbose = TRUE) {
+    alternative <- match.arg(alternative)
+    if (n.min < 3) n.min <- 3
+    if (n.max < n.min) stop("ss.exact.rho: n.max must be >= n.min.")
+    if (abs(rho) >= 1) stop("ss.exact.rho: need |rho| < 1.")
+    if (!(power > 0 && power < 1)) stop("power must be in (0,1).")
+    
+    pwr.at.n <- function(n) pwr.exact.rho(n, rho, alpha, alternative)$power
+    
+    # check bounds
+    pwr.min <- pwr.at.n(n.min)
+    if (verbose) message(sprintf("Power at n.min=%d: %.4f", n.min, pwr.min))
+    if (pwr.min >= power) {
+      return(list(n = n.min, power = pwr.min, achieved = TRUE,
+                  alpha = alpha, rho = rho, power = power,
+                  alternative = alternative))
+    }
+    
+    pwr.max <- pwr.at.n(n.max)
+    if (verbose) message(sprintf("Power at n.max=%d: %.4f", n.max, pwr.max))
+    if (pwr.max < power) {
+      return(list(n = n.max, power = pwr.max, achieved = FALSE,
+                  alpha = alpha, rho = rho, power = power,
+                  alternative = alternative,
+                  message = "Target power not reached within [n.min, n.max]. Increase n.max."))
+    }
+    
+    # bisection on n
+    low <- n.min
+    high <- n.max
+    while (low + 1 < high) {
+      mid <- floor((low + high) / 2)
+      pwr.mid <- pwr.at.n(mid)
+      if (verbose) message(sprintf("n=%d -> power=%.4f", mid, pwr.mid))
+      if (pwr.mid >= power) {
+        high <- mid
+      } else {
+        low <- mid
+      }
+    }
+    
+    final <- pwr.exact.rho(high, rho, alpha, alternative)
+    list(n = high, power = final$power, achieved = (final$power >= power),
+         crit = final$crit,
+         alpha = alpha, rho = rho, power = power,
+         alternative = alternative)
+    
+  } #  ss.exact.rho
+  
+  # minimum detectable rho for target power 
+  mde.exact.rho <- function(n, alpha = 0.05, power = 0.80,
+                            alternative = c("two.sided", "greater", "less"),
+                            rho.min = 1e-6, rho.max = 0.999,
+                            tol = 1e-6, max.iter = 100,
+                            verbose = TRUE) {
+    
+    alternative <- match.arg(alternative)
+    if (n < 3) stop("mde.exact.rho: need n >= 3.")
+    if (!(power > 0 && power < 1)) stop("power must be in (0,1).")
+    if (!(alpha > 0 && alpha < 1)) stop("alpha must be in (0,1).")
+    if (!(rho.min > 0 && rho.min < 1)) stop("rho.min must be in (0,1).")
+    if (!(rho.max > 0 && rho.max < 1)) stop("rho.max must be in (0,1).")
+    if (rho.max <= rho.min) stop("rho.max must be > rho.min.")
+    
+    # direction for one-sided tests
+    if (alternative == "greater") {
+      sign.rho <-  1
+    } else if (alternative == "less") {
+      sign.rho <- -1
+    } else {
+      sign.rho <-  1  
+    }
+    
+    # power as a function of |rho| (two-sided) or rho with sign (one-sided)
+    pwr.at.rho <- function(rho.abs) {
+      rho.use <- if (alternative == "two.sided") rho.abs else sign.rho * rho.abs
+      pwr.exact.rho(n = n, rho = rho.use, alpha = alpha, alternative = alternative)$power
+    }
+    
+    # check bounds
+    pwr.min <- pwr.at.rho(rho.min)
+    if (verbose) message(sprintf("Power at rho.min=%.6f: %.4f", rho.min, pwr.min))
+    if (pwr.min >= power) {
+      rho.use <- if (alternative == "two.sided") rho.min else sign.rho * rho.min
+      return(list(rho = rho.use, abs.rho = rho.min, power = pwr.min, achieved = TRUE,
+                  n = n, alpha = alpha, power = power,
+                  alternative = alternative))
+    }
+    
+    pwr.max <- pwr.at.rho(rho.max)
+    if (verbose) message(sprintf("Power at rho.max=%.6f: %.4f", rho.max, pwr.max))
+    if (pwr.max < power) {
+      rho.use <- if (alternative == "two.sided") rho.max else sign.rho * rho.max
+      return(list(rho = rho.use, abs.rho = rho.max, power = pwr.max, achieved = FALSE,
+                  n = n, alpha = alpha, power = power,
+                  alternative = alternative,
+                  message = "Target power not reached within [rho.min, rho.max]. Increase rho.max (closer to 1)."))
+    }
+    
+    # bisection on |rho|
+    low <- rho.min
+    high <- rho.max
+    iter <- 0
+    while ((high - low) > tol && iter < max.iter) {
+      iter <- iter + 1
+      mid <- (low + high) / 2
+      pwr.mid <- pwr.at.rho(mid)
+      if (verbose) message(sprintf("iter=%d, |rho|=%.6f -> power=%.4f", iter, mid, pwr.mid))
+      if (pwr.mid >= power) {
+        high <- mid
+      } else {
+        low <- mid
+      }
+    }
+    
+    rho.abs <- high
+    rho.use <- ifelse(alternative == "two.sided", rho.abs, sign.rho * rho.abs)
+    pwr.final <- pwr.at.rho(rho.abs)
+    
+    list(rho = rho.use, abs.rho = rho.abs, power = pwr.final, achieved = (pwr.final >= power),
+         n = n, alpha = alpha, power = power,
+         alternative = alternative, iterations = iter, tol = tol)
+    
+  } #  mde.exact.rho
+  
+  
+  # calculate requested parameter 
+  if(requested == "power") {
+    if(sign(rho) == -1 & alternative == "one.sided") alternative <- "less"
+    if(sign(rho) == 1 & alternative == "one.sided") alternative <- "greater"
+    pwr.obj <- pwr.exact.rho(n = n, rho = rho, alpha = alpha,
+                             alternative = alternative)
+  }
+  
+  if(requested == "n") {
+    if(sign(rho) == -1 & alternative == "one.sided") alternative <- "less"
+    if(sign(rho) == 1 & alternative == "one.sided") alternative <- "greater"
+    n <- ss.exact.rho(rho = rho, alpha = alpha, power = power,
+                      alternative = alternative,
+                      n.min = 3, n.max = n.max,
+                      verbose = TRUE)$n
+    pwr.obj <- pwr.exact.rho(n = n, rho = rho, alpha = alpha,
+                             alternative = alternative)
+  }
+  
+  if(requested == "mde") {
+    rho <- mde.exact.rho(n = n, alpha = alpha, power = power,
+                         alternative = alternative,
+                         verbose = FALSE)$rho
+    pwr.obj <- pwr.exact.rho(n = n, rho = rho, alpha = alpha,
+                             alternative = alternative)
+  }
+  
+  power <- pwr.obj$power
+  rho.alpha <- pwr.obj$crit
+  
+  delta <- rho - null.rho
+  q <- cors.to.q(rho, null.rho, FALSE)$q
+  
+  #### for compatibility ####
+  if(alternative %in% c("less", "greater")) alternative <- "one.sided"
+  mean.alternative <- NA
+  sd.alternative <- NA
+  mean.null <- NA
+  sd.null <- NA
+  z.alpha <- NA
+  #### for compatibility ####
+  
+  if (verbose > 0) {
+    
+    print.obj <-  list(requested = requested,
+                       test = "One-Sample Correlation (Exact)",
+                       design = "one.sample",
+                       alpha = alpha,
+                       alternative = alternative,
+                       delta = delta,
+                       q = q,
+                       
+                       #### for compatibility ####
+                       mean.alternative = mean.alternative,
+                       sd.alternative = sd.alternative,
+                       mean.null = mean.null,
+                       sd.null = sd.null,
+                       z.alpha = z.alpha,
+                       #### for compatibility ####
+                       
+                       rho.alpha = rho.alpha,
+                       mde = rho,
+                       power = power,
+                       n = n)
+    
+    .print.pwrss.twocors(print.obj, verbose = verbose, utf = utf)
+    
+  }
+  
+  invisible(structure(list(parms = func.parms,
+                           test = "exact",
+                           design = "one.sample",
+                           delta = delta,
+                           q = q,
+                           alternative = alternative,
+                           rho.alpha = rho.alpha, # critical value for cor
+                           mde = rho,
+                           n = n,
+                           power = power),
+                      class = c("pwrss", "exact", "onecor")))
+  
+} # power.exact.onecor
