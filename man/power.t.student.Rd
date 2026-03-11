@@ -70,6 +70,7 @@ output is printed on the console.}
 characters (if encoding allows for it). \code{FALSE} by
 default.}
 }
+
 \value{
 \item{parms}{list of parameters used in calculation.}
 \item{test}{type of the statistical test (T-Test).}
@@ -79,7 +80,9 @@ default.}
 \item{t.alpha}{critical value(s).}
 \item{power}{statistical power \eqn{(1-\beta)}.}
 \item{n}{sample size (\code{n} or \code{c(n1, n2)} depending on the design.}
+\item{n.total}{total sample size.}
 }
+
 \description{
 Calculates power or sample size (only one can be NULL at a time) for
 Student's t-Test.
