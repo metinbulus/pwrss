@@ -40,7 +40,11 @@
 #'   \item{sd}{standard deviation of the alternative distribution.}
 #'   \item{null.mean}{mean of the null distribution.}
 #'   \item{null.sd}{standard deviation of the null distribution.}
+#'   \item{alpha}{type 1 error rate (user-specified).}
 #'   \item{z.alpha}{critical value(s).}
+#'   \item{beta}{type 2 error rate.}
+#'   \item{type.s}{type S error rate (only for two-tailed test).}
+#'   \item{type.m}{type M error rate (only for two-tailed test).}
 #'   \item{power}{statistical power \eqn{(1-\beta)}.}
 #'
 #' @examples
@@ -72,9 +76,9 @@
 power.z.test <- function(mean = NULL, sd = 1, null.mean = 0, null.sd = 1,
                          alpha = 0.05, alternative = c("two.sided", "one.sided", "two.one.sided"),
                          plot = TRUE, verbose = 1, utf = FALSE) {
-
+  
   alternative <- tolower(match.arg(alternative))
-
+  
   check.numeric(mean)
   check.positive(sd)
   null.mean <- check.margins(null.mean, check.numeric, alternative)
@@ -82,50 +86,75 @@ power.z.test <- function(mean = NULL, sd = 1, null.mean = 0, null.sd = 1,
   check.proportion(alpha)
   check.logical(plot, utf)
   verbose <- ensure_verbose(verbose)
-
+  
   # calculate statistical power
   if (alternative == "two.sided") {
-
+    
     z.alpha <- c(stats::qnorm(alpha / 2,  mean = null.mean,      sd = null.sd, lower.tail = TRUE),
                  stats::qnorm(alpha / 2,  mean = null.mean,      sd = null.sd, lower.tail = FALSE))
     power   <-   stats::pnorm(z.alpha[1], mean = mean,           sd = sd,      lower.tail = TRUE) +
-                 stats::pnorm(z.alpha[2], mean = mean,           sd = sd,      lower.tail = FALSE)
-
+      stats::pnorm(z.alpha[2], mean = mean,           sd = sd,      lower.tail = FALSE)
+    
+    # z.alpha.s <- qnorm(p = 1 - alpha / 2, mean = null.mean, sd = null.sd)
+    # type.s <- pnorm(q = -z.alpha.s, mean = mean, sd = sd) /
+    #  (pnorm(q = -z.alpha.s, mean = mean, sd = sd) + 
+    #     (1 - pnorm(q = z.alpha.s, mean = mean, sd = sd)))
+    
+    Phi.p <- pnorm(q = max(z.alpha), mean = mean, sd = sd)  
+    Phi.m <- pnorm(q = min(z.alpha), mean = mean, sd = sd)  
+    type.s <- min(Phi.m, 1 - Phi.p) / (Phi.m + 1 - Phi.p)
+    
+    phi.p <- dnorm(x = max(z.alpha), mean = mean, sd = sd) 
+    phi.m <- dnorm(x = min(z.alpha), mean = mean, sd = sd) 
+    Phi.p <- pnorm(q = max(z.alpha), mean = mean, sd = sd)  
+    Phi.m <- pnorm(q = min(z.alpha), mean = mean, sd = sd) 
+    type.m <- (sd^2 * (phi.p + phi.m) + mean * (1 - Phi.p - Phi.m)) /
+      (abs(mean) * (1 - Phi.p + Phi.m))
+    
   } else if (alternative == "one.sided") {
-
+    
     lower.tail <- mean < null.mean
     z.alpha <- stats::qnorm(alpha,        mean = null.mean,      sd = null.sd, lower.tail = lower.tail)
     power   <- stats::pnorm(z.alpha,      mean = mean,           sd = sd,      lower.tail = lower.tail)
-
+    
+    type.s <- 0
+    type.m <- NA
+    
   } else if (alternative == "two.one.sided" && (mean > min(null.mean) && mean < max(null.mean))) {  # equivalence test
-
+    
     z.alpha <- c(stats::qnorm(alpha,      mean = min(null.mean), sd = null.sd, lower.tail = FALSE),
                  stats::qnorm(alpha,      mean = max(null.mean), sd = null.sd, lower.tail = TRUE))
     power   <-   stats::pnorm(z.alpha[2], mean = mean,           sd = sd,      lower.tail = TRUE) +
-                 stats::pnorm(z.alpha[1], mean = mean,           sd = sd,      lower.tail = FALSE) - 1
+      stats::pnorm(z.alpha[1], mean = mean,           sd = sd,      lower.tail = FALSE) - 1
     power[power < 0] <- 0
-
+    
+    type.s <- NA
+    type.m <- NA
+    
   } else if (alternative == "two.one.sided" && (mean < min(null.mean) || mean > max(null.mean))) {  # minimum effect test
-
+    
     z.alpha <- c(stats::qnorm(alpha / 2,  mean = min(null.mean), sd = null.sd, lower.tail = TRUE),
                  stats::qnorm(alpha / 2,  mean = max(null.mean), sd = null.sd, lower.tail = FALSE))
     power   <-   stats::pnorm(z.alpha[1], mean = mean,           sd = sd,      lower.tail = TRUE) +
-                 stats::pnorm(z.alpha[2], mean = mean,           sd = sd,      lower.tail = FALSE)
-
+      stats::pnorm(z.alpha[2], mean = mean,           sd = sd,      lower.tail = FALSE)
+    
+    type.s <- NA
+    type.m <- NA
+    
   }
-
+  
   if (plot) {
     # if (sd != 1 || null.sd != 1)
     #   stop("Plotting is not available when the standard deviation of the standard normal distribution deviates from one.", call. = FALSE)
-
+    
     try(silent = TRUE,
         suppressWarnings(.plot.t.t1t2(ncp = mean, null.ncp = null.mean, df = Inf, alpha = alpha, alternative = alternative))
     ) # try
-
+    
   }
-
+  
   if (verbose > 0) {
-
+    
     print.obj <- list(test = "Generic z-Test",
                       requested = "power",
                       alternative = alternative,
@@ -136,14 +165,14 @@ power.z.test <- function(mean = NULL, sd = 1, null.mean = 0, null.sd = 1,
                       alpha = alpha,
                       z.alpha = z.alpha,
                       power = power)
-
+    
     .print.pwrss.z(print.obj, verbose = verbose, utf = utf)
-
+    
   } # verbose
-
+  
   invisible(list(alternative = alternative, mean = mean, sd = sd, null.mean = null.mean, null.sd = null.sd,
-                 alpha = alpha, z.alpha = z.alpha, power = power))
-
+                 alpha = alpha, z.alpha = z.alpha, beta = 1 - power, type.s = type.s, type.m = type.m, power = power))
+  
 } # end of power.z.test()
 
 power.z <- power.z.test

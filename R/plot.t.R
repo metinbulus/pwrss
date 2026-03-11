@@ -52,7 +52,8 @@
   color <- switch(type,
                   `1` = grDevices::adjustcolor(2, alpha.f = 0.3),
                   `2` = grDevices::adjustcolor(4, alpha.f = 0.3),
-                  `3` = grDevices::adjustcolor(1, alpha.f = 0.3))
+                  `3` = grDevices::adjustcolor(1, alpha.f = 0.3),
+                  `s` = grDevices::adjustcolor(2, alpha.f = 0.6))
 
   # non-central t function
   funt <- function(x) {
@@ -77,7 +78,7 @@
 
 .plot.t.t1t2 <- function(ncp, null.ncp = 0, df = Inf, alpha = 0.05,
                          alternative = c("one.sided", "two.sided", "two.one.sided"),
-                         plot.main = NULL, plot.sub = NULL) {
+                         plot.main = NULL, plot.sub = NULL, digits = 2) {
 
   alternative <- tolower(match.arg(alternative))
 
@@ -227,6 +228,28 @@
     .paint.t.dist(ncp = null.ncp, df = df, xlim = c(t.alpha[2], max(xlim)), type = 1)
 
     .paint.t.dist(ncp = ncp, df = df, xlim = c(t.alpha[1], t.alpha[2]), type = 2)
+    
+    # type S region
+    if(ncp > null.ncp) {
+      .paint.t.dist(ncp = ncp, df = df, xlim = c(min(t.alpha), min(xlim)), type = 1)
+    } else {
+      .paint.t.dist(ncp = ncp, df = df, xlim = c(max(t.alpha), max(xlim)), type = 1)
+    }
+    
+    # type S
+    Phi.p <- pt(q = max(t.alpha), df = df, ncp = ncp)  
+    Phi.m <- pt(q = min(t.alpha), df = df, ncp = ncp)  
+    type.s <- min(Phi.m, 1 - Phi.p) / (Phi.m + 1 - Phi.p)
+    type.s <- round(type.s, digits)
+
+    # type M
+    bounds <- qt(c(1e-10, 1 - 1e-10), df = df, ncp = ncp)     
+    integrand <- function(t) abs(t) * dt(t, df = df, ncp = ncp)
+    numerator <- integrate(integrand, min(bounds), min(t.alpha))$value +
+      integrate(integrand, max(t.alpha), max(bounds))$value
+    denominator  <- abs(ncp) * (pt(min(t.alpha), df = df, ncp = ncp) + pt(max(t.alpha), df = df, ncp = ncp, lower.tail = FALSE))
+    type.m <- numerator / denominator 
+    type.m <- round(type.m, digits)
 
     power.left <- .paint.t.dist(ncp = ncp, df = df, xlim = c(t.alpha[1], min(xlim)), type = 3)
     power.right <- .paint.t.dist(ncp = ncp, df = df, xlim = c(t.alpha[2], max(xlim)), type = 3)
@@ -263,23 +286,46 @@
   }
 
   if (power < 0) power <- 0
-  alpha <- round(alpha, 2)
-  beta <- round(1 - power, 2)
-  power <- round(power, 2)
+  alpha <- round(alpha, digits)
+  beta <- round(1 - power, digits)
+  power <- round(power, digits)
 
-  graphics::legend("topright", cex = cex.legend,
-                   c(as.expression(bquote(Power == .(power))),
-                     as.expression(bquote(alpha == .(alpha))),
-                     as.expression(bquote(beta == .(beta)))),
-                   fill = c(grDevices::adjustcolor(1, alpha.f = 0.3),
-                            grDevices::adjustcolor(2, alpha.f = 0.3),
-                            grDevices::adjustcolor(4, alpha.f = 0.3)),
-                   border = c(grDevices::adjustcolor(1, alpha.f = 0.15),
-                              grDevices::adjustcolor(2, alpha.f = 0.15),
-                              grDevices::adjustcolor(4, alpha.f = 0.15)),
-                   bg = grDevices::adjustcolor(1, alpha.f = 0.08),
-                   box.col = grDevices::adjustcolor(1, alpha.f = 0),
-                   density = c(30, NA, NA),
-                   angle = c(45, NA, NA))
+  if(alternative == "two.sided") {
+    graphics::legend("topright", cex = cex.legend,
+                     c(as.expression(bquote(Power == .(power))),
+                       as.expression(bquote(alpha == .(alpha))),
+                       as.expression(bquote(beta == .(beta))),
+                       as.expression(bquote(S == .(type.s))),
+                       as.expression(bquote(M == .(type.m)))),
+                     fill = c(grDevices::adjustcolor(1, alpha.f = 0.3),
+                              grDevices::adjustcolor(2, alpha.f = 0.3),
+                              grDevices::adjustcolor(4, alpha.f = 0.3),
+                              grDevices::adjustcolor(2, alpha.f = 0.6),
+                              grDevices::adjustcolor(1, alpha.f = 0)),
+                     border = c(grDevices::adjustcolor(1, alpha.f = 0.15),
+                                grDevices::adjustcolor(2, alpha.f = 0.15),
+                                grDevices::adjustcolor(4, alpha.f = 0.15),
+                                grDevices::adjustcolor(2, alpha.f = 0.30),
+                                grDevices::adjustcolor(1, alpha.f = 0)),
+                     bg = grDevices::adjustcolor(1, alpha.f = 0.08),
+                     box.col = grDevices::adjustcolor(1, alpha.f = 0),
+                     density = c(30, NA, NA, NA, NA),
+                     angle = c(45, NA, NA, NA, NA))
+  } else {
+    graphics::legend("topright", cex = cex.legend,
+                     c(as.expression(bquote(Power == .(power))),
+                       as.expression(bquote(alpha == .(alpha))),
+                       as.expression(bquote(beta == .(beta)))),
+                     fill = c(grDevices::adjustcolor(1, alpha.f = 0.3),
+                              grDevices::adjustcolor(2, alpha.f = 0.3),
+                              grDevices::adjustcolor(4, alpha.f = 0.3)),
+                     border = c(grDevices::adjustcolor(1, alpha.f = 0.15),
+                                grDevices::adjustcolor(2, alpha.f = 0.15),
+                                grDevices::adjustcolor(4, alpha.f = 0.15)),
+                     bg = grDevices::adjustcolor(1, alpha.f = 0.08),
+                     box.col = grDevices::adjustcolor(1, alpha.f = 0),
+                     density = c(30, NA, NA),
+                     angle = c(45, NA, NA))
+  }
 
 } # end of .plot.t.t1t2()
