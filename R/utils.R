@@ -390,7 +390,7 @@ cles.to.d <- function(cles, design = c("independent", "paired", "one.sample"), v
 #'            rho.paired = 0.50)
 #'
 #' @export means.to.d
-means.to.d <- function(mu1, mu2 = 0, sd1 = 1, sd2 = 1, n.ratio = 1, n2,
+means.to.d <- function(mu1, mu2 = 0, sd1 = 1, sd2 = 1, n.ratio = 1, n2 = 1e10,
                        paired = FALSE, rho.paired = 0.50, verbose = 1) {
 
   func.parms <- clean.parms(as.list(environment()))
@@ -884,3 +884,99 @@ probs.to.w <- function(prob.matrix, null.prob.matrix = NULL, verbose = 1) {
   invisible(list(w = w, df = df, prob.matrix = prob.matrix, null.prob.matrix = null.prob.matrix))
 
 } # probs.to.w
+
+
+#' Conversion from Means and Standard Deviations to Cohen's f and Eta-squared
+#'
+#' @description
+#' Calculates Cohen's f or Eta-squared for one-way ANOVA/ANCOVA. Set \code{k.cov =
+#' 0} for one-way ANOVA (without any pretest or covariate adjustment). Set
+#' \code{k.cov > 0} in combination with \code{r.squared > 0} for one-way ANCOVA (with
+#' pretest or covariate adjustment).
+#'
+#'
+#' @details
+#' Note that R has a partial matching feature which allows you to specify
+#' shortened versions of arguments, such as \code{mu} or \code{mu.vec} instead
+#' of \code{mu.vector}, or such as \code{k} or \code{k.cov} instead of
+#' \code{k.covariates}.
+#'
+#' @param mu.vector     vector of adjusted means (or estimated marginal means)
+#'                      for each level of a factor.
+#' @param sd.vector     vector of unadjusted standard deviations for each level
+#'                      of a factor.
+#' @param n.vector      vector of sample sizes for each level of a factor.
+#' @param factor.levels integer; number of levels or groups in each factor. For
+#'                      example, for two factors each having two levels or
+#'                      groups use e.g. c(2, 2), for three factors each having
+#'                      two levels or groups use e.g. c(2, 2, 2)
+#' @param r.squared     explanatory power of covariates (R-squared) in the
+#'                      ANCOVA model. The default is \code{r.squared = 0},
+#'                      which means an ANOVA model would be of interest.
+#' @param k.covariates  integer; number of covariates in the ANCOVA model. The
+#'                      default is \code{k.covariates = 0}, which means an
+#'                      ANOVA model would be of interest.
+#' @param verbose       \code{1} by default (returns results), if \code{0} no
+#'                      output is printed on the console.
+#'
+#' @return
+#'   \item{f}{Cohen's f}
+#'   \item{eta.squared}{(partial) eta-squared.}
+#'   \item{df1}{numerator degrees of freedom.}
+#'   \item{df2}{denominator degrees of freedom.}
+#'   \item{ncp}{non-centrality parameter under alternative.}
+#'
+#' @references
+#'   Keppel, G., & Wickens, T. D. (2004). Design and analysis: A researcher's
+#'   handbook (4th ed.). Pearson.
+#'
+#' @examples
+#' means.to.etasq(mu.vector = c(0.50, 0), # marginal means
+#'                sd.vector = c(1, 1), # unadjusted standard deviation
+#'                n.vector = c(33, 33), # sample size (will be calculated)
+#'                k.cov = 1, # number of covariates
+#'                r.squared = 0.50)
+#' @export means.to.etasq
+means.to.etasq <- function(mu.vector, sd.vector, n.vector, k.covariates = 0, r.squared = 0, factor.levels = NULL, verbose = 1) {
+  
+  if (!is.vector(mu.vector) || !is.numeric(mu.vector))
+    stop("Provide a vector of means (`mu.vector`) with its length equal to number of groups.", call. = FALSE)
+  check.vector(mu.vector, check.numeric)
+  check.vector(sd.vector, check.positive)
+  if (!is.null(n.vector)) check.vector(n.vector, check.sample.size)
+  check.same.lengths(mu.vector, sd.vector, n.vector)
+  if (is.null(factor.levels)) factor.levels <- length(mu.vector)
+  if (length(factor.levels) > 1)
+    stop("Factorial designs are not allowed.", call. = FALSE)
+  check.factor.level(factor.levels)
+  if (length(mu.vector) != factor.levels)
+    stop("Length of the vector of means (`mu.vector`) does not match number of levels.", call. = FALSE)
+  if (r.squared > 1 || r.squared < 0 || !is.numeric(r.squared) || length(r.squared) != 1)
+    stop("R-squared (explanatory power of covariates) takes a value between 0 and 1.", call. = FALSE)
+  check.nonnegative(k.covariates)
+  if (r.squared > 0 && k.covariates < 1)
+    stop("Explanatory power of covariates is expected to be non-zero when number of covariates is non-zero.", call. = FALSE)
+  
+  n.total <- sum(n.vector)
+  mu_bar <- sum(n.vector * mu.vector) / n.total
+  
+  sigma2_pooled <- sum((n.vector - 1) * sd.vector ^ 2) / (n.total - length(mu.vector))
+  
+  sigma2_between <- sum(n.vector * (mu.vector - mu_bar) ^ 2) / n.total
+  sigma2_error <- sigma2_pooled * (1 - r.squared)
+  
+  f.squared <- sigma2_between / sigma2_error
+  eta.squared <- sigma2_between / (sigma2_between + sigma2_error)
+  
+  u <- prod(factor.levels - 1)
+  v <- n.total - length(mu.vector) - k.covariates
+  lambda <- f.squared * n.total
+  
+  if (verbose > 0)
+    print(c(f = sqrt(f.squared), eta.squared = eta.squared,
+            df1 = u, df2 = v, ncp = lambda))
+  
+  invisible(list(f = sqrt(f.squared), eta.squared = eta.squared,
+                 df1 = u, df2 = v, ncp = lambda))
+  
+} # means.to.etasq

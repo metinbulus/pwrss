@@ -10,7 +10,7 @@ means.to.d(
   sd1 = 1,
   sd2 = 1,
   n.ratio = 1,
-  n2,
+  n2 = 1e10,
   paired = FALSE,
   rho.paired = 0.5,
   verbose = 1

@@ -321,7 +321,7 @@ pwrss.f.ancova <- function(eta2 = NULL, f2 = NULL,
 #' @description
 #' Calculates power or sample size for one-way ANOVA/ANCOVA. Set \code{k.cov =
 #' 0} for one-way ANOVA (without any pretest or covariate adjustment). Set
-#' \code{k.cov > 0} in combination with \code{r2 > 0} for one-way ANCOVA (with
+#' \code{k.cov > 0} in combination with \code{r.squared > 0} for one-way ANCOVA (with
 #' pretest or covariate adjustment).
 #'
 #' Formulas are validated using the PASS documentation.
@@ -1406,8 +1406,18 @@ power.t.contrast <- function(mu.vector, sd.vector,
     d <- psi / sqrt(sigma2_error)
 
     if (k.covariates == 0) {
+      
+      # Shieh (2023, p. 3/18)
+      # Shieh G (2023) Assessing standardized
+      # contrast effects in ANCOVA: Confidence intervals,
+      # precision evaluations, and sample size
+      # requirements. PLoS ONE 18(2): e0282161. 
+      # https://doi.org/10.1371/journal.pone.0282161
+      
+      ss_wts <- sum((contrast.vector^2) / n.vector)
+      se_psi <- sqrt(sigma2_error * ss_wts)
 
-      power <- power.t.test(ncp = psi / sigma2_pooled, df = v, plot = FALSE, verbose = 0)$power
+      power <- power.t.test(ncp = psi / se_psi, df = v, plot = FALSE, verbose = 0)$power
 
       if (calculate.lambda)
         lambda <- psi / sigma2_pooled
