@@ -792,7 +792,7 @@ pwrss.z.corr <- function(r = 0.50, r0 = 0, alpha = 0.05,
 #'   \item{parms}{list of parameters used in calculation.}
 #'   \item{test}{type of the statistical test (Z-Test)}
 #'   \item{rho.alpha}{critical value(s).}
-#'   \item{mde}{minimum detectable correlation.}
+#'   \item{es}{minimum detectable correlation.}
 #'   \item{power}{statistical power\eqn{(1-\beta)}.}
 #'   \item{n}{sample size.}
 #'
@@ -837,7 +837,7 @@ power.exact.onecor <- function(rho = NULL, null.rho = 0,
   check.logical(utf)
   verbose <- ensure_verbose(verbose)
   
-  if(is.null(rho)) requested <- "mde"
+  if(is.null(rho)) requested <- "es"
   if(is.null(n)) requested <- "n"
   if(is.null(power)) requested <- "power"
   
@@ -1128,7 +1128,7 @@ power.exact.onecor <- function(rho = NULL, null.rho = 0,
                              alternative = alternative)
   }
   
-  if(requested == "mde") {
+  if(requested == "es") {
     rho <- mde.exact.rho(n = n, alpha = alpha, power = power,
                          alternative = alternative,
                          verbose = FALSE)$rho
@@ -1170,7 +1170,7 @@ power.exact.onecor <- function(rho = NULL, null.rho = 0,
                        #### for compatibility ####
                        
                        rho.alpha = rho.alpha,
-                       mde = rho,
+                       es = rho,
                        power = power,
                        n = n)
     
@@ -1185,7 +1185,7 @@ power.exact.onecor <- function(rho = NULL, null.rho = 0,
                            q = q,
                            alternative = alternative,
                            rho.alpha = rho.alpha, # critical value for cor
-                           mde = rho,
+                           es = rho,
                            n = n,
                            power = power),
                       class = c("pwrss", "exact", "onecor")))
