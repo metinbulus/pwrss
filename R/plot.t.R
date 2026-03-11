@@ -243,12 +243,14 @@
     type.s <- round(type.s, digits)
 
     # type M
-    bounds <- qt(c(1e-10, 1 - 1e-10), df = df, ncp = ncp)     
-    integrand <- function(t) abs(t) * dt(t, df = df, ncp = ncp)
-    numerator <- integrate(integrand, min(bounds), min(t.alpha))$value +
-      integrate(integrand, max(t.alpha), max(bounds))$value
-    denominator  <- abs(ncp) * (pt(min(t.alpha), df = df, ncp = ncp) + pt(max(t.alpha), df = df, ncp = ncp, lower.tail = FALSE))
-    type.m <- numerator / denominator 
+    type.m <- suppressWarnings({ 
+      bounds <- qt(c(1e-10, 1 - 1e-10), df = df, ncp = ncp)     
+      integrand <- function(t) abs(t) * dt(t, df = df, ncp = ncp)
+      numerator <- integrate(integrand, min(bounds), min(t.alpha))$value +
+        integrate(integrand, max(t.alpha), max(bounds))$value
+      denominator  <- abs(ncp) * (pt(min(t.alpha), df = df, ncp = ncp) + pt(max(t.alpha), df = df, ncp = ncp, lower.tail = FALSE))
+      numerator / denominator 
+    })
     type.m <- round(type.m, digits)
 
     power.left <- .paint.t.dist(ncp = ncp, df = df, xlim = c(t.alpha[1], min(xlim)), type = 3)

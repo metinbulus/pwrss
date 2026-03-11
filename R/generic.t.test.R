@@ -100,12 +100,14 @@ power.t.test <- function(ncp, null.ncp = 0,
     Phi.m <- pt(q = min(t.alpha), df = df, ncp = ncp)  
     type.s <- min(Phi.m, 1 - Phi.p) / (Phi.m + 1 - Phi.p)
     
-    bounds <- qt(c(1e-10, 1 - 1e-10), df = df, ncp = ncp)     
-    integrand <- function(t) abs(t) * dt(t, df = df, ncp = ncp)
-    numerator <- integrate(integrand, min(bounds), min(t.alpha))$value +
-      integrate(integrand, max(t.alpha), max(bounds))$value
-    denominator  <- abs(ncp) * (pt(min(t.alpha), df = df, ncp = ncp) + pt(max(t.alpha), df = df, ncp = ncp, lower.tail = FALSE))
-    type.m <- numerator / denominator 
+    type.m <- suppressWarnings({ 
+      bounds <- qt(c(1e-10, 1 - 1e-10), df = df, ncp = ncp)     
+      integrand <- function(t) abs(t) * dt(t, df = df, ncp = ncp)
+      numerator <- integrate(integrand, min(bounds), min(t.alpha))$value +
+        integrate(integrand, max(t.alpha), max(bounds))$value
+      denominator  <- abs(ncp) * (pt(min(t.alpha), df = df, ncp = ncp) + pt(max(t.alpha), df = df, ncp = ncp, lower.tail = FALSE))
+      numerator / denominator 
+    })
     
   } else if (alternative == "one.sided") {
     
