@@ -164,7 +164,7 @@
   else
     c_a <- rep("", 5)
 
-  sprintf("  %sStatistical Power%s = %.*f%s%s%s%s\n", c_a[1], strrep(" ", ifelse(utf, 1, 3)), digits, x$power, c_a[2], c_a[3], c_a[4], c_a[5])
+  sprintf("  %sStatistical Power%s = %.*f%s%s%s%s\n\n", c_a[1], strrep(" ", ifelse(utf, 1, 3)), digits, x$power, c_a[2], c_a[3], c_a[4], c_a[5])
 }
 
 # assembles / formats the "Minimum Detectable Effect" line
