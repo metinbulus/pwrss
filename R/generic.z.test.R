@@ -176,3 +176,118 @@ power.z.test <- function(mean = NULL, sd = 1, null.mean = 0, null.sd = 1,
 } # end of power.z.test()
 
 power.z <- power.z.test
+
+
+
+#' Finds the Mean (Non-centrality Parameter) for the Generic z-Test
+#'
+#' @description
+#' Finds the mean (non-centrality parameter) for the generic z-Test with (optional) Type 1 and Type 2
+#' error plots.
+#'
+#' @aliases mean.z
+#'
+#' @param power       statistical power \eqn{(1-\beta)}.
+#' @param mean mean of the alternative.
+#' @param sd          standard deviation of the alternative. Do not change this
+#'                    value except when some sort of variance correction is
+#'                    applied (e.g. as in logistic and Poisson regressions).
+#' @param null.mean   mean of the null. When alternative = "two.one.sided", the
+#'                    function expects two values in the form `c(lower,
+#'                    upper)`. If a single value is provided, it is interpreted
+#'                    as the absolute bound and automatically expanded to
+#'                    `c(-value, +value)`.
+#' @param null.sd     standard deviation of the null. Do not change this value
+#'                    except when some sort of correction is applied.
+#' @param alpha       type 1 error rate, defined as the probability of
+#'                    incorrectly rejecting a true null hypothesis, denoted as
+#'                    \eqn{\alpha}.
+#' @param alternative character; the direction or type of the hypothesis test:
+#'                    "two.sided", "one.sided", or "two.one.sided".
+#'                    "two.one.sided" is used for equivalence and minimal
+#'                    effect testing.
+#' @param plot        logical; \code{FALSE} switches off Type 1 and Type 2
+#'                    error plot. \code{TRUE} by default.
+#' @param verbose     \code{1} by default (returns test, hypotheses, and
+#'                    results), if \code{2} a more detailed output is given
+#'                    (plus key parameters and definitions), if \code{0} no
+#'                    output is printed on the console.
+#' @param utf         logical; whether the output should show Unicode
+#'                    characters (if encoding allows for it). \code{FALSE} by
+#'                    default.
+#'
+#' @return
+#'   \item{mean}{mean of the alternative distribution.}
+#'   \item{sd}{standard deviation of the alternative distribution.}
+#'   \item{null.mean}{mean of the null distribution.}
+#'   \item{null.sd}{standard deviation of the null distribution.}
+#'   \item{alpha}{type 1 error rate (user-specified).}
+#'   \item{z.alpha}{critical value(s).}
+#'   \item{beta}{type 2 error rate.}
+#'   \item{type.s}{type S error rate (only for two-tailed test).}
+#'   \item{type.m}{type M error rate (only for two-tailed test).}
+#'   \item{power}{statistical power \eqn{(1-\beta)}.}
+#'
+#' @examples
+#' # two-sided
+#' # power defined as the probability of observing test statistics greater than
+#' # the positive critical value OR less than the negative critical value
+#' mean.z.test(mean = NULL, alpha = 0.05, alternative = "two.sided")
+#'
+#' # one-sided
+#' # power is defined as the probability of observing a test statistic greater
+#' # than the critical value
+#' mean.z.test(mean = NULL, alpha = 0.05, alternative = "one.sided")
+#'
+#' # equivalence
+#' # power is defined as the probability of observing a test statistic greater
+#' # than the upper critical value (for the lower bound) AND less than the
+#' # lower critical value (for the upper bound)
+#' mean.z.test(mean = NULL, null.mean = c(-2, 2), alpha = 0.05,
+#'              alternative = "two.one.sided")
+#'
+#' # minimal effect testing
+#' # power is defined as the probability of observing a test statistic greater
+#' # than the upper critical value (for the upper bound) OR less than the lower
+#' # critical value (for the lower bound).
+#' mean.z.test(mean = NULL, null.mean = c(-1, 1), alpha = 0.05,
+#'              alternative = "two.one.sided")
+#'
+#' @export mean.z.test
+mean.z.test <- function(power = 0.80, mean = NULL, sign = "+",
+                        sd = 1, null.mean = 0, null.sd = 1,
+                        alpha = 0.05, alternative = c("two.sided", "one.sided", "two.one.sided"),
+                        plot = TRUE, verbose = 1, utf = FALSE) {
+  
+  alternative <- tolower(match.arg(alternative))
+  
+  if(!is.null(mean)) 
+    stop("'mean' should remain NULL", call. = FALSE)
+  
+  min <- stats::qnorm(0.000001, mean = min(null.mean), sd = sd)
+  max <- stats::qnorm(0.999999, mean = max(null.mean), sd = sd)
+  
+  if(sign %in% c("-", -1, "-1", "negative")) max <- 0
+  if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) min <- 0
+  if(sign %in% c(" ", 0, "0", "")) {max <- max(null.mean); min <- min(null.mean)}
+  
+  mean <- optimize(
+    f = function(mean) {
+      (power - power.z.test(mean = mean, sd = sd, 
+                            null.mean = null.mean, null.sd = null.sd,
+                            alpha = alpha, alternative = alternative,
+                            plot = FALSE, verbose = 0, utf = FALSE)$power)^2
+    },
+    maximum = FALSE,
+    lower = min,
+    upper = max,
+  )$minimum
+  
+  pwrss::power.z.test(mean = mean, sd = sd,  
+                      null.mean = null.mean, null.sd = null.sd,
+                      alpha = alpha, alternative = alternative,
+                      plot = plot, verbose = verbose, utf = utf)
+  
+} # ncp.t.test
+
+mean.z <- mean.z.test

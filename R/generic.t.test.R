@@ -166,3 +166,136 @@ power.t.test <- function(ncp, null.ncp = 0,
 } # end of power.t.test()
 
 power.t <- power.t.test
+
+#' Find Non-Centrality Parameter for the Generic t-Test
+#'
+#' @description
+#' Finds non-centrality parameter or degrees of freedom given power rate for the generic t-Test with (optional) Type 1 and Type 2
+#' error plots.
+#'
+#' @aliases nct.t
+#'
+#'
+#' @param power       statistical power \eqn{(1-\beta)}.
+#' @param ncp         non-centrality parameter for the alternative.
+#' @param null.ncp    non-centrality parameter for the null. When alternative =
+#'                    "two.one.sided", the function expects two values in the
+#'                    form `c(lower, upper)`. If a single value is provided, it
+#'                    is interpreted as the absolute bound and automatically
+#'                    expanded to `c(-value, +value)`.
+#' @param df          degrees of freedom.
+#' @param alpha       type 1 error rate, defined as the probability of
+#'                    incorrectly rejecting a true null hypothesis, denoted as
+#'                    \eqn{\alpha}.
+#' @param alternative character; the direction or type of the hypothesis test:
+#'                    "two.sided", "one.sided", or "two.one.sided".
+#'                    "two.one.sided" is used for equivalence and minimal
+#'                    effect testing.
+#' @param plot        logical; \code{FALSE} switches off Type 1 and Type 2
+#'                    error plot. \code{TRUE} by default.
+#' @param verbose     \code{1} by default (returns test, hypotheses, and
+#'                    results), if \code{2} a more detailed output is given
+#'                    (plus key parameters and definitions), if \code{0} no
+#'                    output is printed on the console.
+#' @param utf         logical; whether the output should show Unicode
+#'                    characters (if encoding allows for it). \code{FALSE} by
+#'                    default.
+#'
+#' @return
+#'   \item{df}{degrees of freedom.}
+#'   \item{ncp}{non-centrality parameter under alternative.}
+#'   \item{ncp.null}{non-centrality parameter under null.}
+#'   \item{alpha}{type 1 error rate (user-specified).}
+#'   \item{t.alpha}{critical value(s).}
+#'   \item{beta}{type 2 error rate.}
+#'   \item{type.s}{type S error rate (only for two-tailed test).}
+#'   \item{type.m}{type M error rate (only for two-tailed test).}
+#'   \item{power}{statistical power \eqn{(1-\beta)}.}
+#'
+#' @examples
+#' # two-sided
+#' # power defined as the probability of observing test statistics greater
+#' # than the positive critical value OR less than the negative critical value
+#' ncp.t.test(power = 0.80, df = 100, alpha = 0.05, alternative = "two.sided")
+#'
+#' # one-sided
+#' # power is defined as the probability of observing a test statistic greater
+#' # than the critical value
+#' ncp.t.test(power = 0.80,, df = 100, alpha = 0.05, alternative = "one.sided")
+#'
+#' # equivalence
+#' # power is defined as the probability of observing a test statistic greater
+#' # than the upper critical value (for the lower bound) AND less than the
+#' # lower critical value (for the upper bound)
+#' ncp.t.test(power = 0.80, sign = "0",
+#'            null.ncp = c(-2, 2), df = 100, alpha = 0.05,
+#'            alternative = "two.one.sided")
+#'
+#' # minimal effect testing
+#' # power is defined as the probability of observing a test statistic greater
+#' # than the upper critical value (for the upper bound) OR less than the lower
+#' # critical value (for the lower bound).
+#' ncp.t.test(power = 0.80, sign = "+",
+#'            null.ncp = c(-1, 1), df = 100, alpha = 0.05,
+#'            alternative = "two.one.sided")
+#'
+#' @export ncp.t.test
+ncp.t.test <- function(power = 0.80, ncp = NULL, null.ncp = 0, sign = "+",
+                       df = NULL, alpha = 0.05,
+                       alternative = c("two.sided", "one.sided", "two.one.sided"),
+                       plot = TRUE, verbose = 1, utf = FALSE) {
+  
+  alternative <- tolower(match.arg(alternative))
+  
+  if(is.null(ncp) & is.null(df)) 
+    stop("Only one of the 'ncp' or 'df' can be NULL", call. = FALSE)
+  
+  if(is.null(ncp)) {
+    
+    if(is.null(df)) stop("'df' cannot be NULL", call. = FALSE)
+    
+    min <- stats::qt(0.000001, ncp = min(null.ncp), df = df)
+    max <- stats::qt(0.999999, ncp = max(null.ncp), df = df)
+    
+    if(sign %in% c("-", -1, "-1", "negative")) max <- 0
+    if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) min <- 0
+    if(sign %in% c(" ", 0, "0", "")) {max <- max(null.ncp); min <- min(null.ncp)}
+    
+    ncp <- optimize(
+      f = function(ncp) {
+        (power - power.t.test(ncp = ncp, null.ncp = null.ncp,
+                              df = df, alpha = alpha, alternative = alternative,
+                              plot = FALSE, verbose = 0, utf = FALSE)$power)^2
+      },
+      maximum = FALSE,
+      lower = min,
+      upper = max,
+    )$minimum
+    
+  } # ncp is null
+  
+  if(is.null(df)) {
+    
+    if(is.null(ncp)) stop("'ncp' cannot be NULL", call. = FALSE)
+    
+    df <- optimize(
+      f = function(df) {
+        (power - power.t.test(ncp = ncp, null.ncp = null.ncp,
+                              df = df, alpha = alpha, alternative = alternative,
+                              plot = FALSE, verbose = 0, utf = FALSE)$power)^2
+      },
+      maximum = FALSE,
+      lower = 1,
+      upper = 1e10,
+    )$minimum
+    
+  } # df is null
+  
+  pwrss::power.t.test(ncp = ncp, null.ncp = null.ncp,
+                      df = df, alpha = alpha,
+                      alternative = alternative,
+                      plot = plot, verbose = verbose, utf = utf)
+  
+} # ncp.t.test
+
+ncp.t <- ncp.t.test
