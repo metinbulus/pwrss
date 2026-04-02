@@ -176,7 +176,7 @@ power.t <- power.t.test
 #' @aliases nct.t
 #'
 #'
-#' @param power       statistical power.
+#' @param power       statistical power \eqn{(1-\beta)}.
 #' @param ncp         non-centrality parameter for the alternative.
 #' @param null.ncp    non-centrality parameter for the null. When alternative =
 #'                    "two.one.sided", the function expects two values in the
