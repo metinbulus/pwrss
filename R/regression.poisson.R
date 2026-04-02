@@ -42,6 +42,8 @@
 #' @param beta1               the natural logarithm of the relative increase
 #'                            in the mean event rate for one unit increase in
 #'                            the predictor.
+#' @param beta1.sign          sign of the beta1 coefficient (when minimum 
+#'                            detectable effect or beta1 is of interest).
 #' @param mean.exposure       the mean exposure time (should be > 0), usually
 #'                            it is 1.
 #' @param n                   integer; sample size.
@@ -145,7 +147,8 @@
 #'
 #' @export power.z.poisson
 power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL,
-                            beta0 = NULL, beta1 = NULL,
+                            beta0 = NULL, beta1 = NULL, 
+                            beta1.sign = NULL,
                             n = NULL, power = NULL,
                             r.squared.predictor = 0, mean.exposure = 1,
                             alpha = 0.05, alternative = c("two.sided", "one.sided"),
@@ -164,25 +167,33 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL,
   check.proportion(alpha)
   check.logical(ceiling, utf)
   verbose <- ensure_verbose(verbose)
-  requested <- check.n_power(n, power)
-
+  
+  # requested <- check.n_power(n, power)
+  if(is.null(n)) requested <- "n"
+  if(is.null(power)) requested <- "power"
+  if(is.null(beta1) & is.null(rate.ratio)) requested <- "es"
+  
   if (all(check.not_null(base.rate, rate.ratio))) {
     if (any(check.not_null(beta0, beta1)) && verbose >= 0)
       message("Using `base.rate` and `rate.ratio`, ignoring any specifications to `beta0` or `beta1`.")
     check.nonnegative(base.rate, rate.ratio)
     beta0 <- log(base.rate)
     beta1 <- log(rate.ratio)
+    if (beta0 == beta1) stop("`beta0` can not have the same value as `beta1`.", call. = FALSE)
   } else if (all(check.not_null(beta0, beta1))) {
     if (any(check.not_null(base.rate, rate.ratio)) && verbose >= 0)
       message("Using `beta0` and `beta1`, ignoring any specifications to `base.rate` or `rate.ratio`.")
     check.numeric(beta0, beta1)
     base.rate <- exp(beta0)
     rate.ratio <- exp(beta1)
+    if (base.rate == rate.ratio) stop("`base.rate` can not have the same value as `rate.ratio`.", call. = FALSE)
   } else {
-    stop("Specify `base.rate` & `rate.ratio` or\n`beta0` & `beta1`.", call. = FALSE)
+    
+    if(is.null(n) || is.null(power)) 
+      stop("Specify `base.rate` & `rate.ratio` or\n`beta0` & `beta1`.", call. = FALSE)
+    
   }
 
-  if (beta0 == beta1) stop("`beta0` / `base.rate` can not have the same value as `beta1` / `rate.ratio`.", call. = FALSE)
 
   if (is.character(distribution) && length(distribution) == 1) {
     distribution <- switch(tolower(distribution),
@@ -317,14 +328,17 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL,
 
     }
 
-    list(var.beta0 = var.beta0, var.beta1 = var.beta1, distribution = tolower(distribution$dist))
+    list(var.beta0 = var.beta0, var.beta1 = var.beta1, 
+         distribution = tolower(distribution$dist),
+         min = min, max = max)
 
   } # var.beta()
 
   pwr.demidenko <- function(beta0, beta1, n,
                             r.squared.predictor,
                             alpha, alternative,
-                            method, distribution) {
+                            method, distribution,
+                            mean.exposure) {
 
     # variance correction factor
     if (method == "demidenko(vc)") {
@@ -384,34 +398,112 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL,
   ss.demidenko <- function(beta0, beta1, power,
                            r.squared.predictor,
                            alpha, alternative,
-                           method, distribution) {
+                           method, distribution,
+                           mean.exposure) {
 
     n <- stats::uniroot(function(n) {
       power - pwr.demidenko(beta0 = beta0, beta1 = beta1, n = n,
                             r.squared.predictor = r.squared.predictor,
                             alpha = alpha, alternative = alternative,
-                            method = method, distribution = distribution)$power
+                            method = method, distribution = distribution,
+                            mean.exposure = mean.exposure)$power
     }, interval = c(2, 1e10))$root
 
     n
 
   } # ss.demidenko()
-
+  
+  es.demidenko <- function(beta0, beta1.sign, n, power, 
+                           r.squared.predictor,
+                           alpha, alternative,
+                           method, distribution, 
+                           mean.exposure) {
+    
+    # reasonable bounds for logistics
+    # beta1.min <- qlogis(0.001) - beta0 
+    # beta1.max <- qlogis(0.999) - beta0
+    
+    # reasonable bounds for poisson - need to be changed
+    # overflow <- 700 # 709.7827
+    # beta1.min <- (overflow - beta0) / min.x
+    # beta1.max <- (overflow - beta0) / max.x
+    var.obj <- var.beta(beta0 = beta0, beta1 = beta0, distribution = distribution)
+    min.x <- var.obj$min 
+    max.x <- var.obj$max 
+    
+    rate <- c(0.0001, 1e10)
+    bound.values <- c((log(min(rate)) - log(mean.exposure) - beta0) / c(min.x, max.x), 
+                      (log(max(rate)) - log(mean.exposure) - beta0) / c(min.x, max.x))
+    
+    beta1.min <- min(bound.values)
+    beta1.max <- max(bound.values)
+    
+    if(beta1.sign %in% c("-", -1, "-1", "negative")) {
+      beta1 <- try({
+        stats::uniroot(function(beta1) {
+          power - pwr.demidenko(beta0 = beta0, beta1 = beta1, n = n,
+                                r.squared.predictor = r.squared.predictor,
+                                alpha = alpha, alternative = alternative,
+                                method = method, distribution = distribution,
+                                mean.exposure = mean.exposure)$power
+        }, interval = c(beta1.min, 0))$root
+      })
+      
+      if(inherits(beta1, "try-error")) 
+        stop("Design is not feasible. Try 'beta1.sign = '+'", call. = FALSE)
+      
+    } # negative
+    
+    if(beta1.sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) {
+      beta1 <-  try({
+        stats::uniroot(function(beta1) {
+          power - pwr.demidenko(beta0 = beta0, beta1 = beta1, n = n,
+                                r.squared.predictor = r.squared.predictor,
+                                alpha = alpha, alternative = alternative,
+                                method = method, distribution = distribution,
+                                mean.exposure = mean.exposure)$power
+        }, interval = c(0, beta1.max))$root
+      })
+      
+      if(inherits(beta1, "try-error")) 
+        stop("Design is not feasible. Try 'beta1.sign = '-'", call. = FALSE)
+      
+      return(beta1)
+      
+    } # positive
+    
+  } # es.demidenko()
 
   if (requested == "n") {
 
     n <- ss.demidenko(beta0 = beta0, beta1 = beta1, power = power,
                       r.squared.predictor = r.squared.predictor,
                       alpha = alpha, alternative = alternative,
-                      method = method, distribution = distribution)
+                      method = method, distribution = distribution,
+                      mean.exposure = mean.exposure)
 
     if (ceiling) n <- ceiling(n)
 
   }
+  
+  if (requested == "es") {
+    
+    beta1 <- es.demidenko(beta0 = beta0, beta1.sign = beta1.sign, 
+                          n = n, power = power,
+                          r.squared.predictor = r.squared.predictor,
+                          alpha = alpha, alternative = alternative,
+                          method = method, distribution = distribution,
+                          mean.exposure = mean.exposure)
+    
+    base.rate <- exp(beta0)
+    rate.ratio <- exp(beta1)
+    
+  }
 
   # calculate power (if requested == "power") or update it (if requested == "n")
   pwr.obj <- pwr.demidenko(beta0 = beta0, beta1 = beta1, n = n, r.squared.predictor = r.squared.predictor,
-                           alpha = alpha, alternative = alternative, method = method, distribution = distribution)
+                           alpha = alpha, alternative = alternative, method = method, distribution = distribution,
+                           mean.exposure = mean.exposure)
 
   power <- pwr.obj$power
   z.alpha <- pwr.obj$z.alpha
