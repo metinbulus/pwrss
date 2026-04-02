@@ -247,15 +247,21 @@ ncp.t.test <- function(power = 0.80, ncp = NULL, null.ncp = 0, sign = "+",
   
   alternative <- tolower(match.arg(alternative))
   
+  if(power > 0.99) stop("Power cannot be larger than 0.99.", call. = FALSE)
+  
   if(is.null(ncp) & is.null(df)) 
     stop("Only one of the 'ncp' or 'df' can be NULL", call. = FALSE)
   
   if(is.null(ncp)) {
     
     if(is.null(df)) stop("'df' cannot be NULL", call. = FALSE)
+    if(df < 3) stop("Degrees of freedom cannot be smaller than 3.", call. = FALSE)
     
-    min <- stats::qt(0.000001, ncp = min(null.ncp), df = df)
-    max <- stats::qt(0.999999, ncp = max(null.ncp), df = df)
+    min.null <- stats::qt(1e-10, ncp = min(null.ncp), df = df)
+    min <- stats::qt(1e-10, ncp = min.null, df = df)
+    
+    max.null <- stats::qt(1 - 1e-10, ncp = max(null.ncp), df = df)
+    max <- stats::qt(1 - 1e-10, ncp = max.null, df = df)
     
     if(sign %in% c("-", -1, "-1", "negative")) max <- 0
     if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) min <- 0

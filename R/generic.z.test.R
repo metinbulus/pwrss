@@ -261,11 +261,16 @@ mean.z.test <- function(power = 0.80, mean = NULL, sign = "+",
   
   alternative <- tolower(match.arg(alternative))
   
+  if(power > 0.99) stop("Power cannot be larger than 0.99", call. = FALSE)
+  
   if(!is.null(mean)) 
     stop("'mean' should remain NULL", call. = FALSE)
   
-  min <- stats::qnorm(0.000001, mean = min(null.mean), sd = sd)
-  max <- stats::qnorm(0.999999, mean = max(null.mean), sd = sd)
+  min.null <- stats::qnorm(1e-10, mean = min(null.mean), sd = sd)
+  min <- stats::qnorm(1e-10, mean = min.null, sd = sd)
+  
+  max.null <- stats::qnorm(1 - 1e-10, mean = max(null.mean), sd = sd)
+  max <- stats::qnorm(1 - 1e-10, mean = max.null, sd = sd)
   
   if(sign %in% c("-", -1, "-1", "negative")) max <- 0
   if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) min <- 0
@@ -288,6 +293,6 @@ mean.z.test <- function(power = 0.80, mean = NULL, sign = "+",
                       alpha = alpha, alternative = alternative,
                       plot = plot, verbose = verbose, utf = utf)
   
-} # ncp.t.test
+} # mean.z.test
 
 mean.z <- mean.z.test
