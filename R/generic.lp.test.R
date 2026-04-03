@@ -267,16 +267,16 @@ ncp.lp.test <- function(power = 0.80, ncp = NULL, null.ncp = 0, sign = "+",
     if(df < 3) stop("Degrees of freedom cannot be smaller than 3.", call. = FALSE)
     
     suppressMessages({ 
-      min.null <- sadists::qlambdap(1e-10, t = min(null.ncp), df = df)
+      min.null <- sadists::qlambdap(alpha, t = min(null.ncp), df = df)
       min <- sadists::qlambdap(1e-10, t = min.null, df = df)
     })
     suppressMessages({
-      max.null <- sadists::qlambdap(1 - 1e-10, t = max(null.ncp), df = df)
+      max.null <- sadists::qlambdap(1 - alpha, t = max(null.ncp), df = df)
       max <- sadists::qlambdap(1 - 1e-10, t = max.null, df = df)
     })
     
-    if(sign %in% c("-", -1, "-1", "negative")) max <- 0
-    if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) min <- 0
+    if(sign %in% c("-", -1, "-1", "negative")) max <- min(null.ncp)
+    if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) min <- max(null.ncp)
     if(sign %in% c(" ", 0, "0", "")) {max <- max(null.ncp); min <- min(null.ncp)}
     
     suppressMessages({
@@ -316,7 +316,7 @@ ncp.lp.test <- function(power = 0.80, ncp = NULL, null.ncp = 0, sign = "+",
   } # df is null
   
   suppressMessages({
-    pwrss::power.lp.test(ncp = ncp, null.ncp = null.ncp,
+    power.lp.test(ncp = ncp, null.ncp = null.ncp,
                          df = df, alpha = alpha,
                          alternative = alternative,
                          plot = plot, verbose = verbose, utf = utf)

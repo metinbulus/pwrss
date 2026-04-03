@@ -158,3 +158,95 @@ power.binom.test <- function(size,
 } # power.binom.test()
 
 power.binom <- power.binom.test
+
+#' Find Probability (Non-Centrality) for the Generic Binomial Test
+#'
+#' @description
+#' Finds probability (non-centrality) for the generic binomial test with (optional) Type 1 and
+#' Type 2 error plots.
+#'
+#' @aliases prob.binom
+#'
+#' @param power       statistical power \eqn{(1-\beta)}.
+#' @param size        number of trials (zero or more).
+#' @param prob        probability of success on each trial under alternative.
+#' @param null.prob   probability of success on each trial under null.
+#' @param sign        whether 'prob' is expected to be greater '+1', less than '-1', or within '0' the null.prob' bounds.
+#' @param alpha       type 1 error rate, defined as the probability of
+#'                    incorrectly rejecting a true null hypothesis, denoted as
+#'                    \eqn{\alpha}.
+#' @param alternative character; the direction or type of the hypothesis test:
+#'                    "two.sided", "one.sided", or "two.one.sided". For
+#'                    non-inferiority or superiority tests, add or subtract the
+#'                    margin from the null hypothesis value and use alternative
+#'                    = "one.sided".
+#' @param plot        logical; \code{FALSE} switches off Type 1 and Type 2
+#'                    error plot. \code{TRUE} by default.
+#' @param verbose     \code{1} by default (returns test, hypotheses, and
+#'                    results), if \code{2} a more detailed output is given
+#'                    (plus key parameters and definitions), if \code{0} no
+#'                    output is printed on the console.
+#' @param utf         logical; whether the output should show Unicode
+#'                    characters (if encoding allows for it). \code{FALSE} by
+#'                    default.
+#'
+#' @return
+#'   \item{size}{number of trials (zero or more).}
+#'   \item{prob}{probability of success on each trial under alternative.}
+#'   \item{null.prob}{probability of success on each trial under null.}
+#'   \item{binom.alpha}{critical value(s).}
+#'   \item{power}{statistical power \eqn{(1-\beta)}.}
+#'
+#' @examples
+#' # one-sided
+#' prob.binom.test(size = 200, prob = NULL, sign = "+", power = 0.80, null.prob = 0.5,
+#'                  alpha = 0.05, alternative = "one.sided")
+#'
+#' # two-sided
+#' prob.binom.test(size = 200, prob = NULL, sign = "+", power = 0.80, null.prob = 0.5,
+#'                  alpha = 0.05, alternative = "two.sided")
+#'
+#' # equivalence
+#' prob.binom.test(size = 200, prob = NULL, sign = "0", power = 0.80, null.prob = c(0.4, 0.6),
+#'                  alpha = 0.05, alternative = "two.one.sided")
+#'
+#' @export prob.binom.test
+prob.binom.test <- function(power = 0.80, 
+                            size,
+                            prob = NULL,
+                            sign = "+",
+                            null.prob = 0.5,
+                            alpha = 0.05,
+                            alternative = c("two.sided", "one.sided", "two.one.sided"),
+                            plot = TRUE,
+                            verbose = 1,
+                            utf = FALSE) {
+  
+  alternative <- tolower(match.arg(alternative))
+  
+  if(power > 0.99) stop("Power cannot be larger than 0.99.", call. = FALSE)
+  
+  min <- 0.0001
+  max <- 0.9999
+  
+  if(sign %in% c("-", -1, "-1", "negative")) max <- min(null.prob)
+  if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) min <- max(null.prob)
+  if(sign %in% c(" ", 0, "0", "")) {max <- max(null.prob); min <- min(null.prob)}
+  
+  prob <- optimize(
+    f = function(prob) {
+      (power - power.binom.test(size = size, prob = prob, null.prob = null.prob,
+                                alpha = alpha, alternative = alternative,
+                                plot = FALSE, verbose = 0, utf = FALSE)$power)^2
+    },
+    maximum = FALSE,
+    lower = min,
+    upper = max,
+  )$minimum
+  
+  power.binom.test(size = size, prob = prob, null.prob = null.prob,
+                   alpha = alpha, alternative = alternative,
+                   plot = plot, verbose = verbose, utf = utf)
+  
+} # prob.binom.test
+prob.binom <- prob.binom.test

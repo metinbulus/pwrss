@@ -108,20 +108,26 @@ power.chisq <- power.chisq.test
 #' @examples
 #' # power is defined as the probability of observing a test statistics greater
 #' # than the critical value
-#' power.chisq.test(ncp = 20, df = 100, alpha = 0.05)
+#' ncp.chisq.test(ncp =  NULL, power = 0.80, df = 100, alpha = 0.05)
 #'
 #' @export ncp.chisq.test
 ncp.chisq.test <- function(power = 0.80, ncp = NULL, null.ncp = 0,
                            df = NULL, alpha = 0.05,
                            plot = TRUE, verbose = 1, utf = FALSE) {
   
+  if(power > 0.99) stop("Power cannot be larger than 0.99.", call. = FALSE)
+  
   if(is.null(ncp)) {
     
     if(is.null(df)) stop("'df' cannot be NULL", call. = FALSE)
     if(df < 1) stop("Degrees of freedom cannot be smaller than 1.", call. = FALSE)
     
-    max.null <- qchisq(1 - 1e-10, ncp = null.ncp, df = df)
-    max <- qchisq(1 - 1e-10, ncp = max.null, df = df)
+    max <- qchisq(1 - 1e-10, ncp = null.ncp, df = df)
+    while (power.chisq.test(ncp = max, null.ncp = null.ncp,
+                        df = df, alpha = alpha, 
+                        plot = FALSE, verbose = 0, utf = FALSE)$power <= power) {
+      max <- max * 1.10
+    }
     
     ncp <- optimize(
       f = function(ncp) {
@@ -153,7 +159,7 @@ ncp.chisq.test <- function(power = 0.80, ncp = NULL, null.ncp = 0,
     
   } # df is null
   
-  pwrss::power.chisq.test(ncp = ncp, null.ncp = null.ncp,
+  power.chisq.test(ncp = ncp, null.ncp = null.ncp,
                           df = df, alpha = alpha,
                           plot = plot, verbose = verbose, utf = utf)
   
