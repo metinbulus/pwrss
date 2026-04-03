@@ -275,8 +275,8 @@ ncp.lp.test <- function(power = 0.80, ncp = NULL, null.ncp = 0, sign = "+",
       max <- sadists::qlambdap(1 - 1e-10, t = max.null, df = df)
     })
     
-    if(sign %in% c("-", -1, "-1", "negative")) max <- 0
-    if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) min <- 0
+    if(sign %in% c("-", -1, "-1", "negative")) max <- min(null.ncp)
+    if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) min <- max(null.ncp)
     if(sign %in% c(" ", 0, "0", "")) {max <- max(null.ncp); min <- min(null.ncp)}
     
     suppressMessages({

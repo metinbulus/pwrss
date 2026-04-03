@@ -188,7 +188,7 @@ power.z <- power.z.test
 #' @aliases mean.z
 #'
 #' @param power       statistical power \eqn{(1-\beta)}.
-#' @param mean mean of the alternative.
+#' @param mean        mean of the alternative.
 #' @param sd          standard deviation of the alternative. Do not change this
 #'                    value except when some sort of variance correction is
 #'                    applied (e.g. as in logistic and Poisson regressions).
@@ -199,6 +199,7 @@ power.z <- power.z.test
 #'                    `c(-value, +value)`.
 #' @param null.sd     standard deviation of the null. Do not change this value
 #'                    except when some sort of correction is applied.
+#' @param sign        whether 'mean' is expected to be greater '+1', less than '-1', or within '0' the null.mean' bounds.
 #' @param alpha       type 1 error rate, defined as the probability of
 #'                    incorrectly rejecting a true null hypothesis, denoted as
 #'                    \eqn{\alpha}.
@@ -272,8 +273,8 @@ mean.z.test <- function(power = 0.80, mean = NULL, sign = "+",
   max.null <- stats::qnorm(1 - alpha, mean = max(null.mean), sd = sd)
   max <- stats::qnorm(1 - 1e-10, mean = max.null, sd = sd)
   
-  if(sign %in% c("-", -1, "-1", "negative")) max <- 0
-  if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) min <- 0
+  if(sign %in% c("-", -1, "-1", "negative")) max <- min(null.mean)
+  if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) min <- max(null.mean)
   if(sign %in% c(" ", 0, "0", "")) {max <- max(null.mean); min <- min(null.mean)}
   
   mean <- optimize(

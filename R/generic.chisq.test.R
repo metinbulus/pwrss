@@ -115,6 +115,8 @@ ncp.chisq.test <- function(power = 0.80, ncp = NULL, null.ncp = 0,
                            df = NULL, alpha = 0.05,
                            plot = TRUE, verbose = 1, utf = FALSE) {
   
+  if(power > 0.99) stop("Power cannot be larger than 0.99.", call. = FALSE)
+  
   if(is.null(ncp)) {
     
     if(is.null(df)) stop("'df' cannot be NULL", call. = FALSE)

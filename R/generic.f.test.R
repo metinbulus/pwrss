@@ -114,32 +114,30 @@ ncp.f.test <- function(power = 0.80, ncp = NULL, null.ncp = 0,
                        df1 = NULL, df2 = NULL, alpha = 0.05,
                        plot = TRUE, verbose = 1, utf = FALSE) {
   
-  if(is.null(ncp)) {
-    
-    if(is.null(df1)) stop("'df1' cannot be NULL", call. = FALSE)
-    if(is.null(df2)) stop("'df2' cannot be NULL", call. = FALSE)
-    if(df1 < 1) stop("Degrees of freedom cannot be smaller than 1.", call. = FALSE)
-    if(df2 < 3) stop("Degrees of freedom cannot be smaller than 3.", call. = FALSE)
-    
-    max <- qf(1 - 1e-10, ncp = null.ncp, df1 = df1, df2 = df2)
-    while (power.f.test(ncp = max, null.ncp = null.ncp,
-                        df1 = df1, df2 = df2, alpha = alpha, 
-                        plot = FALSE, verbose = 0, utf = FALSE)$power <= power) {
-      max <- max * 1.10
-    }
-    
-    ncp <- optimize(
-      f = function(ncp) {
-        (power - power.f.test(ncp = ncp, null.ncp = null.ncp,
-                              df1 = df1, df2 = df2, alpha = alpha, 
-                              plot = FALSE, verbose = 0, utf = FALSE)$power)^2
-      },
-      maximum = FALSE,
-      lower = 0,
-      upper = max,
-    )$minimum
-    
-  } # ncp is null
+  if(power > 0.99) stop("Power cannot be larger than 0.99.", call. = FALSE)
+  
+  if(is.null(df1)) stop("'df1' cannot be NULL", call. = FALSE)
+  if(is.null(df2)) stop("'df2' cannot be NULL", call. = FALSE)
+  if(df1 < 1) stop("Degrees of freedom cannot be smaller than 1.", call. = FALSE)
+  if(df2 < 3) stop("Degrees of freedom cannot be smaller than 3.", call. = FALSE)
+  
+  max <- qf(1 - 1e-10, ncp = null.ncp, df1 = df1, df2 = df2)
+  while (power.f.test(ncp = max, null.ncp = null.ncp,
+                      df1 = df1, df2 = df2, alpha = alpha, 
+                      plot = FALSE, verbose = 0, utf = FALSE)$power <= power) {
+    max <- max * 1.10
+  }
+  
+  ncp <- optimize(
+    f = function(ncp) {
+      (power - power.f.test(ncp = ncp, null.ncp = null.ncp,
+                            df1 = df1, df2 = df2, alpha = alpha, 
+                            plot = FALSE, verbose = 0, utf = FALSE)$power)^2
+    },
+    maximum = FALSE,
+    lower = 0,
+    upper = max,
+  )$minimum
   
   power.f.test(ncp = ncp, null.ncp = null.ncp,
                df1 = df1, df2 = df2, alpha = alpha,
