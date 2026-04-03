@@ -63,7 +63,7 @@
 #'                     alternative = "one.sided")
 #'
 #' @export power.exact.oneprop
-power.exact.oneprop <- function(prob, null.prob = 0.50,
+power.exact.oneprop <- function(prob = NULL, sign = "+", null.prob = 0.50,
                                 n = NULL, power = NULL, alpha = 0.05,
                                 alternative = c("two.sided", "one.sided", "two.one.sided"),
                                 verbose = 1, utf = FALSE) {
@@ -71,16 +71,21 @@ power.exact.oneprop <- function(prob, null.prob = 0.50,
   alternative <- tolower(match.arg(alternative))
   func.parms <- clean.parms(as.list(environment()))
 
-  check.proportion(prob)
   null.prob <- check.margins(null.prob, check.proportion, alternative)
   if (!is.null(n)) check.sample.size(n)
   if (!is.null(power)) check.proportion(power)
   check.proportion(alpha)
   check.logical(utf)
   verbose <- ensure_verbose(verbose)
-  requested <- check.n_power(n, power)
+  # requested <- check.n_power(n, power)
+  if(is.null(n)) requested <- "n"
+  if(is.null(power)) requested <- "power"
+  if(is.null(prob)) requested <- "es"
   
-  if(prob %in% c(0, 1)) stop("'prob' should be > 0 and < 1", call. = FALSE)
+  if(!is.null(prob)) {
+    check.proportion(prob)
+    if(prob %in% c(0, 1)) stop("'prob' should be > 0 and < 1", call. = FALSE)
+  }
 
   ss.exact <- function(prob, null.prob, power, alpha, alternative) {
 
@@ -154,16 +159,28 @@ power.exact.oneprop <- function(prob, null.prob = 0.50,
     n
 
   } #  ss.exact()
+  
 
   if (requested == "n") {
 
     n <- ss.exact(prob = prob, null.prob = null.prob, power = power,
-             alpha = alpha, alternative = alternative)
+                  alpha = alpha, alternative = alternative)
 
+  }
+  
+  if (requested == "es") {
+    
+    if(power > 0.99) stop("Power cannot be larger than 0.99.", call. = FALSE)
+    
+    prob <- prob.binom.test(power = power, size = n, prob = NULL, sign = sign,
+                            null.prob = null.prob, alpha = alpha, alternative = alternative,
+                            plot = FALSE, verbose = 0, utf = FALSE)$prob
+    
   }
 
   # calculate power (if requested == "power") or update it (if requested == "n")
-  pwr.obj <- power.binom.test(size = n, prob = prob, null.prob = null.prob, alpha = alpha, alternative = alternative,
+  pwr.obj <- power.binom.test(size = n, prob = prob, null.prob = null.prob,
+                              alpha = alpha, alternative = alternative,
                               plot = FALSE, verbose = 0)
 
   alpha <- pwr.obj$alpha
@@ -296,7 +313,7 @@ power.exact.oneprop <- function(prob, null.prob = 0.50,
 #'                 alternative = "one.sided")
 #'
 #' @export power.z.oneprop
-power.z.oneprop <- function(prob, null.prob = 0.50,
+power.z.oneprop <- function(prob = NULL, sign = "+", null.prob = 0.50,
                             n = NULL, power = NULL, alpha = 0.05,
                             alternative = c("two.sided", "one.sided", "two.one.sided"),
                             std.error = c("null", "alternative"),
@@ -307,22 +324,29 @@ power.z.oneprop <- function(prob, null.prob = 0.50,
   std.error <- tolower(match.arg(std.error))
   func.parms <- clean.parms(as.list(environment()))
 
-  check.proportion(prob)
   null.prob <- check.margins(null.prob, check.proportion, alternative)
   if (!is.null(n)) check.sample.size(n)
   if (!is.null(power)) check.proportion(power)
   check.proportion(alpha)
   check.logical(arcsine, correct, ceiling, utf)
   verbose <- ensure_verbose(verbose)
-  requested <- check.n_power(n, power)
   
-  if(prob %in% c(0, 1)) stop("'prob' should be > 0 and < 1", call. = FALSE)
-
-  if (alternative == "two.one.sided" && std.error == "null") {
-    std.error <- "alternative"
-    warning("`std.error` = \"null\" is ignored. Using \"alternative\" for equivalence or minimal effect testing.", call. = FALSE)
+  # requested <- check.n_power(n, power)
+  if(is.null(n)) requested <- "n"
+  if(is.null(power)) requested <- "power"
+  if(is.null(prob)) requested <- "es"
+  
+  if(!is.null(prob)) {
+    check.proportion(prob)
+    if(prob %in% c(0, 1)) stop("'prob' should be > 0 and < 1", call. = FALSE)
   }
-
+  
+  if (alternative == "two.one.sided") {
+    if(std.error == "null") std.error <- "alternative"
+    warning("`std.error` = \"null\" is ignored. Using \"alternative\" for equivalence or minimal effect testing.", call. = FALSE)
+    if(min(null.prob) == max(null.prob)) stop("Null bounds should be different from each other", call. = FALSE)
+  }
+  
   if (arcsine && correct) warning("Continuity correction does not apply to arcsine transformation approach.", call. = FALSE)
 
   pwr <- function(prob, null.prob, n, std.error, arcsine, correct, alpha, alternative) {
@@ -510,7 +534,32 @@ power.z.oneprop <- function(prob, null.prob = 0.50,
 
     if (ceiling) n <- ceiling(n)
 
-  }
+  } # sample size
+  
+  if (requested == "es") {
+    
+    if(power > 0.99) stop("Power cannot be larger than 0.99.", call. = FALSE)
+    
+    min <- 0.0001
+    max <- 0.9999
+    
+    if(sign %in% c("-", -1, "-1", "negative")) max <- min(null.prob)
+    if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) min <- max(null.prob)
+    if(sign %in% c(" ", 0, "0", "")) {max <- max(null.prob); min <- min(null.prob)}
+    
+    prob <- optimize(
+      f = function(prob) {
+        (power - pwr(prob = prob, null.prob = null.prob, 
+                     n = n, std.error = std.error,
+                     arcsine = arcsine, correct = correct, 
+                     alpha = alpha, alternative = alternative)$power)^2 
+      },
+      maximum = FALSE,
+      lower = min,
+      upper = max,
+    )$minimum
+    
+  } # effect size
 
   # calculate power (if requested == "power") or update it (if requested == "n")
   pwr.obj <- pwr(prob = prob, null.prob = null.prob, n = n, std.error = std.error,
@@ -552,6 +601,7 @@ power.z.oneprop <- function(prob, null.prob = 0.50,
 
   invisible(structure(list(parms = func.parms,
                            test = "z",
+                           prob = prob, 
                            delta = delta,
                            odds.ratio = odds.ratio,
                            mean = mean.alternative,
