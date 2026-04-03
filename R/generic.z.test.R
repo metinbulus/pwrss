@@ -266,10 +266,10 @@ mean.z.test <- function(power = 0.80, mean = NULL, sign = "+",
   if(!is.null(mean)) 
     stop("'mean' should remain NULL", call. = FALSE)
   
-  min.null <- stats::qnorm(1e-10, mean = min(null.mean), sd = sd)
+  min.null <- stats::qnorm(alpha, mean = min(null.mean), sd = sd)
   min <- stats::qnorm(1e-10, mean = min.null, sd = sd)
   
-  max.null <- stats::qnorm(1 - 1e-10, mean = max(null.mean), sd = sd)
+  max.null <- stats::qnorm(1 - alpha, mean = max(null.mean), sd = sd)
   max <- stats::qnorm(1 - 1e-10, mean = max.null, sd = sd)
   
   if(sign %in% c("-", -1, "-1", "negative")) max <- 0
@@ -288,7 +288,7 @@ mean.z.test <- function(power = 0.80, mean = NULL, sign = "+",
     upper = max,
   )$minimum
   
-  pwrss::power.z.test(mean = mean, sd = sd,  
+  power.z.test(mean = mean, sd = sd,  
                       null.mean = null.mean, null.sd = null.sd,
                       alpha = alpha, alternative = alternative,
                       plot = plot, verbose = verbose, utf = utf)

@@ -257,10 +257,10 @@ ncp.t.test <- function(power = 0.80, ncp = NULL, null.ncp = 0, sign = "+",
     if(is.null(df)) stop("'df' cannot be NULL", call. = FALSE)
     if(df < 3) stop("Degrees of freedom cannot be smaller than 3.", call. = FALSE)
     
-    min.null <- stats::qt(1e-10, ncp = min(null.ncp), df = df)
+    min.null <- stats::qt(alpha, ncp = min(null.ncp), df = df)
     min <- stats::qt(1e-10, ncp = min.null, df = df)
     
-    max.null <- stats::qt(1 - 1e-10, ncp = max(null.ncp), df = df)
+    max.null <- stats::qt(1 - alpha, ncp = max(null.ncp), df = df)
     max <- stats::qt(1 - 1e-10, ncp = max.null, df = df)
     
     if(sign %in% c("-", -1, "-1", "negative")) max <- 0
@@ -297,7 +297,7 @@ ncp.t.test <- function(power = 0.80, ncp = NULL, null.ncp = 0, sign = "+",
     
   } # df is null
   
-  pwrss::power.t.test(ncp = ncp, null.ncp = null.ncp,
+  power.t.test(ncp = ncp, null.ncp = null.ncp,
                       df = df, alpha = alpha,
                       alternative = alternative,
                       plot = plot, verbose = verbose, utf = utf)
