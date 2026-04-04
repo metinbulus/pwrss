@@ -392,6 +392,8 @@ power.exact.mcnemar <- function(prob10, prob01, n.paired = NULL,
 
   invisible(structure(list(parms = func.parms,
                            test = ifelse(method == "exact", "exact", "z"),
+                           prob01 = prob01,
+                           prob10 = prob10,
                            delta = prob10 - prob01,
                            odds.ratio = prob10 / prob01,
                            size = n.discordant,

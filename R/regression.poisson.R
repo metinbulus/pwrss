@@ -42,7 +42,7 @@
 #' @param beta1               the natural logarithm of the relative increase
 #'                            in the mean event rate for one unit increase in
 #'                            the predictor.
-#' @param beta1.sign          sign of the beta1 coefficient (when minimum 
+#' @param sign          sign of the beta1 coefficient (when minimum 
 #'                            detectable effect or beta1 is of interest).
 #' @param mean.exposure       the mean exposure time (should be > 0), usually
 #'                            it is 1.
@@ -148,7 +148,7 @@
 #' @export power.z.poisson
 power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL,
                             beta0 = NULL, beta1 = NULL, 
-                            beta1.sign = NULL,
+                            sign = NULL,
                             n = NULL, power = NULL,
                             r.squared.predictor = 0, mean.exposure = 1,
                             alpha = 0.05, alternative = c("two.sided", "one.sided"),
@@ -413,7 +413,7 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL,
 
   } # ss.demidenko()
   
-  es.demidenko <- function(beta0, beta1.sign, n, power, 
+  es.demidenko <- function(beta0, sign, n, power, 
                            r.squared.predictor,
                            alpha, alternative,
                            method, distribution, 
@@ -438,7 +438,7 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL,
     beta1.min <- min(bound.values)
     beta1.max <- max(bound.values)
     
-    if(beta1.sign %in% c("-", -1, "-1", "negative")) {
+    if(sign %in% c("-", -1, "-1", "negative")) {
       beta1 <- try({
         stats::uniroot(function(beta1) {
           power - pwr.demidenko(beta0 = beta0, beta1 = beta1, n = n,
@@ -450,11 +450,11 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL,
       })
       
       if(inherits(beta1, "try-error")) 
-        stop("Design is not feasible. Try 'beta1.sign = '+'", call. = FALSE)
+        stop("Design is not feasible. Try sign = '+'", call. = FALSE)
       
     } # negative
     
-    if(beta1.sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) {
+    if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) {
       beta1 <-  try({
         stats::uniroot(function(beta1) {
           power - pwr.demidenko(beta0 = beta0, beta1 = beta1, n = n,
@@ -466,7 +466,7 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL,
       })
       
       if(inherits(beta1, "try-error")) 
-        stop("Design is not feasible. Try 'beta1.sign = '-'", call. = FALSE)
+        stop("Design is not feasible. Try sign = '-'", call. = FALSE)
       
       return(beta1)
       
@@ -488,7 +488,7 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL,
   
   if (requested == "es") {
     
-    beta1 <- es.demidenko(beta0 = beta0, beta1.sign = beta1.sign, 
+    beta1 <- es.demidenko(beta0 = beta0, sign = sign, 
                           n = n, power = power,
                           r.squared.predictor = r.squared.predictor,
                           alpha = alpha, alternative = alternative,

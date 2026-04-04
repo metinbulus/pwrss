@@ -47,7 +47,7 @@
 #'                            \code{beta0 = log(base.prob/(1-base.prob))}
 #' @param beta1               regression coefficient for the predictor X defined as
 #'                            \code{beta1 = log((prob / (1 - prob)) / (base.prob / (1 - base.prob)))}
-#' @param beta1.sign          sign of the beta1 coefficient (when minimum 
+#' @param sign          sign of the beta1 coefficient (when minimum 
 #'                            detectable effect or beta1 is of interest).
 #' @param odds.ratio          odds ratio defined as
 #'                            \code{odds.ratio = exp(beta1) = (prob / (1 - prob)) / (base.prob / (1 - base.prob))}
@@ -187,7 +187,7 @@
 #'
 #' @export power.z.logistic
 power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
-                             beta0 = NULL, beta1 = NULL, beta1.sign = "+",
+                             beta0 = NULL, beta1 = NULL, sign = "+",
                              n = NULL, power = NULL,
                              r.squared.predictor = 0,
                              alpha = 0.05, alternative = c("two.sided", "one.sided"),
@@ -457,7 +457,7 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
 
   } # ss.demidenko()
   
-  es.demidenko <- function(beta0, beta1.sign, n, power, 
+  es.demidenko <- function(beta0, sign, n, power, 
                            r.squared.predictor,
                            alpha, alternative,
                            method, distribution) {
@@ -473,7 +473,7 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
     beta1.min <- min(bound.values)
     beta1.max <- max(bound.values)
     
-    if(beta1.sign %in% c("-", -1, "-1", "negative")) {
+    if(sign %in% c("-", -1, "-1", "negative")) {
       beta1 <- try({
         stats::uniroot(function(beta1) {
           power - pwr.demidenko(beta0 = beta0, beta1 = beta1, n = n,
@@ -484,11 +484,11 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
       })
       
       if(inherits(beta1, "try-error")) 
-        stop("Design is not feasible. Try 'beta1.sign = '+'", call. = FALSE)
+        stop("Design is not feasible. Try sign = '+'", call. = FALSE)
       
     } # negative
     
-    if(beta1.sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) {
+    if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) {
       beta1 <-  try({
         stats::uniroot(function(beta1) {
           power - pwr.demidenko(beta0 = beta0, beta1 = beta1, n = n,
@@ -499,7 +499,7 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
       })
     
       if(inherits(beta1, "try-error")) 
-        stop("Design is not feasible. Try 'beta1.sign = '-'", call. = FALSE)
+        stop("Design is not feasible. Try sign = '-'", call. = FALSE)
       
     } # positive
     
@@ -568,7 +568,7 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
 
   } # pwr.hsieh
   
-  es.hsieh <- function(base.prob, beta1.sign, n, power, 
+  es.hsieh <- function(base.prob, sign, n, power, 
                        r.squared.predictor,
                        alpha, alternative,
                        distribution) {
@@ -577,7 +577,7 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
     prob.min <- 0.0001
     prob.max <- 0.9999
     
-    if(beta1.sign %in% c("-", -1, "-1", "negative")) {
+    if(sign %in% c("-", -1, "-1", "negative")) {
       prob <- try({
         stats::uniroot(function(prob) {
           n - ss.hsieh(base.prob = base.prob, prob = prob,
@@ -589,11 +589,11 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
       })
       
       if(inherits(prob, "try-error")) 
-        stop("Design is not feasible. Try 'beta1.sign = '+'", call. = FALSE)
+        stop("Design is not feasible. Try 'sign = '+'", call. = FALSE)
       
     } # negative
     
-    if(beta1.sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) {
+    if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) {
       prob <- try({
         stats::uniroot(function(prob) {
           n - ss.hsieh(base.prob = base.prob, prob = prob,
@@ -605,7 +605,7 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
       })
       
       if(inherits(prob, "try-error")) 
-        stop("Design is not feasible. Try 'beta1.sign = '-'", call. = FALSE)
+        stop("Design is not feasible. Try 'sign = '-'", call. = FALSE)
       
     } # positive
     
@@ -629,7 +629,7 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
     
     if (requested == "es") {
       
-      beta1 <- es.demidenko(beta0 = beta0, beta1.sign = beta1.sign, 
+      beta1 <- es.demidenko(beta0 = beta0, sign = sign, 
                             n = n, power = power,
                             r.squared.predictor = r.squared.predictor,
                             alpha = alpha, alternative = alternative,
@@ -666,7 +666,7 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
     if (requested == "es") {
       
      prob <- es.hsieh(base.prob = base.prob, 
-                        beta1.sign = beta1.sign,
+                        sign = sign,
                         n = n, power = power, 
                         r.squared.predictor = r.squared.predictor,
                         alpha = alpha, alternative = alternative,
