@@ -668,6 +668,8 @@ pwrss.z.prop <- function(p, p0 = 0.50, margin = 0, arcsin.trans = FALSE, alpha =
 #'
 #' @param prob1       probability of success in the first group.
 #' @param prob2       probability of success in the second group.
+#' @param sign        whether estimated prob is smaller or larger than the other 
+#'                    (when minimum detectable prob is of interest).
 #' @param n.ratio     sample size ratio (n1 / n2).
 #' @param n2          integer; sample size for the second group.
 #' @param power       statistical power, defined as the probability of
