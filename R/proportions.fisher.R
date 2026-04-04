@@ -380,6 +380,8 @@ power.exact.fisher <- function(prob1, prob2,
 
   invisible(structure(list(parms = func.parms,
                            test = ifelse(method == "exact", "exact", "z"),
+                           prob1 = prob1,
+                           prob2 = prob2,
                            delta = prob1 - prob2,
                            odds.ratio = (prob1 / (1 - prob1)) /  (prob2 / (1 - prob2)),
                            mean = mean.alternative,

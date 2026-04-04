@@ -743,18 +743,20 @@ pwrss.z.prop <- function(p, p0 = 0.50, margin = 0, arcsin.trans = FALSE, alpha =
 #'                        paired = TRUE)
 #'
 #' @export power.exact.twoprops
-power.exact.twoprops <- function(prob1, prob2, n.ratio = 1, n2 = NULL,
+power.exact.twoprops <- function(prob1 = NULL, prob2 = NULL, sign = "+",
+                                 n.ratio = 1, n2 = NULL,
                                  power = NULL, alpha = 0.05,
                                  alternative = c("two.sided", "one.sided"),
                                  paired = FALSE, rho.paired = 0.50,
                                  method = c("exact", "approximate"),
                                  ceiling = TRUE, verbose = 1, utf = FALSE) {
-
+  
   alternative <- tolower(match.arg(alternative))
   method <- tolower(match.arg(method))
-
-  check.proportion(prob1, prob2)
+  
   check.positive(n.ratio)
+  if(!is.null(prob1)) check.proportion(prob1)
+  if(!is.null(prob2)) check.proportion(prob2)
   if (!is.null(n2)) check.sample.size(n2)
   if (!is.null(power)) check.proportion(power)
   check.proportion(alpha)
@@ -762,25 +764,101 @@ power.exact.twoprops <- function(prob1, prob2, n.ratio = 1, n2 = NULL,
   check.correlation(rho.paired)
   check.logical(ceiling, utf)
   verbose <- ensure_verbose(verbose)
-
+  
+  # requested <- check.n_power(n, power)
+  if(is.null(n2)) requested <- "n"
+  if(is.null(power)) requested <- "power"
+  if(is.null(prob1) | is.null(prob2)) requested <- "es"
+  
+  if(is.null(prob1) & is.null(prob2)) stop("Only one of the 'prob1' and 'prob2' can be NULL", call. = FALSE)
+  
+  if(requested == "es") {
+    
+    pwr.exact <- function(prob1, prob2, n.ratio, n2, power, alpha,
+                          alternative, paired, rho.paired, method) {
+      
+      if (paired) {
+        
+        jp <- joint.probs.2x2(prob1 = prob1, prob2 = prob2, rho = rho.paired, verbose = 0)
+        
+        power.exact.mcnemar(prob10 = jp$prob10, prob01 = jp$prob01,
+                            power = power, n.paired = n2, alpha = alpha,
+                            alternative = alternative, method =  method,
+                            ceiling = FALSE, verbose = 0, utf = FALSE)
+        
+      } else {
+        
+        power.exact.fisher(prob1 = prob1, prob2 = prob2, n2 = n2, n.ratio = n.ratio,
+                           alpha = alpha, power = power,
+                           alternative = alternative, method = method,
+                           ceiling = FALSE, verbose = FALSE, utf = FALSE)
+        
+      } # paired
+      
+    } # power
+    
+    if(power > 0.99) stop("Power cannot be larger than 0.99.", call. = FALSE)
+    
+    min <- 0.0001
+    max <- 0.9999
+    
+    if(sign %in% c("-", -1, "-1", "negative")) max <- ifelse(is.null(prob1), prob2, prob1)
+    if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) min <- ifelse(is.null(prob1), prob2, prob1)
+    if(sign %in% c(" ", 0, "0", "")) {
+      stop("'sign' can only be '+' and '-' for this function", call. = FALSE)
+    }
+    
+    if(is.null(prob1)) {
+      
+      prob1 <- optimize(
+        f = function(prob1) {
+          (power - pwr.exact(prob1 = prob1, prob2 = prob2, n.ratio = n.ratio, 
+                             n2 = n2, power = NULL, alpha = alpha, alternative = alternative, 
+                             paired = paired, rho.paired = rho.paired, method = method)$power)^2 
+        },
+        maximum = FALSE,
+        lower = min,
+        upper = max,
+      )$minimum
+      
+    } else {
+      
+      prob2 <- optimize(
+        f = function(prob2) {
+          (power - pwr.exact(prob1 = prob1, prob2 = prob2, n.ratio = n.ratio, 
+                             n2 = n2, power = NULL, alpha = alpha, alternative = alternative, 
+                             paired = paired, rho.paired = rho.paired, method = method)$power)^2 
+        },
+        maximum = FALSE,
+        lower = min,
+        upper = max,
+      )$minimum
+      
+    } # prob1 or prob2?
+    
+  } # effect size
+  
+  # update or estimate power or sample size
+  if(requested == "es") power <- NULL
+  
   if (paired) {
-
+    
     jp <- joint.probs.2x2(prob1 = prob1, prob2 = prob2, rho = rho.paired, verbose = 0)
-
+    
     power.exact.mcnemar(prob10 = jp$prob10, prob01 = jp$prob01,
                         power = power, n.paired = n2, alpha = alpha,
                         alternative = alternative, method =  method,
                         ceiling = ceiling, verbose = verbose, utf = utf)
-
+    
   } else {
-
+    
     power.exact.fisher(prob1 = prob1, prob2 = prob2, n2 = n2, n.ratio = n.ratio,
                        alpha = alpha, power = power,
                        alternative = alternative, method = method,
                        ceiling = ceiling, verbose = verbose, utf = utf)
-
-  }
-
+    
+  } # power and sample size
+  
 } # power.exact.twoprops()
 
 #' @export power.exact.twoprop
