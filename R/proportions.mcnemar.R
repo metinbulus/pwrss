@@ -360,7 +360,6 @@ power.exact.mcnemar <- function(prob10, prob01, n.paired = NULL,
     }
   }
 
-
   ifelse(method == "exact",
          class <- c("pwrss", "exact", "mcnemar"),
          class <- c("pwrss", "z", "twoprops"))

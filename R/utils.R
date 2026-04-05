@@ -603,10 +603,67 @@ joint.probs.2x2 <- function(prob1, prob2, rho = 0.50, verbose = 1) {
   if (verbose > 0)
     print(c(rho.min = rho.min, rho.max = rho.max, prob11 = prob11, prob10 = prob10, prob01 = prob01, prob00 = prob00))
 
-  invisible(list(parms = func.parms,
+  invisible(list(parms = func.parms, rho.min = rho.min, rho.max = rho.max, 
                  prob11 = prob11, prob10 = prob10, prob01 = prob01, prob00 = prob00))
 
 } # joint.probs.2x2
+
+
+# no need to export or document - internal function
+# find limits of prob2 given prob1 and rho (or prob1 given prob2 and rho)
+prob.limits.paired <- function(prob1 = NULL, prob2 = NULL, rho = 0.50,
+                               grid.min = 0.0001, grid.max = 0.9999, step = 0.0001) {
+  
+  rho.limits <- function(prob1, prob2) {
+    
+    rho.min <- max(
+      -sqrt(prob1 * prob2 / ((1 - prob1) * (1 - prob2))),
+      -sqrt((1 - prob1) * (1 - prob2) / (prob2 * prob2))
+    )
+    
+    rho.max <- min(
+      sqrt(prob1 * (1 - prob2) / (prob2 * (1 - prob1))),
+      sqrt(prob2 * (1 - prob1) / (prob1 * (1 - prob2)))
+    )
+    
+    c(rho.min, rho.max)
+    
+  } # rho.limits
+  
+  rho.is.feasible <- function(prob1, prob2, rho) {
+    
+    limits <- rho.limits(prob1, prob2)
+    rho >= limits[1] & rho <= limits[2]
+    
+  } # rho.is.feasible
+  
+  if (is.null(prob2) && !is.null(prob1)) {
+    
+    feasible <- function(x) rho.is.feasible(prob1 = prob1, prob2 = x, rho = rho)
+    
+  } else if (is.null(prob1) && !is.null(prob2)) {
+    
+    feasible <- function(x) rho.is.feasible(prob1 = x, prob2 = prob2, rho = rho)
+    
+  } else {
+    
+    stop("Exactly one of prob1 or prob2 must be NULL", call. = FALSE)
+    
+  }
+  
+  # find the feasible region
+  grid <- seq(grid.min, grid.max, by = step)
+  good <- sapply(grid, feasible)
+  
+  if (!any(good)) {
+    stop("No feasible values found. Check that rho is achievable given the fixed probability.")
+  }
+  
+  feasible.vals <- grid[good]
+  
+  c(prob.min = min(feasible.vals), prob.max = max(feasible.vals))
+  
+} # prob.limits.paired
 
 
 #' Helper function to converts marginal probabilities to joint probabilities
