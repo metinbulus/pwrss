@@ -16,6 +16,8 @@
 #' @param prob01      (joint) probability of failure in case (or after) but
 #'                    success in matched control (or before). prob10' and
 #'                    'prob01' are known as discordant probs.
+#' @param sign        whether estimated prob is smaller or larger than the other 
+#'                    (when minimum detectable prob is of interest).
 #' @param n.paired    number of pairs, which is sum of cell frequencies in the
 #'                    2 x 2 table (f11 + f10 + f01 + f00), or number of rows in
 #'                    a data frame with matched variables 'case' and 'control'
@@ -136,7 +138,8 @@
 #' )
 #'
 #' @export power.exact.mcnemar
-power.exact.mcnemar <- function(prob10, prob01, n.paired = NULL,
+power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
+                                sign = "+", n.paired = NULL,
                                 power = NULL,  alpha = 0.05,
                                 alternative = c("two.sided", "one.sided"),
                                 method = c("exact", "approximate"),
@@ -146,13 +149,18 @@ power.exact.mcnemar <- function(prob10, prob01, n.paired = NULL,
   method <- tolower(match.arg(method))
   func.parms <- clean.parms(as.list(environment()))
 
-  check.proportion(prob10, prob01)
+  if (!is.null(prob10)) check.proportion(prob10)
+  if (!is.null(prob01)) check.proportion(prob01)
   if (!is.null(n.paired)) check.sample.size(n.paired)
   if (!is.null(power)) check.proportion(power)
   check.proportion(alpha)
   check.logical(ceiling, utf)
   verbose <- ensure_verbose(verbose)
-  requested <- check.n_power(n.paired, power)
+  
+  # requested <- check.n_power(n.paired, power)
+  if(is.null(n.paired)) requested <- "n"
+  if(is.null(power)) requested <- "power"
+  if(is.null(prob10) | is.null(prob01)) requested <- "es"
 
   pwr.exact <- function(prob10, prob01, n.paired, alpha, alternative) {
 
@@ -264,8 +272,52 @@ power.exact.mcnemar <- function(prob10, prob01, n.paired = NULL,
 
       n.discordant <- ifelse(ceiling, sum(ceiling(n.paired * c(prob10, prob01))), sum(n.paired * c(prob10, prob01)))
 
-    }
-
+    } else if (requested == "es") { 
+      
+      if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) {
+        if(is.null(prob10)) {min <- prob01; max <- 1 - prob01}
+        if(is.null(prob01)) {min <- prob10; max <- 1 - prob10}
+      }
+      
+      if(sign %in% c("-", -1, "-1", "negative")) {
+        if(is.null(prob10)) {min <- 0.0001; max <- min(prob01, 1 - prob01)}
+        if(is.null(prob01)) {min <- 0.0001; max <- min(prob10, 1 - prob10)}
+      }
+      
+      if(sign %in% c(" ", 0, "0", "")) {
+        stop("'sign' can only be '+' or '-'", call. = FALSE)
+      }
+      
+      if(is.null(prob10)) {
+        
+        prob10 <- optimize(
+          f = function(prob10) {
+            (power - pwr.exact(prob10 = prob10, prob01 = prob01, n.paired = n.paired, 
+                               alpha = alpha, alternative = alternative))^2 
+          },
+          maximum = FALSE,
+          lower = min,
+          upper = max,
+        )$minimum
+        
+      } else {
+      
+        prob01 <- optimize(
+          f = function(prob01) {
+            (power - pwr.exact(prob10 = prob10, prob01 = prob01, n.paired = n.paired, 
+                               alpha = alpha, alternative = alternative))^2 
+          },
+          maximum = FALSE,
+          lower = min,
+          upper = max,
+        )$minimum
+        
+      } # prob10 or prob01?
+      
+      n.discordant <- ifelse(ceiling, sum(ceiling(n.paired * c(prob10, prob01))), sum(n.paired * c(prob10, prob01)))
+      
+    } # effect size
+    
     # calculate power (if requested == "power") or update it (if requested == "n")
     power <- pwr.exact(prob10 = prob10, prob01 = prob01, n.paired = n.paired, alpha = alpha, alternative = alternative)
 
@@ -293,7 +345,51 @@ power.exact.mcnemar <- function(prob10, prob01, n.paired = NULL,
 
       n.discordant <- ifelse(ceiling, sum(ceiling(n.paired * c(prob10, prob01))), sum(n.paired * c(prob10, prob01)))
 
-    }
+    } else if (requested == "es") { 
+      
+      if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) {
+        if(is.null(prob10)) {min <- prob01; max <- 1 - prob01}
+        if(is.null(prob01)) {min <- prob10; max <- 1 - prob10}
+      }
+      
+      if(sign %in% c("-", -1, "-1", "negative")) {
+        if(is.null(prob10)) {min <- 0.0001; max <- min(prob01, 1 - prob01)}
+        if(is.null(prob01)) {min <- 0.0001; max <- min(prob10, 1 - prob10)}
+      }
+      
+      if(sign %in% c(" ", 0, "0", "")) {
+        stop("'sign' can only be '+' or '-'", call. = FALSE)
+      }
+      
+      if(is.null(prob10)) {
+        
+        prob10 <- optimize(
+          f = function(prob10) {
+            (power - pwr.approx(prob10 = prob10, prob01 = prob01, n.paired = n.paired, 
+                               alpha = alpha, alternative = alternative))^2 
+          },
+          maximum = FALSE,
+          lower = min,
+          upper = max,
+        )$minimum
+        
+      } else {
+        
+        prob01 <- optimize(
+          f = function(prob01) {
+            (power - pwr.approx(prob10 = prob10, prob01 = prob01, n.paired = n.paired, 
+                               alpha = alpha, alternative = alternative))^2 
+          },
+          maximum = FALSE,
+          lower = min,
+          upper = max,
+        )$minimum
+        
+      } # prob10 or prob01?
+      
+      n.discordant <- ifelse(ceiling, sum(ceiling(n.paired * c(prob10, prob01))), sum(n.paired * c(prob10, prob01)))
+      
+    } # effect size
 
     # calculate power (if requested == "power") or update it (if requested == "n")
     pwr.obj <- pwr.approx(prob10 = prob10, prob01 = prob01, n.paired = n.paired, alpha = alpha, alternative = alternative)
