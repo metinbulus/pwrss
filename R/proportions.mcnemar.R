@@ -366,7 +366,7 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
         prob10 <- optimize(
           f = function(prob10) {
             (power - pwr.approx(prob10 = prob10, prob01 = prob01, n.paired = n.paired, 
-                               alpha = alpha, alternative = alternative))^2 
+                               alpha = alpha, alternative = alternative)$power)^2 
           },
           maximum = FALSE,
           lower = min,
@@ -378,7 +378,7 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
         prob01 <- optimize(
           f = function(prob01) {
             (power - pwr.approx(prob10 = prob10, prob01 = prob01, n.paired = n.paired, 
-                               alpha = alpha, alternative = alternative))^2 
+                               alpha = alpha, alternative = alternative)$power)^2 
           },
           maximum = FALSE,
           lower = min,
