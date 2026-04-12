@@ -2,6 +2,57 @@
 # Steiger's z-test for dependent correlations (Steiger, 1980, p. 247) #
 #######################################################################
 
+# helper function to find correlation limits when minimum detectable effect
+# is of interest, no need to export or document it 
+# cor.mat: correlation matrix with NA at position (i,j) and (j,i)
+# i, j:    row and column of the missing element (1-indexed)
+rho.limits <- function(cor.mat, i, j, tol = 1e-8, n.grid = 1000) {
+  
+  stopifnot(i != j, is.na(cor.mat[i, j]), is.na(cor.mat[j, i]))
+  
+  fill.mat <- function(rho) {
+    m <- cor.mat
+    m[i, j] <- rho
+    m[j, i] <- rho
+    m
+  }
+  
+  min.eig <- function(rho) min(eigen(fill.mat(rho), symmetric = TRUE, only.values = TRUE)$values)
+  
+  grid <- seq(-1 + tol, 1 - tol, length.out = n.grid)
+  eigs <- sapply(grid, min.eig)
+  
+  feasible <- grid[eigs >= -tol]
+  
+  if (length(feasible) == 0) stop("No feasible value found. Check the known correlations.")
+  
+  # refine bounds via uniroot
+  refine <- function(side) {
+    # side = "low" or "high"
+    if (side == "low") {
+      idx <- which(diff(eigs >= -tol) == 1)   # transitions FALSE -> TRUE
+      if (length(idx) == 0) return(min(feasible))
+      tryCatch(
+        uniroot(min.eig, interval = c(grid[idx[1]], grid[idx[1] + 1]))$root,
+        error = function(e) min(feasible)
+      )
+    } else {
+      idx <- which(diff(eigs >= -tol) == -1)   # transitions TRUE -> FALSE
+      if (length(idx) == 0) return(max(feasible))
+      tryCatch(
+        uniroot(min.eig, interval = c(grid[idx[length(idx)]], grid[idx[length(idx)] + 1]))$root,
+        error = function(e) max(feasible)
+      )
+    }
+  }
+  
+  min <- refine("low")
+  max <- refine("high")
+  
+  list(min  = min, max  = max)
+  
+} # rho.limits
+
 #' Power Analysis for Dependent Correlations (Steiger's Z-Test)
 #'
 #' @description
@@ -26,6 +77,11 @@
 #'                     only). Check examples below.
 #' @param rho34        correlation between variable V3 and V4 (no common index
 #'                     only). Check examples below.
+#' @param sign        whether estimated rho is smaller or larger than the other 
+#'                    (when minimum detectable rho is of interest). 
+#'                    Sign comparison is between rho12 and rho13 with common index
+#'                    and between rho12 and rho34 with no common index. 
+#'                    Note that sign comparison is relative to the known correlation. 
 #' @param n            integer; sample size.
 #' @param power        statistical power, defined as the probability of
 #'                     correctly rejecting a false null hypothesis, denoted as
@@ -119,8 +175,9 @@
 #'                         common.index = FALSE)
 #'
 #' @export power.z.twocors.steiger
-power.z.twocors.steiger <- function(rho12, rho13, rho23,
+power.z.twocors.steiger <- function(rho12 = NULL, rho13 = NULL, rho23 = NULL,
                             rho14 = NULL, rho24 = NULL, rho34 = NULL,
+                            sign = "+", 
                             n = NULL, power = NULL, alpha = 0.05,
                             alternative = c("two.sided", "one.sided"),
                             pooled = TRUE, common.index = FALSE,
@@ -134,9 +191,139 @@ power.z.twocors.steiger <- function(rho12, rho13, rho23,
   check.proportion(alpha)
   check.logical(pooled, common.index, ceiling, utf)
   verbose <- ensure_verbose(verbose)
-  requested <- check.n_power(n, power)
 
-  pwr.steiger <- function(rho1, rho2, cov.null, cov.alt, n, alpha, alternative) {
+  # requested <- check.n_power(n, power)
+  if(is.null(n)) requested <- "n"
+  if(is.null(power)) requested <- "power"
+  if(common.index) {
+    if((is.null(rho12) & !is.null(rho13)) || (!is.null(rho12) & is.null(rho13))) requested <- "es"
+  } else {
+    if((is.null(rho12) & !is.null(rho34)) || (!is.null(rho12) & is.null(rho34))) requested <- "es"
+  }
+
+  pwr.steiger <- function(rho12 = NULL, rho13 = NULL, rho23 = NULL,
+                          rho14 = NULL, rho24 = NULL, rho34 = NULL,
+                          n, alpha, alternative, common.index = TRUE) {
+    
+    # check correlation matrix and find cov.null and cov.alt
+    if(common.index) {
+      
+      if (any(check.not_null(rho14, rho24, rho34)))
+        warning("Ignoring `rho14` `rho24`, or `rho34` because `common.index` is TRUE.", call. = FALSE)
+      
+      if(is.null(rho12))  check.correlation(rho13, rho23)
+      if(is.null(rho13))  check.correlation(rho12, rho23)
+      if(!is.null(rho12) & !is.null(rho13)) check.correlation(rho12, rho13, rho23)
+      
+      if (alternative == "two.sided" && rho12 == rho13)
+        stop("`common.index` is TRUE and `alternative` is \"two.sided\" but `rho12` = `rho13`.", call. = FALSE)
+      
+      cor.mat <- matrix(c(1, rho12, rho13,
+                          rho12, 1, rho23,
+                          rho13, rho23, 1),
+                        nrow = 3, ncol = 3)
+      
+      check.correlation.matrix(cor.mat)
+      
+      if (pooled) {
+        
+        rho.bar.ab.ac <- (rho12 + rho13) / 2
+        
+        ## under null
+        psi.ab.ac.0 <- rho23 * (1 - 2 * rho.bar.ab.ac ^ 2) - 0.50 * (rho.bar.ab.ac ^ 2) * (1 - 2 * rho.bar.ab.ac ^ 2 - rho23 ^ 2)
+        cov.ab.ac.0 <- psi.ab.ac.0 / (1 - rho.bar.ab.ac ^ 2) ^ 2 # both = (rho12 + rho13) / 2 when pooled
+        # sigma.ab.ac.0 <- sqrt((2 - 2 * cov.ab.ac.0) / (n - 3))
+        
+      } else {
+        
+        ## under null
+        psi.ab.ac.0 <- rho23 * (1 - rho12 ^ 2 - rho12 ^ 2) - 0.50 * (rho12 * rho12) * (1 - rho12 ^ 2 - rho12 ^ 2 - rho23 ^ 2) # rho12 = rho13
+        cov.ab.ac.0 <- psi.ab.ac.0 / ((1 - rho12 ^ 2) * (1 - rho12 ^ 2)) # rho12 = rho13
+        # sigma.ab.ac.0 <- sqrt((2 - 2 * cov.ab.ac.0) / (n - 3))
+        
+      } # if pooled
+      
+      ## under alt
+      psi.ab.ac.1 <- rho23 * (1 - rho12 ^ 2 - rho13 ^ 2) - 0.50 * (rho12 * rho13) * (1 - rho12 ^ 2 - rho13 ^ 2 - rho23 ^ 2)
+      cov.ab.ac.1 <- psi.ab.ac.1 / ((1 - rho12 ^ 2) * (1 - rho13 ^ 2))
+      # sigma.ab.ac.1 <- sqrt((2 - 2 * cov.ab.ac.1) / (n - 3))
+      
+      # z.ab <- cor.to.z(rho12)
+      # z.ac <- cor.to.z(rho13)
+      # sigma.ab.ac.0 <- sqrt((2 - 2 * cov.ab.ac.0) / (n - 3))
+      # sigma.ab.ac.1 <- sqrt((2 - 2 * cov.ab.ac.1) / (n - 3))
+      # lambda <- (z.ac - z.ab) /  sigma.ab.ac.0
+      # sigma.lambda <- sigma.ab.ac.1 / sigma.ab.ac.0
+      rho1 <- rho12
+      rho2 <- rho13
+      cov.null <- cov.ab.ac.0
+      cov.alt <- cov.ab.ac.1
+      
+    } else { # no common index
+      
+      if (alternative == "two.sided" && rho12 == rho34)
+        stop("`common.index` is FALSE and `alternative` = \"two.sided\" but `rho12` = `rho34`.", call. = FALSE)
+      
+      cor.mat <- matrix(c(1, rho12, rho13, rho14,
+                          rho12, 1, rho23, rho24,
+                          rho13, rho23, 1, rho34,
+                          rho14, rho24, rho34, 1),
+                        nrow = 4, ncol = 4)
+      
+      check.correlation.matrix(cor.mat)
+      
+      if (pooled) {
+        
+        rho.bar.ab.cd <- (rho12 + rho34) / 2
+        
+        ## under null
+        psi.ab.cd.0 <- 0.50 * ((rho13 - rho.bar.ab.cd * rho23) * (rho24 - rho23 * rho.bar.ab.cd) +
+                                 (rho14 - rho13 * rho.bar.ab.cd) * (rho23 - rho.bar.ab.cd * rho13) +
+                                 (rho13 - rho14 * rho.bar.ab.cd) * (rho24 - rho.bar.ab.cd * rho14) +
+                                 (rho14 - rho.bar.ab.cd * rho24) * (rho23 - rho24 * rho.bar.ab.cd)) # rho12 = rho34
+        cov.ab.cd.0 <- psi.ab.cd.0 / (1 - rho.bar.ab.cd ^ 2) ^ 2
+        # sigma.ab.cd.0 <- sqrt((2 - 2 * cov.ab.cd.0) / (n - 3))
+        
+        ## under alt
+        psi.ab.cd.1 <- 0.50 * ((rho13 - rho12 * rho23) * (rho24 - rho23 * rho34) +
+                                 (rho14 - rho13 * rho34) * (rho23 - rho12 * rho13) +
+                                 (rho13 - rho14 * rho34) * (rho24 - rho12 * rho14) +
+                                 (rho14 - rho12 * rho24) * (rho23 - rho24 * rho34))
+        cov.ab.cd.1 <- psi.ab.cd.1 / ((1 - rho12 ^ 2) * (1 - rho34 ^ 2))
+        # sigma.ab.cd.1 <- sqrt((2 - 2 * cov.ab.cd.1) / (n - 3))
+        
+      } else {
+        
+        ## under null
+        psi.ab.cd.0 <- 0.50 * ((rho13 - rho12 * rho23) * (rho24 - rho23 * rho12) +
+                                 (rho14 - rho13 * rho12) * (rho23 - rho12 * rho13) +
+                                 (rho13 - rho14 * rho12) * (rho24 - rho12 * rho14) +
+                                 (rho14 - rho12 * rho24) * (rho23 - rho24 * rho12)) # rho12 = rho34
+        cov.ab.cd.0 <- psi.ab.cd.0 / ((1 - rho12 ^ 2) * (1 - rho12 ^ 2))
+        # sigma.ab.cd.0 <- sqrt((2 - 2 * cov.ab.cd.0) / (n - 3))
+        
+        ## under alt
+        psi.ab.cd.1 <- 0.50 * ((rho13 - rho12 * rho23) * (rho24 - rho23 * rho34) +
+                                 (rho14 - rho13 * rho34) * (rho23 - rho12 * rho13) +
+                                 (rho13 - rho14 * rho34) * (rho24 - rho12 * rho14) +
+                                 (rho14 - rho12 * rho24) * (rho23 - rho24 * rho34))
+        cov.ab.cd.1 <- psi.ab.cd.1 / ((1 - rho12 ^ 2) * (1 - rho34 ^ 2))
+        # sigma.ab.cd.1 <- sqrt((2 - 2 * cov.ab.cd.1) / (n - 3))
+        
+      } # if pooled
+      
+      # z.ab <- cor.to.z(rho12)
+      # z.cd <- cor.to.z(rho34)
+      # sigma.ab.cd.0 <- sqrt((2 - 2 * cov.ab.cd.0) / (n - 3))
+      # sigma.ab.cd.1 <- sqrt((2 - 2 * cov.ab.cd.1) / (n - 3))
+      # lambda <- (z.cd - z.ab) /  sigma.ab.cd.0
+      # sigma.lambda <- sigma.ab.cd.1 / sigma.ab.cd.0
+      rho1 <- rho12
+      rho2 <- rho34
+      cov.null <- cov.ab.cd.0
+      cov.alt <- cov.ab.cd.1
+      
+    } # find cov.null and cov.alt
 
     z1 <- cor.to.z(rho1, FALSE)$z
     z2 <- cor.to.z(rho2, FALSE)$z
@@ -154,22 +341,26 @@ power.z.twocors.steiger <- function(rho12, rho13, rho23,
                             alpha = alpha,
                             alternative = alternative,
                             plot = FALSE, verbose = 0)
+    
+    pwr.obj$rho1 <- rho1
+    pwr.obj$rho2 <- rho2
 
     pwr.obj
 
   } # pwr.steiger()
 
-  ss.steiger <- function(rho1, rho2,
-                         cov.null, cov.alt,
-                         power, alpha, alternative) {
+  ss.steiger <- function(rho12 = NULL, rho13 = NULL, rho23 = NULL,
+                         rho14 = NULL, rho24 = NULL, rho34 = NULL,
+                         power, alpha, alternative, common.index) {
 
     n <- try(silent = TRUE,
              suppressWarnings({
                stats::uniroot(function(n) {
-                 power - pwr.steiger(rho1 = rho1, rho2 = rho2,
-                                     cov.null = cov.null, cov.alt = cov.alt,
+                 power - pwr.steiger(rho12 = rho12, rho13 = rho13, rho23 = rho23,
+                                     rho14 = rho14, rho24 = rho24, rho34 = rho34,
                                      n = n, alpha = alpha,
-                                     alternative = alternative)$power
+                                     alternative = alternative,
+                                     common.index = common.index)$power
                }, interval = c(5, 1e+09))$root
              }) # supressWarnings
     ) # try
@@ -179,139 +370,183 @@ power.z.twocors.steiger <- function(rho12, rho13, rho23,
     n
 
   } # ss.steiger()
+  
+  
+  es.steiger <- function(rho12 = NULL, rho13 = NULL, rho23 = NULL,
+                         rho14 = NULL, rho24 = NULL, rho34 = NULL,
+                         sign = "+",
+                         n, power, alpha, 
+                         alternative, common.index) {
+    
+    if(power > 0.99) stop("Power cannot be larger than 0.99.", call. = FALSE)
+    
+    min <- 0.0001
+    max <- 0.9999
+    
+    if(sign %in% c(" ", 0, "0", "")) {
+      stop("'sign' can only be '+' and '-' for this function", call. = FALSE)
+    }
+    
+    if(common.index) { # common index
+      
+      if(is.null(rho12)) {
+        
+        cor.mat <- matrix(c(1, NA, rho13,
+                            NA, 1, rho23,
+                            rho13, rho23, 1),
+                          nrow = 3, ncol = 3)
+        
+        rho12.limits <- rho.limits(cor.mat = cor.mat, i = 1, j = 2)
+        
+        if(sign %in% c("-", -1, "-1", "negative")) max <- min(rho13, rho12.limits$max)
+        if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) min <- max(rho13, rho12.limits$min)
+        
+        rho12 <- optimize(
+          f = function(rho12) {
+            (power - pwr.steiger(rho12 = rho12, rho13 = rho13, rho23 = rho23,
+                                 rho14 = rho14, rho24 = rho24, rho34 = rho34,
+                                 n = n, alpha = alpha,
+                                 alternative = alternative,
+                                 common.index = common.index)$power)^2 
+          },
+          maximum = FALSE,
+          lower = min,
+          upper = max,
+        )$minimum
+        
+      } # rho12 is null
+      
+      if(is.null(rho13)) {
+        
+        cor.mat <- matrix(c(1, rho12, NA,
+                            rho12, 1, rho23,
+                            NA, rho23, 1),
+                          nrow = 3, ncol = 3)
+        
+        rho13.limits <- rho.limits(cor.mat = cor.mat, i = 1, j = 3)
+        
+        if(sign %in% c("-", -1, "-1", "negative")) max <- min(rho12, rho13.limits$max)
+        if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) min <- max(rho12, rho13.limits$min)
+        
+        rho13 <- optimize(
+          f = function(rho13) {
+            (power - pwr.steiger(rho12 = rho12, rho13 = rho13, rho23 = rho23,
+                                 rho14 = rho14, rho24 = rho24, rho34 = rho34,
+                                 n = n, alpha = alpha,
+                                 alternative = alternative,
+                                 common.index = common.index)$power)^2 
+          },
+          maximum = FALSE,
+          lower = min,
+          upper = max,
+        )$minimum
+        
+      } # rho13 is null
+     
+    } else { # no common index
+      
+      if(is.null(rho12)) {
+        
+        cor.mat <- matrix(c(1, NA, rho13, rho14,
+                            NA, 1, rho23, rho24,
+                            rho13, rho23, 1, rho34,
+                            rho14, rho24, rho34, 1),
+                          nrow = 4, ncol = 4)
+        
+        rho12.limits <- rho.limits(cor.mat = cor.mat, i = 1, j = 2)
+        
+        if(sign %in% c("-", -1, "-1", "negative")) max <- min(rho13, rho12.limits$max)
+        if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) min <- max(rho13, rho12.limits$min)
+        
+        rho12 <- optimize(
+          f = function(rho12) {
+            (power - pwr.steiger(rho12 = rho12, rho13 = rho13, rho23 = rho23,
+                                 rho14 = rho14, rho24 = rho24, rho34 = rho34,
+                                 n = n, alpha = alpha,
+                                 alternative = alternative,
+                                 common.index = common.index)$power)^2 
+          },
+          maximum = FALSE,
+          lower = min,
+          upper = max,
+        )$minimum
+        
+      } # rho12 is null
+      
+      if(is.null(rho34)) {
+        
+        cor.mat <- matrix(c(1, rho12, rho13, rho14,
+                            rho12, 1, rho23, rho24,
+                            rho13, rho23, 1, NA,
+                            rho14, rho24, NA, 1),
+                          nrow = 4, ncol = 4)
+        
+        rho34.limits <- rho.limits(cor.mat = cor.mat, i = 3, j = 4)
+        
+        if(sign %in% c("-", -1, "-1", "negative")) max <- min(rho12, rho34.limits$max)
+        if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) min <- max(rho12, rho34.limits$min)
+        
+        rho34 <- optimize(
+          f = function(rho34) {
+            (power - pwr.steiger(rho12 = rho12, rho13 = rho13, rho23 = rho23,
+                                 rho14 = rho14, rho24 = rho24, rho34 = rho34,
+                                 n = n, alpha = alpha,
+                                 alternative = alternative,
+                                 common.index = common.index)$power)^2 
+          },
+          maximum = FALSE,
+          lower = min,
+          upper = max,
+        )$minimum
+        
+      } # rho34 is null
+     
+    } # find feasible bounds
+    
+    list(rho12 = rho12, rho13 = rho13, rho23 = rho23,
+         rho14 = rho14, rho24 = rho24, rho34 = rho34)
+    
+  } # effect size
 
-  if (common.index) {
-
-    if (any(check.not_null(rho14, rho24, rho34)))
-      warning("Ignoring `rho14` `rho24`, or `rho34` because `common.index` is TRUE.", call. = FALSE)
-
-    check.correlation(rho12, rho13, rho23)
-
-    if (alternative == "two.sided" && rho12 == rho13)
-      stop("`common.index` is TRUE and `alternative` is \"two.sided\" but `rho12` = `rho13`.", call. = FALSE)
-
-    cor.mat <- matrix(c(1, rho12, rho13,
-                           rho12, 1, rho23,
-                           rho13, rho23, 1),
-                         nrow = 3, ncol = 3)
-    check.correlation.matrix(cor.mat)
-
-    # common index
-    if (pooled) {
-
-      rho.bar.ab.ac <- (rho12 + rho13) / 2
-
-      ## under null
-      psi.ab.ac.0 <- rho23 * (1 - 2 * rho.bar.ab.ac ^ 2) - 0.50 * (rho.bar.ab.ac ^ 2) * (1 - 2 * rho.bar.ab.ac ^ 2 - rho23 ^ 2)
-      cov.ab.ac.0 <- psi.ab.ac.0 / (1 - rho.bar.ab.ac ^ 2) ^ 2 # both = (rho12 + rho13) / 2 when pooled
-      # sigma.ab.ac.0 <- sqrt((2 - 2 * cov.ab.ac.0) / (n - 3))
-
-    } else {
-
-      ## under null
-      psi.ab.ac.0 <- rho23 * (1 - rho12 ^ 2 - rho12 ^ 2) - 0.50 * (rho12 * rho12) * (1 - rho12 ^ 2 - rho12 ^ 2 - rho23 ^ 2) # rho12 = rho13
-      cov.ab.ac.0 <- psi.ab.ac.0 / ((1 - rho12 ^ 2) * (1 - rho12 ^ 2)) # rho12 = rho13
-      # sigma.ab.ac.0 <- sqrt((2 - 2 * cov.ab.ac.0) / (n - 3))
-
-    } # if pooled
-
-    ## under alt
-    psi.ab.ac.1 <- rho23 * (1 - rho12 ^ 2 - rho13 ^ 2) - 0.50 * (rho12 * rho13) * (1 - rho12 ^ 2 - rho13 ^ 2 - rho23 ^ 2)
-    cov.ab.ac.1 <- psi.ab.ac.1 / ((1 - rho12 ^ 2) * (1 - rho13 ^ 2))
-    # sigma.ab.ac.1 <- sqrt((2 - 2 * cov.ab.ac.1) / (n - 3))
-
-    # z.ab <- cor.to.z(rho12)
-    # z.ac <- cor.to.z(rho13)
-    # sigma.ab.ac.0 <- sqrt((2 - 2 * cov.ab.ac.0) / (n - 3))
-    # sigma.ab.ac.1 <- sqrt((2 - 2 * cov.ab.ac.1) / (n - 3))
-    # lambda <- (z.ac - z.ab) /  sigma.ab.ac.0
-    # sigma.lambda <- sigma.ab.ac.1 / sigma.ab.ac.0
-    rho1 <- rho12
-    rho2 <- rho13
-    cov.null <- cov.ab.ac.0
-    cov.alt <- cov.ab.ac.1
-
-  } else {
-
-    check.correlation(rho14, rho24, rho34)
-
-    if (alternative == "two.sided" && rho12 == rho34)
-      stop("`common.index` is FALSE and `alternative` = \"two.sided\" but `rho12` = `rho34`.", call. = FALSE)
-
-    cor.mat <- matrix(c(1, rho12, rho13, rho14,
-                             rho12, 1, rho23, rho24,
-                             rho13, rho23, 1, rho34,
-                             rho14, rho24, rho34, 1),
-                           nrow = 4, ncol = 4)
-    check.correlation.matrix(cor.mat)
-
-    # no common index
-    if (pooled) {
-
-      rho.bar.ab.cd <- (rho12 + rho34) / 2
-
-      ## under null
-      psi.ab.cd.0 <- 0.50 * ((rho13 - rho.bar.ab.cd * rho23) * (rho24 - rho23 * rho.bar.ab.cd) +
-                               (rho14 - rho13 * rho.bar.ab.cd) * (rho23 - rho.bar.ab.cd * rho13) +
-                               (rho13 - rho14 * rho.bar.ab.cd) * (rho24 - rho.bar.ab.cd * rho14) +
-                               (rho14 - rho.bar.ab.cd * rho24) * (rho23 - rho24 * rho.bar.ab.cd)) # rho12 = rho34
-      cov.ab.cd.0 <- psi.ab.cd.0 / (1 - rho.bar.ab.cd ^ 2) ^ 2
-      # sigma.ab.cd.0 <- sqrt((2 - 2 * cov.ab.cd.0) / (n - 3))
-
-      ## under alt
-      psi.ab.cd.1 <- 0.50 * ((rho13 - rho12 * rho23) * (rho24 - rho23 * rho34) +
-                               (rho14 - rho13 * rho34) * (rho23 - rho12 * rho13) +
-                               (rho13 - rho14 * rho34) * (rho24 - rho12 * rho14) +
-                               (rho14 - rho12 * rho24) * (rho23 - rho24 * rho34))
-      cov.ab.cd.1 <- psi.ab.cd.1 / ((1 - rho12 ^ 2) * (1 - rho34 ^ 2))
-      # sigma.ab.cd.1 <- sqrt((2 - 2 * cov.ab.cd.1) / (n - 3))
-
-    } else {
-
-      ## under null
-      psi.ab.cd.0 <- 0.50 * ((rho13 - rho12 * rho23) * (rho24 - rho23 * rho12) +
-                               (rho14 - rho13 * rho12) * (rho23 - rho12 * rho13) +
-                               (rho13 - rho14 * rho12) * (rho24 - rho12 * rho14) +
-                               (rho14 - rho12 * rho24) * (rho23 - rho24 * rho12)) # rho12 = rho34
-      cov.ab.cd.0 <- psi.ab.cd.0 / ((1 - rho12 ^ 2) * (1 - rho12 ^ 2))
-      # sigma.ab.cd.0 <- sqrt((2 - 2 * cov.ab.cd.0) / (n - 3))
-
-      ## under alt
-      psi.ab.cd.1 <- 0.50 * ((rho13 - rho12 * rho23) * (rho24 - rho23 * rho34) +
-                               (rho14 - rho13 * rho34) * (rho23 - rho12 * rho13) +
-                               (rho13 - rho14 * rho34) * (rho24 - rho12 * rho14) +
-                               (rho14 - rho12 * rho24) * (rho23 - rho24 * rho34))
-      cov.ab.cd.1 <- psi.ab.cd.1 / ((1 - rho12 ^ 2) * (1 - rho34 ^ 2))
-      # sigma.ab.cd.1 <- sqrt((2 - 2 * cov.ab.cd.1) / (n - 3))
-
-    } # if pooled
-
-    # z.ab <- cor.to.z(rho12)
-    # z.cd <- cor.to.z(rho34)
-    # sigma.ab.cd.0 <- sqrt((2 - 2 * cov.ab.cd.0) / (n - 3))
-    # sigma.ab.cd.1 <- sqrt((2 - 2 * cov.ab.cd.1) / (n - 3))
-    # lambda <- (z.cd - z.ab) /  sigma.ab.cd.0
-    # sigma.lambda <- sigma.ab.cd.1 / sigma.ab.cd.0
-    rho1 <- rho12
-    rho2 <- rho34
-    cov.null <- cov.ab.cd.0
-    cov.alt <- cov.ab.cd.1
-
-  } # if common.index
 
   if (requested == "n") {
 
-    n <- ss.steiger(rho1 = rho1, rho2 = rho2, cov.null = cov.null, cov.alt = cov.alt,
-                    power = power, alpha = alpha, alternative = alternative)
+    n <- ss.steiger(rho12 = rho12, rho13 = rho13, rho23 = rho23,
+                    rho14 = rho14, rho24 = rho24, rho34 = rho34,
+                    power = power, alpha = alpha, 
+                    alternative = alternative,
+                    common.index = common.index)
 
     if (ceiling) n <- ceiling(n)
 
-  }
+  } # sample size
+  
+  
+  if (requested == "es") {
+    
+    rho.list <- es.steiger(rho12 = rho12, rho13 = rho13, rho23 = rho23,
+                           rho14 = rho14, rho24 = rho24, rho34 = rho34,
+                           sign = sign,
+                           power = power, n = n, alpha = alpha, 
+                           alternative = alternative, 
+                           common.index = common.index)
+    
+    rho12 <- rho.list$rho12
+    rho13 <- rho.list$rho13
+    rho34 <- rho.list$rho34
+    
+  } # sample size
+  
 
   # calculate power (if requested == "power") or update it (if requested == "n")
-  pwr.obj <- pwr.steiger(rho1 = rho1, rho2 = rho2, cov.null = cov.null, cov.alt = cov.alt,
-                         n = n, alpha = alpha, alternative = alternative)
-
+  pwr.obj <- pwr.steiger(rho12 = rho12, rho13 = rho13, rho23 = rho23,
+                         rho14 = rho14, rho24 = rho24, rho34 = rho34,
+                         n = n, alpha = alpha, 
+                         alternative = alternative,
+                         common.index = common.index)
+  
+  rho1 <- pwr.obj$rho1
+  rho2 <- pwr.obj$rho2
   power <- pwr.obj$power
   mean.alternative <- ifelse(alternative == "two.sided" && rho1 - rho2 < 0, -pwr.obj$mean, pwr.obj$mean)
   sd.alternative <- pwr.obj$sd
@@ -347,6 +582,10 @@ power.z.twocors.steiger <- function(rho12, rho13, rho23,
   invisible(structure(list(parms = func.parms,
                            test = "z",
                            design = "paired",
+                           common = common.index,
+                           rho12 = rho12,
+                           rho13 = rho13,
+                           rho34 = rho34,
                            delta = delta,
                            q = q,
                            mean = mean.alternative,
