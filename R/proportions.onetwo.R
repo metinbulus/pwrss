@@ -890,6 +890,8 @@ power.exact.twoprop <- power.exact.twoprops
 #'
 #' @param prob1       probability of success in the first group.
 #' @param prob2       probability of success in the second group.
+#' @param sign        whether estimated prob is smaller or larger than the other 
+#'                    (when minimum detectable prob is of interest).
 #' @param margin      ignorable \code{prob1} - \code{prob2} difference. For two
 #'                    one-sided tests provide lower and upper margins in the
 #'                    form of \code{c(lower, upper)}.
@@ -956,7 +958,8 @@ power.exact.twoprop <- power.exact.twoprops
 #'                    alternative = "one.sided")
 #'
 #' @export power.z.twoprops
-power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, sign = "+", margin = 0,
+power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, 
+                             sign = "+", margin = 0,
                              n.ratio = 1, n2 = NULL,
                              power = NULL, alpha = 0.05,
                              alternative = c("two.sided", "one.sided", "two.one.sided"),
@@ -981,7 +984,6 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, sign = "+", margin = 0,
   verbose <- ensure_verbose(verbose)
   
   # requested <- check.n_power(n2, power)
-  # requested <- check.n_power(n, power)
   if(is.null(n2)) requested <- "n"
   if(is.null(power)) requested <- "power"
   if(is.null(prob1) | is.null(prob2)) requested <- "es"
