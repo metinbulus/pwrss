@@ -677,7 +677,7 @@ power.z.steiger <- power.z.twocors.steiger
 #'                alternative = "one.sided")
 #'
 #' @export power.z.twocors
-power.z.twocors <- function(rho1, rho2,
+power.z.twocors <- function(rho1 = NULL, rho2 = NULL, sign = "+",
                             n2 = NULL, n.ratio = 1,
                             power = NULL, alpha = 0.05,
                             alternative = c("two.sided", "one.sided"),
@@ -686,19 +686,48 @@ power.z.twocors <- function(rho1, rho2,
   alternative <- tolower(match.arg(alternative))
   func.parms <- clean.parms(as.list(environment()))
 
-  check.correlation(rho1, rho2)
+  if (!is.null(rho1)) check.correlation(rho1)
+  if (!is.null(rho2)) check.correlation(rho2)
   if (!is.null(n2)) check.sample.size(n2)
-  check.positive(n.ratio)
   if (!is.null(power)) check.proportion(power)
+  check.positive(n.ratio)
   check.proportion(alpha)
   check.logical(ceiling, utf)
   verbose <- ensure_verbose(verbose)
-  requested <- check.n_power(n2, power)
-
-  z1 <- cor.to.z(rho1, FALSE)$z
-  z2 <- cor.to.z(rho2, FALSE)$z
+  
+  # requested <- check.n_power(n2, power)
+  if(is.null(n2)) requested <- "n"
+  if(is.null(power)) requested <- "power"
+  if(is.null(rho1) | is.null(rho2)) requested <- "es"
+  
+  pwr <- function(rho1, rho2, n2, n.ratio, alpha, alternative) {
+    
+    z1 <- cor.to.z(rho1, FALSE)$z
+    z2 <- cor.to.z(rho2, FALSE)$z
+    
+    lambda <- (z1 - z2) / sqrt(1 / (n1 - 3) + 1 / (n2 - 3))
+    
+    if (alternative == "two.sided") {
+      
+      z.alpha <- stats::qnorm(alpha / 2, mean = 0, sd = 1, lower.tail = FALSE) * c(-1, 1)
+      power <- 1 - stats::pnorm(z.alpha[2],   mean = abs(lambda), sd = 1) + stats::pnorm(z.alpha[1], mean = abs(lambda), sd = 1)
+      
+    } else if (alternative == "one.sided") {
+      
+      z.alpha <- stats::qnorm(alpha,     mean = 0, sd = 1, lower.tail = FALSE) * ifelse(lambda < 0, -1, 1)
+      power <- 1 - stats::pnorm(abs(z.alpha), mean = abs(lambda), sd = 1)
+      
+    }
+    
+    list(power = power, z.alpha = z.alpha, lambda = lambda)
+    
+  }
+ 
 
   if (requested == "n") {
+    
+    z1 <- cor.to.z(rho1, FALSE)$z
+    z2 <- cor.to.z(rho2, FALSE)$z
 
     beta <- 1 - power
     if (alternative == "two.sided") {
@@ -711,26 +740,67 @@ power.z.twocors <- function(rho1, rho2,
     }
 
     n2 <- ifelse(ceiling, ceiling(n2), n2)
-  }
+   
+  } # sample size 
 
   n1 <- ifelse(ceiling, ceiling(n.ratio * n2), n.ratio * n2)
+  
+  
+  if (requested == "es") { 
+    
+    if(power > 0.99) stop("Power cannot be larger than 0.99.", call. = FALSE)
+    
+    if((is.null(rho1) & is.null(rho2)) | (!is.null(rho1) & !is.null(rho2))) 
+      stop("Exactly one of the 'rho1' or 'rho2' can be NULL.")
+    
+    min <- -0.9999
+    max <- 0.9999
+    
+    if(sign %in% c("-", -1, "-1", "negative")) max <- ifelse(is.null(rho1), rho2, rho1)
+    if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) min <- ifelse(is.null(rho1), rho2, rho1)
+    if(sign %in% c(" ", 0, "0", "")) stop("'sign' can only be '+' and '-' for this function", call. = FALSE)
+    
+    if(is.null(rho1)) {
+      
+      rho1 <- optimize(
+        f = function(rho1) {
+          (power - pwr(rho1 = rho1, rho2 = rho2, n2 = n2, n.ratio = n.ratio, 
+                       alpha = alpha, alternative = alternative)$power)^2 
+        },
+        maximum = FALSE,
+        lower = min,
+        upper = max,
+      )$minimum
+      
+    } else {
+      
+      rho2 <- optimize(
+        f = function(rho2) {
+          (power - pwr(rho1 = rho1, rho2 = rho2, n2 = n2, n.ratio = n.ratio, 
+                       alpha = alpha, alternative = alternative)$power)^2 
+        },
+        maximum = FALSE,
+        lower = min,
+        upper = max,
+      )$minimum
+      
+    } # rho1 or rho2?
+    
+  } # effect size
+  
+  # update or estimate power
+  pwr.obj <- pwr(rho1 = rho1, rho2 = rho2, n2 = n2, n.ratio = n.ratio, 
+                 alpha = alpha, alternative = alternative)
 
-  lambda <- (z1 - z2) / sqrt(1 / (n1 - 3) + 1 / (n2 - 3))
-  if (alternative == "two.sided") {
-    z.alpha <- stats::qnorm(alpha / 2, mean = 0, sd = 1, lower.tail = FALSE) * c(-1, 1)
-    power <- 1 - stats::pnorm(z.alpha[2],   mean = abs(lambda), sd = 1) + stats::pnorm(z.alpha[1], mean = abs(lambda), sd = 1)
-  } else if (alternative == "one.sided") {
-    z.alpha <- stats::qnorm(alpha,     mean = 0, sd = 1, lower.tail = FALSE) * ifelse(lambda < 0, -1, 1)
-    power <- 1 - stats::pnorm(abs(z.alpha), mean = abs(lambda), sd = 1)
-  }
-
-  delta <- rho1 - rho2
-  q <- cors.to.q(rho1, rho2, FALSE)$q
-
-  mean.alternative <- lambda
+  power <- pwr.obj$power
+  z.alpha <- pwr.obj$z.alpha
+  mean.alternative <- pwr.obj$lambda
   sd.alternative <- 1
   mean.null <- 0
   sd.null <- 1
+  
+  delta <- rho1 - rho2
+  q <- cors.to.q(rho1, rho2, FALSE)$q
 
   if (verbose > 0) {
 
@@ -756,6 +826,8 @@ power.z.twocors <- function(rho1, rho2,
   invisible(structure(list(parms = func.parms,
                            test = "z",
                            design = "independent",
+                           rho1 = rho1,
+                           rho2 = rho2,
                            delta = delta,
                            q = q,
                            mean = mean.alternative,
@@ -765,6 +837,7 @@ power.z.twocors <- function(rho1, rho2,
                            alternative = alternative,
                            z.alpha = z.alpha,
                            n = c(n1 = n1, n2 = n2),
+                           n.total = n1 + n2,
                            power = power),
                       class = c("pwrss", "z", "twocors", "independent")))
 
@@ -878,7 +951,7 @@ pwrss.z.2corrs <- function(r1 = 0.50, r2 = 0.30,
 #'
 #'
 #' @export power.z.onecor
-power.z.onecor <- function(rho, null.rho = 0,
+power.z.onecor <- function(rho = NULL, sign = "+", null.rho = 0,
                            n = NULL, power = NULL, alpha = 0.05,
                            alternative = c("two.sided", "one.sided"),
                            ceiling = TRUE, verbose = 1, utf = FALSE) {
@@ -886,19 +959,48 @@ power.z.onecor <- function(rho, null.rho = 0,
   alternative <- tolower(match.arg(alternative))
   func.parms <- clean.parms(as.list(environment()))
 
-  check.correlation(rho, null.rho)
+  if (!is.null(rho)) check.correlation(rho)
   if (!is.null(n)) check.sample.size(n)
   if (!is.null(power)) check.proportion(power)
+  check.correlation(null.rho)
   check.proportion(alpha)
   check.logical(ceiling, utf)
   verbose <- ensure_verbose(verbose)
-  requested <- check.n_power(n, power)
+  
+  # requested <- check.n_power(n, power)
+  if(is.null(n)) requested <- "n"
+  if(is.null(power)) requested <- "power"
+  if(is.null(rho)) requested <- "es"
+  
+  pwr <- function(rho, null.rho, n, alpha, alternative) {
+    
+    z <- cor.to.z(rho, FALSE)$z
+    null.z <- cor.to.z(null.rho, FALSE)$z
+    
+    lambda <- (z - null.z) / sqrt(1 / (n - 3))
+    
+    if (alternative == "two.sided") {
+      
+      z.alpha <- stats::qnorm(alpha / 2, lower.tail = FALSE) * c(-1, 1)
+      power <- 1 - stats::pnorm(z.alpha[2], lambda) + stats::pnorm(z.alpha[1], lambda)
+      
+    } else if (alternative == "one.sided") {
+      
+      z.alpha <- stats::qnorm(alpha, lower.tail = FALSE)
+      power <- 1 - stats::pnorm(z.alpha, abs(lambda))
+      
+    }
+    
+    list(power = power, z.alpha = z.alpha, lambda = lambda)
+    
+  }
 
-  z <- cor.to.z(rho, FALSE)$z
-  null.z <- cor.to.z(null.rho, FALSE)$z
-
+ 
   if (requested == "n") {
 
+    z <- cor.to.z(rho, FALSE)$z
+    null.z <- cor.to.z(null.rho, FALSE)$z
+    
     beta <- 1 - power
     if (alternative == "two.sided") {
       M <- stats::qnorm(alpha / 2, lower.tail = FALSE) + stats::qnorm(beta, lower.tail = FALSE)
@@ -907,23 +1009,44 @@ power.z.onecor <- function(rho, null.rho = 0,
       M <- stats::qnorm(alpha, lower.tail = FALSE) + stats::qnorm(beta, lower.tail = FALSE)
       n <- M ^ 2 / (z - null.z) ^ 2 + 3
     }
-
-    if (ceiling) n <- ceiling(n)
-  }
-
-  lambda <- (z - null.z) / sqrt(1 / (n - 3))
-  if (alternative == "two.sided") {
-    z.alpha <- stats::qnorm(alpha / 2, lower.tail = FALSE) * c(-1, 1)
-    power <- 1 - stats::pnorm(z.alpha[2], lambda) + stats::pnorm(z.alpha[1], lambda)
-  } else if (alternative == "one.sided") {
-    z.alpha <- stats::qnorm(alpha, lower.tail = FALSE)
-    power <- 1 - stats::pnorm(z.alpha, abs(lambda))
-  }
+    
+  } # sample size
+  
+  if (ceiling) n <- ceiling(n)
+  
+  if (requested == "es") {
+    
+    if(power > 0.99) stop("Power cannot be larger than 0.99.", call. = FALSE)
+    
+    min <- -0.9999
+    max <- 0.9999
+    
+    if(sign %in% c("-", -1, "-1", "negative")) max <- null.rho
+    if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) min <- null.rho
+    if(sign %in% c(" ", 0, "0", "")) stop("'sign' can only be '+' and '-' for this function", call. = FALSE)
+  
+    rho <- optimize(
+      f = function(rho) {
+        (power - pwr(rho = rho, null.rho = null.rho, n = n, 
+                     alpha = alpha, alternative = alternative)$power)^2 
+      },
+      maximum = FALSE,
+      lower = min,
+      upper = max,
+    )$minimum
+    
+  } # effect size
+ 
+   # estimate or update power
+  pwr.obj <- pwr(rho = rho, null.rho = null.rho, n = n,
+                 alpha = alpha, alternative = alternative) 
 
   delta <- rho - null.rho
   q <- cors.to.q(rho, null.rho, FALSE)$q
 
-  mean.alternative <- lambda
+  power <- pwr.obj$power
+  z.alpha <- pwr.obj$z.alpha
+  mean.alternative <- pwr.obj$lambda
   sd.alternative <- 1
   mean.null <- 0
   sd.null <- 1
@@ -952,6 +1075,7 @@ power.z.onecor <- function(rho, null.rho = 0,
   invisible(structure(list(parms = func.parms,
                            test = "z",
                            design = "one.sample",
+                           rho = rho,
                            delta = delta,
                            q = q,
                            mean = mean.alternative,
@@ -1350,27 +1474,36 @@ power.exact.onecor <- function(rho = NULL, null.rho = 0,
   
   # calculate requested parameter 
   if(requested == "power") {
+    
     if(sign(rho) == -1 & alternative == "one.sided") alternative <- "less"
     if(sign(rho) == 1 & alternative == "one.sided") alternative <- "greater"
+    
     pwr.obj <- pwr.exact.rho(n = n, rho = rho, alpha = alpha,
                              alternative = alternative)
   }
   
   if(requested == "n") {
+    
     if(sign(rho) == -1 & alternative == "one.sided") alternative <- "less"
     if(sign(rho) == 1 & alternative == "one.sided") alternative <- "greater"
+    
     n <- ss.exact.rho(rho = rho, alpha = alpha, power = power,
                       alternative = alternative,
                       n.min = 3, n.max = n.max,
                       verbose = TRUE)$n
+    
     pwr.obj <- pwr.exact.rho(n = n, rho = rho, alpha = alpha,
                              alternative = alternative)
   }
   
   if(requested == "es") {
+    
+    if(power > 0.99) stop("Power cannot be larger than 0.99.", call. = FALSE)
+    
     rho <- mde.exact.rho(n = n, alpha = alpha, power = power,
                          alternative = alternative,
                          verbose = FALSE)$rho
+    
     pwr.obj <- pwr.exact.rho(n = n, rho = rho, alpha = alpha,
                              alternative = alternative)
   }
@@ -1420,6 +1553,7 @@ power.exact.onecor <- function(rho = NULL, null.rho = 0,
   invisible(structure(list(parms = func.parms,
                            test = "exact",
                            design = "one.sample",
+                           rho = rho,
                            delta = delta,
                            q = q,
                            alternative = alternative,
