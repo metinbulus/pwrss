@@ -618,6 +618,8 @@ power.z.steiger <- power.z.twocors.steiger
 #'
 #' @param rho1        correlation in the first group.
 #' @param rho2        correlation in the second group.
+#' @param sign        whether estimated rho is smaller or larger than the other 
+#'                    (when minimum detectable rho is of interest). 
 #' @param n.ratio     \code{n1 / n2} ratio.
 #' @param n2          sample size in the second group. Sample size in the first
 #'                    group can be calculated as \code{n2*kappa}. By default,
@@ -892,6 +894,8 @@ pwrss.z.2corrs <- function(r1 = 0.50, r2 = 0.30,
 #'
 #'
 #' @param rho         correlation.
+#' @param sign        whether estimated rho is smaller or larger than the null.rho 
+#'                    (when minimum detectable rho is of interest). 
 #' @param null.rho    correlation when null is true.
 #' @param n           sample size.
 #' @param power       statistical power, defined as the probability of
@@ -1133,6 +1137,8 @@ pwrss.z.corr <- function(r = 0.50, r0 = 0, alpha = 0.05,
 #'
 #'
 #' @param rho         correlation.
+#' @param sign        whether estimated rho is smaller or larger than the null.rho 
+#'                    (when minimum detectable rho is of interest). 
 #' @param null.rho    correlation when null is true. Only 0 is allowed for now.
 #' @param n           sample size.
 #' @param power       statistical power, defined as the probability of
@@ -1181,7 +1187,7 @@ pwrss.z.corr <- function(r = 0.50, r0 = 0, alpha = 0.05,
 #'
 #'
 #' @export power.exact.onecor
-power.exact.onecor <- function(rho = NULL, null.rho = 0,
+power.exact.onecor <- function(rho = NULL, sign = "+", null.rho = 0,
                                n = NULL, n.max = 500, power = NULL, alpha = 0.05,
                                alternative = c("two.sided", "one.sided"),
                                verbose = 1, utf = FALSE) {
@@ -1189,12 +1195,12 @@ power.exact.onecor <- function(rho = NULL, null.rho = 0,
   alternative <- tolower(match.arg(alternative))
   func.parms <- clean.parms(as.list(environment()))
   
-  if (null.rho != 0) stop("'null.rho' cannot be different from 0 at the moment", call. = FALSE)
+  if (null.rho != 0) stop("'null.rho' cannot be different from 0 at the moment.", call. = FALSE)
   if (!is.null(rho)) check.correlation(rho, null.rho)
   if (!is.null(n)) check.sample.size(n)
   if (!is.null(power)) check.proportion(power)
   if(sum(c(is.null(rho), is.null(n), is.null(power))) > 1) 
-    stop("Excatly one of the 'rho', 'power', and 'n' can be NULL", call. = FALSE)
+    stop("Excatly one of the 'rho', 'power', and 'n' can be NULL.", call. = FALSE)
   
   check.proportion(alpha)
   check.logical(utf)
@@ -1389,8 +1395,7 @@ power.exact.onecor <- function(rho = NULL, null.rho = 0,
     
     final <- pwr.exact.rho(high, rho, alpha, alternative)
     list(n = high, power = final$power, achieved = (final$power >= power),
-         crit = final$crit,
-         alpha = alpha, rho = rho, power = power,
+         crit = final$crit, alpha = alpha, rho = rho, power = power,
          alternative = alternative)
     
   } #  ss.exact.rho
@@ -1471,17 +1476,6 @@ power.exact.onecor <- function(rho = NULL, null.rho = 0,
     
   } #  mde.exact.rho
   
-  
-  # calculate requested parameter 
-  if(requested == "power") {
-    
-    if(sign(rho) == -1 & alternative == "one.sided") alternative <- "less"
-    if(sign(rho) == 1 & alternative == "one.sided") alternative <- "greater"
-    
-    pwr.obj <- pwr.exact.rho(n = n, rho = rho, alpha = alpha,
-                             alternative = alternative)
-  }
-  
   if(requested == "n") {
     
     if(sign(rho) == -1 & alternative == "one.sided") alternative <- "less"
@@ -1490,23 +1484,42 @@ power.exact.onecor <- function(rho = NULL, null.rho = 0,
     n <- ss.exact.rho(rho = rho, alpha = alpha, power = power,
                       alternative = alternative,
                       n.min = 3, n.max = n.max,
-                      verbose = TRUE)$n
+                      verbose = FALSE)$n
     
     pwr.obj <- pwr.exact.rho(n = n, rho = rho, alpha = alpha,
                              alternative = alternative)
-  }
+  } # sample size
   
   if(requested == "es") {
     
-    if(power > 0.99) stop("Power cannot be larger than 0.99.", call. = FALSE)
+    if(power > 0.99) 
+      stop("Power cannot be larger than 0.99.", call. = FALSE)
+    
+    if(alternative == "one.sided") {
+      if(sign %in% c("-", -1, "-1", "negative")) 
+        alternative <- "less"
+      if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) 
+        alternative <- "greater"
+    } 
+    
+    if(sign %in% c(" ", 0, "0", "")) 
+      stop("'sign' can only be '+' and '-' for this function", call. = FALSE)
     
     rho <- mde.exact.rho(n = n, alpha = alpha, power = power,
                          alternative = alternative,
                          verbose = FALSE)$rho
     
-    pwr.obj <- pwr.exact.rho(n = n, rho = rho, alpha = alpha,
-                             alternative = alternative)
-  }
+    if(sign %in% c("-", -1, "-1", "negative") & alternative == "two.sided") 
+      rho <- -rho
+  
+  } # effect size 
+  
+  # update or estimate power
+  if(sign(rho) == -1 & alternative == "one.sided") alternative <- "less"
+  if(sign(rho) == 1 & alternative == "one.sided") alternative <- "greater"
+  
+  pwr.obj <- pwr.exact.rho(n = n, rho = rho, alpha = alpha,
+                           alternative = alternative)
   
   power <- pwr.obj$power
   rho.alpha <- pwr.obj$crit
@@ -1542,7 +1555,6 @@ power.exact.onecor <- function(rho = NULL, null.rho = 0,
                        #### for compatibility ####
                        
                        rho.alpha = rho.alpha,
-                       es = rho,
                        power = power,
                        n = n)
     

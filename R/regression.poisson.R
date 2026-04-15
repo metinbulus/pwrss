@@ -42,7 +42,7 @@
 #' @param beta1               the natural logarithm of the relative increase
 #'                            in the mean event rate for one unit increase in
 #'                            the predictor.
-#' @param sign          sign of the beta1 coefficient (when minimum 
+#' @param sign                sign of the beta1 coefficient (when minimum 
 #'                            detectable effect or beta1 is of interest).
 #' @param mean.exposure       the mean exposure time (should be > 0), usually
 #'                            it is 1.
@@ -419,14 +419,6 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL,
                            method, distribution, 
                            mean.exposure) {
     
-    # reasonable bounds for logistics
-    # beta1.min <- qlogis(0.001) - beta0 
-    # beta1.max <- qlogis(0.999) - beta0
-    
-    # reasonable bounds for poisson - need to be changed
-    # overflow <- 700 # 709.7827
-    # beta1.min <- (overflow - beta0) / min.x
-    # beta1.max <- (overflow - beta0) / max.x
     var.obj <- var.beta(beta0 = beta0, beta1 = beta0, distribution = distribution)
     min.x <- var.obj$min 
     max.x <- var.obj$max 
