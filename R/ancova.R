@@ -192,7 +192,7 @@ power.f.ancova <- function(eta.squared = NULL,
   check.nonnegative(null.eta.squared, k.covariates)
   check.vector(factor.levels, check.factor.level, min.length = 1)
   if (!is.null(n.total)) check.sample.size(n.total)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   check.proportion(alpha)
   check.logical(ceil.n, utf)
   verbose <- ensure.verbose(verbose)
@@ -456,14 +456,14 @@ power.f.ancova.keppel <- function(mu.vector,
   check.nonnegative(k.covariates)
   if (r.squared > 0 && k.covariates < 1)
     stop("Explanatory power of covariates is expected to be non-zero when number of covariates is non-zero.", call. = FALSE)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   check.proportion(alpha)
   check.logical(ceil.n, utf)
   verbose <- ensure.verbose(verbose)
   requested <- get.requested(es = NA, n = n.vector, power = power) # effect size can not be calculated
 
   if (requested == "n" && is.null(p.vector))
-    stop("`p.vector` cannot be NULL when sample size is requested", call. = FALSE)
+    stop("`p.vector` can not be NULL when sample size is requested", call. = FALSE)
   if (requested == "n" && round(sum(p.vector), 5) != 1)
     stop("The elements of the `p.vector` should sum to 1", call. = FALSE)
 
@@ -1063,7 +1063,7 @@ power.f.ancova.shieh <- function(mu.vector,
   if (r.squared > 1 || r.squared < 0 || !is.numeric(r.squared) || length(r.squared) != 1)
     stop("R-squared (explanatory power of covariates) takes a value between 0 and 1.", call. = FALSE)
   check.positive(k.covariates)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   if (alpha > 1 || alpha < 0 || !is.numeric(alpha) || length(alpha) != 1)
     stop("Type 1 error rate (alpha) takes a value between 0 and 1.", call. = FALSE)
   check.logical(ceil.n, utf)
@@ -1152,7 +1152,7 @@ power.f.ancova.shieh <- function(mu.vector,
 
   if (requested == "n") {
 
-    if (is.null(p.vector)) stop("`p.vector` cannot be NULL when sample size is requested.", call. = FALSE)
+    if (is.null(p.vector)) stop("`p.vector` can not be NULL when sample size is requested.", call. = FALSE)
     if (round(sum(p.vector), 5) != 1) stop("The elements of the `p.vector` should sum to 1.", call. = FALSE)
 
     n.total <- stats::uniroot(function(n.total) {
@@ -1312,7 +1312,7 @@ power.t.contrast <- function(mu.vector, sd.vector,
   if (r.squared > 1 || r.squared < 0 || !is.numeric(r.squared) || length(r.squared) != 1)
     stop("R-squared (explanatory power of covariates) takes a value between 0 and 1.", call. = FALSE)
   check.nonnegative(k.covariates)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   check.proportion(alpha)
   check.logical(tukey.kramer, ceil.n, utf)
   verbose <- ensure.verbose(verbose)
@@ -1330,7 +1330,7 @@ power.t.contrast <- function(mu.vector, sd.vector,
     stop("The number of columns / elements in the contrast vector should match number of groups.", call. = FALSE)
 
   if (requested == "n" && is.null(p.vector))
-    stop("The `p.vector` cannot be NULL when the sample size is requested.", call. = FALSE)
+    stop("The `p.vector` can not be NULL when the sample size is requested.", call. = FALSE)
   if (requested == "n" && abs(sum(p.vector) - 1) > 1e-6)
     stop("The elements of the `p.vector` should sum to 1.", call. = FALSE)
 
@@ -1644,7 +1644,7 @@ power.t.contrasts <- function(x = NULL,
     if (!is.null(p.vector)) check.vector(p.vector, check.proportion)
     check.proportion(r.squared)
     check.nonnegative(k.covariates)
-    if (!is.null(power)) check.proportion(power)
+    if (!is.null(power)) check.power(power)
     check.proportion(alpha)
     check.logical(ceil.n)
 
@@ -1684,7 +1684,7 @@ power.t.contrasts <- function(x = NULL,
     idx.neg <- which(contrast.sign == -1)
 
     comparison.i <- sprintf("%s <=> %s", paste(levels[idx.poz], collapse = " "), paste(levels[idx.neg], collapse = " "))
-    comparison <- rbind(comparison, comparison.i)
+    comparison <- c(comparison, comparison.i)
 
     pwr.t.contr.obj <- power.t.contrast(mu.vector = mu.vector,
                                         sd.vector = sd.vector,

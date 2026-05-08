@@ -16,7 +16,7 @@ get.requested <- function(es = NULL, n = NULL, power = NULL) {
   es_vars <- gsub("list", "", deparse(substitute(es), nlines = 1))
   if (is.list(es)) {
     if        (sum(unlist(lapply(es, is.null))) == 2) {
-      stop(sprintf("Exactly one of `%s` can be NULL, not both.",
+      stop(sprintf("Exactly one element / entry of `%s` can be NULL, not both.",
                    paste(strsplit(gsub("[() ]", "", es_vars), ",")[[1]], collapse = "` or `")), call. = FALSE)
     } else if (sum(unlist(lapply(es, is.null))) == 1) {
       es <- NULL

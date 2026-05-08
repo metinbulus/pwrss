@@ -205,10 +205,10 @@ power.np.wilcoxon <- function(d = NULL, null.d = 0, margin = 0,
 
   if (!is.null(d)) check.numeric(d)
   check.numeric(null.d)
-  check.margins(margin, check.numeric, alternative)
+  margin <- check.margins(margin, check.numeric, alternative)
   check.positive(n.ratio)
   if (!is.null(n2)) check.sample.size(n2)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   check.proportion(alpha)
   check.logical(ceil.n, utf)
   verbose <- ensure.verbose(verbose)

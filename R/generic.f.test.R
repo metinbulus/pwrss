@@ -114,10 +114,16 @@ ncp.f.test <- function(power = 0.80, ncp = NULL, null.ncp = 0, df1 = NULL, df2 =
                        alpha = 0.05, plot = TRUE, verbose = 1, utf = FALSE) {
 
   check.power(power)
+  check.numeric(null.ncp)
+  if (is.null(df1) || df1 < 1) stop("`df1` can not be NULL, and needs to be at least 1.", call. = FALSE)
+  if (is.null(df2) || df2 < 3) stop("`df2` can not be NULL, and needs to be at least 3.", call. = FALSE)
+  check.proportion(alpha)
+  check.logical(plot, utf)
+  verbose <- ensure.verbose(verbose)
 
-  if (is.null(df1) || df1 < 1) stop("'df1' cannot be NULL, and need to be at least 1.", call. = FALSE)
-  if (is.null(df2) || df2 < 3) stop("'df2' cannot be NULL, and need to be at least 2.", call. = FALSE)
-
+  if (!is.null(ncp))
+    stop("`ncp` needs to be NULL.", call. = FALSE)
+  
   max.thresh <- stats::qf(1 - 1e-10, ncp = null.ncp, df1 = df1, df2 = df2)
   while (power.f.test(ncp = max.thresh, null.ncp = null.ncp, df1 = df1, df2 = df2, alpha = alpha,
                       plot = FALSE, verbose = 0, utf = FALSE)$power <= power) {
@@ -132,9 +138,7 @@ ncp.f.test <- function(power = 0.80, ncp = NULL, null.ncp = 0, df1 = NULL, df2 =
     },
     maximum = FALSE, lower = 0, upper = max.thresh)$minimum
 
-  power.f.test(ncp = ncp, null.ncp = null.ncp,
-               df1 = df1, df2 = df2, alpha = alpha,
-               plot = plot, verbose = verbose, utf = utf)
+  power.f.test(ncp = ncp, null.ncp = null.ncp, df1 = df1, df2 = df2, alpha = alpha, plot = FALSE, verbose = 0)
 
 } # ncp.f.test
 

@@ -233,6 +233,8 @@ test_that("power.f.ancova / pwrss.f.ancova work", {
                        "these letters separated by \":\", e.g., \"A:B\", assessing an interaction."))
     expect_error(power.f.ancova(eta.squared = 1e-9, factor.levels = 8, k.covariates = 0, alpha = 0.01, power = 0.80),
                  "Design is not feasible.")
+    expect_error(power.f.ancova(factor.levels = 8, k.covariates = 0, alpha = 0.01, power = 0.80, n.total = 9),
+                 "Design is not feasible.")
     expect_error(power.f.ancova(eta.squared = 0.059, factor.levels = rep(2, 4), power = 0.80, alpha = 0.05, verbose = 0),
                  "More than three-way ANOVA or ANCOVA is not allowed at the moment.")
     expect_error(pwrss.f.ancova(eta2 = 0.059, f2 = 0.059 / (1 - 0.059), n.levels = 2, power = 0.80, alpha = 0.05, verbose = 0),
@@ -318,7 +320,7 @@ test_that("power.f.ancova.keppel works", {
                  "Exactly one of the parameters `n.vector` or `power` must be given, one has to be NULL.")
     expect_error(power.f.ancova.keppel(mu.vector = c(0.50, 0.00, 0.20, 0.30), sd.vector = rep(1, 4),
                                        factor.levels = 4, k.covariates = 1, r.squared = 0.50, power = 0.80, alpha = 0.05),
-                 "`p.vector` cannot be NULL when sample size is requested")
+                 "`p.vector` can not be NULL when sample size is requested")
     expect_error(power.f.ancova.keppel(mu.vector = c(0.50, 0.00, 0.20, 0.30), sd.vector = rep(1, 4), p.vector = rep(0.24, 4),
                                        factor.levels = 4, k.covariates = 1, r.squared = 0.50, power = 0.80, alpha = 0.05),
                  "The elements of the `p.vector` should sum to 1")
@@ -913,7 +915,7 @@ test_that("power.f.ancova.shieh / power.t.contrasts / power.t.contrast work", {
                  "The number of rows in the contrast matrix should be less than or equal to number of groups minus one.")
     expect_error(power.f.ancova.shieh(mu.vector = c(0.20, 0), sd.vector = rep(1, 2),
                                       r.squared = 0.50, k.covariates = 1, power = 0.8, alpha = 0.05, verbose = 0),
-                 "`p.vector` cannot be NULL when sample size is requested.")
+                 "`p.vector` can not be NULL when sample size is requested.")
     expect_error(power.f.ancova.shieh(mu.vector = c(0.20, 0), sd.vector = rep(1, 2), p.vector = rep(0.5 - 1e-5, 2),
                                       r.squared = 0.50, k.covariates = 1, power = 0.8, alpha = 0.05, verbose = 0),
                  "The elements of the `p.vector` should sum to 1.")
@@ -934,14 +936,14 @@ test_that("power.f.ancova.shieh / power.t.contrasts / power.t.contrast work", {
                                   r.squared = 0.50, k.covariates = 1, power = 0.8, alpha = 0.05, verbose = 0),
                  "The number of rows in the contrast matrix should be one.")
     expect_error(power.t.contrast(mu.vector = c(0.001, 0, 0.0005), sd.vector = rep(1, 3), p.vector = rep(1 / 3, 3), contrast.vector = c(1, 0, -1),
-                                  r.squared = 0, k.covariates = 1e8, power = 1 - 1e-9, alpha = 1e-9, verbose = 0),
+                                  r.squared = 0, k.covariates = 1e8, power = 0.99, alpha = 1e-9, verbose = 0),
                  "Design not feasible.")
     expect_warning(power.t.contrast(mu.vector = c(0.20, 0.20), sd.vector = rep(1, 2), p.vector = rep(0.5, 2), contrast.vector = c(1, -1),
                                     r.squared = 0.5, k.covariates = 1, power = 0.8, alpha = 0.05, verbose = 0),
                    "Using infinity \\(maximum integer number as defined in R\\) for `n.total` because `psi` = 0.")
     expect_error(power.t.contrast(mu.vector = c(0.20, 0), sd.vector = rep(1, 2), contrast.vector = c(1, -1),
                                   r.squared = 0.5, k.covariates = 1, power = 0.8, alpha = 0.05, verbose = 0),
-                   "The `p.vector` cannot be NULL when the sample size is requested.")
+                   "The `p.vector` can not be NULL when the sample size is requested.")
     expect_error(power.t.contrast(mu.vector = c(0.20, 0), sd.vector = rep(1, 2), p.vector = rep(0.5 - 1e-5, 2), contrast.vector = c(1, -1),
                                   r.squared = 0.5, k.covariates = 1, power = 0.8, alpha = 0.05, verbose = 0),
                    "The elements of the `p.vector` should sum to 1.")

@@ -152,7 +152,7 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
   if (!is.null(prob10)) check.proportion(prob10)
   if (!is.null(prob01)) check.proportion(prob01)
   if (!is.null(n.paired)) check.sample.size(n.paired)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   check.proportion(alpha)
   check.logical(ceil.n, utf)
   verbose <- ensure.verbose(verbose)

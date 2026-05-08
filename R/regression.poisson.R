@@ -157,7 +157,7 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL, beta0 = NULL, b
   func.parms <- as.list(environment())
 
   if (!is.null(n)) check.sample.size(n)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   check.proportion(r.squared.predictor)
   check.positive(mean.exposure)
   check.proportion(alpha)
@@ -364,7 +364,7 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL, beta0 = NULL, b
         ncp <- beta1 * sqrt(exp(beta0) * n * (1 - r.squared.predictor) * mean.exposure / var.beta0)
         sd.ncp <- sqrt(var.beta1 / var.beta0)
       } else {
-        stop("Distribution type is not supported by the Signorini procedure", call. = FALSE)
+        stop("Distribution type is not supported by the Signorini procedure.", call. = FALSE)
       }
     } else { # signorini
       var.obj <- var.beta(beta0 = beta0, beta1 = beta1, distribution = distribution)

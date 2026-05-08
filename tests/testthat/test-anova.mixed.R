@@ -233,7 +233,7 @@ test_that("power.f.mixed.anova / pwrss.f.rmanova work", {
                                      power = 0.80, alpha = 0.05, verbose = 0),
                  "When the effect size shall be estimated, `rho.within` needs to be defined.")
     expect_error(power.f.mixed.anova(eta.squared = 1e-12, factor.levels = c(4, 4), rho.within = 0.50, effect = "within",
-                                     power = 0.99999, alpha = 0.05, verbose = 0),
+                                     power = 0.99, alpha = 0.05, verbose = 0),
                  "Design is not feasible.")
     expect_error(power.f.mixed.anova(factor.levels = c(4, 4), rho.within = 0.50, effect = "within", power = 0.80,
                                      n.total = 2, alpha = 0.05, verbose = 0),

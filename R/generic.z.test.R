@@ -231,26 +231,26 @@ power.z <- power.z.test
 #' # two-sided
 #' # power defined as the probability of observing test statistics greater than
 #' # the positive critical value OR less than the negative critical value
-#' ncp.z.test(mean = NULL, alpha = 0.05, alternative = "two.sided")
+#' ncp.z.test(power = 0.80, alpha = 0.05, alternative = "two.sided")
 #'
 #' # one-sided
 #' # power is defined as the probability of observing a test statistic greater
 #' # than the critical value
-#' ncp.z.test(mean = NULL, alpha = 0.05, alternative = "one.sided")
+#' ncp.z.test(power = 0.80, alpha = 0.05, alternative = "one.sided")
 #'
 #' # equivalence
 #' # power is defined as the probability of observing a test statistic greater
 #' # than the upper critical value (for the lower bound) AND less than the
 #' # lower critical value (for the upper bound)
-#' ncp.z.test(mean = NULL, null.mean = c(-2, 2), alpha = 0.05,
-#'              alternative = "two.one.sided")
+#' ncp.z.test(power = 0.80, req.sign = "0", null.mean = c(-2, 2), alpha = 0.05,
+#'            alternative = "two.one.sided")
 #'
 #' # minimal effect testing
 #' # power is defined as the probability of observing a test statistic greater
 #' # than the upper critical value (for the upper bound) OR less than the lower
 #' # critical value (for the lower bound).
-#' ncp.z.test(mean = NULL, null.mean = c(-1, 1), alpha = 0.05,
-#'              alternative = "two.one.sided")
+#' ncp.z.test(power = 0.80, req.sign = "+", null.mean = c(-1, 1), alpha = 0.05,
+#'            alternative = "two.one.sided")
 #'
 #' @export ncp.z.test
 ncp.z.test <- function(power = 0.80, mean = NULL, req.sign = "+", sd = 1, null.mean = 0, null.sd = 1,
@@ -259,9 +259,14 @@ ncp.z.test <- function(power = 0.80, mean = NULL, req.sign = "+", sd = 1, null.m
 
   alternative <- tolower(match.arg(alternative))
   check.power(power)
+  null.mean <- check.margins(null.mean, check.numeric, alternative)
+  check.positive(sd, null.sd)
+  check.proportion(alpha)
+  check.logical(plot, utf)
+  verbose <- ensure.verbose(verbose)
 
   if (!is.null(mean))
-    stop("'mean' should remain NULL", call. = FALSE)
+    stop("`mean` needs to be NULL.", call. = FALSE)
 
   min.alt <- stats::qnorm(1e-10,     mean = stats::qnorm(alpha,     mean = min(null.mean), sd = sd), sd = sd)
   max.alt <- stats::qnorm(1 - 1e-10, mean = stats::qnorm(1 - alpha, mean = max(null.mean), sd = sd), sd = sd)
@@ -278,12 +283,12 @@ ncp.z.test <- function(power = 0.80, mean = NULL, req.sign = "+", sd = 1, null.m
   mean <- stats::optimize(
     f = function(mean) {
       (power - power.z.test(mean = mean, sd = sd, null.mean = null.mean, null.sd = null.sd, alpha = alpha,
-                            alternative = alternative, plot = FALSE, verbose = 0, utf = FALSE)$power) ^ 2
+                            alternative = alternative, plot = FALSE, verbose = 0)$power) ^ 2
     },
     maximum = FALSE, interval = val.rng)$minimum
 
   power.z.test(mean = mean, sd = sd, null.mean = null.mean, null.sd = null.sd, alpha = alpha,
-               alternative = alternative, plot = plot, verbose = verbose, utf = utf)
+               alternative = alternative, plot = FALSE, verbose = 0)
 
 } # ncp.z.test
 

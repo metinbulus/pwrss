@@ -744,9 +744,9 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
                  "Specify `method` = \"guenther\" to request Wilcoxon signed-rank test for matched pairs.")
     expect_error(power.np.wilcoxon(margin = c(-0.05, 0.05), n2 = 7517, power = 0.80, alternative = "two.one.sided"),
                  "Determining the effect size is not possible if `alternative` is \"two.one.sided\".")
-    expect_error(power.np.wilcoxon(d = 0, alpha = 1e-4, power = 1 - 1e-4, alternative = "two.sided"),
+    expect_error(power.np.wilcoxon(d = 0, alpha = 1e-4, power = 0.99, alternative = "two.sided"),
                  "Design is not feasible.")
-    expect_error(power.np.wilcoxon(n2 = 2, alpha = 1e-4, power = 1 - 1e-4, alternative = "two.sided"),
+    expect_error(power.np.wilcoxon(n2 = 2, alpha = 1e-4, power = 0.99, alternative = "two.sided"),
                  "Design is not feasible.")
     expect_error(pwrss.np.2means(), "This function is no longer available. Please use `power.np.wilcoxon\\(\\)`.")
 })

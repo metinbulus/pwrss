@@ -76,7 +76,7 @@ power.exact.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
   if (!is.null(prob)) check.proportion(prob)
   null.prob <- check.margins(null.prob, check.proportion, alternative)
   if (!is.null(n)) check.sample.size(n)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   check.proportion(alpha)
   check.logical(utf)
   verbose <- ensure.verbose(verbose)
@@ -102,8 +102,6 @@ power.exact.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
     }
 
   } else if (requested == "es") {
-
-    if (power > 0.99) stop("Power cannot be larger than 0.99.", call. = FALSE)
 
     prob <- prob.binom.test(power = power, size = n, prob = NULL, req.sign = req.sign,
                             null.prob = null.prob, alpha = alpha, alternative = alternative,
@@ -675,7 +673,7 @@ power.exact.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+",
   if (!is.null(prob1)) check.proportion(prob1)
   if (!is.null(prob2)) check.proportion(prob2)
   if (!is.null(n2)) check.sample.size(n2)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   check.proportion(alpha)
   check.logical(paired)
   check.correlation(rho.paired)
@@ -708,8 +706,6 @@ power.exact.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+",
       } # paired
 
     } # power.exact()
-
-    if (power > 0.99) stop("Power cannot be larger than 0.99.", call. = FALSE)
 
     if (is.null(prob1)) {
 
@@ -868,7 +864,7 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
   if (!is.null(prob1)) check.proportion(prob1)
   if (!is.null(prob2)) check.proportion(prob2)
   if (!is.null(n2)) check.sample.size(n2)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   check.positive(n.ratio)
   check.proportion(alpha)
   check.logical(arcsine, correct, paired)
@@ -1095,8 +1091,6 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
     if (margin != 0) warning("`margin` argument is ignored.", call. = FALSE)
 
     if (requested == "es") {
-
-      if (power > 0.99) stop("Power cannot be larger than 0.99.", call. = FALSE)
 
       pwr.exact <- function(prob1, prob2, n.ratio, n2, power, alpha,
                             alternative, paired, rho.paired, method) {

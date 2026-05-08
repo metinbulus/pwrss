@@ -21,6 +21,10 @@ test_that("ensure.verbose works", {
 
 # get.requested --------------------------------------------------------------------------------------------------------
 test_that("get.requested works", {
+    probs <- list(NULL, NULL)
+    expect_error(get.requested(es = probs, n = NULL, power = NULL),
+                 "Exactly one element / entry of `probs` can be NULL, not both.")
+
     d <- NULL
     n <- NULL
     power <- NULL

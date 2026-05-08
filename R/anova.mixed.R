@@ -162,7 +162,7 @@ power.f.mixed.anova <- function(eta.squared = NULL,
   if (!is.null(eta.squared)) check.nonnegative(eta.squared)
   check.nonnegative(null.eta.squared)
   if (!is.null(n.total)) check.sample.size(n.total)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   check.proportion(alpha)
   check.logical(ceil.n, utf)
   verbose <- ensure.verbose(verbose)

@@ -115,15 +115,11 @@
 
   check.sample.size(size)
   check.proportion(prob)
-  # null.prob checked below
+  null.prob <- check.margins(null.prob, check.proportion, alternative)
   check.proportion(alpha)
 
   if (size < 10)
     stop("Number of trials should be greater than 10 for plotting.", call. = FALSE)
-
-  if (alternative == "two.one.sided" && length(null.prob) == 1)
-    null.prob <- rbind(prob - abs(null.prob - prob), prob + abs(null.prob - prob))
-  check.margins(null.prob, check.proportion, alternative)
 
   # critical binom line segment coordinates
   if (alternative == "two.one.sided") {
@@ -319,7 +315,7 @@
   graphics::title(ylab = "Probability Density", line = 2.2, cex.lab = cex.label, col.lab = "grey30")
   graphics::title(xlab = sprintf("X ~ Binomial (n = %d)", size), line = 2.2, cex.lab = cex.label, col.lab = "grey30")
 
-  if (power < 0) power <- 0
+  power[power < 0] <- 0
   alpha <- round(alpha, 2)
   beta <- round(1 - power, 2)
   power <- round(power, 2)

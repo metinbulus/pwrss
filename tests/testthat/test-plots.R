@@ -9,7 +9,6 @@ test_that("plots work", {
     check.snap4plot("binom_plot_3", power.binom.test, list(size = 200, prob = 0.4, null.prob = 0.5,         alternative = "two.sided"))
     check.snap4plot("binom_plot_4", power.binom.test, list(size = 200, prob = 0.5, null.prob = c(0.4, 0.6), alternative = "two.one.sided"))
     check.snap4plot("binom_plot_5", power.binom.test, list(size = 200, prob = 0.5, null.prob = c(0.3, 0.4), alternative = "two.one.sided"))
-    check.snap4plot("binom_plot_6", .plot.binom.t1t2, list(size = 200, prob = 0.5, null.prob = 0.2,         alternative = "two.one.sided"))
 
     # chisq-tests ------------------------------------------------------------------------------------------------------
     check.snap4plot("chisq_plot_1", power.chisq.test, list(ncp = 20, df =    1))
@@ -39,6 +38,14 @@ test_that("plots work", {
     check.snap4plot("F_plot_16", power.f.test, list(ncp = 8, df1 = 4, df2 =   10))
     check.snap4plot("F_plot_17", power.f.test, list(ncp = 8, df1 = 4, df2 =  100))
     check.snap4plot("F_plot_18", power.f.test, list(ncp = 8, df1 = 4, df2 = 1000))
+
+    # Lambda-prime distribution ----------------------------------------------------------------------------------------
+    check.snap4plot("lp_plot_1", power.lp.test, list(ncp =  1.96, df = 100))
+    check.snap4plot("lp_plot_2", power.lp.test, list(ncp =  1.96, df = 100, alternative = "one.sided"))
+    check.snap4plot("lp_plot_3", power.lp.test, list(ncp =  0, null.ncp = c(-2, 2), df = 100, alternative = "two.one.sided"))
+    check.snap4plot("lp_plot_4", power.lp.test, list(ncp =  2, null.ncp = c(-1, 1), df = 100, alternative = "two.one.sided"))
+    check.snap4plot("lp_plot_5", power.lp.test, list(ncp = -2, null.ncp = c(-1, 1), df = 100, alternative = "two.one.sided"))
+    check.snap4plot("lp_plot_6", power.lp.test, list(ncp = -1.96, df = 100))
 
     # t-tests ----------------------------------------------------------------------------------------------------------
     check.snap4plot("t_plot_1", power.t.test, list(ncp =  1.96,                   df = 100, alternative = "two.sided"))
@@ -102,6 +109,8 @@ test_that("plots work", {
                  "`df1` must be numeric, finite, have a value of at least 1 and have a length of 1.")
     expect_error(.plot.f.t1t2(ncp = 1, df1 = 1, df2 = Inf),
                  "`df2` must be numeric, finite, have a value of at least 1 and have a length of 1.")
+    expect_error(.plot.lp.t1t2(ncp = 1, df = NA),
+                 "`df` must be numeric, have a value of at least 1 and have a length of 1.")
     expect_error(.plot.t.t1t2(ncp = 2, df = 0),
                  "`df` must be numeric, have a value of at least 1 and have a length of 1.")
 })

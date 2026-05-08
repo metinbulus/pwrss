@@ -118,7 +118,7 @@ test_that("q.to.cors works", {
                  c("          q       delta        rho1        rho2 ", " 0.10000000 -0.07120268  0.50000000  0.57120268 "))
     expect_equal(capture.output(q.to.cors(q = 0.10, rho2 = 0.5)),
                  c("          q       delta        rho1        rho2 ", " 0.10000000 -0.07867151  0.42132849  0.50000000 "))
-    expect_error(q.to.cors(q = 0.10, verbose = 0), "Both `rho1` and `rho2` cannot be NULL.")
+    expect_error(q.to.cors(q = 0.10, verbose = 0), "Both `rho1` and `rho2` can not be NULL.")
     expect_error(q.to.cors(q = 0.10, rho1 = 0.5, rho2 = 0.3, verbose = 0), "Exactly one of the `rho1` or `rho2` should be NULL.")
 })
 
@@ -271,4 +271,53 @@ test_that("probs.to.w works", {
     expect_error(probs.to.w(matrix(c(0.2, 0.3, 0.4, 0.5), nrow = 2), matrix(c(0.2, 0.3, 0.4, 0.5), nrow = 1)),
                  "Dimensions for `prob.matrix` and `null.prob.matrix` do not match.")
     expect_error(probs.to.w(data.frame(A = c(0.2, 0.3, 0.4, 0.5))), "`prob.matrix` must be either a vector or a matrix.")
+})
+
+# prob.limits.paired ---------------------------------------------------------------------------------------------------
+test_that("prob.limits.paired works", {
+    expect_equal(prob.limits.paired(prob1 = 0.40, prob2 = NULL), c(prob.min = 0.1429, prob.max = 0.7272))
+    expect_equal(prob.limits.paired(prob1 = 0.50, prob2 = NULL), c(prob.min = 0.2000, prob.max = 0.7999))
+    expect_equal(prob.limits.paired(prob1 = NULL, prob2 = 0.50), c(prob.min = 0.2000, prob.max = 0.7999))
+    expect_equal(prob.limits.paired(prob1 = 0.10, prob2 = NULL), c(prob.min = 0.0271, prob.max = 0.3076))
+    expect_equal(prob.limits.paired(prob1 = 0.01, prob2 = NULL), c(prob.min = 0.0026, prob.max = 0.0388))
+    expect_equal(prob.limits.paired(prob1 = 0.10, prob2 = NULL, rho = 1.0),   c(prob.min = 0.1000, prob.max = 0.1000))
+    expect_equal(prob.limits.paired(prob1 = 0.10, prob2 = NULL, rho = 0.8),   c(prob.min = 0.0664, prob.max = 0.1479))
+    expect_equal(prob.limits.paired(prob1 = 0.10, prob2 = NULL, rho = 0.2),   c(prob.min = 0.0045, prob.max = 0.7352))
+    expect_equal(prob.limits.paired(prob1 = 0.10, prob2 = NULL, rho = 0.1),   c(prob.min = 0.0012, prob.max = 0.9174))
+    expect_equal(prob.limits.paired(prob1 = 0.10, prob2 = NULL, rho = 0.01),  c(prob.min = 0.0001, prob.max = 0.9991))
+    expect_equal(prob.limits.paired(prob1 = 0.10, prob2 = NULL, rho = 1e-12), c(prob.min = 0.0001, prob.max = 0.9999))
+    expect_error(prob.limits.paired(prob1 = NULL, prob2 = NULL),
+                 "Exactly one of the parameters `prob1` or `prob2` must be given, one has to be NULL.")
+    expect_error(prob.limits.paired(prob1 = 1e-6, prob2 = NULL),
+                 "No feasible values found. Check that rho is achievable given the fixed probability.")
+})
+
+# means.to.etasq -------------------------------------------------------------------------------------------------------
+test_that("means.to.etasq works", {
+    expect_equal(means.to.etasq(mu.vector = c(0.50, 0), sd.vector = rep(1, 2), n.vector = rep(33, 2), k.cov = 1,
+                                r.squared = 0.50, verbose = 0),
+                 list(f = 0.353553391, eta.squared = 1 / 9, df1 = 1, df2 = 63, ncp = 8.25))
+    expect_equal(means.to.etasq(mu.vector = c(0.50, 0), sd.vector = rep(1, 2), n.vector = rep(33, 2), verbose = 0),
+                 list(f = 0.25, eta.squared = 0.05882353, df1 = 1, df2 = 64, ncp = 4.125))
+    expect_equal(means.to.etasq(mu.vector = seq(-1, 1, 0.5), sd.vector = rep(1, 5), n.vector = rep(20, 5), k.cov = 1,
+                                r.squared = 0.50, verbose = 0),
+                 list(f = 1, eta.squared = 0.5, df1 = 4, df2 = 94, ncp = 100))
+    expect_equal(means.to.etasq(mu.vector = seq(-1, 1, 0.5), sd.vector = rep(1, 5), n.vector = rep(20, 5), verbose = 0),
+                 list(f = sqrt(0.5), eta.squared = 1 / 3, df1 = 4, df2 = 95, ncp = 50))
+    expect_output(means.to.etasq(mu.vector = seq(-1, 1, 0.5), sd.vector = rep(1, 5), n.vector = rep(20, 5), verbose = 1),
+                  "f eta.squared         df1         df2         ncp \n  0.7071068   0.3333333   4.0000000  95.0000000  50.0000000")
+    expect_error(means.to.etasq(mu.vector = NULL, sd.vector = rep(1, 5), n.vector = rep(20, 5), k.cov = 0, verbose = 0),
+                 "Provide a vector of means \\(`mu.vector`\\) with its length equal to number of groups.")
+    expect_error(means.to.etasq(mu.vector = seq(-1, 1, 0.5), sd.vector = rep(1, 5), n.vector = rep(20, 5),
+                                factor.levels = c(2, 2), verbose = 0),
+                 "Factorial designs are not allowed.")
+    expect_error(means.to.etasq(mu.vector = seq(-1, 1, 0.5), sd.vector = rep(1, 5), n.vector = rep(20, 5),
+                                factor.levels = 4, verbose = 0),
+                 "Length of the vector of means \\(`mu.vector`\\) does not match number of levels.")
+    expect_error(means.to.etasq(mu.vector = seq(-1, 1, 0.5), sd.vector = rep(1, 5), n.vector = rep(20, 5), k.cov = 1,
+                                r.squared = -1e-12, verbose = 0),
+                 "R-squared \\(explanatory power of covariates\\) takes a value between 0 and 1.")
+    expect_error(means.to.etasq(mu.vector = seq(-1, 1, 0.5), sd.vector = rep(1, 5), n.vector = rep(20, 5), k.cov = 0,
+                                r.squared = 0.50, verbose = 0),
+                 "Explanatory power of covariates is expected to be non-zero when number of covariates is non-zero.")
 })

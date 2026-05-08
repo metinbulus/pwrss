@@ -109,7 +109,7 @@ power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, req.sign = "+",
   if (!is.null(prob1)) check.proportion(prob1)
   if (!is.null(prob2)) check.proportion(prob2)
   if (!is.null(n2))    check.sample.size(n2)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   check.positive(n.ratio)
   check.proportion(alpha)
   check.logical(ceil.n, utf)

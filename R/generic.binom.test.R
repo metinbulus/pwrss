@@ -113,7 +113,7 @@ power.binom.test <- function(size,
 
     power <- stats::pbinom(q.low, size, prob, lower.tail = FALSE) +
              stats::pbinom(q.high, size, prob, lower.tail = TRUE) - 1
-    if (power < 0) power <- 0
+    power[power < 0] <- 0
 
   } else if (alternative == "two.one.sided" && (prob < min(null.prob) || prob > max(null.prob))) {  # minimal effect
 
@@ -225,12 +225,15 @@ prob.binom.test <- function(power = 0.80,
 
   alternative <- tolower(match.arg(alternative))
   check.power(power)
-  check.sample.size(size)
+  if (!is.null(size)) check.positive(size)
   if (!is.null(prob)) check.proportion(prob)
-  check.margins(null.prob, check.proportion, alternative)
+  null.prob <- check.margins(null.prob, check.proportion, alternative)
   check.proportion(alpha)
   check.logical(plot, utf)
   verbose <- ensure.verbose(verbose)
+
+  if (is.null(size) || !is.null(prob))
+    stop("`size` can not be NULL, and prob` needs to be NULL.", call. = FALSE)
 
   pos.sign <- check.pos_sign(req.sign, TRUE)
   if (is.null(pos.sign)) {
@@ -249,7 +252,7 @@ prob.binom.test <- function(power = 0.80,
     maximum = FALSE, interval = val.rng)$minimum
 
   power.binom.test(size = size, prob = prob, null.prob = null.prob, alpha = alpha, alternative = alternative,
-                   plot = plot, verbose = verbose, utf = utf)
+                   plot = FALSE, verbose = 0)
 
 } # prob.binom.test
 

@@ -227,23 +227,21 @@ power.t <- power.t.test
 #' # one-sided
 #' # power is defined as the probability of observing a test statistic greater
 #' # than the critical value
-#' ncp.t.test(power = 0.80,, df = 100, alpha = 0.05, alternative = "one.sided")
+#' ncp.t.test(power = 0.80, df = 100, alpha = 0.05, alternative = "one.sided")
 #'
 #' # equivalence
 #' # power is defined as the probability of observing a test statistic greater
 #' # than the upper critical value (for the lower bound) AND less than the
 #' # lower critical value (for the upper bound)
-#' ncp.t.test(power = 0.80, req.sign = "0",
-#'            null.ncp = c(-2, 2), df = 100, alpha = 0.05,
-#'            alternative = "two.one.sided")
+#' ncp.t.test(power = 0.80, req.sign = "0", null.ncp = c(-2, 2),
+#'            df = 100, alpha = 0.05, alternative = "two.one.sided")
 #'
 #' # minimal effect testing
 #' # power is defined as the probability of observing a test statistic greater
 #' # than the upper critical value (for the upper bound) OR less than the lower
 #' # critical value (for the lower bound).
-#' ncp.t.test(power = 0.80, req.sign = "+",
-#'            null.ncp = c(-1, 1), df = 100, alpha = 0.05,
-#'            alternative = "two.one.sided")
+#' ncp.t.test(power = 0.80, req.sign = "+", null.ncp = c(-1, 1),
+#'            df = 100, alpha = 0.05, alternative = "two.one.sided")
 #'
 #' @export ncp.t.test
 ncp.t.test <- function(power = 0.80, ncp = NULL, null.ncp = 0, req.sign = "+",
@@ -252,16 +250,20 @@ ncp.t.test <- function(power = 0.80, ncp = NULL, null.ncp = 0, req.sign = "+",
                        plot = TRUE, verbose = 1, utf = FALSE) {
 
   alternative <- tolower(match.arg(alternative))
+  check.power(power)
+  if (!is.null(ncp)) check.numeric(ncp)
+  null.ncp <- check.margins(null.ncp, check.numeric, alternative)
+  if (!is.null(df)) check.positive(df)
+  check.proportion(alpha)
+  check.logical(plot, utf)
+  verbose <- ensure.verbose(verbose)
 
-  if (power > 0.99) stop("Power cannot be larger than 0.99.", call. = FALSE)
-
-  if (is.null(ncp) && is.null(df))
-    stop("Only one of the 'ncp' or 'df' can be NULL", call. = FALSE)
+  if (is.null(ncp) == is.null(df))
+    stop("Exactly one of the parameters `ncp` or `df` must be given, one has to be NULL.", call. = FALSE)
 
   if (is.null(ncp)) {
 
-    if (is.null(df)) stop("'df' cannot be NULL", call. = FALSE)
-    if (df < 3) stop("Degrees of freedom cannot be smaller than 3.", call. = FALSE)
+    if (df < 3) stop("Degrees of freedom can not be smaller than 3.", call. = FALSE)
 
     suppressWarnings({
       min.alt <- stats::qt(1e-10,     ncp = stats::qt(alpha,     ncp = min(null.ncp), df = df), df = df)
@@ -287,8 +289,6 @@ ncp.t.test <- function(power = 0.80, ncp = NULL, null.ncp = 0, req.sign = "+",
 
   } else if (is.null(df)) { # ncp is null
 
-    if (is.null(ncp)) stop("'ncp' cannot be NULL", call. = FALSE)
-
     df <- stats::optimize(
       f = function(df) {
         (power - power.t.test(ncp = ncp, null.ncp = null.ncp,
@@ -300,7 +300,7 @@ ncp.t.test <- function(power = 0.80, ncp = NULL, null.ncp = 0, req.sign = "+",
   } # df is null
 
   power.t.test(ncp = ncp, null.ncp = null.ncp, df = df, alpha = alpha, alternative = alternative,
-               plot = plot, verbose = verbose, utf = utf)
+               plot = FALSE, verbose = 0)
 
 } # ncp.t.test
 

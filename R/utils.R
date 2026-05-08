@@ -358,7 +358,7 @@ q.to.cors <- function(q, rho1 = NULL, rho2 = NULL, verbose = 1) {
   verbose <- ensure.verbose(verbose)
 
   if (is.null(rho1) && is.null(rho2))
-    stop("Both `rho1` and `rho2` cannot be NULL.", call. = FALSE)
+    stop("Both `rho1` and `rho2` can not be NULL.", call. = FALSE)
   if (!is.null(rho1) && !is.null(rho2))
     stop("Exactly one of the `rho1` or `rho2` should be NULL.", call. = FALSE)
 
@@ -754,7 +754,7 @@ prob.limits.paired <- function(prob1 = NULL, prob2 = NULL, rho = 0.50,
 
   } else {
 
-    stop("Exactly one of prob1 or prob2 must be NULL", call. = FALSE)
+    stop("Exactly one of the parameters `prob1` or `prob2` must be given, one has to be NULL.", call. = FALSE)
 
   }
 
@@ -763,7 +763,7 @@ prob.limits.paired <- function(prob1 = NULL, prob2 = NULL, rho = 0.50,
   good <- sapply(grid, feasible)
 
   if (!any(good)) {
-    stop("No feasible values found. Check that rho is achievable given the fixed probability.")
+    stop("No feasible values found. Check that rho is achievable given the fixed probability.", call. = FALSE)
   }
 
   feasible.vals <- grid[good]

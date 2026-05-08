@@ -334,7 +334,7 @@ power.t.student <- function(d = NULL, null.d = 0, margin = 0,
   margin <- check.margins(margin, check.numeric, alternative)
   if (!is.null(n2)) check.sample.size(n2)
   check.positive(n.ratio)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   check.proportion(alpha)
   check.logical(ceil.n, utf)
   verbose <- ensure.verbose(verbose)
@@ -434,7 +434,7 @@ power.t.student <- function(d = NULL, null.d = 0, margin = 0,
 } # power.t.student()
 
 # provide a table of conversions from d to d.hc2
-# mention that it cannot be interpreted same as d
+# mention that it can not be interpreted same as d
 # when both var.ratio and n.ratio deviate from 1
 # minor deviations are OK
 
@@ -562,7 +562,7 @@ power.t.welch <- function(d = NULL, null.d = 0, margin = 0,
   margin <- check.margins(margin, check.numeric, alternative)
   check.positive(n.ratio)
   if (!is.null(n2)) check.sample.size(n2)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   check.proportion(alpha)
   check.logical(ceil.n, utf)
   verbose <- ensure.verbose(verbose)
@@ -688,7 +688,7 @@ pwrss.t.mean <- function(mu, sd = 1, mu0 = 0, margin = 0, alpha = 0.05,
 
   check.positive(sd)
   check.numeric(mu, mu0, margin)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   if (!is.null(n)) check.sample.size(n)
 
   if (alternative %in% c("less", "greater", "non-inferior", "superior")) alternative <- "one.sided"
@@ -745,7 +745,7 @@ pwrss.t.2means <- function(mu1, mu2 = 0, margin = 0,
   check.positive(sd1, sd2)
   check.correlation(paired.r)
   check.numeric(mu1, mu2, margin)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   if (!is.null(n2)) check.sample.size(n2)
 
   if (alternative %in% c("less", "greater", "non-inferior", "superior")) alternative <- "one.sided"

@@ -201,7 +201,7 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
 
   check.proportion(r.squared.predictor)
   if (!is.null(n)) check.sample.size(n)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   check.proportion(alpha)
   check.logical(ceil.n, utf)
   verbose <- ensure.verbose(verbose)

@@ -4,6 +4,11 @@ test_that("checks.R works", {
     expect_error(check.proportion(-1, 2, 1.1, 0, 1),
                  "Arguments `-1`, `2`, `1.1` do not have valid proportion values \\(must be length 1, numeric, >= 0, and <= 1\\)")
 
+    # check.power ------------------------------------------------------------------------------------------------------
+    expect_null(unlist(lapply(seq(1, 99, 14) / 100, check.power)))
+    expect_error(check.power(-1, 2, 0, 1, 0.01, 0.99),
+                 "Arguments `-1`, `2`, `0`, `1` do not have valid power values \\(must be length 1, numeric, >= 0.01, and <= 0.99\\)")
+
     # check.correlation ------------------------------------------------------------------------------------------------
     expect_null(unlist(lapply(seq(-10, 10) / 10, check.correlation)))
     expect_error(check.correlation(-1.1, 2, 1.1, 0, 1, -1),
@@ -107,4 +112,35 @@ test_that("checks.R works", {
     expect_error(check.correlation.matrix(tstMtx), "Correlation matrix `tstMtx` is not positive definite")
     # neither I nor ChatGPT could not generate test cases for (1) a matrix that is not invertible (determinant of 0 or lower)
     # and (2) a matrix that is not well conditioned (kappa > 1000)
+
+    # check.null  ------------------------------------------------------------------------------------------------------
+    expect_equal(check.null(NULL, NULL, NULL, NULL), rep(TRUE, 4))
+    expect_equal(check.null(NA, NULL, Inf, NULL), c(FALSE, TRUE, FALSE, TRUE))
+
+    # check.not_null  --------------------------------------------------------------------------------------------------
+    expect_equal(check.not_null(NULL, NULL, NULL, NULL), rep(FALSE, 4))
+    expect_equal(check.not_null(NA, NULL, Inf, NULL), c(TRUE, FALSE, TRUE, FALSE))
+
+    # check.pos_sign  --------------------------------------------------------------------------------------------------
+    expect_true(check.pos_sign("+"))
+    expect_true(check.pos_sign(1))
+    expect_true(check.pos_sign("1"))
+    expect_true(check.pos_sign("+1"))
+    expect_true(check.pos_sign("positive"))
+    expect_false(check.pos_sign("-"))
+    expect_false(check.pos_sign(-1))
+    expect_false(check.pos_sign("-1"))
+    expect_false(check.pos_sign("negative"))
+    expect_null(check.pos_sign(" ", TRUE))
+    expect_null(check.pos_sign(0, TRUE))
+    expect_null(check.pos_sign("0", TRUE))
+    expect_null(check.pos_sign("", TRUE))
+    expect_error(check.pos_sign(" "),       "`req.sign` can only be `\\+` and `-` for this function.")
+    expect_error(check.pos_sign(""),        "`req.sign` can only be `\\+` and `-` for this function.")
+    expect_error(check.pos_sign("A"),       "`req.sign` can only be `\\+` and `-` for this function.")
+    expect_error(check.pos_sign(2),         "`req.sign` can only be `\\+` and `-` for this function.")
+    expect_error(check.pos_sign(-2),        "`req.sign` can only be `\\+` and `-` for this function.")
+    expect_error(check.pos_sign("A", TRUE), "`req.sign` can only be `\\+`, `-` and ` ` for this function.")
+    expect_error(check.pos_sign(2,   TRUE), "`req.sign` can only be `\\+`, `-` and ` ` for this function.")
+    expect_error(check.pos_sign(-2,  TRUE), "`req.sign` can only be `\\+`, `-` and ` ` for this function.")
 })

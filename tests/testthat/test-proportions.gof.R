@@ -99,7 +99,7 @@ test_that("proportions.gof.R works", {
 
     expect_error(power.chisq.gof(w = 0.01, null.w = 0.1, df = 1, power = 0.80, alpha = 0.05, verbose = 0),
                  "`w` should be greater than or equal to `null.w`.")
-    expect_error(power.chisq.gof(w = 1e-6, df = 1, power = 1 - 1e-6, alpha = 1e-6),
+    expect_error(power.chisq.gof(w = 1e-6, df = 1, power = 0.99, alpha = 1e-6),
                  "Design is not feasible.")
     expect_error(power.chisq.gof(df = 1, n = 2, power = 0.80, alpha = 0.05, verbose = 0),
                  "Design is not feasible.")

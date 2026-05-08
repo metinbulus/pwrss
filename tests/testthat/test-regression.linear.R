@@ -159,7 +159,7 @@ test_that("power.f.regression / pwrss.f.regression work", {
     expect_error(power.f.regression(r.squared.change = 0.10, k.total = 5, k.tested = 2, verbose = 0),
                  "Exactly two of the parameters `r.squared.change`, `n`, or `power` must be given, one has to be NULL.")
     expect_error(power.f.regression(r.squared.change = 0.10, k.total = 2, k.tested = 5, power = 0.80, verbose = 0),
-                 "`k.tested` cannot be greater than `k.total`.")
+                 "`k.tested` can not be greater than `k.total`.")
     expect_error(power.f.regression(r.squared.change = 0, k.total = 5, k.tested = 2, power = 0.80, verbose = 0),
                  "Value for `r.squared.change` must be larger than 0 and smaller than 1.")
     expect_error(power.f.regression(r.squared.change = -0.01, k.total = 5, k.tested = 2, power = 0.80, verbose = 0),

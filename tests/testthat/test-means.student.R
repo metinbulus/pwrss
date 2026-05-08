@@ -551,9 +551,9 @@ test_that("power.t.student / pwrss.t.mean / pwrss.t.2means work", {
 
     expect_error(power.t.student(margin = c(-0.05, 0.05), n2 = 7517, power = 0.80, alternative = "two.one.sided"),
                  "Determining the effect size is not possible if `alternative` is \"two.one.sided\".")
-    expect_error(power.t.student(d = 1e-4, power = 1 - 1e-4, alpha = 1e-4, alternative = "two.sided", design = "independent"),
+    expect_error(power.t.student(d = 1e-6, power = 0.99, alpha = 1e-6, alternative = "two.sided", design = "independent"),
                  "Design is not feasible.")
-    expect_error(power.t.student(n2 = 2, power = 1 - 1e-4, alpha = 1e-4, alternative = "two.sided", design = "independent"),
+    expect_error(power.t.student(n2 = 2, power = 0.99, alpha = 1e-6, alternative = "two.sided", design = "independent"),
                  "Design is not feasible.")
     expect_warning(pwrss.t.mean(mu = 0.20, margin = 0.1, sd = 1, power = 0.8, alternative = "not equal", verbose = FALSE),
                    "Margin is forced to be 0 for the 'two.sided' test.")
@@ -785,9 +785,9 @@ test_that("power.t.welch works", {
 
     expect_error(power.t.welch(margin = c(-0.05, 0.05), n2 = 7517, power = 0.80, alternative = "two.one.sided"),
                  "Determining the effect size is not possible if `alternative` is \"two.one.sided\".")
-    expect_error(power.t.welch(d = 1e-4, power = 1 - 1e-4, alpha = 1e-4, alternative = "two.sided"),
+    expect_error(power.t.welch(d = 1e-6, power = 0.99, alpha = 1e-6, alternative = "two.sided"),
                  "Design is not feasible.")
-    expect_error(power.t.welch(n2 = 2, power = 1 - 1e-4, alpha = 1e-4, alternative = "two.sided"),
+    expect_error(power.t.welch(n2 = 2, power = 0.99, alpha = 1e-6, alternative = "two.sided"),
                  "Design is not feasible.")
     expect_warning(pwrss.t.2means(mu1 = 0.20, sd1 = 1, power = 0.8, welch.df = FALSE, alternative = "not equal", verbose = FALSE),
                    "Forcing welch.df = TRUE.")

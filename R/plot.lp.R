@@ -125,7 +125,7 @@
 
     t.alpha.upper <- sadists::qlambdap(alpha / 2, df = df, t = null.ncp, lower.tail = FALSE)
     t.alpha.lower <- sadists::qlambdap(alpha / 2, df = df, t = null.ncp, lower.tail = TRUE)
-    t.alpha <- rbind(t.alpha.lower, t.alpha.upper)
+    t.alpha <- c(t.alpha.lower, t.alpha.upper)
 
     yt.alpha <- sadists::dlambdap(t.alpha, df = df, t = null.ncp)
 
@@ -298,7 +298,7 @@
                     col.lab = grDevices::adjustcolor(1, alpha.f = 0.8))
   }
 
-  if (power < 0) power <- 0
+  power[power < 0] <- 0
   alpha <- round(alpha, digits)
   beta <- round(1 - power, digits)
   power <- round(power, digits)

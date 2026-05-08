@@ -86,6 +86,19 @@ test_that("power.z.poisson / pwrss.z.poisson work", {
                  list(test = "z", base.rate = exp(0.50), rate.ratio = exp(-0.10), mean = -2.80250964, sd = 0.99999976,
                       vcf = 1, null.mean = 0, null.sd = 1, z.alpha = c(-1.959964, 1.959964), power = 0.80025971, n = 474))
 
+    crrRes <- power.z.poisson(base.rate = exp(0.50), req.sign = "-", alpha = 0.05, power = 0.80, n = 474,
+                              dist = "normal", verbose = 0)
+    expect_equal(class(crrRes), c("pwrss", "z", "poisson"))
+    expect_equal(names(crrRes),
+                 c("parms", "test", "base.rate", "rate.ratio", "mean", "sd", "vcf", "null.mean", "null.sd", "z.alpha", "power", "n"))
+    expect_equal(crrRes[["parms"]],
+                 list(base.rate = exp(0.50), rate.ratio = NULL, beta0 = NULL, beta1 = NULL, req.sign = "-", n = 474,
+                      power = 0.8, r.squared.predictor = 0, mean.exposure = 1, alpha = 0.05, alternative = "two.sided",
+                      method = "demidenko(vc)", distribution = "normal", ceil.n = TRUE, verbose = 0, utf = FALSE))
+    expect_equal(crrRes[c("test", "base.rate", "rate.ratio", "mean", "sd", "vcf", "null.mean", "null.sd", "z.alpha", "power", "n")],
+                 list(test = "z", base.rate = exp(0.50), rate.ratio = 0.9048634, mean = -2.80170092, sd = 0.99999976,
+                      vcf = 1, null.mean = 0, null.sd = 1, z.alpha = c(-1.959964, 1.959964), power = 0.8000334, n = 474))
+
     crrRes <- power.z.poisson(base.rate = exp(0.50), rate.ratio = exp(-0.10), alpha = 0.05, power = 0.80,
                               dist = list(dist = "normal", mean = 10, sd = 2), verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "poisson"))
@@ -243,6 +256,8 @@ test_that("power.z.poisson / pwrss.z.poisson work", {
                    "Using `beta0` and `beta1`, ignoring any specifications to `base.rate` or `rate.ratio`.")
     expect_message(power.z.poisson(base.rate = exp(0.50), rate.ratio = exp(-0.10), beta0 = 0.50, alpha = 0.05, power = 0.80, verbose = 0),
                    "Using `base.rate` and `rate.ratio`, ignoring any specifications to `beta0` or `beta1`.")
+    expect_message(power.z.poisson(base.rate = exp(0.50), beta0 = 0.50, alpha = 0.05, power = 0.80, n = 474, verbose = 0),
+                   "Calculating the effect size \\(`rate.ratio`\\), ignoring any specifications to `rate.ratio`, `beta0` or `beta1`.")
     expect_error(power.z.poisson(base.rate = exp(0.50), rate.ratio = exp(0.50), alpha = 0.05, power = 0.80, verbose = 0),
                  "`beta0` / `base.rate` can not have the same value as `beta1` / `rate.ratio`.")
     expect_error(power.z.poisson(base.rate = exp(0.50), rate.ratio = exp(-0.10), alpha = 0.05, verbose = 0),
@@ -257,4 +272,7 @@ test_that("power.z.poisson / pwrss.z.poisson work", {
                  "Unknown input type for `distribution`")
     expect_error(power.z.poisson(base.rate = exp(0.50), rate.ratio = exp(-0.10), alpha = 0.05, power = 0.80, distribution = NA, verbose = 0),
                  "Unknown input type for `distribution`")
+    expect_error(power.z.poisson(base.rate = exp(0.50), rate.ratio = exp(-0.10), alpha = 0.05, power = 0.80,
+                                 method = "signorini", dist = "uniform", verbose = 0),
+                 "Distribution type is not supported by the Signorini procedure.")
 })

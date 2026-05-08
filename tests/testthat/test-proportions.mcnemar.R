@@ -132,6 +132,6 @@ test_that("proportions.mcnemar.R works", {
     # -> reasonable close for power = 0.839343 (GPower) / 0.839357 (pwrss); quite off for alpha = 0.032578 (GPower) / 0.020695 (pwrss)
     # likely due to missing alpha-balancing
 
-    expect_error(power.exact.mcnemar(prob10 = 0.002, prob01 = 0.001, power = 0.999, alpha = 0.001, alternative = "two.sided"),
+    expect_error(power.exact.mcnemar(prob10 = 0.002, prob01 = 0.001, power = 0.99, alpha = 1e-6, alternative = "two.sided"),
                  "Sample size exceeds 100,000. Please check the assumptions.")
 })

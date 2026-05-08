@@ -116,14 +116,19 @@ ncp.chisq.test <- function(power = 0.80, ncp = NULL, null.ncp = 0, df = NULL,
                            alpha = 0.05, plot = TRUE, verbose = 1, utf = FALSE) {
 
   check.power(power)
+  if (!is.null(ncp)) check.numeric(ncp)
+  check.numeric(null.ncp)
+  if (!is.null(df)) check.positive(df)
+  check.proportion(alpha)
+  check.logical(plot, utf)
+  verbose <- ensure.verbose(verbose)
 
-  if (is.null(ncp) && is.null(df)) {
+  if (is.null(ncp) == is.null(df))
+    stop("Exactly one of the parameters `ncp` or `df` must be given, one has to be NULL.", call. = FALSE)
 
-    if (is.null(df)) stop("`ncp` and `df` cannot be NULL at the same time", call. = FALSE)
+  if (is.null(ncp)) {
 
-  } else if (is.null(ncp)) {
-
-    if (df < 1) stop("Degrees of freedom cannot be smaller than 1.", call. = FALSE)
+    if (df < 1) stop("Degrees of freedom can not be smaller than 1.", call. = FALSE)
 
     max.thresh <- stats::qchisq(1 - 1e-10, ncp = null.ncp, df = df)
     while (power.chisq.test(ncp = max.thresh, null.ncp = null.ncp, df = df, alpha = alpha,
@@ -150,8 +155,7 @@ ncp.chisq.test <- function(power = 0.80, ncp = NULL, null.ncp = 0, df = NULL,
 
   } # df is null
 
-  power.chisq.test(ncp = ncp, null.ncp = null.ncp, df = df, alpha = alpha,
-                   plot = plot, verbose = verbose, utf = utf)
+  power.chisq.test(ncp = ncp, null.ncp = null.ncp, df = df, alpha = alpha, plot = FALSE, verbose = 0)
 
 } # ncp.chisq.test
 
