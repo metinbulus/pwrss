@@ -14,6 +14,8 @@ ensure.verbose <- function(verbose = NULL) {
 get.requested <- function(es = NULL, n = NULL, power = NULL) {
 
   es_vars <- gsub("list", "", deparse(substitute(es), nlines = 1))
+  n_vars <- deparse(substitute(n), nlines = 1)
+
   if (is.list(es)) {
     if        (sum(unlist(lapply(es, is.null))) == 2) {
       stop(sprintf("Exactly one element / entry of `%s` can be NULL, not both.",
@@ -24,11 +26,16 @@ get.requested <- function(es = NULL, n = NULL, power = NULL) {
   }
   es <- unlist(es)[1] # works for vectors too (then unlist has no effect)
 
+  is_na <- check.na(es, n, power)
+  if (sum(is_na) > 1)
+    stop(sprintf("Maximally one input parameter (`%s`, `%s`, or `power`) can be excluded from checking.", es_vars, n_vars),
+         call. = FALSE)
+
   if (sum(check.not_null(n, power, es)) != 2) {
-    parms <- ifelse(is.null(es) || !is.na(es),
-                    sprintf("two of the parameters `%s`, `%s`, or `power`", es_vars, deparse(substitute(n), nlines = 1)),
-                    sprintf("one of the parameters `%s` or `power`", deparse(substitute(n), nlines = 1)))
-    stop(sprintf("Exactly %s must be given, one has to be NULL.", parms), call. = FALSE)
+    n.parms <- ifelse(!any(is_na), "two", "one")
+    s.parms <- do.call(sprintf,
+                     list(ifelse(!any(is_na), "%s`, `%s`, or `%s", "%s` or `%s"), es_vars, n_vars, "power")[c(TRUE, !is_na)]) 
+    stop(sprintf("Exactly %s of the parameters `%s` must be given, one has to be NULL.", n.parms, s.parms), call. = FALSE)
   }
 
   invisible(c("es", "n", "power")[check.null(es, n, power)]) # return what is requested / to be calculated
