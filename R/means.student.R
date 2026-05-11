@@ -372,7 +372,7 @@ power.t.student <- function(d = NULL, null.d = 0, margin = 0,
 
   if (requested == "n") {
 
-    n2 <- try(stats::uniroot(function(n2) min.pwr.student(d, n2, power), interval = c(3, 1e10))$root, silent = TRUE)
+    n2 <- try(stats::uniroot(function(n2) min.pwr.student(d, n2, power), interval = c(4, 1e10))$root, silent = TRUE)
     if (inherits(n2, "try-error") || n2 == 1e10) stop("Design is not feasible.", call. = FALSE)
 
     n2 <- ifelse(ceil.n, ceiling(n2), n2)
@@ -387,8 +387,7 @@ power.t.student <- function(d = NULL, null.d = 0, margin = 0,
       # exit the loop, if there is no error, or another error than that indicating that no local minimum can be found
       if (uniroot_break(d)) break
     } # for (o ...)
-    if (inherits(d, "try-error"))
-      stop("Design is not feasible.", call. = FALSE)
+    if (inherits(d, "try-error")) stop("Design is not feasible.", call. = FALSE)
 
   }
 
@@ -411,8 +410,8 @@ power.t.student <- function(d = NULL, null.d = 0, margin = 0,
                       d = d, null.d = null.d, margin = margin,
                       alpha = alpha, t.alpha = t.alpha,
                       alternative = alternative, n = n, df = df,
-                      ncp.alternative = ncp,
-                      ncp.null = null.ncp,
+                      ncp = ncp,
+                      null.ncp = null.ncp,
                       power = power)
 
     .print.pwrss.ttest(print.obj, verbose = verbose, utf = utf)
@@ -648,8 +647,8 @@ power.t.welch <- function(d = NULL, null.d = 0, margin = 0,
                       margin = margin,
                       alpha = alpha, t.alpha = t.alpha,
                       alternative = alternative, n = n, df = df,
-                      ncp.alternative = ncp,
-                      ncp.null = null.ncp,
+                      ncp = ncp,
+                      null.ncp = null.ncp,
                       power = power)
 
     .print.pwrss.ttest(print.obj, verbose = verbose, utf = utf)

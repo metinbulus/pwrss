@@ -154,13 +154,6 @@ power.f.regression <- function(r.squared.change = NULL,
   pwr.obj <- pwr.f.reg(r.squared.change = r.squared.change, margin = margin,
                        k.total = k.total, k.tested = k.tested, n = n, alpha = alpha)
 
-  power <- pwr.obj$power
-  df1 <- pwr.obj$df1
-  df2 <- pwr.obj$df2
-  lambda <- pwr.obj$lambda
-  null.lambda <- pwr.obj$null.lambda
-  f.alpha <- pwr.obj$f.alpha
-
   if (verbose > 0) {
 
     print.obj <- list(requested = requested,
@@ -170,13 +163,13 @@ power.f.regression <- function(r.squared.change = NULL,
                       k.tested = k.tested,
                       margin = margin,
                       n = n,
-                      df1 = df1,
-                      df2 = df2,
-                      ncp.alternative = lambda,
-                      ncp.null = null.lambda,
-                      f.alpha = f.alpha,
+                      df1 = pwr.obj$df1,
+                      df2 = pwr.obj$df2,
+                      ncp = pwr.obj$lambda,
+                      null.ncp = pwr.obj$null.lambda,
+                      f.alpha = pwr.obj$f.alpha,
                       alpha = alpha,
-                      power = power)
+                      power = pwr.obj$power)
 
     .print.pwrss.f.regression(print.obj, verbose = verbose, utf = utf)
 
@@ -184,13 +177,13 @@ power.f.regression <- function(r.squared.change = NULL,
 
   invisible(structure(list(parms = func.parms,
                            test = "F",
-                           df1 = df1,
-                           df2 = df2,
-                           ncp = lambda,
-                           null.ncp = null.lambda,
-                           f.alpha = f.alpha,
+                           df1 = pwr.obj$df1,
+                           df2 = pwr.obj$df2,
+                           ncp = pwr.obj$lambda,
+                           null.ncp = pwr.obj$null.lambda,
+                           f.alpha = pwr.obj$f.alpha,
                            r.squared.change = r.squared.change,
-                           power = power,
+                           power = pwr.obj$power,
                            n = n),
                       class = c("pwrss", "f", "regression")))
 
@@ -461,7 +454,7 @@ power.t.regression <- function(beta = NULL, null.beta = 0, margin = 0,
   if (requested == "n") {
 
     n <- try(stats::uniroot(function(n) min.pwr(r.squared, beta, n, power),
-                            interval = c(k.total + 3, 1e10), tol = 1e-12)$root,
+                            interval = c(k.total + 4, 1e10), tol = 1e-12)$root,
              silent = TRUE)
     if (inherits(n, "try-error") || n == 1e10) stop("Design is not feasible.", call. = FALSE)
 
@@ -484,12 +477,6 @@ power.t.regression <- function(beta = NULL, null.beta = 0, margin = 0,
                        n = n, k.total = k.total, r.squared = r.squared,
                        alpha = alpha, alternative =  alternative)
 
-  power <- pwr.obj$power
-  lambda <- pwr.obj$lambda
-  null.lambda <- pwr.obj$null.lambda
-  df <- pwr.obj$df
-  t.alpha <- pwr.obj$t.alpha
-
   std.beta <- beta * (sd.predictor / sd.outcome)
   std.null.beta <- null.beta * (sd.predictor / sd.outcome)
   std.margin <- margin * (sd.predictor / sd.outcome)
@@ -504,13 +491,13 @@ power.t.regression <- function(beta = NULL, null.beta = 0, margin = 0,
                       std.margin = std.margin,
                       margin = margin,
                       n = n,
-                      df = df,
-                      ncp.alternative = lambda,
-                      ncp.null = null.lambda,
-                      t.alpha = t.alpha,
-                      r.squared = r.squared,
+                      df = pwr.obj$df,
+                      ncp = pwr.obj$lambda,
+                      null.ncp = pwr.obj$null.lambda,
                       alpha = alpha,
-                      power = power)
+                      t.alpha = pwr.obj$t.alpha,
+                      r.squared = r.squared,
+                      power = pwr.obj$power)
 
     .print.pwrss.t.regression(print.obj, verbose = verbose, utf = utf)
 
@@ -521,12 +508,12 @@ power.t.regression <- function(beta = NULL, null.beta = 0, margin = 0,
                            std.beta = std.beta,
                            std.null.beta = std.null.beta,
                            std.margin = std.margin,
-                           df = df,
-                           t.alpha = t.alpha,
-                           ncp = lambda,
-                           null.ncp = null.lambda,
+                           df = pwr.obj$df,
+                           t.alpha = pwr.obj$t.alpha,
+                           ncp = pwr.obj$lambda,
+                           null.ncp = pwr.obj$null.lambda,
                            r.squared = r.squared,
-                           power = power,
+                           power = pwr.obj$power,
                            n = n),
                       class = c("pwrss", "t", "regression")))
 } # power.t.regression()

@@ -6,9 +6,11 @@
 \title{Statistical Power for the Lambda-Prime Distribution}
 \usage{
 power.lp.test(
-  ncp,
+  power = NULL,
+  ncp = NULL,
+  req.sign = "+",
   null.ncp = 0,
-  df,
+  df = NULL,
   alpha = 0.05,
   alternative = c("two.sided", "one.sided", "two.one.sided"),
   plot = TRUE,
@@ -17,7 +19,16 @@ power.lp.test(
 )
 }
 \arguments{
-\item{ncp}{non-centrality parameter for the alternative.}
+\item{power}{statistical power \eqn{(1 - \beta)}; either \code{power},
+\code{ncp} or \code{df} needs to be NULL (and is then estimated).}
+
+\item{ncp}{non-centrality parameter for the alternative; either
+\code{power}, \code{ncp} or \code{df} needs to be NULL (and is then
+estimated).}
+
+\item{req.sign}{whether \code{ncp} is expected to be greater '+1', less than
+'-1', or within '0' the \code{null.ncp} bounds; only relevant
+if \code{ncp} is to be estimated.}
 
 \item{null.ncp}{non-centrality parameter for the null. When alternative =
 "two.one.sided", the function expects two values in the
@@ -25,7 +36,8 @@ form \code{c(lower, upper)}. If a single value is provided, it
 is interpreted as the absolute bound and automatically
 expanded to \code{c(-value, +value)}.}
 
-\item{df}{degrees of freedom.}
+\item{df}{degrees of freedom; either \code{power}, \code{ncp} or \code{df} needs
+to be NULL (and is then estimated).}
 
 \item{alpha}{type 1 error rate, defined as the probability of
 incorrectly rejecting a true null hypothesis, denoted as
@@ -49,18 +61,20 @@ characters (if encoding allows for it). \code{FALSE} by
 default.}
 }
 \value{
-\item{df}{degrees of freedom.}
+\item{power}{statistical power \eqn{(1 - \beta)}.}
 \item{ncp}{non-centrality parameter under alternative.}
 \item{ncp.null}{non-centrality parameter under null.}
+\item{df}{degrees of freedom.}
 \item{alpha}{type 1 error rate (user-specified).}
+\item{alternative}{the direction or type of the hypothesis test.}
 \item{t.alpha}{critical value(s).}
 \item{beta}{type 2 error rate.}
 \item{type.s}{type S error rate (only for two-tailed test).}
 \item{type.m}{type M error rate (only for two-tailed test).}
-\item{power}{statistical power \eqn{(1-\beta)}.}
 }
 \description{
-Calculates power for the lambda-prime distribution with (optional) Type 1 and Type 2
+Determines the power, the non-centrality parameter, or the degrees of
+freedom for the lambda-prime distribution with (optional) Type 1 and Type 2
 error plots.
 }
 \examples{
@@ -68,24 +82,30 @@ error plots.
 # power defined as the probability of observing test statistics greater
 # than the positive critical value OR less than the negative critical value
 power.lp.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "two.sided")
+power.lp.test(power = 0.80, df = 100, alpha = 0.05, alternative = "two.sided")
 
 # one-sided
 # power is defined as the probability of observing a test statistic greater
 # than the critical value
 power.lp.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "one.sided")
+power.lp.test(power = 0.80, df = 100, alpha = 0.05, alternative = "one.sided")
 
 # equivalence
 # power is defined as the probability of observing a test statistic greater
 # than the upper critical value (for the lower bound) AND less than the
 # lower critical value (for the upper bound)
 power.lp.test(ncp = 0, null.ncp = c(-2, 2), df = 100, alpha = 0.05,
-             alternative = "two.one.sided")
+              alternative = "two.one.sided")
+power.lp.test(power = 0.80, req.sign = "0", null.ncp = c(-2, 2),
+              df = 100, alpha = 0.05, alternative = "two.one.sided")
 
 # minimal effect testing
 # power is defined as the probability of observing a test statistic greater
 # than the upper critical value (for the upper bound) OR less than the lower
 # critical value (for the lower bound).
 power.lp.test(ncp = 2, null.ncp = c(-1, 1), df = 100, alpha = 0.05,
-             alternative = "two.one.sided")
+              alternative = "two.one.sided")
+power.lp.test(power = 0.80, req.sign = "+", null.ncp = c(-1, 1),
+              df = 100, alpha = 0.05, alternative = "two.one.sided")
 
 }

@@ -1,6 +1,6 @@
 # power.exact.oneprop --------------------------------------------------------------------------------------------------
 test_that("power.exact.oneprop works", {
-    crrRes <- power.exact.oneprop(prob = 0.45, null.prob = 0.50, alpha = 0.05, n = 500, alternative = "one.sided", verbose = 0)
+    crrRes <- power.exact.oneprop(prob = 0.45, null.prob = 0.50, n = 500, alpha = 0.05, alternative = "one.sided", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "exact", "oneprop"))
     expect_equal(names(crrRes),
                  c("parms", "test", "prob", "null.prob", "delta", "odds.ratio", "size", "binom.alpha", "alpha", "power", "n"))
@@ -11,7 +11,7 @@ test_that("power.exact.oneprop works", {
                  list(test = "exact", prob = 0.45, null.prob = 0.50, delta = -0.05, odds.ratio = 0.818181818, size = 500,
                       binom.alpha = 231, alpha = 0.048945014, power = 0.7208035, n = 500))
 
-    crrRes <- power.exact.oneprop(prob = 0.45, null.prob = 0.50, alpha = 0.05, power = 0.80, alternative = "one.sided", verbose = 0)
+    crrRes <- power.exact.oneprop(power = 0.80, prob = 0.45, null.prob = 0.50, alpha = 0.05, alternative = "one.sided", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "exact", "oneprop"))
     expect_equal(names(crrRes),
                  c("parms", "test", "prob", "null.prob", "delta", "odds.ratio", "size", "binom.alpha", "alpha", "power", "n"))
@@ -21,6 +21,17 @@ test_that("power.exact.oneprop works", {
     expect_equal(crrRes[c("test", "prob", "null.prob", "delta", "odds.ratio", "size", "binom.alpha", "alpha", "power", "n")],
                  list(test = "exact", prob = 0.45, null.prob = 0.50, delta = -0.05, odds.ratio = 0.818181818, size = 631,
                       binom.alpha = 294, alpha = 0.047223688, power = 0.800822354, n = 631))
+
+    crrRes <- power.exact.oneprop(req.sign = "-", null.prob = 0.50, power = 0.80, n = 500, alpha = 0.05, alternative = "one.sided", verbose = 0)
+    expect_equal(class(crrRes), c("pwrss", "exact", "oneprop"))
+    expect_equal(names(crrRes),
+                 c("parms", "test", "prob", "null.prob", "delta", "odds.ratio", "size", "binom.alpha", "alpha", "power", "n"))
+    expect_equal(crrRes[["parms"]],
+                 list(prob = NULL, req.sign = "-", null.prob = 0.50, n = 500, power = 0.80, alpha = 0.05, alternative = "one.sided",
+                      verbose = 0, utf = FALSE))
+    expect_equal(crrRes[c("test", "prob", "null.prob", "delta", "odds.ratio", "size", "binom.alpha", "alpha", "power", "n")],
+                 list(test = "exact", prob = 0.44432015, null.prob = 0.50, delta = -0.055679851, odds.ratio = 0.799597372,
+                      size = 500, binom.alpha = 231, alpha = 0.048945014, power = 0.7998452, n = 500))
 
     crrRes <- power.exact.oneprop(prob = 0.80, null.prob = 0.65, n = 20, alternative = "one.sided", verbose = 0) # example 4.3 from GPower
     expect_equal(class(crrRes), c("pwrss", "exact", "oneprop"))

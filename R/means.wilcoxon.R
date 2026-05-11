@@ -291,7 +291,7 @@ power.np.wilcoxon <- function(d = NULL, null.d = 0, margin = 0,
     } else {
       n2.max <- ifelse(design == "independent", (1 + 1 / n.ratio) / (H1_H0.min / lambda.max) ^ 2, (lambda.max / H1_H0.min) ^ 2)
     }
-    val.rng <- c(ceiling(2 * w), n2.max)
+    val.rng <- c(4, n2.max) # power.t.test requires at least df = 3, hence the minumum N is 4
 
     # estimation, using wilcoxon adjustment (* w)
     n2 <- try(stats::uniroot(function(n2) min.pwr(d, n2 * w, power), interval = val.rng)$root * w, silent = TRUE)
@@ -318,8 +318,6 @@ power.np.wilcoxon <- function(d = NULL, null.d = 0, margin = 0,
                         n2 = n2 / w, n.ratio = n.ratio, alpha = alpha,
                         design = design, alternative = alternative,
                         method = method)
-
-  if (pwr.obj$power < 0) stop("Design is not feasible.", call. = FALSE)
 
   n1 <- ifelse(ceil.n, ceiling(n2 * n.ratio), n2 * n.ratio)
   if (design == "independent") n <- c(n1 = n1, n2 = n2) else n <- n2

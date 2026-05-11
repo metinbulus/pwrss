@@ -224,40 +224,24 @@ power.z.mediation  <- function(beta.a = NULL, beta.b = NULL, ab.ratio = 1, req.s
   check.sample.size(n.simulation, n.draws)
   check.logical(ceil.n, utf)
   verbose <- ensure.verbose(verbose)
-  requested <- get.requested(es = list(beta.a, beta.b), n = n, power = power)
-
-  se.a <- function(sd.mediator, sd.predictor, r.squared.mediator, n) {
-    var.beta.a <- (1 / n) * (sd.mediator ^ 2) * (1 - r.squared.mediator) / (sd.predictor ^ 2)
-    sqrt(var.beta.a)
-  }
-
-  se.b <- function(sd.outcome, sd.mediator, r.squared.outcome, r.squared.mediator, n) {
-    var.beta.b <- (1 / n) * (sd.outcome ^ 2) * (1 - r.squared.outcome) / ((sd.mediator ^ 2) * (1 - r.squared.mediator))
-    sqrt(var.beta.b)
-  }
+  requested <- get.requested(es = NA, n = n, power = power)
+# requested <- get.requested(es = list(beta.a, beta.b), n = n, power = power)
 
   pwr <- function(beta.a, beta.b, sd.predictor, sd.mediator, sd.outcome, r.squared.mediator, r.squared.outcome,
                   n, method) {
 
-    se.beta.a <- se.a(sd.mediator = sd.mediator, sd.predictor = sd.predictor,
-                      r.squared.mediator = r.squared.mediator, n = n)
-    se.beta.b <- se.b(sd.outcome = sd.outcome, sd.mediator = sd.mediator,
-                      r.squared.outcome = r.squared.outcome,
-                      r.squared.mediator = r.squared.mediator, n = n)
+    se.beta.a <- sqrt((1 / n) * (sd.mediator ^ 2) * (1 - r.squared.mediator) / (sd.predictor ^ 2))
+    se.beta.b <- sqrt((1 / n) * (sd.outcome ^ 2) * (1 - r.squared.outcome) / ((sd.mediator ^ 2) * (1 - r.squared.mediator)))
 
     if (method == "sobel") {
 
       sobel.se <- sqrt(beta.a ^ 2 * se.beta.b ^ 2  + beta.b ^ 2 * se.beta.a ^ 2)
       lambda <- (beta.a * beta.b) / sobel.se
-      pwr.obj <- power.z.test(mean = lambda, alpha = alpha, alternative = alternative,
-                              plot = FALSE, verbose = 0)
 
     } else if (method == "aroian") {
 
       aroian.se <- sqrt(beta.a ^ 2 * se.beta.b ^ 2  + beta.b ^ 2 * se.beta.a ^ 2 + se.beta.a ^ 2 * se.beta.b ^ 2)
       lambda <- (beta.a * beta.b) / aroian.se
-      pwr.obj <- power.z.test(mean = lambda, alpha = alpha, alternative = alternative,
-                              plot = FALSE, verbose = 0)
 
     } else if (method == "goodman") {
 
@@ -265,8 +249,6 @@ power.z.mediation  <- function(beta.a = NULL, beta.b = NULL, ab.ratio = 1, req.s
       if (goodman.var <= 0) stop("Design is not feasible for Goodman's Z-Test", call. = FALSE)
       goodman.se <- sqrt(goodman.var)
       lambda <- (beta.a * beta.b) / goodman.se
-      pwr.obj <- power.z.test(mean = lambda, alpha = alpha, alternative = alternative,
-                              plot = FALSE, verbose = 0)
 
     } else if (method == "joint") {
 
@@ -275,8 +257,6 @@ power.z.mediation  <- function(beta.a = NULL, beta.b = NULL, ab.ratio = 1, req.s
       power.beta.b <- power.z.test(mean = beta.b / se.beta.b, alpha = alpha, alternative = alternative,
                                    plot = FALSE, verbose = 0)$power
       power <- power.beta.a * power.beta.b
-      pwr.obj <- list(alternative = alternative, mean = NA, sd = NA, null.mean = NA,
-                      alpha = alpha, z.alpha = NA, power = power)
 
     } else if (method == "monte.carlo") {
 
@@ -287,23 +267,24 @@ power.z.mediation  <- function(beta.a = NULL, beta.b = NULL, ab.ratio = 1, req.s
         beta.a.star <- stats::rnorm(1, beta.a, se.beta.a)
         beta.b.star <- stats::rnorm(1, beta.b, se.beta.b)
         reject <- c(reject, stats::quantile(stats::rnorm(n.draws, beta.a.star, se.beta.a) * stats::rnorm(n.draws, beta.b.star, se.beta.b),
-                                     probs = ifelse(alternative == "two.sided", alpha / 2, alpha), na.rm = TRUE) > 0)
+                                            probs = ifelse(alternative == "two.sided", alpha / 2, alpha), na.rm = TRUE) > 0)
       }
       power <- mean(reject)
-      pwr.obj <- list(alternative = alternative, mean = NA, sd = NA, null.mean = NA,
-                      alpha = alpha, z.alpha = NA, power = power)
 
     }
 
-    pwr.obj
+    if (method %in% c("sobel", "aroian", "goodman")) {
+      power.z.test(mean = lambda, alpha = alpha, alternative = alternative, plot = FALSE, verbose = 0)
+    } else {
+      list(alternative = alternative, mean = NA, sd = NA, null.mean = NA, alpha = alpha, z.alpha = NA, power = power)
+    }
 
   } # pwr()
-  
-  min.pwr <- function(beta.a, beta.b, n, power) {
 
-    if (is.null(r.squared.mediator)) r.squared.mediator <- beta.a ^ 2 * sd.predictor ^ 2 / sd.mediator ^ 2
+  min.pwr <- function(beta.a, beta.b, n, power) {
+    if (is.null(r.squared.mediator)) r.squared.mediator <-  beta.a ^ 2 * sd.predictor ^ 2 / sd.mediator ^ 2
     if (is.null(r.squared.outcome))  r.squared.outcome  <- (beta.b ^ 2 * sd.mediator ^ 2 + beta.cp ^ 2 * sd.predictor ^ 2) / sd.outcome ^ 2
-    
+
     power - pwr(beta.a = beta.a, beta.b = beta.b,
                 sd.predictor = sd.predictor, sd.mediator = sd.mediator, sd.outcome = sd.outcome,
                 r.squared.mediator = r.squared.mediator, r.squared.outcome = r.squared.outcome,
@@ -318,144 +299,48 @@ power.z.mediation  <- function(beta.a = NULL, beta.b = NULL, ab.ratio = 1, req.s
 
     n <- stats::uniroot(function(n) min.pwr(beta.a, beta.b, n, power), interval = c(10, 1e10))$root
 
-  } else if (requested == "es") {
+#  } else if (requested == "es") {
 
-    if (method %in% c("joint", "monte.carlo"))
-      stop("Minimum detectable effect calculation not supported by this method.", call. = FALSE)
+#    if (method %in% c("joint", "monte.carlo"))
+#      stop("Minimum detectable effect calculation not supported by this method.", call. = FALSE)
 
-# ----------------------------------------------------------------------------------------------------------------------
-# was a separate function es.med before
+#    # lim.a <- sqrt(1 - r.squared.mediator) * (sd.mediator / sd.predictor)
+#    # lim.b <- sqrt(1 - r.squared.outcome) * (sd.outcome / sd.mediator)
+#    lim.a <- abs(ab.ratio) * (sd.mediator / sd.predictor)
+#    lim.b <- abs(1 /  ab.ratio) * (sd.outcome / sd.mediator)
+#    pos.sign <- check.pos_sign(req.sign)
 
-    # lim.a <- sqrt(1 - r.squared.mediator) * (sd.mediator / sd.predictor)
-    # lim.b <- sqrt(1 - r.squared.outcome) * (sd.outcome / sd.mediator)
-    lim.a <- abs(ab.ratio) * (sd.mediator / sd.predictor)
-    lim.b <- abs(1 /  ab.ratio) * (sd.outcome / sd.mediator)
+#    if (is.null(beta.a) && !is.null(beta.b)) {
 
-    if (is.null(beta.a) && !is.null(beta.b)) {
+#      val.rng <- c(-lim.a, 0, lim.a)[ifelse((sign(beta.b) > 0) == pos.sign, -1, -3)]
 
-      if (check.pos_sign(req.sign)) {
-        ifelse(sign(beta.b) == 1, bounds <- c(0, lim.a), bounds <- c(-lim.a, 0))
+#      beta.a <- try(stats::optimize(f = function(beta.a) { min.pwr(beta.a, beta.b, n, power) ^ 2; }, interval = val.rng)$minimum)
+#      if (inherits(beta.a, "try-error"))
+#        stop(sprintf("Design is not feasible. Try `req.sign` = \"%s\".", ifelse(pos.sign, "-", "+")), call. = FALSE)
 
-        beta.a <- try({
-          stats::optimize(f = function(beta.a) {
-            if (is.null(r.squared.mediator)) r.squared.mediator <- beta.a ^ 2 * sd.predictor ^ 2 / sd.mediator ^ 2
-            if (is.null(r.squared.outcome)) r.squared.outcome <- (beta.b ^ 2 * sd.mediator ^ 2 + beta.cp ^ 2 * sd.predictor ^ 2) / sd.outcome ^ 2
-            (power - pwr(beta.a = beta.a, beta.b = beta.b,
-                             sd.predictor = sd.predictor, sd.mediator = sd.mediator, sd.outcome = sd.outcome,
-                             r.squared.mediator = r.squared.mediator, r.squared.outcome = r.squared.outcome,
-                             n = n, method = method)$power) ^ 2
-          }, interval = bounds, maximum = FALSE)$minimum
-        })
-        if (inherits(beta.a, "try-error"))
-          stop("Design is not feasible. Try `req.sign` = '-'", call. = FALSE)
+#    } else if (!is.null(beta.a) && is.null(beta.b)) {
 
-      } else {
-        ifelse(sign(beta.b) == -1, bounds <- c(0, lim.a), bounds <- c(-lim.a, 0))
-        beta.a <- try({
-          stats::optimize(f = function(beta.a) {
-            if (is.null(r.squared.mediator)) r.squared.mediator <- beta.a ^ 2 * sd.predictor ^ 2 / sd.mediator ^ 2
-            if (is.null(r.squared.outcome)) r.squared.outcome <- (beta.b ^ 2 * sd.mediator ^ 2 + beta.cp ^ 2 * sd.predictor ^ 2) / sd.outcome ^ 2
-            (power - pwr(beta.a = beta.a, beta.b = beta.b,
-                             sd.predictor = sd.predictor, sd.mediator = sd.mediator, sd.outcome = sd.outcome,
-                             r.squared.mediator = r.squared.mediator, r.squared.outcome = r.squared.outcome,
-                             n = n, method = method)$power) ^ 2
-          }, interval = bounds, maximum = FALSE)$minimum
-        })
-        if (inherits(beta.a, "try-error"))
-          stop("Design is not feasible. Try `req.sign` = '+'", call. = FALSE)
+#      val.rng <- c(-lim.b, 0, lim.b)[ifelse((sign(beta.a) > 0) == pos.sign, -1, -3)]
 
-      } # req.sign: positive or negative
+#      beta.b <- try(stats::optimize(f = function(beta.b) min.pwr(beta.a, beta.b, n, power) ^ 2, interval = val.rng)$minimum)
+#      if (inherits(beta.b, "try-error"))
+#        stop(sprintf("Design is not feasible. Try `req.sign` = \"%s\".", ifelse(pos.sign, "-", "+")), call. = FALSE)
 
-    } else if (!is.null(beta.a) && is.null(beta.b)) {
+#    } else if (is.null(beta.a) && is.null(beta.b)) {
 
-      if (check.pos_sign(req.sign)) {
-        ifelse(sign(beta.a) == 1, bounds <- c(0, lim.b), bounds <- c(-lim.b, 0))
-        beta.b <-  try({
-          stats::optimize(f = function(beta.b) {
-            if (is.null(r.squared.mediator)) r.squared.mediator <- beta.a ^ 2 * sd.predictor ^ 2 / sd.mediator ^ 2
-            if (is.null(r.squared.outcome)) r.squared.outcome <- (beta.b ^ 2 * sd.mediator ^ 2 + beta.cp ^ 2 * sd.predictor ^ 2) / sd.outcome ^ 2
-            (power - pwr(beta.a = beta.a, beta.b = beta.b,
-                             sd.predictor = sd.predictor, sd.mediator = sd.mediator, sd.outcome = sd.outcome,
-                             r.squared.mediator = r.squared.mediator, r.squared.outcome = r.squared.outcome,
-                             n = n, method = method)$power) ^ 2
-          }, interval = bounds, maximum = FALSE)$minimum
-        })
+#      if (pos.sign != (sign(ab.ratio) > 0)) {
+#        warning("`req.sign` is positive but 'ab.ratio' is negative. Ignoring the sign of 'ab.ratio' but not its value.", call. = FALSE)
+#        ab.ratio <- -ab.ratio
+#      }
 
-        if (inherits(beta.b, "try-error"))
-          stop("Design is not feasible. Try `req.sign` = '-'", call. = FALSE)
+#      val.rng <- c(-lim.b, 0, lim.b)[ifelse((sign(ab.ratio) > 0) == pos.sign, -1, -3)]
 
-      } else {
-        ifelse(sign(beta.a) == -1, bounds <- c(0, lim.b), bounds <- c(-lim.b, 0))
-        beta.b <- try({
-          stats::optimize(f = function(beta.b) {
-            if (is.null(r.squared.mediator)) r.squared.mediator <- beta.a ^ 2 * sd.predictor ^ 2 / sd.mediator ^ 2
-            if (is.null(r.squared.outcome)) r.squared.outcome <- (beta.b ^ 2 * sd.mediator ^ 2 + beta.cp ^ 2 * sd.predictor ^ 2) / sd.outcome ^ 2
-            (power - pwr(beta.a = beta.a, beta.b = beta.b,
-                             sd.predictor = sd.predictor, sd.mediator = sd.mediator, sd.outcome = sd.outcome,
-                             r.squared.mediator = r.squared.mediator, r.squared.outcome = r.squared.outcome,
-                             n = n, method = method)$power) ^ 2
-          }, interval = bounds, maximum = FALSE)$minimum
-        })
+#      beta.b <-  try(stats::optimize(f = function(beta.b) min.pwr(beta.b * ab.ratio, beta.b, n, power) ^ 2, interval = val.rng)$minimum)
+#      if (inherits(beta.b, "try-error"))
+#        stop(sprintf("Design is not feasible. Try `req.sign` = \"%s\".", ifelse(pos.sign, "-", "+")), call. = FALSE)
+#      beta.a <- beta.b * ab.ratio
 
-        if (inherits(beta.b, "try-error"))
-          stop("Design is not feasible. Try `req.sign` = '+'", call. = FALSE)
-
-      } # req.sign: positive or negative
-
-
-    } else if (is.null(beta.a) && is.null(beta.b)) {
-
-      if (check.pos_sign(req.sign)) {
-        if (sign(ab.ratio) == -1) {
-          warning("`req.sign` is positive but 'ab.ratio' is negative. Ignoring the sign of 'ab.ratio' but not its value.", call. = FALSE)
-          ab.ratio <- -ab.ratio
-        }
-        ifelse(sign(ab.ratio) == 1, bounds <- c(0, lim.b), bounds <- c(-lim.b, 0))
-        beta.b <-  try({
-          stats::optimize(f = function(beta.b) {
-            beta.a <- beta.b * ab.ratio
-            if (is.null(r.squared.mediator)) r.squared.mediator <- beta.a ^ 2 * sd.predictor ^ 2 / sd.mediator ^ 2
-            if (is.null(r.squared.outcome)) r.squared.outcome <- (beta.b ^ 2 * sd.mediator ^ 2 + beta.cp ^ 2 * sd.predictor ^ 2) / sd.outcome ^ 2
-            (power - pwr(beta.a = beta.a, beta.b = beta.b,
-                             sd.predictor = sd.predictor, sd.mediator = sd.mediator, sd.outcome = sd.outcome,
-                             r.squared.mediator = r.squared.mediator, r.squared.outcome = r.squared.outcome,
-                             n = n, method = method)$power) ^ 2
-          }, interval = bounds, maximum = FALSE)$minimum
-        })
-
-        beta.a <- beta.b * ab.ratio
-
-        if (inherits(beta.b, "try-error"))
-          stop("Design is not feasible. Try req.sign = '-'", call. = FALSE)
-
-      } else {
-        if (sign(ab.ratio) == 1) {
-          warning("`req.sign` is negative but 'ab.ratio' is positive. Ignoring the sign of 'ab.ratio' but not its value.", call. = FALSE)
-          ab.ratio <- -ab.ratio
-        }
-        ifelse(sign(ab.ratio) == -1, bounds <- c(0, lim.b), bounds <- c(-lim.b, 0))
-        beta.b <- try({
-          stats::optimize(f = function(beta.b) {
-            beta.a <- beta.b * ab.ratio
-            if (is.null(r.squared.mediator)) r.squared.mediator <- beta.a ^ 2 * sd.predictor ^ 2 / sd.mediator ^ 2
-            if (is.null(r.squared.outcome)) r.squared.outcome <- (beta.b ^ 2 * sd.mediator ^ 2 + beta.cp ^ 2 * sd.predictor ^ 2) / sd.outcome ^ 2
-            (power - pwr(beta.a = beta.a, beta.b = beta.b,
-                             sd.predictor = sd.predictor, sd.mediator = sd.mediator, sd.outcome = sd.outcome,
-                             r.squared.mediator = r.squared.mediator, r.squared.outcome = r.squared.outcome,
-                             n = n, method = method)$power) ^ 2
-          }, interval = bounds, maximum = FALSE)$minimum
-        })
-
-        if (inherits(beta.b, "try-error"))
-          stop("Design is not feasible. Try `req.sign` = '+'", call. = FALSE)
-
-        beta.a <- beta.b * ab.ratio
-
-      } # req.sign: positive or negative
-
-    } # beta.a and beta.b
-
-# ----------------------------------------------------------------------------------------------------------------------
+#    } # beta.a and beta.b
 
   } # sample size or effect size
 

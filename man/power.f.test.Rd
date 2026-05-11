@@ -6,7 +6,8 @@
 \title{Statistical Power for the Generic F-Test}
 \usage{
 power.f.test(
-  ncp,
+  power = NULL,
+  ncp = NULL,
   null.ncp = 0,
   df1,
   df2,
@@ -17,7 +18,11 @@ power.f.test(
 )
 }
 \arguments{
-\item{ncp}{non-centrality parameter for the alternative.}
+\item{power}{statistical power \eqn{(1 - \beta)}; either \code{power} or \code{ncp}
+needs to be NULL (and is then estimated).}
+
+\item{ncp}{non-centrality parameter for the alternative; either \code{power}
+or \code{ncp} needs to be NULL (and is then estimated).}
 
 \item{null.ncp}{non-centrality parameter for the null.}
 
@@ -36,24 +41,25 @@ if \code{2} a more detailed output is given (plus key
 parameters and definitions), if \code{0} no output is printed
 on the console.}
 
-\item{utf}{logical; whether the output should show Unicode characters (if
-encoding allows for it). \code{FALSE} by default.}
+\item{utf}{logical; whether the output should show Unicode characters
+(if encoding allows for it). \code{FALSE} by default.}
 }
 \value{
-\item{df1}{numerator degrees of freedom.}
-\item{df2}{denominator degrees of freedom.}
+\item{power}{statistical power \eqn{(1-\beta)}.}
 \item{ncp}{non-centrality parameter under alternative.}
 \item{ncp.null}{non-centrality parameter under null.}
+\item{df1}{numerator degrees of freedom.}
+\item{df2}{denominator degrees of freedom.}
 \item{f.alpha}{critical value(s).}
-\item{power}{statistical power \eqn{(1-\beta)}.}
 }
 \description{
-Calculates power for the generic F-Test with (optional) Type 1 and Type 2
-error plots.
+Determines the power or the non-centrality parameter for the generic F-Test
+with (optional) Type 1 and Type 2 error plots.
 }
 \examples{
 # power is defined as the probability of observing a test statistics greater
 # than the critical value
 power.f.test(ncp = 1, df1 = 4, df2 = 100, alpha = 0.05)
+power.f.test(power = 0.80, df1 = 4, df2 = 100, alpha = 0.05)
 
 }

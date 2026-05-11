@@ -6,9 +6,11 @@
 \title{Statistical Power for the Generic t-Test}
 \usage{
 power.t.test(
-  ncp,
+  power = NULL,
+  ncp = NULL,
+  req.sign = "+",
   null.ncp = 0,
-  df,
+  df = NULL,
   alpha = 0.05,
   alternative = c("two.sided", "one.sided", "two.one.sided"),
   plot = TRUE,
@@ -17,7 +19,16 @@ power.t.test(
 )
 }
 \arguments{
-\item{ncp}{non-centrality parameter for the alternative.}
+\item{power}{statistical power \eqn{(1 - \beta)}; either \code{power},
+\code{ncp} or \code{df} needs to be NULL (and is then estimated).}
+
+\item{ncp}{non-centrality parameter for the alternative; ; either
+\code{power}, \code{ncp} or \code{df} needs to be NULL (and is then
+estimated).}
+
+\item{req.sign}{whether \code{ncp} is expected to be greater '+1', less than
+'-1', or within '0' the \code{null.ncp} bounds; only relevant
+if \code{ncp} is to be estimated.}
 
 \item{null.ncp}{non-centrality parameter for the null. When alternative =
 "two.one.sided", the function expects two values in the
@@ -25,7 +36,8 @@ form \code{c(lower, upper)}. If a single value is provided, it
 is interpreted as the absolute bound and automatically
 expanded to \code{c(-value, +value)}.}
 
-\item{df}{degrees of freedom.}
+\item{df}{degrees of freedom; either \code{power}, \code{ncp} or \code{df} needs
+to be NULL (and is then estimated).}
 
 \item{alpha}{type 1 error rate, defined as the probability of
 incorrectly rejecting a true null hypothesis, denoted as
@@ -49,30 +61,33 @@ characters (if encoding allows for it). \code{FALSE} by
 default.}
 }
 \value{
-\item{df}{degrees of freedom.}
+\item{power}{statistical power \eqn{(1-\beta)}.}
 \item{ncp}{non-centrality parameter under alternative.}
 \item{ncp.null}{non-centrality parameter under null.}
+\item{df}{degrees of freedom.}
 \item{alpha}{type 1 error rate (user-specified).}
 \item{t.alpha}{critical value(s).}
 \item{beta}{type 2 error rate.}
 \item{type.s}{type S error rate (only for two-tailed test).}
 \item{type.m}{type M error rate (only for two-tailed test).}
-\item{power}{statistical power \eqn{(1-\beta)}.}
 }
 \description{
-Calculates power for the generic t-Test with (optional) Type 1 and Type 2
-error plots.
+Determines the power, the non-centrality parameter, or the degrees of
+freedom for the generic t-Test with (optional) Type 1 and Type 2 error
+plots.
 }
 \examples{
 # two-sided
 # power defined as the probability of observing test statistics greater
 # than the positive critical value OR less than the negative critical value
 power.t.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "two.sided")
+power.t.test(power = 0.80, df = 100, alpha = 0.05, alternative = "two.sided")
 
 # one-sided
 # power is defined as the probability of observing a test statistic greater
 # than the critical value
 power.t.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "one.sided")
+power.t.test(power = 0.80, df = 100, alpha = 0.05, alternative = "one.sided")
 
 # equivalence
 # power is defined as the probability of observing a test statistic greater
@@ -80,6 +95,8 @@ power.t.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "one.sided")
 # lower critical value (for the upper bound)
 power.t.test(ncp = 0, null.ncp = c(-2, 2), df = 100, alpha = 0.05,
              alternative = "two.one.sided")
+power.t.test(power = 0.80, req.sign = "0", null.ncp = c(-2, 2),
+             df = 100, alpha = 0.05, alternative = "two.one.sided")
 
 # minimal effect testing
 # power is defined as the probability of observing a test statistic greater
@@ -87,5 +104,7 @@ power.t.test(ncp = 0, null.ncp = c(-2, 2), df = 100, alpha = 0.05,
 # critical value (for the lower bound).
 power.t.test(ncp = 2, null.ncp = c(-1, 1), df = 100, alpha = 0.05,
              alternative = "two.one.sided")
+power.t.test(power = 0.80, req.sign = "+", null.ncp = c(-1, 1),
+             df = 100, alpha = 0.05, alternative = "two.one.sided")
 
 }

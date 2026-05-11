@@ -34,13 +34,52 @@ get.requested <- function(es = NULL, n = NULL, power = NULL) {
   if (sum(check.not_null(n, power, es)) != 2) {
     n.parms <- ifelse(!any(is_na), "two", "one")
     s.parms <- do.call(sprintf,
-                     list(ifelse(!any(is_na), "%s`, `%s`, or `%s", "%s` or `%s"), es_vars, n_vars, "power")[c(TRUE, !is_na)]) 
+                     list(ifelse(!any(is_na), "%s`, `%s`, or `%s", "%s` or `%s"), es_vars, n_vars, "power")[c(TRUE, !is_na)])
     stop(sprintf("Exactly %s of the parameters `%s` must be given, one has to be NULL.", n.parms, s.parms), call. = FALSE)
   }
 
   invisible(c("es", "n", "power")[check.null(es, n, power)]) # return what is requested / to be calculated
 
 } # get.requested
+
+get.interval <- function(null.ncp, distribution = c("z", "t", "lp", "binom"), alpha = 0.05, req.sign = "+", sd = NULL, df = NULL) {
+
+    if (distribution == "z") {
+
+      min.alt <- stats::qnorm(1e-10,     mean = stats::qnorm(alpha,     mean = min(null.ncp), sd = sd), sd = sd)
+      max.alt <- stats::qnorm(1 - 1e-10, mean = stats::qnorm(1 - alpha, mean = max(null.ncp), sd = sd), sd = sd)
+
+    } else if (distribution == "t") {
+
+      suppressWarnings({
+        min.alt <- stats::qt(1e-10,     ncp = stats::qt(alpha,     ncp = min(null.ncp), df = df), df = df)
+        max.alt <- stats::qt(1 - 1e-10, ncp = stats::qt(1 - alpha, ncp = max(null.ncp), df = df), df = df)
+      })
+
+    } else if (distribution == "lp") {
+
+      suppressMessages({
+        min.alt <- sadists::qlambdap(1e-10,     t = sadists::qlambdap(alpha,     t = min(null.ncp), df = df), df = df)
+        max.alt <- sadists::qlambdap(1 - 1e-10, t = sadists::qlambdap(1 - alpha, t = max(null.ncp), df = df), df = df)
+      })
+    
+    } else if (distribution == "binom") {
+
+        min.alt <- 0.0001
+        max.alt <- 0.9999
+
+    }
+
+    pos.sign <- check.pos_sign(req.sign, TRUE)
+    if (is.null(pos.sign)) {
+      sort(null.ncp)
+    } else if (pos.sign == FALSE) {
+      c(min.alt, min(null.ncp))
+    } else if (pos.sign == TRUE) {
+      c(max(null.ncp), max.alt)
+    }
+
+} # get.interval
 
 isInt <- function(x) is.numeric(x) && !any(abs(x - round(x)) > .Machine$double.eps ^ 2 / 3)
 
@@ -49,7 +88,7 @@ isInt <- function(x) is.numeric(x) && !any(abs(x - round(x)) > .Machine$double.e
 check.snap4plot <- function(snpFle = "", pltFnc = NULL, pltPrm = list(), pltWdt = 800, pltHgh = 800) {
   if (nchar(Sys.getenv("GITHUB_ACTIONS")) == 0) { # ensures that the code only runs on a local machine, not as GitHub action
     tmpFle <- tempfile(fileext = ".png")
-    addPrm <- list(power = 0.80, alpha = 0.05, verbose = 0)[c("power", "alpha", "verbose") %in% names(formals(pltFnc))]
+    addPrm <- list(alpha = 0.05, verbose = 0)[c("alpha", "verbose") %in% names(formals(pltFnc))]
     testthat::announce_snapshot_file(name = snpFle)
     grDevices::png(tmpFle, width = pltWdt, height = pltHgh)
     if (any(c("plot", "plot.main") %in% names(formals(pltFnc)))) {

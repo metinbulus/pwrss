@@ -170,11 +170,6 @@ power.chisq.gof <- function(w = NULL, null.w = 0, df,
   # calculate power (if requested == "power") or update it (if requested == "n" / "es")
   pwr.obj <- pwr.chisq(w = w, null.w = null.w, df = df, n = n, alpha = alpha)
 
-  power <- pwr.obj$power
-  ncp.alternative <- pwr.obj$lambda
-  ncp.null <- pwr.obj$null.lambda
-  chisq.alpha <- pwr.obj$chisq.alpha
-
   if (verbose > 0) {
 
     print.obj <- list(requested = requested,
@@ -182,11 +177,11 @@ power.chisq.gof <- function(w = NULL, null.w = 0, df,
                       w = w,
                       n = n,
                       df = df,
-                      ncp.alternative = ncp.alternative,
-                      ncp.null = ncp.null,
-                      chisq.alpha = chisq.alpha,
+                      ncp = pwr.obj$lambda,
+                      null.ncp = pwr.obj$null.lambda,
+                      chisq.alpha = pwr.obj$chisq.alpha,
                       alpha = alpha,
-                      power = power)
+                      power = pwr.obj$power)
 
     .print.pwrss.gof(print.obj, verbose = verbose, utf = utf)
 
@@ -195,11 +190,11 @@ power.chisq.gof <- function(w = NULL, null.w = 0, df,
   invisible(structure(list(parms = func.parms,
                            test = "chisq",
                            df = df,
-                           ncp = ncp.alternative,
-                           null.ncp = ncp.null,
-                           chisq.alpha = chisq.alpha,
+                           ncp = pwr.obj$lambda,
+                           null.ncp = pwr.obj$null.lambda,
+                           chisq.alpha = pwr.obj$chisq.alpha,
                            w = w,
-                           power = power,
+                           power = pwr.obj$power,
                            n = n),
                       class = c("pwrss", "chisq", "gof")))
 

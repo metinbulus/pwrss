@@ -430,10 +430,13 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
   if (verbose > 0) {
 
     print.obj <- list(requested = requested,
+                      tgt.effect = ifelse(is.null(func.parms[["prob01"]]), "prob01", "prob10"),
                       test = "Paired Proportions",
                       alpha = approx.alpha,
                       alternative = alternative,
                       method = ifelse(method == "exact", "exact", "z"),
+                      prob10 = prob10,
+                      prob01 = prob01,
                       delta = prob10 - prob01,
                       odds.ratio = prob10 / prob01,
                       size = n.discordant,

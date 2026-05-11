@@ -419,7 +419,7 @@ power.z.twocors.steiger <- function(rho12 = NULL, rho13 = NULL, rho23 = NULL,
 
   } # estimate sample size or effect size
 
-  # calculate power (if requested == "power") or update it (if requested == "n")
+  # calculate power (if requested == "power") or update it (if requested == "n" or "es")
   pwr.obj <- pwr(rho12 = rho12, rho13 = rho13, rho23 = rho23, rho14 = rho14, rho24 = rho24, rho34 = rho34,
                  n = n, alpha = alpha, alternative = alternative, common.index = common.index)
 
@@ -434,15 +434,20 @@ power.z.twocors.steiger <- function(rho12 = NULL, rho13 = NULL, rho23 = NULL,
 
   delta <- rho1 - rho2
   q <- cors.to.q(rho1, rho2, FALSE)$q
+  rho2p <- ifelse(common.index, "rho13", "rho34")
 
   if (verbose > 0) {
 
     print.obj <-  list(requested = requested,
+                       tgt.effect = ifelse(is.null(func.parms[[rho2p]]), rho2p, "rho12"),
                        test = "Dependent Correlations",
                        design = "paired",
                        alpha = alpha,
                        alternative = alternative,
                        common = common.index,
+                       rho12 = rho12,
+                       rho13 = rho13,
+                       rho34 = rho34,
                        delta = delta,
                        q = q,
                        mean.alternative = mean.alternative,
@@ -581,7 +586,7 @@ power.z.twocors <- function(rho1 = NULL, rho2 = NULL, req.sign = "+",
     z1 <- cor.to.z(rho1, FALSE)$z
     z2 <- cor.to.z(rho2, FALSE)$z
 
-    lambda <- (z1 - z2) / sqrt(1 / (n1 - 3) + 1 / (n2 - 3))
+    lambda <- (z1 - z2) / sqrt(1 / (ceiling(n2 * n.ratio) - 3) + 1 / (n2 - 3))
 
     if (alternative == "two.sided") {
 
@@ -590,7 +595,7 @@ power.z.twocors <- function(rho1 = NULL, rho2 = NULL, req.sign = "+",
 
     } else if (alternative == "one.sided") {
 
-      z.alpha <- stats::qnorm(alpha,     mean = 0, sd = 1, lower.tail = FALSE) * ifelse(lambda < 0, -1, 1)
+      z.alpha <- stats::qnorm(alpha, mean = 0, sd = 1, lower.tail = FALSE) * ifelse(lambda < 0, -1, 1)
       power <- 1 - stats::pnorm(abs(z.alpha), mean = abs(lambda), sd = 1)
 
     }
@@ -598,9 +603,9 @@ power.z.twocors <- function(rho1 = NULL, rho2 = NULL, req.sign = "+",
     list(power = power, z.alpha = z.alpha, lambda = lambda)
 
   }
-  
+
   min.pwr <- function() {
-  
+
   } # min.pwr() for optimize
 
   if (requested == "n") {
@@ -666,20 +671,23 @@ power.z.twocors <- function(rho1 = NULL, rho2 = NULL, req.sign = "+",
 
   if (verbose > 0) {
 
-    print.obj <-  list(requested = requested,
-                       test = "Independent Correlations",
-                       design = "independent",
-                       alpha = alpha,
-                       alternative = alternative,
-                       delta = delta,
-                       q = q,
-                       mean.alternative = mean.alternative,
-                       sd.alternative = sd.alternative,
-                       mean.null = mean.null,
-                       sd.null = sd.null,
-                       z.alpha = z.alpha,
-                       power = power,
-                       n = c(n1 = n1, n2 = n2))
+    print.obj <- list(requested = requested,
+                      tgt.effect = ifelse(is.null(func.parms[["rho2"]]), "rho2", "rho1"),
+                      test = "Independent Correlations",
+                      design = "independent",
+                      alpha = alpha,
+                      alternative = alternative,
+                      rho1 = rho1,
+                      rho2 = rho2,
+                      delta = delta,
+                      q = q,
+                      mean.alternative = mean.alternative,
+                      sd.alternative = sd.alternative,
+                      mean.null = mean.null,
+                      sd.null = sd.null,
+                      z.alpha = z.alpha,
+                      power = power,
+                      n = c(n1 = n1, n2 = n2))
 
     .print.pwrss.twocors(print.obj, verbose = verbose, utf = utf)
 
@@ -908,6 +916,8 @@ power.z.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0,
                        design = "one.sample",
                        alpha = alpha,
                        alternative = alternative,
+                       rho = rho,
+                       null.rho = null.rho,
                        delta = delta,
                        q = q,
                        mean.alternative = mean.alternative,
@@ -1365,11 +1375,6 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0,
 
   #### for compatibility ####
   if (alternative %in% c("less", "greater")) alternative <- "one.sided"
-  mean.alternative <- NA
-  sd.alternative <- NA
-  mean.null <- NA
-  sd.null <- NA
-  z.alpha <- NA
   #### for compatibility ####
 
   if (verbose > 0) {
@@ -1379,17 +1384,17 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0,
                        design = "one.sample",
                        alpha = alpha,
                        alternative = alternative,
+                       rho = rho,
+                       null.rho = null.rho,
                        delta = delta,
                        q = q,
-
-                       #### for compatibility ####
-                       mean.alternative = mean.alternative,
-                       sd.alternative = sd.alternative,
-                       mean.null = mean.null,
-                       sd.null = sd.null,
-                       z.alpha = z.alpha,
-                       #### for compatibility ####
-
+                       #### for compatibility #### ----------------------------
+                       mean.alternative = NA,
+                       sd.alternative = NA,
+                       mean.null = NA,
+                       sd.null = NA,
+                       z.alpha = NA,
+                       #### for compatibility #### ----------------------------
                        rho.alpha = rho.alpha,
                        power = power,
                        n = n)
@@ -1402,11 +1407,11 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0,
                            test = "exact",
                            design = "one.sample",
                            rho = rho,
+                           null.rho = null.rho,
                            delta = delta,
                            q = q,
                            alternative = alternative,
                            rho.alpha = rho.alpha, # critical value for cor
-                           es = rho,
                            n = n,
                            power = power),
                       class = c("pwrss", "exact", "onecor")))

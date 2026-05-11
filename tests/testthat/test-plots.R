@@ -64,41 +64,43 @@ test_that("plots work", {
 
     # plots.R (taking a results-obj and using it for plotting) ---------------------------------------------------------
     # binom: proportions.onetwo (only exact.oneprop) -------------------------------------------------------------------
-    check.snap4plot("plot_oneprop.binom", power.exact.oneprop, list(prob = 0.45, null.prob = 0.50, alternative = "one.sided"))
+    check.snap4plot("plot_oneprop.binom", power.exact.oneprop, list(power = 0.8, prob = 0.45, null.prob = 0.50, alternative = "one.sided"))
     # chisq: chisq.gof -------------------------------------------------------------------------------------------------
     mtxW <- probs.to.w(cbind(c(0.6759, 0.1559, 0.1281, 0.0323, 0.0078), c(0.6771, 0.1519, 0.1368, 0.0241, 0.0101)), verbose = 0)
-    check.snap4plot("plot_gof", power.chisq.gof, list(w = mtxW$w, df = mtxW$df))
+    check.snap4plot("plot_gof", power.chisq.gof, list(power = 0.8, w = mtxW$w, df = mtxW$df))
     # F: ancova, keppel, shieh, mixed.anova, (f.)regression ------------------------------------------------------------
-    check.snap4plot("plot_ancova",        power.f.ancova,     list(eta.squared = 0.059, factor.levels = 2))
+    check.snap4plot("plot_ancova",        power.f.ancova,     list(power = 0.8, eta.squared = 0.059, factor.levels = 2))
     check.snap4plot("plot_ancova.keppel", power.f.ancova.keppel,
-                    list(mu.vector = c(0.50, 0.00), sd.vector = rep(1, 2), p.vector = rep(0.50, 2), k.covariates = 1, r.squared = 0.50))
+                    list(power = 0.8, mu.vector = c(0.50, 0.00), sd.vector = rep(1, 2), p.vector = rep(0.50, 2),
+                         k.covariates = 1, r.squared = 0.50))
     check.snap4plot("plot_ancova.shieh",  power.f.ancova.shieh,
-                    list(mu.vector = c(0.20, 0), sd.vector = rep(1, 2), p.vector = rep(0.5, 2), r.squared = 0.50, k.covariates = 1))
+                    list(power = 0.8, mu.vector = c(0.20, 0), sd.vector = rep(1, 2), p.vector = rep(0.5, 2),
+                         r.squared = 0.50, k.covariates = 1))
     check.snap4plot("plot_mixed.anova",   power.f.mixed.anova,
-                    list(eta.squared = 0.022, factor.levels = c(1, 2), rho.within = 0.50, effect = "within"))
-    check.snap4plot("plot_regression.f",  power.f.regression, list(r.squared = 0.15, k.total = 3))
+                    list(power = 0.8, eta.squared = 0.022, factor.levels = c(1, 2), rho.within = 0.50, effect = "within"))
+    check.snap4plot("plot_regression.f",  power.f.regression, list(power = 0.8, r.squared = 0.15, k.total = 3))
 
     # t: student, welch, wilcoxon, (t.)regression ----------------------------------------------------------------------
-    check.snap4plot("plot_student",      power.t.student,    list(d = 0.20, alternative = "two.sided", design = "independent"))
-    check.snap4plot("plot_welch",        power.t.welch,      list(d = 0.20, n.ratio = 2, var.ratio = 2, alternative = "two.sided"))
-    check.snap4plot("plot_wilcoxon",     power.np.wilcoxon,  list(d = 0.25, alternative = "two.sided", design = "independent"))
-    check.snap4plot("plot_regression.t", power.t.regression, list(beta = 0.20, k.total = 5, r.squared = 0.30))
+    check.snap4plot("plot_student",      power.t.student,    list(d = 0.20, n2 = 100, alternative = "two.sided", design = "independent"))
+    check.snap4plot("plot_welch",        power.t.welch,      list(d = 0.20, n2 = 100, n.ratio = 2, var.ratio = 2, alternative = "two.sided"))
+    check.snap4plot("plot_wilcoxon",     power.np.wilcoxon,  list(d = 0.25, n2 = 100, alternative = "two.sided", design = "independent"))
+    check.snap4plot("plot_regression.t", power.t.regression, list(power = 0.8, beta = 0.20, k.total = 5, r.squared = 0.30))
 
     # z: proportions.onetwo, correlations (steiger, twocors, onecor), logistic, poisson, mediation ---------------------
-    check.snap4plot("plot_oneprop.z",  power.z.oneprop,  list(prob = 0.45, null.prob = 0.50, alternative = "one.sided"))
-    check.snap4plot("plot_twoprops.z", power.z.twoprops, list(prob1 = 0.65, prob2 = 0.60, alternative = "one.sided"))
+    check.snap4plot("plot_oneprop.z",  power.z.oneprop,  list(power = 0.8, prob = 0.45, null.prob = 0.50, alternative = "one.sided"))
+    check.snap4plot("plot_twoprops.z", power.z.twoprops, list(power = 0.8, prob1 = 0.65, prob2 = 0.60, alternative = "one.sided"))
     check.snap4plot("plot_twocors.steiger", power.z.twocors.steiger,
-                    list(rho12 = 0.35, rho13 = 0.45, rho23 = 0.05, alternative = "two.sided", common.index = TRUE))
-    check.snap4plot("plot_twocors",   power.z.twocors,   list(rho1 = 0.20, rho2 = 0.30, alternative = "two.sided"))
-    check.snap4plot("plot_onecor",    power.z.onecor,    list(rho = 0.20, alternative = "two.sided"))
-    check.snap4plot("plot_logistic",  power.z.logistic,  list(base.prob = 0.15, prob = 0.20, distribution = "normal"))
-    check.snap4plot("plot_mediation", power.z.mediation, list(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10))
-    check.snap4plot("plot_poisson",   power.z.poisson,   list(beta0 = 0.50, beta1 = -0.10, dist = "normal"))
+                    list(power = 0.8, rho12 = 0.35, rho13 = 0.45, rho23 = 0.05, alternative = "two.sided", common.index = TRUE))
+    check.snap4plot("plot_twocors",   power.z.twocors,   list(power = 0.8, rho1 = 0.20, rho2 = 0.30, alternative = "two.sided"))
+    check.snap4plot("plot_onecor",    power.z.onecor,    list(power = 0.8, rho = 0.20, alternative = "two.sided"))
+    check.snap4plot("plot_logistic",  power.z.logistic,  list(power = 0.8, base.prob = 0.15, prob = 0.20, distribution = "normal"))
+    check.snap4plot("plot_mediation", power.z.mediation, list(power = 0.8, beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10))
+    check.snap4plot("plot_poisson",   power.z.poisson,   list(power = 0.8, beta0 = 0.50, beta1 = -0.10, dist = "normal"))
 
     # errors -----------------------------------------------------------------------------------------------------------
-    expect_error(plot(pwrss.z.mediation(a = 0.25, b = 0.25, cp = 0.10, power = 0.80, verbose = FALSE)),
+    expect_error(plot(pwrss.z.mediation(power = 0.8, a = 0.25, b = 0.25, cp = 0.10, verbose = FALSE)),
                  "Plotting is no longer available for this type of object.")
-    expect_error(plot(power.exact.fisher(prob1 = 0.60, prob2 = 0.40, power = 0.80, verbose = 0)),
+    expect_error(plot(power.exact.fisher(power = 0.8, prob1 = 0.60, prob2 = 0.40, verbose = 0)),
                  "Plotting is not available for Fisher's or McNemar's exact test.")
     expect_error(plot.pwrss(NULL), "Not an object of the type 'pwrss'.")
     expect_error(.plot.binom.t1t2(size = 5, prob = 0.4, alternative = "two.sided"),

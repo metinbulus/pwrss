@@ -415,10 +415,13 @@ power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, req.sign = "+",
   if (verbose > 0) {
 
     print.obj <- list(requested = requested,
+                      tgt.effect = ifelse(is.null(func.parms[["prob2"]]), "prob2", "prob1"),
                       test = "Independent Proportions",
                       alpha = alpha,
                       alternative = alternative,
                       method = ifelse(method == "exact", "exact", "z"),
+                      prob1 = prob1,
+                      prob2 = prob2,
                       delta = prob1 - prob2,
                       margin = 0,
                       odds.ratio = (prob1 / (1 - prob1)) /  (prob2 / (1 - prob2)),

@@ -6,10 +6,12 @@
 \title{Statistical Power for the Generic z-Test}
 \usage{
 power.z.test(
+  power = NULL,
   mean = NULL,
   sd = 1,
   null.mean = 0,
   null.sd = 1,
+  req.sign = "+",
   alpha = 0.05,
   alternative = c("two.sided", "one.sided", "two.one.sided"),
   plot = TRUE,
@@ -18,7 +20,11 @@ power.z.test(
 )
 }
 \arguments{
-\item{mean}{mean of the alternative.}
+\item{power}{statistical power \eqn{(1-\beta)}; either \code{power}, or
+\code{mean} needs to be NULL (and is then estimated).}
+
+\item{mean}{mean of the alternative; either \code{power}, or \code{mean} needs
+to be NULL (and is then estimated).}
 
 \item{sd}{standard deviation of the alternative. Do not change this
 value except when some sort of variance correction is
@@ -31,6 +37,10 @@ as the absolute bound and automatically expanded to
 
 \item{null.sd}{standard deviation of the null. Do not change this value
 except when some sort of correction is applied.}
+
+\item{req.sign}{whether \code{mean} is expected to be greater '+1', less than
+'-1', or within '0' the \code{null.mean} bounds; only relevant
+if \code{mean} is to be estimated.}
 
 \item{alpha}{type 1 error rate, defined as the probability of
 incorrectly rejecting a true null hypothesis, denoted as
@@ -54,6 +64,7 @@ characters (if encoding allows for it). \code{FALSE} by
 default.}
 }
 \value{
+\item{power}{statistical power \eqn{(1-\beta)}.}
 \item{mean}{mean of the alternative distribution.}
 \item{sd}{standard deviation of the alternative distribution.}
 \item{null.mean}{mean of the null distribution.}
@@ -63,22 +74,23 @@ default.}
 \item{beta}{type 2 error rate.}
 \item{type.s}{type S error rate (only for two-tailed test).}
 \item{type.m}{type M error rate (only for two-tailed test).}
-\item{power}{statistical power \eqn{(1-\beta)}.}
 }
 \description{
-Calculates power for the generic z-Test with (optional) Type 1 and Type 2
-error plots.
+Determines the power or the non-centrality parameter (mean) for the generic
+z-Test with (optional) Type 1 and Type 2 error plots.
 }
 \examples{
 # two-sided
 # power defined as the probability of observing test statistics greater than
 # the positive critical value OR less than the negative critical value
 power.z.test(mean = 1.96, alpha = 0.05, alternative = "two.sided")
+power.z.test(power = 0.80, alpha = 0.05, alternative = "two.sided")
 
 # one-sided
 # power is defined as the probability of observing a test statistic greater
 # than the critical value
 power.z.test(mean = 1.96, alpha = 0.05, alternative = "one.sided")
+power.z.test(power = 0.80, alpha = 0.05, alternative = "one.sided")
 
 # equivalence
 # power is defined as the probability of observing a test statistic greater
@@ -86,6 +98,8 @@ power.z.test(mean = 1.96, alpha = 0.05, alternative = "one.sided")
 # lower critical value (for the upper bound)
 power.z.test(mean = 0, null.mean = c(-2, 2), alpha = 0.05,
              alternative = "two.one.sided")
+power.z.test(power = 0.80, req.sign = "0", null.mean = c(-2, 2),
+             alpha = 0.05, alternative = "two.one.sided")
 
 # minimal effect testing
 # power is defined as the probability of observing a test statistic greater
@@ -93,5 +107,7 @@ power.z.test(mean = 0, null.mean = c(-2, 2), alpha = 0.05,
 # critical value (for the lower bound).
 power.z.test(mean = 2, null.mean = c(-1, 1), alpha = 0.05,
              alternative = "two.one.sided")
+power.z.test(power = 0.80, req.sign = "+", null.mean = c(-1, 1),
+             alpha = 0.05, alternative = "two.one.sided")
 
 }

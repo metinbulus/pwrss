@@ -38,9 +38,6 @@ test_that("regression.mediation.R works", {
                       std.beta.cp = 0.1, std.beta.indirect = 0.0625, mean = 2.80172572, sd = 1, null.mean = 0,
                       null.sd = 1, z.alpha = c(-1.959964, 1.959964), power = 0.80004029, n = 242))
 
-
-
-
     crrRes <- power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, n = 500, method = "sobel", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "mediation"))
     expect_equal(names(crrRes), c("parms", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp", "r.squared.mediator",
@@ -226,9 +223,13 @@ test_that("regression.mediation.R works", {
                       n = 279))
 
     expect_error(power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, verbose = 0),
-                 "Exactly two of the parameters `\\(beta.a, beta.b\\)`, `n`, or `power` must be given, one has to be NULL.")
+                 "Exactly one of the parameters `n` or `power` must be given, one has to be NULL.")
     expect_error(power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, n = 200, power = 0.8, verbose = 0),
-                 "Exactly two of the parameters `\\(beta.a, beta.b\\)`, `n`, or `power` must be given, one has to be NULL.")
+                 "Exactly one of the parameters `n` or `power` must be given, one has to be NULL.")
+#    expect_error(power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, verbose = 0),
+#                 "Exactly two of the parameters `\\(beta.a, beta.b\\)`, `n`, or `power` must be given, one has to be NULL.")
+#    expect_error(power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, n = 200, power = 0.8, verbose = 0),
+#                 "Exactly two of the parameters `\\(beta.a, beta.b\\)`, `n`, or `power` must be given, one has to be NULL.")
     expect_error(power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, power = 0.8, method = "joint", verbose = 0),
                  "Sample size calculation not supported by this method")
     crrWrn <- capture_warnings(power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, r.squared.outcome = 0, n = 200, verbose = 0, utf = FALSE))

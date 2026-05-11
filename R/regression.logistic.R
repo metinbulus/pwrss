@@ -242,8 +242,6 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
     prob <- odds2prob(odds.ratio, base.prob)
   } else if (all(check.not_null(base.prob, n, power))) { # calculate effect size
     check.proportion(base.prob)
-    if (any(check.not_null(prob, odds.ratio, beta0, beta1)) && verbose >= 0)
-      message("Calculating the effect size (`odds.ratio`), ignoring any specifications to `prob`, `odds.ratio`, `beta0` or `beta1`.")
     prob <- odds.ratio <- beta1 <- NULL
     beta0 <- log(base.prob / (1 - base.prob))
   } else {
@@ -251,7 +249,7 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
                "`beta0` & `beta1`\n  or `base.prob` & `n` & `power` (the latter calculates `odds.ratio` as effect size)."), call. = FALSE)
   }
 
-  requested <- get.requested(es = odds.ratio, n = n, power = power)
+  requested <- get.requested(es = list(base.prob, odds.ratio), n = n, power = power)
 
   # check distribution
   if (length(distribution) == 1 && is.character(distribution)) {
@@ -488,11 +486,12 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
       var.obj <- var.beta(beta0 = beta0, beta1 = beta0, distribution = distribution)
       bound.values <- c((stats::qlogis(0.0001) - beta0) / c(var.obj$min, var.obj$max),
                         (stats::qlogis(0.9999) - beta0) / c(var.obj$min, var.obj$max))
+      bound.values <- bound.values[is.finite(bound.values)]
       val.rng <- c(min(bound.values), 0, max(bound.values))[ifelse(check.pos_sign(req.sign), -1, -3)]
 
-      beta1 <- try(stats::uniroot(function(beta1) min.pwr.demidenko(beta1, n, power), interval = val.rng)$root)
+      beta1 <- try(stats::uniroot(function(beta1) min.pwr.demidenko(beta1, n, power), interval = val.rng)$root, silent = TRUE)
       if (inherits(beta1, "try-error"))
-        stop(sprintf("Design is not feasible. Try `req.sign` = \"%s\"", ifelse(check.pos_sign(req.sign), "-", "+")), call. = FALSE)
+        stop(sprintf("Design is not feasible. Try `req.sign` = \"%s\".", ifelse(check.pos_sign(req.sign), "-", "+")), call. = FALSE)
 
       base.prob <- exp(beta0) / (1 + exp(beta0))
       odds.ratio <- exp(beta1)
@@ -522,11 +521,11 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
     } else if (requested == "es") {
 
       # reasonable bounds for prob
-      val.rng <- c(0.0001, prob, 0.9999)[ifelse(check.pos_sign(req.sign), -1, -3)]
+      val.rng <- c(0.0001, base.prob, 0.9999)[ifelse(check.pos_sign(req.sign), -1, -3)]
 
-      prob <- try(stats::uniroot(function(prob) min.ss.hsieh(prob, n, power), interval = val.rng)$root)
+      prob <- try(stats::uniroot(function(prob) min.ss.hsieh(prob, n, power), interval = val.rng)$root, silent = TRUE)
       if (inherits(prob, "try-error"))
-        stop(sprintf("Design is not feasible. Try `req.sign` = \"%s\"", ifelse(check.pos_sign(req.sign), "-", "+")), call. = FALSE)
+        stop(sprintf("Design is not feasible. Try `req.sign` = \"%s\".", ifelse(check.pos_sign(req.sign), "-", "+")), call. = FALSE)
 
       odds.ratio <- (prob / (1 - prob)) / (base.prob / (1 - base.prob))
       beta0 <- log(base.prob / (1 - base.prob))
@@ -552,6 +551,7 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
 
     print.obj <- list(requested = requested,
                       test = "Logistic Regression Coefficient (Wald's Z-Test)",
+                      tgt.effect = "odds.ratio",
                       method = switch(method,
                                       `demidenko(vc)` = "Demidenko (Variance Corrected)",
                                       `demidenko` = "Demidenko",

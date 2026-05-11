@@ -184,7 +184,7 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL, beta0 = NULL, b
     beta0 <- log(base.rate)
   } else {
     stop(paste("Specify `base.rate` & `rate.ratio`\n  or `beta0` & `beta1`\n  or `base.rate` & `n` & `power`",
-               "(the latter calculates `odds.ratio` as effect size)."), call. = FALSE)
+               "(the latter calculates `rate.ratio` as effect size)."), call. = FALSE)
   }
 
   if (!is.null(beta1) && beta0 == beta1)

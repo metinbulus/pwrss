@@ -45,7 +45,7 @@ check.sample.size <- function(...) {
   args <- list(...)
   arg.names <- vapply(substitute(list(...))[-1], function(fn) paste0("`", deparse(fn, nlines = 1), "`"), character(1))
 
-  check <- vapply(args, function(x) length(x) == 1 && isInt(x) && is.finite(x) && x > 1, logical(1))
+  check <- vapply(args, function(x) length(x) == 1 && isInt(x) && is.finite(x) && x >= 2, logical(1))
 
   if (any(!check))
     stop(format_errmsg(arg.names[!check], as.character(match.call()[[1]])), call. = FALSE)
@@ -53,6 +53,18 @@ check.sample.size <- function(...) {
 } # check.sample.size
 
 check.factor.level <- check.sample.size # check.factor.level
+
+check.size <- function(...) {
+
+  args <- list(...)
+  arg.names <- vapply(substitute(list(...))[-1], function(fn) paste0("`", deparse(fn, nlines = 1), "`"), character(1))
+
+  check <- vapply(args, function(x) length(x) == 1 && isInt(x) && is.finite(x) && x >= 0, logical(1))
+
+  if (any(!check))
+    stop(format_errmsg(arg.names[!check], as.character(match.call()[[1]])), call. = FALSE)
+
+} # check.size
 
 check.nonnegative <- function(...) {
 
@@ -190,11 +202,20 @@ check.correlation.matrix <- function(x) {
 
 } # check.correlation.matrix()
 
+check.na <- function(...) {
+
+  args <- list(...)
+
+  vapply(args, function(a) !is.null(a) && all(is.na(a)), logical(1))
+
+} # check.na
+
 check.null <- function(...) {
 
   args <- list(...)
 
   vapply(args, is.null, logical(1))
+
 } # check.null
 
 check.not_null <- function(...) !check.null(...) # check.not_null
@@ -213,7 +234,7 @@ check.pos_sign <- function(req.sign, has.zero = FALSE) {
 
 # helper function(s) ---------------------------------------------------------------------------------------------------
 format_errmsg <- function(names = c(), fnc.name = NULL) {
-  sprintf("Argument%s %s %s not have %svalid %s value%s (must be length 1, %s)",
+  sprintf("Argument%s %s %s not have %svalid %s value%s (must be length 1, %s).",
           ifelse(length(names) > 1, "s", ""),
           paste(names, collapse = ifelse(length(names) > 2, ", ", " and ")),
           ifelse(length(names) > 1, "do", "does"),
@@ -239,6 +260,8 @@ valid.cond <- function(fnc.name = "") {
     "TRUE or FALSE"
   } else if (fnc.name %in% c("check.sample.size", "check.factor.level")) {
     "integer-like, > 1, and finite"
+  } else if (fnc.name == "check.size") {
+    "integer-like, >= 0, and finite"
   } else if (fnc.name == "check.nonnegative") {
     "numeric, >= 0, and finite"
   } else if (fnc.name == "check.positive") {

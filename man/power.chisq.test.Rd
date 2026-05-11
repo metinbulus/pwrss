@@ -6,6 +6,7 @@
 \title{Statistical Power for the Generic Chi-Square Test}
 \usage{
 power.chisq.test(
+  power = NULL,
   ncp = NULL,
   null.ncp = 0,
   df = NULL,
@@ -16,12 +17,18 @@ power.chisq.test(
 )
 }
 \arguments{
-\item{ncp}{non-centrality parameter for the alternative.}
+\item{power}{statistical power \eqn{(1 - \beta)}; either \code{power}, \code{ncp}
+or \code{df} needs to be NULL (and is then estimated).}
+
+\item{ncp}{non-centrality parameter for the alternative; either
+\code{power}, \code{ncp} or \code{df} needs to be NULL (and is then
+estimated).}
 
 \item{null.ncp}{non-centrality parameter for the null.}
 
-\item{df}{integer; degrees of freedom. For example, for the test of
-independence df = (nrow - 1)*(ncol - 1).}
+\item{df}{integer; degrees of freedom, e.g., for the test of
+independence df = (nrow - 1) * (ncol - 1); either \code{power},
+\code{ncp} or \code{df} needs to be NULL (and is then estimated).}
 
 \item{alpha}{type 1 error rate, defined as the probability of incorrectly
 rejecting a true null hypothesis, denoted as \eqn{\alpha}.}
@@ -31,27 +38,29 @@ plot. \code{TRUE} by default.}
 
 \item{verbose}{\code{1} by default (returns test, hypotheses, and results),
 if \code{2} a more detailed output is given (plus key
-parameters and definitions), if \code{0} no output is printed
-on the console.}
+parameters and definitions), if \code{0} no output is
+printed on the console.}
 
 \item{utf}{logical; whether the output should show Unicode characters
 (if encoding allows for it). \code{FALSE} by default.}
 }
 \value{
-\item{df}{degrees of freedom.}
+\item{power}{statistical power \eqn{(1-\beta)}.}
 \item{ncp}{non-centrality parameter under alternative.}
-\item{ncp.null}{non-centrality parameter under null.}
+\item{null.ncp}{non-centrality parameter under null.}
+\item{df}{degrees of freedom.}
 \item{alpha}{type 1 error rate (user-specified).}
 \item{chisq.alpha}{critical value.}
-\item{power}{statistical power \eqn{(1-\beta)}.}
 }
 \description{
-Calculates power for the generic chi-square test with (optional) Type 1 and
-Type 2 error plots.
+Determines power, the non-centrality parameter (NCP) for the generic
+chi-square test with (optional) Type 1 and Type 2 error plots.
 }
 \examples{
 # power is defined as the probability of observing a test statistics greater
 # than the critical value
 power.chisq.test(ncp = 20, df = 100, alpha = 0.05)
+power.chisq.test(power = 0.80, df = 100, alpha = 0.05)
+power.chisq.test(power = 0.80, ncp = 20, alpha = 0.05)
 
 }

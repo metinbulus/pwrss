@@ -251,7 +251,7 @@ test_that("power.z.poisson / pwrss.z.poisson work", {
 
     expect_error(power.z.poisson(beta0 = 0.50, alpha = 0.05, power = 0.80, verbose = 0),
                  paste("Specify `base.rate` & `rate.ratio`\n  or `beta0` & `beta1`\n  or `base.rate` & `n` & `power`",
-                       "\\(the latter calculates `odds.ratio` as effect size\\)."))
+                       "\\(the latter calculates `rate.ratio` as effect size\\)."))
     expect_message(power.z.poisson(beta0 = 0.50, beta1 = -0.10, base.rate = exp(0.50), alpha = 0.05, power = 0.80, verbose = 0),
                    "Using `beta0` and `beta1`, ignoring any specifications to `base.rate` or `rate.ratio`.")
     expect_message(power.z.poisson(base.rate = exp(0.50), rate.ratio = exp(-0.10), beta0 = 0.50, alpha = 0.05, power = 0.80, verbose = 0),

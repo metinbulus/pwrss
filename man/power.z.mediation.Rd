@@ -102,7 +102,7 @@ hypothesis test: "two.sided" or "one.sided".}
 
 \item{method}{character; "sobel", "aroian", "goodman", "joint"
 or "monte.carlo". "joint" and "monte.carlo"
-methods cannot be used for sample size
+methods can not be used for sample size
 calculation.}
 
 \item{n.simulation}{integer; number of replications (applies when

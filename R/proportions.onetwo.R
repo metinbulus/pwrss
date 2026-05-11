@@ -103,9 +103,9 @@ power.exact.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
 
   } else if (requested == "es") {
 
-    prob <- prob.binom.test(power = power, size = n, prob = NULL, req.sign = req.sign,
-                            null.prob = null.prob, alpha = alpha, alternative = alternative,
-                            plot = FALSE, verbose = 0, utf = FALSE)$prob
+    prob <- power.binom.test(power = power, size = n, prob = NULL, req.sign = req.sign,
+                             null.prob = null.prob, alpha = alpha, alternative = alternative,
+                             plot = FALSE, verbose = 0, utf = FALSE)$prob
 
   }
 
@@ -131,6 +131,8 @@ power.exact.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
                       alpha = alpha,
                       alternative = alternative,
                       method = "exact",
+                      prob = prob,
+                      null.prob = null.prob,
                       delta = delta,
                       odds.ratio = odds.ratio,
                       size = size,
@@ -455,15 +457,7 @@ power.z.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
 
   } else if (requested == "es") { # sample size
 
-    pos.sign <- check.pos_sign(req.sign, TRUE)
-    if  (is.null(pos.sign)) {
-      val.rng <- sort(null.prob)
-    } else if (pos.sign == FALSE) {
-      val.rng <- c(0.0001, min(null.prob))
-    } else if (pos.sign == TRUE) {
-      val.rng <- c(max(null.prob), 0.9999)
-    }
-
+    val.rng <- get.interval(null.ncp = null.prob, distribution = "binom", req.sign = req.sign)
     prob <- stats::optimize(
       f = function(prob) {
         (power - pwr(prob = prob, null.prob = null.prob, n = n, std.error = std.error, arcsine = arcsine,
@@ -497,6 +491,8 @@ power.z.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
                       std.error = std.error,
                       arcsine = arcsine,
                       correct = correct,
+                      prob = prob,
+                      null.prob = null.prob,
                       delta = delta,
                       odds.ratio = odds.ratio,
                       mean.alternative = mean.alternative,
@@ -1225,10 +1221,13 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
     if (verbose > 0) {
 
       print.obj <- list(requested = requested,
+                        tgt.effect = ifelse(is.null(func.parms[["prob2"]]), "prob2", "prob1"),
                         test = "Independent Proportions",
                         alpha = alpha,
                         alternative = alternative,
                         method = "z",
+                        prob1 = prob1,
+                        prob2 = prob2,
                         delta = delta,
                         margin = margin,
                         odds.ratio = odds.ratio,

@@ -113,7 +113,7 @@
 
   alternative <- tolower(match.arg(alternative))
 
-  check.sample.size(size)
+  check.size(size)
   check.proportion(prob)
   null.prob <- check.margins(null.prob, check.proportion, alternative)
   check.proportion(alpha)

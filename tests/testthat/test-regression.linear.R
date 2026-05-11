@@ -174,7 +174,7 @@ test_that("power.f.regression / pwrss.f.regression work", {
 
 # power.t.regression (= pwrss.t.regression / pwrss.t.reg) --------------------------------------------------------------
 test_that("power.t.regression / pwrss.t.regression work", {
-    crrRes <- power.t.regression(beta = 0.20, k.total = 1, power = 0.80, verbose = 0)
+    crrRes <- power.t.regression(power = 0.80, beta = 0.20, k.total = 1, verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "t", "regression"))
     expect_equal(names(crrRes),
                  c("parms", "test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp",
