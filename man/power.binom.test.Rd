@@ -7,7 +7,7 @@
 \usage{
 power.binom.test(
   power = NULL,
-  size,
+  size = NULL,
   prob = NULL,
   null.prob = 0.5,
   req.sign = "+",

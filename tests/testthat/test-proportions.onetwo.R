@@ -172,6 +172,47 @@ test_that("power.z.oneprop works", {
                       power = 0.800484462, n = 778))
     expect_equal(crrRes, pwrss.z.prop(p = 0.45, p0 = c(0.35, 0.40), alpha = 0.05, power = 0.80, alternative = "equivalent", verbose = FALSE))
 
+    crrRes <- power.z.oneprop(null.prob = 0.50, req.sign = "-", alpha = 0.05, power = 0.80, n = 617, alternative = "one.sided", verbose = 0)
+    expect_equal(class(crrRes), c("pwrss", "z", "oneprop"))
+    expect_equal(names(crrRes),
+                 c("parms", "test", "prob", "null.prob", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
+                   "z.alpha", "power", "n"))
+    expect_equal(crrRes[["parms"]],
+                 list(prob = NULL, req.sign = "-", null.prob = 0.50, n = 617, power = 0.80, alpha = 0.05, alternative = "one.sided",
+                      std.error = "null", arcsine = FALSE, correct = FALSE, ceil.n = TRUE, verbose = 0, utf = FALSE))
+    expect_equal(crrRes[c("test", "prob", "null.prob", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n")],
+                 list(test = "z", prob = 0.45003744, null.prob = 0.50, delta = -0.04996256, odds.ratio = 0.8183056,
+                      mean = -2.494573907, sd = 1, null.mean = 0, null.sd = 1.005030216, z.alpha = -1.6531276,
+                      power = 0.799951025, n = 617))
+
+    crrRes <- power.z.oneprop(null.prob = 0.50, req.sign = "-", alpha = 0.05, n = 621, power = 0.80,
+                              alternative = "one.sided", arcsine = TRUE, verbose = 0)
+    expect_equal(class(crrRes), c("pwrss", "z", "oneprop"))
+    expect_equal(names(crrRes),
+                 c("parms", "test", "prob", "null.prob", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
+                   "z.alpha", "power", "n"))
+    expect_equal(crrRes[["parms"]],
+                 list(prob = NULL, req.sign = "-", null.prob = 0.50, n = 621, power = 0.80, alpha = 0.05, alternative = "one.sided",
+                      std.error = "null", arcsine = TRUE, correct = FALSE, ceil.n = TRUE, verbose = 0, utf = FALSE))
+    expect_equal(crrRes[c("test", "prob", "null.prob", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n")],
+                 list(test = "z", prob = 0.45003163, null.prob = 0.50, delta = -0.049968372, odds.ratio = 0.81828638,
+                      mean = -2.494575, sd = 1, null.mean = 0, null.sd = 1.0050314, z.alpha = -1.65312954,
+                      power = 0.79995079, n = 621))
+
+    crrRes <- power.z.oneprop(null.prob = 0.50, req.sign = "-", alpha = 0.05, n = 637, power = 0.80,
+                              alternative = "one.sided", correct = TRUE, verbose = 0)
+    expect_equal(class(crrRes), c("pwrss", "z", "oneprop"))
+    expect_equal(names(crrRes),
+                 c("parms", "test", "prob", "null.prob", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
+                   "z.alpha", "power", "n"))
+    expect_equal(crrRes[["parms"]],
+                 list(prob = NULL, req.sign = "-", null.prob = 0.50, n = 637, power = 0.80, alpha = 0.05, alternative = "one.sided",
+                      std.error = "null", arcsine = FALSE, correct = TRUE, ceil.n = TRUE, verbose = 0, utf = FALSE))
+    expect_equal(crrRes[c("test", "prob", "null.prob", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n")],
+                 list(test = "z", prob = 0.450043091, null.prob = 0.50, delta = -0.049956909, odds.ratio = 0.818324278,
+                      mean = -2.494571932, sd = 1, null.mean = 0, null.sd = 1.00502907, z.alpha = -1.65312571,
+                      power = 0.799951, n = 637))
+
     expect_warning(power.z.oneprop(prob = 0.45, null.prob = 0.50, n = 500, alternative = "one.sided", arcsine = TRUE, correct = TRUE, verbose = 0),
                    "Continuity correction does not apply to arcsine transformation approach.")
     expect_warning(power.z.oneprop(prob = 0.45, null.prob = c(0.40, 0.50), n = 500, alternative = "two.one.sided", verbose = 0),
@@ -213,9 +254,9 @@ test_that("power.exact.twoprops works", {
                       alpha = 0.05, alternative = "two.sided", method = "exact", ceil.n = TRUE, verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "prob10", "prob01", "delta", "odds.ratio", "size", "prob", "null.prob", "binom.alpha",
                    "mean", "sd", "null.mean", "null.sd", "z.alpha", "alpha", "power", "n.paired")],
-                 list(test = "exact", prob10 = 0.12285039, prob01 = 0.02285039, delta = 0.10, odds.ratio = 5.376293, size = 74,
-                      prob = 0.843169063, null.prob = 0.5, binom.alpha = c(28, 45), mean = NA, sd = NA, null.mean = NA, null.sd = NA,
-                      z.alpha = NA, alpha = 0.047392976, power = 0.999990832, n.paired = 500))
+                 list(test = "exact", prob10 = 0.12285039, prob01 = 0.02285039, delta = 0.10, odds.ratio = 5.376293, size = 73,
+                      prob = 0.843169063, null.prob = 0.5, binom.alpha = c(27, 45), mean = NA, sd = NA, null.mean = NA, null.sd = NA,
+                      z.alpha = NA, alpha = 0.034415914, power = 0.999990832, n.paired = 500))
 
     crrRes <- power.exact.twoprops(prob1 = 0.70, prob2 = 0.60, alpha = 0.05, power = 0.80, alternative = "one.sided", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "exact", "fisher"))
@@ -235,13 +276,70 @@ test_that("power.exact.twoprops works", {
                  c("parms", "test", "prob10", "prob01", "delta", "odds.ratio", "size", "prob", "null.prob", "binom.alpha",
                    "mean", "sd", "null.mean", "null.sd", "z.alpha", "alpha", "power", "n.paired"))
     expect_equal(crrRes[["parms"]],
-                 list(prob10 = 0.12285039, prob01 = 0.02285039, req.sign = "+", n.paired = NULL, power = 0.80,
-                      alpha = 0.05, alternative = "two.sided", method = "exact", ceil.n = TRUE, verbose = 0, utf = FALSE))
+                 list(prob10 = 0.12285039, prob01 = 0.02285039, req.sign = "+", n.paired = NULL, power = 0.80, alpha = 0.05,
+                      alternative = "two.sided", method = "exact", ceil.n = TRUE, verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "delta", "odds.ratio", "size", "prob", "null.prob", "binom.alpha", "mean", "sd",
                           "null.mean", "null.sd", "z.alpha", "alpha", "power", "n.paired")],
                  list(test = "exact", delta = 0.10, odds.ratio = 5.376293, size = 18, prob = 0.843169063, null.prob = 0.5,
                       binom.alpha = c(4, 13), mean = NA, sd = NA, null.mean = NA, null.sd = NA,
                       z.alpha = NA, alpha = 0.030883789, power = 0.807733751, n.paired = 120))
+
+    crrRes <- power.exact.twoprops(prob1 = 0.70, req.sign = "-", alpha = 0.05, n2 = 302, power = 0.80,
+                                   alternative = "one.sided", verbose = 0)
+    expect_equal(class(crrRes), c("pwrss", "exact", "fisher"))
+    expect_equal(names(crrRes),
+                 c("parms", "test", "prob1", "prob2", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
+                   "alternative", "z.alpha", "power", "n", "n.total"))
+    expect_equal(crrRes[["parms"]],
+                 list(prob1 = 0.70, prob2 = NULL, req.sign = "-", n.ratio = 1, n2 = 302, power = 0.80, alpha = 0.05,
+                      alternative = "one.sided", method = "exact", ceil.n = TRUE, verbose = 0, utf = FALSE))
+    expect_equal(crrRes[c("test", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "power", "n", "n.total")],
+                 list(test = "exact", delta = 0.099829897, odds.ratio = 1.55445335, mean = NA, sd = NA, null.mean = NA,
+                      null.sd = NA, alternative = "one.sided", z.alpha = NA, power = 0.79992023, n = c(n1 = 302, n2 = 302),
+                      n.total = 604))
+
+    crrRes <- power.exact.twoprops(prob2 = 0.60, alpha = 0.05, n2 = 302, power = 0.80, alternative = "one.sided", verbose = 0)
+    expect_equal(class(crrRes), c("pwrss", "exact", "fisher"))
+    expect_equal(names(crrRes),
+                 c("parms", "test", "prob1", "prob2", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
+                   "alternative", "z.alpha", "power", "n", "n.total"))
+    expect_equal(crrRes[["parms"]],
+                 list(prob1 = NULL, prob2 = 0.60, req.sign = "+", n.ratio = 1, n2 = 302, power = 0.8, alpha = 0.05,
+                      alternative = "one.sided", method = "exact", ceil.n = TRUE, verbose = 0, utf = FALSE))
+    expect_equal(crrRes[c("test", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "power", "n", "n.total")],
+                 list(test = "exact", delta = 0.09986048, odds.ratio = 1.55452255, mean = NA, sd = NA, null.mean = NA,
+                      null.sd = NA, alternative = "one.sided", z.alpha = NA, power = 0.8000729, n = c(n1 = 302, n2 = 302),
+                      n.total = 604))
+
+    crrRes <- power.exact.twoprops(prob1 = 0.70, req.sign = "-", alpha = 0.05, n2 = 120, power = 0.80, paired = TRUE,
+                                   rho.paired = 0.7, verbose = 0)
+    expect_equal(class(crrRes), c("pwrss", "exact", "mcnemar"))
+    expect_equal(names(crrRes),
+                 c("parms", "test", "prob10", "prob01", "delta", "odds.ratio", "size", "prob", "null.prob", "binom.alpha",
+                   "mean", "sd", "null.mean", "null.sd", "z.alpha", "alpha", "power", "n.paired"))
+    expect_equal(crrRes[["parms"]],
+                 list(prob10 = 0.122314849, prob01 = 0.02315924041, req.sign = "+", n.paired = 120, power = NULL,
+                      alpha = 0.05, alternative = "two.sided", method = "exact", ceil.n = TRUE, verbose = 0, utf = FALSE))
+    expect_equal(crrRes[c("test", "delta", "odds.ratio", "size", "prob", "null.prob", "binom.alpha", "mean", "sd",
+                          "null.mean", "null.sd", "z.alpha", "alpha", "power", "n.paired")],
+                 list(test = "exact", delta = 0.099155608, odds.ratio = 5.28147066, size = 18, prob = 0.840801613,
+                      null.prob = 0.5, binom.alpha = c(4, 13), mean = NA, sd = NA, null.mean = NA, null.sd = NA,
+                      z.alpha = NA, alpha = 0.030883789, power = 0.79997889, n.paired = 120))
+
+    crrRes <- power.exact.twoprops(prob2 = 0.60, req.sign = "+", alpha = 0.05, n2 = 120, power = 0.80, paired = TRUE,
+                                   rho.paired = 0.7, verbose = 0)
+    expect_equal(class(crrRes), c("pwrss", "exact", "mcnemar"))
+    expect_equal(names(crrRes),
+                 c("parms", "test", "prob10", "prob01", "delta", "odds.ratio", "size", "prob", "null.prob", "binom.alpha",
+                   "mean", "sd", "null.mean", "null.sd", "z.alpha", "alpha", "power", "n.paired"))
+    expect_equal(crrRes[["parms"]],
+                 list(prob10 = 0.12241839, prob01 = 0.023204822, req.sign = "+", n.paired = 120, power = NULL,
+                      alpha = 0.05, alternative = "two.sided", method = "exact", ceil.n = TRUE, verbose = 0, utf = FALSE))
+    expect_equal(crrRes[c("test", "delta", "odds.ratio", "size", "prob", "null.prob", "binom.alpha", "mean", "sd",
+                          "null.mean", "null.sd", "z.alpha", "alpha", "power", "n.paired")],
+                 list(test = "exact", delta = 0.099213568, odds.ratio = 5.27555827, size = 18, prob = 0.84065163,
+                      null.prob = 0.5, binom.alpha = c(4, 13), mean = NA, sd = NA, null.mean = NA, null.sd = NA,
+                      z.alpha = NA, alpha = 0.030883789, power = 0.800035, n.paired = 120))
 })
 
 # power.z.twoprops (= pwrss.z.2props) ------------------------------------------------------------------------------
@@ -279,6 +377,38 @@ test_that("power.z.twoprops works", {
                       n = c(n1 = 1159, n2 = 1159), n.total = 2318))
     expect_equal(crrRes, pwrss.z.2props(p1 = 0.65, p2 = 0.60, alpha = 0.05, power = 0.80, alternative = "less", verbose = FALSE))
     expect_equal(crrRes, pwrss.z.2prop(p1  = 0.65, p2 = 0.60, alpha = 0.05, power = 0.80, alternative = "less", verbose = FALSE))
+
+    crrRes <- power.z.twoprops(prob1 = 0.65, req.sign = "-", n2 = 1159, alpha = 0.05, power = 0.80,
+                               alternative = "one.sided", verbose = 0)
+    expect_equal(class(crrRes), c("pwrss", "z", "twoprops"))
+    expect_equal(names(crrRes),
+                 c("parms", "test", "prob1", "prob2", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
+                   "z.alpha", "power", "n", "n.total"))
+    expect_equal(crrRes[["parms"]],
+                 list(prob1 = 0.65, prob2 = NULL, req.sign = "-", margin = 0, n.ratio = 1, n2 = 1159, power = 0.80, alpha = 0.05,
+                      alternative = "one.sided", arcsine = FALSE, correct = FALSE, paired = FALSE, rho.paired = 0.5,
+                      std.error = "pooled", ceil.n = TRUE, verbose = 0, utf = FALSE))
+    expect_equal(crrRes[c("test", "prob1", "prob2", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd", "z.alpha",
+                          "power", "n", "n.total")],
+                 list(test = "z", prob1 = 0.65, prob2 = 0.600022015, delta = 0.049977985, odds.ratio = 1.23798167,
+                      mean = 2.488465902, sd = 1, null.mean = 0, null.sd = 1.001334843, z.alpha = 1.647049248,
+                      power = 0.79994272, n = c(n1 = 1159, n2 = 1159), n.total = 2318))
+
+    crrRes <- power.z.twoprops(prob2 = 0.60, req.sign = "+", n2 = 1159, alpha = 0.05, power = 0.80,
+                               alternative = "one.sided", verbose = 0)
+    expect_equal(class(crrRes), c("pwrss", "z", "twoprops"))
+    expect_equal(names(crrRes),
+                 c("parms", "test", "prob1", "prob2", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
+                   "z.alpha", "power", "n", "n.total"))
+    expect_equal(crrRes[["parms"]],
+                 list(prob1 = NULL, prob2 = 0.60, req.sign = "+", margin = 0, n.ratio = 1, n2 = 1159, power = 0.80, alpha = 0.05,
+                      alternative = "one.sided", arcsine = FALSE, correct = FALSE, paired = FALSE, rho.paired = 0.5,
+                      std.error = "pooled", ceil.n = TRUE, verbose = 0, utf = FALSE))
+    expect_equal(crrRes[c("test", "prob1", "prob2", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd", "z.alpha",
+                          "power", "n", "n.total")],
+                 list(test = "z", prob1 = 0.64998433, prob2 = 0.6, delta = 0.049984331, odds.ratio = 1.238009969,
+                      mean = 2.4887577, sd = 1, null.mean = 0, null.sd = 1.00133516, z.alpha = 1.64704976,
+                      power = 0.80002426, n = c(n1 = 1159, n2 = 1159), n.total = 2318))
 
     crrRes <- power.z.twoprops(prob1 = 0.65, prob2 = 0.60, alpha = 0.05, power = 0.80, alternative = "one.sided",
                                arcsine = TRUE, std.error = "unpooled", verbose = 0)
@@ -423,6 +553,66 @@ test_that("power.z.twoprops works", {
                       sd = 1, null.mean = 4.97910071 * c(-1, 1), null.sd = 1.001336, z.alpha = 3.33204955 * c(-1, 1),
                       power = 0.8002457, n = c(n1 = 1159, n2 = 1159), n.total = 2318))
 
+    crrRes <- power.z.twoprops(prob1 = 0.55, prob2 = 0.45, rho.paired = 0.41414141, power = 0.8, paired = TRUE, verbose = 0)
+    expect_equal(class(crrRes), c("pwrss", "z", "twoprops"))
+    expect_equal(names(crrRes),
+                 c("parms", "test", "prob10", "prob01", "delta", "odds.ratio", "size", "prob", "null.prob", "binom.alpha",
+                   "mean", "sd", "null.mean", "null.sd", "z.alpha", "alpha", "power", "n.paired", "prob1", "prob2"))
+    expect_equal(crrRes[["parms"]],
+                 list(prob10 = 0.20, prob01 = 0.10, req.sign = "+", n.paired = NULL, power = 0.80, alpha = 0.05,
+                      alternative = "two.sided", method = "approximate", ceil.n = TRUE, verbose = 0, utf = FALSE))
+    expect_equal(crrRes[c("test", "prob10", "prob01", "delta", "odds.ratio", "size", "prob", "null.prob", "binom.alpha",
+                          "mean", "sd", "null.mean", "null.sd", "z.alpha", "alpha", "power", "n.paired", "prob1", "prob2")],
+                 list(test = "z", prob10 = 0.2, prob01 = 0.1, delta = 0.1, odds.ratio = 2, size = 71, prob = 2 / 3,
+                      null.prob = 0.5, binom.alpha = c(26, 44), mean = 2.81314954, sd = 1, null.mean = 0, null.sd = 1,
+                      z.alpha = 1.959964 * c(-1, 1), alpha = 0.05, power = 0.8032218, n.paired = 235, prob1 = 0.55,
+                      prob2 = 0.45))
+
+    crrRes <- power.z.twoprops(prob1 = 0.55, prob2 = 0.45, rho.paired = 0.41414141, n2 = 235, paired = TRUE, verbose = 0)
+    expect_equal(class(crrRes), c("pwrss", "z", "twoprops"))
+    expect_equal(names(crrRes),
+                 c("parms", "test", "prob10", "prob01", "delta", "odds.ratio", "size", "prob", "null.prob", "binom.alpha",
+                   "mean", "sd", "null.mean", "null.sd", "z.alpha", "alpha", "power", "n.paired", "prob1", "prob2"))
+    expect_equal(crrRes[["parms"]],
+                 list(prob10 = 0.20, prob01 = 0.10, req.sign = "+", n.paired = 235, power = NULL, alpha = 0.05,
+                      alternative = "two.sided", method = "approximate", ceil.n = TRUE, verbose = 0, utf = FALSE))
+    expect_equal(crrRes[c("test", "prob10", "prob01", "delta", "odds.ratio", "size", "prob", "null.prob", "binom.alpha",
+                          "mean", "sd", "null.mean", "null.sd", "z.alpha", "alpha", "power", "n.paired", "prob1", "prob2")],
+                 list(test = "z", prob10 = 0.2, prob01 = 0.1, delta = 0.1, odds.ratio = 2, size = 71, prob = 2 / 3,
+                      null.prob = 0.5, binom.alpha = c(26, 44), mean = 2.81314954, sd = 1, null.mean = 0, null.sd = 1,
+                      z.alpha = 1.959964 * c(-1, 1), alpha = 0.05, power = 0.8032218, n.paired = 235, prob1 = 0.55,
+                      prob2 = 0.45))
+
+    crrRes <- power.z.twoprops(prob1 = 0.55, req.sign = "-", rho.paired = 0.41414141, n2 = 235, power = 0.8, paired = TRUE, verbose = 0)
+    expect_equal(class(crrRes), c("pwrss", "z", "twoprops"))
+    expect_equal(names(crrRes),
+                 c("parms", "test", "prob10", "prob01", "delta", "odds.ratio", "size", "prob", "null.prob", "binom.alpha",
+                   "mean", "sd", "null.mean", "null.sd", "z.alpha", "alpha", "power", "n.paired", "prob1", "prob2"))
+    expect_equal(crrRes[["parms"]],
+                 list(prob10 = 0.199770384, prob01 = 0.100172781, req.sign = "+", n.paired = 235, power = NULL, alpha = 0.05,
+                      alternative = "two.sided", method = "approximate", ceil.n = TRUE, verbose = 0, utf = FALSE))
+    expect_equal(crrRes[c("test", "prob10", "prob01", "delta", "odds.ratio", "size", "prob", "null.prob", "binom.alpha",
+                          "mean", "sd", "null.mean", "null.sd", "z.alpha", "alpha", "power", "n.paired", "prob1", "prob2")],
+                 list(test = "z", prob10 = 0.199770384, prob01 = 0.100172781, delta = 0.099597604, odds.ratio = 1.994258149,
+                      size = 71, prob = 0.66602746, null.prob = 0.5, binom.alpha = c(26, 44), mean = 2.80184946, sd = 1,
+                      null.mean = 0, null.sd = 1, z.alpha = 1.959964 * c(-1, 1), alpha = 0.05, power = 0.80007397,
+                      n.paired = 235, prob1 = 0.55, prob2 = 0.4504024))
+
+    crrRes <- power.z.twoprops(prob2 = 0.45, req.sign = "+", rho.paired = 0.41414141, n2 = 235, power = 0.8, paired = TRUE, verbose = 0)
+    expect_equal(class(crrRes), c("pwrss", "z", "twoprops"))
+    expect_equal(names(crrRes),
+                 c("parms", "test", "prob10", "prob01", "delta", "odds.ratio", "size", "prob", "null.prob", "binom.alpha",
+                   "mean", "sd", "null.mean", "null.sd", "z.alpha", "alpha", "power", "n.paired", "prob1", "prob2"))
+    expect_equal(crrRes[["parms"]],
+                 list(prob10 = 0.199770384, prob01 = 0.100172781, req.sign = "+", n.paired = 235, power = NULL, alpha = 0.05,
+                      alternative = "two.sided", method = "approximate", ceil.n = TRUE, verbose = 0, utf = FALSE))
+    expect_equal(crrRes[c("test", "prob10", "prob01", "delta", "odds.ratio", "size", "prob", "null.prob", "binom.alpha",
+                          "mean", "sd", "null.mean", "null.sd", "z.alpha", "alpha", "power", "n.paired", "prob1", "prob2")],
+                 list(test = "z", prob10 = 0.199770384, prob01 = 0.100172781, delta = 0.099597604, odds.ratio = 1.994258149,
+                      size = 71, prob = 0.66602746, null.prob = 0.5, binom.alpha = c(26, 44), mean = 2.80184946, sd = 1,
+                      null.mean = 0, null.sd = 1, z.alpha = 1.959964 * c(-1, 1), alpha = 0.05, power = 0.80007397,
+                      n.paired = 235, prob1 = 0.5495976, prob2 = 0.45))
+
     expect_error(power.z.twoprops(prob1 = 0.65, prob2 = 0.60, margin = 1, n2 = 500, alternative = "one.sided"),
                  "Provide a reasonable `margin` consistent with `prob1` - `prob2`.")
     expect_error(power.z.twoprops(prob1 = 0.65, prob2 = 0.60, margin = 0.05, n2 = 500, alternative = "one.sided"),
@@ -441,6 +631,8 @@ test_that("power.z.twoprops works", {
                  "Arcsine transformation is currently not available for two one-sided tests.")
     expect_error(power.z.twoprops(prob1 = 0.65, prob2 = 0.60, margin = 0.10, n2 = 500, alternative = "two.one.sided"),
                  "Provide margins in the form of margin = c\\(lower, upper\\).")
+    expect_error(power.z.twoprops(prob1 = 0.55, prob2 = 0.45, margin = 0.10, power = 0.8, verbose = 0),
+                 "The value of margin should be different from the prob1 - prob2 difference.")
     expect_warning(power.z.twoprops(prob1 = 0.65, prob2 = 0.60, margin = 0.10, alpha = 0.05, power = 0.80,
                                     alternative = "one.sided", paired = TRUE, verbose = 0),
                    "`margin` argument is ignored.")

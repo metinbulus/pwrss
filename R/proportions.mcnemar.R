@@ -63,7 +63,7 @@
 #'
 #' @references
 #'   Bennett, B. M., & Underwood, R. E. (1970). 283. Note: On McNemar's Test
-#'   for the 2 * 2 Table and Its Power Function. *Biometrics, 26(2), 339-343.
+#'   for the 2 * 2 Table and Its Power Function. *Biometrics, 26*(2), 339-343.
 #'   https://doi.org/10.2307/2529083
 #'
 #'   Connor, R. J. (1987). Sample size for testing differences in proportions
@@ -132,9 +132,9 @@
 #' # we may not have 2 x 2 joint probs
 #' # convert marginal probs to joint probs
 #' joint.probs.2x2(prob1 = 0.55, # mean of case group (or after)
-#'                     prob2 = 0.45, # mean of matched control group (or before)
-#'                     # correlation between matched case-control or before-after
-#'                     rho = 0.4141414
+#'                 prob2 = 0.45, # mean of matched control group (or before)
+#'                 # correlation between matched case-control or before-after
+#'                 rho = 0.4141414
 #' )
 #'
 #' @export power.exact.mcnemar
@@ -212,10 +212,6 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
     power <- stats::pnorm(z.beta, mean = 0, sd = 1, lower.tail = TRUE)
 
     mean.alternative <- z.alpha + z.beta
-    sd.alternative <- 1
-    mean.null <- 0
-    sd.null <- 1
-    z.alpha <- z.alpha
 
     if (OR < 1) {
       mean.alternative <- -mean.alternative
@@ -223,12 +219,7 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
     }
     if (alternative == "two.sided") z.alpha <- c(-z.alpha, z.alpha)
 
-    list(power = power,
-         mean.alternative =  mean.alternative,
-         sd.alternative = sd.alternative,
-         mean.null = mean.null,
-         sd.null = sd.null,
-         z.alpha = z.alpha)
+    list(power = power, mean.alternative = mean.alternative, sd.alternative = 1, mean.null = 0, sd.null = 1, z.alpha = z.alpha)
 
   } # pwr.approx()
 
@@ -257,19 +248,8 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
 
     if (requested == "n") {
 
-      n.paired <- ss.exact(prob10 = prob10, prob01 = prob01,
-                           power = power, alpha = alpha,
-                           alternative = alternative)
-      n.discordant <- sum(n.paired * c(prob10, prob01))
-
-      if (ceil.n) {
-        n.paired <- sum(ceiling(n.paired * c(prob11, prob10, prob01, prob00)))
-        n.discordant <- sum(ceiling(n.paired * c(prob10, prob01)))
-      }
-
-    } else if (requested == "power") {
-
-      n.discordant <- ifelse(ceil.n, sum(ceiling(n.paired * c(prob10, prob01))), sum(n.paired * c(prob10, prob01)))
+      n.paired <- ss.exact(prob10 = prob10, prob01 = prob01, power = power, alpha = alpha, alternative = alternative)
+      n.paired <- ifelse(ceil.n, sum(ceiling(n.paired * c(prob11, prob10, prob01, prob00))), n.paired)
 
     } else if (requested == "es") {
 
@@ -277,10 +257,10 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
 
         prob10 <- stats::optimize(
           f = function(prob10) {
-            (power - pwr.exact(prob10 = prob10, prob01 = prob01, n.paired = n.paired,
-                               alpha = alpha, alternative = alternative)) ^ 2
+            pwr.est <- pwr.exact(prob10 = prob10, prob01 = prob01, n.paired = n.paired,
+                                 alpha = alpha, alternative = alternative)
+            if (pwr.est == 1) 1 + max(prob10, prob01) else (power - pwr.est) ^ 2
           },
-          maximum = FALSE,
           lower = ifelse(check.pos_sign(req.sign),     prob01, 0.0001),
           upper = ifelse(check.pos_sign(req.sign), 1 - prob01, min(prob01, 1 - prob01)))$minimum
 
@@ -288,16 +268,14 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
 
         prob01 <- stats::optimize(
           f = function(prob01) {
-            (power - pwr.exact(prob10 = prob10, prob01 = prob01, n.paired = n.paired,
-                               alpha = alpha, alternative = alternative)) ^ 2
+            pwr.est <- pwr.exact(prob10 = prob10, prob01 = prob01, n.paired = n.paired,
+                                 alpha = alpha, alternative = alternative)
+            if (pwr.est == 1) 1 + max(prob10, prob01) else (power - pwr.est) ^ 2
           },
-          maximum = FALSE,
           lower = ifelse(check.pos_sign(req.sign),     prob10, 0.0001),
           upper = ifelse(check.pos_sign(req.sign), 1 - prob10, min(prob10, 1 - prob10)))$minimum
 
       } # prob10 or prob01?
-
-      n.discordant <- ifelse(ceil.n, sum(ceiling(n.paired * c(prob10, prob01))), sum(n.paired * c(prob10, prob01)))
 
     } # effect size
 
@@ -314,19 +292,8 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
 
     if (requested == "n") {
 
-      n.paired <- ss.approx(prob10 = prob10, prob01 = prob01,
-                            power = power, alpha = alpha,
-                            alternative = alternative)
-      n.discordant <- sum(n.paired * c(prob10, prob01))
-
-      if (ceil.n) {
-        n.paired <- sum(ceiling(n.paired * c(prob11, prob10, prob01, prob00)))
-        n.discordant <- sum(ceiling(n.paired * c(prob10, prob01)))
-      }
-
-    } else if (requested == "power") {
-
-      n.discordant <- ifelse(ceil.n, sum(ceiling(n.paired * c(prob10, prob01))), sum(n.paired * c(prob10, prob01)))
+      n.paired <- ss.approx(prob10 = prob10, prob01 = prob01, power = power, alpha = alpha, alternative = alternative)
+      n.paired <- ifelse(ceil.n, sum(ceiling(n.paired * c(prob11, prob10, prob01, prob00))), n.paired)
 
     } else if (requested == "es") {
 
@@ -334,27 +301,27 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
 
         prob10 <- stats::optimize(
           f = function(prob10) {
-            (power - pwr.approx(prob10 = prob10, prob01 = prob01, n.paired = n.paired,
-                                alpha = alpha, alternative = alternative)$power) ^ 2
+            pwr.est <- pwr.approx(prob10 = prob10, prob01 = prob01, n.paired = n.paired,
+                                  alpha = alpha, alternative = alternative)$power
+            if (pwr.est == 1) 1 + max(prob10, prob01) else (power - pwr.est) ^ 2
           },
-          maximum = FALSE,
           lower = ifelse(check.pos_sign(req.sign),     prob01,                 0.0001),
-          upper = ifelse(check.pos_sign(req.sign), 1 - prob01, min(prob01, 1 - prob01)))$minimum
+          upper = ifelse(check.pos_sign(req.sign), 1 - prob01, min(prob01, 1 - prob01)),
+          tol = 1e-12)$minimum
 
       } else {
 
         prob01 <- stats::optimize(
           f = function(prob01) {
-            (power - pwr.approx(prob10 = prob10, prob01 = prob01, n.paired = n.paired,
-                                alpha = alpha, alternative = alternative)$power) ^ 2
+            pwr.est <- pwr.approx(prob10 = prob10, prob01 = prob01, n.paired = n.paired,
+                                  alpha = alpha, alternative = alternative)$power
+            if (pwr.est == 1) 1 + max(prob10, prob01) else (power - pwr.est) ^ 2
           },
-          maximum = FALSE,
           lower = ifelse(check.pos_sign(req.sign),     prob10,                 0.0001),
-          upper = ifelse(check.pos_sign(req.sign), 1 - prob10, min(prob10, 1 - prob10)))$minimum
+          upper = ifelse(check.pos_sign(req.sign), 1 - prob10, min(prob10, 1 - prob10)),
+          tol = 1e-12)$minimum
 
       } # prob10 or prob01?
-
-      n.discordant <- ifelse(ceil.n, sum(ceiling(n.paired * c(prob10, prob01))), sum(n.paired * c(prob10, prob01)))
 
     } # effect size
 
@@ -379,7 +346,7 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
   # critical values for the binomial approach
   prob <- prob10 / (prob10 + prob01)
   null.prob <- 0.50
-  size <- ceiling(n.discordant)
+  size <- ceiling(sum(n.paired * c(prob10, prob01)))
   if (alternative == "one.sided") {
     if (prob < null.prob) {
       # less
@@ -402,9 +369,7 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
         approx.alpha <- alpha
       }
     }
-  }
-
-  if (alternative == "two.sided") {
+  } else if (alternative == "two.sided") {
     q.binom.lower <- stats::qbinom(alpha / 2, size = size, prob = null.prob, lower.tail = TRUE)
     p.binom.lower <- stats::pbinom(q.binom.lower, size = size, prob = null.prob, lower.tail = TRUE)
     if (p.binom.lower > alpha / 2) q.binom.lower <- q.binom.lower - 1
@@ -423,9 +388,7 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
     }
   }
 
-  ifelse(method == "exact",
-         class <- c("pwrss", "exact", "mcnemar"),
-         class <- c("pwrss", "z", "twoprops"))
+  class <- c("pwrss", ifelse(method == "exact", "exact", "z"), ifelse(method == "exact", "mcnemar", "twoprops"))
 
   if (verbose > 0) {
 
@@ -439,7 +402,7 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
                       prob01 = prob01,
                       delta = prob10 - prob01,
                       odds.ratio = prob10 / prob01,
-                      size = n.discordant,
+                      size = size,
                       prob.alternative = prob10 / (prob10 + prob01),
                       prob.null = 0.50,
                       binom.alpha = q.binom.alpha,
@@ -461,7 +424,7 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
                            prob01 = prob01,
                            delta = prob10 - prob01,
                            odds.ratio = prob10 / prob01,
-                           size = n.discordant,
+                           size = size,
                            prob = prob10 / (prob10 + prob01),
                            null.prob = 0.50,
                            binom.alpha = q.binom.alpha,

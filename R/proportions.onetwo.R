@@ -654,12 +654,9 @@ pwrss.z.prop <- function(p, p0 = 0.50, margin = 0, arcsin.trans = FALSE, alpha =
 #'                        paired = TRUE)
 #'
 #' @export power.exact.twoprops
-power.exact.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+",
-                                 n.ratio = 1, n2 = NULL,
-                                 power = NULL, alpha = 0.05,
-                                 alternative = c("two.sided", "one.sided"),
-                                 paired = FALSE, rho.paired = 0.50,
-                                 method = c("exact", "approximate"),
+power.exact.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", n.ratio = 1, n2 = NULL,
+                                 power = NULL, alpha = 0.05, alternative = c("two.sided", "one.sided"),
+                                 paired = FALSE, rho.paired = 0.50, method = c("exact", "approximate"),
                                  ceil.n = TRUE, verbose = 1, utf = FALSE) {
 
   alternative <- tolower(match.arg(alternative))
@@ -677,77 +674,47 @@ power.exact.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+",
   verbose <- ensure.verbose(verbose)
   requested <- get.requested(es = list(prob1, prob2), n = n2, power = power)
 
+  min.pwr.paired <- function(prob1, prob2, power) {
 
-  if (requested == "es") {
+    jp <- joint.probs.2x2(prob1 = prob1, prob2 = prob2, rho = rho.paired, verbose = 0)
 
-    pwr.exact <- function(prob1, prob2, n.ratio, n2, power, alpha,
-                          alternative, paired, rho.paired, method) {
+    power - power.exact.mcnemar(prob10 = jp$prob10, prob01 = jp$prob01, req.sign = req.sign, power = NULL, n.paired = n2,
+                                alpha = alpha, alternative = alternative, method =  method, verbose = 0)$power
 
-      if (paired) {
+  } # min.pwr.paired (for stats::optimize)
 
-        jp <- joint.probs.2x2(prob1 = prob1, prob2 = prob2, rho = rho.paired, verbose = 0)
-
-        power.exact.mcnemar(prob10 = jp$prob10, prob01 = jp$prob01,
-                            power = power, n.paired = n2, alpha = alpha,
-                            alternative = alternative, method =  method,
-                            ceil.n = FALSE, verbose = 0, utf = FALSE)
-
-      } else {
-
-        power.exact.fisher(prob1 = prob1, prob2 = prob2, n2 = n2, n.ratio = n.ratio,
-                           alpha = alpha, power = power,
-                           alternative = alternative, method = method,
-                           ceil.n = FALSE, verbose = FALSE, utf = FALSE)
-
-      } # paired
-
-    } # power.exact()
+  if (requested == "es" && paired) {
 
     if (is.null(prob1)) {
 
-      prob1 <- stats::optimize(
-        f = function(prob1) {
-          (power - pwr.exact(prob1 = prob1, prob2 = prob2, n.ratio = n.ratio,
-                             n2 = n2, power = NULL, alpha = alpha, alternative = alternative,
-                             paired = paired, rho.paired = rho.paired, method = method)$power) ^ 2
-        },
-        maximum = FALSE,
-        lower = ifelse(check.pos_sign(req.sign),  prob2, 0.0001),
-        upper = ifelse(check.pos_sign(req.sign), 0.9999, prob2))$minimum
+      val.rng <- sort(c(unname(prob.limits.paired(prob2 = prob2, rho = rho.paired)), prob2))[ifelse(check.pos_sign(req.sign), -1, -3)]
+      prob1 <- stats::optimize(f = function(prob1) min.pwr.paired(prob1, prob2, power) ^ 2, interval = val.rng)$minimum
 
     } else {
 
-      prob2 <- stats::optimize(
-        f = function(prob2) {
-          (power - pwr.exact(prob1 = prob1, prob2 = prob2, n.ratio = n.ratio,
-                             n2 = n2, power = NULL, alpha = alpha, alternative = alternative,
-                             paired = paired, rho.paired = rho.paired, method = method)$power) ^ 2
-        },
-        maximum = FALSE,
-        lower = ifelse(check.pos_sign(req.sign),  prob1, 0.0001),
-        upper = ifelse(check.pos_sign(req.sign), 0.9999, prob1))$minimum
+      val.rng <- sort(c(unname(prob.limits.paired(prob1 = prob1, rho = rho.paired)), prob1))[ifelse(check.pos_sign(req.sign), -1, -3)]
+      prob2 <- stats::optimize(f = function(prob2) min.pwr.paired(prob1, prob2, power) ^ 2, interval = val.rng)$minimum
 
     } # prob1 or prob2?
 
-  } # effect size
+    power <- NULL # reset power (which is then updated / calculated below)
+
+  }
 
   if (paired) {
 
     jp <- joint.probs.2x2(prob1 = prob1, prob2 = prob2, rho = rho.paired, verbose = 0)
 
-    power.exact.mcnemar(prob10 = jp$prob10, prob01 = jp$prob01,
-                        power = power, n.paired = n2, alpha = alpha,
-                        alternative = alternative, method =  method,
-                        ceil.n = ceil.n, verbose = verbose, utf = utf)
+    power.exact.mcnemar(prob10 = jp$prob10, prob01 = jp$prob01, power = power, n.paired = n2, alpha = alpha,
+                        alternative = alternative, method =  method, ceil.n = ceil.n, verbose = verbose, utf = utf)
 
   } else {
 
-    power.exact.fisher(prob1 = prob1, prob2 = prob2, n2 = n2, n.ratio = n.ratio,
-                       alpha = alpha, power = power,
-                       alternative = alternative, method = method,
-                       ceil.n = ceil.n, verbose = verbose, utf = utf)
+    power.exact.fisher(prob1 = prob1, prob2 = prob2, req.sign = req.sign, power = power, n2 = n2, n.ratio = n.ratio,
+                       alpha = alpha, alternative = alternative, method = method, ceil.n = ceil.n, verbose = verbose,
+                       utf = utf)
 
-  } # power and sample size
+  } # paired
 
 } # power.exact.twoprops()
 
@@ -1128,16 +1095,18 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
 
       } # prob1 or prob2?
 
+      power <- NULL
+
     } # effect size
 
     # update or estimate power or sample size
-    if (requested == "es") power <- NULL
-
     jp <- joint.probs.2x2(prob1 = prob1, prob2 = prob2, rho = rho.paired, verbose = 0)
 
-    c(power.exact.mcnemar(prob10 = jp$prob10, prob01 = jp$prob01, power = power, n.paired = n2, alpha = alpha,
-                          method =  "approx", alternative = alternative, ceil.n = ceil.n, verbose = verbose),
-      list(prob1 = prob1, prob2 = prob2))
+    invisible(structure(c(power.exact.mcnemar(prob10 = jp$prob10, prob01 = jp$prob01, power = power, n.paired = n2,
+                                              alpha = alpha, method = "approx", alternative = alternative,
+                                              ceil.n = ceil.n, verbose = verbose),
+                          list(prob1 = prob1, prob2 = prob2)),
+                        class = c("pwrss", "z", "twoprops")))
 
   } else { # paired?
 

@@ -125,21 +125,19 @@ power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, req.sign = "+",
     # stderr <- (1 / sigma0) * sqrt((prob1 * (1 - prob1)) / n1 + (prob2 * (1 - prob2)) / n2)
     # delta <- (1 / sigma0) * (prob1 - prob2 - (k / 2) * (1 / n1 + 1 / n2)) # w/ continuity correction
 
-    if (pooled.stderr) {
+#    if (pooled.stderr) {
 
-      stop("Pooled std. error not yet implemented.")
 #      p.bar <- (n1 * prob1 + n2 * prob2) / (n1 + n2)
 #      stderr <- sqrt(p.bar * (1 - p.bar) * (1 / n1 + 1 / n2))
 
-    } else {
+#    } else {
 
       stderr <- sqrt((prob1 * (1 - prob1)) / n1 + (prob2 * (1 - prob2)) / n2)
 
-    }
+#    }
 
-    if (correct.continuity) {
+#    if (correct.continuity) {
 
-      stop("Continuity correction not yet implemented.")
 #      if (alternative %in% c("not equal", "two.sided")) {
 #        k <- c(-1, 1)
 #      } else {
@@ -147,11 +145,11 @@ power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, req.sign = "+",
 #      }
 #      delta <- (prob1 - prob2 - (k / 2) * (1 / n1 + 1 / n2))
 
-    } else {
+#    } else {
 
       delta <- prob1 - prob2
 
-    }
+#    }
 
     pwr.obj <- power.z.test(mean = delta / stderr, sd = 1, null.mean = 0, null.sd = 1,
                             alpha = alpha, alternative = alternative,
@@ -350,18 +348,7 @@ power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, req.sign = "+",
 
       n2 <- ss.approx(prob1 = prob1, prob2 = prob2, power = power, n.ratio = n.ratio,
                       alpha = alpha, alternative = alternative)
-
-      n1 <- n.ratio * n2
-      n.total <- n1 + n2
-
-      if (ceil.n) {
-        n1 <- ceiling(n1)
-        n2 <- ceiling(n2)
-      }
-
-    } else if (requested == "power") {
-
-      n1 <- ifelse(ceil.n, ceiling(n.ratio * n2), n.ratio * n2)
+      n2 <- ifelse(ceil.n, ceiling(n2), n2)
 
     } else if (requested == "es") {
 
@@ -389,10 +376,9 @@ power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, req.sign = "+",
 
       } # prob1 or prob2?
 
-      n1 <- ifelse(ceil.n, ceiling(n.ratio * n2), n.ratio * n2)
-
     } # n, power, es?
 
+    n1 <- ifelse(ceil.n, ceiling(n.ratio * n2), n.ratio * n2)
     n.total <- n1 + n2
 
     # calculate power (if requested == "power") or update it (if requested == "n")

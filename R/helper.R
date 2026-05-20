@@ -62,7 +62,7 @@ get.interval <- function(null.ncp, distribution = c("z", "t", "lp", "binom"), al
         min.alt <- sadists::qlambdap(1e-10,     t = sadists::qlambdap(alpha,     t = min(null.ncp), df = df), df = df)
         max.alt <- sadists::qlambdap(1 - 1e-10, t = sadists::qlambdap(1 - alpha, t = max(null.ncp), df = df), df = df)
       })
-    
+
     } else if (distribution == "binom") {
 
         min.alt <- 0.0001

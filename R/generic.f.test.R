@@ -63,11 +63,11 @@ power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
 
     f.alpha <- stats::qf(alpha, df1 = df1, df2 = df2, ncp = null.ncp, lower.tail = FALSE)
     power   <- stats::pf(f.alpha, df1 = df1, df2 = df2, ncp = ncp, lower.tail = FALSE)
-  
+
     list(power = power, f.alpha = f.alpha)
-  
+
   } # pwr()
-  
+
   min.pwr <- function(ncp, power) {
     power - pwr(ncp = ncp, null.ncp = null.ncp, df1 = df1, df2 = df2, alpha = alpha)$power
   } # min.pwr()
@@ -78,7 +78,7 @@ power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
     while (min.pwr(ncp = max.thresh, power = power) > 0) max.thresh <- max.thresh * 1.1
 
     ncp <- stats::optimize(f = function(ncp) min.pwr(ncp, power) ^ 2, interval = c(0, max.thresh))$minimum
-  
+
   }
 
   pwr.obj <- pwr(ncp = ncp, null.ncp = null.ncp, df1 = df1, df2 = df2, alpha = alpha)

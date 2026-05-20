@@ -262,7 +262,7 @@
 }
 
 .results <- function(x, utf = FALSE, digits = 3) {
-  a_pad <- .a_pad(names(x), utf, ifelse(hasName(x, "tgt.effect"), x[["tgt.effect"]], ""))
+  a_pad <- .a_pad(names(x), utf, ifelse(utils::hasName(x, "tgt.effect"), x[["tgt.effect"]], ""))
   paste0(.topic("Results", utf),
          .esline(x, utf, digits, a_pad),
          .nline(x,  utf, digits, a_pad),

@@ -103,7 +103,7 @@ power.t.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0,
 
   # calculate statistical power
   pwr <- function(ncp, null.ncp = 0, df, alpha = 0.05, alternative) {
-  
+
     if (alternative == "two.sided") {
 
       t.alpha <- c(stats::qt(alpha / 2,  df = df, ncp = null.ncp,      lower.tail = TRUE),

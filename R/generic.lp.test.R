@@ -21,7 +21,7 @@
 #' @param req.sign    whether `ncp` is expected to be greater '+1', less than
 #'                    '-1', or within '0' the `null.ncp` bounds; only relevant
 #'                    if `ncp` is to be estimated.
-#' @param df          degrees of freedom; either `power`, `ncp` or `df` needs 
+#' @param df          degrees of freedom; either `power`, `ncp` or `df` needs
 #'                    to be NULL (and is then estimated).
 #' @param alpha       type 1 error rate, defined as the probability of
 #'                    incorrectly rejecting a true null hypothesis, denoted as
@@ -106,7 +106,7 @@ power.lp.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0
 
   # calculate statistical power
   pwr <- function(ncp = NULL, null.ncp = 0, df, alpha = 0.05, alternative) {
-  
+
     if (alternative == "two.sided") {
 
       t.alpha <- c(sadists::qlambdap(p = alpha / 2, df = df, t = 0, lower.tail = TRUE),
@@ -168,7 +168,7 @@ power.lp.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0
     list(power = power, t.alpha = t.alpha, type.s = type.s, type.m = type.m)
 
   } # pwr()
-  
+
   min.pwr <- function(ncp, df, power) {
 
     power - pwr(ncp = ncp, null.ncp = null.ncp, df = df, alpha = alpha, alternative = alternative)$power
