@@ -99,7 +99,7 @@ power.chisq.gof(w = 0.44, df = 1, power = 0.80, alpha = 0.05)
 # girls are underdiagnosed with ADHD?                      #
 # ---------------------------------------------------------#
 
-## from https://time.com/growing-up-with-adhd/
+## from http://archive.today/E2hqM
 ## 5.6 percent of girls and 13.2 percent of boys are diagnosed with ADHD
 prob.matrix <- rbind(c(0.056, 0.132),
                      c(0.944, 0.868))
