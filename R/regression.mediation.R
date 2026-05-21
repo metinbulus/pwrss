@@ -314,6 +314,9 @@ power.z.mediation  <- function(beta.a = NULL, beta.b = NULL, ab.ratio = 1, sign 
                      power, method = c("sobel", "aroian", "goodman")) {
 
     method <- tolower(match.arg(method))
+    
+    if (is.null(r.squared.mediator)) r.squared.mediator <- beta.a ^ 2 * sd.predictor ^ 2 / sd.mediator ^ 2
+    if (is.null(r.squared.outcome)) r.squared.outcome <- (beta.b ^ 2 * sd.mediator ^ 2 + beta.cp ^ 2 * sd.predictor ^ 2) / sd.outcome ^ 2
 
     if (method == "sobel") {
       n <- stats::uniroot(function(n) {
