@@ -16,7 +16,7 @@ test_that("generic.lp.test.R works", {
                       t.alpha = 2.96236048 * c(-1, 1), beta = 0.83093024, type.s = NA, type.m = NA))
     expect_equal(power.lp.test(power = 0.80, df = 100, alpha = 0.05, alternative = "two.sided", plot = FALSE, verbose = 0),
                  list(power = 0.7999948, ncp = 2.82523051, null.ncp = 0, df = 100, alpha = 0.05, alternative = "two.sided",
-                      t.alpha = 1.959964 * c(-1, 1), beta = 0.200005209, type.s = 0.0000013540822, type.m = 1.12380496))
+                      t.alpha = 1.959964 * c(-1, 1), beta = 0.200005209, type.s = 0.00000135408218, type.m = 1.12380496))
     expect_equal(power.lp.test(power = 0.80, df = 100, alpha = 0.05, alternative = "one.sided", plot = FALSE, verbose = 0),
                  list(power = 0.800002034, ncp = 2.50583448, null.ncp = 0, df = 100, alpha = 0.05, alternative = "one.sided",
                       t.alpha = 1.64485363, beta = 0.199997966, type.s = 0, type.m = NA))
