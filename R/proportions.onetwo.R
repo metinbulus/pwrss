@@ -1278,11 +1278,36 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL,
                                        power = power, n.paired = n2, alpha = alpha,
                                        method =  "approx",
                                        alternative = alternative,
-                                       ceiling = ceiling, verbose = verbose)
+                                       ceiling = ceiling, verbose = 0)
     obj.mcnemar$prob1 <- prob1
     obj.mcnemar$prob2 <- prob2
     
-    obj.mcnemar
+    if (verbose > 0) {
+      
+      print.obj <- list(requested = requested,
+                        test = "Paired Proportions",
+                        alpha = obj.mcnemar$alpha,
+                        alternative = obj.mcnemar$alternative,
+                        method = obj.mcnemar$test,
+                        delta = obj.mcnemar$delta,
+                        odds.ratio = obj.mcnemar$odds.ratio,
+                        size = obj.mcnemar$size,
+                        prob.alternative = obj.mcnemar$prob,
+                        prob.null = obj.mcnemar$null.prob,
+                        binom.alpha = obj.mcnemar$binom.alpha,
+                        mean.alternative = obj.mcnemar$mean,
+                        sd.alternative = obj.mcnemar$sd,
+                        mean.null =obj.mcnemar$null.mean,
+                        sd.null = obj.mcnemar$null.sd,
+                        z.alpha = obj.mcnemar$z.alpha,
+                        power = obj.mcnemar$power,
+                        n.paired = obj.mcnemar$n.paired)
+      
+      .print.pwrss.mcnemar(print.obj, verbose = verbose, utf = utf)
+      
+    } # verbose
+    
+    invisible(obj.mcnemar)
 
   } else { # paired?
 
