@@ -242,12 +242,29 @@ test_that("power.z.poisson / pwrss.z.poisson work", {
 #    expect_equal(vapply(c(-0.4, -0.7),     function(b1) pois_pwr(b1, "signorini",     list(dist = "exponential", rate = 3)), numeric(1)),
 #                 c(0.609332289, 0.933746771))
     # results are not identical to GPower for Signorini; for Demidenko (both with and without VC), the values are correct
+    # cf. the GPower 3.1 manual (June 1, 2023; 30.2 Options, p. 76):
+    # Results of Monte-Carlo simulations indicate that the accuracy of the procedure based on the work of Demidenko
+    # (2007) is comparable to that of the enumeration procedure for N > 200, whereas errors of the procedure proposed
+    # by Signorini (1991) can be quite large. We thus recommend to use the procedure based on Demidenko (2007) as the
+    # standard procedure.
 
     # table from PASS (p. 870-5)
-#    pois_pwr <- function(rr, n) {
-#      pwrss::power.z.poisson(base.rate = 1, rate.ratio = rr, alpha = 0.05, n = n, alternative = "two.sided", method = "signorini",
-#                             mean.exposure = 1, dist = list(dist = "normal", mean = 3.2, sd = 2.1), verbose = 0)$power
-#    }
+    pois_pwr <- function(rr, n) {
+      pwrss::power.z.poisson(base.rate = 1, rate.ratio = rr, alpha = 0.05, n = n, alternative = "two.sided", method = "signorini",
+                             mean.exposure = 1, dist = list(dist = "normal", mean = 3.2, sd = 2.1), verbose = 0)$power
+    }
+    expect_equal(vapply(seq(5, 50, 5), function(n) pois_pwr(1.3, n), numeric(1)),
+                 c(0.116036529, 0.360429468, 0.612368678, 0.795997955, 0.904027378,
+                   0.958760537, 0.983554409, 0.993840309, 0.997813065, 0.999258670))
+    expect_equal(vapply(seq(5, 50, 5), function(n) pois_pwr(1.5, n), numeric(1)),
+                 c(0.448902366, 0.953538538, 0.998922421, 0.999988721, 0.999999931, 1, 1, 1, 1, 1))
+    # table from PASS (p. 870-8)
+    pois_n <- function(power) {
+      pwrss::power.z.poisson(base.rate = 0.85, rate.ratio = 1.3, alpha = 0.05, power = power, alternative = "one.sided",
+                             method = "signorini", mean.exposure = 1, dist = "binomial", verbose = 0)$n
+    }
+    expect_equal(vapply(c(0.80, 0.90, 0.95), function(power) pois_n(power), numeric(1)),
+                 c(406, 556, 697))
 
     expect_error(power.z.poisson(beta0 = 0.50, alpha = 0.05, power = 0.80, verbose = 0),
                  paste("Specify `base.rate` & `rate.ratio`\n  or `beta0` & `beta1`\n  or `base.rate` & `n` & `power`",
