@@ -1148,19 +1148,19 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0, n = NUL
     min(max(out, 0), 1)
   }
 
-  # step 3: exact critical values 
+  # step 3: exact critical values
   crit.r.two.sided <- function(n, null.rho = 0, alpha = 0.05) {
     target <- function(crit) {
       FR.exact(-crit, rho = null.rho, n = n) + (1 - FR.exact(crit, rho = null.rho, n = n)) - alpha
     }
     stats::uniroot(target, lower = 1e-10, upper = 1 - 1e-10)$root
   }
- 
+
   crit.r.one.sided.upper <- function(n, null.rho = 0, alpha = 0.05) {
     target <- function(crit) (1 - FR.exact(crit, rho = null.rho, n = n)) - alpha
     uniroot(target, lower = 1e-10, upper = 1 - 1e-10)$root
   }
-  
+
   crit.r.one.sided.lower <- function(n, null.rho = 0, alpha = 0.05) {
     target <- function(crit) FR.exact(crit, rho = null.rho, n = n) - alpha
     uniroot(target, lower = -1 + 1e-10, upper = -1e-10)$root
@@ -1168,7 +1168,7 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0, n = NUL
 
   # power
   pwr.exact.rho <- function(n, rho, null.rho, alpha = 0.05, alternative) {
-    
+
     if (alternative == "two.sided") {
       crit <- crit.r.two.sided(n, null.rho, alpha) * c(-1, 1)
       pwr <- FR.exact(crit[1], rho = rho, n = n) + (1 - FR.exact(crit[2], rho = rho, n = n))
@@ -1193,14 +1193,14 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0, n = NUL
 
     n.min <- max(n.min, 3)
     if (n.max < n.min) stop(sprintf("ss.exact.rho: n.max (%d) must be >= n.min (%d).", n.max, n.min), call. = FALSE)
-    
+
     pwr.at.n <- function(n) pwr.exact.rho(n, rho, null.rho, alpha, alternative)$power
-    
+
     # check bounds
     if (pwr.at.n(n.min) >= power) return(n.min)
     if (pwr.at.n(n.max)  < power)
       stop(sprintf("Target power not reached within [n.min = %d, n.max = %d]. Try increasing n.max.", n.min, n.max), call. = FALSE)
-    
+
     # bisection on n
     low <- n.min
     high <- n.max
@@ -1209,15 +1209,15 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0, n = NUL
       pwr.mid <- pwr.at.n(mid)
       if (pwr.mid >= power) high <- mid else low <- mid
     }
-    
+
     high
 
   } #  ss.exact.rho
-  
-  # minimum detectable rho for target power 
+
+  # minimum detectable rho for target power
   mde.exact.rho <- function(n, alpha = 0.05, power = 0.80, alternative, rho.min = 1e-4, rho.max = 1 - 1e-4,
                             tol = 1e-6, max.iter = 100) {
-    
+
     # direction for one-sided tests
     sign.rho <- ifelse(alternative == "less", -1, 1)
 
@@ -1231,7 +1231,7 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0, n = NUL
     if (pwr.at.rho(rho.min) >= power) return(ifelse(alternative == "two.sided", rho.min, sign.rho * rho.min))
     if (pwr.at.rho(rho.max)  < power)
       stop(sprintf("Target power not reached within [rho.min = %.4f, rho.max = %.4f]. Try increasing n.", rho.min, rho.max), call. = FALSE)
-    
+
     # bisection on |rho|
     low <- rho.min
     high <- rho.max
@@ -1242,11 +1242,11 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0, n = NUL
       pwr.mid <- pwr.at.rho(mid)
       if (pwr.mid >= power) high <- mid else low <- mid
     }
-    
+
     ifelse(alternative == "two.sided", high, sign.rho * high)
-    
+
   } #  mde.exact.rho
-  
+
   if (requested == "n") {
 
     n <- ss.exact.rho(rho = rho, null.rho = null.rho, alpha = alpha, power = power, alternative = alternative, n.min = 3, n.max = n.max)
@@ -1257,7 +1257,7 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0, n = NUL
     rho <- ifelse(alternative == "two.sided" && !check.pos_sign(req.sign), -rho, rho)
 
   } # effect size
- 
+
   # calculate power (if requested == "power") or update it (if requested == "n" or "es")
   pwr.obj <- pwr.exact.rho(n = n, rho = rho, null.rho = null.rho, alpha = alpha, alternative = alternative)
   q <- cors.to.q(rho, null.rho, FALSE)$q

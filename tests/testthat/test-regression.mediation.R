@@ -38,6 +38,44 @@ test_that("regression.mediation.R works", {
                       std.beta.cp = 0.1, std.beta.indirect = 0.0625, mean = 2.80172572, sd = 1, null.mean = 0,
                       null.sd = 1, z.alpha = c(-1.959964, 1.959964), power = 0.80004029, n = 242))
 
+#    crrRes <- power.z.mediation(beta.a = 0.25, beta.cp = 0.10, power = 0.80, n = 242, verbose = 0)
+#    expect_equal(class(crrRes), c("pwrss", "z", "mediation"))
+#    expect_equal(names(crrRes), c("parms", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp", "r.squared.mediator",
+#                                  "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp", "std.beta.indirect",
+#                                  "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
+#    expect_equal(crrRes[["parms"]],
+#                 list(beta.a = 0.25, beta.b = NULL, ab.ratio = 1, req.sign = "+", beta.cp = 0.1, sd.predictor = 1,
+#                      sd.mediator = 1, sd.outcome = 1, r.squared.mediator = NULL, r.squared.outcome = NULL, n = 242,
+#                      power = 0.80, alpha = 0.05, alternative = "two.sided", method = "sobel", n.simulation = 1000,
+#                      n.draws = 1000, ceil.n = TRUE, verbose = 0, utf = FALSE))
+#    expect_equal(crrRes[c("test", "beta.a", "beta.b", "beta.indirect", "beta.cp", "r.squared.mediator",
+#                          "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp", "std.beta.indirect", "mean",
+#                          "sd", "null.mean", "null.sd", "z.alpha", "power", "n")],
+#                 list(test = "z", beta.a = 0.25, beta.b = 0.24997071, beta.indirect = 0.062492677, beta.cp = 0.1,
+#                      r.squared.mediator = 0.0625, r.squared.outcome = 0.072485355, std.beta.a = 0.25,
+#                      std.beta.b = 0.24997071, std.beta.cp = 0.1, std.beta.indirect = 0.062492677, mean = 2.8015458,
+#                      sd = 1, null.mean = 0, null.sd = 1, z.alpha = c(-1.959964, 1.959964), power = 0.799989922,
+#                      n = 242))
+
+#    crrRes <- power.z.mediation(beta.b = 0.25, beta.cp = 0.10, power = 0.80, n = 242, verbose = 0)
+#    expect_equal(class(crrRes), c("pwrss", "z", "mediation"))
+#    expect_equal(names(crrRes), c("parms", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp", "r.squared.mediator",
+#                                  "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp", "std.beta.indirect",
+#                                  "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
+#    expect_equal(crrRes[["parms"]],
+#                 list(beta.a = NULL, beta.b = 0.25, ab.ratio = 1, req.sign = "+", beta.cp = 0.1, sd.predictor = 1,
+#                      sd.mediator = 1, sd.outcome = 1, r.squared.mediator = NULL, r.squared.outcome = NULL, n = 242,
+#                      power = 0.80, alpha = 0.05, alternative = "two.sided", method = "sobel", n.simulation = 1000,
+#                      n.draws = 1000, ceil.n = TRUE, verbose = 0, utf = FALSE))
+#    expect_equal(crrRes[c("test", "beta.a", "beta.b", "beta.indirect", "beta.cp", "r.squared.mediator",
+#                          "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp", "std.beta.indirect", "mean",
+#                          "sd", "null.mean", "null.sd", "z.alpha", "power", "n")],
+#                 list(test = "z", beta.a = 0.24997071, beta.b = 0.25, beta.indirect = 0.062492677, beta.cp = 0.1,
+#                      r.squared.mediator = 0.0625, r.squared.outcome = 0.072485355, std.beta.a = 0.25,
+#                      std.beta.b = 0.24997071, std.beta.cp = 0.1, std.beta.indirect = 0.062492677, mean = 2.8015458,
+#                      sd = 1, null.mean = 0, null.sd = 1, z.alpha = c(-1.959964, 1.959964), power = 0.799989922,
+#                      n = 242))
+
     crrRes <- power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, n = 500, method = "sobel", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "mediation"))
     expect_equal(names(crrRes), c("parms", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp", "r.squared.mediator",

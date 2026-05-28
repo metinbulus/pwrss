@@ -229,12 +229,12 @@ test_that("power.z.twocors.steiger works", {
                  "Design is not feasible.")
     expect_error(power.z.twocors.steiger(rho12 = 0.01, rho13 = 0.01, rho23 = 0.02, power = 0.8, alpha = 0.05,
                                          alternative = "two.sided", common.index = TRUE),
-#                 "`common.index` is TRUE and `alternative` is \"two.sided\" but `rho12` = `rho13`.")
-)
+                 "`common.index` is TRUE and `alternative` is \"two.sided\" but `rho12` = `rho13`.")
+
     expect_error(power.z.twocors.steiger(rho12 = 0.45, rho13 = 0.45, rho23 = 0.50, rho14 = 0.50, rho24 = 0.80, rho34 = 0.45, power = 0.8,
                                          alpha = 0.05, alternative = "two.sided", common.index = FALSE, verbose = 0),
-#                 "`common.index` is FALSE and `alternative` = \"two.sided\" but `rho12` = `rho34`.")
-)
+                 "`common.index` is FALSE and `alternative` = \"two.sided\" but `rho12` = `rho34`.")
+
     expect_warning(power.z.twocors.steiger(rho12 = 0.1, rho13 = 0.2, rho23 = 0.3, rho14 = 0.4, power = 0.8, alpha = 0.05,
                                          alternative = "two.sided", common.index = TRUE, verbose = 0),
                    "Ignoring `rho14` `rho24`, or `rho34` because `common.index` is TRUE.")
@@ -631,7 +631,4 @@ test_that("power.exact.onecor works", {
                  "Target power not reached within \\[n.min = 3, n.max = 500\\]. Try increasing n.max.")
     expect_error(power.exact.onecor(n = 3, power = 0.99, verbose = 0),
                  "Target power not reached within \\[rho.min = 0.0001, rho.max = 0.9999\\]. Try increasing n.")
-
-
-
 })
