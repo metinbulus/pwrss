@@ -114,13 +114,6 @@ power.exact.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
                               alpha = alpha, alternative = alternative,
                               plot = FALSE, verbose = 0)
 
-  alpha <- pwr.obj$alpha
-  power <- pwr.obj$power
-  size <- n
-  prob.alternative <- prob
-  prob.null <- null.prob
-  binom.alpha <- pwr.obj$binom.alpha
-
   delta <- prob - null.prob
   odds.ratio <- (prob / (1 - prob)) /  (null.prob / (1 - null.prob))
 
@@ -128,18 +121,18 @@ power.exact.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
 
     print.obj <- list(requested = requested,
                       test = "One Proportion",
-                      alpha = alpha,
+                      alpha = pwr.obj$alpha,
                       alternative = alternative,
                       method = "exact",
                       prob = prob,
                       null.prob = null.prob,
                       delta = delta,
                       odds.ratio = odds.ratio,
-                      size = size,
-                      prob.alternative = prob.alternative,
-                      prob.null = prob.null,
-                      binom.alpha = binom.alpha,
-                      power = power,
+                      size = n,
+                      prob.alternative = prob,
+                      prob.null = null.prob,
+                      binom.alpha = pwr.obj$binom.alpha,
+                      power = pwr.obj$power,
                       n = n)
 
     .print.pwrss.oneprop(print.obj, verbose = verbose, utf = utf)
@@ -148,14 +141,14 @@ power.exact.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
 
   invisible(structure(list(parms = func.parms,
                            test = "exact",
-                           prob = prob.alternative,
-                           null.prob = prob.null,
+                           prob = prob,
+                           null.prob = null.prob,
                            delta = delta,
                            odds.ratio = odds.ratio,
-                           size = size,
-                           binom.alpha = binom.alpha,
-                           alpha = alpha,
-                           power = power,
+                           size = n,
+                           binom.alpha = pwr.obj$binom.alpha,
+                           alpha = pwr.obj$alpha,
+                           power = pwr.obj$power,
                            n = n),
                       class = c("pwrss", "exact", "oneprop")))
 
@@ -852,6 +845,10 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
       stop("Arcsine transformation is currently not available for non-zero null.", call. = FALSE)
   if (correct && paired)
     stop("Continuity correction is currently not available for paired proportions.", call. = FALSE)
+  if (requested %in% c("power", "n") && any(abs((prob1 - prob2) - margin) < 1e-6))
+    stop("The value of margin should be different from the prob1 - prob2 difference.", call. = FALSE)
+  if (requested == "es" && margin != 0)
+    warning("`margin` argument is ignored.", call. = FALSE)
 
   pwr <- function(prob1, prob2, margin, n2, n.ratio, arcsine,
                   std.error, correct, alpha, alternative) {
@@ -1041,17 +1038,12 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
 
     } # while
 
-    n2 <- n2.init
-    n1 <- n2.init * n.ratio
-
-    list(n1 = n1, n2 = n2)
+    n2.init
 
   } # ss()
 
 
   if (paired) {
-
-    if (margin != 0) warning("`margin` argument is ignored.", call. = FALSE)
 
     if (requested == "es") {
 
@@ -1102,40 +1094,48 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
     # update or estimate power or sample size
     jp <- joint.probs.2x2(prob1 = prob1, prob2 = prob2, rho = rho.paired, verbose = 0)
 
-    invisible(structure(c(power.exact.mcnemar(prob10 = jp$prob10, prob01 = jp$prob01, power = power, n.paired = n2,
-                                              alpha = alpha, method = "approx", alternative = alternative,
-                                              ceil.n = ceil.n, verbose = verbose),
-                          list(prob1 = prob1, prob2 = prob2)),
-                        class = c("pwrss", "z", "twoprops")))
+    pwr.obj <- power.exact.mcnemar(prob10 = jp$prob10, prob01 = jp$prob01, power = power, n.paired = n2, alpha = alpha,
+                                   method =  "approx", alternative = alternative, ceil.n = ceil.n, verbose = 0)
+    pwr.obj[c("prob1", "prob2")] <- c(prob1, prob2)
+
+    if (verbose > 0) {
+
+      print.obj <- list(requested = requested,
+                        tgt.effect = "prob10",
+                        test = "Paired Proportions",
+                        alpha = pwr.obj$alpha,
+                        alternative = pwr.obj$alternative,
+                        method = pwr.obj$test,
+                        prob10 = jp$prob10,
+                        prob01 = jp$prob01,
+                        delta = pwr.obj$delta,
+                        odds.ratio = pwr.obj$odds.ratio,
+                        size = pwr.obj$size,
+                        prob.alternative = pwr.obj$prob,
+                        prob.null = pwr.obj$null.prob,
+                        binom.alpha = pwr.obj$binom.alpha,
+                        mean.alternative = pwr.obj$mean,
+                        sd.alternative = pwr.obj$sd,
+                        mean.null =pwr.obj$null.mean,
+                        sd.null = pwr.obj$null.sd,
+                        z.alpha = pwr.obj$z.alpha,
+                        power = pwr.obj$power,
+                        n.paired = pwr.obj$n.paired)
+
+      .print.pwrss.mcnemar(print.obj, verbose = verbose, utf = utf)
+
+    } # verbose
+
+    invisible(pwr.obj)
 
   } else { # paired?
 
     if (requested == "n") {
 
-      if (any(abs((prob1 - prob2) - margin) < 1e-6))
-        stop("The value of margin should be different from the prob1 - prob2 difference.", call. = FALSE)
-
-      ss.obj <- ss(prob1 = prob1, prob2 = prob2, margin = margin, power = power, n.ratio = n.ratio, arcsine = arcsine,
-                   std.error = std.error, correct = correct, alpha = alpha, alternative = alternative)
-      n1 <- ss.obj$n1
-      n2 <- ss.obj$n2
-
-      if (ceil.n) {
-        n1 <- ceiling(n1)
-        n2 <- ceiling(n2)
-      }
-      n.total <- n1 + n2
-
-    } else if (requested == "power") {
-
-      if (any(abs((prob1 - prob2) - margin) < 1e-6))
-        stop("The value of margin should be different from the prob1 - prob2 difference.", call. = FALSE)
-
-       n1 <- ifelse(ceil.n, ceiling(n2 * n.ratio), n2 * n.ratio)
+      n2 <- ss(prob1 = prob1, prob2 = prob2, margin = margin, power = power, n.ratio = n.ratio, arcsine = arcsine,
+               std.error = std.error, correct = correct, alpha = alpha, alternative = alternative)
 
     } else if (requested == "es") {
-
-      n1 <- ifelse(ceil.n, ceiling(n2 * n.ratio), n2 * n.ratio)
 
       pos.sign <- check.pos_sign(req.sign, TRUE)
       if  (is.null(pos.sign) && is.null(prob1)) {
@@ -1168,21 +1168,15 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
 
       } # prob1 or prob2?
 
-    } # n, es, power?
+    } # n, es
 
+    n1 <- ifelse(ceil.n, ceiling(n2 * n.ratio), n2 * n.ratio)
     n.ratio <- n1 / n2
     n.total <- n1 + n2
 
     # calculate power (if requested == "power") or update it (if requested == "n")
     pwr.obj <- pwr(prob1 = prob1, prob2 = prob2, margin = margin, n2 = n2, n.ratio = n.ratio, arcsine = arcsine,
                    std.error = std.error, correct = correct, alpha = alpha, alternative = alternative)
-
-    power <- pwr.obj$power
-    mean.alternative <- pwr.obj$mean.alternative
-    sd.alternative <- pwr.obj$sd.alternative
-    mean.null <- pwr.obj$mean.null
-    sd.null <- pwr.obj$sd.null
-    z.alpha <- pwr.obj$z.alpha
 
     delta <- prob1 - prob2
     odds.ratio <- (prob1 / (1 - prob1)) /  (prob2 / (1 - prob2))
@@ -1200,12 +1194,12 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
                         delta = delta,
                         margin = margin,
                         odds.ratio = odds.ratio,
-                        mean.alternative = mean.alternative,
-                        sd.alternative = sd.alternative,
-                        mean.null = mean.null,
-                        sd.null = sd.null,
-                        z.alpha = z.alpha,
-                        power = power,
+                        mean.alternative = pwr.obj$mean.alternative,
+                        sd.alternative = pwr.obj$sd.alternative,
+                        mean.null = pwr.obj$mean.null,
+                        sd.null = pwr.obj$sd.null,
+                        z.alpha = pwr.obj$z.alpha,
+                        power = pwr.obj$power,
                         n = c(n1 = n1, n2 = n2),
                         n.total = n.total)
 
@@ -1219,12 +1213,12 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
                              prob2 = prob2,
                              delta = delta,
                              odds.ratio = odds.ratio,
-                             mean = mean.alternative,
-                             sd = sd.alternative,
-                             null.mean = mean.null,
-                             null.sd = sd.null,
-                             z.alpha = z.alpha,
-                             power = power,
+                             mean = pwr.obj$mean.alternative,
+                             sd = pwr.obj$sd.alternative,
+                             null.mean = pwr.obj$mean.null,
+                             null.sd = pwr.obj$sd.null,
+                             z.alpha = pwr.obj$z.alpha,
+                             power = pwr.obj$power,
                              n = c(n1 = n1, n2 = n2),
                              n.total = n.total),
                         class = c("pwrss", "z", "twoprops")))

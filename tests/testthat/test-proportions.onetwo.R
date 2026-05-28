@@ -633,7 +633,6 @@ test_that("power.z.twoprops works", {
                  "Provide margins in the form of margin = c\\(lower, upper\\).")
     expect_error(power.z.twoprops(prob1 = 0.55, prob2 = 0.45, margin = 0.10, power = 0.8, verbose = 0),
                  "The value of margin should be different from the prob1 - prob2 difference.")
-    expect_warning(power.z.twoprops(prob1 = 0.65, prob2 = 0.60, margin = 0.10, alpha = 0.05, power = 0.80,
-                                    alternative = "one.sided", paired = TRUE, verbose = 0),
+    expect_warning(power.z.twoprops(prob1 = 0.65, margin = 0.10, alpha = 0.05, n2 = 200, power = 0.80, verbose = 0),
                    "`margin` argument is ignored.")
 })
