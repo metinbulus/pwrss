@@ -1307,10 +1307,27 @@ power.exact.onecor <- function(rho = NULL, sign = "+", null.rho = 0,
   
   # step 3: exact critical values 
   crit.r.two.sided <- function(n, null.rho = 0, alpha = 0.05) {
-    target <- function(crit) {
-      FR.exact(-crit, rho = null.rho, n = n) + (1 - FR.exact(crit, rho = null.rho, n = n)) - alpha
+    
+    if (null.rho == 0) {
+      target <- function(crit)
+        FR.exact(-crit, rho = 0, n = n) + (1 - FR.exact(crit, rho = 0, n = n)) - alpha
+      crit <- uniroot(target, lower = 1e-10, upper = 1 - 1e-10)$root
+      return(list(lower = -crit, upper = crit))
     }
-    uniroot(target, lower = 1e-10, upper = 1 - 1e-10)$root
+    
+    lower <- uniroot(
+      function(c) FR.exact(c, rho = null.rho, n = n) - alpha / 2,
+      lower = -1 + 1e-10,
+      upper = null.rho         # c_lo < null.rho always
+    )$root
+    
+    upper <- uniroot(
+      function(c) FR.exact(c, rho = null.rho, n = n) - (1 - alpha / 2),
+      lower = null.rho,       
+      upper = 1 - 1e-10
+    )$root
+    
+    list(lower = lower, upper = upper)
   }
   
   crit.r.one.sided.upper <- function(n, null.rho = 0, alpha = 0.05) {
@@ -1330,7 +1347,7 @@ power.exact.onecor <- function(rho = NULL, sign = "+", null.rho = 0,
     
     if (alternative == "two.sided") {
       crit <- crit.r.two.sided(n, null.rho, alpha)
-      pwr <- FR.exact(-crit, rho = rho, n = n) + (1 - FR.exact(crit, rho = rho, n = n))
+      pwr <- FR.exact(crit$lower, rho = rho, n = n) + (1 - FR.exact(crit$upper, rho = rho, n = n))
     }
     
     if (alternative == "greater") {
