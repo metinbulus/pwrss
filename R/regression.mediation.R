@@ -537,6 +537,9 @@ power.z.mediation  <- function(beta.a = NULL, beta.b = NULL, ab.ratio = 1, sign 
     if (method %in% c("joint", "monte.carlo"))
       stop("Minimum detectable effect calculation not supported by this method.", call. = FALSE)
     
+    if(is.null(r.squared.mediator) || is.null(r.squared.outcome))
+      stop("R-squared values cannot be NULL when minimum detectable effect is of interest. Needed for identification.", call. = FALSE)
+    
     es.obj <- es.med(beta.a = beta.a, beta.b = beta.b, ab.ratio = ab.ratio, beta.cp = beta.cp, 
                      sd.predictor = sd.predictor, sd.mediator = sd.mediator, sd.outcome = sd.outcome,
                      r.squared.mediator = r.squared.mediator, r.squared.outcome = r.squared.outcome,
