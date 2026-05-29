@@ -1188,7 +1188,7 @@ pwrss.z.corr <- function(r = 0.50, r0 = 0, alpha = 0.05,
 #'
 #' @export power.exact.onecor
 power.exact.onecor <- function(rho = NULL, sign = "+", null.rho = 0,
-                               n = NULL, n.max = 500, power = NULL, alpha = 0.05,
+                               n = NULL, n.max = 10000, power = NULL, alpha = 0.05,
                                alternative = c("two.sided", "one.sided"),
                                verbose = 1, utf = FALSE) {
   
@@ -1497,6 +1497,10 @@ power.exact.onecor <- function(rho = NULL, sign = "+", null.rho = 0,
     
   } #  mde.exact.rho
   
+  # desired power may not be reached with n.max when sample size is of interest
+  # fall back to normal approximation (applies only when sample size is requested)
+  normal.approx <- FALSE
+  
   if(requested == "n") {
     
     if(sign(rho) == -1 & alternative == "one.sided") alternative <- "less"
@@ -1510,6 +1514,24 @@ power.exact.onecor <- function(rho = NULL, sign = "+", null.rho = 0,
     
     pwr.obj <- pwr.exact.rho(n = n, rho = rho, null.rho = null.rho,
                              alpha = alpha, alternative = alternative)
+    
+    if(pwr.obj$power < power) {
+      
+      warning(sprintf("Exact power at n.max = %.0f is %.3f. \nUsing normal approximation.\n",
+                      n.max, pwr.obj$power), call. = FALSE)
+      
+      n <- power.z.onecor(rho = rho, null.rho = null.rho,
+                     alpha = alpha, power = power,
+                     alternative = alternative,
+                     verbose = FALSE)$n
+      
+      pwr.obj <- pwr.exact.rho(n = n, rho = rho, null.rho = null.rho,
+                               alpha = alpha, alternative = alternative)
+      
+      normal.approx <- TRUE
+      
+    }
+      
   } # sample size
   
   if(requested == "es") {
@@ -1562,7 +1584,9 @@ power.exact.onecor <- function(rho = NULL, sign = "+", null.rho = 0,
   if (verbose > 0) {
     
     print.obj <-  list(requested = requested,
-                       test = "One-Sample Correlation (Exact)",
+                       test = ifelse(normal.approx, 
+                                     "One-Sample Correlation (Approximate)",
+                                     "One-Sample Correlation (Exact)"),
                        design = "one.sample",
                        alpha = alpha,
                        alternative = alternative,
@@ -1586,7 +1610,9 @@ power.exact.onecor <- function(rho = NULL, sign = "+", null.rho = 0,
   }
   
   invisible(structure(list(parms = func.parms,
-                           test = "exact",
+                           test = ifelse(normal.approx, 
+                                         "approximate",
+                                         "exact"),
                            design = "one.sample",
                            rho = rho,
                            null.rho = null.rho,
