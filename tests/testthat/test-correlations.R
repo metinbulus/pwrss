@@ -506,31 +506,10 @@ test_that("power.z.onecor works", {
                       null.mean = 0, null.sd = 1, alternative = "one.sided", z.alpha = 1.64485363, n = 593,
                       power = 0.799896919))
 
-    crrRes <- power.z.onecor(rho = 0.65, null.rho = 0.60, alpha = 0.05, power = 0.95, verbose = 0) # example 3.3 from GPower manual
-    expect_equal(class(crrRes), c("pwrss", "z", "onecor"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "rho", "delta", "q", "mean", "sd", "null.mean", "null.sd",
-                                  "alternative", "z.alpha", "n", "power"))
-    expect_equal(crrRes[["parms"]],
-                 list(rho = 0.65, req.sign = "+", null.rho = 0.60, n = NULL, power = 0.95, alpha = 0.05, alternative = "two.sided",
-                      ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "one.sample", delta = 0.05, q = 0.082151526, mean = 3.60531964, sd = 1, null.mean = 0, null.sd = 1,
-                      alternative = "two.sided", z.alpha = 1.95996398 * c(-1, 1), n = 1929, power = 0.95005177))
-    # pwrss uses approximation or is, when using exact limited to null.rho == 0, GPower an exact calculation
-    # -> values are slighly off: n = 1928 (GPower) / 1929 (pwrss), power = 0.950028 (GPower) / 0.950052 (pwrss)
+    # example 3.3 from GPower manual (using approximation, using the exact approximation - see below)
+    expect_equal(power.z.onecor(rho = 0.65, null.rho = 0.60, alpha = 0.05, power = 0.95, verbose = 0)[["n"]], 1929)
+    expect_equal(power.z.onecor(rho = 0.30, null.rho = 0.80, n = 8, alpha = 0.05, verbose = 0)[["power"]], 0.422599)
 
-    crrRes <- power.z.onecor(rho = 0.30, null.rho = 0.80, alpha = 0.05, n = 8, verbose = 0) # example 3.3 from GPower manual
-    expect_equal(class(crrRes), c("pwrss", "z", "onecor"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "rho", "delta", "q", "mean", "sd", "null.mean", "null.sd",
-                                  "alternative", "z.alpha", "n", "power"))
-    expect_equal(crrRes[["parms"]],
-                 list(rho = 0.30, req.sign = "+", null.rho = 0.80, n = 8, power = NULL, alpha = 0.05, alternative = "two.sided",
-                      ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "one.sample", delta = -0.50, q = -0.789092684, mean = -1.7644649, sd = 1, null.mean = 0, null.sd = 1,
-                      alternative = "two.sided", z.alpha = 1.95996398 * c(-1, 1), n = 8, power = 0.422599))
-    # pwrss uses approximation or is, when using exact limited to null.rho == 0, GPower an exact calculation
-    # -> values are correct for approx.: power = 0.482927 / 0.422599 (GPower - exact / appr.) / 0.422599 (pwrss)
 })
 
 # power.exact.onecor ---------------------------------------------------------------------------------------------------
@@ -540,95 +519,131 @@ test_that("power.exact.onecor works", {
     expect_equal(names(crrRes), c("parms", "test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha",
                                   "n", "power"))
     expect_equal(crrRes[["parms"]],
-                 list(rho = 0.20, req.sign = "+", null.rho = 0, n = NULL, n.max = 500, power = 0.80, alpha = 0.05,
+                 list(rho = 0.20, req.sign = "+", null.rho = 0, n = NULL, n.max = 10000, power = 0.80, alpha = 0.05,
                       alternative = "two.sided", verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha", "n", "power")],
                  list(test = "exact", design = "one.sample", rho = 0.2, null.rho = 0, delta = 0.2, q = 0.202732554,
-                      alternative = "two.sided", rho.alpha = 0.14129686 * c(-1, 1), n = 193, power = 0.80005979))
+                      alternative = "two.sided", rho.alpha = 0.141290574 * c(-1, 1), n = 193, power = 0.80008456))
 
     crrRes <- power.exact.onecor(rho = 0.20, n = 193, alpha = 0.05, alternative = "two.sided", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "exact", "onecor"))
     expect_equal(names(crrRes), c("parms", "test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha",
                                   "n", "power"))
     expect_equal(crrRes[["parms"]],
-                 list(rho = 0.20, req.sign = "+", null.rho = 0, n = 193, n.max = 500, power = NULL, alpha = 0.05,
+                 list(rho = 0.20, req.sign = "+", null.rho = 0, n = 193, n.max = 10000, power = NULL, alpha = 0.05,
                       alternative = "two.sided", verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha", "n", "power")],
                  list(test = "exact", design = "one.sample", rho = 0.2, null.rho = 0, delta = 0.2, q = 0.202732554,
-                      alternative = "two.sided", rho.alpha = 0.14129686 * c(-1, 1), n = 193, power = 0.80005979))
+                      alternative = "two.sided", rho.alpha = 0.141290574 * c(-1, 1), n = 193, power = 0.80008456))
 
     crrRes <- power.exact.onecor(n = 193, power = 0.80, alpha = 0.05, alternative = "two.sided", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "exact", "onecor"))
     expect_equal(names(crrRes), c("parms", "test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha",
                                   "n", "power"))
     expect_equal(crrRes[["parms"]],
-                 list(rho = NULL, req.sign = "+", null.rho = 0, n = 193, n.max = 500, power = 0.8, alpha = 0.05,
+                 list(rho = NULL, req.sign = "+", null.rho = 0, n = 193, n.max = 10000, power = 0.8, alpha = 0.05,
                       alternative = "two.sided", verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha", "n", "power")],
-                 list(test = "exact", design = "one.sample", rho = 0.19998544, null.rho = 0, delta = 0.19998544,
-                      q = 0.202717385, alternative = "two.sided", rho.alpha = 0.14129686 * c(-1, 1), n = 193,
-                      power = 0.800001085))
+                 list(test = "exact", design = "one.sample", rho = 0.199979031, null.rho = 0, delta = 0.199979031,
+                      q = 0.202710712, alternative = "two.sided", rho.alpha = 0.141290574 * c(-1, 1), n = 193,
+                      power = 0.800000026))
 
     crrRes <- power.exact.onecor(rho = 0.20, power = 0.80, alpha = 0.05, alternative = "one.sided", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "exact", "onecor"))
     expect_equal(names(crrRes), c("parms", "test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha",
                                   "n", "power"))
     expect_equal(crrRes[["parms"]],
-                 list(rho = 0.20, req.sign = "+", null.rho = 0, n = NULL, n.max = 500, power = 0.80, alpha = 0.05,
+                 list(rho = 0.20, req.sign = "+", null.rho = 0, n = NULL, n.max = 10000, power = 0.80, alpha = 0.05,
                       alternative = "one.sided", verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha", "n", "power")],
                  list(test = "exact", design = "one.sample", rho = 0.2, null.rho = 0, delta = 0.2, q = 0.202732554,
-                      alternative = "one.sided", rho.alpha = 0.133505225, n = 153, power = 0.80158444))
+                      alternative = "one.sided", rho.alpha = 0.13347743, n = 153, power = 0.801681043))
 
     crrRes <- power.exact.onecor(rho = 0.20, n = 153, alpha = 0.05, alternative = "one.sided", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "exact", "onecor"))
     expect_equal(names(crrRes), c("parms", "test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha",
                                   "n", "power"))
     expect_equal(crrRes[["parms"]],
-                 list(rho = 0.20, req.sign = "+", null.rho = 0, n = 153, n.max = 500, power = NULL, alpha = 0.05,
+                 list(rho = 0.20, req.sign = "+", null.rho = 0, n = 153, n.max = 10000, power = NULL, alpha = 0.05,
                       alternative = "one.sided", verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha", "n", "power")],
                  list(test = "exact", design = "one.sample", rho = 0.2, null.rho = 0, delta = 0.2, q = 0.202732554,
-                      alternative = "one.sided", rho.alpha = 0.133505225, n = 153, power = 0.80158444))
+                      alternative = "one.sided", rho.alpha = 0.13347743, n = 153, power = 0.801681043))
 
     crrRes <- power.exact.onecor(n = 153, power = 0.80, alpha = 0.05, alternative = "one.sided", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "exact", "onecor"))
     expect_equal(names(crrRes), c("parms", "test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha",
                                   "n", "power"))
     expect_equal(crrRes[["parms"]],
-                 list(rho = NULL, req.sign = "+", null.rho = 0, n = 153, n.max = 500, power = 0.80, alpha = 0.05,
+                 list(rho = NULL, req.sign = "+", null.rho = 0, n = 153, n.max = 10000, power = 0.80, alpha = 0.05,
                       alternative = "one.sided", verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha", "n", "power")],
-                 list(test = "exact", design = "one.sample", rho = 0.199557323, null.rho = 0, delta = 0.199557323,
-                      q = 0.202271475, alternative = "one.sided", rho.alpha = 0.133505225, n = 153, power = 0.8000013))
+                 list(test = "exact", design = "one.sample", rho = 0.19952988, null.rho = 0, delta = 0.19952988,
+                      q = 0.202242895, alternative = "one.sided", rho.alpha = 0.13347743, n = 153, power = 0.800000012))
 
     crrRes <- power.exact.onecor(req.sign = "-", n = 153, power = 0.80, alpha = 0.05, alternative = "one.sided", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "exact", "onecor"))
     expect_equal(names(crrRes), c("parms", "test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha",
                                   "n", "power"))
     expect_equal(crrRes[["parms"]],
-                 list(rho = NULL, req.sign = "-", null.rho = 0, n = 153, n.max = 500, power = 0.80, alpha = 0.05,
+                 list(rho = NULL, req.sign = "-", null.rho = 0, n = 153, n.max = 10000, power = 0.80, alpha = 0.05,
                       alternative = "one.sided", verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha", "n", "power")],
-                 list(test = "exact", design = "one.sample", rho = -0.199557323, null.rho = 0, delta = -0.199557323,
-                      q = -0.202271475, alternative = "one.sided", rho.alpha = -0.133505225, n = 153, power = 0.8000013))
+                 list(test = "exact", design = "one.sample", rho = -0.19952988, null.rho = 0, delta = -0.19952988,
+                      q = -0.202242895, alternative = "one.sided", rho.alpha = -0.13347743, n = 153, power = 0.800000012))
 
     crrRes <- power.exact.onecor(n = 1e4, power = 0.01, alpha = 0.05, alternative = "one.sided", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "exact", "onecor"))
     expect_equal(names(crrRes), c("parms", "test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha",
                                   "n", "power"))
     expect_equal(crrRes[["parms"]],
-                 list(rho = NULL, req.sign = "+", null.rho = 0, n = 1e4, n.max = 500, power = 0.01, alpha = 0.05,
+                 list(rho = NULL, req.sign = "+", null.rho = 0, n = 1e4, n.max = 10000, power = 0.01, alpha = 0.05,
                       alternative = "one.sided", verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha", "n", "power")],
-                 list(test = "exact", design = "one.sample", rho = 0.0001, null.rho = 0, delta = 0.0001, q = 0.0001,
-                      alternative = "one.sided", rho.alpha = 0.016460517, n = 1e4, power = 0.050924098))
+                 list(test = "exact", design = "one.sample", rho = 0.000100007449, null.rho = 0, delta = 0.000100007449,
+                      q = 0.000100007449, alternative = "one.sided", rho.alpha = 0.01644948, n = 1e4, power = 0.051039797))
+
+    crrRes <- power.exact.onecor(rho = 0.90, power = 0.50, alpha = 0.05, alternative = "one.sided", verbose = 0)
+    expect_equal(class(crrRes), c("pwrss", "exact", "onecor"))
+    expect_equal(names(crrRes), c("parms", "test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha",
+                                  "n", "power"))
+    expect_equal(crrRes[["parms"]],
+                 list(rho = 0.90, req.sign = "+", null.rho = 0, n = NULL, n.max = 10000, power = 0.50, alpha = 0.05,
+                      alternative = "one.sided", verbose = 0, utf = FALSE))
+    expect_equal(crrRes[c("test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha", "n", "power")],
+                 list(test = "exact", design = "one.sample", rho = 0.90, null.rho = 0, delta = 0.90, q = 1.47221949,
+                      alternative = "one.sided", rho.alpha = 0.80538364, n = 3, power = 0.57572973))
+
+    crrRes <- power.exact.onecor(rho = 0.65, null.rho = 0.60, alpha = 0.05, power = 0.95, verbose = 0) # example 3.3 from GPower manual
+    expect_equal(class(crrRes), c("pwrss", "exact", "onecor"))
+    expect_equal(names(crrRes), c("parms", "test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha",
+                                  "n", "power"))
+    expect_equal(crrRes[["parms"]],
+                 list(rho = 0.65, req.sign = "+", null.rho = 0.60, n = NULL, n.max = 10000, power = 0.95, alpha = 0.05,
+                      alternative = "two.sided", verbose = 0, utf = FALSE))
+    expect_equal(crrRes[c("test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha", "n", "power")],
+                 list(test = "exact", design = "one.sample", rho = 0.65, null.rho = 0.60, delta = 0.05, q = 0.082151526,
+                      alternative = "two.sided", rho.alpha = c(0.570748139, 0.627919698), n = 1928, power = 0.95002753))
+    # values are identical: n = 1928, power = 0.950028, r_crit = c(0.570748, 0.627920)
+
+    crrRes <- power.exact.onecor(rho = 0.30, null.rho = 0.80, alpha = 0.05, n = 8, verbose = 0) # example 3.3 from GPower manual
+    expect_equal(class(crrRes), c("pwrss", "exact", "onecor"))
+    expect_equal(names(crrRes), c("parms", "test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha",
+                                  "n", "power"))
+    expect_equal(crrRes[["parms"]],
+                 list(rho = 0.30, req.sign = "+", null.rho = 0.80, n = 8, n.max = 10000, power = NULL, alpha = 0.05,
+                      alternative = "two.sided", verbose = 0, utf = FALSE))
+    expect_equal(crrRes[c("test", "design", "rho", "null.rho", "delta", "q", "alternative", "rho.alpha", "n", "power")],
+                 list(test = "exact", design = "one.sample", rho = 0.30, null.rho = 0.80, delta = -0.50, q = -0.789092684,
+                      alternative = "two.sided", rho.alpha = c(0.306747432, 0.966395733), n = 8, power = 0.482927086))
+    # values are identical: n = 8, power = 0.482927
+
+    # fallback to approximate
+    expect_equal(class(power.exact.onecor(rho = 0.001, power = 0.99, verbose = 0)), c("pwrss", "z", "onecor"))
 
     expect_error(power.exact.onecor(rho = 0.20, n = 2, verbose = 0), "n needs to be >= 3.")
     expect_error(power.exact.onecor(rho = 0.20, power = 0.8, n.max = 2, verbose = 0),
                  "ss.exact.rho: n.max \\(2\\) must be >= n.min \\(3\\).")
-    expect_error(power.exact.onecor(rho = 0.001, power = 0.8, verbose = 0),
-                 "Target power not reached within \\[n.min = 3, n.max = 500\\]. Try increasing n.max.")
-    expect_error(power.exact.onecor(n = 3, power = 0.99, verbose = 0),
-                 "Target power not reached within \\[rho.min = 0.0001, rho.max = 0.9999\\]. Try increasing n.")
+    expect_error(power.exact.onecor(null.rho = 0.9, n = 3, power = 0.99, verbose = 0),
+                 "Target power not reached within \\[rho.min = 0.9001, rho.max = 0.9999\\]. Try increasing n.")
 })
