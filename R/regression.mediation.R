@@ -304,6 +304,9 @@ power.z.mediation  <- function(beta.a = NULL, beta.b = NULL, ab.ratio = 1, req.s
 #    if (method %in% c("joint", "monte.carlo"))
 #      stop("Minimum detectable effect calculation not supported by this method.", call. = FALSE)
 
+#    if (is.null(r.squared.mediator) || is.null(r.squared.outcome))
+#      stop("R-squared values cannot be NULL when minimum detectable effect is of interest. Needed for identification.", call. = FALSE)
+
 #    # lim.a <- sqrt(1 - r.squared.mediator) * (sd.mediator / sd.predictor)
 #    # lim.b <- sqrt(1 - r.squared.outcome) * (sd.outcome / sd.mediator)
 #    lim.a <- abs(ab.ratio) * (sd.mediator / sd.predictor)
