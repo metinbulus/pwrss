@@ -9,7 +9,7 @@ power.exact.onecor(
   req.sign = "+",
   null.rho = 0,
   n = NULL,
-  n.max = 500,
+  n.max = 10000,
   power = NULL,
   alpha = 0.05,
   alternative = c("two.sided", "one.sided"),

@@ -1116,7 +1116,7 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
                         binom.alpha = pwr.obj$binom.alpha,
                         mean.alternative = pwr.obj$mean,
                         sd.alternative = pwr.obj$sd,
-                        mean.null =pwr.obj$null.mean,
+                        mean.null = pwr.obj$null.mean,
                         sd.null = pwr.obj$null.sd,
                         z.alpha = pwr.obj$z.alpha,
                         power = pwr.obj$power,

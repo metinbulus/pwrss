@@ -2293,7 +2293,7 @@ power.chisq.gof(w = 0.44,
 **Effect size: Phi Coefficient (or Cramer's V or Cohen's W) for independence test (2 x 2 contingency table).**
 
 How many subjects are needed to claim that girls are under-diagnosed with ADHD?
-Check the original article at [https://time.com/growing-up-with-adhd/](https://time.com/growing-up-with-adhd/)
+Check the original article published in [TIME](https://web.archive.org/web/20250601054306/https://time.com/growing-up-with-adhd/)
 
 5.6% of girls and 13.2% of boys are diagnosed with ADHD (from the article).
 

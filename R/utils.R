@@ -970,7 +970,7 @@ marginal.probs.2x2 <- function(prob11, prob10, prob01, prob00, verbose = 1) {
 #'   # girls are underdiagnosed with ADHD?                      #
 #'   # ---------------------------------------------------------#
 #'
-#'   ## from https://time.com/growing-up-with-adhd/
+#'   ## from https://web.archive.org/web/20250601054306/https://time.com/growing-up-with-adhd/
 #'   ## 5.6 percent of girls and 13.2 percent of boys are diagnosed with ADHD
 #'   prob.matrix <- rbind(c(0.056, 0.132),
 #'                        c(0.944, 0.868))

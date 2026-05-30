@@ -1057,12 +1057,12 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0, n = NUL
 
     c1 <- 1 - (r ^ 2 * rho ^ 2)
     c2 <- (1 - r ^ 2) * (1 - rho ^ 2)
-  
+
     L <- numeric(n + 1)
     L[1] <- acos(-r * rho) / sqrt(c1)
     L[2] <- (1 + r * rho * L[1]) * sqrt(c2) / c1
     for (k in 2:n) L[k + 1] <- (2 - 1 / k) * sqrt(c2) * r * rho * L[k] / c1 + (1 - 1 / k) * c2 * L[k - 1] / c1
-  
+
     acos(ifelse(n %% 2 == 0, rho, -r)) / pi +
     (r * sqrt(1 - rho ^ 2) / pi) * sum(L[seq(ifelse(n %% 2 == 0, 1, 2), max(n - 2, 2), 2)]) -
     (rho * sqrt(1 - r ^ 2) / pi) * sum(L[seq(ifelse(n %% 2 == 0, 2, 1), max(n - 2, 2), 2)])
@@ -1131,11 +1131,11 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0, n = NUL
       }
 
       n.max
-    
+
     } else { # otherwise use approximation
 
       power.z.onecor(rho = rho, null.rho = null.rho, alpha = alpha, power = power, alternative = alternative, verbose = 0)$n
-    
+
     }
 
   } #  ss.exact.rho
@@ -1183,7 +1183,7 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0, n = NUL
   } else {
 
     pwr.obj <- power.z.onecor(rho = rho, null.rho = null.rho, n = n, alpha = alpha, alternative = alternative, verbose = verbose)
-    normal.approx <- TRUE  
+    normal.approx <- TRUE
 
   }
 
