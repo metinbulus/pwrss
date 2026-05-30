@@ -11,7 +11,7 @@ means.to.d(
   sd1 = 1,
   sd2 = 1,
   n.ratio = 1,
-  n2,
+  n2 = 10000000000,
   paired = FALSE,
   rho.paired = 0.5,
   verbose = 1
@@ -90,6 +90,7 @@ means.to.d(
 ## Examples
 
 ``` r
+
 
 # means and standard deviations from independent samples
 means.to.d(mu1 = 20, mu2 = 17.5,

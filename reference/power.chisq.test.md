@@ -1,15 +1,16 @@
 # Statistical Power for the Generic Chi-Square Test
 
-Calculates power for the generic chi-square test with (optional) Type 1
-and Type 2 error plots.
+Determines power, the non-centrality parameter (NCP) for the generic
+chi-square test with (optional) Type 1 and Type 2 error plots.
 
 ## Usage
 
 ``` r
 power.chisq.test(
-  ncp,
+  power = NULL,
+  ncp = NULL,
   null.ncp = 0,
-  df,
+  df = NULL,
   alpha = 0.05,
   plot = TRUE,
   verbose = 1,
@@ -19,9 +20,15 @@ power.chisq.test(
 
 ## Arguments
 
+- power:
+
+  statistical power \\(1 - \beta)\\; either `power`, `ncp` or `df` needs
+  to be NULL (and is then estimated).
+
 - ncp:
 
-  non-centrality parameter for the alternative.
+  non-centrality parameter for the alternative; either `power`, `ncp` or
+  `df` needs to be NULL (and is then estimated).
 
 - null.ncp:
 
@@ -29,8 +36,9 @@ power.chisq.test(
 
 - df:
 
-  integer; degrees of freedom. For example, for the test of independence
-  df = (nrow - 1)\*(ncol - 1).
+  integer; degrees of freedom, e.g., for the test of independence df =
+  (nrow - 1) \* (ncol - 1); either `power`, `ncp` or `df` needs to be
+  NULL (and is then estimated).
 
 - alpha:
 
@@ -59,6 +67,26 @@ power.chisq.test(
 
   statistical power \\(1-\beta)\\.
 
+- ncp:
+
+  non-centrality parameter under alternative.
+
+- null.ncp:
+
+  non-centrality parameter under null.
+
+- df:
+
+  degrees of freedom.
+
+- alpha:
+
+  type 1 error rate (user-specified).
+
+- chisq.alpha:
+
+  critical value.
+
 ## Examples
 
 ``` r
@@ -75,14 +103,62 @@ power.chisq.test(ncp = 20, df = 100, alpha = 0.05)
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : ncp = ncp.null
-#>   H1 (Alternative) : ncp > ncp.null
+#>   H0 (Null)        : ncp = null.ncp
+#>   H1 (Alternative) : ncp > null.ncp
 #> 
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (ncp)    = 20 (vs. null.ncp = 0)
+#>   Degrees of Freedom   = 100
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.619
 #>   Statistical Power    = 0.381  <<
+#> 
+power.chisq.test(power = 0.80, df = 100, alpha = 0.05)
+
+#> +--------------------------------------------------+
+#> |      MINIMUM DETECTABLE EFFECT CALCULATION       |
+#> +--------------------------------------------------+
+#> 
+#> Generic Chi-square Test
+#> 
+#> ----------------------------------------------------
+#> Hypotheses
+#> ----------------------------------------------------
+#>   H0 (Null)        : ncp = null.ncp
+#>   H1 (Alternative) : ncp > null.ncp
+#> 
+#> ----------------------------------------------------
+#> Results
+#> ----------------------------------------------------
+#>   Effect Size (ncp)    = 40.556 (vs. null.ncp = 0)  <<
+#>   Degrees of Freedom   = 100
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
+#> 
+power.chisq.test(power = 0.80, ncp = 20, alpha = 0.05)
+
+#> +--------------------------------------------------+
+#> |             SAMPLE SIZE CALCULATION              |
+#> +--------------------------------------------------+
+#> 
+#> Generic Chi-square Test
+#> 
+#> ----------------------------------------------------
+#> Hypotheses
+#> ----------------------------------------------------
+#>   H0 (Null)        : ncp = null.ncp
+#>   H1 (Alternative) : ncp > null.ncp
+#> 
+#> ----------------------------------------------------
+#> Results
+#> ----------------------------------------------------
+#>   Effect Size (ncp)    = 20 (vs. null.ncp = 0)
+#>   Degrees of Freedom   = 17.673  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 #> 
 ```

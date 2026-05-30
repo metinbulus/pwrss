@@ -1,7 +1,7 @@
 # Power Analysis for Student's t-Test
 
-Calculates power or sample size (only one can be NULL at a time) for
-Student's t-Test.
+Calculates power, sample size or effect size (only one can be NULL at a
+time) for Student's t-Test.
 
 In contrast to previous versions, users can now specify whether their
 claims will be based on raw score mean difference with P-values or
@@ -31,7 +31,7 @@ Chow et al. (2018) and Lakens (2017).
 
 ``` r
 power.t.student(
-  d,
+  d = NULL,
   null.d = 0,
   margin = 0,
   n2 = NULL,
@@ -41,7 +41,7 @@ power.t.student(
   alternative = c("two.sided", "one.sided", "two.one.sided"),
   design = c("independent", "paired", "one.sample"),
   claim.basis = c("md.pval", "smd.ci"),
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -97,7 +97,7 @@ power.t.student(
   p-values, "smd.ci" when claims are based on standardized mean
   differences and confidence intervals.
 
-- ceiling:
+- ceil.n:
 
   logical; whether sample size should be rounded up. `TRUE` by default.
 
@@ -187,6 +187,7 @@ science, 8*(4), 355-362. https://doi.org/10.1177/1948550617697177
 ## Examples
 
 ``` r
+
 #######################
 # Independent Samples #
 #######################
@@ -217,6 +218,7 @@ power.np.wilcoxon(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 412 and 412  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -243,6 +245,7 @@ power.t.student(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 394 and 394  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -270,6 +273,7 @@ power.t.welch(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 474 and 237  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -303,6 +307,7 @@ power.np.wilcoxon(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 325 and 325  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -329,6 +334,7 @@ power.t.student(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 310 and 310  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -356,6 +362,7 @@ power.t.welch(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 372 and 186  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -390,6 +397,7 @@ power.np.wilcoxon(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 208 and 208  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -417,6 +425,7 @@ power.t.student(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 199 and 199  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -445,6 +454,7 @@ power.t.welch(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 238 and 119  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -479,6 +489,7 @@ power.np.wilcoxon(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 578 and 578  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -506,6 +517,7 @@ power.t.student(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 552 and 552  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -534,6 +546,7 @@ power.t.welch(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 662 and 331  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -571,6 +584,7 @@ power.np.wilcoxon(d = 0,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0 (vs. null.d = 0)
 #>   Sample Size          = 7175 and 7175  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -600,6 +614,7 @@ power.t.student(d = 0,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0 (vs. null.d = 0)
 #>   Sample Size          = 6852 and 6852  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -630,6 +645,7 @@ power.t.welch(d = 0,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0 (vs. null.d = 0)
 #>   Sample Size          = 8222 and 4111  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -666,6 +682,7 @@ power.np.wilcoxon(d = -0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = -0.200 (vs. null.d = 0)
 #>   Sample Size          = 208  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -692,6 +709,7 @@ power.t.student(d = -0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = -0.200 (vs. null.d = 0)
 #>   Sample Size          = 199  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.198
@@ -723,6 +741,7 @@ power.np.wilcoxon(d = -0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = -0.200 (vs. null.d = 0)
 #>   Sample Size          = 164  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.198
@@ -749,6 +768,7 @@ power.t.student(d = -0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = -0.200 (vs. null.d = 0)
 #>   Sample Size          = 156  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -782,6 +802,7 @@ power.np.wilcoxon(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 291  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -809,6 +830,7 @@ power.t.student(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 278  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -841,6 +863,7 @@ power.np.wilcoxon(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 105  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.198
@@ -868,6 +891,7 @@ power.t.student(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 100  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -905,6 +929,7 @@ power.np.wilcoxon(d = 0,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0 (vs. null.d = 0)
 #>   Sample Size          = 3589  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -934,6 +959,7 @@ power.t.student(d = 0,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0 (vs. null.d = 0)
 #>   Sample Size          = 3427  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200

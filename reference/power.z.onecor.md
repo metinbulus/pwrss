@@ -10,13 +10,14 @@ Formulas are validated using PASS and G\*Power.
 
 ``` r
 power.z.onecor(
-  rho,
+  rho = NULL,
+  req.sign = "+",
   null.rho = 0,
   n = NULL,
   power = NULL,
   alpha = 0.05,
   alternative = c("two.sided", "one.sided"),
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -27,6 +28,11 @@ power.z.onecor(
 - rho:
 
   correlation.
+
+- req.sign:
+
+  whether estimated rho is smaller or larger than the null.rho (when
+  minimum detectable rho is of interest).
 
 - null.rho:
 
@@ -51,7 +57,7 @@ power.z.onecor(
   character; the direction or type of the hypothesis test: "two.sided"
   or "one.sided".
 
-- ceiling:
+- ceil.n:
 
   logical; whether sample size should be rounded up. `TRUE` by default.
 
@@ -130,7 +136,7 @@ power.z.onecor(rho = 0.20,
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> One-Sample Correlation
+#> One-Sample Correlation (Approximate)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -141,6 +147,7 @@ power.z.onecor(rho = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (rho)    = 0.200 (vs. null.rho = 0)
 #>   Sample Size          = 194  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -156,7 +163,7 @@ power.z.onecor(rho = 0.20, null.rho = 0.10,
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> One-Sample Correlation
+#> One-Sample Correlation (Approximate)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -167,6 +174,7 @@ power.z.onecor(rho = 0.20, null.rho = 0.10,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (rho)    = 0.200 (vs. null.rho = 0.100)
 #>   Sample Size          = 593  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200

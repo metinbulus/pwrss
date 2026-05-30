@@ -1,8 +1,8 @@
 # Power Analysis for Non-parametric Rank-Based Tests (One-Sample, Independent, and Paired Designs)
 
-Calculates power or sample size (only one can be NULL at a time) for
-non-parametric rank-based tests. The following tests and designs are
-available:
+Calculates power, sample size or effect size (only one can be NULL at a
+time) for non-parametric rank-based tests. The following tests and
+designs are available:
 
 - Wilcoxon Signed-Rank Test (One Sample)
 
@@ -18,7 +18,7 @@ G*Power.
 
 ``` r
 power.np.wilcoxon(
-  d,
+  d = NULL,
   null.d = 0,
   margin = 0,
   n.ratio = 1,
@@ -29,7 +29,7 @@ power.np.wilcoxon(
   design = c("independent", "paired", "one.sample"),
   distribution = c("normal", "uniform", "double.exponential", "laplace", "logistic"),
   method = c("guenther", "noether"),
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -86,7 +86,7 @@ power.np.wilcoxon(
 
   character; non-parametric approach: "guenther" (default) or "noether"
 
-- ceiling:
+- ceil.n:
 
   logical; whether sample size should be rounded up. `TRUE` by default.
 
@@ -236,6 +236,7 @@ power.np.wilcoxon(d = 0.25,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.250 (vs. null.d = 0)
 #>   Sample Size          = 265 and 265  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -266,6 +267,7 @@ power.np.wilcoxon(d = 0.25,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.250 (vs. null.d = 0)
 #>   Sample Size          = 208 and 208  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -297,6 +299,7 @@ power.np.wilcoxon(d = 0.10,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.100 (vs. null.d = 0)
 #>   Sample Size          = 576 and 576  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -328,6 +331,7 @@ power.np.wilcoxon(d = 0.10,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.100 (vs. null.d = 0)
 #>   Sample Size          = 5184 and 5184  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -362,6 +366,7 @@ power.np.wilcoxon(d = 0,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0 (vs. null.d = 0)
 #>   Sample Size          = 7175 and 7175  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -394,6 +399,7 @@ power.np.wilcoxon(d = -0.25,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = -0.250 (vs. null.d = 0)
 #>   Sample Size          = 134  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -424,6 +430,7 @@ power.np.wilcoxon(d = -0.25,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = -0.250 (vs. null.d = 0)
 #>   Sample Size          = 106  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.197
@@ -455,6 +462,7 @@ power.np.wilcoxon(d = -0.10,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = -0.100 (vs. null.d = 0)
 #>   Sample Size          = 289  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -486,6 +494,7 @@ power.np.wilcoxon(d = -0.10,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = -0.100 (vs. null.d = 0)
 #>   Sample Size          = 2599  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -520,6 +529,7 @@ power.np.wilcoxon(d = 0,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0 (vs. null.d = 0)
 #>   Sample Size          = 3589  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200

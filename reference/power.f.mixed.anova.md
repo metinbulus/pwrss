@@ -1,8 +1,9 @@
 # Power Analysis for Mixed-Effects Analysis of Variance (F-Test)
 
-Calculates power or sample size for mixed-effects ANOVA design with two
-factors (between and within). When there is only one group observed over
-time, this design is often referred to as repeated-measures ANOVA.
+Calculates power, sample size or effect size for mixed-effects ANOVA
+design with two factors (between and within). When there is only one
+group observed over time, this design is often referred to as
+repeated-measures ANOVA.
 
 Formulas are validated using G\*Power and tables in the PASS
 documentation.
@@ -11,7 +12,7 @@ documentation.
 
 ``` r
 power.f.mixed.anova(
-  eta.squared,
+  eta.squared = NULL,
   null.eta.squared = 0,
   factor.levels = c(2, 2),
   factor.type = c("between", "within"),
@@ -21,7 +22,7 @@ power.f.mixed.anova(
   power = NULL,
   alpha = 0.05,
   effect = c("between", "within", "interaction"),
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -87,7 +88,7 @@ power.f.mixed.anova(
   character; the effect of interest: "between", "within", or
   "interaction".
 
-- ceiling:
+- ceil.n:
 
   logical; `TRUE` by default. If `FALSE` sample size in each group is
   NOT rounded up.
@@ -182,10 +183,11 @@ power.f.mixed.anova(eta.squared = 0.022,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 90  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.196
-#>   Statistical Power    = 0.804
+#>   Effect Size (eta-squared) = 0.022
+#>   Total Sample Size         = 90  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.196
+#>   Statistical Power         = 0.804
 #> 
 
 # if effect size is already adjusted for correlation
@@ -211,10 +213,11 @@ power.f.mixed.anova(eta.squared = 0.08255,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 90  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.196
-#>   Statistical Power    = 0.804
+#>   Effect Size (eta-squared) = 0.083
+#>   Total Sample Size         = 90  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.196
+#>   Statistical Power         = 0.804
 #> 
 
 ##########################################################
@@ -243,10 +246,11 @@ power.f.mixed.anova(eta.squared = 0.059,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 128  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.197
-#>   Statistical Power    = 0.803
+#>   Effect Size (eta-squared) = 0.059
+#>   Total Sample Size         = 128  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.197
+#>   Statistical Power         = 0.803
 #> 
 
 
@@ -278,10 +282,11 @@ power.f.mixed.anova(eta.squared = 0.038,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 152  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.197
-#>   Statistical Power    = 0.803
+#>   Effect Size (eta-squared) = 0.038
+#>   Total Sample Size         = 152  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.197
+#>   Statistical Power         = 0.803
 #> 
 
 # a researcher is expecting an interaction effect
@@ -306,10 +311,11 @@ power.f.mixed.anova(eta.squared = 0.01,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 198  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.196
-#>   Statistical Power    = 0.804
+#>   Effect Size (eta-squared) = 0.010
+#>   Total Sample Size         = 198  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.196
+#>   Statistical Power         = 0.804
 #> 
 
 # a researcher is expecting an interaction effect
@@ -334,9 +340,10 @@ power.f.mixed.anova(eta.squared = 0.01,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 198  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.196
-#>   Statistical Power    = 0.804
+#>   Effect Size (eta-squared) = 0.010
+#>   Total Sample Size         = 198  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.196
+#>   Statistical Power         = 0.804
 #> 
 ```

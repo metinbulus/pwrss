@@ -8,23 +8,24 @@ The original tutorial was published on CRAN and can be accessed at:
 Install and load pwrss R package:
 
 ``` r
+
 install.packages("pwrss")
 library(pwrss)
 ```
 
 If you find the package and related material useful please cite as:
 
-Bulus, M., & Jentschke, S. (2025). pwrss: Statistical Power and Sample
-Size Calculation Tools. R package version 1.0.0.
+Bulus, M., & Jentschke, S. (2026). pwrss: Statistical Power and Sample
+Size Calculation Tools. R package version 1.2.0.
 <https://doi.org/10.32614/CRAN.package.pwrss>
 
 **Acknowledgments**
 
 This open-source project has benefited from users who have taken the
-time to report typos and identify bugs. I would like to acknowledge
+time to report typos and identify bugs. We would like to acknowledge
 those who have helped improve the accuracy and quality of the project by
-reporting these issues. If I have missed anyone who has provided similar
-feedback, please let me know.
+reporting these issues. If we have missed anyone who has provided
+similar feedback, please let me know.
 
 Error reports from (alphabetic order):  
 Adrian Olszewski (bug report); Catherine (Kate) Crespi (bug report);
@@ -78,6 +79,7 @@ vehicle weight. What is the post-hoc power given the observed test
 statistic?
 
 ``` r
+
 data(mtcars)
 
 model <- lm(mpg ~ hp + wt, data = mtcars)
@@ -126,6 +128,8 @@ power.t.test(ncp = -3.519, # t-value for hp variable
     #> ----------------------------------------------------
     #> Results
     #> ----------------------------------------------------
+    #>   Effect Size (ncp)    = -3.519 (vs. null.ncp = 0)
+    #>   Degrees of Freedom   = 29
     #>   Type 1 Error (alpha) = 0.050
     #>   Type 2 Error (beta)  = 0.075
     #>   Statistical Power    = 0.925  <<
@@ -133,7 +137,7 @@ power.t.test(ncp = -3.519, # t-value for hp variable
 **Report**: The post-hoc power analysis showed that a sample of 32 cars
 had a 0.925 chance of detecting the observed relationship between
 horsepower and miles per gallon, if such a relationship exists. The
-analysis was conducted using an $\alpha$ level of 0.05.
+analysis was conducted using an $`\alpha`$ level of 0.05.
 
 #### User-Defined Design
 
@@ -141,16 +145,18 @@ Power calculation is not readily available for non-equivalent pre-test
 vs. post-test control-group-designs but the formula is already known.
 The approximate standard error is
 
-$$SE = \sqrt{\frac{1 - R^{2}}{p(1 - p)n\left( 1 - R_{TX}^{2} \right)}}$$
+``` math
+SE = \sqrt{\frac{1 - R^2}{p(1 - p)n(1 - R^2_{TX})}}
+```
 
-with $df = n - g - 2$ where
+with $`df = n - g - 2`$ where
 
-- $R^{2}$ : Explanatory power of covariates
-- $R_{TX}^{2}$ : Squared point-biserial correlation between treatment
+- $`R^2`$ : Explanatory power of covariates
+- $`R^2_{TX}`$ : Squared point-biserial correlation between treatment
   indicator and pre-test
-- $p$ : Group allocation rate
-- $n$ : Total sample size
-- $g$ : Number of covariates
+- $`p`$ : Group allocation rate
+- $`n`$ : Total sample size
+- $`g`$ : Number of covariates
 
 For details please see
 ([Bulus](https://dergipark.org.tr/tr/download/article-file/1783497),
@@ -182,6 +188,7 @@ membership and emotional regulation scores is 0.10. What is the power to
 detect superiority under these criteria?
 
 ``` r
+
 # define parameters
 d <- 0.50 # effect size under alternative
 null.d <- 0 # effect size under null
@@ -222,6 +229,8 @@ power.t.test(ncp = ncp,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (ncp)    = 3.674 (vs. null.ncp = 0.735)
+#>   Degrees of Freedom   = 117
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.104
 #>   Statistical Power    = 0.896  <<
@@ -231,7 +240,7 @@ power.t.test(ncp = ncp,
 120 students would be sufficient to detect the effect of a mindfulness
 intervention on emotional regulation. The analysis targeted a moderate
 effect size (d = 0.50) with a superiority margin of 0.10, using a
-one-tailed test at $\alpha$ = 0.05. This design yielded an estimated
+one-tailed test at $`\alpha`$ = 0.05. This design yielded an estimated
 power of 0.90, indicating adequate sensitivity to detect the
 intervention effect.
 
@@ -256,6 +265,7 @@ regression model. What is the post-hoc power given the observed test
 statistic for Wool B?
 
 ``` r
+
 data(warpbreaks)
 
 model <- glm(breaks ~ wool + tension, data = warpbreaks,
@@ -313,18 +323,21 @@ power.z.test(mean = -3.994, # z-value for wool B
 **Report**: The post-hoc power analysis showed that a sample of 54
 trials had a 0.979 chance of detecting the observed relationship between
 Wool B and number of warp breaks, if such a relationship exists. The
-analysis was conducted using an $\alpha$ level of 0.05.
+analysis was conducted using an $`\alpha`$ level of 0.05.
 
 #### User Defined Design
 
-Power calculation is not readily available for Spearman’s $\rho$ rank
+Power calculation is not readily available for Spearman’s $`\rho`$ rank
 correlation but the formula is already known. The approximate standard
 error for the Fisher’s Z-transformed correlation coefficient is
 
-$$SE = \sqrt{\frac{1.06}{n - 3}}$$
+``` math
+SE = \sqrt{\frac{1.06}{n - 3}}
+```
 
-where $n$ is the sample size. For details please see ([Fieller, Hartley,
-and Pearson](https://doi.org/10.1093/biomet/44.3-4.470), 1957, p. 472).
+where $`n`$ is the sample size. For details please see ([Fieller,
+Hartley, and Pearson](https://doi.org/10.1093/biomet/44.3-4.470), 1957,
+p. 472).
 
 **Example**: A team of school counselors want to examine whether there
 is a relationship between students’ class rank (1st, 2nd, 3rd, etc.) and
@@ -332,17 +345,18 @@ their self-reported academic stress levels, measured on a 10-point scale
 (1 = no stress, 10 = extreme stress). Since class rank is an ordinal
 variable (lower ranks mean higher academic standing) and the stress
 scale is subjective and potentially not interval-scaled, the counselor
-uses Spearman’s rank-order correlation (Spearman’s $\rho$) to assess
+uses Spearman’s rank-order correlation (Spearman’s $`\rho`$) to assess
 whether higher-ranking students tend to report lower or higher levels of
 stress.
 
 Researchers hypothesize that students with higher class ranks (i.e.,
 lower rank numbers) report lower stress levels. They plan to recruit 100
-students, interested in detecting a Spearman’s $\rho$ as small as 0.30,
-and will use a two-tailed test with an $\alpha$ level of 0.05. What is
-the power under these criteria?
+students, interested in detecting a Spearman’s $`\rho`$ as small as
+0.30, and will use a two-tailed test with an $`\alpha`$ level of 0.05.
+What is the power under these criteria?
 
 ``` r
+
 # define parameters
 rs <- 0.30 # spearman rho rank cor under alternative
 null.rs <- 0 # spearman rho rank cor under null
@@ -393,9 +407,9 @@ power.z.test(mean = ncp,
 **Report**: A power analysis was conducted to assess whether 100
 students are sufficient to detect association between students’ class
 rank and their self-reported academic stress levels. The analysis
-targeted a moderate Spearman’s $\rho$ of 0.30, a two-tailed test with
-$\alpha$ = 0.05. This configuration yielded an estimated power of 0.84,
-indicating sufficient sensitivity to detect the hypothesized
+targeted a moderate Spearman’s $`\rho`$ of 0.30, a two-tailed test with
+$`\alpha`$ = 0.05. This configuration yielded an estimated power of
+0.84, indicating sufficient sensitivity to detect the hypothesized
 association.
 
 ### F-Test
@@ -414,6 +428,7 @@ with the tree girth. What is the post-hoc power given the observed test
 statistic?
 
 ``` r
+
 data(trees)
 
 # model <- aov(Girth ~ Height, data = trees)
@@ -458,6 +473,8 @@ power.f.test(ncp = 10.71, # non-centrality under alternative
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (ncp)    = 10.710 (vs. null.ncp = 0)
+#>   Presumed Sample S.   = 31
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.115
 #>   Statistical Power    = 0.885  <<
@@ -466,7 +483,7 @@ power.f.test(ncp = 10.71, # non-centrality under alternative
 **Report**: The post-hoc power analysis showed that a sample of 31 trees
 had a 0.885 chance of detecting the observed relationship between tree
 height and girth, if such a relationship exists in the population. The
-analysis was conducted using an $\alpha$ level of 0.05.
+analysis was conducted using an $`\alpha`$ level of 0.05.
 
 ### Chi-square Test
 
@@ -486,6 +503,7 @@ is the post-hoc power given the observed test statistic from a
 chi-squared test of independence?
 
 ``` r
+
 data(HairEyeColor)
 
 table <- margin.table(HairEyeColor, c(1, 2))
@@ -517,12 +535,14 @@ power.chisq.test(ncp = 138.29, # X-squared
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : ncp = ncp.null
-#>   H1 (Alternative) : ncp > ncp.null
+#>   H0 (Null)        : ncp = null.ncp
+#>   H1 (Alternative) : ncp > null.ncp
 #> 
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (ncp)    = 138.290 (vs. null.ncp = 0)
+#>   Degrees of Freedom   = 9
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.000
 #>   Statistical Power    = 1.000  <<
@@ -531,7 +551,8 @@ power.chisq.test(ncp = 138.29, # X-squared
 **Report**: The post-hoc power analysis showed that a sample of 592
 individuals had a 1.00 chance of detecting the observed relationship
 between hair and eye color, if such a relationship exists in the
-population. The analysis was conducted using an $\alpha$ level of 0.05.
+population. The analysis was conducted using an $`\alpha`$ level of
+0.05.
 
 #### Post-Hoc 2
 
@@ -553,6 +574,7 @@ framework. What is the post-hoc power given the observed deviance
 difference between the full and reduced models?
 
 ``` r
+
 data(infert)
 
 fit.reduced <- glm(case ~ age + parity + spontaneous,
@@ -591,12 +613,14 @@ power.chisq.test(ncp = 18.463,
     #> ----------------------------------------------------
     #> Hypotheses
     #> ----------------------------------------------------
-    #>   H0 (Null)        : ncp = ncp.null
-    #>   H1 (Alternative) : ncp > ncp.null
+    #>   H0 (Null)        : ncp = null.ncp
+    #>   H1 (Alternative) : ncp > null.ncp
     #> 
     #> ----------------------------------------------------
     #> Results
     #> ----------------------------------------------------
+    #>   Effect Size (ncp)    = 18.463 (vs. null.ncp = 0)
+    #>   Degrees of Freedom   = 1
     #>   Type 1 Error (alpha) = 0.050
     #>   Type 2 Error (beta)  = 0.010
     #>   Statistical Power    = 0.990  <<
@@ -605,7 +629,7 @@ power.chisq.test(ncp = 18.463,
 women provided a 0.99 probability of detecting the unique contribution
 of the number of induced abortions to infertility status, while
 controlling for other variables, assuming such a relationship exists in
-the population. The analysis was conducted using an $\alpha$ level of
+the population. The analysis was conducted using an $`\alpha`$ level of
 0.05.
 
 ### Binomial Test
@@ -624,6 +648,7 @@ than half the time. What is the post-hoc power given the observed
 proportion and sample size?
 
 ``` r
+
 data(faithful)
 
 long <- faithful$eruptions > 3
@@ -668,6 +693,8 @@ power.binom.test(size = n.total, # number of eruptions
     #> ----------------------------------------------------
     #> Results
     #> ----------------------------------------------------
+    #>   Effect Size (prob)   = 0.643 (vs. null.prob = 0.500)
+    #>   Number of Trials     = 272
     #>   Type 1 Error (alpha) = 0.039
     #>   Type 2 Error (beta)  = 0.001
     #>   Statistical Power    = 0.999  <<
@@ -676,13 +703,14 @@ power.binom.test(size = n.total, # number of eruptions
 eruptions provided a 0.999 probability of detecting whether eruptions
 lasting more than 3 minutes occur more than 50% of the time, if it
 exists in the underlying eruption pattern. The analysis was based on a
-one-sided test procedure with $\alpha$ = 0.05.
+one-sided test procedure with $`\alpha`$ = 0.05.
 
 #### User-Defined Designs
 
 **Example 1**: Find number of coin toss to test whether a coin is fair.
 
 ``` r
+
 # find the approximate solution
 power.z.oneprop(prob = 0.50, # prob. of head under alt.
                 null.prob = c(0.495, 0.505), # equivalence margins
@@ -716,6 +744,8 @@ power.binom.test(size = 85632, # number of tosses needed
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob)   = 0.500 (vs. null.prob = 0.495 and 0.505)
+#>   Number of Trials     = 85632
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
 #>   Statistical Power    = 0.800  <<
@@ -725,7 +755,7 @@ power.binom.test(size = 85632, # number of tosses needed
 are required to determine whether a coin is fair. The analysis assumes a
 fair coin has a 0.50 probability of landing heads, with equivalence
 margins set at 0.495 and 0.505, using a two one-sided test procedure
-with $\alpha$ = 0.05.
+with $`\alpha`$ = 0.05.
 
 **Example 2**: Find optimal number of replications in a Monte Carlo
 simulation.
@@ -733,6 +763,7 @@ simulation.
 To reliably detect a type 1 error rate of 0.05:
 
 ``` r
+
 # find the approximate solution
 power.z.oneprop(prob = 0.05, # prob. of head under alt.
                 null.prob = c(0.045, 0.055), # equivalence margins
@@ -765,6 +796,8 @@ power.binom.test(size = 16424, # number of replications needed
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob)   = 0.050 (vs. null.prob = 0.045 and 0.055)
+#>   Number of Trials     = 16424
 #>   Type 1 Error (alpha) = 0.049
 #>   Type 2 Error (beta)  = 0.198
 #>   Statistical Power    = 0.802  <<
@@ -773,6 +806,7 @@ power.binom.test(size = 16424, # number of replications needed
 To reliably detect a power rate of 0.80:
 
 ``` r
+
 # find the approximate solution
 power.z.oneprop(prob = 0.80, # prob. of correctly rejecting null
                 null.prob = c(0.795, 0.805), # equivalence margins
@@ -805,18 +839,20 @@ power.binom.test(size = 55011, # number of replications needed
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob)   = 0.800 (vs. null.prob = 0.795 and 0.805)
+#>   Number of Trials     = 55011
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
 #>   Statistical Power    = 0.801  <<
 ```
 
 **Report 2**: Power analysis indicated that at least 16,424 replications
-are required to estimate the Type 1 error rate at $\alpha$ = 0.05. This
-analysis used a two one-sided test procedure with equivalence margins
-set at 0.045 and 0.055. In contrast, at least 55,011 replications are
-needed to estimate statistical power at 0.80, assuming equivalence
-margins of 0.795 and 0.805, also using the two one-sided test procedure
-with $\alpha$ = 0.05.
+are required to estimate the Type 1 error rate at $`\alpha`$ = 0.05.
+This analysis used a two one-sided test procedure with equivalence
+margins set at 0.045 and 0.055. In contrast, at least 55,011
+replications are needed to estimate statistical power at 0.80, assuming
+equivalence margins of 0.795 and 0.805, also using the two one-sided
+test procedure with $`\alpha`$ = 0.05.
 
 ### Error Plots
 
@@ -830,6 +866,7 @@ Assign results of any `pwrss` function to an R object and pass it to the
 [`plot()`](https://rdrr.io/r/graphics/plot.default.html) function.
 
 ``` r
+
 power.t.student(d = 0.20, power = 0.80) |>
   plot()
 ```
@@ -868,6 +905,7 @@ relevant. What is the minimum required sample size per group, accounting
 for a 0.05 dropout rate in the treatment group?
 
 ``` r
+
 power.t.student(d = -0.20,
                 power = 0.80,
                 alpha = 0.05,
@@ -888,6 +926,7 @@ power.t.student(d = -0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = -0.200 (vs. null.d = 0)
 #>   Sample Size          = 310 and 310  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -919,6 +958,7 @@ ratio (female to male) in the population is 2. What is the minimum
 required sample size per group under these conditions?
 
 ``` r
+
 power.t.welch(d = 0.20,
               power = 0.80,
               n.ratio = 2,
@@ -940,6 +980,7 @@ power.t.welch(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 518 and 259  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -965,6 +1006,7 @@ groups is Cohen’s d = 0.20. What is the minimum required sample size per
 group, accounting for a 0.05 dropout rate in the treatment group?
 
 ``` r
+
 power.np.wilcoxon(d = 0.20,
                   power = 0.80,
                   n.ratio = 1,
@@ -991,6 +1033,7 @@ power.np.wilcoxon(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 412 and 412  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -1029,6 +1072,7 @@ margin usually takes POSITIVE values.
   
 
 ``` r
+
 # parametric (an example report is provided below)
 power.t.student(d = 0.20,
                 margin = -0.05,
@@ -1051,6 +1095,7 @@ power.t.student(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 199 and 199  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -1083,6 +1128,7 @@ power.t.welch(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 238 and 119  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -1114,6 +1160,7 @@ power.np.wilcoxon(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 208 and 208  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -1148,6 +1195,7 @@ usually takes NEGATIVE values.
   
 
 ``` r
+
 # parametric (an example report is provided below)
 power.t.student(d = 0.20,
                 margin = 0.05,
@@ -1170,6 +1218,7 @@ power.t.student(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 552 and 552  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -1202,6 +1251,7 @@ power.t.welch(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 662 and 331  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -1233,6 +1283,7 @@ power.np.wilcoxon(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 578 and 578  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -1260,6 +1311,7 @@ considered sufficient to claim equivalence. What is the minimum required
 sample size to detect an effect size of d = 0.20 under this criterion?
 
 ``` r
+
 # parametric (an example report is provided below)
 power.t.student(d = 0,
                 margin = c(-0.10, 0.10),
@@ -1284,6 +1336,7 @@ power.t.student(d = 0,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0 (vs. null.d = 0)
 #>   Sample Size          = 1714 and 1714  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -1318,6 +1371,7 @@ power.t.welch(d = 0,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0 (vs. null.d = 0)
 #>   Sample Size          = 2056 and 1028  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -1351,6 +1405,7 @@ power.np.wilcoxon(d = 0,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0 (vs. null.d = 0)
 #>   Sample Size          = 1795 and 1795  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -1381,6 +1436,7 @@ the minimum required sample size to detect an effect size of Cohen’s d =
 0.20 under this criterion?
 
 ``` r
+
 # parametric (an example report is provided below)
 power.t.student(d = 0.20,
                 margin = c(-0.05, 0.05),
@@ -1405,6 +1461,7 @@ power.t.student(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 700 and 700  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -1439,6 +1496,7 @@ power.t.welch(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 842 and 421  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -1472,6 +1530,7 @@ power.np.wilcoxon(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 733 and 733  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -1514,11 +1573,12 @@ regulation, assessed at the end of the program using the Difficulties in
 Emotion Regulation Scale (DERS). A two-sided test will be conducted to
 determine whether emotional regulation improves or deteriorates in the
 online format in comparison to the in-person format. Researchers aim to
-detect a small effect (d = 0.20), using a two-sided test with $\alpha$ =
-0.05 and 0.80 power. What is the minimum required sample size under this
-criterion?
+detect a small effect (d = 0.20), using a two-sided test with $`\alpha`$
+= 0.05 and 0.80 power. What is the minimum required sample size under
+this criterion?
 
 ``` r
+
 power.t.student(d = 0.20,
                 power = 0.80,
                 alpha = 0.05,
@@ -1539,6 +1599,7 @@ power.t.student(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 199  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.198
@@ -1567,10 +1628,11 @@ measured on a 5-point scale (1 = Not at all, 5 = Extremely). Researchers
 aim to determine whether satisfaction ratings differ between the online
 and in-person formats. To test this, they plan to use the Wilcoxon
 signed-rank test for paired data, targeting a small effect size (d =
-0.20) with a two-sided significance level of $\alpha$ = 0.05. What is
+0.20) with a two-sided significance level of $`\alpha`$ = 0.05. What is
 the minimum required sample size under these conditions?
 
 ``` r
+
 power.np.wilcoxon(d = 0.20,
                   power = 0.80,
                   alpha = 0.05,
@@ -1595,6 +1657,7 @@ power.np.wilcoxon(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 208  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -1637,6 +1700,7 @@ margin usually takes POSITIVE values.
   
 
 ``` r
+
 # parametric (an example report is provided below)
 power.t.student(d = 0,
                 margin = -0.10,
@@ -1659,6 +1723,7 @@ power.t.student(d = 0,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0 (vs. null.d = 0)
 #>   Sample Size          = 619  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -1693,6 +1758,7 @@ power.np.wilcoxon(d = 0,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0 (vs. null.d = 0)
 #>   Sample Size          = 648  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -1740,6 +1806,7 @@ usually takes NEGATIVE values.
   
 
 ``` r
+
 # parametric (an example report is provided below)
 power.t.student(d = 0.20,
                 margin = 0.10,
@@ -1762,6 +1829,7 @@ power.t.student(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 627  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -1796,6 +1864,7 @@ power.np.wilcoxon(d = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.200 (vs. null.d = 0)
 #>   Sample Size          = 657  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -1841,6 +1910,7 @@ equivalence. What is the minimum required sample size under this
 criterion?
 
 ``` r
+
 # parametric (an example report is provided below)
 power.t.student(d = 0,
                 margin = c(-0.10, 0.10),
@@ -1865,6 +1935,7 @@ power.t.student(d = 0,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0 (vs. null.d = 0)
 #>   Sample Size          = 858  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -1901,6 +1972,7 @@ power.np.wilcoxon(d = 0,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0 (vs. null.d = 0)
 #>   Sample Size          = 898  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -1936,6 +2008,7 @@ to claim difference. What is the minimum required sample size under this
 criterion?
 
 ``` r
+
 # parametric (an example report is provided below)
 power.t.student(d = -0.20,
                 margin = c(-0.10, 0.10),
@@ -1960,6 +2033,7 @@ power.t.student(d = -0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = -0.200 (vs. null.d = 0)
 #>   Sample Size          = 797  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -1996,6 +2070,7 @@ power.np.wilcoxon(d = -0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = -0.200 (vs. null.d = 0)
 #>   Sample Size          = 370  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -2036,10 +2111,11 @@ the commonly used clinical threshold of 20 - is considered indicative of
 elevated stress that warrants attention. With an estimated standard
 deviation of 5, this two-point difference corresponds to a medium effect
 size (Cohen’s d = 0.40). Assume a one-tailed test with a significance
-level of $\alpha$ = 0.05 and a target power of 0.80. What is the minimum
-required sample size under this criterion?
+level of $`\alpha`$ = 0.05 and a target power of 0.80. What is the
+minimum required sample size under this criterion?
 
 ``` r
+
 power.t.student(d = 0.40,
                 power = 0.80,
                 alpha = 0.05,
@@ -2060,6 +2136,7 @@ power.t.student(d = 0.40,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.400 (vs. null.d = 0)
 #>   Sample Size          = 52  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.192
@@ -2083,10 +2160,11 @@ using “Overall, I am satisfied with my job.” and responses range from 1
 neutral point of 3 indicates dissatisfaction. The schools district
 considers a modest difference between average and neutral point (Cohen’s
 d = -0.20). Assume a one-tailed test with a significance level of
-$\alpha$ = 0.05 and a target power of 0.80. What is the minimum required
-sample size under this criterion?
+$`\alpha`$ = 0.05 and a target power of 0.80. What is the minimum
+required sample size under this criterion?
 
 ``` r
+
 power.np.wilcoxon(d = -0.20,
                   power = 0.80,
                   alpha = 0.05,
@@ -2111,6 +2189,7 @@ power.np.wilcoxon(d = -0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = -0.200 (vs. null.d = 0)
 #>   Sample Size          = 208  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -2132,10 +2211,11 @@ minimum meaningful effect by specifying `margin = 0.10` - which
 correspond to half-point increase in average stress level. Differences
 smaller than this margin are not considered practically significant or a
 cause for concern. Researchers plan to use a one-sided test with a
-significance level of $\alpha$ = 0.05 and a desired power of 0.80. What
-is the minimum required sample size under this configuration?
+significance level of $`\alpha`$ = 0.05 and a desired power of 0.80.
+What is the minimum required sample size under this configuration?
 
 ``` r
+
 # parametric
 power.t.student(d = 0.40,
                 margin = 0.10,
@@ -2158,6 +2238,7 @@ power.t.student(d = 0.40,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.400 (vs. null.d = 0)
 #>   Sample Size          = 72  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -2188,6 +2269,7 @@ power.np.wilcoxon(d = 0.40,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.400 (vs. null.d = 0)
 #>   Sample Size          = 76  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.196
@@ -2210,14 +2292,15 @@ supplement does not disrupt healthy sleep patterns, they plan to assess
 whether average nightly sleep duration among users falls within the
 clinically acceptable range of 6.5 to 8.5 hours, which is considered
 optimal for most adults. Using a one-sample equivalence t-test with
-equivalence bounds set at $\pm$ 1 hour around the target value of 7.5
+equivalence bounds set at $`\pm`$ 1 hour around the target value of 7.5
 hours, the researchers aim to demonstrate that the supplement does not
 lead to under- or oversleeping. A two one-sided tests procedure will be
-conducted with a significance level of $\alpha$ = 0.05 and 0.80 power.
+conducted with a significance level of $`\alpha`$ = 0.05 and 0.80 power.
 Assume a standard deviation of 1.2 hours and an expected mean of 7.5
 hours. What is the minimum required sample size under this criterion?
 
 ``` r
+
 d <- (7.5 - 7.5) / 1.2
 margin <- c((6.5 - 7.5) / 1.2, (8.5 - 7.5) / 1.2)
 
@@ -2245,6 +2328,7 @@ power.t.student(d = d,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0 (vs. null.d = 0)
 #>   Sample Size          = 14  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.174
@@ -2277,6 +2361,7 @@ power.np.wilcoxon(d = d,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0 (vs. null.d = 0)
 #>   Sample Size          = 14  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.196
@@ -2286,7 +2371,7 @@ power.np.wilcoxon(d = d,
 **Report**: We conducted a power analysis to determine the required
 sample size for assessing whether sleep duration falls within a
 predefined acceptable range. Assuming no difference (d = 0) with an
-equivalence margin of d = $\pm$ 0.83, a two one-sided test with 0.05
+equivalence margin of d = $`\pm`$ 0.83, a two one-sided test with 0.05
 significance level and 0.80 power, the analysis indicated that a minimum
 of 14 participants are needed.
 
@@ -2307,6 +2392,7 @@ assuming a standard deviation of 1.2 hours. What is the minimum required
 sample size under this criterion?
 
 ``` r
+
 d <- (9 - 7.5) / 1.2
 margin <- c((6.5 - 7.5) / 1.2, (8.5 - 7.5) / 1.2)
 
@@ -2334,6 +2420,7 @@ power.t.student(d = d,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 1.250 (vs. null.d = 0)
 #>   Sample Size          = 74  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.198
@@ -2366,6 +2453,7 @@ power.np.wilcoxon(d = d,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 1.250 (vs. null.d = 0)
 #>   Sample Size          = 78  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.196
@@ -2375,9 +2463,9 @@ power.np.wilcoxon(d = d,
 **Report**: We conducted a power analysis to determine the required
 sample size for assessing whether sleep duration falls outside of a
 predefined acceptable range. Assuming a large difference (d = 1.25) with
-an equivalence margin of d = $\pm$ 0.83, a two one-sided test with 0.05
-significance level and 0.80 power, the analysis indicated that a minimum
-of 74 participants are needed.
+an equivalence margin of d = $`\pm`$ 0.83, a two one-sided test with
+0.05 significance level and 0.80 power, the analysis indicated that a
+minimum of 74 participants are needed.
 
   
   
@@ -2407,10 +2495,11 @@ compliance rate as a public safety benchmark, consistent with national
 targets promoted by the National Highway Traffic Safety Administration
 (NHTSA). A usage rate of 80% or lower would raise concern and
 potentially trigger enforcement campaigns. Assuming a one-sided test
-with $\alpha = 0.05$ and 0.80 power, how many vehicles should be
+with $`\alpha = 0.05`$ and 0.80 power, how many vehicles should be
 observed?
 
 ``` r
+
 power.z.oneprop(prob = 0.80, # probability of success under alternative
                 null.prob = 0.90, # probability of success under null
                 power = 0.80,
@@ -2436,6 +2525,7 @@ power.z.oneprop(prob = 0.80, # probability of success under alternative
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob)   = 0.800 (vs. null.prob = 0.900)
 #>   Sample Size          = 69  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -2456,6 +2546,7 @@ The arcsine transformation stabilizes variance of proportion
 differences. It can be useful for proportions towards the extreme.
 
 ``` r
+
 power.z.oneprop(prob = 0.80, # probability of success under alternative
                 null.prob = 0.90, # probability of success under null
                 power = 0.80,
@@ -2482,6 +2573,7 @@ power.z.oneprop(prob = 0.80, # probability of success under alternative
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob)   = 0.800 (vs. null.prob = 0.900)
 #>   Sample Size          = 54  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.197
@@ -2495,6 +2587,7 @@ samples by accounting for the discrete nature of the outcome, resulting
 in more accurate test statistics.
 
 ``` r
+
 power.z.oneprop(prob = 0.80, # probability of success under alternative
                 null.prob = 0.90, # probability of success under null
                 power = 0.80,
@@ -2521,6 +2614,7 @@ power.z.oneprop(prob = 0.80, # probability of success under alternative
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob)   = 0.800 (vs. null.prob = 0.900)
 #>   Sample Size          = 79  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.198
@@ -2538,6 +2632,7 @@ values close to zero or one, it is more appropriate to use the [exact
 test](#one-prop-exact).
 
 ``` r
+
 power.z.oneprop(prob = 0.80, # probability of success under alternative
                 null.prob = 0.90, # probability of success under null
                 power = 0.80,
@@ -2564,6 +2659,7 @@ power.z.oneprop(prob = 0.80, # probability of success under alternative
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob)   = 0.800 (vs. null.prob = 0.900)
 #>   Sample Size          = 99  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -2580,6 +2676,7 @@ test with a significance level of 0.05 and 0.80 power. What is the
 minimum required sample size under this criterion?
 
 ``` r
+
 power.exact.oneprop(prob = 0.002, # probability of success under alternative
                     null.prob = 0, # probability of success under null
                     power = 0.80,
@@ -2602,6 +2699,7 @@ power.exact.oneprop(prob = 0.002, # probability of success under alternative
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob)   = 0.002 (vs. null.prob = 0)
 #>   Sample Size          = 804  <<
 #>   Type 1 Error (alpha) = 0.000
 #>   Type 2 Error (beta)  = 0.200
@@ -2636,6 +2734,7 @@ yields power calculations that are acceptably accurate.
 Here is an example that compares the two approaches:
 
 ``` r
+
 # z-test approach
 power.z.twoprops(prob1 = 0.60, prob2 = 0.50,
                  power = 0.80, arcsine = TRUE)
@@ -2656,6 +2755,7 @@ power.z.twoprops(prob1 = 0.60, prob2 = 0.50,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob1)  = 0.600 (vs. prob2 = 0.500)
 #>   Sample Size          = 388 and 388  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -2683,6 +2783,7 @@ power.t.student(d = 0.2013579, power = 0.80)
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.201 (vs. null.d = 0)
 #>   Sample Size          = 389 and 389  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -2725,6 +2826,7 @@ near 50% and that is fine.
   
 
 ``` r
+
 power.z.twoprops(prob1 = 0.15,
                  prob2 = 0.10,
                  power = 0.80,
@@ -2747,6 +2849,7 @@ power.z.twoprops(prob1 = 0.15,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob1)  = 0.150 (vs. prob2 = 0.100)
 #>   Sample Size          = 540 and 540  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -2763,6 +2866,7 @@ group (1080 total).
 **Arcsine transformation**:
 
 ``` r
+
 power.z.twoprops(prob1 = 0.15,
                  prob2 = 0.10,
                  power = 0.80,
@@ -2786,6 +2890,7 @@ power.z.twoprops(prob1 = 0.15,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob1)  = 0.150 (vs. prob2 = 0.100)
 #>   Sample Size          = 536 and 536  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -2795,6 +2900,7 @@ power.z.twoprops(prob1 = 0.15,
 **Continuity correction**:
 
 ``` r
+
 power.z.twoprops(prob1 = 0.15,
                  prob2 = 0.10,
                  power = 0.80,
@@ -2818,6 +2924,7 @@ power.z.twoprops(prob1 = 0.15,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob1)  = 0.150 (vs. prob2 = 0.100)
 #>   Sample Size          = 580 and 580  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -2827,6 +2934,7 @@ power.z.twoprops(prob1 = 0.15,
 **Calculate the standard error using the unpooled standard deviations**:
 
 ``` r
+
 power.z.twoprops(prob1 = 0.15,
                  prob2 = 0.10,
                  power = 0.80,
@@ -2850,6 +2958,7 @@ power.z.twoprops(prob1 = 0.15,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob1)  = 0.150 (vs. prob2 = 0.100)
 #>   Sample Size          = 538 and 538  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -2870,11 +2979,12 @@ if return rate for either of the group exceeds the other by at least 10
 percentage points. The decision will help which reminder system to
 invest on considering their cost. Because no prior data exist, planners
 adopt the “worst-case scenario” approach that maximizes required sample
-size: a rise from 50% to 60%. Using a one-sided test with $\alpha$ =
+size: a rise from 50% to 60%. Using a one-sided test with $`\alpha`$ =
 0.05 and 0.80 power, what is the minimum number of patrons needed in
 each group?
 
 ``` r
+
 power.exact.twoprops(prob1 = 0.60,
                      prob2 = 0.50,
                      power = 0.80,
@@ -2897,6 +3007,7 @@ power.exact.twoprops(prob1 = 0.60,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob1)  = 0.600 (vs. prob2 = 0.500)
 #>   Sample Size          = 321 and 321  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -2927,6 +3038,7 @@ minimum required sample size to evaluate non-inferiority under this
 criterion?
 
 ``` r
+
 power.z.twoprops(prob1 = 0.01,
                  prob2 = 0.02,
                  margin = 0.01,
@@ -2950,6 +3062,7 @@ power.z.twoprops(prob1 = 0.01,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob1)  = 0.010 (vs. prob2 = 0.020)
 #>   Sample Size          = 457 and 457  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -2987,6 +3100,7 @@ what is the minimum required sample size to test for superiority under
 these conditions?
 
 ``` r
+
 power.z.twoprops(prob1 = 0.45,
                  prob2 = 0.50,
                  margin = -0.01,
@@ -3010,6 +3124,7 @@ power.z.twoprops(prob1 = 0.45,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob1)  = 0.450 (vs. prob2 = 0.500)
 #>   Sample Size          = 1926 and 1926  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -3048,8 +3163,9 @@ if interaction effects between variables create unexpected biases.
 Because of these concerns about algorithmic bias in the composite
 scoring methodology, the ministry wants the eligibility rates (eligible
 vs. not eligible) for the scholarship must remain equivalent across male
-and female students. Any disparity greater than $\pm$ 1% in eligibility
-rates would be flagged as a potential violation of gender equity policy.
+and female students. Any disparity greater than $`\pm`$ 1% in
+eligibility rates would be flagged as a potential violation of gender
+equity policy.
 
 An equivalence trial is conducted to determine whether the new automated
 scoring system produces statistically equivalent scholarship eligibility
@@ -3061,6 +3177,7 @@ of applications to process per group to test for equivalence under these
 conditions?
 
 ``` r
+
 power.z.twoprops(prob1 = 0.10,
                  prob2 = 0.10,
                  margin = c(-0.02, 0.02),
@@ -3086,6 +3203,7 @@ power.z.twoprops(prob1 = 0.10,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob1)  = 0.100 (vs. prob2 = 0.100)
 #>   Sample Size          = 3854 and 3854  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -3097,7 +3215,7 @@ required sample size to evaluate whether a new automated scoring system
 yields scholarship eligibility rates that are statistically equivalent
 between male and female students. The analysis assumed a baseline
 eligibility rate of 10% for both groups under the standard rater-based
-system. Using an equivalence margin of $\pm$ 5%, a two one-sided test
+system. Using an equivalence margin of $`\pm`$ 5%, a two one-sided test
 with a 0.05 significance level, and 0.80 power, the analysis indicated
 that a minimum of 3,854 applications should be processed per group
 (7,708 total).
@@ -3108,9 +3226,9 @@ that a minimum of 3,854 applications should be processed per group
 evaluates whether a new automated scoring system yields scholarship
 eligibility rates that are statistically equivalent between male and
 female students. The research team establishes that any gender
-difference in eligibility rates greater than $\pm$ 3% would constitute a
-meaningful disparity requiring algorithmic adjustment. They establish
-equivalence bounds of $\pm$ 1% in eligibility rates - a threshold
+difference in eligibility rates greater than $`\pm`$ 3% would constitute
+a meaningful disparity requiring algorithmic adjustment. They establish
+equivalence bounds of $`\pm`$ 1% in eligibility rates - a threshold
 considered the smallest practically important effect that warrants
 monitoring and potential intervention.
 
@@ -3120,6 +3238,7 @@ one-sided test with 0.05 significance level, 0.80 power, what is the
 minimum required number of complete applications to process?
 
 ``` r
+
 power.z.twoprops(prob1 = 0.13,
                  prob2 = 0.10,
                  margin = c(-0.01, 0.01),
@@ -3145,6 +3264,7 @@ power.z.twoprops(prob1 = 0.13,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob1)  = 0.130 (vs. prob2 = 0.100)
 #>   Sample Size          = 3992 and 3992  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -3155,8 +3275,8 @@ power.z.twoprops(prob1 = 0.13,
 required number of complete scholarship applications to evaluate whether
 a new automated scoring system results in a gender difference of 3% in
 eligibility rates (13% for females and 10% for males). Using equivalence
-bounds of $\pm$ 1%, a two one-sided test with a 0.05 significance level,
-and 0.80 power, the analysis indicated that a minimum of 3,992
+bounds of $`\pm`$ 1%, a two one-sided test with a 0.05 significance
+level, and 0.80 power, the analysis indicated that a minimum of 3,992
 applications should be processed per group (7,984 total).
 
 ### Paired Samples
@@ -3183,11 +3303,12 @@ clinical characteristics available in health records,
 
 The binary outcome is screening completion (yes / no). The aim is to
 evaluate whether the at-home kit significantly improves uptake, with an
-expected 10% increase (from 40% to 50%). A two-sided test, $\alpha$ =
+expected 10% increase (from 40% to 50%). A two-sided test, $`\alpha`$ =
 0.05, and 0.80 power is planned to estimate the minimum required sample
 size for the newly recruited group.
 
 ``` r
+
 power.z.twoprops(prob1 = 0.50,
                  prob2 = 0.40,
                  power = 0.80,
@@ -3212,6 +3333,7 @@ power.z.twoprops(prob1 = 0.50,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob10) = 0.178 (vs. prob01 = 0.078)
 #>   Paired Sample Size   = 200  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.196
@@ -3240,6 +3362,7 @@ other parameters remain unchanged; however, an additional 13 subjects
 need to be matched to maintain the desired power.
 
 ``` r
+
 power.exact.twoprops(prob1 = 0.50,
                      prob2 = 0.40,
                      power = 0.80,
@@ -3264,6 +3387,7 @@ power.exact.twoprops(prob1 = 0.50,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob10) = 0.178 (vs. prob01 = 0.078)
 #>   Paired Sample Size   = 213  <<
 #>   Type 1 Error (alpha) = 0.030
 #>   Type 2 Error (beta)  = 0.195
@@ -3288,11 +3412,12 @@ scores and academic stress scores is significantly greater than 0.10,
 which they define as the minimum meaningful effect size. Researchers
 define the difference between the expected correlation (0.20) and the
 benchmark value (0.10) as the minimum meaningful effect size that
-warrants attention. They plan a one-sided test with $\alpha$ = 0.05 and
-0.80 power. What is the minimum required sample size under these
+warrants attention. They plan a one-sided test with $`\alpha`$ = 0.05
+and 0.80 power. What is the minimum required sample size under these
 criteria?
 
 ``` r
+
 power.z.onecor(rho = 0.20,
                null.rho = 0.10,
                power = 0.80,
@@ -3302,7 +3427,7 @@ power.z.onecor(rho = 0.20,
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> One-Sample Correlation
+#> One-Sample Correlation (Approximate)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -3313,6 +3438,7 @@ power.z.onecor(rho = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (rho)    = 0.200 (vs. null.rho = 0.100)
 #>   Sample Size          = 593  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -3344,6 +3470,7 @@ acceptably accurate.
 Here is an example that compares the two approaches:
 
 ``` r
+
 # z-test approach
 power.z.twocors(rho1 = 0.20, rho2 = 0.10, power = .80)
 #> +--------------------------------------------------+
@@ -3361,6 +3488,7 @@ power.z.twocors(rho1 = 0.20, rho2 = 0.10, power = .80)
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (rho1)   = 0.200 (vs. rho2 = 0.100)
 #>   Sample Size          = 1501 and 1501  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -3388,6 +3516,7 @@ power.t.student(d = 0.1023972, power = 0.80)
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.102 (vs. null.d = 0)
 #>   Sample Size          = 1499 and 1499  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -3419,10 +3548,11 @@ difference between the two correlations. They consider a minimum
 meaningful difference of 0.10 - representing the difference between a
 correlation of 0 and 0.10 in the worst-case scenario - which corresponds
 to a small effect size (Cohen’s q = 0.10). Researchers plan to use a
-one-sided test with $\alpha$ = 0.05 and 0.80 power. What is the minimum
-required sample size under these criteria?
+one-sided test with $`\alpha`$ = 0.05 and 0.80 power. What is the
+minimum required sample size under these criteria?
 
 ``` r
+
 power.z.twocors(rho1 = 0.10,
                 rho2 = 0,
                 power = .80,
@@ -3443,6 +3573,7 @@ power.z.twocors(rho1 = 0.10,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (rho1)   = 0.100 (vs. rho2 = 0)
 #>   Sample Size          = 1232 and 1232  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -3473,6 +3604,7 @@ power.t.student(d = 0.1003353,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = 0.100 (vs. null.d = 0)
 #>   Sample Size          = 1229 and 1229  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -3509,11 +3641,12 @@ SES and academic achievement (`rho12 = 0.30`). A reduction from 0.30 to
 0.20 is meaningful and warrants attention (`rho13 = 0.30`). Also based
 on prior meta-analytic findings, it is common to observe a correlation
 of 0.70 between pre-test and post-test achievement scores
-(`rho23 = 0.30`). Researchers plan to use a one-sided test with $\alpha$
-= 0.05 and 0.80 power. What is the minimum required sample size under
-these criteria?
+(`rho23 = 0.30`). Researchers plan to use a one-sided test with
+$`\alpha`$ = 0.05 and 0.80 power. What is the minimum required sample
+size under these criteria?
 
 ``` r
+
 # example data for one common index
 # compare cor(V1, V2) to cor(V1, V3)
 
@@ -3555,6 +3688,7 @@ power.z.twocors.steiger(rho12 = 0.50,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (rho12)  = 0.500 (vs. rho13 = 0.400)
 #>   Sample Size          = 286  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -3574,10 +3708,10 @@ inflate.sample(n = 286, rate = 0.05)
 sample size required to detect a meaningful reduction in the correlation
 between SES and academic achievement following a parental engagement
 intervention. Based on prior meta-analyses, the correlation between SES
-and academic achievement is assumed to be $\rho_{12}$ = 0.30 at
-pre-test, with a post-test correlation of $\rho_{13}$ = 0.20
+and academic achievement is assumed to be $`\rho_{12}`$ = 0.30 at
+pre-test, with a post-test correlation of $`\rho_{13}`$ = 0.20
 representing a meaningful reduction (Cohen’s q = 0.126). The correlation
-between pre-test and post-test scores is assumed to be $\rho_{23}$ =
+between pre-test and post-test scores is assumed to be $`\rho_{23}`$ =
 -0.70. The analysis uses a one-sided Steiger’s Z test to compare
 dependent correlations, with a significance level of 0.05 and a
 statistical power of 0.80. Under these assumptions, the minimum required
@@ -3605,11 +3739,12 @@ pre-test and post-test reading is `rho13 = 0.70`, the correlation
 between pre-test and post-test math is `rho24 = 0.70`, the correlation
 between pre-test reading and post-test math is `rho14 = 0.40`, and the
 correlation between pre-test math and post-test reading is
-`rho23 = 0.40`. Researchers plan to use a one-sided test with $\alpha$ =
-0.05 and 0.80 power. What is the minimum required sample size under
+`rho23 = 0.40`. Researchers plan to use a one-sided test with $`\alpha`$
+= 0.05 and 0.80 power. What is the minimum required sample size under
 these criteria?
 
 ``` r
+
 # example data for no common index
 # compare cor(V1, V2) to cor(V3, V4)
 
@@ -3655,6 +3790,7 @@ power.z.twocors.steiger(rho12 = 0.50, # cor(V1, V2)
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (rho12)  = 0.500 (vs. rho34 = 0.600)
 #>   Sample Size          = 317  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -3675,13 +3811,13 @@ sample size required to detect a meaningful increase in the correlation
 between reading and math performance following an intervention involving
 meta-cognitive strategy instruction in reading. Based on prior
 meta-analyses, the correlation between reading and math scores is
-assumed to be $\rho_{12} = 0.50$ at pre-test, with a post-test
-correlation of $\rho_{34} = 0.60$ representing a meaningful increase
-(Cohen’s $q = 0.144$). The analysis also incorporates the following
-assumed correlations: $\rho_{13} = 0.70$ (pre-test reading - post-test
-reading), $\rho_{24} = 0.70$ (pre-test math - post-test math),
-$\rho_{14} = 0.40$ (pre-test reading - post-test math), and
-$\rho_{23} = 0.40$ (pre-test math - post-test reading). The analysis
+assumed to be $`\rho_{12} = 0.50`$ at pre-test, with a post-test
+correlation of $`\rho_{34} = 0.60`$ representing a meaningful increase
+(Cohen’s $`q = 0.144`$). The analysis also incorporates the following
+assumed correlations: $`\rho_{13} = 0.70`$ (pre-test reading - post-test
+reading), $`\rho_{24} = 0.70`$ (pre-test math - post-test math),
+$`\rho_{14} = 0.40`$ (pre-test reading - post-test math), and
+$`\rho_{23} = 0.40`$ (pre-test math - post-test reading). The analysis
 uses a one-sided Steiger’s Z test to compare dependent correlations,
 with a significance level of 0.05 and statistical power of 0.80. Under
 these assumptions, the minimum required sample size is 317 students. To
@@ -3698,28 +3834,31 @@ students.
 
 ### Omnibus F-Test
 
-#### $R^{2} > 0$
+#### $`R^2 > 0`$
 
 The omnibus F-test in multiple linear regression is used to evaluate
 whether the model as a whole explains a statistically significant
 portion of variance in the outcome variable. The null hypothesis states
 that all regression coefficients (except the intercept) are equal to
 zero which means none of the predictors contributes meaningfully to
-explaining the outcome variable (or $R^{2}$ is equal to zero).
+explaining the outcome variable (or $`R^2`$ is equal to zero).
 Alternative hypothesis states that at least some regression coefficients
-(except the intercept) is different from zero (or $R^{2}$ is greater
+(except the intercept) is different from zero (or $`R^2`$ is greater
 than zero).
 
-**Example**: Assume that we want to predict a continuous variable $Y$
-using $X_{1}$, $X_{2}$, and $X_{2}$ variables (can be a combination of
-binary or continuous).
+**Example**: Assume that we want to predict a continuous variable $`Y`$
+using $`X_{1}`$, $`X_{2}`$, and $`X_{2}`$ variables (can be a
+combination of binary or continuous).
 
-$$Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r,\quad r \sim N\left( 0,\sigma^{2} \right)$$
+``` math
+Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \sim N(0, \sigma ^ 2)
+```
 
-We are interested in a minimum $R^{2}$ = 0.10. What is the minimum
+We are interested in a minimum $`R^2`$ = 0.10. What is the minimum
 required sample size?
 
 ``` r
+
 power.f.regression(r.squared = 0.10,
                    k.total = 3, # number of total predictors
                    power = 0.80,
@@ -3739,30 +3878,32 @@ power.f.regression(r.squared = 0.10,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 103  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.196
-#>   Statistical Power    = 0.804
+#>   Effect Size (R-squared) = 0.100
+#>   Sample Size             = 103  <<
+#>   Type 1 Error (alpha)    = 0.050
+#>   Type 2 Error (beta)     = 0.196
+#>   Statistical Power       = 0.804
 ```
 
 **Report**: We conducted a power analysis to determine the minimum
 required sample size to detect a small but meaningful effect in a
 multiple linear regression model predicting a continuous outcome
-variable $Y$ from three predictors ($X_{1}$, $X_{2}$, and $X_{3}$). We
-are interested in an effect as small as $R^{2} = 0.10$ using an omnibus
-F-test with a significance level of $\alpha = 0.05$ and statistical
-power of 0.80. Under these assumptions, the minimum required sample size
-is 103 participants.
+variable $`Y`$ from three predictors ($`X_{1}`$, $`X_{2}`$, and
+$`X_{3}`$). We are interested in an effect as small as $`R^2 = 0.10`$
+using an omnibus F-test with a significance level of $`\alpha = 0.05`$
+and statistical power of 0.80. Under these assumptions, the minimum
+required sample size is 103 participants.
 
-#### $R^{2}$ \> Margin
+#### $`R^2`$ \> Margin
 
 **Example**: Consider the [earlier example](#reg-f-test). Now, instead
-of testing against a zero null hypothesis (i.e., $R^{2}$ = 0), we aim to
-set a practical null hypothesis for $R^{2}$ at 0.05 (`margin = 0.05`),
+of testing against a zero null hypothesis (i.e., $`R^2`$ = 0), we aim to
+set a practical null hypothesis for $`R^2`$ at 0.05 (`margin = 0.05`),
 representing the largest effect size considered practically null. What
 is the minimum required sample size under these conditions?
 
 ``` r
+
 power.f.regression(r.squared = 0.10,
                    margin = 0.05,
                    k.total = 3,
@@ -3783,36 +3924,40 @@ power.f.regression(r.squared = 0.10,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 612  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Effect Size (R-squared) = 0.100
+#>   Sample Size             = 612  <<
+#>   Type 1 Error (alpha)    = 0.050
+#>   Type 2 Error (beta)     = 0.200
+#>   Statistical Power       = 0.800
 ```
 
 **Report**: We conducted a power analysis to determine the minimum
 required sample size to detect a small but meaningful effect in a
 multiple linear regression model predicting a continuous outcome
-variable $Y$ from three predictors ($X_{1}$, $X_{2}$, and $X_{3}$). We
-are interested in an effect as small as $R^{2}$ = 0.10 using an omnibus
-F-test with a significance level of $\alpha = 0.05$ and statistical
-power of 0.80. An $R^{2}$ \< 0.05 is considered to have negligible
-practical significance. Under these assumptions, the minimum required
-sample size is 612 participants.
+variable $`Y`$ from three predictors ($`X_{1}`$, $`X_{2}`$, and
+$`X_{3}`$). We are interested in an effect as small as $`R^2`$ = 0.10
+using an omnibus F-test with a significance level of $`\alpha = 0.05`$
+and statistical power of 0.80. An $`R^2`$ \< 0.05 is considered to have
+negligible practical significance. Under these assumptions, the minimum
+required sample size is 612 participants.
 
-#### $\Delta R^{2}$ \> 0
+#### $`\Delta R^2`$ \> 0
 
 **Example**: Assume that we want to test the incremental contribution of
-two additional predictors ($X_{4}$ and $X_{5}$) to an existing
+two additional predictors ($`X_{4}`$ and $`X_{5}`$) to an existing
 regression model. That is, we are testing whether adding these two
 predictors (k.tested = 2) results in a significant increase in explained
 variance. The full model includes five predictors in total (k.total =
 5). We are interested in detecting a meaningful increase in explained
-variance of $\Delta R^{2} = 0.10$. What is the minimum required sample
+variance of $`\Delta R^2 = 0.10`$. What is the minimum required sample
 size under these criteria?
 
-$$Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + \beta_{4}X_{4} + \beta_{5}X_{5} + r,\quad r \sim N\left( 0,\sigma^{2} \right)$$
+``` math
+Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + \beta_{4}X_{4} + \beta_{5}X_{5} + r, \quad r \sim N(0, \sigma ^ 2)
+```
 
 ``` r
+
 power.f.regression(r.squared.change = 0.10,
                    k.total = 5, # number of total predictors
                    k.tested = 2, # number of tested predictors
@@ -3833,35 +3978,38 @@ power.f.regression(r.squared.change = 0.10,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 90  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (R-squared) = 0.100
+#>   Sample Size             = 90  <<
+#>   Type 1 Error (alpha)    = 0.050
+#>   Type 2 Error (beta)     = 0.199
+#>   Statistical Power       = 0.801
 ```
 
 **Report**: We conducted a power analysis to determine the minimum
 required sample size to detect a small but meaningful effect in a
 multiple linear regression model predicting a continuous outcome
-variable $Y$ from five predictors ($X_{1}$ through $X_{5}$). Our primary
-interest is in testing the incremental contribution of two predictors
-($X_{4}$ and $X_{5}$), beyond the initial model that includes $X_{1}$,
-$X_{2}$, and $X_{3}$. Specifically, we aim to detect an increase in
-explained variance of $\Delta R^{2} = 0.10$ using an F-test with a
-significance level of $\alpha = 0.05$ and statistical power of 0.80. The
-total number of predictors in the final model is five (`k.total = 5`),
-and the number of predictors being tested is two (`k.tested = 2`). Under
-these assumptions, the minimum required sample size is 90 participants.
+variable $`Y`$ from five predictors ($`X_{1}`$ through $`X_{5}`$). Our
+primary interest is in testing the incremental contribution of two
+predictors ($`X_{4}`$ and $`X_{5}`$), beyond the initial model that
+includes $`X_{1}`$, $`X_{2}`$, and $`X_{3}`$. Specifically, we aim to
+detect an increase in explained variance of $`\Delta R^2 = 0.10`$ using
+an F-test with a significance level of $`\alpha = 0.05`$ and statistical
+power of 0.80. The total number of predictors in the final model is five
+(`k.total = 5`), and the number of predictors being tested is two
+(`k.tested = 2`). Under these assumptions, the minimum required sample
+size is 90 participants.
 
-#### $\Delta R^{2}$ \> Margin
+#### $`\Delta R^2`$ \> Margin
 
 **Example**: Consider the [earlier example](#reg-f-test-rsq-change).
 Now, instead of testing against a zero null hypothesis (i.e.,
-$\Delta R^{2}$ = 0), we aim to set a practical null hypothesis for
-$\Delta R^{2}$ at 0.05 (`margin = 0.05`), representing the largest
+$`\Delta R^2`$ = 0), we aim to set a practical null hypothesis for
+$`\Delta R^2`$ at 0.05 (`margin = 0.05`), representing the largest
 effect size considered practically null. What is the minimum required
 sample size under these conditions?
 
 ``` r
+
 power.f.regression(r.squared.change = 0.10,
                    margin = 0.05,
                    k.total = 5, # number of total predictors
@@ -3883,44 +4031,48 @@ power.f.regression(r.squared.change = 0.10,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 606  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (R-squared) = 0.100
+#>   Sample Size             = 606  <<
+#>   Type 1 Error (alpha)    = 0.050
+#>   Type 2 Error (beta)     = 0.199
+#>   Statistical Power       = 0.801
 ```
 
 **Report**: We conducted a power analysis to determine the minimum
 required sample size to detect a small but meaningful effect in a
 multiple linear regression model predicting a continuous outcome
-variable $Y$ from five predictors ($X_{1}$ through $X_{5}$). Our
+variable $`Y`$ from five predictors ($`X_{1}`$ through $`X_{5}`$). Our
 specific interest lies in testing the incremental contribution of two
-predictors ($X_{4}$ and $X_{5}$) beyond an initial model containing
-three predictors ($X_{1}$, $X_{2}$, and $X_{3}$). We are interested in
-detecting an increase in explained variance of $\Delta R^{2} = 0.10$
-using an F-test with a significance level of $\alpha = 0.05$ and
-statistical power of 0.80. An $\Delta R^{2}$ less than 0.05 is
-considered to have negligible practical significance. Under these
-assumptions, the minimum required sample size is 606 participants.
+predictors ($`X_{4}`$ and $`X_{5}`$) beyond an initial model containing
+three predictors ($`X_{1}`$, $`X_{2}`$, and $`X_{3}`$). We are
+interested in detecting an increase in explained variance of
+$`\Delta R^2 = 0.10`$ using an F-test with a significance level of
+$`\alpha = 0.05`$ and statistical power of 0.80. An $`\Delta R^2`$ less
+than 0.05 is considered to have negligible practical significance. Under
+these assumptions, the minimum required sample size is 606 participants.
 
 ### Single Coefficient (T-Test)
 
 #### Standardized Input
 
 In the earlier example, assume that we want to predict a continuous
-variable $Y$ using a continuous predictor $X_{1}$ but control for
-$X_{2}$, and $X_{2}$ variables (can be a combination of binary or
-continuous). We are mainly interested in the effect of $X_{1}$ and
-expect a standardized regression coefficient of $\beta_{1} = 0.20$.
+variable $`Y`$ using a continuous predictor $`X_{1}`$ but control for
+$`X_{2}`$, and $`X_{2}`$ variables (can be a combination of binary or
+continuous). We are mainly interested in the effect of $`X_{1}`$ and
+expect a standardized regression coefficient of $`\beta_{1} = 0.20`$.
 
-$$Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r,\quad r \sim N\left( 0,\sigma^{2} \right)$$
+``` math
+Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \sim N(0, \sigma ^ 2)
+```
 
 Again, we are expecting that these three variables explain 30% of the
-variance in the outcome ($R^{2} = 0.30$). What is the minimum required
+variance in the outcome ($`R^2 = 0.30`$). What is the minimum required
 sample size? It is sufficient to provide standardized regression
 coefficient for `beta` because `sd.predictor = 1` and `sd.outcome = 1`
 by default.
 
 ``` r
+
 power.t.regression(beta = 0.20,
                    k.total = 3,
                    r.squared = 0.30,
@@ -3942,10 +4094,11 @@ power.t.regression(beta = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 140  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.198
-#>   Statistical Power    = 0.802
+#>   Effect Size (R-squared) = 0.300
+#>   Sample Size             = 140  <<
+#>   Type 1 Error (alpha)    = 0.050
+#>   Type 2 Error (beta)     = 0.198
+#>   Statistical Power       = 0.802
 ```
 
 #### Unstandardized Input
@@ -3957,6 +4110,7 @@ and a standard deviation of `sd.predictor = 4` for the main predictor.
 What is the minimum required sample size?
 
 ``` r
+
 power.t.regression(beta = 0.60,
                    sd.outcome = 12,
                    sd.predictor = 4,
@@ -3980,22 +4134,24 @@ power.t.regression(beta = 0.60,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 140  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.198
-#>   Statistical Power    = 0.802
+#>   Effect Size (R-squared) = 0.300
+#>   Sample Size             = 140  <<
+#>   Type 1 Error (alpha)    = 0.050
+#>   Type 2 Error (beta)     = 0.198
+#>   Statistical Power       = 0.802
 ```
 
 If the main predictor is binary (e.g. treatment / control), the
 standardized regression coefficient is Cohen’s *d*. Standard deviation
-of the main predictor is $\sqrt{p(1 - p)}$ where *p* is the proportion
+of the main predictor is $`\sqrt{p(1-p)}`$ where *p* is the proportion
 of sample in one of the groups. Assume half of the sample is in the
-first group $p = 0.50$. What is the minimum required sample size? It is
-sufficient to provide Cohen’s *d* for `beta` (standardized difference
+first group $`p = 0.50`$. What is the minimum required sample size? It
+is sufficient to provide Cohen’s *d* for `beta` (standardized difference
 between two groups) but specify `sd.predictor = sqrt(p * (1 - p))` where
 *p* is the proportion of subjects in one of the groups.
 
 ``` r
+
 p <- 0.50
 sd.predictor <- sqrt(p * (1 - p))
 
@@ -4021,10 +4177,11 @@ power.t.regression(beta = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 552  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Effect Size (R-squared) = 0.300
+#>   Sample Size             = 552  <<
+#>   Type 1 Error (alpha)    = 0.050
+#>   Type 2 Error (beta)     = 0.200
+#>   Statistical Power       = 0.800
 ```
 
 #### Non-inferiority
@@ -4042,6 +4199,7 @@ expected to be NEGATIVE and the `margin` takes POSITIVE values.
   
 
 ``` r
+
 p <- 0.50
 sd.predictor <- sqrt(p * (1 - p))
 
@@ -4069,10 +4227,11 @@ power.t.regression(beta = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 770  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Effect Size (R-squared) = 0.300
+#>   Sample Size             = 770  <<
+#>   Type 1 Error (alpha)    = 0.050
+#>   Type 2 Error (beta)     = 0.200
+#>   Statistical Power       = 0.800
 ```
 
 #### Superiority
@@ -4090,6 +4249,7 @@ to be NEGATIVE and the `margin` takes NEGATIVE values.
   
 
 ``` r
+
 p <- 0.50
 sd.predictor <- sqrt(p * (1 - p))
 
@@ -4117,10 +4277,11 @@ power.t.regression(beta = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 6934  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Effect Size (R-squared) = 0.300
+#>   Sample Size             = 6934  <<
+#>   Type 1 Error (alpha)    = 0.050
+#>   Type 2 Error (beta)     = 0.200
+#>   Statistical Power       = 0.800
 ```
 
 #### Equivalence
@@ -4132,6 +4293,7 @@ within -0.05 and 0.05 (`margin = c(-0.05, 0.05)`). What is the minimum
 required sample size?
 
 ``` r
+
 p <- 0.50
 sd.predictor <- sqrt(p * (1 - p))
 
@@ -4161,10 +4323,11 @@ power.t.regression(beta = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 9593  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Effect Size (R-squared) = 0.300
+#>   Sample Size             = 9593  <<
+#>   Type 1 Error (alpha)    = 0.050
+#>   Type 2 Error (beta)     = 0.200
+#>   Statistical Power       = 0.800
 ```
 
 #### Minimum Effect
@@ -4175,6 +4338,7 @@ expected to be less than -0.05 or greater than 0.05
 (`margin = c(-0.05, 0.05)`). What is the minimum required sample size?
 
 ``` r
+
 p <- 0.50
 sd.predictor <- sqrt(p * (1 - p))
 
@@ -4203,10 +4367,11 @@ power.t.regression(beta = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 981  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Effect Size (R-squared) = 0.300
+#>   Sample Size             = 981  <<
+#>   Type 1 Error (alpha)    = 0.050
+#>   Type 2 Error (beta)     = 0.200
+#>   Statistical Power       = 0.800
 ```
 
   
@@ -4218,36 +4383,47 @@ power.t.regression(beta = 0.20,
 
 In logistic regression a binary outcome variable (0 / 1: failure /
 success, dead / alive, absent / present) is modeled by predicting
-probability of being in group 1 ($P_{1}$) via logit transformation
-(natural logarithm of odds). The base probability $P_{0}$ is the overall
+probability of being in group 1 ($`P_1`$) via logit transformation
+(natural logarithm of odds). The base probability $`P_0`$ is the overall
 probability of being in group 1 without influence of predictors in the
 model (null). Under alternative hypothesis, the probability of being in
-group 1 ($P_{1}$) deviate from $P_{0}$ depending on the value of the
-predictor; whereas under null it is same as the $P_{0}$. A model with
-one main predictor ($X_{1}$) and two other covariates ($X_{2}$ and
-$X_{3}$) can be constructed as
+group 1 ($`P_1`$) deviate from $`P_0`$ depending on the value of the
+predictor; whereas under null it is same as the $`P_0`$. A model with
+one main predictor ($`X_1`$) and two other covariates ($`X_2`$ and
+$`X_3`$) can be constructed as
 
-$$ln\left( \frac{P_{1}}{1 - P_{1}} \right) = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3}$$
+``` math
+ln(\frac{P_1}{1 - P_1}) = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3}
+```
 
 where  
-$$\beta_{0} = ln\left( \frac{P_{0}}{1 - P_{0}} \right)$$  
-$$\beta_{1} = ln\left( \frac{P_{1}}{1 - P_{1}}/\frac{P_{0}}{1 - P_{0}} \right)$$  
+``` math
+\beta_0 = ln(\frac{P_0}{1 - P_0})
+```
+  
+``` math
+\beta_1 = ln(\frac{P_1}{1 - P_1} / \frac{P_0}{1 - P_0})
+```
+  
 Odds ratio is defined as
-$$OR = exp\left( \beta_{1} \right) = \frac{P_{1}}{1 - P_{1}}/\frac{P_{0}}{1 - P_{0}}$$  
+``` math
+OR = exp(\beta_1) = \frac{P_1}{1 - P_1} / \frac{P_0}{1 - P_0}
+```
+  
 
 **Example**:
 
 Assume
 
-- A squared multiple correlation of 0.20 between $X_{1}$ and other
+- A squared multiple correlation of 0.20 between $`X_1`$ and other
   covariates (`r2.other.x = 0.20` in the code). It can be found in the
-  form of adjusted R-square via regressing $X_{1}$ on $X_{2}$ and
-  $X_{3}$. Higher values require larger sample sizes. The default is 0
+  form of adjusted R-square via regressing $`X_1`$ on $`X_2`$ and
+  $`X_3`$. Higher values require larger sample sizes. The default is 0
   (zero).
-- A base probability of $P_{0} = 0.15$. This is the rate when predictor
-  $X_{1} = 0$ or when $\beta_{1} = 0$.
-- Increasing $X_{1}$ from 0 to 1 reduces the probability of being in
-  group 1 from 0.15 to 0.10 ($P_{1} = 0.10$).
+- A base probability of $`P_0 = 0.15`$. This is the rate when predictor
+  $`X_1 = 0`$ or when $`\beta_1 = 0`$.
+- Increasing $`X_1`$ from 0 to 1 reduces the probability of being in
+  group 1 from 0.15 to 0.10 ($`P_1 = 0.10`$).
 
 What is the minimum required sample size? There are three types of
 specification to statistical power or sample size calculations; (i)
@@ -4257,6 +4433,7 @@ regression coefficient specification (as in standard software output).
 ### Probability Specification
 
 ``` r
+
 power.z.logistic(prob = 0.10,
                  base.prob = 0.15,
                  r.squared.predictor = 0.20,
@@ -4282,17 +4459,21 @@ power.z.logistic(prob = 0.10,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 365  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (Odds Ratio) = 0.630
+#>   Sample Size              = 365  <<
+#>   Type 1 Error (alpha)     = 0.050
+#>   Type 2 Error (beta)      = 0.199
+#>   Statistical Power        = 0.801
 ```
 
 ### Odds Ratio Specification
 
-$$OR = \frac{P_{1}}{1 - P1}/\frac{P_{0}}{1 - P_{0}} = \frac{0.10}{1 - 0.10}/\frac{0.15}{1 - 0.15} = 0.6296$$
+``` math
+OR = \frac{P_1}{1 - P1} / \frac{P_0}{1 - P_0} = \frac{0.10}{1 - 0.10} / \frac{0.15}{1 - 0.15} = 0.6296
+```
 
 ``` r
+
 power.z.logistic(odds.ratio = 0.6296,
                  base.prob = 0.15,
                  r.squared.predictor = 0.20,
@@ -4318,17 +4499,21 @@ power.z.logistic(odds.ratio = 0.6296,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 365  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (Odds Ratio) = 0.630
+#>   Sample Size              = 365  <<
+#>   Type 1 Error (alpha)     = 0.050
+#>   Type 2 Error (beta)      = 0.199
+#>   Statistical Power        = 0.801
 ```
 
 ### Regression Coefficient
 
-$$\beta_{1} = ln\left( \frac{P_{1}}{1 - P1}/\frac{P_{0}}{1 - P_{0}} \right) = ln(0.6296) = - 0.4626$$
+``` math
+\beta_1 = ln(\frac{P_1}{1 - P1} / \frac{P_0}{1 - P_0}) = ln(0.6296) = -0.4626
+```
 
 ``` r
+
 power.z.logistic(beta1 = -0.4626,
                  base.prob = 0.15,
                  r.squared.predictor = 0.20,
@@ -4354,10 +4539,11 @@ power.z.logistic(beta1 = -0.4626,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 365  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (Odds Ratio) = 0.630
+#>   Sample Size              = 365  <<
+#>   Type 1 Error (alpha)     = 0.050
+#>   Type 2 Error (beta)      = 0.199
+#>   Statistical Power        = 0.801
 ```
 
 ### Change Distribution
@@ -4369,6 +4555,7 @@ is 0 and 1 by default. They can be modified. In the following example
 the mean is 20 and the standard deviation is 8.
 
 ``` r
+
 distribution <- list(dist = "normal", mean = 20, sd = 8)
 
 power.z.logistic(beta1 = -0.4626,
@@ -4396,10 +4583,11 @@ power.z.logistic(beta1 = -0.4626,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 591  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Effect Size (Odds Ratio) = 0.630
+#>   Sample Size              = 591  <<
+#>   Type 1 Error (alpha)     = 0.050
+#>   Type 2 Error (beta)      = 0.200
+#>   Statistical Power        = 0.800
 ```
 
 **Change the distribution family of predictor X**:
@@ -4410,6 +4598,7 @@ half of the sample is assigned to the treatment group and the other half
 to the control (`prob = 0.50` by default).
 
 ``` r
+
 power.z.logistic(beta1 = -0.4626,
                  base.prob = 0.15,
                  r.squared.predictor = 0.20,
@@ -4435,10 +4624,11 @@ power.z.logistic(beta1 = -0.4626,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 1723  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Effect Size (Odds Ratio) = 0.630
+#>   Sample Size              = 1723  <<
+#>   Type 1 Error (alpha)     = 0.050
+#>   Type 2 Error (beta)      = 0.200
+#>   Statistical Power        = 0.800
 ```
 
 **Change the treatment group allocation rate of the binary predictor X**
@@ -4453,6 +4643,7 @@ sample (but not too much unbalanced). Assume the treatment group
 allocation rate is 40%. What is the minimum required sample size?
 
 ``` r
+
 distribution <- list(dist = "bernoulli", prob = 0.40)
 
 power.z.logistic(beta1 = -0.4626,
@@ -4480,10 +4671,11 @@ power.z.logistic(beta1 = -0.4626,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 1826  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Effect Size (Odds Ratio) = 0.630
+#>   Sample Size              = 1826  <<
+#>   Type 1 Error (alpha)     = 0.050
+#>   Type 2 Error (beta)      = 0.200
+#>   Statistical Power        = 0.800
 ```
 
   
@@ -4495,23 +4687,31 @@ power.z.logistic(beta1 = -0.4626,
 
 In Poisson regression a count outcome variable (e.g. number of hospital
 / store / website visits, number of absence / dead / purchase in a day /
-week / month) is modeled by predicting incidence rate ($\lambda$) via
+week / month) is modeled by predicting incidence rate ($`\lambda`$) via
 logarithmic transformation (natural logarithm of rates). A model with
-one main predictor ($X_{1}$) and two other covariates ($X_{2}$ and
-$X_{3}$) can be constructed as
+one main predictor ($`X_1`$) and two other covariates ($`X_2`$ and
+$`X_3`$) can be constructed as
 
-$$ln(\lambda) = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3}$$
+``` math
+ln(\lambda) = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3}
+```
 
-where $exp\left( \beta_{0} \right)$ is the base incidence rate.  
-$$\beta_{1} = ln\left( \frac{\lambda\left( X_{1} = 1 \right)}{\lambda\left( X_{1} = 0 \right)} \right)$$  
+where $`exp(\beta_0)`$ is the base incidence rate.  
+``` math
+\beta_1 = ln(\frac{\lambda(X_1=1)}{\lambda(X_1=0)})
+```
+  
 Incidence rate ratio is defined as
-$$exp\left( \beta_{1} \right) = \frac{\lambda\left( X_{1} = 1 \right)}{\lambda\left( X_{1} = 0 \right)}$$  
+``` math
+exp(\beta_1) = \frac{\lambda(X_1=1)}{\lambda(X_1=0)}
+```
+  
 
 Assume
 
-- The expected base incidence rate is 1.65: $exp(0.50) = 1.65$.
-- Increasing $X_{1}$ from 0 to 1 reduces the mean incidence rate from
-  1.65 to 0.905: $exp( - 0.10) = 0.905$.
+- The expected base incidence rate is 1.65: $`exp(0.50) = 1.65`$.
+- Increasing $`X_1`$ from 0 to 1 reduces the mean incidence rate from
+  1.65 to 0.905: $`exp(-0.10) = 0.905`$.
 
 What is the minimum required sample size? There are two types of
 specification; (i) rate ratio specification (exponentiated regression
@@ -4521,6 +4721,7 @@ standard software output).
 ### Regression Coefficient
 
 ``` r
+
 power.z.poisson(beta0 = 0.50,
                 beta1 = -0.10,
                 power = 0.80,
@@ -4545,15 +4746,17 @@ power.z.poisson(beta0 = 0.50,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 474  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Effect Size (Rate Ratio) = 0.905
+#>   Sample Size              = 474  <<
+#>   Type 1 Error (alpha)     = 0.050
+#>   Type 2 Error (beta)      = 0.200
+#>   Statistical Power        = 0.800
 ```
 
 ### Rate Ratio Specification
 
 ``` r
+
 power.z.poisson(base.rate = exp(0.50),
                 rate.ratio = exp(-0.10),
                 power = 0.80,
@@ -4578,10 +4781,11 @@ power.z.poisson(base.rate = exp(0.50),
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 474  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Effect Size (Rate Ratio) = 0.905
+#>   Sample Size              = 474  <<
+#>   Type 1 Error (alpha)     = 0.050
+#>   Type 2 Error (beta)      = 0.200
+#>   Statistical Power        = 0.800
 ```
 
 ### Change Distribution
@@ -4589,6 +4793,7 @@ power.z.poisson(base.rate = exp(0.50),
 **Change the distribution’s parameters for predictor X**:
 
 ``` r
+
 distribution <- list(dist = "normal", mean = 20, sd = 8)
 
 power.z.poisson(base.rate = exp(0.50),
@@ -4615,16 +4820,18 @@ power.z.poisson(base.rate = exp(0.50),
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 40  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (Rate Ratio) = 0.905
+#>   Sample Size              = 40  <<
+#>   Type 1 Error (alpha)     = 0.050
+#>   Type 2 Error (beta)      = 0.199
+#>   Statistical Power        = 0.801
 ```
 
 The function accommodates other types of distribution. For example, the
 main predictor can be binary (e.g. treatment / control groups).
 
 ``` r
+
 power.z.poisson(base.rate = exp(0.50),
                 rate.ratio = exp(-0.10),
                 power = 0.80,
@@ -4649,16 +4856,18 @@ power.z.poisson(base.rate = exp(0.50),
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 2003  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Effect Size (Rate Ratio) = 0.905
+#>   Sample Size              = 2003  <<
+#>   Type 1 Error (alpha)     = 0.050
+#>   Type 2 Error (beta)      = 0.200
+#>   Statistical Power        = 0.800
 ```
 
 **Change treatment group allocation rate of the binary predictor X**
 (`prob = 0.40`):
 
 ``` r
+
 distribution <- list(dist = "bernoulli", prob = 0.40)
 
 power.z.poisson(base.rate = exp(0.50),
@@ -4685,10 +4894,11 @@ power.z.poisson(base.rate = exp(0.50),
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 2095  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Effect Size (Rate Ratio) = 0.905
+#>   Sample Size              = 2095  <<
+#>   Type 1 Error (alpha)     = 0.050
+#>   Type 2 Error (beta)      = 0.200
+#>   Statistical Power        = 0.800
 ```
 
   
@@ -4706,14 +4916,16 @@ Simple Mediation Model
 
 Regression models take the form of
 
-$$\begin{array}{rcl}
-M & = & {\beta_{0M} + \beta_{a}X + e} \\
-Y & = & {\beta_{0Y} + \beta_{b}M + \beta_{cp}X + \epsilon}
-\end{array}$$
+``` math
+\begin{eqnarray}
+M & = & \beta_{0M} + \beta_{a} X + e \\
+Y & = & \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
+\end{eqnarray}
+```
 
 *Y* is the outcome, *M* is the mediator, and *X* is the main predictor.
-The indirect effect is the product of $\beta_{a}$ and $\beta_{b}$ path
-coefficients. $\beta_{cp}$ is the path coefficient for the direct
+The indirect effect is the product of $`\beta_a`$ and $`\beta_b`$ path
+coefficients. $`\beta_{cp}`$ is the path coefficient for the direct
 effect. Path coefficients can be standardized or unstandardized. They
 are presumed to be standardized by default because the main predictor,
 mediator, and outcome all have standard deviations of
@@ -4725,15 +4937,16 @@ reports / publications).
 ### Continuous Predictor
 
 Most software applications presume no covariates in the mediator and
-outcome models ($R_{M}^{2} = 0$ and $R_{M}^{2} = 0$). Even with no
-covariates, *X* explain some of the variance in *M* ($R_{M}^{2} > 0$)
-and *M* & *X* explains some of the variance in *Y* ($R_{Y}^{2} > 0$). We
-will almost never have an R-squared value of 0 (zero). The explained
-variance in the basic mediation model (the base R-squared values) can be
+outcome models ($`R^2_M = 0`$ and $`R^2_M = 0`$). Even with no
+covariates, *X* explain some of the variance in *M* ($`R^2_M > 0`$) and
+*M* & *X* explains some of the variance in *Y* ($`R^2_Y > 0`$). We will
+almost never have an R-squared value of 0 (zero). The explained variance
+in the basic mediation model (the base R-squared values) can be
 non-trivial and is taken into account in the function by default. Thus,
 results may seem different from other software outputs.
 
 ``` r
+
 # mediation model with base R-squared values
 power.z.mediation(beta.a = 0.25,
                   beta.b = 0.25,
@@ -4770,6 +4983,7 @@ the function expects R-squared values greater than the base R-squared
 value. Note that in this case `beta.cp` argument will be ignored.
 
 ``` r
+
 # base R-squared values are 0 (zero)
 # do not specify 'cp'
 power.z.mediation(beta.a = 0.25,
@@ -4809,6 +5023,7 @@ researcher might be interested in whether treatment influence the
 outcome through some mediators.
 
 ``` r
+
 p <- 0.50 # proportion of subjects in one of the groups
 sd.predictor <- sqrt(p * (1 - p))
 
@@ -4846,6 +5061,7 @@ power.z.mediation(beta.a = 0.25,
 Joint and Monte Carlo tests are only available when power is requested.
 
 ``` r
+
 # binary X
 p <- 0.50 # proportion of subjects in one of the groups
 sd.predictor <- sqrt(p * (1 - p))
@@ -4918,6 +5134,7 @@ and outcome models can be specified via `r.squared.mediator` and
 `r.squared.outcome` arguments.
 
 ``` r
+
 # continuous X
 power.z.mediation(beta.a = 0.25,
                   beta.b = 0.25,
@@ -4957,6 +5174,7 @@ less likely to have confounder. It is more common to add covariates to
 the outcome model only.
 
 ``` r
+
 # binary X
 p <- 0.50 # proportion of subjects in one of the groups
 sd.predictor <- sqrt(p * (1 - p))
@@ -5013,10 +5231,11 @@ such designs.
 
 A researcher is expecting a difference of Cohen’s *d* = 0.50 between
 treatment and control groups (two levels) translating into
-$\eta^{2} = 0.059$ (`eta.squared = 0.059`). Means are not adjusted for
+$`\eta^2 = 0.059`$ (`eta.squared = 0.059`). Means are not adjusted for
 any covariates. What is the minimum required sample size?
 
 ``` r
+
 power.f.ancova(eta.squared = 0.059,
                factor.levels = 2,
                power = 0.80,
@@ -5025,7 +5244,7 @@ power.f.ancova(eta.squared = 0.059,
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> One-way Analysis of Variance (F-Test)
+#> One-Way Analysis of Variance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -5036,20 +5255,22 @@ power.f.ancova(eta.squared = 0.059,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 128  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.197
-#>   Statistical Power    = 0.803
+#>   Effect Size (eta-squared) = 0.059
+#>   Total Sample Size         = 128  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.197
+#>   Statistical Power         = 0.803
 ```
 
 #### Two-way
 
-A researcher is expecting a partial $\eta^{2} = 0.03$
+A researcher is expecting a partial $`\eta^2 = 0.03`$
 (`eta.squared = 0.03`) for interaction of treatment / control (Factor A:
 two levels) with gender (Factor B: two levels). Thus,
 `factor.levels = c(2,2)`. What is the minimum required sample size?
 
 ``` r
+
 power.f.ancova(eta.squared = 0.03,
                factor.levels = c(2, 2),
                power = 0.80,
@@ -5058,7 +5279,7 @@ power.f.ancova(eta.squared = 0.03,
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> Two-way Analysis of Variance (F-Test)
+#> Two-Way Analysis of Variance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -5069,21 +5290,23 @@ power.f.ancova(eta.squared = 0.03,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 256  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Effect Size (eta-squared) = 0.030
+#>   Total Sample Size         = 256  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.200
+#>   Statistical Power         = 0.800
 ```
 
 #### Three-way
 
-A researcher is expecting a partial $\eta^{2} = 0.02$
+A researcher is expecting a partial $`\eta^2 = 0.02`$
 (`eta.squared = 0.02`) for interaction of treatment / control (Factor A:
 two levels), gender (Factor B: two levels), and socio-economic status
 (Factor C: three levels). Thus, `factor.levels = c(2, 2, 3)`. What is
 the minimum required sample size?
 
 ``` r
+
 power.f.ancova(eta.squared = 0.02,
                factor.levels = c(2, 2, 3),
                power = 0.80,
@@ -5092,7 +5315,7 @@ power.f.ancova(eta.squared = 0.02,
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> Three-way Analysis of Variance (F-Test)
+#> Three-Way Analysis of Variance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -5103,21 +5326,23 @@ power.f.ancova(eta.squared = 0.02,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 480  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.196
-#>   Statistical Power    = 0.804
+#>   Effect Size (eta-squared) = 0.020
+#>   Total Sample Size         = 480  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.196
+#>   Statistical Power         = 0.804
 ```
 
 #### Practical Effects
 
 The smallest effect size of interest for policy and practice may differ
-from zero. For example, if we want to test whether $\eta^{2} = 0.02$ is
+from zero. For example, if we want to test whether $`\eta^2 = 0.02`$ is
 meaningfully different from a null value of
-$\eta_{\text{Null}}^{2} = 0.01$, we can specify
+$`\eta^2_{\text{Null}} = 0.01`$, we can specify
 `null.eta.squared = 0.01`.
 
 ``` r
+
 power.f.ancova(eta.squared = 0.02,
                null.eta.squared = 0.01,
                factor.levels = c(2, 2, 3),
@@ -5127,7 +5352,7 @@ power.f.ancova(eta.squared = 0.02,
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> Three-way Analysis of Variance (F-Test)
+#> Three-Way Analysis of Variance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -5138,21 +5363,23 @@ power.f.ancova(eta.squared = 0.02,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 3516  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (eta-squared) = 0.020
+#>   Total Sample Size         = 3516  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.199
+#>   Statistical Power         = 0.801
 ```
 
 ### Means and SDs as Input
 
 A researcher is expecting a difference of Cohen’s *d* = 0.50 between
 treatment and control groups (two levels) translating into
-$\eta^{2} = 0.059$, as in the earlier example. Means and standard
+$`\eta^2 = 0.059`$, as in the earlier example. Means and standard
 deviations are not adjusted for any covariates. What is the minimum
 required sample size?
 
 ``` r
+
 power.f.ancova.keppel(mu.vector = c(0.50, 0), # vector of means
                       sd.vector = c(1, 1), # vector of standard deviations
                       p.vector = c(0.50, 0.50), # sample allocation rates
@@ -5162,7 +5389,7 @@ power.f.ancova.keppel(mu.vector = c(0.50, 0), # vector of means
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> One-way Analysis of Variance (F-Test)
+#> One-Way Analysis of Variance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -5173,10 +5400,11 @@ power.f.ancova.keppel(mu.vector = c(0.50, 0), # vector of means
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 128  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (eta-squared) = 0.059
+#>   Total Sample Size         = 128  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.199
+#>   Statistical Power         = 0.801
 ```
 
 NOTE: Keppel procedure allows only one-way ANOVA.
@@ -5213,11 +5441,12 @@ outcome variable depends the group membership.
 
 A researcher is expecting a difference of Cohen’s *d* = 0.50 on the
 post-test score between treatment and control groups, translating into
-$\eta^{2} = 0.059$. The test is administered at a single time point;
+$`\eta^2 = 0.059`$. The test is administered at a single time point;
 thus, the number of repeated measures is 1. What is the minimum required
 sample size?
 
 ``` r
+
 power.f.mixed.anova(eta.squared = 0.059,
                     factor.levels = c(2, 1), # c("between", "within")
                     power = 0.80,
@@ -5238,10 +5467,11 @@ power.f.mixed.anova(eta.squared = 0.059,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 128  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.197
-#>   Statistical Power    = 0.803
+#>   Effect Size (eta-squared) = 0.059
+#>   Total Sample Size         = 128  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.197
+#>   Statistical Power         = 0.803
 ```
 
 ### Time Effect (Within)
@@ -5249,13 +5479,14 @@ power.f.mixed.anova(eta.squared = 0.059,
 **Example 2: Pre-test vs. post-test design with treatment group only.**
 
 A researcher is expecting a difference of Cohen’s *d* = 0.30 between
-post-test and pre-test scores, translating into $\eta^{2} = 0.022$. The
+post-test and pre-test scores, translating into $`\eta^2 = 0.022`$. The
 test is administered before and after the treatment; thus, the number of
 repeated measures is 2. There is treatment group but no control group.
 The researcher also expects a correlation of 0.50 between pre-test and
 post-test scores. What is the minimum required sample size?
 
 ``` r
+
 power.f.mixed.anova(eta.squared = 0.022,
                     factor.levels = c(1, 2), # c("between", "within")
                     power = 0.80,
@@ -5277,10 +5508,11 @@ power.f.mixed.anova(eta.squared = 0.022,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 90  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.196
-#>   Statistical Power    = 0.804
+#>   Effect Size (eta-squared) = 0.022
+#>   Total Sample Size         = 90  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.196
+#>   Statistical Power         = 0.804
 ```
 
 ### Group x Time Interaction
@@ -5289,13 +5521,14 @@ power.f.mixed.anova(eta.squared = 0.022,
 
 A researcher is expecting a difference of Cohen’s *d* = 0.40 on the
 post-test scores between treatment and control groups after controlling
-for pre-test, translating into partial $\eta^{2} = 0.038$. The test is
+for pre-test, translating into partial $`\eta^2 = 0.038`$. The test is
 administered before and after the treatment; thus, the number of
 repeated measures is 2. The researcher also expects a correlation of
 0.50 between pre-test and post-test scores. What is the minimum required
 sample size?
 
 ``` r
+
 power.f.mixed.anova(eta.squared = 0.038,
                     factor.levels = c(2, 2), # c("between", "within")
                     power = 0.80,
@@ -5317,20 +5550,22 @@ power.f.mixed.anova(eta.squared = 0.038,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 152  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.197
-#>   Statistical Power    = 0.803
+#>   Effect Size (eta-squared) = 0.038
+#>   Total Sample Size         = 152  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.197
+#>   Statistical Power         = 0.803
 ```
 
 A researcher is expecting a difference of Cohen’s *d* = 0.30 between
 post-test and pre-test scores after controlling for group membership,
-translating into partial $\eta^{2} = 0.022$. There is both treatment and
+translating into partial $`\eta^2 = 0.022`$. There is both treatment and
 control groups. The researcher also expects a correlation of 0.50
 between pre-test and post-test scores. What is the minimum required
 sample size?
 
 ``` r
+
 power.f.mixed.anova(eta.squared = 0.022,
                     factor.levels = c(2, 2), # c("between", "within")
                     power = 0.80,
@@ -5352,22 +5587,24 @@ power.f.mixed.anova(eta.squared = 0.022,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 90  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.196
-#>   Statistical Power    = 0.804
+#>   Effect Size (eta-squared) = 0.022
+#>   Total Sample Size         = 90  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.196
+#>   Statistical Power         = 0.804
 ```
 
 The rationale for inspecting the interaction is that the benefit of the
 treatment may depend on the pre-test score (e.g. those with higher
 scores on the pre-test improve or deteriorate more). A researcher is
-expecting an interaction effect of partial $\eta^{2} = 0.01$. The test
+expecting an interaction effect of partial $`\eta^2 = 0.01`$. The test
 is administered before and after the treatment; thus, the number of
 repeated measures is 2. There is both treatment and control groups. The
 researcher also expects a correlation of 0.50 between pre-test and
 post-test scores. What is the minimum required sample size?
 
 ``` r
+
 power.f.mixed.anova(eta.squared = 0.01,
                     factor.levels = c(2, 2), # c("between", "within")
                     power = 0.80,
@@ -5389,19 +5626,21 @@ power.f.mixed.anova(eta.squared = 0.01,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 198  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.196
-#>   Statistical Power    = 0.804
+#>   Effect Size (eta-squared) = 0.010
+#>   Total Sample Size         = 198  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.196
+#>   Statistical Power         = 0.804
 ```
 
 ### Adjusted Eta-squared
 
-It is possible that $\eta^{2}$ is already adjusted for within-subject
-correlation. In this case instead of using unadjusted $\eta^{2} = 0.038$
-use the adjusted $\eta^{2} = 0.05$ but specify `rho.within = NA`.
+It is possible that $`\eta^2`$ is already adjusted for within-subject
+correlation. In this case instead of using unadjusted $`\eta^2 = 0.038`$
+use the adjusted $`\eta^2 = 0.05`$ but specify `rho.within = NA`.
 
 ``` r
+
 power.f.mixed.anova(eta.squared = 0.05,
                     factor.levels = c(2, 2), # c("between", "within")
                     power = 0.80,
@@ -5423,21 +5662,23 @@ power.f.mixed.anova(eta.squared = 0.05,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 152  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.198
-#>   Statistical Power    = 0.802
+#>   Effect Size (eta-squared) = 0.050
+#>   Total Sample Size         = 152  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.198
+#>   Statistical Power         = 0.802
 ```
 
 ### Practical Effects
 
 The smallest effect size of interest for policy and practice may differ
-from zero. For example, if we want to test whether $\eta^{2} = 0.05$ is
+from zero. For example, if we want to test whether $`\eta^2 = 0.05`$ is
 meaningfully different from a null value of
-$\eta_{\text{Null}}^{2} = 0.01$, we can specify
+$`\eta^2_{\text{Null}} = 0.01`$, we can specify
 `null.eta.squared = 0.01`.
 
 ``` r
+
 power.f.mixed.anova(eta.squared = 0.05,
                     null.eta.squared = 0.01,
                     factor.levels = c(2, 2), # c("between", "within")
@@ -5460,10 +5701,11 @@ power.f.mixed.anova(eta.squared = 0.05,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 380  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (eta-squared) = 0.050
+#>   Total Sample Size         = 380  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.199
+#>   Statistical Power         = 0.801
 ```
 
   
@@ -5480,9 +5722,10 @@ power.f.mixed.anova(eta.squared = 0.05,
 A researcher is expecting an adjusted difference of Cohen’s *d* = 0.45
 between treatment and control groups (`factor.levels = 2`) after
 controlling for the pre-test (`k.covariates = 1`) translating into
-partial $\eta^{2} = 0.048$. What is the minimum required sample size?
+partial $`\eta^2 = 0.048`$. What is the minimum required sample size?
 
 ``` r
+
 power.f.ancova(eta.squared = 0.048,
                factor.levels = 2,
                k.covariates = 1,
@@ -5492,7 +5735,7 @@ power.f.ancova(eta.squared = 0.048,
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> One-way Analysis of Covariance (F-Test)
+#> One-Way Analysis of Covariance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -5503,10 +5746,11 @@ power.f.ancova(eta.squared = 0.048,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 158  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (eta-squared) = 0.048
+#>   Total Sample Size         = 158  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.199
+#>   Statistical Power         = 0.801
 ```
 
 `k.covariates` argument has trivial effect on the results. The
@@ -5515,11 +5759,12 @@ effect (`eta.squared`) is unadjusted or covariate-adjusted.
 
 #### Two-way
 
-A researcher is expecting a partial $\eta^{2} = 0.02$ for interaction of
+A researcher is expecting a partial $`\eta^2 = 0.02`$ for interaction of
 treatment / control (Factor A) with gender (Factor B) adjusted for the
 pre-test (`k.covariates = 1`). What is the minimum required sample size?
 
 ``` r
+
 power.f.ancova(eta.squared = 0.02,
                factor.levels = c(2, 2),
                k.covariates = 1,
@@ -5529,7 +5774,7 @@ power.f.ancova(eta.squared = 0.02,
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> Two-way Analysis of Covariance (F-Test)
+#> Two-Way Analysis of Covariance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -5540,20 +5785,22 @@ power.f.ancova(eta.squared = 0.02,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 388  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (eta-squared) = 0.020
+#>   Total Sample Size         = 388  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.199
+#>   Statistical Power         = 0.801
 ```
 
 #### Three-way
 
-A researcher is expecting a partial $\eta^{2} = 0.01$ for interaction of
+A researcher is expecting a partial $`\eta^2 = 0.01`$ for interaction of
 treatment / control (Factor A), gender (Factor B), and socio-economic
 status (Factor C: three levels) adjusted for the pre-test
 (`k.covariates = 1`). What is the minimum required sample size?
 
 ``` r
+
 power.f.ancova(eta.squared = 0.01,
                factor.levels = c(2, 2, 3),
                k.covariates = 1,
@@ -5563,7 +5810,7 @@ power.f.ancova(eta.squared = 0.01,
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> Three-way Analysis of Covariance (F-Test)
+#> Three-Way Analysis of Covariance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -5574,21 +5821,23 @@ power.f.ancova(eta.squared = 0.01,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 960  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (eta-squared) = 0.010
+#>   Total Sample Size         = 960  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.199
+#>   Statistical Power         = 0.801
 ```
 
 #### Practical Effects
 
 The smallest effect size of interest for policy and practice may differ
-from zero. For example, if we want to test whether $\eta^{2} = 0.048$ is
+from zero. For example, if we want to test whether $`\eta^2 = 0.048`$ is
 meaningfully different from a null value of
-$\eta_{\text{Null}}^{2} = 0.01$, we can specify
+$`\eta^2_{\text{Null}} = 0.01`$, we can specify
 `null.eta.squared = 0.01`.
 
 ``` r
+
 power.f.ancova(eta.squared = 0.048,
                null.eta.squared = 0.01,
                factor.levels = 2,
@@ -5599,7 +5848,7 @@ power.f.ancova(eta.squared = 0.048,
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> One-way Analysis of Covariance (F-Test)
+#> One-Way Analysis of Covariance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -5610,10 +5859,11 @@ power.f.ancova(eta.squared = 0.048,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 410  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (eta-squared) = 0.048
+#>   Total Sample Size         = 410  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.199
+#>   Statistical Power         = 0.801
 ```
 
 ### Means and SDs as Input
@@ -5623,10 +5873,11 @@ power.f.ancova(eta.squared = 0.048,
 A researcher is expecting an adjusted difference of Cohen’s *d* = 0.318
 between treatment and control groups after controlling for the pre-test
 (`k.covariates = 1`) and explanatory power of the covariates
-(`r.squared = 0.50`). This translates into a partial $\eta^{2} = 0.048$.
+(`r.squared = 0.50`). This translates into a partial $`\eta^2 = 0.048`$.
 What is the minimum required sample size?
 
 ``` r
+
 power.f.ancova.keppel(mu.vector = c(0.318, 0), # vector of adjusted means
                       sd.vector = c(1, 1), # vector of unadjusted standard deviations
                       p.vector = c(0.50, 0.50), # sample allocation rates
@@ -5638,7 +5889,7 @@ power.f.ancova.keppel(mu.vector = c(0.318, 0), # vector of adjusted means
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> One-way Analysis of Covariance (F-Test)
+#> One-Way Analysis of Covariance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -5649,10 +5900,11 @@ power.f.ancova.keppel(mu.vector = c(0.318, 0), # vector of adjusted means
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 158  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.198
-#>   Statistical Power    = 0.802
+#>   Effect Size (eta-squared) = 0.048
+#>   Total Sample Size         = 158  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.198
+#>   Statistical Power         = 0.802
 ```
 
 NOTE: Keppel procedure allows only one-way ANOVA.
@@ -5664,10 +5916,11 @@ NOTE: Keppel procedure allows only one-way ANOVA.
 A researcher is expecting an adjusted difference of Cohen’s *d* = 0.318
 between treatment and control groups after controlling for the pre-test
 (`k.covariates = 1`) and explanatory power of the covariates
-(`r.squared = 0.50`). This translates into a partial $\eta^{2} = 0.048$.
+(`r.squared = 0.50`). This translates into a partial $`\eta^2 = 0.048`$.
 What is the minimum required sample size?
 
 ``` r
+
 power.f.ancova.shieh(mu.vector = c(0.318, 0), # vector of adjusted means
                       sd.vector = c(1, 1), # vector of unadjusted standard deviations
                       p.vector = c(0.50, 0.50), # sample allocation rates
@@ -5679,7 +5932,7 @@ power.f.ancova.shieh(mu.vector = c(0.318, 0), # vector of adjusted means
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> One-way Analysis of Covariance (F-Test)
+#> One-Way Analysis of Covariance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -5690,10 +5943,11 @@ power.f.ancova.shieh(mu.vector = c(0.318, 0), # vector of adjusted means
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 160  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.195
-#>   Statistical Power    = 0.805
+#>   Effect Size (eta-squared) = 0.048
+#>   Total Sample Size         = 160  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.195
+#>   Statistical Power         = 0.805
 ```
 
 #### Two-way
@@ -5703,10 +5957,11 @@ with gender (Factor B) adjusted for the pre-test (`k.covariates = 1`)
 and explanatory power of the covariate (`r.squared = 0.50`) are 0.30,
 0.09, 0.05, 0.245, corresponding to cells A1:B1, A1:B2, A2:B1, A2:B2,
 respectively, with unit standard deviation for each. This translates
-into a partial $\eta^{2} = 0.02$. What is the minimum required sample
+into a partial $`\eta^2 = 0.02`$. What is the minimum required sample
 size?
 
 ``` r
+
 power.f.ancova.shieh(mu.vector = c(0.30, 0.09, 0.05, 0.245), # vector of adjusted means
                      sd.vector = c(1, 1, 1, 1), # vector of unadjusted standard deviations
                      p.vector = c(0.25, 0.25, 0.25, 0.25), # sample allocation rates
@@ -5719,7 +5974,7 @@ power.f.ancova.shieh(mu.vector = c(0.30, 0.09, 0.05, 0.245), # vector of adjuste
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> Two-way Analysis of Covariance (F-Test)
+#> Two-Way Analysis of Covariance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -5730,10 +5985,11 @@ power.f.ancova.shieh(mu.vector = c(0.30, 0.09, 0.05, 0.245), # vector of adjuste
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 388  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.198
-#>   Statistical Power    = 0.802
+#>   Effect Size (eta-squared) = 0.020
+#>   Total Sample Size         = 388  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.198
+#>   Statistical Power         = 0.802
 ```
 
 ## Planned Contrasts (T-Test)
@@ -5743,6 +5999,7 @@ power.f.ancova.shieh(mu.vector = c(0.30, 0.09, 0.05, 0.245), # vector of adjuste
 ### Dummy Coding
 
 ``` r
+
 contr.obj <- factorial.contrasts(factor.levels = 3,
                                  coding = "treatment")
 #>    A1 A2 A3
@@ -5765,7 +6022,7 @@ design <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), # marginal means
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> One-way Analysis of Covariance (F-Test)
+#> One-Way Analysis of Covariance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -5776,10 +6033,11 @@ design <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), # marginal means
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 1245  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (eta-squared) = 0.008
+#>   Total Sample Size         = 1245  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.199
+#>   Statistical Power         = 0.801
 
 # power of planned contrasts, adjusted for alpha level
 power.t.contrasts(design, adjust.alpha = "fdr")
@@ -5806,6 +6064,7 @@ power.t.contrasts(design, adjust.alpha = "fdr")
 ### Helmert Coding
 
 ``` r
+
 contr.obj <- factorial.contrasts(factor.levels = 3,
                                  coding = "helmert")
 #>        A1     A2    A3
@@ -5828,7 +6087,7 @@ design <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), # marginal means
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> One-way Analysis of Covariance (F-Test)
+#> One-Way Analysis of Covariance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -5839,10 +6098,11 @@ design <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), # marginal means
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 1245  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (eta-squared) = 0.008
+#>   Total Sample Size         = 1245  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.199
+#>   Statistical Power         = 0.801
 
 # power of planned contrasts
 power.t.contrasts(design)
@@ -5869,6 +6129,7 @@ power.t.contrasts(design)
 ### Polynomial Coding
 
 ``` r
+
 contr.obj <- factorial.contrasts(factor.levels = 3,
                                  coding = "poly")
 #>         A1     A2    A3
@@ -5891,7 +6152,7 @@ design <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), # marginal means
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> One-way Analysis of Covariance (F-Test)
+#> One-Way Analysis of Covariance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -5902,10 +6163,11 @@ design <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), # marginal means
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 1245  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (eta-squared) = 0.008
+#>   Total Sample Size         = 1245  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.199
+#>   Statistical Power         = 0.801
 
 # power of the planned contrasts
 power.t.contrasts(design)
@@ -5932,6 +6194,7 @@ power.t.contrasts(design)
 ### Custom Contrasts
 
 ``` r
+
 # custom contrasts
 contrast.matrix <- rbind(
   cbind(A1 = 1, A2 = -0.50, A3 = -0.50),
@@ -5953,7 +6216,7 @@ design <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), # marginal means
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> One-way Analysis of Covariance (F-Test)
+#> One-Way Analysis of Covariance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -5964,10 +6227,11 @@ design <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), # marginal means
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 1245  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (eta-squared) = 0.008
+#>   Total Sample Size         = 1245  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.199
+#>   Statistical Power         = 0.801
 
 # power of the planned contrasts
 power.t.contrasts(design)
@@ -6012,6 +6276,7 @@ women whereas 72% is men (from the article). The null hypothesis assume
 50% is women and 50% is men.
 
 ``` r
+
 prob.matrix <- c(0.28, 0.72)
 
 probs.to.w(prob.matrix = prob.matrix)
@@ -6038,6 +6303,7 @@ power.chisq.gof(w = 0.44,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (w)      = 0.440
 #>   Sample Size          = 41  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.196
@@ -6050,13 +6316,14 @@ power.chisq.gof(w = 0.44,
 independence test (2 x 2 contingency table).**
 
 How many subjects are needed to claim that girls are under-diagnosed
-with ADHD? Check the original article at
-<https://time.com/growing-up-with-adhd/>
+with ADHD? Check the original article published in
+[TIME](https://web.archive.org/web/20250601054306/https://time.com/growing-up-with-adhd/)
 
 5.6% of girls and 13.2% of boys are diagnosed with ADHD (from the
 article).
 
 ``` r
+
 prob.matrix <- rbind(c(0.056, 0.132),
                   c(0.944, 0.868))
 colnames(prob.matrix) <- c("Girl", "Boy")
@@ -6090,6 +6357,7 @@ power.chisq.gof(w = 0.1302134,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (w)      = 0.130
 #>   Sample Size          = 463  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -6106,6 +6374,7 @@ depression severity and gender? Check the original article at
 <https://doi.org/10.1016/j.jad.2019.11.121>
 
 ``` r
+
 prob.matrix <- cbind(c(0.6759, 0.1559, 0.1281, 0.0323, 0.0078),
                   c(0.6771, 0.1519, 0.1368, 0.0241, 0.0101))
 rownames(prob.matrix) <- c("Normal", "Mild", "Moderate", "Severe", "Extremely Severe")
@@ -6142,6 +6411,7 @@ power.chisq.gof(w = 0.03022008,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (w)      = 0.030
 #>   Sample Size          = 13069  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200

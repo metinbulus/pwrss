@@ -13,15 +13,16 @@ Formulas are validated using Monte Carlo simulations.
 
 ``` r
 power.z.mediation(
-  beta.a,
-  beta.b,
+  beta.a = NULL,
+  beta.b = NULL,
+  ab.ratio = 1,
+  req.sign = "+",
   beta.cp = 0,
   sd.predictor = 1,
   sd.mediator = 1,
   sd.outcome = 1,
-  r.squared.mediator = beta.a^2 * sd.predictor^2/sd.mediator^2,
-  r.squared.outcome = (beta.b^2 * sd.mediator^2 + beta.cp^2 *
-    sd.predictor^2)/sd.outcome^2,
+  r.squared.mediator = NULL,
+  r.squared.outcome = NULL,
   n = NULL,
   power = NULL,
   alpha = 0.05,
@@ -29,7 +30,7 @@ power.z.mediation(
   method = c("sobel", "aroian", "goodman", "joint", "monte.carlo"),
   n.simulation = 1000,
   n.draws = 1000,
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -49,6 +50,16 @@ power.z.mediation(
   regression coefficient for M -\> Y path. One can use standardized
   regression coefficient, but should keep `sd.mediator = 1` and
   `sd.outcome = 1` or leave them out as they are default specifications.
+
+- ab.ratio:
+
+  'beta.a' / 'beta.b' ratio (can be negative) when minimum detectable
+  effect is of interest (either beta.a or beta.b, or both).
+
+- req.sign:
+
+  Sign of the indirect effect (beta.a \* beta.b product), when minimum
+  detectable effect is of interest (either beta.a or beta.b, or both)).
 
 - beta.cp:
 
@@ -110,7 +121,7 @@ power.z.mediation(
 - method:
 
   character; "sobel", "aroian", "goodman", "joint" or "monte.carlo".
-  "joint" and "monte.carlo" methods cannot be used for sample size
+  "joint" and "monte.carlo" methods can not be used for sample size
   calculation.
 
 - n.simulation:
@@ -123,7 +134,7 @@ power.z.mediation(
   coefficients for each replication (applies when method =
   "monte.carlo").
 
-- ceiling:
+- ceil.n:
 
   logical; whether sample size should be rounded up. `TRUE` by default.
 

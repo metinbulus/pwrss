@@ -27,7 +27,7 @@ power.t.contrasts(
   alpha = 0.05,
   adjust.alpha = c("none", "tukey", "bonferroni", "holm", "hochberg", "hommel", "BH",
     "BY", "fdr"),
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -100,7 +100,7 @@ power.t.contrasts(
   error. See
   [`?stats::p.adjust`](https://rdrr.io/r/stats/p.adjust.html).
 
-- ceiling:
+- ceil.n:
 
   logical; `TRUE` by default. If `FALSE` sample sizes in each cell are
   NOT rounded up.

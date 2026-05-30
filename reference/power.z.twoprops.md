@@ -9,8 +9,9 @@ Validated via G\*Power and PASS documentation.
 
 ``` r
 power.z.twoprops(
-  prob1,
-  prob2,
+  prob1 = NULL,
+  prob2 = NULL,
+  req.sign = "+",
   margin = 0,
   n.ratio = 1,
   n2 = NULL,
@@ -22,7 +23,7 @@ power.z.twoprops(
   paired = FALSE,
   rho.paired = 0.5,
   std.error = c("pooled", "unpooled"),
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -37,6 +38,11 @@ power.z.twoprops(
 - prob2:
 
   probability of success in the second group.
+
+- req.sign:
+
+  whether estimated prob is smaller or larger than the other (when
+  minimum detectable prob is of interest).
 
 - margin:
 
@@ -90,7 +96,7 @@ power.z.twoprops(
   character; whether to calculate standard error using "pooled" or
   "unpooled" standard deviation. Ignored for the paired test.
 
-- ceiling:
+- ceil.n:
 
   logical; `TRUE` rounds up sample size in each group.
 
@@ -189,6 +195,7 @@ https://doi.org/10.29299/kefad.1209913
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob1)  = 0.650 (vs. prob2 = 0.600)
 #>   Sample Size          = 500 and 500
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.505
@@ -216,6 +223,7 @@ https://doi.org/10.29299/kefad.1209913
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob1)  = 0.650 (vs. prob2 = 0.600)
 #>   Sample Size          = 1159 and 1159  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200

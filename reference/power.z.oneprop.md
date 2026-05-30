@@ -10,7 +10,8 @@ Formulas are validated using the PASS documentation and G\*Power.
 
 ``` r
 power.z.oneprop(
-  prob,
+  prob = NULL,
+  req.sign = "+",
   null.prob = 0.5,
   n = NULL,
   power = NULL,
@@ -19,7 +20,7 @@ power.z.oneprop(
   std.error = c("null", "alternative"),
   arcsine = FALSE,
   correct = FALSE,
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -30,6 +31,11 @@ power.z.oneprop(
 - prob:
 
   probability of success under alternative.
+
+- req.sign:
+
+  whether `prob` is smaller or larger than `null.prob` (when minimum
+  detectable prob is of interest).
 
 - null.prob:
 
@@ -71,7 +77,7 @@ power.z.oneprop(
 
   logical; whether Yate's continuity correction should be applied.
 
-- ceiling:
+- ceil.n:
 
   logical; whether sample size should be rounded up. `TRUE` by default.
 
@@ -149,9 +155,8 @@ https://doi.org/10.29299/kefad.1209913
 
 ``` r
 # power
-power.z.oneprop(prob = 0.45, null.prob = 0.50,
-                alpha = 0.05, n = 500,
-                alternative = "one.sided")
+power.z.oneprop(prob = 0.45, null.prob = 0.50, alpha = 0.05,
+                n = 500, alternative = "one.sided")
 #> +--------------------------------------------------+
 #> |                POWER CALCULATION                 |
 #> +--------------------------------------------------+
@@ -172,6 +177,7 @@ power.z.oneprop(prob = 0.45, null.prob = 0.50,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob)   = 0.450 (vs. null.prob = 0.500)
 #>   Sample Size          = 500
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.276
@@ -179,9 +185,8 @@ power.z.oneprop(prob = 0.45, null.prob = 0.50,
 #> 
 
 # sample size
-power.z.oneprop(prob = 0.45, null.prob = 0.50,
-                alpha = 0.05, power = 0.80,
-                alternative = "one.sided")
+power.z.oneprop(prob = 0.45, null.prob = 0.50, alpha = 0.05,
+                power = 0.80, alternative = "one.sided")
 #> +--------------------------------------------------+
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
@@ -202,7 +207,38 @@ power.z.oneprop(prob = 0.45, null.prob = 0.50,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob)   = 0.450 (vs. null.prob = 0.500)
 #>   Sample Size          = 617  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
+#> 
+
+# effect size
+power.z.oneprop(req.sign = "+", null.prob = 0.50, alpha = 0.05,
+                n = 500, power = 0.80, alternative = "one.sided")
+#> +--------------------------------------------------+
+#> |      MINIMUM DETECTABLE EFFECT CALCULATION       |
+#> +--------------------------------------------------+
+#> 
+#> One Proportion
+#> 
+#>   Method                 : Normal Approximation
+#>   Continuity Correction  : FALSE
+#>   Arcsine Transformation : FALSE
+#>   Standard Error         : Calculated From Null
+#> 
+#> ----------------------------------------------------
+#> Hypotheses
+#> ----------------------------------------------------
+#>   H0 (Null)        : prob - null.prob <= 0
+#>   H1 (Alternative) : prob - null.prob  > 0
+#> 
+#> ----------------------------------------------------
+#> Results
+#> ----------------------------------------------------
+#>   Effect Size (prob)   = 0.555 (vs. null.prob = 0.500)  <<
+#>   Sample Size          = 500
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
 #>   Statistical Power    = 0.800

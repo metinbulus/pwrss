@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Statistical Power and Sample Size Calculation Tools • pwrss</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Statistical Power and Sample Size Calculation Tools">
 <meta name="description" content="The pwrss R package provides flexible and comprehensive functions for statistical power and minimum required sample size calculations across a wide range of commonly used hypothesis tests in psychological, biomedical, and social sciences.">
@@ -61,7 +61,7 @@
 
 <div style="background-color:rgb(255, 165, 90); padding: 20px 20px 1px; border-radius:5px;">
 <p>
-The original tutorial was published on CRAN and can be accessed at: <a href="https://cran.rstudio.com/web/packages/pwrss/vignettes/examples.html" class="external-link">https://cran.rstudio.com/web/packages/pwrss/vignettes/examples.html</a>
+The original tutorial was published on CRAN and can be accessed at: <a href="https://cran.r-project.org/package=pwrss/vignettes/examples.html" class="external-link">https://cran.r-project.org/package=pwrss/vignettes/examples.html</a>
 </p>
 </div>
 <p><br></p>
@@ -72,11 +72,11 @@ The original tutorial was published on CRAN and can be accessed at: <a href="htt
 <p>If you find the package and related material useful please cite as:</p>
 <div style="background-color:rgb(245, 245, 245); padding: 20px 20px 1px; border-radius:5px;">
 <p>
-Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size Calculation Tools. R package version 1.0.0. <a href="https://doi.org/10.32614/CRAN.package.pwrss" class="external-link uri">https://doi.org/10.32614/CRAN.package.pwrss</a>
+Bulus, M., &amp; Jentschke, S. (2026). pwrss: Statistical Power and Sample Size Calculation Tools. R package version 1.2.0. <a href="https://doi.org/10.32614/CRAN.package.pwrss" class="external-link uri">https://doi.org/10.32614/CRAN.package.pwrss</a>
 </p>
 </div>
 <p><strong>Acknowledgments</strong></p>
-<p>This open-source project has benefited from users who have taken the time to report typos and identify bugs. I would like to acknowledge those who have helped improve the accuracy and quality of the project by reporting these issues. If I have missed anyone who has provided similar feedback, please let me know.</p>
+<p>This open-source project has benefited from users who have taken the time to report typos and identify bugs. We would like to acknowledge those who have helped improve the accuracy and quality of the project by reporting these issues. If we have missed anyone who has provided similar feedback, please let me know.</p>
 <p>Error reports from (alphabetic order): <br> Adrian Olszewski (bug report); Catherine (Kate) Crespi (bug report); dpnichols811 (GitHub profile, bug report); Fred Oswald (typo report); Jarrod Hadfield (bug report); Leszek Gawarecki (typo report); liegepr (GitHub profile, bug report); Roland Thijs (typo report)</p>
 <p>Please send any bug reports, feedback, or questions to <a href="mailto:bulusmetin@gmail.com">bulusmetin [at] gmail.com</a></p>
 <p><br></p>
@@ -149,16 +149,18 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt; Results</span></span>
 <span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt;   Type 2 Error (beta)  = 0.075</span></span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">#&gt;   Statistical Power    = 0.925  &lt;&lt;</span></span></code></pre></div>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt;   Effect Size (ncp)    = -3.519 (vs. null.ncp = 0)</span></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt;   Degrees of Freedom   = 29</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="co">#&gt;   Type 2 Error (beta)  = 0.075</span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="co">#&gt;   Statistical Power    = 0.925  &lt;&lt;</span></span></code></pre></div>
 <p><strong>Report</strong>: The post-hoc power analysis showed that a sample of 32 cars had a 0.925 chance of detecting the observed relationship between horsepower and miles per gallon, if such a relationship exists. The analysis was conducted using an <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math> level of 0.05.</p>
 </div>
 <div class="section level3">
 <h3 id="user-defined-design">User-Defined Design<a class="anchor" aria-label="anchor" href="#user-defined-design"></a>
 </h3>
 <p>Power calculation is not readily available for non-equivalent pre-test vs. post-test control-group-designs but the formula is already known. The approximate standard error is</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>E</mi><mo>=</mo><msqrt><mfrac><mrow><mn>1</mn><mo>−</mo><msup><mi>R</mi><mn>2</mn></msup></mrow><mrow><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>n</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><msubsup><mi>R</mi><mrow><mi>T</mi><mi>X</mi></mrow><mn>2</mn></msubsup><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac></msqrt></mrow><annotation encoding="application/x-tex">SE = \sqrt{\frac{1 - R^2}{p(1 - p)n(1 - R^2_{TX})}}</annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>E</mi><mo>=</mo><msqrt><mfrac><mrow><mn>1</mn><mo>−</mo><msup><mi>R</mi><mn>2</mn></msup></mrow><mrow><mi>p</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mi>n</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><msubsup><mi>R</mi><mrow><mi>T</mi><mi>X</mi></mrow><mn>2</mn></msubsup><mo stretchy="false" form="postfix">)</mo></mrow></mfrac></msqrt></mrow><annotation encoding="application/x-tex">SE = \sqrt{\frac{1 - R^2}{p(1 - p)n(1 - R^2_{TX})}}</annotation></semantics></math></p>
 <p>with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>f</mi><mo>=</mo><mi>n</mi><mo>−</mo><mi>g</mi><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">df = n - g - 2</annotation></semantics></math> where</p>
 <ul>
 <li>
@@ -217,6 +219,8 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (ncp)    = 3.674 (vs. null.ncp = 0.735)</span></span>
+<span><span class="co">#&gt;   Degrees of Freedom   = 117</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.104</span></span>
 <span><span class="co">#&gt;   Statistical Power    = 0.896  &lt;&lt;</span></span></code></pre></div>
@@ -406,6 +410,8 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (ncp)    = 10.710 (vs. null.ncp = 0)</span></span>
+<span><span class="co">#&gt;   Presumed Sample S.   = 31</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.115</span></span>
 <span><span class="co">#&gt;   Statistical Power    = 0.885  &lt;&lt;</span></span></code></pre></div>
@@ -458,12 +464,14 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   H0 (Null)        : ncp = ncp.null</span></span>
-<span><span class="co">#&gt;   H1 (Alternative) : ncp &gt; ncp.null</span></span>
+<span><span class="co">#&gt;   H0 (Null)        : ncp = null.ncp</span></span>
+<span><span class="co">#&gt;   H1 (Alternative) : ncp &gt; null.ncp</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (ncp)    = 138.290 (vs. null.ncp = 0)</span></span>
+<span><span class="co">#&gt;   Degrees of Freedom   = 9</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.000</span></span>
 <span><span class="co">#&gt;   Statistical Power    = 1.000  &lt;&lt;</span></span></code></pre></div>
@@ -522,15 +530,17 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#&gt; Hypotheses</span></span>
 <span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt;   H0 (Null)        : ncp = ncp.null</span></span>
-<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a><span class="co">#&gt;   H1 (Alternative) : ncp &gt; ncp.null</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt;   H0 (Null)        : ncp = null.ncp</span></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a><span class="co">#&gt;   H1 (Alternative) : ncp &gt; null.ncp</span></span>
 <span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a><span class="co">#&gt; Results</span></span>
 <span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a><span class="co">#&gt;   Type 2 Error (beta)  = 0.010</span></span>
-<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a><span class="co">#&gt;   Statistical Power    = 0.990  &lt;&lt;</span></span></code></pre></div>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a><span class="co">#&gt;   Effect Size (ncp)    = 18.463 (vs. null.ncp = 0)</span></span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a><span class="co">#&gt;   Degrees of Freedom   = 1</span></span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
+<span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a><span class="co">#&gt;   Type 2 Error (beta)  = 0.010</span></span>
+<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a><span class="co">#&gt;   Statistical Power    = 0.990  &lt;&lt;</span></span></code></pre></div>
 <p><strong>Report</strong>: The post-hoc power analysis indicated that a sample of 248 women provided a 0.99 probability of detecting the unique contribution of the number of induced abortions to infertility status, while controlling for other variables, assuming such a relationship exists in the population. The analysis was conducted using an <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math> level of 0.05.</p>
 </div>
 </div>
@@ -590,9 +600,11 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="co">#&gt; Results</span></span>
 <span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a><span class="co">#&gt;   Type 1 Error (alpha) = 0.039</span></span>
-<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="co">#&gt;   Type 2 Error (beta)  = 0.001</span></span>
-<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a><span class="co">#&gt;   Statistical Power    = 0.999  &lt;&lt;</span></span></code></pre></div>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a><span class="co">#&gt;   Effect Size (prob)   = 0.643 (vs. null.prob = 0.500)</span></span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="co">#&gt;   Number of Trials     = 272</span></span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a><span class="co">#&gt;   Type 1 Error (alpha) = 0.039</span></span>
+<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="co">#&gt;   Type 2 Error (beta)  = 0.001</span></span>
+<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a><span class="co">#&gt;   Statistical Power    = 0.999  &lt;&lt;</span></span></code></pre></div>
 <p><strong>Report</strong>: The post-hoc power analysis indicated that a sample of 272 eruptions provided a 0.999 probability of detecting whether eruptions lasting more than 3 minutes occur more than 50% of the time, if it exists in the underlying eruption pattern. The analysis was based on a one-sided test procedure with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math> = 0.05.</p>
 </div>
 <div class="section level3">
@@ -633,6 +645,8 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (prob)   = 0.500 (vs. null.prob = 0.495 and 0.505)</span></span>
+<span><span class="co">#&gt;   Number of Trials     = 85632</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
 <span><span class="co">#&gt;   Statistical Power    = 0.800  &lt;&lt;</span></span></code></pre></div>
@@ -672,6 +686,8 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (prob)   = 0.050 (vs. null.prob = 0.045 and 0.055)</span></span>
+<span><span class="co">#&gt;   Number of Trials     = 16424</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.049</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.198</span></span>
 <span><span class="co">#&gt;   Statistical Power    = 0.802  &lt;&lt;</span></span></code></pre></div>
@@ -709,6 +725,8 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (prob)   = 0.800 (vs. null.prob = 0.795 and 0.805)</span></span>
+<span><span class="co">#&gt;   Number of Trials     = 55011</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
 <span><span class="co">#&gt;   Statistical Power    = 0.801  &lt;&lt;</span></span></code></pre></div>
@@ -761,6 +779,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = -0.200 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 310 and 310  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -799,6 +818,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0.200 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 518 and 259  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
@@ -836,6 +856,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0.200 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 412 and 412  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -876,6 +897,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0.200 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 199 and 199  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
@@ -908,6 +930,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0.200 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 238 and 119  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -939,6 +962,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0.200 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 208 and 208  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
@@ -976,6 +1000,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0.200 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 552 and 552  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
@@ -1008,6 +1033,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0.200 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 662 and 331  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -1039,6 +1065,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0.200 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 578 and 578  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
@@ -1074,6 +1101,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 1714 and 1714  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -1108,6 +1136,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 2056 and 1028  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -1141,6 +1170,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 1795 and 1795  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -1176,6 +1206,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0.200 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 700 and 700  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -1210,6 +1241,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0.200 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 842 and 421  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
@@ -1243,6 +1275,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0.200 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 733 and 733  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -1279,6 +1312,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0.200 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 199  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.198</span></span>
@@ -1318,6 +1352,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0.200 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 208  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
@@ -1359,6 +1394,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 619  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -1393,6 +1429,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 648  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -1431,6 +1468,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0.200 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 627  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -1465,6 +1503,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0.200 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 657  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -1501,6 +1540,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 858  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -1537,6 +1577,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 898  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -1573,6 +1614,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = -0.200 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 797  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -1609,6 +1651,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = -0.200 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 370  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -1645,6 +1688,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0.400 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 52  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.192</span></span>
@@ -1680,6 +1724,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = -0.200 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 208  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
@@ -1713,6 +1758,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0.400 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 72  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
@@ -1743,6 +1789,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0.400 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 76  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.196</span></span>
@@ -1752,7 +1799,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <div class="section level3">
 <h3 id="equivalence-2">Equivalence<a class="anchor" aria-label="anchor" href="#equivalence-2"></a>
 </h3>
-<p><strong>Example</strong>: A sleep research team is evaluating the safety of a new melatonin-based supplement designed to support better sleep in adults without causing excessive drowsiness or oversleeping. To ensure the supplement does not disrupt healthy sleep patterns, they plan to assess whether average nightly sleep duration among users falls within the clinically acceptable range of 6.5 to 8.5 hours, which is considered optimal for most adults. Using a one-sample equivalence t-test with equivalence bounds set at <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>±</mo><annotation encoding="application/x-tex">\pm</annotation></semantics></math> 1 hour around the target value of 7.5 hours, the researchers aim to demonstrate that the supplement does not lead to under- or oversleeping. A two one-sided tests procedure will be conducted with a significance level of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math> = 0.05 and 0.80 power. Assume a standard deviation of 1.2 hours and an expected mean of 7.5 hours. What is the minimum required sample size under this criterion?</p>
+<p><strong>Example</strong>: A sleep research team is evaluating the safety of a new melatonin-based supplement designed to support better sleep in adults without causing excessive drowsiness or oversleeping. To ensure the supplement does not disrupt healthy sleep patterns, they plan to assess whether average nightly sleep duration among users falls within the clinically acceptable range of 6.5 to 8.5 hours, which is considered optimal for most adults. Using a one-sample equivalence t-test with equivalence bounds set at <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>±</mi><annotation encoding="application/x-tex">\pm</annotation></semantics></math> 1 hour around the target value of 7.5 hours, the researchers aim to demonstrate that the supplement does not lead to under- or oversleeping. A two one-sided tests procedure will be conducted with a significance level of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math> = 0.05 and 0.80 power. Assume a standard deviation of 1.2 hours and an expected mean of 7.5 hours. What is the minimum required sample size under this criterion?</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fl">7.5</span> <span class="op">-</span> <span class="fl">7.5</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1.2</span></span>
 <span><span class="va">margin</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">(</span><span class="fl">6.5</span> <span class="op">-</span> <span class="fl">7.5</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1.2</span>, <span class="op">(</span><span class="fl">8.5</span> <span class="op">-</span> <span class="fl">7.5</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1.2</span><span class="op">)</span></span>
@@ -1781,6 +1828,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 14  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.174</span></span>
@@ -1813,11 +1861,12 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 14  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.196</span></span>
 <span><span class="co">#&gt;   Statistical Power    = 0.804</span></span></code></pre></div>
-<p><strong>Report</strong>: We conducted a power analysis to determine the required sample size for assessing whether sleep duration falls within a predefined acceptable range. Assuming no difference (d = 0) with an equivalence margin of d = <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>±</mo><annotation encoding="application/x-tex">\pm</annotation></semantics></math> 0.83, a two one-sided test with 0.05 significance level and 0.80 power, the analysis indicated that a minimum of 14 participants are needed.</p>
+<p><strong>Report</strong>: We conducted a power analysis to determine the required sample size for assessing whether sleep duration falls within a predefined acceptable range. Assuming no difference (d = 0) with an equivalence margin of d = <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>±</mi><annotation encoding="application/x-tex">\pm</annotation></semantics></math> 0.83, a two one-sided test with 0.05 significance level and 0.80 power, the analysis indicated that a minimum of 14 participants are needed.</p>
 </div>
 <div class="section level3">
 <h3 id="minimal-effect">Minimal Effect<a class="anchor" aria-label="anchor" href="#minimal-effect"></a>
@@ -1851,6 +1900,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 1.250 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 74  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.198</span></span>
@@ -1883,11 +1933,12 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 1.250 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 78  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.196</span></span>
 <span><span class="co">#&gt;   Statistical Power    = 0.804</span></span></code></pre></div>
-<p><strong>Report</strong>: We conducted a power analysis to determine the required sample size for assessing whether sleep duration falls outside of a predefined acceptable range. Assuming a large difference (d = 1.25) with an equivalence margin of d = <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>±</mo><annotation encoding="application/x-tex">\pm</annotation></semantics></math> 0.83, a two one-sided test with 0.05 significance level and 0.80 power, the analysis indicated that a minimum of 74 participants are needed.</p>
+<p><strong>Report</strong>: We conducted a power analysis to determine the required sample size for assessing whether sleep duration falls outside of a predefined acceptable range. Assuming a large difference (d = 1.25) with an equivalence margin of d = <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>±</mi><annotation encoding="application/x-tex">\pm</annotation></semantics></math> 0.83, a two one-sided test with 0.05 significance level and 0.80 power, the analysis indicated that a minimum of 74 participants are needed.</p>
 <p><br><br></p>
 </div>
 </div>
@@ -1931,6 +1982,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (prob)   = 0.800 (vs. null.prob = 0.900)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 69  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -1965,6 +2017,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (prob)   = 0.800 (vs. null.prob = 0.900)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 54  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.197</span></span>
@@ -1998,6 +2051,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (prob)   = 0.800 (vs. null.prob = 0.900)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 79  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.198</span></span>
@@ -2031,6 +2085,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (prob)   = 0.800 (vs. null.prob = 0.900)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 99  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -2063,6 +2118,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (prob)   = 0.002 (vs. null.prob = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 804  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.000</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -2100,6 +2156,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (prob1)  = 0.600 (vs. prob2 = 0.500)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 388 and 388  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
@@ -2127,6 +2184,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0.201 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 389 and 389  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
@@ -2162,6 +2220,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (prob1)  = 0.150 (vs. prob2 = 0.100)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 540 and 540  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -2192,6 +2251,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (prob1)  = 0.150 (vs. prob2 = 0.100)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 536 and 536  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -2221,6 +2281,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (prob1)  = 0.150 (vs. prob2 = 0.100)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 580 and 580  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -2250,6 +2311,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (prob1)  = 0.150 (vs. prob2 = 0.100)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 538 and 538  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -2282,6 +2344,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (prob1)  = 0.600 (vs. prob2 = 0.500)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 321 and 321  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
@@ -2316,6 +2379,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (prob1)  = 0.010 (vs. prob2 = 0.020)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 457 and 457  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -2354,6 +2418,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (prob1)  = 0.450 (vs. prob2 = 0.500)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 1926 and 1926  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -2368,7 +2433,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <h3 id="equivalence-3">Equivalence<a class="anchor" aria-label="anchor" href="#equivalence-3"></a>
 </h3>
 <p><strong>Example</strong>: A national education ministry implements a new automated scoring system to evaluate high school students for a merit-based university scholarship program. The algorithm incorporates multiple factors including GPA, standardized test scores, extracurricular activities, and socio-economic indicators using a complex weighting system. Despite using seemingly objective inputs, there are concerns that the algorithm’s weighting and interaction effects might inadvertently favor one gender over another - for example, if the system overweights certain activities traditionally dominated by one gender, or if interaction effects between variables create unexpected biases.</p>
-<p>Because of these concerns about algorithmic bias in the composite scoring methodology, the ministry wants the eligibility rates (eligible vs. not eligible) for the scholarship must remain equivalent across male and female students. Any disparity greater than <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>±</mo><annotation encoding="application/x-tex">\pm</annotation></semantics></math> 1% in eligibility rates would be flagged as a potential violation of gender equity policy.</p>
+<p>Because of these concerns about algorithmic bias in the composite scoring methodology, the ministry wants the eligibility rates (eligible vs. not eligible) for the scholarship must remain equivalent across male and female students. Any disparity greater than <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>±</mi><annotation encoding="application/x-tex">\pm</annotation></semantics></math> 1% in eligibility rates would be flagged as a potential violation of gender equity policy.</p>
 <p>An equivalence trial is conducted to determine whether the new automated scoring system produces statistically equivalent scholarship eligibility rates for male and female students. The standard, human-rated system yields eligibility rates of approximately 10% for both groups. To evaluate equivalence, the analysis uses a two one-sided test with a 0.05 significance level and 0.80 power. What is the minimum required number of applications to process per group to test for equivalence under these conditions?</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/power.z.twoprops.html">power.z.twoprops</a></span><span class="op">(</span>prob1 <span class="op">=</span> <span class="fl">0.10</span>,</span>
@@ -2396,16 +2461,17 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (prob1)  = 0.100 (vs. prob2 = 0.100)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 3854 and 3854  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
 <span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
-<p><strong>Report</strong>: We conducted a power analysis to estimate the minimum required sample size to evaluate whether a new automated scoring system yields scholarship eligibility rates that are statistically equivalent between male and female students. The analysis assumed a baseline eligibility rate of 10% for both groups under the standard rater-based system. Using an equivalence margin of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>±</mo><annotation encoding="application/x-tex">\pm</annotation></semantics></math> 5%, a two one-sided test with a 0.05 significance level, and 0.80 power, the analysis indicated that a minimum of 3,854 applications should be processed per group (7,708 total).</p>
+<p><strong>Report</strong>: We conducted a power analysis to estimate the minimum required sample size to evaluate whether a new automated scoring system yields scholarship eligibility rates that are statistically equivalent between male and female students. The analysis assumed a baseline eligibility rate of 10% for both groups under the standard rater-based system. Using an equivalence margin of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>±</mi><annotation encoding="application/x-tex">\pm</annotation></semantics></math> 5%, a two one-sided test with a 0.05 significance level, and 0.80 power, the analysis indicated that a minimum of 3,854 applications should be processed per group (7,708 total).</p>
 </div>
 <div class="section level3">
 <h3 id="minimum-effect-2">Minimum Effect<a class="anchor" aria-label="anchor" href="#minimum-effect-2"></a>
 </h3>
-<p><strong>Example</strong>: Consider the <a href="#twoprops-equivalence">earlier example</a> that evaluates whether a new automated scoring system yields scholarship eligibility rates that are statistically equivalent between male and female students. The research team establishes that any gender difference in eligibility rates greater than <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>±</mo><annotation encoding="application/x-tex">\pm</annotation></semantics></math> 3% would constitute a meaningful disparity requiring algorithmic adjustment. They establish equivalence bounds of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>±</mo><annotation encoding="application/x-tex">\pm</annotation></semantics></math> 1% in eligibility rates - a threshold considered the smallest practically important effect that warrants monitoring and potential intervention.</p>
+<p><strong>Example</strong>: Consider the <a href="#twoprops-equivalence">earlier example</a> that evaluates whether a new automated scoring system yields scholarship eligibility rates that are statistically equivalent between male and female students. The research team establishes that any gender difference in eligibility rates greater than <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>±</mi><annotation encoding="application/x-tex">\pm</annotation></semantics></math> 3% would constitute a meaningful disparity requiring algorithmic adjustment. They establish equivalence bounds of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>±</mi><annotation encoding="application/x-tex">\pm</annotation></semantics></math> 1% in eligibility rates - a threshold considered the smallest practically important effect that warrants monitoring and potential intervention.</p>
 <p>A minimal effect test is conducted to check whether the system produces a gender difference of at least 1% in either direction. Using a two one-sided test with 0.05 significance level, 0.80 power, what is the minimum required number of complete applications to process?</p>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/power.z.twoprops.html">power.z.twoprops</a></span><span class="op">(</span>prob1 <span class="op">=</span> <span class="fl">0.13</span>,</span>
@@ -2433,11 +2499,12 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (prob1)  = 0.130 (vs. prob2 = 0.100)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 3992 and 3992  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
 <span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
-<p><strong>Report</strong>: We conducted a power analysis to estimate the minimum required number of complete scholarship applications to evaluate whether a new automated scoring system results in a gender difference of 3% in eligibility rates (13% for females and 10% for males). Using equivalence bounds of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>±</mo><annotation encoding="application/x-tex">\pm</annotation></semantics></math> 1%, a two one-sided test with a 0.05 significance level, and 0.80 power, the analysis indicated that a minimum of 3,992 applications should be processed per group (7,984 total).</p>
+<p><strong>Report</strong>: We conducted a power analysis to estimate the minimum required number of complete scholarship applications to evaluate whether a new automated scoring system results in a gender difference of 3% in eligibility rates (13% for females and 10% for males). Using equivalence bounds of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>±</mi><annotation encoding="application/x-tex">\pm</annotation></semantics></math> 1%, a two one-sided test with a 0.05 significance level, and 0.80 power, the analysis indicated that a minimum of 3,992 applications should be processed per group (7,984 total).</p>
 </div>
 </div>
 <div class="section level2">
@@ -2474,6 +2541,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (prob10) = 0.178 (vs. prob01 = 0.078)</span></span>
 <span><span class="co">#&gt;   Paired Sample Size   = 200  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.196</span></span>
@@ -2509,6 +2577,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (prob10) = 0.178 (vs. prob01 = 0.078)</span></span>
 <span><span class="co">#&gt;   Paired Sample Size   = 213  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.030</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.195</span></span>
@@ -2535,7 +2604,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; |             SAMPLE SIZE CALCULATION              |</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; One-Sample Correlation</span></span>
+<span><span class="co">#&gt; One-Sample Correlation (Approximate)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
@@ -2546,6 +2615,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (rho)    = 0.200 (vs. null.rho = 0.100)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 593  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -2578,6 +2648,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (rho1)   = 0.200 (vs. rho2 = 0.100)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 1501 and 1501  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -2605,6 +2676,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0.102 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 1499 and 1499  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -2635,6 +2707,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (rho1)   = 0.100 (vs. rho2 = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 1232 and 1232  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -2665,6 +2738,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (d)      = 0.100 (vs. null.d = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 1229 and 1229  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -2721,6 +2795,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (rho12)  = 0.500 (vs. rho13 = 0.400)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 286  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -2787,6 +2862,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (rho12)  = 0.500 (vs. rho34 = 0.600)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 317  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -2818,7 +2894,7 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 </h3>
 <p>The omnibus F-test in multiple linear regression is used to evaluate whether the model as a whole explains a statistically significant portion of variance in the outcome variable. The null hypothesis states that all regression coefficients (except the intercept) are equal to zero which means none of the predictors contributes meaningfully to explaining the outcome variable (or <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>R</mi><mn>2</mn></msup><annotation encoding="application/x-tex">R^2</annotation></semantics></math> is equal to zero). Alternative hypothesis states that at least some regression coefficients (except the intercept) is different from zero (or <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>R</mi><mn>2</mn></msup><annotation encoding="application/x-tex">R^2</annotation></semantics></math> is greater than zero).</p>
 <p><strong>Example</strong>: Assume that we want to predict a continuous variable <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math> using <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_{1}</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>2</mn></msub><annotation encoding="application/x-tex">X_{2}</annotation></semantics></math>, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>2</mn></msub><annotation encoding="application/x-tex">X_{2}</annotation></semantics></math> variables (can be a combination of binary or continuous).</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><msub><mi>X</mi><mn>1</mn></msub><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><msub><mi>X</mi><mn>2</mn></msub><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><msub><mi>X</mi><mn>3</mn></msub><mo>+</mo><mi>r</mi><mo>,</mo><mspace width="1.0em"></mspace><mi>r</mi><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><msup><mi>σ</mi><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \sim N(0, \sigma ^ 2)</annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><msub><mi>X</mi><mn>1</mn></msub><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><msub><mi>X</mi><mn>2</mn></msub><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><msub><mi>X</mi><mn>3</mn></msub><mo>+</mo><mi>r</mi><mo>,</mo><mspace width="1.0em"></mspace><mi>r</mi><mo>∼</mo><mi>N</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><msup><mi>σ</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \sim N(0, \sigma ^ 2)</annotation></semantics></math></p>
 <p>We are interested in a minimum <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>R</mi><mn>2</mn></msup><annotation encoding="application/x-tex">R^2</annotation></semantics></math> = 0.10. What is the minimum required sample size?</p>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/power.f.regression.html">power.f.regression</a></span><span class="op">(</span>r.squared <span class="op">=</span> <span class="fl">0.10</span>,</span>
@@ -2840,10 +2916,11 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 103  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.196</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.804</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (R-squared) = 0.100</span></span>
+<span><span class="co">#&gt;   Sample Size             = 103  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)    = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)     = 0.196</span></span>
+<span><span class="co">#&gt;   Statistical Power       = 0.804</span></span></code></pre></div>
 <p><strong>Report</strong>: We conducted a power analysis to determine the minimum required sample size to detect a small but meaningful effect in a multiple linear regression model predicting a continuous outcome variable <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math> from three predictors (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_{1}</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>2</mn></msub><annotation encoding="application/x-tex">X_{2}</annotation></semantics></math>, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>3</mn></msub><annotation encoding="application/x-tex">X_{3}</annotation></semantics></math>). We are interested in an effect as small as <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.10</mn></mrow><annotation encoding="application/x-tex">R^2 = 0.10</annotation></semantics></math> using an omnibus F-test with a significance level of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>0.05</mn></mrow><annotation encoding="application/x-tex">\alpha = 0.05</annotation></semantics></math> and statistical power of 0.80. Under these assumptions, the minimum required sample size is 103 participants.</p>
 </div>
 <div class="section level3">
@@ -2872,18 +2949,19 @@ Bulus, M., &amp; Jentschke, S. (2025). pwrss: Statistical Power and Sample Size 
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 612  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (R-squared) = 0.100</span></span>
+<span><span class="co">#&gt;   Sample Size             = 612  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)    = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)     = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power       = 0.800</span></span></code></pre></div>
 <p><strong>Report</strong>: We conducted a power analysis to determine the minimum required sample size to detect a small but meaningful effect in a multiple linear regression model predicting a continuous outcome variable <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math> from three predictors (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_{1}</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>2</mn></msub><annotation encoding="application/x-tex">X_{2}</annotation></semantics></math>, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>3</mn></msub><annotation encoding="application/x-tex">X_{3}</annotation></semantics></math>). We are interested in an effect as small as <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>R</mi><mn>2</mn></msup><annotation encoding="application/x-tex">R^2</annotation></semantics></math> = 0.10 using an omnibus F-test with a significance level of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>0.05</mn></mrow><annotation encoding="application/x-tex">\alpha = 0.05</annotation></semantics></math> and statistical power of 0.80. An <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>R</mi><mn>2</mn></msup><annotation encoding="application/x-tex">R^2</annotation></semantics></math> &lt; 0.05 is considered to have negligible practical significance. Under these assumptions, the minimum required sample size is 612 participants.</p>
 </div>
 <div class="section level3">
 <h3 id="delta-r2--0">
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Δ</mi><msup><mi>R</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\Delta R^2</annotation></semantics></math> &gt; 0<a class="anchor" aria-label="anchor" href="#delta-r2--0"></a>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><msup><mi>R</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\Delta R^2</annotation></semantics></math> &gt; 0<a class="anchor" aria-label="anchor" href="#delta-r2--0"></a>
 </h3>
-<p><strong>Example</strong>: Assume that we want to test the incremental contribution of two additional predictors (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>4</mn></msub><annotation encoding="application/x-tex">X_{4}</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>5</mn></msub><annotation encoding="application/x-tex">X_{5}</annotation></semantics></math>) to an existing regression model. That is, we are testing whether adding these two predictors (k.tested = 2) results in a significant increase in explained variance. The full model includes five predictors in total (k.total = 5). We are interested in detecting a meaningful increase in explained variance of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Δ</mi><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.10</mn></mrow><annotation encoding="application/x-tex">\Delta R^2 = 0.10</annotation></semantics></math>. What is the minimum required sample size under these criteria?</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><msub><mi>X</mi><mn>1</mn></msub><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><msub><mi>X</mi><mn>2</mn></msub><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><msub><mi>X</mi><mn>3</mn></msub><mo>+</mo><msub><mi>β</mi><mn>4</mn></msub><msub><mi>X</mi><mn>4</mn></msub><mo>+</mo><msub><mi>β</mi><mn>5</mn></msub><msub><mi>X</mi><mn>5</mn></msub><mo>+</mo><mi>r</mi><mo>,</mo><mspace width="1.0em"></mspace><mi>r</mi><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><msup><mi>σ</mi><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+<p><strong>Example</strong>: Assume that we want to test the incremental contribution of two additional predictors (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>4</mn></msub><annotation encoding="application/x-tex">X_{4}</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>5</mn></msub><annotation encoding="application/x-tex">X_{5}</annotation></semantics></math>) to an existing regression model. That is, we are testing whether adding these two predictors (k.tested = 2) results in a significant increase in explained variance. The full model includes five predictors in total (k.total = 5). We are interested in detecting a meaningful increase in explained variance of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.10</mn></mrow><annotation encoding="application/x-tex">\Delta R^2 = 0.10</annotation></semantics></math>. What is the minimum required sample size under these criteria?</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><msub><mi>X</mi><mn>1</mn></msub><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><msub><mi>X</mi><mn>2</mn></msub><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><msub><mi>X</mi><mn>3</mn></msub><mo>+</mo><msub><mi>β</mi><mn>4</mn></msub><msub><mi>X</mi><mn>4</mn></msub><mo>+</mo><msub><mi>β</mi><mn>5</mn></msub><msub><mi>X</mi><mn>5</mn></msub><mo>+</mo><mi>r</mi><mo>,</mo><mspace width="1.0em"></mspace><mi>r</mi><mo>∼</mo><mi>N</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><msup><mi>σ</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
 Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + \beta_{4}X_{4} + \beta_{5}X_{5} + r, \quad r \sim N(0, \sigma ^ 2)
 </annotation></semantics></math></p>
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
@@ -2907,17 +2985,18 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + \beta_{4}X_{4
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 90  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.801</span></span></code></pre></div>
-<p><strong>Report</strong>: We conducted a power analysis to determine the minimum required sample size to detect a small but meaningful effect in a multiple linear regression model predicting a continuous outcome variable <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math> from five predictors (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_{1}</annotation></semantics></math> through <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>5</mn></msub><annotation encoding="application/x-tex">X_{5}</annotation></semantics></math>). Our primary interest is in testing the incremental contribution of two predictors (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>4</mn></msub><annotation encoding="application/x-tex">X_{4}</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>5</mn></msub><annotation encoding="application/x-tex">X_{5}</annotation></semantics></math>), beyond the initial model that includes <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_{1}</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>2</mn></msub><annotation encoding="application/x-tex">X_{2}</annotation></semantics></math>, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>3</mn></msub><annotation encoding="application/x-tex">X_{3}</annotation></semantics></math>. Specifically, we aim to detect an increase in explained variance of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Δ</mi><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.10</mn></mrow><annotation encoding="application/x-tex">\Delta R^2 = 0.10</annotation></semantics></math> using an F-test with a significance level of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>0.05</mn></mrow><annotation encoding="application/x-tex">\alpha = 0.05</annotation></semantics></math> and statistical power of 0.80. The total number of predictors in the final model is five (<code>k.total = 5</code>), and the number of predictors being tested is two (<code>k.tested = 2</code>). Under these assumptions, the minimum required sample size is 90 participants.</p>
+<span><span class="co">#&gt;   Effect Size (R-squared) = 0.100</span></span>
+<span><span class="co">#&gt;   Sample Size             = 90  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)    = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)     = 0.199</span></span>
+<span><span class="co">#&gt;   Statistical Power       = 0.801</span></span></code></pre></div>
+<p><strong>Report</strong>: We conducted a power analysis to determine the minimum required sample size to detect a small but meaningful effect in a multiple linear regression model predicting a continuous outcome variable <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math> from five predictors (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_{1}</annotation></semantics></math> through <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>5</mn></msub><annotation encoding="application/x-tex">X_{5}</annotation></semantics></math>). Our primary interest is in testing the incremental contribution of two predictors (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>4</mn></msub><annotation encoding="application/x-tex">X_{4}</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>5</mn></msub><annotation encoding="application/x-tex">X_{5}</annotation></semantics></math>), beyond the initial model that includes <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_{1}</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>2</mn></msub><annotation encoding="application/x-tex">X_{2}</annotation></semantics></math>, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>3</mn></msub><annotation encoding="application/x-tex">X_{3}</annotation></semantics></math>. Specifically, we aim to detect an increase in explained variance of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.10</mn></mrow><annotation encoding="application/x-tex">\Delta R^2 = 0.10</annotation></semantics></math> using an F-test with a significance level of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>0.05</mn></mrow><annotation encoding="application/x-tex">\alpha = 0.05</annotation></semantics></math> and statistical power of 0.80. The total number of predictors in the final model is five (<code>k.total = 5</code>), and the number of predictors being tested is two (<code>k.tested = 2</code>). Under these assumptions, the minimum required sample size is 90 participants.</p>
 </div>
 <div class="section level3">
 <h3 id="delta-r2--margin">
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Δ</mi><msup><mi>R</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\Delta R^2</annotation></semantics></math> &gt; Margin<a class="anchor" aria-label="anchor" href="#delta-r2--margin"></a>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><msup><mi>R</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\Delta R^2</annotation></semantics></math> &gt; Margin<a class="anchor" aria-label="anchor" href="#delta-r2--margin"></a>
 </h3>
-<p><strong>Example</strong>: Consider the <a href="#reg-f-test-rsq-change">earlier example</a>. Now, instead of testing against a zero null hypothesis (i.e., <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Δ</mi><msup><mi>R</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\Delta R^2</annotation></semantics></math> = 0), we aim to set a practical null hypothesis for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Δ</mi><msup><mi>R</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\Delta R^2</annotation></semantics></math> at 0.05 (<code>margin = 0.05</code>), representing the largest effect size considered practically null. What is the minimum required sample size under these conditions?</p>
+<p><strong>Example</strong>: Consider the <a href="#reg-f-test-rsq-change">earlier example</a>. Now, instead of testing against a zero null hypothesis (i.e., <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><msup><mi>R</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\Delta R^2</annotation></semantics></math> = 0), we aim to set a practical null hypothesis for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><msup><mi>R</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\Delta R^2</annotation></semantics></math> at 0.05 (<code>margin = 0.05</code>), representing the largest effect size considered practically null. What is the minimum required sample size under these conditions?</p>
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/power.f.regression.html">power.f.regression</a></span><span class="op">(</span>r.squared.change <span class="op">=</span> <span class="fl">0.10</span>,</span>
 <span>                   margin <span class="op">=</span> <span class="fl">0.05</span>,</span>
@@ -2940,11 +3019,12 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + \beta_{4}X_{4
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 606  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.801</span></span></code></pre></div>
-<p><strong>Report</strong>: We conducted a power analysis to determine the minimum required sample size to detect a small but meaningful effect in a multiple linear regression model predicting a continuous outcome variable <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math> from five predictors (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_{1}</annotation></semantics></math> through <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>5</mn></msub><annotation encoding="application/x-tex">X_{5}</annotation></semantics></math>). Our specific interest lies in testing the incremental contribution of two predictors (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>4</mn></msub><annotation encoding="application/x-tex">X_{4}</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>5</mn></msub><annotation encoding="application/x-tex">X_{5}</annotation></semantics></math>) beyond an initial model containing three predictors (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_{1}</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>2</mn></msub><annotation encoding="application/x-tex">X_{2}</annotation></semantics></math>, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>3</mn></msub><annotation encoding="application/x-tex">X_{3}</annotation></semantics></math>). We are interested in detecting an increase in explained variance of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Δ</mi><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.10</mn></mrow><annotation encoding="application/x-tex">\Delta R^2 = 0.10</annotation></semantics></math> using an F-test with a significance level of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>0.05</mn></mrow><annotation encoding="application/x-tex">\alpha = 0.05</annotation></semantics></math> and statistical power of 0.80. An <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Δ</mi><msup><mi>R</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\Delta R^2</annotation></semantics></math> less than 0.05 is considered to have negligible practical significance. Under these assumptions, the minimum required sample size is 606 participants.</p>
+<span><span class="co">#&gt;   Effect Size (R-squared) = 0.100</span></span>
+<span><span class="co">#&gt;   Sample Size             = 606  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)    = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)     = 0.199</span></span>
+<span><span class="co">#&gt;   Statistical Power       = 0.801</span></span></code></pre></div>
+<p><strong>Report</strong>: We conducted a power analysis to determine the minimum required sample size to detect a small but meaningful effect in a multiple linear regression model predicting a continuous outcome variable <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math> from five predictors (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_{1}</annotation></semantics></math> through <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>5</mn></msub><annotation encoding="application/x-tex">X_{5}</annotation></semantics></math>). Our specific interest lies in testing the incremental contribution of two predictors (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>4</mn></msub><annotation encoding="application/x-tex">X_{4}</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>5</mn></msub><annotation encoding="application/x-tex">X_{5}</annotation></semantics></math>) beyond an initial model containing three predictors (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_{1}</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>2</mn></msub><annotation encoding="application/x-tex">X_{2}</annotation></semantics></math>, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>3</mn></msub><annotation encoding="application/x-tex">X_{3}</annotation></semantics></math>). We are interested in detecting an increase in explained variance of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.10</mn></mrow><annotation encoding="application/x-tex">\Delta R^2 = 0.10</annotation></semantics></math> using an F-test with a significance level of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>0.05</mn></mrow><annotation encoding="application/x-tex">\alpha = 0.05</annotation></semantics></math> and statistical power of 0.80. An <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><msup><mi>R</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\Delta R^2</annotation></semantics></math> less than 0.05 is considered to have negligible practical significance. Under these assumptions, the minimum required sample size is 606 participants.</p>
 </div>
 </div>
 <div class="section level2">
@@ -2954,7 +3034,7 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + \beta_{4}X_{4
 <h3 id="standardized-input">Standardized Input<a class="anchor" aria-label="anchor" href="#standardized-input"></a>
 </h3>
 <p>In the earlier example, assume that we want to predict a continuous variable <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math> using a continuous predictor <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_{1}</annotation></semantics></math> but control for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>2</mn></msub><annotation encoding="application/x-tex">X_{2}</annotation></semantics></math>, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>2</mn></msub><annotation encoding="application/x-tex">X_{2}</annotation></semantics></math> variables (can be a combination of binary or continuous). We are mainly interested in the effect of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_{1}</annotation></semantics></math> and expect a standardized regression coefficient of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mn>1</mn></msub><mo>=</mo><mn>0.20</mn></mrow><annotation encoding="application/x-tex">\beta_{1} = 0.20</annotation></semantics></math>.</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><msub><mi>X</mi><mn>1</mn></msub><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><msub><mi>X</mi><mn>2</mn></msub><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><msub><mi>X</mi><mn>3</mn></msub><mo>+</mo><mi>r</mi><mo>,</mo><mspace width="1.0em"></mspace><mi>r</mi><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><msup><mi>σ</mi><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><msub><mi>X</mi><mn>1</mn></msub><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><msub><mi>X</mi><mn>2</mn></msub><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><msub><mi>X</mi><mn>3</mn></msub><mo>+</mo><mi>r</mi><mo>,</mo><mspace width="1.0em"></mspace><mi>r</mi><mo>∼</mo><mi>N</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><msup><mi>σ</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
 Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \sim N(0, \sigma ^ 2)
 </annotation></semantics></math></p>
 <p>Again, we are expecting that these three variables explain 30% of the variance in the outcome (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.30</mn></mrow><annotation encoding="application/x-tex">R^2 = 0.30</annotation></semantics></math>). What is the minimum required sample size? It is sufficient to provide standardized regression coefficient for <code>beta</code> because <code>sd.predictor = 1</code> and <code>sd.outcome = 1</code> by default.</p>
@@ -2980,10 +3060,11 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \s
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 140  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.198</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.802</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (R-squared) = 0.300</span></span>
+<span><span class="co">#&gt;   Sample Size             = 140  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)    = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)     = 0.198</span></span>
+<span><span class="co">#&gt;   Statistical Power       = 0.802</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="unstandardized-input">Unstandardized Input<a class="anchor" aria-label="anchor" href="#unstandardized-input"></a>
@@ -3013,11 +3094,12 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \s
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 140  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.198</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.802</span></span></code></pre></div>
-<p>If the main predictor is binary (e.g. treatment / control), the standardized regression coefficient is Cohen’s <em>d</em>. Standard deviation of the main predictor is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msqrt><mrow><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msqrt><annotation encoding="application/x-tex">\sqrt{p(1-p)}</annotation></semantics></math> where <em>p</em> is the proportion of sample in one of the groups. Assume half of the sample is in the first group <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mn>0.50</mn></mrow><annotation encoding="application/x-tex">p = 0.50</annotation></semantics></math>. What is the minimum required sample size? It is sufficient to provide Cohen’s <em>d</em> for <code>beta</code> (standardized difference between two groups) but specify <code>sd.predictor = sqrt(p * (1 - p))</code> where <em>p</em> is the proportion of subjects in one of the groups.</p>
+<span><span class="co">#&gt;   Effect Size (R-squared) = 0.300</span></span>
+<span><span class="co">#&gt;   Sample Size             = 140  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)    = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)     = 0.198</span></span>
+<span><span class="co">#&gt;   Statistical Power       = 0.802</span></span></code></pre></div>
+<p>If the main predictor is binary (e.g. treatment / control), the standardized regression coefficient is Cohen’s <em>d</em>. Standard deviation of the main predictor is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msqrt><mrow><mi>p</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo></mrow></msqrt><annotation encoding="application/x-tex">\sqrt{p(1-p)}</annotation></semantics></math> where <em>p</em> is the proportion of sample in one of the groups. Assume half of the sample is in the first group <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mn>0.50</mn></mrow><annotation encoding="application/x-tex">p = 0.50</annotation></semantics></math>. What is the minimum required sample size? It is sufficient to provide Cohen’s <em>d</em> for <code>beta</code> (standardized difference between two groups) but specify <code>sd.predictor = sqrt(p * (1 - p))</code> where <em>p</em> is the proportion of subjects in one of the groups.</p>
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">0.50</span></span>
 <span><span class="va">sd.predictor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">p</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">p</span><span class="op">)</span><span class="op">)</span></span>
@@ -3044,10 +3126,11 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \s
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 552  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (R-squared) = 0.300</span></span>
+<span><span class="co">#&gt;   Sample Size             = 552  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)    = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)     = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power       = 0.800</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="non-inferiority-3">Non-inferiority<a class="anchor" aria-label="anchor" href="#non-inferiority-3"></a>
@@ -3085,10 +3168,11 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \s
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 770  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (R-squared) = 0.300</span></span>
+<span><span class="co">#&gt;   Sample Size             = 770  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)    = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)     = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power       = 0.800</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="superiority-2">Superiority<a class="anchor" aria-label="anchor" href="#superiority-2"></a>
@@ -3126,10 +3210,11 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \s
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 6934  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (R-squared) = 0.300</span></span>
+<span><span class="co">#&gt;   Sample Size             = 6934  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)    = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)     = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power       = 0.800</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="equivalence-4">Equivalence<a class="anchor" aria-label="anchor" href="#equivalence-4"></a>
@@ -3165,10 +3250,11 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \s
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 9593  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (R-squared) = 0.300</span></span>
+<span><span class="co">#&gt;   Sample Size             = 9593  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)    = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)     = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power       = 0.800</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="minimum-effect-3">Minimum Effect<a class="anchor" aria-label="anchor" href="#minimum-effect-3"></a>
@@ -3203,10 +3289,11 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \s
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 981  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (R-squared) = 0.300</span></span>
+<span><span class="co">#&gt;   Sample Size             = 981  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)    = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)     = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power       = 0.800</span></span></code></pre></div>
 <p><br><br></p>
 </div>
 </div>
@@ -3216,8 +3303,8 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \s
 </h1>
 <hr>
 <p>In logistic regression a binary outcome variable (0 / 1: failure / success, dead / alive, absent / present) is modeled by predicting probability of being in group 1 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>P</mi><mn>1</mn></msub><annotation encoding="application/x-tex">P_1</annotation></semantics></math>) via logit transformation (natural logarithm of odds). The base probability <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>P</mi><mn>0</mn></msub><annotation encoding="application/x-tex">P_0</annotation></semantics></math> is the overall probability of being in group 1 without influence of predictors in the model (null). Under alternative hypothesis, the probability of being in group 1 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>P</mi><mn>1</mn></msub><annotation encoding="application/x-tex">P_1</annotation></semantics></math>) deviate from <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>P</mi><mn>0</mn></msub><annotation encoding="application/x-tex">P_0</annotation></semantics></math> depending on the value of the predictor; whereas under null it is same as the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>P</mi><mn>0</mn></msub><annotation encoding="application/x-tex">P_0</annotation></semantics></math>. A model with one main predictor (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_1</annotation></semantics></math>) and two other covariates (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>2</mn></msub><annotation encoding="application/x-tex">X_2</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>3</mn></msub><annotation encoding="application/x-tex">X_3</annotation></semantics></math>) can be constructed as</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>n</mi><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><msub><mi>P</mi><mn>1</mn></msub><mrow><mn>1</mn><mo>−</mo><msub><mi>P</mi><mn>1</mn></msub></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><msub><mi>X</mi><mn>1</mn></msub><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><msub><mi>X</mi><mn>2</mn></msub><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><msub><mi>X</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">ln(\frac{P_1}{1 - P_1}) = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3}</annotation></semantics></math></p>
-<p>where <br><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mn>0</mn></msub><mo>=</mo><mi>l</mi><mi>n</mi><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><msub><mi>P</mi><mn>0</mn></msub><mrow><mn>1</mn><mo>−</mo><msub><mi>P</mi><mn>0</mn></msub></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\beta_0 = ln(\frac{P_0}{1 - P_0})</annotation></semantics></math><br><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mn>1</mn></msub><mo>=</mo><mi>l</mi><mi>n</mi><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><msub><mi>P</mi><mn>1</mn></msub><mrow><mn>1</mn><mo>−</mo><msub><mi>P</mi><mn>1</mn></msub></mrow></mfrac><mi>/</mi><mfrac><msub><mi>P</mi><mn>0</mn></msub><mrow><mn>1</mn><mo>−</mo><msub><mi>P</mi><mn>0</mn></msub></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\beta_1 = ln(\frac{P_1}{1 - P_1} / \frac{P_0}{1 - P_0})</annotation></semantics></math><br> Odds ratio is defined as <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mi>R</mi><mo>=</mo><mi>e</mi><mi>x</mi><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>β</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><msub><mi>P</mi><mn>1</mn></msub><mrow><mn>1</mn><mo>−</mo><msub><mi>P</mi><mn>1</mn></msub></mrow></mfrac><mi>/</mi><mfrac><msub><mi>P</mi><mn>0</mn></msub><mrow><mn>1</mn><mo>−</mo><msub><mi>P</mi><mn>0</mn></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">OR = exp(\beta_1) = \frac{P_1}{1 - P_1} / \frac{P_0}{1 - P_0}</annotation></semantics></math><br></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>n</mi><mo stretchy="false" form="prefix">(</mo><mfrac><msub><mi>P</mi><mn>1</mn></msub><mrow><mn>1</mn><mo>−</mo><msub><mi>P</mi><mn>1</mn></msub></mrow></mfrac><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><msub><mi>X</mi><mn>1</mn></msub><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><msub><mi>X</mi><mn>2</mn></msub><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><msub><mi>X</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">ln(\frac{P_1}{1 - P_1}) = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3}</annotation></semantics></math></p>
+<p>where <br><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mn>0</mn></msub><mo>=</mo><mi>l</mi><mi>n</mi><mo stretchy="false" form="prefix">(</mo><mfrac><msub><mi>P</mi><mn>0</mn></msub><mrow><mn>1</mn><mo>−</mo><msub><mi>P</mi><mn>0</mn></msub></mrow></mfrac><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\beta_0 = ln(\frac{P_0}{1 - P_0})</annotation></semantics></math><br><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mn>1</mn></msub><mo>=</mo><mi>l</mi><mi>n</mi><mo stretchy="false" form="prefix">(</mo><mfrac><msub><mi>P</mi><mn>1</mn></msub><mrow><mn>1</mn><mo>−</mo><msub><mi>P</mi><mn>1</mn></msub></mrow></mfrac><mi>/</mi><mfrac><msub><mi>P</mi><mn>0</mn></msub><mrow><mn>1</mn><mo>−</mo><msub><mi>P</mi><mn>0</mn></msub></mrow></mfrac><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\beta_1 = ln(\frac{P_1}{1 - P_1} / \frac{P_0}{1 - P_0})</annotation></semantics></math><br> Odds ratio is defined as <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mi>R</mi><mo>=</mo><mi>e</mi><mi>x</mi><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>β</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><msub><mi>P</mi><mn>1</mn></msub><mrow><mn>1</mn><mo>−</mo><msub><mi>P</mi><mn>1</mn></msub></mrow></mfrac><mi>/</mi><mfrac><msub><mi>P</mi><mn>0</mn></msub><mrow><mn>1</mn><mo>−</mo><msub><mi>P</mi><mn>0</mn></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">OR = exp(\beta_1) = \frac{P_1}{1 - P_1} / \frac{P_0}{1 - P_0}</annotation></semantics></math><br></p>
 <p><strong>Example</strong>:</p>
 <p>Assume</p>
 <ul>
@@ -3255,10 +3342,11 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \s
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 365  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.801</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (Odds Ratio) = 0.630</span></span>
+<span><span class="co">#&gt;   Sample Size              = 365  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)     = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)      = 0.199</span></span>
+<span><span class="co">#&gt;   Statistical Power        = 0.801</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="odds-ratio-specification">Odds Ratio Specification<a class="anchor" aria-label="anchor" href="#odds-ratio-specification"></a>
@@ -3290,15 +3378,16 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \s
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 365  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.801</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (Odds Ratio) = 0.630</span></span>
+<span><span class="co">#&gt;   Sample Size              = 365  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)     = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)      = 0.199</span></span>
+<span><span class="co">#&gt;   Statistical Power        = 0.801</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="regression-coefficient">Regression Coefficient<a class="anchor" aria-label="anchor" href="#regression-coefficient"></a>
 </h2>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mn>1</mn></msub><mo>=</mo><mi>l</mi><mi>n</mi><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><msub><mi>P</mi><mn>1</mn></msub><mrow><mn>1</mn><mo>−</mo><mi>P</mi><mn>1</mn></mrow></mfrac><mi>/</mi><mfrac><msub><mi>P</mi><mn>0</mn></msub><mrow><mn>1</mn><mo>−</mo><msub><mi>P</mi><mn>0</mn></msub></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>l</mi><mi>n</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0.6296</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>−</mo><mn>0.4626</mn></mrow><annotation encoding="application/x-tex">\beta_1 = ln(\frac{P_1}{1 - P1} / \frac{P_0}{1 - P_0}) = ln(0.6296) = -0.4626</annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mn>1</mn></msub><mo>=</mo><mi>l</mi><mi>n</mi><mo stretchy="false" form="prefix">(</mo><mfrac><msub><mi>P</mi><mn>1</mn></msub><mrow><mn>1</mn><mo>−</mo><mi>P</mi><mn>1</mn></mrow></mfrac><mi>/</mi><mfrac><msub><mi>P</mi><mn>0</mn></msub><mrow><mn>1</mn><mo>−</mo><msub><mi>P</mi><mn>0</mn></msub></mrow></mfrac><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>l</mi><mi>n</mi><mo stretchy="false" form="prefix">(</mo><mn>0.6296</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>−</mi><mn>0.4626</mn></mrow><annotation encoding="application/x-tex">\beta_1 = ln(\frac{P_1}{1 - P1} / \frac{P_0}{1 - P_0}) = ln(0.6296) = -0.4626</annotation></semantics></math></p>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/power.z.logistic.html">power.z.logistic</a></span><span class="op">(</span>beta1 <span class="op">=</span> <span class="op">-</span><span class="fl">0.4626</span>,</span>
 <span>                 base.prob <span class="op">=</span> <span class="fl">0.15</span>,</span>
@@ -3325,10 +3414,11 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \s
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 365  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.801</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (Odds Ratio) = 0.630</span></span>
+<span><span class="co">#&gt;   Sample Size              = 365  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)     = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)      = 0.199</span></span>
+<span><span class="co">#&gt;   Statistical Power        = 0.801</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="change-distribution">Change Distribution<a class="anchor" aria-label="anchor" href="#change-distribution"></a>
@@ -3363,10 +3453,11 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \s
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 591  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (Odds Ratio) = 0.630</span></span>
+<span><span class="co">#&gt;   Sample Size              = 591  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)     = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)      = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power        = 0.800</span></span></code></pre></div>
 <p><strong>Change the distribution family of predictor X</strong>:</p>
 <p>More distribution types are supported by the function. For example, the main predictor can be binary (e.g. treatment / control groups). Often half of the sample is assigned to the treatment group and the other half to the control (<code>prob = 0.50</code> by default).</p>
 <div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
@@ -3395,10 +3486,11 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \s
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 1723  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (Odds Ratio) = 0.630</span></span>
+<span><span class="co">#&gt;   Sample Size              = 1723  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)     = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)      = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power        = 0.800</span></span></code></pre></div>
 <p><strong>Change the treatment group allocation rate of the binary predictor X</strong> (<code>prob = 0.40</code>):</p>
 <p>The per-subject cost in a treatment group is sometimes substantially higher than the per-subject cost in control group. At other times, it is difficult to recruit subjects for a treatment whereas there are plenty of subjects to be considered for the control group (e.g. a long wait-list). In such cases there is some leeway to pick an unbalanced sample (but not too much unbalanced). Assume the treatment group allocation rate is 40%. What is the minimum required sample size?</p>
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
@@ -3429,10 +3521,11 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \s
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 1826  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (Odds Ratio) = 0.630</span></span>
+<span><span class="co">#&gt;   Sample Size              = 1826  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)     = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)      = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power        = 0.800</span></span></code></pre></div>
 <p><br><br></p>
 </div>
 </div>
@@ -3441,14 +3534,14 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \s
 </h1>
 <hr>
 <p>In Poisson regression a count outcome variable (e.g. number of hospital / store / website visits, number of absence / dead / purchase in a day / week / month) is modeled by predicting incidence rate (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>) via logarithmic transformation (natural logarithm of rates). A model with one main predictor (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_1</annotation></semantics></math>) and two other covariates (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>2</mn></msub><annotation encoding="application/x-tex">X_2</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>3</mn></msub><annotation encoding="application/x-tex">X_3</annotation></semantics></math>) can be constructed as</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>n</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>λ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><msub><mi>X</mi><mn>1</mn></msub><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><msub><mi>X</mi><mn>2</mn></msub><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><msub><mi>X</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>n</mi><mo stretchy="false" form="prefix">(</mo><mi>λ</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><msub><mi>X</mi><mn>1</mn></msub><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><msub><mi>X</mi><mn>2</mn></msub><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><msub><mi>X</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">
 ln(\lambda) = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3}
 </annotation></semantics></math></p>
-<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi><mi>x</mi><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>β</mi><mn>0</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">exp(\beta_0)</annotation></semantics></math> is the base incidence rate. <br><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mn>1</mn></msub><mo>=</mo><mi>l</mi><mi>n</mi><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mrow><mi>λ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>=</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>λ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>=</mo><mn>0</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\beta_1 = ln(\frac{\lambda(X_1=1)}{\lambda(X_1=0)})</annotation></semantics></math><br> Incidence rate ratio is defined as <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi><mi>x</mi><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>β</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mi>λ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>=</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>λ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>=</mo><mn>0</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac></mrow><annotation encoding="application/x-tex">exp(\beta_1) = \frac{\lambda(X_1=1)}{\lambda(X_1=0)}</annotation></semantics></math><br></p>
+<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi><mi>x</mi><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>β</mi><mn>0</mn></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">exp(\beta_0)</annotation></semantics></math> is the base incidence rate. <br><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mn>1</mn></msub><mo>=</mo><mi>l</mi><mi>n</mi><mo stretchy="false" form="prefix">(</mo><mfrac><mrow><mi>λ</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>=</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mi>λ</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>=</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo></mrow></mfrac><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\beta_1 = ln(\frac{\lambda(X_1=1)}{\lambda(X_1=0)})</annotation></semantics></math><br> Incidence rate ratio is defined as <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi><mi>x</mi><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>β</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mrow><mi>λ</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>=</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mi>λ</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>=</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">exp(\beta_1) = \frac{\lambda(X_1=1)}{\lambda(X_1=0)}</annotation></semantics></math><br></p>
 <p>Assume</p>
 <ul>
-<li>The expected base incidence rate is 1.65: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi><mi>x</mi><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0.50</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1.65</mn></mrow><annotation encoding="application/x-tex">exp(0.50) = 1.65</annotation></semantics></math>.</li>
-<li>Increasing <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_1</annotation></semantics></math> from 0 to 1 reduces the mean incidence rate from 1.65 to 0.905: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi><mi>x</mi><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>0.10</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.905</mn></mrow><annotation encoding="application/x-tex">exp(-0.10) = 0.905</annotation></semantics></math>.</li>
+<li>The expected base incidence rate is 1.65: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi><mi>x</mi><mi>p</mi><mo stretchy="false" form="prefix">(</mo><mn>0.50</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>1.65</mn></mrow><annotation encoding="application/x-tex">exp(0.50) = 1.65</annotation></semantics></math>.</li>
+<li>Increasing <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_1</annotation></semantics></math> from 0 to 1 reduces the mean incidence rate from 1.65 to 0.905: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi><mi>x</mi><mi>p</mi><mo stretchy="false" form="prefix">(</mo><mi>−</mi><mn>0.10</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.905</mn></mrow><annotation encoding="application/x-tex">exp(-0.10) = 0.905</annotation></semantics></math>.</li>
 </ul>
 <p>What is the minimum required sample size? There are two types of specification; (i) rate ratio specification (exponentiated regression coefficient), and (ii) raw regression coefficient specification (as in standard software output).</p>
 <div class="section level2">
@@ -3479,10 +3572,11 @@ ln(\lambda) = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3}
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 474  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (Rate Ratio) = 0.905</span></span>
+<span><span class="co">#&gt;   Sample Size              = 474  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)     = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)      = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power        = 0.800</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="rate-ratio-specification">Rate Ratio Specification<a class="anchor" aria-label="anchor" href="#rate-ratio-specification"></a>
@@ -3512,10 +3606,11 @@ ln(\lambda) = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3}
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 474  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (Rate Ratio) = 0.905</span></span>
+<span><span class="co">#&gt;   Sample Size              = 474  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)     = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)      = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power        = 0.800</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="change-distribution-1">Change Distribution<a class="anchor" aria-label="anchor" href="#change-distribution-1"></a>
@@ -3548,10 +3643,11 @@ ln(\lambda) = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3}
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 40  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.801</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (Rate Ratio) = 0.905</span></span>
+<span><span class="co">#&gt;   Sample Size              = 40  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)     = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)      = 0.199</span></span>
+<span><span class="co">#&gt;   Statistical Power        = 0.801</span></span></code></pre></div>
 <p>The function accommodates other types of distribution. For example, the main predictor can be binary (e.g. treatment / control groups).</p>
 <div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/power.z.poisson.html">power.z.poisson</a></span><span class="op">(</span>base.rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fl">0.50</span><span class="op">)</span>,</span>
@@ -3578,10 +3674,11 @@ ln(\lambda) = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3}
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 2003  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (Rate Ratio) = 0.905</span></span>
+<span><span class="co">#&gt;   Sample Size              = 2003  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)     = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)      = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power        = 0.800</span></span></code></pre></div>
 <p><strong>Change treatment group allocation rate of the binary predictor X</strong> (<code>prob = 0.40</code>):</p>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">distribution</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dist <span class="op">=</span> <span class="st">"bernoulli"</span>, prob <span class="op">=</span> <span class="fl">0.40</span><span class="op">)</span></span>
@@ -3610,10 +3707,11 @@ ln(\lambda) = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3}
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Sample Size          = 2095  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (Rate Ratio) = 0.905</span></span>
+<span><span class="co">#&gt;   Sample Size              = 2095  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)     = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)      = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power        = 0.800</span></span></code></pre></div>
 <p><br><br></p>
 </div>
 </div>
@@ -3893,7 +3991,7 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; |             SAMPLE SIZE CALCULATION              |</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; One-way Analysis of Variance (F-Test)</span></span>
+<span><span class="co">#&gt; One-Way Analysis of Variance (F-Test)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
@@ -3904,10 +4002,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 128  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.197</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.803</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.059</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 128  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.197</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.803</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="two-way">Two-way<a class="anchor" aria-label="anchor" href="#two-way"></a>
@@ -3922,7 +4021,7 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; |             SAMPLE SIZE CALCULATION              |</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Two-way Analysis of Variance (F-Test)</span></span>
+<span><span class="co">#&gt; Two-Way Analysis of Variance (F-Test)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
@@ -3933,10 +4032,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 256  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.030</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 256  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.800</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="three-way">Three-way<a class="anchor" aria-label="anchor" href="#three-way"></a>
@@ -3951,7 +4051,7 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; |             SAMPLE SIZE CALCULATION              |</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Three-way Analysis of Variance (F-Test)</span></span>
+<span><span class="co">#&gt; Three-Way Analysis of Variance (F-Test)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
@@ -3962,10 +4062,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 480  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.196</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.804</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.020</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 480  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.196</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.804</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="practical-effects">Practical Effects<a class="anchor" aria-label="anchor" href="#practical-effects"></a>
@@ -3981,7 +4082,7 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; |             SAMPLE SIZE CALCULATION              |</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Three-way Analysis of Variance (F-Test)</span></span>
+<span><span class="co">#&gt; Three-Way Analysis of Variance (F-Test)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
@@ -3992,10 +4093,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 3516  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.801</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.020</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 3516  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.199</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.801</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -4012,7 +4114,7 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; |             SAMPLE SIZE CALCULATION              |</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; One-way Analysis of Variance (F-Test)</span></span>
+<span><span class="co">#&gt; One-Way Analysis of Variance (F-Test)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
@@ -4023,10 +4125,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 128  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.801</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.059</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 128  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.199</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.801</span></span></code></pre></div>
 <p>NOTE: Keppel procedure allows only one-way ANOVA.</p>
 <p><br><br></p>
 </div>
@@ -4064,10 +4167,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 128  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.197</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.803</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.059</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 128  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.197</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.803</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="time-effect-within">Time Effect (Within)<a class="anchor" aria-label="anchor" href="#time-effect-within"></a>
@@ -4096,10 +4200,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 90  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.196</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.804</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.022</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 90  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.196</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.804</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="group-x-time-interaction">Group x Time Interaction<a class="anchor" aria-label="anchor" href="#group-x-time-interaction"></a>
@@ -4128,10 +4233,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 152  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.197</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.803</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.038</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 152  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.197</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.803</span></span></code></pre></div>
 <p>A researcher is expecting a difference of Cohen’s <em>d</em> = 0.30 between post-test and pre-test scores after controlling for group membership, translating into partial <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>η</mi><mn>2</mn></msup><mo>=</mo><mn>0.022</mn></mrow><annotation encoding="application/x-tex">\eta^2 = 0.022</annotation></semantics></math>. There is both treatment and control groups. The researcher also expects a correlation of 0.50 between pre-test and post-test scores. What is the minimum required sample size?</p>
 <div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/power.f.mixed.anova.html">power.f.mixed.anova</a></span><span class="op">(</span>eta.squared <span class="op">=</span> <span class="fl">0.022</span>,</span>
@@ -4155,10 +4261,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 90  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.196</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.804</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.022</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 90  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.196</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.804</span></span></code></pre></div>
 <p>The rationale for inspecting the interaction is that the benefit of the treatment may depend on the pre-test score (e.g. those with higher scores on the pre-test improve or deteriorate more). A researcher is expecting an interaction effect of partial <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>η</mi><mn>2</mn></msup><mo>=</mo><mn>0.01</mn></mrow><annotation encoding="application/x-tex">\eta^2 = 0.01</annotation></semantics></math>. The test is administered before and after the treatment; thus, the number of repeated measures is 2. There is both treatment and control groups. The researcher also expects a correlation of 0.50 between pre-test and post-test scores. What is the minimum required sample size?</p>
 <div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/power.f.mixed.anova.html">power.f.mixed.anova</a></span><span class="op">(</span>eta.squared <span class="op">=</span> <span class="fl">0.01</span>,</span>
@@ -4182,10 +4289,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 198  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.196</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.804</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.010</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 198  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.196</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.804</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="adjusted-eta-squared">Adjusted Eta-squared<a class="anchor" aria-label="anchor" href="#adjusted-eta-squared"></a>
@@ -4213,10 +4321,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 152  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.198</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.802</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.050</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 152  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.198</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.802</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="practical-effects-1">Practical Effects<a class="anchor" aria-label="anchor" href="#practical-effects-1"></a>
@@ -4245,10 +4354,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 380  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.801</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.050</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 380  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.199</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.801</span></span></code></pre></div>
 <p><br><br></p>
 </div>
 </div>
@@ -4273,7 +4383,7 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; |             SAMPLE SIZE CALCULATION              |</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; One-way Analysis of Covariance (F-Test)</span></span>
+<span><span class="co">#&gt; One-Way Analysis of Covariance (F-Test)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
@@ -4284,10 +4394,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 158  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.801</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.048</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 158  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.199</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.801</span></span></code></pre></div>
 <div style="background-color:rgb(188, 224, 247); padding: 20px 20px 1px; border-radius:5px;">
 <p><code>k.covariates</code> argument has trivial effect on the results. The difference between ANOVA and ANCOVA procedure depends on whether the effect (<code>eta.squared</code>) is unadjusted or covariate-adjusted.</p>
 </div>
@@ -4306,7 +4417,7 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; |             SAMPLE SIZE CALCULATION              |</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Two-way Analysis of Covariance (F-Test)</span></span>
+<span><span class="co">#&gt; Two-Way Analysis of Covariance (F-Test)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
@@ -4317,10 +4428,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 388  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.801</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.020</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 388  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.199</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.801</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="three-way-1">Three-way<a class="anchor" aria-label="anchor" href="#three-way-1"></a>
@@ -4336,7 +4448,7 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; |             SAMPLE SIZE CALCULATION              |</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Three-way Analysis of Covariance (F-Test)</span></span>
+<span><span class="co">#&gt; Three-Way Analysis of Covariance (F-Test)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
@@ -4347,10 +4459,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 960  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.801</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.010</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 960  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.199</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.801</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="practical-effects-2">Practical Effects<a class="anchor" aria-label="anchor" href="#practical-effects-2"></a>
@@ -4367,7 +4480,7 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; |             SAMPLE SIZE CALCULATION              |</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; One-way Analysis of Covariance (F-Test)</span></span>
+<span><span class="co">#&gt; One-Way Analysis of Covariance (F-Test)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
@@ -4378,10 +4491,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 410  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.801</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.048</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 410  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.199</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.801</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -4404,7 +4518,7 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; |             SAMPLE SIZE CALCULATION              |</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; One-way Analysis of Covariance (F-Test)</span></span>
+<span><span class="co">#&gt; One-Way Analysis of Covariance (F-Test)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
@@ -4415,10 +4529,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 158  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.198</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.802</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.048</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 158  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.198</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.802</span></span></code></pre></div>
 <p>NOTE: Keppel procedure allows only one-way ANOVA.</p>
 </div>
 <div class="section level2">
@@ -4440,7 +4555,7 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; |             SAMPLE SIZE CALCULATION              |</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; One-way Analysis of Covariance (F-Test)</span></span>
+<span><span class="co">#&gt; One-Way Analysis of Covariance (F-Test)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
@@ -4451,10 +4566,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 160  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.195</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.805</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.048</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 160  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.195</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.805</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="two-way-2">Two-way<a class="anchor" aria-label="anchor" href="#two-way-2"></a>
@@ -4473,7 +4589,7 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; |             SAMPLE SIZE CALCULATION              |</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Two-way Analysis of Covariance (F-Test)</span></span>
+<span><span class="co">#&gt; Two-Way Analysis of Covariance (F-Test)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
@@ -4484,10 +4600,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 388  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.198</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.802</span></span></code></pre></div>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.020</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 388  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.198</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.802</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -4521,7 +4638,7 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; |             SAMPLE SIZE CALCULATION              |</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; One-way Analysis of Covariance (F-Test)</span></span>
+<span><span class="co">#&gt; One-Way Analysis of Covariance (F-Test)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
@@ -4532,10 +4649,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 1245  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.801</span></span>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.008</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 1245  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.199</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.801</span></span>
 <span></span>
 <span><span class="co"># power of planned contrasts, adjusted for alpha level</span></span>
 <span><span class="fu"><a href="reference/power.t.contrasts.html">power.t.contrasts</a></span><span class="op">(</span><span class="va">design</span>, adjust.alpha <span class="op">=</span> <span class="st">"fdr"</span><span class="op">)</span></span>
@@ -4584,7 +4702,7 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; |             SAMPLE SIZE CALCULATION              |</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; One-way Analysis of Covariance (F-Test)</span></span>
+<span><span class="co">#&gt; One-Way Analysis of Covariance (F-Test)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
@@ -4595,10 +4713,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 1245  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.801</span></span>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.008</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 1245  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.199</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.801</span></span>
 <span></span>
 <span><span class="co"># power of planned contrasts</span></span>
 <span><span class="fu"><a href="reference/power.t.contrasts.html">power.t.contrasts</a></span><span class="op">(</span><span class="va">design</span><span class="op">)</span></span>
@@ -4647,7 +4766,7 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; |             SAMPLE SIZE CALCULATION              |</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; One-way Analysis of Covariance (F-Test)</span></span>
+<span><span class="co">#&gt; One-Way Analysis of Covariance (F-Test)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
@@ -4658,10 +4777,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 1245  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.801</span></span>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.008</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 1245  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.199</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.801</span></span>
 <span></span>
 <span><span class="co"># power of the planned contrasts</span></span>
 <span><span class="fu"><a href="reference/power.t.contrasts.html">power.t.contrasts</a></span><span class="op">(</span><span class="va">design</span><span class="op">)</span></span>
@@ -4709,7 +4829,7 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; |             SAMPLE SIZE CALCULATION              |</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; One-way Analysis of Covariance (F-Test)</span></span>
+<span><span class="co">#&gt; One-Way Analysis of Covariance (F-Test)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
@@ -4720,10 +4840,11 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Total Sample Size    = 1245  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.801</span></span>
+<span><span class="co">#&gt;   Effect Size (eta-squared) = 0.008</span></span>
+<span><span class="co">#&gt;   Total Sample Size         = 1245  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.199</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.801</span></span>
 <span></span>
 <span><span class="co"># power of the planned contrasts</span></span>
 <span><span class="fu"><a href="reference/power.t.contrasts.html">power.t.contrasts</a></span><span class="op">(</span><span class="va">design</span><span class="op">)</span></span>
@@ -4785,6 +4906,7 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (w)      = 0.440</span></span>
 <span><span class="co">#&gt;   Sample Size          = 41  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.196</span></span>
@@ -4830,6 +4952,7 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (w)      = 0.130</span></span>
 <span><span class="co">#&gt;   Sample Size          = 463  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -4877,6 +5000,7 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect Size (w)      = 0.030</span></span>
 <span><span class="co">#&gt;   Sample Size          = 13069  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -4898,7 +5022,6 @@ Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
 </h2>
 <p>This work is licensed under the <a href="https://github.com/metinbulus/pwrss/blob/main/LICENSE" class="external-link">GPL 3</a>.</p>
 <!---
-[![License](reference/figures/license.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 &#10;## Giving back
 &#10;If you find this package helpful, please consider donating to the jamovi project (via
 the Patreon-link on the left side).

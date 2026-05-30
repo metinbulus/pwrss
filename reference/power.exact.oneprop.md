@@ -1,7 +1,8 @@
 # Power Analysis for the Test of One Proportion (Exact Method)
 
-Calculates power or sample size (only one can be NULL at a time) for
-test of a proportion against a constant using the exact method.
+Calculates power, sample size or effect size (only one can be NULL at a
+time) for test of a proportion against a constant using the exact
+method.
 
 Formulas are validated using PASS documentation.
 
@@ -9,7 +10,8 @@ Formulas are validated using PASS documentation.
 
 ``` r
 power.exact.oneprop(
-  prob,
+  prob = NULL,
+  req.sign = "+",
   null.prob = 0.5,
   n = NULL,
   power = NULL,
@@ -25,6 +27,11 @@ power.exact.oneprop(
 - prob:
 
   probability of success under alternative.
+
+- req.sign:
+
+  whether `prob` is smaller or larger than `null.prob` (when minimum
+  detectable prob is of interest).
 
 - null.prob:
 
@@ -131,6 +138,7 @@ power.exact.oneprop(prob = 0.45, null.prob = 0.50,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob)   = 0.450 (vs. null.prob = 0.500)
 #>   Sample Size          = 500
 #>   Type 1 Error (alpha) = 0.049
 #>   Type 2 Error (beta)  = 0.279
@@ -158,9 +166,10 @@ power.exact.oneprop(prob = 0.45, null.prob = 0.50,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 633  <<
+#>   Effect Size (prob)   = 0.450 (vs. null.prob = 0.500)
+#>   Sample Size          = 631  <<
 #>   Type 1 Error (alpha) = 0.047
-#>   Type 2 Error (beta)  = 0.197
-#>   Statistical Power    = 0.803
+#>   Type 2 Error (beta)  = 0.199
+#>   Statistical Power    = 0.801
 #> 
 ```

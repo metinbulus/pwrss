@@ -1,10 +1,10 @@
 # Power Analysis for One-, Two-, Three-Way ANCOVA Using Means, Standard Deviations, and (Optionally) Contrasts (F test)
 
-Calculates power or sample size for one-, two-, three-way ANCOVA. For
-factorial designs, use the argument `factor.levels` but note that unique
-combination of levels (cells in this case) should follow a specific
-order for the test of interaction. The order of marginal means and
-standard deviations is printed as a warning message.
+Calculates power, sample size or effect size for one-, two-, three-way
+ANCOVA. For factorial designs, use the argument `factor.levels` but note
+that unique combination of levels (cells in this case) should follow a
+specific order for the test of interaction. The order of marginal means
+and standard deviations is printed as a warning message.
 
 Formulas are validated using examples and tables in Shieh (2020).
 
@@ -22,7 +22,7 @@ power.f.ancova.shieh(
   contrast.matrix = NULL,
   power = NULL,
   alpha = 0.05,
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -85,7 +85,7 @@ power.f.ancova.shieh(
   type 1 error rate, defined as the probability of incorrectly rejecting
   a true null hypothesis, denoted as \\\alpha\\.
 
-- ceiling:
+- ceil.n:
 
   logical; `TRUE` by default. If `FALSE` sample sizes in each cell are
   NOT rounded up.
@@ -158,6 +158,7 @@ https://doi.org/10.1007/s11336-019-09692-3
 ## Examples
 
 ``` r
+
 ###################################################################
 ##########################  main effect  ##########################
 ###################################################################
@@ -173,7 +174,7 @@ power.f.ancova.shieh(mu.vector = c(0.20, 0), # marginal means
 #> |                POWER CALCULATION                 |
 #> +--------------------------------------------------+
 #> 
-#> One-way Analysis of Covariance (F-Test)
+#> One-Way Analysis of Covariance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -184,10 +185,11 @@ power.f.ancova.shieh(mu.vector = c(0.20, 0), # marginal means
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 300
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.316
-#>   Statistical Power    = 0.684  <<
+#>   Effect Size (eta-squared) = 0.020
+#>   Total Sample Size         = 300
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.316
+#>   Statistical Power         = 0.684  <<
 #> 
 
 
@@ -203,7 +205,7 @@ power.f.ancova.shieh(mu.vector = c(0.20, 0), # marginal means
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> One-way Analysis of Covariance (F-Test)
+#> One-Way Analysis of Covariance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -214,10 +216,11 @@ power.f.ancova.shieh(mu.vector = c(0.20, 0), # marginal means
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 396  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (eta-squared) = 0.020
+#>   Total Sample Size         = 396  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.199
+#>   Statistical Power         = 0.801
 #> 
 
 ###################################################################
@@ -239,7 +242,7 @@ power.f.ancova.shieh(mu.vector = c(0.20, 0.25, 0.15, 0.05), # marginal means
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> Two-way Analysis of Covariance (F-Test)
+#> Two-Way Analysis of Covariance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -250,10 +253,11 @@ power.f.ancova.shieh(mu.vector = c(0.20, 0.25, 0.15, 0.05), # marginal means
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 2796  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Effect Size (eta-squared) = 0.003
+#>   Total Sample Size         = 2796  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.200
+#>   Statistical Power         = 0.800
 #> 
 # Elements of `mu.vector`, `sd.vector`, `n.vector` or `p.vector` should follow this specific order:
 #  A1:B1  A1:B2  A2:B1  A2:B2
@@ -288,7 +292,7 @@ ancova.design <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), # margina
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> One-way Analysis of Covariance (F-Test)
+#> One-Way Analysis of Covariance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -299,10 +303,11 @@ ancova.design <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), # margina
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 1245  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (eta-squared) = 0.008
+#>   Total Sample Size         = 1245  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.199
+#>   Statistical Power         = 0.801
 #> 
 
 # power of planned contrasts, adjusted for alpha level
@@ -353,7 +358,7 @@ ancova.design <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), # margina
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> One-way Analysis of Covariance (F-Test)
+#> One-Way Analysis of Covariance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -364,10 +369,11 @@ ancova.design <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), # margina
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 1245  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (eta-squared) = 0.008
+#>   Total Sample Size         = 1245  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.199
+#>   Statistical Power         = 0.801
 #> 
 
 # power of planned contrasts
@@ -418,7 +424,7 @@ ancova.design <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), # margina
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> One-way Analysis of Covariance (F-Test)
+#> One-Way Analysis of Covariance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -429,10 +435,11 @@ ancova.design <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), # margina
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 1245  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (eta-squared) = 0.008
+#>   Total Sample Size         = 1245  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.199
+#>   Statistical Power         = 0.801
 #> 
 
 # power of the planned contrasts
@@ -482,7 +489,7 @@ ancova.design <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), # margina
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> One-way Analysis of Covariance (F-Test)
+#> One-Way Analysis of Covariance (F-Test)
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -493,10 +500,11 @@ ancova.design <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), # margina
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Total Sample Size    = 1245  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (eta-squared) = 0.008
+#>   Total Sample Size         = 1245  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.199
+#>   Statistical Power         = 0.801
 #> 
 
 # power of the planned contrasts

@@ -54,6 +54,7 @@ Article 111. https://doi.org/10.3389/fpsyg.2012.00111
 ## Examples
 
 ``` r
+
   rsq.to.f(r.squared.full = 0.02) # small
   rsq.to.f(r.squared.full = 0.13) # medium
   rsq.to.f(r.squared.full = 0.26) # large

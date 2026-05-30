@@ -1,14 +1,13 @@
 # Power Analysis for Linear Regression: Single Coefficient (T-Test)
 
-Calculates power or sample size (only one can be NULL at a time) to test
-a single coefficient in multiple linear regression. The predictor is
-assumed to be continuous by default. However, one can calculate power or
-sample size for a binary predictor (such as treatment and control groups
-in an experimental design) by specifying `sd.predictor = sqrt(p*(1-p))`
-where `p` is the proportion of subjects in one of the groups. The sample
-size in each group would be `n*p` and `n*(1-p)`.
-`power.t.regression()``pwrss.t.regression()` are the same functions, as
-well as `power.t.reg()` and `pwrss.t.reg()`.
+Calculates power, sample size or effect size (only one can be NULL at a
+time) to test a single coefficient in multiple linear regression. By
+default, the predictor is assumed to be continuous. However, one can
+calculate power, sample size or effect size for a binary predictor (such
+as treatment and control groups in an experimental design) by specifying
+`sd.predictor = sqrt(p * (1 - p))` where `p` is the proportion of
+subjects in one of the groups. The sample size in each group would be
+`n * p` and `n * (1 - p)`.
 
 Minimal effect and equivalence tests are implemented in line with Hodges
 and Lehmann (1954), Kim and Robinson (2019), Phillips (1990), and Dupont
@@ -21,18 +20,18 @@ the PASS documentation, and tables in Bulus (2021).
 
 ``` r
 power.t.regression(
-  beta,
+  beta = NULL,
   null.beta = 0,
   margin = 0,
   sd.predictor = 1,
   sd.outcome = 1,
-  r.squared = (beta * sd.predictor/sd.outcome)^2,
+  r.squared = NULL,
   k.total = 1,
   n = NULL,
   power = NULL,
   alpha = 0.05,
   alternative = c("two.sided", "one.sided", "two.one.sided"),
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -69,12 +68,7 @@ power.t.regression(
 
 - r.squared:
 
-  model R-squared. The default is
-  `r.squared = (beta * sd.predictor / sd.outcome) ^ 2` assuming a linear
-  regression with one predictor. Thus, an `r.squared` below this value
-  will throw a warning. To consider other covariates in the model
-  provide a value greater than the default `r.squared` along with the
-  argument `k.total > 1`.
+  model R-squared. Please see also Details below.
 
 - k.total:
 
@@ -100,7 +94,7 @@ power.t.regression(
   character; the direction or type of the hypothesis test: "two.sided",
   "one.sided", or "two.one.sided".
 
-- ceiling:
+- ceil.n:
 
   logical; whether sample size should be rounded up. `TRUE` by default.
 
@@ -141,6 +135,10 @@ power.t.regression(
 
   critical value(s).
 
+- r.squared:
+
+  model R-squared.
+
 - power:
 
   statistical power \\(1-\beta)\\.
@@ -150,6 +148,25 @@ power.t.regression(
   sample size.
 
 ## Details
+
+- When it is requested to calculate the effect size (by giving both
+  their parameters `n` and `power`), `r.squared` must be empty and
+  `beta` can be empty (`NULL`). By default, a linear regression with one
+  predictor is assumed. If `beta`, `sd.predictor` and `sd.outcome` are
+  given (i.e., in cases where it is not requested to calculate the
+  effect size), `r.squared` is calculated as follows:
+  `r.squared = (beta * sd.predictor / sd.outcome) ^ 2`. If the given
+  `beta` results in an `r.squared` below this value, a warning will be
+  issued. To calculate `beta` from `r.squared`, the following formula
+  can be used: `beta = (sqrt(r.squared) * sd.outcome / sd.predictor)`.
+
+- To consider other covariates in the model provide a value greater than
+  the default value for `r.squared` (see above) along with the argument
+  `k.total > 1`. However, in such case, the above formula for
+  calculating `beta` can not be used.
+
+- `power.t.regression()`, `pwrss.t.regression()`, `power.t.reg()` and
+  `pwrss.t.reg()` are the same functions.
 
 - NB: The `pwrss.z.regression()` function and its alias `pwrss.z.reg()`
   are deprecated, but they will remain available as a wrapper for the
@@ -183,6 +200,7 @@ https://doi.org/10.1007/10.1016/s0197-2456(98)00037-3
 ## Examples
 
 ``` r
+
 # continuous predictor x (and 4 covariates)
 power.t.regression(beta = 0.20,
             k.total = 5,
@@ -203,16 +221,17 @@ power.t.regression(beta = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 140  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.198
-#>   Statistical Power    = 0.802
+#>   Effect Size (R-squared) = 0.300
+#>   Sample Size             = 140  <<
+#>   Type 1 Error (alpha)    = 0.050
+#>   Type 2 Error (beta)     = 0.198
+#>   Statistical Power       = 0.802
 #> 
 
 # binary predictor x (and 4 covariates)
 p <- 0.50 # proportion of subjects in one group
 power.t.regression(beta = 0.20,
-            sd.predictor = sqrt(p*(1-p)),
+            sd.predictor = sqrt(p * (1 - p)),
             k.total = 5,
             r.squared = 0.30,
             power = 0.80)
@@ -231,10 +250,11 @@ power.t.regression(beta = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 552  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Effect Size (R-squared) = 0.300
+#>   Sample Size             = 552  <<
+#>   Type 1 Error (alpha)    = 0.050
+#>   Type 2 Error (beta)     = 0.200
+#>   Statistical Power       = 0.800
 #> 
 
 # non-inferiority test with binary predictor x (and 4 covariates)
@@ -261,10 +281,11 @@ power.t.regression(beta = 0.20, # Cohen's d
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 278  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Effect Size (R-squared) = 0.300
+#>   Sample Size             = 278  <<
+#>   Type 1 Error (alpha)    = 0.050
+#>   Type 2 Error (beta)     = 0.200
+#>   Statistical Power       = 0.800
 #> 
 
 # superiority test with binary predictor x (and 4 covariates)
@@ -272,7 +293,7 @@ p <- 0.50 # proportion of subjects in one group
 power.t.regression(beta = 0.20, # Cohen's d
             margin = 0.05, # superiority margin in Cohen's d unit
             alternative = "one.sided",
-            sd.predictor = sqrt(p*(1-p)),
+            sd.predictor = sqrt(p * (1 - p)),
             k.total = 5,
             r.squared = 0.30,
             power = 0.80)
@@ -291,10 +312,11 @@ power.t.regression(beta = 0.20, # Cohen's d
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 773  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Effect Size (R-squared) = 0.300
+#>   Sample Size             = 773  <<
+#>   Type 1 Error (alpha)    = 0.050
+#>   Type 2 Error (beta)     = 0.200
+#>   Statistical Power       = 0.800
 #> 
 
 # equivalence test with binary predictor x (and 4 covariates)
@@ -302,7 +324,7 @@ p <- 0.50 # proportion of subjects in one group
 power.t.regression(beta = 0, # Cohen's d
             margin = c(-0.05, 0.05), # equivalence bounds in Cohen's d unit
             alternative = "two.one.sided",
-            sd.predictor = sqrt(p*(1 - p)),
+            sd.predictor = sqrt(p * (1 - p)),
             k.total = 5,
             r.squared = 0.30,
             power = 0.80)
@@ -323,9 +345,10 @@ power.t.regression(beta = 0, # Cohen's d
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 9593  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Effect Size (R-squared) = 0.300
+#>   Sample Size             = 9593  <<
+#>   Type 1 Error (alpha)    = 0.050
+#>   Type 2 Error (beta)     = 0.200
+#>   Statistical Power       = 0.800
 #> 
 ```

@@ -10,14 +10,15 @@ Validated using the PASS documentation and G\*Power.
 
 ``` r
 power.exact.mcnemar(
-  prob10,
-  prob01,
+  prob10 = NULL,
+  prob01 = NULL,
+  req.sign = "+",
   n.paired = NULL,
   power = NULL,
   alpha = 0.05,
   alternative = c("two.sided", "one.sided"),
   method = c("exact", "approximate"),
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -36,6 +37,11 @@ power.exact.mcnemar(
   (joint) probability of failure in case (or after) but success in
   matched control (or before). prob10' and 'prob01' are known as
   discordant probs.
+
+- req.sign:
+
+  whether estimated prob is smaller or larger than the other (when
+  minimum detectable prob is of interest).
 
 - n.paired:
 
@@ -64,12 +70,12 @@ power.exact.mcnemar(
   Fisher's exact test, while "approximate" refers to the z-test based on
   the normal approximation.
 
-- ceiling:
+- ceil.n:
 
   logical; if `TRUE` rounds up sample size in each cell. This procedure
-  assumes symmetry for concordant probs, which are 'p11' and 'p00').
+  assumes symmetry for concordant probs, which are `p11` and `p00`).
   Thus results may differ from other software by a few units. To match
-  results set 'ceiling = FALSE'.
+  results set `ceil.n` to FALSE.
 
 - verbose:
 
@@ -129,7 +135,7 @@ power.exact.mcnemar(
 ## References
 
 Bennett, B. M., & Underwood, R. E. (1970). 283. Note: On McNemar's Test
-for the 2 \* 2 Table and Its Power Function. \*Biometrics, 26(2),
+for the 2 \* 2 Table and Its Power Function. *Biometrics, 26*(2),
 339-343. https://doi.org/10.2307/2529083
 
 Connor, R. J. (1987). Sample size for testing differences in proportions
@@ -213,6 +219,7 @@ power.exact.mcnemar(prob10 = 0.20, prob01 = 0.10,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob10) = 0.200 (vs. prob01 = 0.100)
 #>   Paired Sample Size   = 100
 #>   Type 1 Error (alpha) = 0.043
 #>   Type 2 Error (beta)  = 0.627
@@ -241,6 +248,7 @@ power.exact.mcnemar(prob10 = 0.20, prob01 = 0.10,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob10) = 0.200 (vs. prob01 = 0.100)
 #>   Paired Sample Size   = 249  <<
 #>   Type 1 Error (alpha) = 0.037
 #>   Type 2 Error (beta)  = 0.199
@@ -250,9 +258,9 @@ power.exact.mcnemar(prob10 = 0.20, prob01 = 0.10,
 # we may not have 2 x 2 joint probs
 # convert marginal probs to joint probs
 joint.probs.2x2(prob1 = 0.55, # mean of case group (or after)
-                    prob2 = 0.45, # mean of matched control group (or before)
-                    # correlation between matched case-control or before-after
-                    rho = 0.4141414
+                prob2 = 0.45, # mean of matched control group (or before)
+                # correlation between matched case-control or before-after
+                rho = 0.4141414
 )
 #>    rho.min    rho.max     prob11     prob10     prob01     prob00 
 #> -1.0000000  0.8181818  0.3500000  0.2000000  0.1000000  0.3500000 

@@ -19,7 +19,7 @@ power.t.contrast(
   power = NULL,
   alpha = 0.05,
   tukey.kramer = FALSE,
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -74,7 +74,7 @@ power.t.contrast(
   logical; `FALSE` by default. If `TRUE` adjustments will be made to
   control Type 1 error.
 
-- ceiling:
+- ceil.n:
 
   logical; `TRUE` by default. If `FALSE` sample sizes in each cell are
   NOT rounded up.
@@ -175,6 +175,7 @@ power.t.contrast(mu.vector = c(0.15, 0.30, 0.20),
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (d)      = -0.071
 #>   Total Sample Size    = 9423  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200

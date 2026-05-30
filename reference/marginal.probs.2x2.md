@@ -154,6 +154,7 @@ power.exact.mcnemar(prob01 = jp$prob01,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob10) = 0.200 (vs. prob01 = 0.100)
 #>   Paired Sample Size   = 249  <<
 #>   Type 1 Error (alpha) = 0.037
 #>   Type 2 Error (beta)  = 0.199

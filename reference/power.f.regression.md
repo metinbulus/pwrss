@@ -20,7 +20,7 @@ power.f.regression(
   n = NULL,
   power = NULL,
   alpha = 0.05,
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -61,7 +61,7 @@ power.f.regression(
   type 1 error rate, defined as the probability of incorrectly rejecting
   a true null hypothesis, denoted as \\\alpha\\.
 
-- ceiling:
+- ceil.n:
 
   logical; whether sample size should be rounded up. `TRUE` by default.
 
@@ -133,6 +133,7 @@ Cohen, J. (1988). Statistical power analysis for the behavioral sciences
 ## Examples
 
 ``` r
+
 # in the outcome (R-squared = 0.15).
 power.f.regression(r.squared = 0.15,
                    k.total = 3, # total number of predictors
@@ -152,10 +153,11 @@ power.f.regression(r.squared = 0.15,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 66  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (R-squared) = 0.150
+#>   Sample Size             = 66  <<
+#>   Type 1 Error (alpha)    = 0.050
+#>   Type 2 Error (beta)     = 0.199
+#>   Statistical Power       = 0.801
 #> 
 
 # adding two more variables will increase R-squared
@@ -179,9 +181,10 @@ power.f.regression(r.squared.change = 0.10, # R-squared change
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Sample Size          = 90  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Effect Size (R-squared) = 0.100
+#>   Sample Size             = 90  <<
+#>   Type 1 Error (alpha)    = 0.050
+#>   Type 2 Error (beta)     = 0.199
+#>   Statistical Power       = 0.801
 #> 
 ```

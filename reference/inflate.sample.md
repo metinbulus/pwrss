@@ -5,7 +5,7 @@ Inflate Sample Size for Attrition
 ## Usage
 
 ``` r
-inflate.sample(n, rate = 0.05, ceiling = TRUE, verbose = 1)
+inflate.sample(n, rate = 0.05, ceil.n = TRUE, verbose = 1)
 ```
 
 ## Arguments
@@ -18,7 +18,7 @@ inflate.sample(n, rate = 0.05, ceiling = TRUE, verbose = 1)
 
   attrition rate.
 
-- ceiling:
+- ceil.n:
 
   rounds-up the inflated sample size.
 

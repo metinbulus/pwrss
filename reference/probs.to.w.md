@@ -82,6 +82,7 @@ sciences* (2nd ed.). Lawrence Erlbaum Associates.
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (w)      = 0.440
 #>   Sample Size          = 41  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.196
@@ -96,7 +97,7 @@ sciences* (2nd ed.). Lawrence Erlbaum Associates.
   # girls are underdiagnosed with ADHD?                      #
   # ---------------------------------------------------------#
 
-  ## from https://time.com/growing-up-with-adhd/
+  ## from https://archive.today/E2hqM
   ## 5.6 percent of girls and 13.2 percent of boys are diagnosed with ADHD
   prob.matrix <- rbind(c(0.056, 0.132),
                        c(0.944, 0.868))
@@ -128,6 +129,7 @@ sciences* (2nd ed.). Lawrence Erlbaum Associates.
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (w)      = 0.130
 #>   Sample Size          = 463  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -177,6 +179,7 @@ sciences* (2nd ed.). Lawrence Erlbaum Associates.
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (w)      = 0.030
 #>   Sample Size          = 13069  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200

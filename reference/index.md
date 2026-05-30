@@ -27,17 +27,21 @@
   probabilities for the McNemar test applied to paired binary data.
 - [`means.to.d()`](https://metinbulus.github.io/pwrss/reference/means.to.d.md)
   : Conversion from Means and Standard Deviations to Cohen's d
+- [`means.to.etasq()`](https://metinbulus.github.io/pwrss/reference/means.to.etasq.md)
+  : Conversion from Means and Standard Deviations to Cohen's f and
+  Eta-squared
 - [`power.binom.test()`](https://metinbulus.github.io/pwrss/reference/power.binom.test.md)
   : Power Analysis for the Generic Binomial Test
 - [`power.chisq.gof()`](https://metinbulus.github.io/pwrss/reference/power.chisq.gof.md)
-  : Power and Sample Size for Chi-square Goodness-of-Fit or Independence
-  Tests
+  : Power Analysis for Chi-square Goodness-of-Fit or Independence Tests
 - [`power.chisq.test()`](https://metinbulus.github.io/pwrss/reference/power.chisq.test.md)
   : Statistical Power for the Generic Chi-Square Test
 - [`power.exact.fisher()`](https://metinbulus.github.io/pwrss/reference/power.exact.fisher.md)
   : Power Analysis for Fisher's Exact Test (Independent Proportions)
 - [`power.exact.mcnemar()`](https://metinbulus.github.io/pwrss/reference/power.exact.mcnemar.md)
   : Power Analysis for McNemar's Exact Test (Paired Proportions)
+- [`power.exact.onecor()`](https://metinbulus.github.io/pwrss/reference/power.exact.onecor.md)
+  : Power Analysis for One-Sample Correlation (Exact)
 - [`power.exact.oneprop()`](https://metinbulus.github.io/pwrss/reference/power.exact.oneprop.md)
   : Power Analysis for the Test of One Proportion (Exact Method)
 - [`power.exact.twoprops()`](https://metinbulus.github.io/pwrss/reference/power.exact.twoprops.md)
@@ -59,6 +63,8 @@
   (F-Test)
 - [`power.f.test()`](https://metinbulus.github.io/pwrss/reference/power.f.test.md)
   : Statistical Power for the Generic F-Test
+- [`power.lp.test()`](https://metinbulus.github.io/pwrss/reference/power.lp.test.md)
+  : Statistical Power for the Lambda-Prime Distribution
 - [`power.np.wilcoxon()`](https://metinbulus.github.io/pwrss/reference/power.np.wilcoxon.md)
   : Power Analysis for Non-parametric Rank-Based Tests (One-Sample,
   Independent, and Paired Designs)

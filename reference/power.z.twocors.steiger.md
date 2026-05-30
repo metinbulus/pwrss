@@ -10,19 +10,20 @@ Validated via PASS and G\*Power.
 
 ``` r
 power.z.twocors.steiger(
-  rho12,
-  rho13,
-  rho23,
+  rho12 = NULL,
+  rho13 = NULL,
+  rho23 = NULL,
   rho14 = NULL,
   rho24 = NULL,
   rho34 = NULL,
+  req.sign = "+",
   n = NULL,
   power = NULL,
   alpha = 0.05,
   alternative = c("two.sided", "one.sided"),
   pooled = TRUE,
   common.index = FALSE,
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -60,6 +61,14 @@ power.z.twocors.steiger(
   correlation between variable V3 and V4 (no common index only). Check
   examples below.
 
+- req.sign:
+
+  whether estimated rho is smaller or larger than the other (when
+  minimum detectable rho is of interest). Sign comparison is between
+  rho12 and rho13 with common index and between rho12 and rho34 with no
+  common index. Note that sign comparison is relative to the known
+  correlation.
+
 - n:
 
   integer; sample size.
@@ -92,7 +101,7 @@ power.z.twocors.steiger(
   relevant correlations must be explicitly specified). Check examples
   below.
 
-- ceiling:
+- ceil.n:
 
   logical; if `TRUE` rounds up sample size.
 
@@ -192,6 +201,7 @@ power.z.twocors.steiger(rho12 = 0.35, rho13 = 0.45, rho23 = 0.05,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (rho12)  = 0.350 (vs. rho13 = 0.450)
 #>   Sample Size          = 1000
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.253
@@ -239,6 +249,7 @@ power.z.twocors.steiger(rho12 = 0.45, rho13 = 0.45, rho23 = 0.50,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (rho12)  = 0.450 (vs. rho34 = 0.550)
 #>   Sample Size          = 1000
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.062

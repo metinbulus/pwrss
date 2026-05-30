@@ -9,15 +9,16 @@ Validated using the PASS documentation and G\*Power.
 
 ``` r
 power.exact.fisher(
-  prob1,
-  prob2,
+  prob1 = NULL,
+  prob2 = NULL,
+  req.sign = "+",
   n.ratio = 1,
   n2 = NULL,
   power = NULL,
   alpha = 0.05,
   alternative = c("two.sided", "one.sided"),
   method = c("exact", "approximate"),
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -32,6 +33,11 @@ power.exact.fisher(
 - prob2:
 
   probability of success in the second group.
+
+- req.sign:
+
+  whether estimated prob is smaller or larger than the other (when
+  minimum detectable prob is of interest).
 
 - n.ratio:
 
@@ -62,7 +68,7 @@ power.exact.fisher(
   Fisher's exact test, while "approximate" refers to the Z-Test based on
   the normal approximation.
 
-- ceiling:
+- ceil.n:
 
   logical; if `TRUE` rounds up sample size in each group.
 
@@ -171,6 +177,7 @@ power.exact.fisher(prob1 = 0.60, prob2 = 0.40, n2 = 50)
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Effect Size (prob1)  = 0.600 (vs. prob2 = 0.400)
 #>   Sample Size          = 50 and 50
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.538
