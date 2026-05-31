@@ -874,12 +874,11 @@ power.z.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0,
   } else if (requested == "es") {
 
     # limit the borders of the value range (if they interval gets to large, no local minimum may be found below)
-    val.rng <- vapply(seq(null.rho, ifelse(check.pos_sign(req.sign), 1, -1), 0.1),
-                      function(rho) ifelse(pwr(rho = rho, null.rho = null.rho, n = n, alpha = alpha,
-                                               alternative = alternative)$power < 1, rho, NA),
-                      numeric(1))
-    val.rng <- range(val.rng, na.rm = TRUE)
-    if (check.pos_sign(req.sign)) val.rng[2] <- max(val.rng[2] + 0.1, 0.9999) else val.rng[1] <- min(val.rng[1] - 0.1, -0.9999)
+    val.rng <- seq(null.rho, ifelse(check.pos_sign(req.sign), 1, -1), 0.1)
+    val.rng <- range(val.rng[vapply(val.rng,
+                                    function(rho) pwr(rho = rho, null.rho = null.rho, n = n, alpha = alpha, alternative = alternative)$power < 1,
+                                    logical(1))])
+    if (check.pos_sign(req.sign)) val.rng[2] <- min(val.rng[2] + 0.1, 0.9999) else val.rng[1] <- max(val.rng[1] - 0.1, -0.9999)
 
     rho <- stats::optimize(
       f = function(rho) (power - pwr(rho = rho, null.rho = null.rho, n = n, alpha = alpha, alternative = alternative)$power) ^ 2,
