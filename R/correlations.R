@@ -892,13 +892,6 @@ power.z.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0,
   delta <- rho - null.rho
   q <- cors.to.q(rho, null.rho, FALSE)$q
 
-  power <- pwr.obj$power
-  z.alpha <- pwr.obj$z.alpha
-  mean.alternative <- pwr.obj$lambda
-  sd.alternative <- 1
-  mean.null <- 0
-  sd.null <- 1
-
   if (verbose > 0) {
 
     print.obj <-  list(requested = requested,
@@ -910,12 +903,12 @@ power.z.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0,
                        null.rho = null.rho,
                        delta = delta,
                        q = q,
-                       mean.alternative = mean.alternative,
-                       sd.alternative = sd.alternative,
-                       mean.null = mean.null,
-                       sd.null = sd.null,
-                       z.alpha = z.alpha,
-                       power = power,
+                       mean.alternative = pwr.obj$lambda,
+                       sd.alternative = 1,
+                       mean.null = 0,
+                       sd.null = 1,
+                       z.alpha = pwr.obj$z.alpha,
+                       power = pwr.obj$power,
                        n = n)
 
     .print.pwrss.twocors(print.obj, verbose = verbose, utf = utf)
@@ -926,16 +919,17 @@ power.z.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0,
                            test = "z",
                            design = "one.sample",
                            rho = rho,
+                           null.rho = null.rho,
                            delta = delta,
                            q = q,
-                           mean = mean.alternative,
-                           sd = sd.alternative,
-                           null.mean = mean.null,
-                           null.sd = sd.null,
+                           mean = pwr.obj$lambda,
+                           sd = 1,
+                           null.mean = 0,
+                           null.sd = 1,
                            alternative = alternative,
-                           z.alpha = z.alpha,
+                           z.alpha = pwr.obj$z.alpha,
                            n = n,
-                           power = power),
+                           power = pwr.obj$power),
                       class = c("pwrss", "z", "onecor")))
 
 } # power.z.onecor()

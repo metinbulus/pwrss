@@ -437,74 +437,84 @@ test_that("power.z.twocors works", {
 test_that("power.z.onecor works", {
     crrRes <- power.z.onecor(rho = 0.20, power = 0.80, alpha = 0.05, alternative = "two.sided", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "onecor"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "rho", "delta", "q", "mean", "sd", "null.mean", "null.sd",
-                                  "alternative", "z.alpha", "n", "power"))
+    expect_equal(names(crrRes), c("parms", "test", "design", "rho", "null.rho", "delta", "q", "mean", "sd", "null.mean",
+                                  "null.sd", "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho = 0.20, req.sign = "+", null.rho = 0, n = NULL, power = 0.80, alpha = 0.05, alternative = "two.sided",
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "one.sample", delta = 0.2, q = 0.202732554, mean = 2.80181964, sd = 1, null.mean = 0, null.sd = 1,
-                      alternative = "two.sided", z.alpha = c(-1.959964, 1.959964), n = 194, power = 0.80006658))
+    expect_equal(crrRes[c("test", "design", "rho", "null.rho", "delta", "q", "mean", "sd", "null.mean", "null.sd",
+                          "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "one.sample", rho = 0.2, null.rho = 0, delta = 0.2, q = 0.202732554,
+                      mean = 2.80181964, sd = 1, null.mean = 0, null.sd = 1, alternative = "two.sided",
+                      z.alpha = c(-1.959964, 1.959964), n = 194, power = 0.80006658))
     expect_equal(crrRes, pwrss.z.corr(r = 0.20, power = 0.80, alpha = 0.05, alternative = "not equal", verbose = FALSE))
 
     crrRes <- power.z.onecor(rho = 0.20, n = 194, alpha = 0.05, alternative = "two.sided", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "onecor"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "rho", "delta", "q", "mean", "sd", "null.mean", "null.sd",
-                                  "alternative", "z.alpha", "n", "power"))
+    expect_equal(names(crrRes), c("parms", "test", "design", "rho", "null.rho", "delta", "q", "mean", "sd", "null.mean",
+                                  "null.sd", "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho = 0.20, req.sign = "+", null.rho = 0, n = 194, power = NULL, alpha = 0.05, alternative = "two.sided",
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "one.sample", delta = 0.2, q = 0.202732554, mean = 2.80181964, sd = 1, null.mean = 0, null.sd = 1,
-                      alternative = "two.sided", z.alpha = c(-1.959964, 1.959964), n = 194, power = 0.80006658))
+    expect_equal(crrRes[c("test", "design", "rho", "null.rho", "delta", "q", "mean", "sd", "null.mean", "null.sd",
+                          "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "one.sample", rho = 0.2, null.rho = 0, delta = 0.2, q = 0.202732554,
+                      mean = 2.80181964, sd = 1, null.mean = 0, null.sd = 1, alternative = "two.sided",
+                      z.alpha = c(-1.959964, 1.959964), n = 194, power = 0.80006658))
     expect_equal(crrRes, pwrss.z.corr(r = 0.20, n = 194, alpha = 0.05, alternative = "not equal", verbose = FALSE))
 
     crrRes <- power.z.onecor(power = 0.80, n = 194, alpha = 0.05, alternative = "two.sided", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "onecor"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "rho", "delta", "q", "mean", "sd", "null.mean", "null.sd",
-                                  "alternative", "z.alpha", "n", "power"))
+    expect_equal(names(crrRes), c("parms", "test", "design", "rho", "null.rho", "delta", "q", "mean", "sd", "null.mean",
+                                  "null.sd", "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho = NULL, req.sign = "+", null.rho = 0, n = 194, power = 0.80, alpha = 0.05, alternative = "two.sided",
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "one.sample", delta = 0.19997876, q = 0.20271043, mean = 2.8015139, sd = 1,
-                      null.mean = 0, null.sd = 1, alternative = "two.sided", z.alpha = c(-1.959964, 1.959964), n = 194,
-                      power = 0.799980982))
+    expect_equal(crrRes[c("test", "design", "rho", "null.rho", "delta", "q", "mean", "sd", "null.mean", "null.sd",
+                          "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "one.sample", rho = 0.19997665, null.rho = 0, delta = 0.19997665,
+                      q = 0.202708229, mean = 2.80148346, sd = 1, null.mean = 0, null.sd = 1, alternative = "two.sided",
+                      z.alpha = c(-1.959964, 1.959964), n = 194, power = 0.799972471))
 
     crrRes <- power.z.onecor(rho = 0.20, null.rho = 0.10, power = 0.80, alpha = 0.05, alternative = "one.sided", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "onecor"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "rho", "delta", "q", "mean", "sd", "null.mean", "null.sd",
-                                  "alternative", "z.alpha", "n", "power"))
+    expect_equal(names(crrRes), c("parms", "test", "design", "rho", "null.rho", "delta", "q", "mean", "sd", "null.mean",
+                                  "null.sd", "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho = 0.20, req.sign = "+", null.rho = 0.10, n = NULL, power = 0.80, alpha = 0.05, alternative = "one.sided",
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "one.sample", delta = 0.1, q = 0.102397206, mean = 2.4872195, sd = 1, null.mean = 0, null.sd = 1,
-                      alternative = "one.sided", z.alpha = 1.64485363, n = 593, power = 0.8002084))
+    expect_equal(crrRes[c("test", "design", "rho", "null.rho", "delta", "q", "mean", "sd", "null.mean", "null.sd",
+                          "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "one.sample", rho = 0.2, null.rho = 0.10, delta = 0.1, q = 0.102397206,
+                      mean = 2.4872195, sd = 1, null.mean = 0, null.sd = 1, alternative = "one.sided",
+                      z.alpha = 1.64485363, n = 593, power = 0.8002084))
     expect_equal(crrRes, pwrss.z.corr(r = 0.20, r0 = 0.10, power = 0.80, alpha = 0.05, alternative = "greater", verbose = FALSE))
 
     crrRes <- power.z.onecor(rho = 0.20, null.rho = 0.10, n = 593, alpha = 0.05, alternative = "one.sided", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "onecor"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "rho", "delta", "q", "mean", "sd", "null.mean", "null.sd",
-                                  "alternative", "z.alpha", "n", "power"))
+    expect_equal(names(crrRes), c("parms", "test", "design", "rho", "null.rho", "delta", "q", "mean", "sd", "null.mean",
+                                  "null.sd", "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho = 0.20, req.sign = "+", null.rho = 0.10, n = 593, power = NULL, alpha = 0.05, alternative = "one.sided",
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "one.sample", delta = 0.1, q = 0.102397206, mean = 2.4872195, sd = 1, null.mean = 0, null.sd = 1,
-                      alternative = "one.sided", z.alpha = 1.64485363, n = 593, power = 0.8002084))
+    expect_equal(crrRes[c("test", "design", "rho", "null.rho", "delta", "q", "mean", "sd", "null.mean", "null.sd",
+                          "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "one.sample", rho = 0.20, null.rho = 0.10, delta = 0.1, q = 0.102397206,
+                      mean = 2.4872195, sd = 1, null.mean = 0, null.sd = 1, alternative = "one.sided",
+                      z.alpha = 1.64485363, n = 593, power = 0.8002084))
 
     crrRes <- power.z.onecor(null.rho = 0.10, n = 593, power = 0.80, alpha = 0.05, alternative = "one.sided", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "onecor"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "rho", "delta", "q", "mean", "sd", "null.mean", "null.sd",
-                                  "alternative", "z.alpha", "n", "power"))
+    expect_equal(names(crrRes), c("parms", "test", "design", "rho", "null.rho", "delta", "q", "mean", "sd", "null.mean",
+                                  "null.sd", "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho = NULL, req.sign = "+", null.rho = 0.10, n = 593, power = 0.80, alpha = 0.05,
                       alternative = "one.sided", ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "one.sample", delta = 0.09995602, q = 0.102351394, mean = 2.4861067, sd = 1,
-                      null.mean = 0, null.sd = 1, alternative = "one.sided", z.alpha = 1.64485363, n = 593,
-                      power = 0.799896919))
+    expect_equal(crrRes[c("test", "design", "rho", "null.rho", "delta", "q", "mean", "sd", "null.mean", "null.sd",
+                          "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "one.sample", rho = 0.19997583, null.rho = 0.1, delta = 0.09997583,
+                      q = 0.102372028, mean = 2.4866079, sd = 1, null.mean = 0, null.sd = 1, alternative = "one.sided",
+                      z.alpha = 1.64485363, n = 593, power = 0.80003725))
 
     # example 3.3 from GPower manual (using approximation, using the exact approximation - see below)
     expect_equal(power.z.onecor(rho = 0.65, null.rho = 0.60, alpha = 0.05, power = 0.95, verbose = 0)[["n"]], 1929)
