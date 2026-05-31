@@ -5,7 +5,8 @@
 \title{Power Analysis for the Test of One Proportion (Exact Method)}
 \usage{
 power.exact.oneprop(
-  prob,
+  prob = NULL,
+  req.sign = "+",
   null.prob = 0.5,
   n = NULL,
   power = NULL,
@@ -17,6 +18,9 @@ power.exact.oneprop(
 }
 \arguments{
 \item{prob}{probability of success under alternative.}
+
+\item{req.sign}{whether \code{prob} is smaller or larger than \code{null.prob}
+(when minimum detectable prob is of interest).}
 
 \item{null.prob}{probability of success under null.}
 
@@ -58,8 +62,8 @@ default.}
 \item{n}{sample size.}
 }
 \description{
-Calculates power or sample size (only one can be NULL at a time) for test of
-a proportion against a constant using the exact method.
+Calculates power, sample size or effect size (only one can be NULL at a
+time) for test of a proportion against a constant using the exact method.
 
 Formulas are validated using PASS documentation.
 }

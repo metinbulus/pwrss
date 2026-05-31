@@ -69,3 +69,6 @@ Meta/
 /Meta/
 /doc/
 .prepare4CRAN
+
+# LibreOffice files to keep work statuses, etc.
+*.od?

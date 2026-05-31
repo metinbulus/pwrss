@@ -9,7 +9,7 @@
 and Paired Designs)}
 \usage{
 power.np.wilcoxon(
-  d,
+  d = NULL,
   null.d = 0,
   margin = 0,
   n.ratio = 1,
@@ -20,7 +20,7 @@ power.np.wilcoxon(
   design = c("independent", "paired", "one.sample"),
   distribution = c("normal", "uniform", "double.exponential", "laplace", "logistic"),
   method = c("guenther", "noether"),
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -58,7 +58,7 @@ incorrectly rejecting a true null hypothesis, denoted as
 \item{method}{character; non-parametric approach: "guenther" (default)
 or "noether"}
 
-\item{ceiling}{logical; whether sample size should be rounded up.
+\item{ceil.n}{logical; whether sample size should be rounded up.
 \code{TRUE} by default.}
 
 \item{verbose}{\code{1} by default (returns test, hypotheses, and
@@ -90,9 +90,9 @@ method = 'guenther').}
 \item{n}{sample size (\code{n} or \code{c(n1, n2)} depending on the design.}
 }
 \description{
-Calculates power or sample size (only one can be NULL at a time) for
-non-parametric rank-based tests. The following tests and designs are
-available:
+Calculates power, sample size or effect size (only one can be NULL at a
+time) for non-parametric rank-based tests. The following tests and designs
+are available:
 \itemize{
 \item Wilcoxon Signed-Rank Test (One Sample)
 \item Wilcoxon Rank-Sum or Mann-Whitney U Test (Independent Samples)

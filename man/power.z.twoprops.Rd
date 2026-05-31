@@ -9,8 +9,9 @@
 Approximation Method)}
 \usage{
 power.z.twoprops(
-  prob1,
-  prob2,
+  prob1 = NULL,
+  prob2 = NULL,
+  req.sign = "+",
   margin = 0,
   n.ratio = 1,
   n2 = NULL,
@@ -22,7 +23,7 @@ power.z.twoprops(
   paired = FALSE,
   rho.paired = 0.5,
   std.error = c("pooled", "unpooled"),
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -31,6 +32,9 @@ power.z.twoprops(
 \item{prob1}{probability of success in the first group.}
 
 \item{prob2}{probability of success in the second group.}
+
+\item{req.sign}{whether estimated prob is smaller or larger than the
+other (when minimum detectable prob is of interest).}
 
 \item{margin}{ignorable \code{prob1} - \code{prob2} difference. For two
 one-sided tests provide lower and upper margins in the
@@ -68,7 +72,7 @@ by default.}
 "pooled" or "unpooled" standard deviation. Ignored for
 the paired test.}
 
-\item{ceiling}{logical; \code{TRUE} rounds up sample size in each group.}
+\item{ceil.n}{logical; \code{TRUE} rounds up sample size in each group.}
 
 \item{verbose}{\code{1} by default (returns test, hypotheses, and
 results), if \code{2} a more detailed output is given

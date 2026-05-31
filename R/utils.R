@@ -3,7 +3,7 @@
 #'
 #' @param n       sample size.
 #' @param rate    attrition rate.
-#' @param ceiling rounds-up the inflated sample size.
+#' @param ceil.n  rounds-up the inflated sample size.
 #' @param verbose \code{1} by default (returns test, hypotheses, and results),
 #'                if \code{2} a more detailed output is given (plus key
 #'                parameters and definitions), if \code{0} no output is printed
@@ -15,12 +15,12 @@
 #' inflate.sample(n = 100, rate = 0.05)
 #'
 #' @export inflate.sample
-inflate.sample <- function(n, rate = 0.05, ceiling = TRUE, verbose = 1) {
+inflate.sample <- function(n, rate = 0.05, ceil.n = TRUE, verbose = 1) {
 
   check.sample.size(n)
-  verbose <- ensure_verbose(verbose)
+  verbose <- ensure.verbose(verbose)
 
-  n.adj <- ifelse(ceiling, ceiling(n / (1 - rate)), n / (1 - rate))
+  n.adj <- ifelse(ceil.n, ceiling(n / (1 - rate)), n / (1 - rate))
 
   if (verbose > 0)
     cat(n.adj)
@@ -56,7 +56,7 @@ inflate.sample <- function(n, rate = 0.05, ceiling = TRUE, verbose = 1) {
 etasq.to.f <- function(eta.squared, verbose = 1) {
 
   check.nonnegative(eta.squared)
-  verbose <- ensure_verbose(verbose)
+  verbose <- ensure.verbose(verbose)
 
   f.squared <- eta.squared / (1 - eta.squared)
 
@@ -94,7 +94,7 @@ etasq.to.f <- function(eta.squared, verbose = 1) {
 f.to.etasq <- function(f, verbose = 1) {
 
   check.nonnegative(f)
-  verbose <- ensure_verbose(verbose)
+  verbose <- ensure.verbose(verbose)
 
   f.squared <- f ^ 2
   eta.squared <- f.squared / (1 + f.squared)
@@ -105,6 +105,113 @@ f.to.etasq <- function(f, verbose = 1) {
   invisible(list(eta.squared = eta.squared, f.squared = f.squared, f = sqrt(f.squared)))
 
 } # f.to.etasq
+
+
+#' Conversion from R-squared to Cohen's f
+#'
+#' @description
+#' Helper function to convert between Cohen's f and R-squared.
+#'
+#' @param r.squared.full    R-squared for the full model.
+#' @param r.squared.reduced R-squared for the reduced model.
+#' @param verbose           \code{1} by default (returns results), if \code{0}
+#'                          no output is printed on the console.
+#'
+#' @return
+#'   \item{f.squared}{Cohen's f-squared.}
+#'   \item{f}{Cohen's f.}
+#'   \item{r.squared.full}{R-squared for the full model.}
+#'   \item{r.squared.reduced}{R-squared for the reduced model.}
+#'
+#' @references
+#'   Cohen, J. (1988). Statistical power analysis for the behavioral sciences
+#'   (2nd ed.). Lawrence Erlbaum Associates.
+#'
+#'   Selya, A. S., Rose, J. S., Dierker, L. C., Hedeker, D., & Mermelstein,
+#'   R. J. (2012). A practical guide to calculating Cohen's f2, a measure of
+#'   local effect size, from PROC MIXED. *Frontiers in Psychology, 3*, Article
+#'   111. https://doi.org/10.3389/fpsyg.2012.00111
+#'
+#' @examples
+#'
+#'   rsq.to.f(r.squared.full = 0.02) # small
+#'   rsq.to.f(r.squared.full = 0.13) # medium
+#'   rsq.to.f(r.squared.full = 0.26) # large
+#'
+#' @export rsq.to.f
+rsq.to.f <- function(r.squared.full, r.squared.reduced = 0, verbose = 0) {
+
+  check.nonnegative(r.squared.full, r.squared.reduced)
+  verbose <- ensure.verbose(verbose)
+
+  if (r.squared.full < r.squared.reduced)
+    stop("Expecting `r.squared.full` > `r.squared.reduced`.", call. = FALSE)
+
+  f.squared <- (r.squared.full - r.squared.reduced) / (1 - r.squared.full)
+
+  if (verbose > 0)
+    print(c(f.squared = f.squared, f = sqrt(f.squared), r.squared.full = r.squared.full, r.squared.reduced = r.squared.reduced))
+
+  invisible(list(f.squared = f.squared, f = sqrt(f.squared),
+                 r.squared.full = r.squared.full,
+                 r.squared.reduced = r.squared.reduced))
+} # rsq.to.f
+
+
+#' Conversion from Cohen's f to R-squared
+#'
+#' @description
+#' Helper function to convert between Cohen's f and R-squared.
+#'
+#'
+#' @param f              Cohen's f.
+#' @param r.squared.full R-squared for the full model.
+#' @param verbose        \code{1} by default (returns results), if \code{0} no
+#'                       output is printed on the console.
+#'
+#' @return
+#'   \item{f}{Cohen's f.}
+#'   \item{f.squared}{Cohen's f-squared.}
+#'   \item{r.squared.full}{R-squared for the full model.}
+#'   \item{r.squared.reduced}{R-squared for the reduced model.}
+#'
+#' @references
+#'   Cohen, J. (1988). Statistical power analysis for the behavioral sciences
+#'   (2nd ed.). Lawrence Erlbaum Associates.
+#'
+#'   Selya, A. S., Rose, J. S., Dierker, L. C., Hedeker, D., & Mermelstein,
+#'   R. J. (2012). A practical guide to calculating Cohen's f2, a measure of
+#'   local effect size, from PROC MIXED. *Frontiers in Psychology, 3*, Article
+#'   111. https://doi.org/10.3389/fpsyg.2012.00111
+#'
+#' @examples
+#'
+#'   f.to.rsq(f = 0.14) # small
+#'   f.to.rsq(f = 0.39) # medium
+#'   f.to.rsq(f = 0.59) # large
+#'
+#' @export f.to.rsq
+f.to.rsq <- function(f, r.squared.full = NULL, verbose = 0) {
+
+  check.nonnegative(f)
+  verbose <- ensure.verbose(verbose)
+
+  f.squared <- f ^ 2
+  if (is.null(r.squared.full)) {
+    r.squared.full <- f.squared / (1 + f.squared)
+    r.squared.reduced <- 0
+  } else {
+    change.r.squared <- f.squared * (1 - r.squared.full)
+    r.squared.reduced <- r.squared.full - change.r.squared
+  }
+
+  if (verbose > 0)
+    print(c(f.squared = f.squared, f = sqrt(f.squared), r.squared.full = r.squared.full, r.squared.reduced = r.squared.reduced))
+
+  invisible(list(f.squared = f.squared, f = sqrt(f.squared),
+                 r.squared.full = r.squared.full,
+                 r.squared.reduced = r.squared.reduced))
+} # f.to.rsq
 
 
 #' Conversion from a correlation to a z-value (Fisher's z-transformation)
@@ -130,7 +237,7 @@ f.to.etasq <- function(f, verbose = 1) {
 cor.to.z <- function(rho, verbose = 1) {
 
   check.vector(rho, check.correlation, min.length = 1)
-  verbose <- ensure_verbose(verbose)
+  verbose <- ensure.verbose(verbose)
 
   z <- vapply(rho, function(v) log((1 + v) / (1 - v)) / 2, numeric(1))
 
@@ -165,7 +272,7 @@ cor.to.z <- function(rho, verbose = 1) {
 z.to.cor <- function(z, verbose = 1) {
 
   check.vector(z, check.numeric, min.length = 1)
-  verbose <- ensure_verbose(verbose)
+  verbose <- ensure.verbose(verbose)
 
   rho <- vapply(z, function(v) (exp(2 * v) - 1) / (exp(2 * v) + 1), numeric(1))
 
@@ -208,7 +315,7 @@ z.to.cor <- function(z, verbose = 1) {
 cors.to.q <- function(rho1, rho2, verbose = 1) {
 
   check.correlation(rho1, rho2)
-  verbose <- ensure_verbose(verbose)
+  verbose <- ensure.verbose(verbose)
 
   q <- cor.to.z(rho1, FALSE)$z - cor.to.z(rho2, FALSE)$z
 
@@ -248,10 +355,10 @@ q.to.cors <- function(q, rho1 = NULL, rho2 = NULL, verbose = 1) {
   check.numeric(q)
   if (!is.null(rho1)) check.correlation(rho1)
   if (!is.null(rho2)) check.correlation(rho2)
-  verbose <- ensure_verbose(verbose)
+  verbose <- ensure.verbose(verbose)
 
   if (is.null(rho1) && is.null(rho2))
-    stop("Both `rho1` and `rho2` cannot be NULL.", call. = FALSE)
+    stop("Both `rho1` and `rho2` can not be NULL.", call. = FALSE)
   if (!is.null(rho1) && !is.null(rho2))
     stop("Exactly one of the `rho1` or `rho2` should be NULL.", call. = FALSE)
 
@@ -317,7 +424,7 @@ d.to.cles <- function(d, design = c("independent", "paired", "one.sample"), verb
 
   check.numeric(d)
   design <- tolower(match.arg(design))
-  verbose <- ensure_verbose(verbose)
+  verbose <- ensure.verbose(verbose)
 
   prob <- stats::pnorm(d / sqrt(ifelse(design == "independent", 2, 1)))
 
@@ -334,7 +441,7 @@ cles.to.d <- function(cles, design = c("independent", "paired", "one.sample"), v
 
   check.proportion(cles)
   design <- tolower(match.arg(design))
-  verbose <- ensure_verbose(verbose)
+  verbose <- ensure.verbose(verbose)
 
   d <- sqrt(ifelse(design == "independent", 2, 1)) * stats::qnorm(cles)
 
@@ -393,14 +500,14 @@ cles.to.d <- function(cles, design = c("independent", "paired", "one.sample"), v
 means.to.d <- function(mu1, mu2 = 0, sd1 = 1, sd2 = 1, n.ratio = 1, n2 = 1e10,
                        paired = FALSE, rho.paired = 0.50, verbose = 1) {
 
-  func.parms <- clean.parms(as.list(environment()))
+  func.parms <- as.list(environment())
 
   check.logical(paired)
   check.numeric(mu1, mu2)
   check.correlation(rho.paired)
   check.positive(sd1, sd2, n.ratio)
   check.sample.size(n2)
-  verbose <- ensure_verbose(verbose)
+  verbose <- ensure.verbose(verbose)
 
   n1 <- n.ratio * n2
 
@@ -457,7 +564,7 @@ means.to.d <- function(mu1, mu2 = 0, sd1 = 1, sd2 = 1, n.ratio = 1, n2 = 1e10,
 probs.to.h <- function(prob1, prob2 = 0.50, verbose = 1) {
 
   check.proportion(prob1, prob2)
-  verbose <- ensure_verbose(verbose)
+  verbose <- ensure.verbose(verbose)
 
   h <- 2 * asin(sqrt(prob1)) - 2 * asin(sqrt(prob2))
 
@@ -574,8 +681,8 @@ probs.to.h <- function(prob1, prob2 = 0.50, verbose = 1) {
 #' @export joint.probs.2x2
 joint.probs.2x2 <- function(prob1, prob2, rho = 0.50, verbose = 1) {
 
-  func.parms <- clean.parms(as.list(environment()))
-  verbose <- ensure_verbose(verbose)
+  func.parms <- as.list(environment())
+  verbose <- ensure.verbose(verbose)
 
   check.proportion(prob1, prob2)
   check.correlation(rho)
@@ -603,7 +710,7 @@ joint.probs.2x2 <- function(prob1, prob2, rho = 0.50, verbose = 1) {
   if (verbose > 0)
     print(c(rho.min = rho.min, rho.max = rho.max, prob11 = prob11, prob10 = prob10, prob01 = prob01, prob00 = prob00))
 
-  invisible(list(parms = func.parms, rho.min = rho.min, rho.max = rho.max, 
+  invisible(list(parms = func.parms, rho.min = rho.min, rho.max = rho.max,
                  prob11 = prob11, prob10 = prob10, prob01 = prob01, prob00 = prob00))
 
 } # joint.probs.2x2
@@ -613,56 +720,56 @@ joint.probs.2x2 <- function(prob1, prob2, rho = 0.50, verbose = 1) {
 # find limits of prob2 given prob1 and rho (or prob1 given prob2 and rho)
 prob.limits.paired <- function(prob1 = NULL, prob2 = NULL, rho = 0.50,
                                grid.min = 0.0001, grid.max = 0.9999, step = 0.0001) {
-  
+
   rho.limits <- function(prob1, prob2) {
-    
+
     rho.min <- max(
       -sqrt(prob1 * prob2 / ((1 - prob1) * (1 - prob2))),
       -sqrt((1 - prob1) * (1 - prob2) / (prob2 * prob2))
     )
-    
+
     rho.max <- min(
       sqrt(prob1 * (1 - prob2) / (prob2 * (1 - prob1))),
       sqrt(prob2 * (1 - prob1) / (prob1 * (1 - prob2)))
     )
-    
+
     c(rho.min, rho.max)
-    
+
   } # rho.limits
-  
+
   rho.is.feasible <- function(prob1, prob2, rho) {
-    
+
     limits <- rho.limits(prob1, prob2)
     rho >= limits[1] & rho <= limits[2]
-    
+
   } # rho.is.feasible
-  
+
   if (is.null(prob2) && !is.null(prob1)) {
-    
+
     feasible <- function(x) rho.is.feasible(prob1 = prob1, prob2 = x, rho = rho)
-    
+
   } else if (is.null(prob1) && !is.null(prob2)) {
-    
+
     feasible <- function(x) rho.is.feasible(prob1 = x, prob2 = prob2, rho = rho)
-    
+
   } else {
-    
-    stop("Exactly one of prob1 or prob2 must be NULL", call. = FALSE)
-    
+
+    stop("Exactly one of the parameters `prob1` or `prob2` must be given, one has to be NULL.", call. = FALSE)
+
   }
-  
+
   # find the feasible region
   grid <- seq(grid.min, grid.max, by = step)
   good <- sapply(grid, feasible)
-  
+
   if (!any(good)) {
-    stop("No feasible values found. Check that rho is achievable given the fixed probability.")
+    stop("No feasible values found. Check that rho is achievable given the fixed probability.", call. = FALSE)
   }
-  
+
   feasible.vals <- grid[good]
-  
+
   c(prob.min = min(feasible.vals), prob.max = max(feasible.vals))
-  
+
 } # prob.limits.paired
 
 
@@ -771,10 +878,10 @@ prob.limits.paired <- function(prob1 = NULL, prob2 = NULL, rho = 0.50,
 #' @export marginal.probs.2x2
 marginal.probs.2x2 <- function(prob11, prob10, prob01, prob00, verbose = 1) {
 
-  func.parms <- clean.parms(as.list(environment()))
+  func.parms <- as.list(environment())
 
   check.proportion(prob11, prob10, prob01, prob00)
-  verbose <- ensure_verbose(verbose)
+  verbose <- ensure.verbose(verbose)
 
   total <- prob11 + prob10 + prob01 + prob00
 
@@ -863,7 +970,7 @@ marginal.probs.2x2 <- function(prob11, prob10, prob01, prob00, verbose = 1) {
 #'   # girls are underdiagnosed with ADHD?                      #
 #'   # ---------------------------------------------------------#
 #'
-#'   ## from https://time.com/growing-up-with-adhd/
+#'   ## from https://web.archive.org/web/20250601054306/https://time.com/growing-up-with-adhd/
 #'   ## 5.6 percent of girls and 13.2 percent of boys are diagnosed with ADHD
 #'   prob.matrix <- rbind(c(0.056, 0.132),
 #'                        c(0.944, 0.868))
@@ -900,7 +1007,7 @@ marginal.probs.2x2 <- function(prob11, prob10, prob01, prob00, verbose = 1) {
 #' @export probs.to.w
 probs.to.w <- function(prob.matrix, null.prob.matrix = NULL, verbose = 1) {
 
-  verbose <- ensure_verbose(verbose)
+  verbose <- ensure.verbose(verbose)
 
   if (any(prob.matrix < 0) || any(prob.matrix > 1))
     stop("Matrix elements outside of [0, 1] range.", call. = FALSE)
@@ -995,7 +1102,7 @@ probs.to.w <- function(prob.matrix, null.prob.matrix = NULL, verbose = 1) {
 #'                r.squared = 0.50)
 #' @export means.to.etasq
 means.to.etasq <- function(mu.vector, sd.vector, n.vector, k.covariates = 0, r.squared = 0, factor.levels = NULL, verbose = 1) {
-  
+
   if (!is.vector(mu.vector) || !is.numeric(mu.vector))
     stop("Provide a vector of means (`mu.vector`) with its length equal to number of groups.", call. = FALSE)
   check.vector(mu.vector, check.numeric)
@@ -1013,27 +1120,27 @@ means.to.etasq <- function(mu.vector, sd.vector, n.vector, k.covariates = 0, r.s
   check.nonnegative(k.covariates)
   if (r.squared > 0 && k.covariates < 1)
     stop("Explanatory power of covariates is expected to be non-zero when number of covariates is non-zero.", call. = FALSE)
-  
+
   n.total <- sum(n.vector)
   mu_bar <- sum(n.vector * mu.vector) / n.total
-  
+
   sigma2_pooled <- sum((n.vector - 1) * sd.vector ^ 2) / (n.total - length(mu.vector))
-  
+
   sigma2_between <- sum(n.vector * (mu.vector - mu_bar) ^ 2) / n.total
   sigma2_error <- sigma2_pooled * (1 - r.squared)
-  
+
   f.squared <- sigma2_between / sigma2_error
   eta.squared <- sigma2_between / (sigma2_between + sigma2_error)
-  
+
   u <- prod(factor.levels - 1)
   v <- n.total - length(mu.vector) - k.covariates
   lambda <- f.squared * n.total
-  
+
   if (verbose > 0)
     print(c(f = sqrt(f.squared), eta.squared = eta.squared,
             df1 = u, df2 = v, ncp = lambda))
-  
+
   invisible(list(f = sqrt(f.squared), eta.squared = eta.squared,
                  df1 = u, df2 = v, ncp = lambda))
-  
+
 } # means.to.etasq

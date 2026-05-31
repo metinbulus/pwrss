@@ -6,7 +6,7 @@
 \title{Power Analysis for Mixed-Effects Analysis of Variance (F-Test)}
 \usage{
 power.f.mixed.anova(
-  eta.squared,
+  eta.squared = NULL,
   null.eta.squared = 0,
   factor.levels = c(2, 2),
   factor.type = c("between", "within"),
@@ -16,7 +16,7 @@ power.f.mixed.anova(
   power = NULL,
   alpha = 0.05,
   effect = c("between", "within", "interaction"),
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -68,7 +68,7 @@ denoted as \eqn{\alpha}.}
 \item{effect}{character; the effect of interest: "between",
 "within", or "interaction".}
 
-\item{ceiling}{logical; \code{TRUE} by default. If \code{FALSE}
+\item{ceil.n}{logical; \code{TRUE} by default. If \code{FALSE}
 sample size in each group is NOT rounded up.}
 
 \item{verbose}{\code{1} by default (returns test, hypotheses, and
@@ -91,9 +91,9 @@ characters (if encoding allows for it).
 \item{n.total}{total sample size.}
 }
 \description{
-Calculates power or sample size for mixed-effects ANOVA design with two
-factors (between and within). When there is only one group observed over
-time, this design is often referred to as repeated-measures ANOVA.
+Calculates power, sample size or effect size for mixed-effects ANOVA design
+with two factors (between and within). When there is only one group observed
+over time, this design is often referred to as repeated-measures ANOVA.
 
 Formulas are validated using G*Power and tables in the PASS documentation.
 }

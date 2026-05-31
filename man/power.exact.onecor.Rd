@@ -6,9 +6,10 @@
 \usage{
 power.exact.onecor(
   rho = NULL,
+  req.sign = "+",
   null.rho = 0,
   n = NULL,
-  n.max = 500,
+  n.max = 10000,
   power = NULL,
   alpha = 0.05,
   alternative = c("two.sided", "one.sided"),
@@ -19,11 +20,14 @@ power.exact.onecor(
 \arguments{
 \item{rho}{correlation.}
 
-\item{null.rho}{correlation when null is true.}
+\item{req.sign}{whether estimated rho is smaller or larger than the null.rho
+(when minimum detectable rho is of interest).}
+
+\item{null.rho}{correlation when null is true. Only 0 is allowed for now.}
 
 \item{n}{sample size.}
 
-\item{n.max}{max sample size (applies when n = NULL).}
+\item{n.max}{max. number of observations in the sample (default: 500).}
 
 \item{power}{statistical power, defined as the probability of
 correctly rejecting a false null hypothesis, denoted as
@@ -49,31 +53,36 @@ default.}
 \item{parms}{list of parameters used in calculation.}
 \item{test}{type of the statistical test (Z-Test)}
 \item{rho.alpha}{critical value(s).}
-\item{mde}{minimum detectable rho.}
+\item{es}{minimum detectable correlation.}
 \item{power}{statistical power\eqn{(1-\beta)}.}
 \item{n}{sample size.}
 }
 \description{
-Calculates power, sample size, and minimum detectable correlation (only one can be NULL at a time) to test a
-(Pearson) correlation against a constant using exact test propsoed by Barabesi and Greco (2002).
+Calculates power, sample size, or minimum detectable correlation (only one
+can be NULL at a time) to test a (Pearson) correlation against a constant
+using exact method described in Barabesi and Greco (2002).
 
-Formulas are validated using PASS and G*Power.
+Formulas are validated using G*Power.
 }
 \examples{
 # expected correlation is 0.20 and it is different from 0
+# it could be 0.20 as well as -0.20
 power.exact.onecor(rho = 0.20,
-               power = 0.80,
-               alpha = 0.05,
-               alternative = "two.sided")
+                   power = 0.80,
+                   alpha = 0.05,
+                   alternative = "two.sided")
 
 # expected correlation is 0.20 and it is greater than 0
-power.exact.onecor(rho = 0.20, 
-               power = 0.80,
-               alpha = 0.05,
-               alternative = "one.sided")
+power.exact.onecor(rho = 0.20,
+                   power = 0.80,
+                   alpha = 0.05,
+                   alternative = "one.sided")
+
+
 }
 \references{
-Barabesi & Greco (2002): A note on the exact computation of the Student t, 
-Snecdor F and sample correlation coefficient distribution function. 
-\emph{The Statistician, 51}(Part 1), 105-110. 
+Barabesi, L., & Greco, L. (2002). A Note on the Exact Computation of the
+Student t, Snedecor F and Sample Correlation Coefficient Distribution
+Functions. Journal of the Royal Statistical Society. Series D (The
+Statistician), 51(1), 105–110. https://www.jstor.org/stable/3650394
 }

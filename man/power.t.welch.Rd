@@ -5,7 +5,7 @@
 \title{Power Analysis for Welch's t-Test}
 \usage{
 power.t.welch(
-  d,
+  d = NULL,
   null.d = 0,
   margin = 0,
   var.ratio = 1,
@@ -15,7 +15,7 @@ power.t.welch(
   alpha = 0.05,
   alternative = c("two.sided", "one.sided", "two.one.sided"),
   claim.basis = c("md.pval", "smd.ci"),
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -54,7 +54,7 @@ differences and p-values, "smd.ci" when claims are based
 on standardized mean differences and confidence
 intervals.}
 
-\item{ceiling}{logical; whether sample size should be rounded up.
+\item{ceil.n}{logical; whether sample size should be rounded up.
 \code{TRUE} by default.}
 
 \item{verbose}{\code{1} by default (returns test, hypotheses, and
@@ -77,9 +77,9 @@ default.}
 \item{n}{sample size (\code{n} or \code{c(n1, n2)}.}
 }
 \description{
-Calculates power or sample size (only one can be NULL at a time) for Welch's
-t-Tests. Welch's T-Test implementation relies on formulas proposed by Bulus
-(2024).
+Calculates power, sample size or effect size (only one can be NULL at a
+time) for Welch's t-Tests. Welch's T-Test implementation relies on formulas
+proposed by Bulus (2024).
 
 In contrast to previous versions, users can now specify whether their claims
 will be based on raw score mean difference with p-values or standardized

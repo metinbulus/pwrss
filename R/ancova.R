@@ -1,27 +1,45 @@
 # f.squared <- eta.squared / (1 - eta.squared)
 # eta.squared <- f.squared / (1 + f.squared)
-format_test <- function(n.way, cov) {
-  paste0(c("One", "Two", "Three")[n.way], "-way Analysis of ", ifelse(cov > 0, "Cov", "V"), "ariance (F-Test)")
+
+# helper functions -----------------------------------------------------------------------------------------------------
+# common function to calculate df2 for between-subject AN(C)OVAs
+calc.df2 <- function(n.total, n.groups, k.covariates) n.total - (n.groups + k.covariates)
+
+fmt_test_ancova <- function(n.way, cov) {
+  paste0(c("One", "Two", "Three")[n.way], "-Way Analysis of ", ifelse(cov > 0, "Cov", "V"), "ariance (F-Test)")
 }
 
+check_var.ratio <- function(sd.vector, n.vector, alpha = 0.05) {
+  sd.vector.squared <- sd.vector ^ 2
+  var.ratio <- max(sd.vector.squared) / min(sd.vector.squared)
+  n.max <- n.vector[sd.vector.squared == max(sd.vector.squared)][1]
+  n.min <- n.vector[sd.vector.squared == min(sd.vector.squared)][1]
 
+  if (var.ratio <= stats::qf(alpha,     df1 = n.max - 1, df2 = n.min - 1, lower.tail = TRUE) ||
+      var.ratio >= stats::qf(1 - alpha, df1 = n.max - 1, df2 = n.min - 1, lower.tail = TRUE))
+    warning("Interpretation of results may no longer be valid when variances differ beyond sampling error.", call. = FALSE)
+
+  invisible(NULL)
+}
+
+# ----------------------------------------------------------------------------------------------------------------------
 #' Power Analysis for One-, Two-, Three-Way ANOVA/ANCOVA Using Effect Size
 #' (F-Test)
 #'
 #' @description
-#' Calculates power or sample size for one-way, two-way, or three-way
-#' ANOVA/ANCOVA. Set \code{k.cov = 0} for ANOVA, and \code{k.cov > 0} for
-#' ANCOVA. Note that in the latter, the effect size (\code{eta.squared} should
-#' be obtained from the relevant ANCOVA model, which is already adjusted for
-#' the explanatory power of covariates (thus, an additional R-squared argument
-#' is not required as an input).
+#' Calculates power, sample size or effect size for one-way, two-way, or
+#' three-way ANOVA/ANCOVA. Set \code{k.covariates = 0} for ANOVA, and
+#' \code{k.covariates > 0} for ANCOVA. Note that in the latter, the effect
+#' size (\code{eta.squared} should be obtained from the relevant ANCOVA model,
+#'  which is already adjusted for the explanatory power of covariates (thus,
+#' an additional R-squared argument is not required as an input).
 #'
 #' Formulas are validated using G*Power and tables in the PASS documentation.
 #'
 #' @details
 #' Note that R has a partial matching feature which allows you to specify
 #' shortened versions of arguments, such as \code{mu} or \code{mu.vec} instead
-#' of \code{mu.vector}, or such as \code{k} or \code{k.cov} instead of
+#' of \code{mu.vector}, or such as \code{k} or \code{k.covariates} instead of
 #' \code{k.covariates}.
 #'
 #'
@@ -48,7 +66,7 @@ format_test <- function(n.way, cov) {
 #' @param alpha            type 1 error rate, defined as the probability of
 #'                         incorrectly rejecting a true null hypothesis,
 #'                         denoted as \eqn{\alpha}.
-#' @param ceiling          logical; if \code{FALSE} sample size in each cell
+#' @param ceil.n           logical; if \code{FALSE} sample size in each cell
 #'                         is not rounded up.
 #' @param verbose          \code{1} by default (returns test, hypotheses, and
 #'                         results), if \code{2} a more detailed output is
@@ -61,6 +79,7 @@ format_test <- function(n.way, cov) {
 #' @return
 #'   \item{parms}{list of parameters used in calculation.}
 #'   \item{test}{type of the statistical test (F-Test).}
+#'   \item{eta.squared}{(partial) eta-squared for the alternative.}
 #'   \item{df1}{numerator degrees of freedom.}
 #'   \item{df2}{denominator degrees of freedom.}
 #'   \item{ncp}{non-centrality parameter for the alternative.}
@@ -85,47 +104,47 @@ format_test <- function(n.way, cov) {
 #' #############################################
 #'
 #' # Cohen's d = 0.50 between treatment and control
-#' # translating into Eta-squared = 0.059
+#' # translating into eta-squared = 0.059
 #'
 #' # estimate sample size using ANOVA approach
 #' power.f.ancova(eta.squared = 0.059,
 #'                factor.levels = 2,
-#'                alpha = 0.05, power = .80)
+#'                power = .80, alpha = 0.05)
 #'
 #' # estimate sample size using regression approach(F-Test)
 #' power.f.regression(r.squared = 0.059,
 #'                    k.total = 1,
-#'                    alpha = 0.05, power = 0.80)
+#'                    power = 0.80, alpha = 0.05)
 #'
-#' # estimate sample size using regression approach (T-Test)
+#' # estimate sample size using regression approach (t-Test)
 #' p <- 0.50 # proportion of sample in treatment (allocation rate)
 #' power.t.regression(beta = 0.50, r.squared = 0,
 #'                    k.total = 1,
-#'                    sd.predictor = sqrt(p*(1-p)),
-#'                    alpha = 0.05, power = 0.80)
+#'                    sd.predictor = sqrt(p * (1 - p)),
+#'                    power = 0.80, alpha = 0.05)
 #'
 #' # estimate sample size using t test approach
-#' power.t.student(d = 0.50, alpha = 0.05, power = 0.80)
+#' power.t.student(d = 0.50, power = 0.80, alpha = 0.05)
 #'
 #' #############################################
 #' #              two-way ANOVA                #
 #' #############################################
 #'
-#' # a researcher is expecting a partial Eta-squared = 0.03
+#' # a researcher is expecting a partial eta-squared = 0.03
 #' # for interaction of treatment (Factor A) with
 #' # gender consisting of two levels (Factor B)
 #'
 #' power.f.ancova(eta.squared = 0.03,
 #'                factor.levels = c(2,2),
-#'                alpha = 0.05, power = 0.80)
+#'                power = 0.80, alpha = 0.05)
 #'
 #' # estimate sample size using regression approach (F test)
 #' # one dummy for treatment, one dummy for gender, and their interaction (k = 3)
-#' # partial Eta-squared is equivalent to the increase in R-squared by adding
+#' # partial eta-squared is equivalent to the increase in R-squared by adding
 #' # only the interaction term (m = 1)
 #' power.f.regression(r.squared = 0.03,
 #'                    k.total = 3, k.test = 1,
-#'                    alpha = 0.05, power = 0.80)
+#'                    power = 0.80, alpha = 0.05)
 #'
 #' #############################################
 #' #              one-way ANCOVA               #
@@ -133,29 +152,29 @@ format_test <- function(n.way, cov) {
 #'
 #' # a researcher is expecting an adjusted difference of
 #' # Cohen's d = 0.45 between treatment and control after
-#' # controllling for the pretest (k.cov = 1)
-#' # translating into Eta-squared = 0.048
+#' # controllling for the pretest (k.covariates = 1)
+#' # translating into eta-squared = 0.048
 #'
 #' power.f.ancova(eta.squared = 0.048,
 #'                factor.levels = 2,
 #'                k.covariates = 1,
-#'                alpha = 0.05, power = .80)
+#'                power = .80, alpha = 0.05)
 #'
 #' #############################################
 #' #              two-way ANCOVA               #
 #' #############################################
 #'
-#' # a researcher is expecting an adjusted partial Eta-squared = 0.02
+#' # a researcher is expecting an adjusted partial eta-squared = 0.02
 #' # for interaction of treatment (Factor A) with
 #' # gender consisting of two levels (Factor B)
 #'
 #' power.f.ancova(eta.squared = 0.02,
 #'                factor.levels = c(2,2),
 #'                k.covariates = 1,
-#'                alpha = 0.05, power = .80)
+#'                power = .80, alpha = 0.05)
 #'
 #' @export power.f.ancova
-power.f.ancova <- function(eta.squared,
+power.f.ancova <- function(eta.squared = NULL,
                            null.eta.squared = 0,
                            factor.levels = 2,
                            target.effect = NULL,
@@ -163,64 +182,31 @@ power.f.ancova <- function(eta.squared,
                            n.total = NULL,
                            power = NULL,
                            alpha = 0.05,
-                           ceiling = TRUE,
+                           ceil.n = TRUE,
                            verbose = 1,
                            utf = FALSE) {
 
-  func.parms <- clean.parms(as.list(environment()))
+  func.parms <- as.list(environment())
 
-  check.nonnegative(eta.squared, null.eta.squared, k.covariates)
+  if (!is.null(eta.squared)) check.nonnegative(eta.squared)
+  check.nonnegative(null.eta.squared, k.covariates)
   check.vector(factor.levels, check.factor.level, min.length = 1)
   if (!is.null(n.total)) check.sample.size(n.total)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   check.proportion(alpha)
-  check.logical(ceiling, utf)
-  verbose <- ensure_verbose(verbose)
+  check.logical(ceil.n, utf)
+  verbose <- ensure.verbose(verbose)
+  requested <- get.requested(es = eta.squared, n = n.total, power = power)
 
-  requested <- check.n_power(n.total, power)
-
-  f.squared <- eta.squared / (1 - eta.squared)
+  if (!is.null(eta.squared)) f.squared <- eta.squared / (1 - eta.squared)
   null.f.squared <- null.eta.squared / (1 - null.eta.squared)
 
-  ss <- function(df1, n.groups, k.covariates, f.squared, null.f.squared, alpha, power) {
-
-    n.total <- try(silent = TRUE,
-        suppressWarnings({
-          stats::uniroot(function(n.total) {
-            u <- df1
-            v <- n.total - n.groups - k.covariates
-            lambda <- f.squared * n.total
-            null.lambda <- null.f.squared * n.total
-            f.alpha <- stats::qf(alpha, df1 = u, df2 = v, ncp = null.lambda, lower.tail = FALSE)
-            power - stats::pf(f.alpha, df1 = u, df2 = v, ncp = lambda, lower.tail = FALSE)
-          }, interval = c(n.groups + k.covariates + 2, 1e10))$root
-        }) # supressWarnings
-    ) # try
-
-    if (inherits(n.total, "try-error") || n.total == 1e10) stop("Design is not feasible.", call. = FALSE)
-
-    n.total
-
-  } # ss
-
-  pwr <- function(df1, n.total, n.groups, k.covariates, f.squared, null.f.squared, alpha) {
-    u <- df1
-    v <- n.total - n.groups - k.covariates
-    lambda <- f.squared * n.total
-    null.lambda <- null.f.squared * n.total
-    f.alpha <- stats::qf(alpha, df1 = u, df2 = v, ncp = null.lambda, lower.tail = FALSE)
-    power <- stats::pf(f.alpha, df1 = u, df2 = v, ncp = lambda, lower.tail = FALSE)
-    list(power = power, u = u, v = v, lambda = lambda,
-         null.lambda = null.lambda, f.alpha = f.alpha)
-  } # pwr
-
   n.way <- length(factor.levels)
-  n.groups <- prod(factor.levels)
-  fac.letters <- LETTERS[seq_along(factor.levels)]
-
   if (n.way > 3)
     stop("More than three-way ANOVA or ANCOVA is not allowed at the moment.", call. = FALSE)
 
+  n.groups <- prod(factor.levels)
+  fac.letters <- LETTERS[seq_along(factor.levels)]
   effect <- paste0(fac.letters, "(", factor.levels, ")", collapse = ":")
 
   if (is.null(target.effect)) {
@@ -237,21 +223,45 @@ power.f.ancova <- function(eta.squared,
     }
   }
 
+  pwr <- function(df1, n.total, n.groups, k.covariates, f.squared, null.f.squared, alpha) {
+    df2 <- calc.df2(n.total, n.groups, k.covariates)
+    lambda <- f.squared * n.total
+    null.lambda <- null.f.squared * n.total
+    f.alpha <- stats::qf(alpha, df1 = df1, df2 = df2, ncp = null.lambda, lower.tail = FALSE)
+    power <- stats::pf(f.alpha, df1 = df1, df2 = df2, ncp = lambda, lower.tail = FALSE)
+
+    list(power = power, lambda = lambda, null.lambda = null.lambda, f.alpha = f.alpha)
+  } # pwr
+
+  min.pwr <- function(f.squared, n.total, power) {
+    power - pwr(df1, n.total, n.groups, k.covariates, f.squared, null.f.squared, alpha)$power
+  } # min.pwr (for uniroot)
+
   if (requested == "n") {
 
-    n.total <- ss(df1 = df1, n.groups = n.groups, k.covariates = k.covariates,
-                  f.squared = f.squared, null.f.squared = null.f.squared,
-                  alpha = alpha, power = power)
+    n.total <- try(stats::uniroot(function(n.total) min.pwr(f.squared, n.total, power),
+                                  interval = c(n.groups + k.covariates + 2, 1e10))$root,
+                   silent = TRUE)
+    if (inherits(n.total, "try-error") || n.total == 1e10) stop("Design is not feasible.", call. = FALSE)
 
-    if (ceiling) n.total <- ceiling(n.total / n.groups) * n.groups
+    if (ceil.n) n.total <- ceiling(n.total / n.groups) * n.groups
+
+  } else if (requested == "es") {
+
+    f.squared <- try(stats::uniroot(function(f.squared) min.pwr(f.squared, n.total, power),
+                                    interval = c(0, 1), tol = 1e-12)$root,
+                     silent = TRUE)
+    if (inherits(f.squared, "try-error")) stop("Design is not feasible.", call. = FALSE)
+
+    eta.squared <- f.squared / (1 + f.squared)
 
   }
 
-  # calculate power (if requested == "power") or update it (if requested == "n")
+  # calculate power (if requested == "power") or update it (if requested == "n" / "es")
   pwr.obj <- pwr(df1 = df1, n.total = n.total, n.groups = n.groups, k.covariates = k.covariates,
                  f.squared = f.squared, null.f.squared = null.f.squared, alpha = alpha)
 
-  df2 <- n.total - n.groups - k.covariates
+  df2 <- calc.df2(n.total, n.groups, k.covariates)
   power <- ncp <- pwr.obj$power
   ncp <-  pwr.obj$lambda
   null.ncp <-  pwr.obj$null.lambda
@@ -259,8 +269,9 @@ power.f.ancova <- function(eta.squared,
 
   if (verbose > 0) {
 
-    test <- format_test(n.way, k.covariates)
-    print.obj <- list(test = test, effect = effect, n.total = n.total, n.way = n.way,
+    print.obj <- list(test = fmt_test_ancova(n.way, k.covariates),
+                      effect = effect, eta.squared = eta.squared,
+                      n.total = n.total, n.way = n.way,
                       requested = requested, factor.levels = factor.levels,
                       power = power, ncp = ncp, null.ncp = null.ncp,
                       alpha = alpha, f.alpha = f.alpha, df1 = df1, df2 = df2)
@@ -272,6 +283,7 @@ power.f.ancova <- function(eta.squared,
   invisible(structure(list(parms = func.parms,
                            test = "F",
                            effect = effect,
+                           eta.squared = eta.squared,
                            df1 = df1,
                            df2 = df2,
                            ncp = ncp,
@@ -289,7 +301,7 @@ pwrss.f.ancova <- function(eta2 = NULL, f2 = NULL,
                            n.levels = 2, n.covariates = 0, alpha = 0.05,
                            n = NULL, power = NULL, verbose = TRUE) {
 
-  verbose <- ensure_verbose(verbose)
+  verbose <- ensure.verbose(verbose)
 
   if (all(check.not_null(f2, eta2))) {
     stop("Effect size conflict for the alternative. Specify only either `eta2` or `f2`.", call. = FALSE)
@@ -305,7 +317,7 @@ pwrss.f.ancova <- function(eta2 = NULL, f2 = NULL,
                                n.total = n,
                                power = power,
                                alpha = alpha,
-                               ceiling = TRUE,
+                               ceil.n = TRUE,
                                verbose = verbose)
 
   # cat("This function will be removed in the future. \n Please use power.f.ancova() function. \n")
@@ -319,10 +331,11 @@ pwrss.f.ancova <- function(eta2 = NULL, f2 = NULL,
 #' (F test)
 #'
 #' @description
-#' Calculates power or sample size for one-way ANOVA/ANCOVA. Set \code{k.cov =
-#' 0} for one-way ANOVA (without any pretest or covariate adjustment). Set
-#' \code{k.cov > 0} in combination with \code{r.squared > 0} for one-way ANCOVA (with
-#' pretest or covariate adjustment).
+#' Calculates power, sample size or effect size for one-way ANOVA/ANCOVA. Set
+#' \code{k.covariates = 0} for one-way ANOVA (without any pretest or covariate
+#' adjustment). Set \code{k.covariates > 0} in combination with
+#' \code{r.squared > 0} for one-way ANCOVA (with pretest or covariate
+#' adjustment).
 #'
 #' Formulas are validated using the PASS documentation.
 #'
@@ -355,7 +368,7 @@ pwrss.f.ancova <- function(eta2 = NULL, f2 = NULL,
 #' @param alpha         type 1 error rate, defined as the probability of
 #'                      incorrectly rejecting a true null hypothesis, denoted
 #'                      as \eqn{\alpha}.
-#' @param ceiling       logical; whether sample size should be rounded up.
+#' @param ceil.n        logical; whether sample size should be rounded up.
 #'                      \code{TRUE} by default.
 #' @param verbose       \code{1} by default (returns test, hypotheses, and
 #'                      results), if \code{2} a more detailed output is given
@@ -387,7 +400,7 @@ pwrss.f.ancova <- function(eta2 = NULL, f2 = NULL,
 #'                       sd.vector = c(1, 1), # unadjusted standard deviations
 #'                       n.vector = NULL, # sample size (will be calculated)
 #'                       p.vector = c(0.50, 0.50), # balanced allocation
-#'                       k.cov = 1, # number of covariates
+#'                       k.covariates = 1, # number of covariates
 #'                       r.squared = 0.50, # explanatory power of covariates
 #'                       alpha = 0.05, # Type 1 error rate
 #'                       power = .80)
@@ -418,11 +431,11 @@ power.f.ancova.keppel <- function(mu.vector,
                                   k.covariates = 0,
                                   power = NULL,
                                   alpha = 0.05,
-                                  ceiling = TRUE,
+                                  ceil.n = TRUE,
                                   verbose = 1,
                                   utf = FALSE) {
 
-  func.parms <- clean.parms(as.list(environment()))
+  func.parms <- as.list(environment())
 
   # value and consistency checks
   if (!is.vector(mu.vector) || !is.numeric(mu.vector))
@@ -443,75 +456,49 @@ power.f.ancova.keppel <- function(mu.vector,
   check.nonnegative(k.covariates)
   if (r.squared > 0 && k.covariates < 1)
     stop("Explanatory power of covariates is expected to be non-zero when number of covariates is non-zero.", call. = FALSE)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   check.proportion(alpha)
-  check.logical(ceiling, utf)
-  verbose <- ensure_verbose(verbose)
+  check.logical(ceil.n, utf)
+  verbose <- ensure.verbose(verbose)
+  requested <- get.requested(es = NA, n = n.vector, power = power) # effect size can not be calculated
 
-  requested <- check.n_power(n.vector, power)
+  if (requested == "n" && is.null(p.vector))
+    stop("`p.vector` can not be NULL when sample size is requested", call. = FALSE)
+  if (requested == "n" && round(sum(p.vector), 5) != 1)
+    stop("The elements of the `p.vector` should sum to 1", call. = FALSE)
 
-  ncp.keppel <- function(mu.vector, sd.vector, n.vector, k.covariates, r.squared, factor.levels) {
+  pwr.keppel <- function(mu.vector, sd.vector, n.vector, k.covariates, r.squared, alpha, factor.levels) {
 
     n.total <- sum(n.vector)
     mu_bar <- sum(n.vector * mu.vector) / n.total
 
     sigma2_pooled <- sum((n.vector - 1) * sd.vector ^ 2) / (n.total - length(mu.vector))
-
     sigma2_between <- sum(n.vector * (mu.vector - mu_bar) ^ 2) / n.total
     sigma2_error <- sigma2_pooled * (1 - r.squared)
 
     f.squared <- sigma2_between / sigma2_error
-    eta.squared <- sigma2_between / (sigma2_between + sigma2_error)
 
-    u <- prod(factor.levels - 1)
-    v <- n.total - length(mu.vector) - k.covariates
+    df1 <- prod(factor.levels - 1)
+    df2 <- calc.df2(n.total, length(mu.vector), k.covariates)
     lambda <- f.squared * n.total
 
-    list(f = sqrt(f.squared), eta.squared = eta.squared,
-         df1 = u, df2 = v, lambda = lambda)
-
-  }
-
-  pwr.keppel <- function(mu.vector, sd.vector, n.vector, k.covariates, r.squared, alpha, factor.levels) {
-
-    ncp.obj <- ncp.keppel(mu.vector = mu.vector, sd.vector = sd.vector,
-                          n.vector = n.vector, k.covariates = k.covariates,
-                          r.squared = r.squared, factor.levels = factor.levels)
-    df1 <- ncp.obj$df1
-    df2 <- ncp.obj$df2
-    lambda <- ncp.obj$lambda
     f.alpha <- stats::qf(alpha, df1 = df1, df2 = df2, lower.tail = FALSE)
     power <- stats::pf(f.alpha, df1 = df1, df2 = df2, ncp = lambda, lower.tail = FALSE)
-    list(power = power, df1 = df1, df2 = df2, lambda = lambda, f.alpha = f.alpha)
-  }
 
-  ss.keppel <- function(mu.vector, sd.vector, p.vector, k.covariates,
-                        r.squared, alpha, power, factor.levels) {
-    n.total <- stats::uniroot(function(n.total) {
-      n.vector <- n.total * p.vector
-      power - pwr.keppel(mu.vector = mu.vector, sd.vector = sd.vector,
-                         n.vector = n.vector, k.covariates = k.covariates,
-                         r.squared = r.squared, alpha = alpha,
-                         factor.levels = factor.levels)$power
-    }, interval = c(length(mu.vector) + k.covariates + 2, 1e10))$root
+    list(power = power, f.squared = f.squared, df1 = df1, df2 = df2, lambda = lambda, f.alpha = f.alpha)
 
-    n.total
   }
 
   if (requested == "n") {
 
-    if (is.null(p.vector))
-      stop("`p.vector` cannot be NULL when sample size is requested", call. = FALSE)
-    if (round(sum(p.vector), 5) != 1)
-      stop("The elements of the `p.vector` should sum to 1", call. = FALSE)
+    n.total <- stats::uniroot(function(n.total) {
+      power - pwr.keppel(mu.vector = mu.vector, sd.vector = sd.vector, n.vector = n.total * p.vector,
+                         k.covariates = k.covariates, r.squared = r.squared, alpha = alpha,
+                         factor.levels = factor.levels)$power
+    }, interval = c(length(mu.vector) + k.covariates + 2, 1e10))$root
 
-    n.total <- ss.keppel(mu.vector = mu.vector, sd.vector = sd.vector,
-                         p.vector = p.vector, k.covariates = k.covariates,
-                         r.squared = r.squared, alpha = alpha, power =  power,
-                         factor.levels = factor.levels)
     n.vector <- n.total * p.vector
-
-    if (ceiling) n.vector <- ceiling(n.vector)
+    if (ceil.n) n.vector <- ceiling(n.vector)
 
   }
 
@@ -527,29 +514,18 @@ power.f.ancova.keppel <- function(mu.vector,
   ncp <- pwr.obj$lambda
   f.alpha <- pwr.obj$f.alpha
   n.total <- sum(n.vector)
+  eta.squared <- pwr.obj$f.squared / (1 + pwr.obj$f.squared)
 
-  ncp.obj <- ncp.keppel(mu.vector = mu.vector, sd.vector = sd.vector,
-                        n.vector = n.vector, k.covariates = k.covariates,
-                        r.squared = r.squared, factor.levels = factor.levels)
-
-  alpha.hc <- 0.05
-  sd.vector.squared <- sd.vector ^ 2
-  var.ratio <- max(sd.vector.squared) / min(sd.vector.squared)
-  n.max <- n.vector[which(sd.vector.squared == max(sd.vector.squared))][1]
-  n.min <- n.vector[which(sd.vector.squared == min(sd.vector.squared))][1]
-  f.alpha.lower <- stats::qf(alpha.hc, df1 = n.max - 1, df2 = n.min - 1, lower.tail = TRUE)
-  f.alpha.upper <- stats::qf(1 - alpha.hc, df1 = n.max - 1, df2 = n.min - 1, lower.tail = TRUE)
-  if (var.ratio <= f.alpha.lower || var.ratio >= f.alpha.upper)
-    warning("Interpretation of results may no longer be valid when variances differ beyond sampling error.", call. = FALSE)
   effect <- paste0(c("A"), "(", factor.levels, ")")
   n.way <- length(factor.levels)
 
+  check_var.ratio(sd.vector, n.vector)
+
   if (verbose > 0) {
 
-    test <- ifelse(k.covariates > 0, "One-way Analysis of Covariance (F-Test)", "One-way Analysis of Variance (F-Test)")
-    print.obj <- list(test = test, effect = effect, n.total = n.total, n.way = n.way,
-                      requested = requested, factor.levels = factor.levels,
-                      power = power, ncp = ncp, null.ncp = 0,
+    print.obj <- list(test = fmt_test_ancova(1, k.covariates), effect = effect, n.total = n.total,
+                      n.way = n.way, requested = requested, factor.levels = factor.levels,
+                      eta.squared = eta.squared, power = power, ncp = ncp, null.ncp = 0,
                       alpha = alpha, f.alpha = f.alpha, df1 = df1, df2 = df2)
 
     .print.pwrss.ancova(print.obj, verbose = verbose, utf = utf)
@@ -559,8 +535,8 @@ power.f.ancova.keppel <- function(mu.vector,
   invisible(structure(list(parms = func.parms,
                            test = "F",
                            effect = effect,
-                           eta.squared = ncp.obj$eta.squared,
-                           f = ncp.obj$f,
+                           eta.squared = eta.squared,
+                           f = sqrt(pwr.obj$f.squared),
                            df1 = df1,
                            df2 = df2,
                            ncp = ncp,
@@ -686,7 +662,7 @@ factorial.contrasts <- function(factor.levels = c(3, 2),
                                 intercept = FALSE,
                                 verbose = 1) {
 
-  verbose <- ensure_verbose(verbose)
+  verbose <- ensure.verbose(verbose)
 
   if (length(coding.scheme) > length(factor.levels)) {
 
@@ -843,11 +819,11 @@ factorial.contrasts <- function(factor.levels = c(3, 2),
 #' Deviations, and (Optionally) Contrasts (F test)
 #'
 #' @description
-#' Calculates power or sample size for one-, two-, three-way ANCOVA. For
-#' factorial designs, use the argument \code{factor.levels} but note that
-#' unique combination of levels (cells in this case) should follow a specific
-#' order for the test of interaction. The order of marginal means and standard
-#' deviations is printed as a warning message.
+#' Calculates power, sample size or effect size for one-, two-, three-way
+#' ANCOVA. For factorial designs, use the argument \code{factor.levels} but
+#' note that unique combination of levels (cells in this case) should follow a
+#' specific order for the test of interaction. The order of marginal means and
+#' standard deviations is printed as a warning message.
 #'
 #' Formulas are validated using examples and tables in Shieh (2020).
 #'
@@ -890,7 +866,7 @@ factorial.contrasts <- function(factor.levels = c(3, 2),
 #' @param alpha           type 1 error rate, defined as the probability of
 #'                        incorrectly rejecting a true null hypothesis, denoted
 #'                        as \eqn{\alpha}.
-#' @param ceiling         logical; \code{TRUE} by default. If \code{FALSE}
+#' @param ceil.n          logical; \code{TRUE} by default. If \code{FALSE}
 #'                        sample sizes in each cell are NOT rounded up.
 #' @param verbose         \code{1} by default (returns test, hypotheses, and
 #'                        results), if \code{2} a more detailed output is given
@@ -1066,11 +1042,11 @@ power.f.ancova.shieh <- function(mu.vector,
                                  contrast.matrix = NULL,
                                  power = NULL,
                                  alpha = 0.05,
-                                 ceiling = TRUE,
+                                 ceil.n = TRUE,
                                  verbose = 1,
                                  utf = FALSE) {
 
-  func.parms <- clean.parms(as.list(environment()))
+  func.parms <- as.list(environment())
 
   # value and consistency checks
   if (!is.vector(mu.vector) || !is.numeric(mu.vector))
@@ -1087,13 +1063,16 @@ power.f.ancova.shieh <- function(mu.vector,
   if (r.squared > 1 || r.squared < 0 || !is.numeric(r.squared) || length(r.squared) != 1)
     stop("R-squared (explanatory power of covariates) takes a value between 0 and 1.", call. = FALSE)
   check.positive(k.covariates)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   if (alpha > 1 || alpha < 0 || !is.numeric(alpha) || length(alpha) != 1)
     stop("Type 1 error rate (alpha) takes a value between 0 and 1.", call. = FALSE)
-  check.logical(ceiling, utf)
-  verbose <- ensure_verbose(verbose)
+  check.logical(ceil.n, utf)
+  verbose <- ensure.verbose(verbose)
+  requested <- get.requested(es = NA, n = n.vector, power = power) # calculation of effect size not possible
 
-  requested <- check.n_power(n.vector, power)
+  n.way <- length(factor.levels)
+  if (n.way > 3)
+    stop("More than three-way ANCOVA is not allowed at the moment.", call. = FALSE)
 
   if (is.null(contrast.matrix)) {
 
@@ -1127,36 +1106,37 @@ power.f.ancova.shieh <- function(mu.vector,
                t(contrast.matrix)) %*% (contrast.matrix %*% mean.mat)) / sigma2_error
     gamma2 <- as.numeric(gamma2)
 
-    u <- nrow(contrast.matrix)
-    v <- n.total - length(mu.vector) - k.covariates
+    df1 <- nrow(contrast.matrix)
+    df2 <- calc.df2(n.total, length(mu.vector), k.covariates)
 
-    f.alpha <- stats::qf(1 - alpha, df1 = u, df2 = v)
+    f.alpha <- stats::qf(1 - alpha, df1 = df1, df2 = df2)
 
     if (k.covariates > 1) {
 
-      shape1 <- (v + 1) / 2
+      shape1 <- (df2 + 1) / 2
       shape2 <- k.covariates / 2
       mean.beta <- shape1 / (shape1 + shape2)
       sd.beta <- sqrt((shape1 * shape2) / ((shape1 + shape2) ^ 2 * (shape1 + shape2 + 1)))
       lower.beta <- max(0, mean.beta - 10 * sd.beta)
 
       integrand <- function(x) {
-        stats::dbeta(x, shape1 = (v + 1) / 2, shape2 = k.covariates / 2) * stats::pf(f.alpha, u, v, n.total * gamma2 * x, lower.tail = FALSE)
+        stats::dbeta(x, shape1 = (df2 + 1) / 2, shape2 = k.covariates / 2) *
+        stats::pf(f.alpha, df1, df2, n.total * gamma2 * x, lower.tail = FALSE)
       }
       power <- stats::integrate(integrand, lower = lower.beta, upper = 1)$value
 
-      lambda <- ifelse(calculate.lambda, n.total * gamma2 * (v + 1) / (v + 1 + k.covariates), NA)
+      lambda <- ifelse(calculate.lambda, n.total * gamma2 * (df2 + 1) / (df2 + 1 + k.covariates), NA)
 
     } else if (k.covariates == 1) {
 
       integrand <- function(x) {
-        stats::dt(x, (v + 1)) * stats::pf(f.alpha, u, v, n.total * gamma2 / (1 + (k.covariates / (v + 1)) * x ^ 2), lower.tail = FALSE)
+        stats::dt(x, (df2 + 1)) * stats::pf(f.alpha, df1, df2, n.total * gamma2 / (1 + (k.covariates / (df2 + 1)) * x ^ 2), lower.tail = FALSE)
       }
       power <- stats::integrate(integrand, lower = -10, upper = 10)$value
 
       if (calculate.lambda) {
         integrand <- function(x) {
-          stats::dt(x, v) * n.total * gamma2 / (1 + (k.covariates / v) * x ^ 2)
+          stats::dt(x, df2) * n.total * gamma2 / (1 + (k.covariates / df2) * x ^ 2)
         }
         lambda <- stats::integrate(integrand, lower = -Inf, upper = Inf)$value
       } else {
@@ -1165,34 +1145,24 @@ power.f.ancova.shieh <- function(mu.vector,
 
     }
 
-    list(power = power, df1 = u, df2 = v, lambda = lambda, f.alpha = f.alpha)
-
-  }
-
-  ss.shieh <- function(mu.vector, sd.vector, p.vector, k.covariates, r.squared, alpha, power, contrast.matrix) {
-
-    stats::uniroot(function(n.total) {
-      n.vector <- n.total * p.vector
-      power -  pwr.shieh(mu.vector = mu.vector, sd.vector = sd.vector,
-                   n.vector = n.vector, k.covariates = k.covariates,
-                   r.squared =  r.squared, alpha = alpha, contrast.matrix = contrast.matrix)$power
-    }, interval = c(length(mu.vector) + k.covariates + 1, 1e10))$root
+    list(power = power, df1 = df1, df2 = df2, lambda = lambda, f.alpha = f.alpha)
 
   }
 
 
   if (requested == "n") {
 
-    if (is.null(p.vector)) stop("`p.vector` cannot be NULL when sample size is requested.", call. = FALSE)
+    if (is.null(p.vector)) stop("`p.vector` can not be NULL when sample size is requested.", call. = FALSE)
     if (round(sum(p.vector), 5) != 1) stop("The elements of the `p.vector` should sum to 1.", call. = FALSE)
 
-    n.total <- ss.shieh(mu.vector = mu.vector, sd.vector = sd.vector,
-                        p.vector = p.vector, k.covariates =  k.covariates,
-                        r.squared = r.squared, alpha = alpha,
-                        power = power, contrast.matrix =  contrast.matrix)
+    n.total <- stats::uniroot(function(n.total) {
+      power -  pwr.shieh(mu.vector = mu.vector, sd.vector = sd.vector, n.vector = n.total * p.vector,
+                         k.covariates = k.covariates, r.squared =  r.squared, alpha = alpha,
+                         contrast.matrix = contrast.matrix)$power
+    }, interval = c(length(mu.vector) + k.covariates + 1, 1e10))$root
     n.vector <- n.total * p.vector
 
-    if (ceiling) n.vector <- ceiling(n.vector)
+    if (ceil.n) n.vector <- ceiling(n.vector)
 
   }
 
@@ -1208,38 +1178,18 @@ power.f.ancova.shieh <- function(mu.vector,
   f.alpha <- pwr.obj$f.alpha
   n.total <- sum(n.vector)
 
+  effect <- paste0(LETTERS[seq_along(factor.levels)], "(", factor.levels, ")", collapse = ":")
+
   f.squared <- ncp / n.total
   eta.squared <- f.squared / (1 + f.squared)
 
-  alpha <- 0.05
-  sd.vector.squared <- sd.vector ^ 2
-  var.ratio <- max(sd.vector.squared) / min(sd.vector.squared)
-  n.max <- n.vector[which(sd.vector.squared == max(sd.vector.squared))][1]
-  n.min <- n.vector[which(sd.vector.squared == min(sd.vector.squared))][1]
-  f.alpha.lower <- stats::qf(alpha, df1 = n.max - 1, df2 = n.min - 1, lower.tail = TRUE)
-  f.alpha.upper <- stats::qf(1 - alpha, df1 = n.max - 1, df2 = n.min - 1, lower.tail = TRUE)
-  if (var.ratio <= f.alpha.lower || var.ratio >= f.alpha.upper)
-    warning("Interpretation of results may no longer be valid when variances differ beyond sampling error.", call. = FALSE)
-
-  n.way <- length(factor.levels)
-
-  if (n.way == 1) {
-    effect <- paste0(c("A"), "(", factor.levels, ")")
-  } else if (n.way == 2) {
-    effect <- paste0(c("A", "B"), "(", factor.levels, ")", collapse = ":")
-  } else if (n.way == 3) {
-    effect <- paste0(c("A", "B", "C"), "(", factor.levels, ")", collapse = ":")
-  } else {
-    stop("More than three-way ANCOVA is not allowed at the moment.", call. = FALSE)
-  } # n.way
+  check_var.ratio(sd.vector, n.vector)
 
   if (verbose > 0) {
 
-    test <- format_test(n.way, k.covariates)
-    print.obj <- list(test = test, effect = effect, n.total = n.total,
-                      requested = requested, factor.levels = factor.levels,
-                      power = power, ncp = ncp, null.ncp = 0,
-                      alpha = alpha, f.alpha = f.alpha, df1 = df1, df2 = df2)
+    print.obj <- list(test = fmt_test_ancova(n.way, k.covariates), effect = effect, n.total = n.total,
+                      requested = requested, factor.levels = factor.levels, eta.squared = eta.squared,
+                      power = power, ncp = ncp, null.ncp = 0, alpha = alpha, f.alpha = f.alpha, df1 = df1, df2 = df2)
 
     .print.pwrss.ancova(print.obj, verbose = verbose, utf = utf)
 
@@ -1303,7 +1253,7 @@ power.f.ancova.shieh <- function(mu.vector,
 #'                        as \eqn{\alpha}.
 #' @param tukey.kramer    logical; \code{FALSE} by default. If \code{TRUE}
 #'                        adjustments will be made to control Type 1 error.
-#' @param ceiling         logical; \code{TRUE} by default. If \code{FALSE}
+#' @param ceil.n          logical; \code{TRUE} by default. If \code{FALSE}
 #'                        sample sizes in each cell are NOT rounded up.
 #' @param verbose         \code{1} by default (returns test, hypotheses, and
 #'                        results), if \code{2} a more detailed output is given
@@ -1349,9 +1299,9 @@ power.t.contrast <- function(mu.vector, sd.vector,
                              r.squared = 0, k.covariates = 1,
                              power = NULL,
                              alpha = 0.05, tukey.kramer = FALSE,
-                             ceiling = TRUE, verbose = 1, utf = FALSE) {
+                             ceil.n = TRUE, verbose = 1, utf = FALSE) {
 
-  func.parms <- clean.parms(as.list(environment()))
+  func.parms <- as.list(environment())
 
   # value checks
   check.vector(mu.vector, check.numeric)
@@ -1362,10 +1312,11 @@ power.t.contrast <- function(mu.vector, sd.vector,
   if (r.squared > 1 || r.squared < 0 || !is.numeric(r.squared) || length(r.squared) != 1)
     stop("R-squared (explanatory power of covariates) takes a value between 0 and 1.", call. = FALSE)
   check.nonnegative(k.covariates)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   check.proportion(alpha)
-  check.logical(tukey.kramer, ceiling, utf)
-  verbose <- ensure_verbose(verbose)
+  check.logical(tukey.kramer, ceil.n, utf)
+  verbose <- ensure.verbose(verbose)
+  requested <- get.requested(es = NA, n = n.vector, power = power) # calculation of effect size not possible
 
   if (is.matrix(contrast.vector) && dim(contrast.vector)[1] > 1)
     stop("The number of rows in the contrast matrix should be one.", call. = FALSE)
@@ -1378,7 +1329,10 @@ power.t.contrast <- function(mu.vector, sd.vector,
   if (length(contrast.vector) != length(mu.vector))
     stop("The number of columns / elements in the contrast vector should match number of groups.", call. = FALSE)
 
-  requested <- check.n_power(n.vector, power)
+  if (requested == "n" && is.null(p.vector))
+    stop("The `p.vector` can not be NULL when the sample size is requested.", call. = FALSE)
+  if (requested == "n" && abs(sum(p.vector) - 1) > 1e-6)
+    stop("The elements of the `p.vector` should sum to 1.", call. = FALSE)
 
   pwr.contrast <- function(mu.vector, sd.vector, n.vector, k.covariates,
                            r.squared, alpha, contrast.vector, tukey.kramer,
@@ -1389,35 +1343,35 @@ power.t.contrast <- function(mu.vector, sd.vector,
     sigma2_error <- sigma2_pooled * (1 - r.squared)
 
     psi <- sum(contrast.vector * mu.vector)
-    v <- n.total - length(mu.vector) - k.covariates
+    df  <- n.total - length(mu.vector) - k.covariates
 
     if (tukey.kramer == 1) {
 
-      t.alpha <- stats::qtukey(1 - alpha, length(mu.vector), v) / sqrt(2)
+      t.alpha <- stats::qtukey(1 - alpha, length(mu.vector), df) / sqrt(2)
 
       } else {
 
-      t.alpha <- stats::qt(1 - alpha / 2, v)
+      t.alpha <- stats::qt(1 - alpha / 2, df)
 
     }
 
     a <- sum(contrast.vector ^ 2 / n.vector)
     # delta <- psi / sqrt(a * sigma2_error)
-    d <- psi / sqrt(sigma2_error)
+    d <- psi / sqrt(ifelse(k.covariates == 0, sigma2_pooled, sigma2_error))
 
     if (k.covariates == 0) {
-      
+
       # Shieh (2023, p. 3/18)
       # Shieh G (2023) Assessing standardized
       # contrast effects in ANCOVA: Confidence intervals,
       # precision evaluations, and sample size
-      # requirements. PLoS ONE 18(2): e0282161. 
+      # requirements. PLoS ONE 18(2): e0282161.
       # https://doi.org/10.1371/journal.pone.0282161
-      
-      ss_wts <- sum((contrast.vector^2) / n.vector)
+
+      ss_wts <- sum((contrast.vector ^ 2) / n.vector)
       se_psi <- sqrt(sigma2_error * ss_wts)
 
-      power <- power.t.test(ncp = psi / se_psi, df = v, plot = FALSE, verbose = 0)$power
+      power <- power.t.test(ncp = psi / se_psi, df = df, plot = FALSE, verbose = 0)$power
 
       if (calculate.lambda)
         lambda <- psi / sigma2_pooled
@@ -1426,85 +1380,65 @@ power.t.contrast <- function(mu.vector, sd.vector,
 
     } else if (k.covariates == 1) {
 
+      ncp.x <- function(x) psi / sqrt((1 + x ^ 2 / (df + 1)) * sigma2_error * a)
       integrand <- function(x) {
-
-        stats::dt(x, v + 1) * (stats::pt(-t.alpha, v, psi / sqrt(sigma2_error * a * (1 + x ^ 2 / (v + 1)))) +
-                               stats::pt(+t.alpha, v, psi / sqrt(sigma2_error * a * (1 + x ^ 2 / (v + 1))), lower.tail = FALSE))
-
+        stats::dt(x, df + 1) * (stats::pt(-t.alpha, df, ncp.x(x)) + stats::pt(+t.alpha, df, ncp.x(x), lower.tail = FALSE))
       }
 
-      power <- stats::integrate(integrand, lower = -10, upper = 10)$value
-
+      power <- stats::integrate(integrand, -10, 10)$value
       if (calculate.lambda)
-        lambda <- stats::integrate(function(x) stats::dt(x, v + 1) * (psi / sqrt(sigma2_error * a * (1 + x ^ 2 / (v + 1)))), -10, 10)$value
+        lambda <- stats::integrate(function(x) stats::dt(x, df + 1) * ncp.x(x), -10, 10)$value
       else
         lambda <- NA
 
     } else if (k.covariates > 1) {
 
-      shape1 <- (v + 1) / 2
+      shape1 <- (df + 1) / 2
       shape2 <- k.covariates / 2
       mean.beta <- shape1 / (shape1 + shape2)
       sd.beta <- sqrt((shape1 * shape2) / ((shape1 + shape2) ^ 2 * (shape1 + shape2 + 1)))
       lower.beta <- max(0, mean.beta - 10 * sd.beta)
+      ncp.x <- function(x) sqrt(x) * psi / sqrt(sigma2_error * a)
 
       integrand <- function(x) {
-        stats::dbeta(x, (v + 1) / 2, k.covariates / 2) * (stats::pt(-t.alpha, v, sqrt(x) * psi / sqrt(sigma2_error * a)) +
-                                                          stats::pt(+t.alpha, v, sqrt(x) * psi / sqrt(sigma2_error * a), lower.tail = FALSE))
+        stats::dbeta(x, (df + 1) / 2, k.covariates / 2) *
+          (stats::pt(-t.alpha, df, ncp.x(x)) + stats::pt(+t.alpha, df, ncp.x(x), lower.tail = FALSE))
       }
       power <- stats::integrate(integrand, lower = lower.beta, upper = 1)$value
 
       if (calculate.lambda) {
-        integrand <- function(x) stats::dbeta(x, (v + 1) / 2, k.covariates / 2) * (sqrt(x) * psi / sqrt(sigma2_error * a))
-        lambda <- stats::integrate(integrand, lower.beta, 1)$value
+        lambda <- stats::integrate(function(x) stats::dbeta(x, (df + 1) / 2, k.covariates / 2) * ncp.x(x), lower.beta, 1)$value
       } else {
         lambda <- NA
       }
 
     }
 
-    list(power = power, df = v, lambda = lambda, t.alpha = t.alpha, psi = psi, d = d)
+    list(power = power, df = df, lambda = lambda, t.alpha = t.alpha, psi = psi, d = d)
 
   } # pwr.contrast()
 
-  ss.contrast <- function(mu.vector, sd.vector, p.vector, power, k.covariates,
-                          r.squared, alpha, contrast.vector, tukey.kramer) {
+  if (requested == "n") {
 
-    psi <- sum(contrast.vector * mu.vector)
-
-    if (psi == 0) {
+    if (sum(contrast.vector * mu.vector) == 0) {
 
       n.total <- as.integer(.Machine$integer.max)
       warning("Using infinity (maximum integer number as defined in R) for `n.total` because `psi` = 0.", call. = FALSE)
 
     } else {
 
-      n.total <- stats::uniroot(function(n.total) {
-        n.vector <- n.total * p.vector
+      n.total <- try(stats::uniroot(function(n.total) {
         power - pwr.contrast(mu.vector = mu.vector, sd.vector = sd.vector,
-                             n.vector = n.vector, k.covariates = k.covariates,
+                             n.vector = n.total * p.vector, k.covariates = k.covariates,
                              r.squared = r.squared, alpha = alpha, contrast.vector = contrast.vector,
                              tukey.kramer = tukey.kramer, calculate.lambda = FALSE)$power
-      }, interval = c(length(mu.vector) + k.covariates + 1, 1e10))$root
+      }, interval = c(length(mu.vector) + k.covariates + 1, 1e10))$root, silent = TRUE)
+      if (inherits(n.total, "try-error") || n.total == 1e10) stop("Design not feasible.", call. = FALSE)
 
     }
 
-    n.total
-
-  } # ss.contrast
-
-
-  if (requested == "n") {
-
-    if (is.null(p.vector)) stop("The `p.vector` cannot be NULL when the sample size is requested.", call. = FALSE)
-    if (round(sum(p.vector), 5) != 1) stop("The elements of the `p.vector` should sum to 1.", call. = FALSE)
-
-    n.total <- ss.contrast(mu.vector = mu.vector, sd.vector = sd.vector, p.vector = p.vector, power = power,
-                           k.covariates = k.covariates, r.squared = r.squared, alpha = alpha,
-                           contrast.vector = contrast.vector, tukey.kramer = tukey.kramer)
     n.vector <- n.total * p.vector
-
-    if (ceiling) n.vector <- ceiling(n.vector)
+    if (ceil.n) n.vector <- ceiling(n.vector)
 
   }
 
@@ -1523,11 +1457,8 @@ power.t.contrast <- function(mu.vector, sd.vector,
 
   if (verbose > 0) {
 
-    test <- "Single Contrast Analysis (T-Test)"
-
-    print.obj <- list(test = test, psi = psi, d = d,
-                      n.total = n.total, requested = requested,
-                      power = power, ncp = ncp, null.ncp = 0,
+    print.obj <- list(test = "Single Contrast Analysis (T-Test)", requested = requested, psi = psi,
+                      d = d, n.total = n.total, power = power, ncp = ncp, null.ncp = 0,
                       alpha = alpha, t.alpha = c(-t.alpha, t.alpha), df = df)
 
     .print.pwrss.contrast(print.obj, verbose = verbose, utf = utf)
@@ -1628,7 +1559,7 @@ adjust.alpha <- function(n, alpha = 0.05,
 #'                        "bonferroni", "holm", "hochberg", "hommel", "BH",
 #'                        "BY", "fdr") to control Type 1 error. See
 #'                        \code{?stats::p.adjust}.
-#' @param ceiling         logical; \code{TRUE} by default. If \code{FALSE}
+#' @param ceil.n          logical; \code{TRUE} by default. If \code{FALSE}
 #'                        sample sizes in each cell are NOT rounded up.
 #' @param verbose         \code{1} by default (returns test, hypotheses, and
 #'                        results), if \code{2} a more detailed output is given
@@ -1681,7 +1612,7 @@ power.t.contrasts <- function(x = NULL,
                               adjust.alpha = c("none", "tukey", "bonferroni",
                                                "holm", "hochberg", "hommel",
                                                "BH", "BY", "fdr"),
-                              ceiling = TRUE, verbose = 1, utf = FALSE) {
+                              ceil.n = TRUE, verbose = 1, utf = FALSE) {
 
   if (!is.null(x)) {
 
@@ -1695,7 +1626,7 @@ power.t.contrasts <- function(x = NULL,
       r.squared <- x$parms$r.squared
       k.covariates <- x$parms$k.covariates
       contrast.matrix <- x$parms$contrast.matrix
-      ceiling <- x$parms$ceiling
+      ceil.n <- x$parms$ceil.n
       power <- NULL
 
     } else {
@@ -1713,18 +1644,17 @@ power.t.contrasts <- function(x = NULL,
     if (!is.null(p.vector)) check.vector(p.vector, check.proportion)
     check.proportion(r.squared)
     check.nonnegative(k.covariates)
-    if (!is.null(power)) check.proportion(power)
+    if (!is.null(power)) check.power(power)
     check.proportion(alpha)
-    check.logical(ceiling)
+    check.logical(ceil.n)
 
   } # if data is null
 
   rm(x)
   adjust.alpha <- tolower(match.arg(adjust.alpha))
-  func.parms <- clean.parms(as.list(environment()))
-  verbose <- ensure_verbose(verbose)
-
-  requested <- check.n_power(n.vector, power)
+  func.parms <- as.list(environment())
+  verbose <- ensure.verbose(verbose)
+  requested <- get.requested(es = NA, n = n.vector, power = power) # calculation of effect size not possible
 
   if (is.vector(contrast.matrix))
     contrast.matrix <- t(as.matrix(contrast.matrix))
@@ -1754,17 +1684,18 @@ power.t.contrasts <- function(x = NULL,
     idx.neg <- which(contrast.sign == -1)
 
     comparison.i <- sprintf("%s <=> %s", paste(levels[idx.poz], collapse = " "), paste(levels[idx.neg], collapse = " "))
-    comparison <- rbind(comparison, comparison.i)
+    comparison <- c(comparison, comparison.i)
 
     pwr.t.contr.obj <- power.t.contrast(mu.vector = mu.vector,
                                         sd.vector = sd.vector,
                                         n.vector = n.vector,
                                         p.vector = p.vector,
                                         contrast.vector = contrast.vector,
-                                        r.squared = r.squared, k.covariates = k.covariates,
+                                        r.squared = r.squared,
+                                        k.covariates = k.covariates,
                                         alpha = alpha, power = power,
                                         tukey.kramer = tukey.kramer,
-                                        ceiling = ceiling,
+                                        ceil.n = ceil.n,
                                         verbose = 0)
 
     power.out.i <- cbind(psi = pwr.t.contr.obj$psi,
@@ -1792,11 +1723,9 @@ power.t.contrasts <- function(x = NULL,
                              n.total = round(power.out$n.total, 3),
                              power = round(power.out$power, 3))
 
-    test <- "Multiple Contrast Analyses (T-Tests)"
-
-    print.obj <- list(test = test, requested = requested,
-                      alpha = alpha, adjust.alpha = adjust.alpha,
-                      null.ncp = 0, data = print.data)
+    print.obj <- list(test = "Multiple Contrast Analyses (T-Tests)", requested = requested,
+                      alpha = alpha, adjust.alpha = adjust.alpha, null.ncp = 0,
+                      data = print.data)
 
     .print.pwrss.contrasts(print.obj, verbose = verbose, utf = utf)
 

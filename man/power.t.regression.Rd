@@ -10,18 +10,18 @@
 \title{Power Analysis for Linear Regression: Single Coefficient (T-Test)}
 \usage{
 power.t.regression(
-  beta,
+  beta = NULL,
   null.beta = 0,
   margin = 0,
   sd.predictor = 1,
   sd.outcome = 1,
-  r.squared = (beta * sd.predictor/sd.outcome)^2,
+  r.squared = NULL,
   k.total = 1,
   n = NULL,
   power = NULL,
   alpha = 0.05,
   alternative = c("two.sided", "one.sided", "two.one.sided"),
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -48,14 +48,7 @@ groups.}
 
 \item{sd.outcome}{standard deviation of the outcome.}
 
-\item{r.squared}{model R-squared. The default is
-\code{r.squared = (beta * sd.predictor / sd.outcome) ^ 2}
-assuming a linear regression with one predictor. Thus,
-an \code{r.squared} below this value will throw a
-warning.
-To consider other covariates in the model provide a value
-greater than the default \code{r.squared} along with the
-argument \code{k.total > 1}.}
+\item{r.squared}{model R-squared. Please see also Details below.}
 
 \item{k.total}{integer; total number of predictors, including the
 predictor of interest.}
@@ -73,7 +66,7 @@ incorrectly rejecting a true null hypothesis, denoted as
 \item{alternative}{character; the direction or type of the hypothesis test:
 "two.sided", "one.sided", or "two.one.sided".}
 
-\item{ceiling}{logical; whether sample size should be rounded up.
+\item{ceil.n}{logical; whether sample size should be rounded up.
 \code{TRUE} by default.}
 
 \item{verbose}{\code{1} by default (returns test, hypotheses, and
@@ -92,19 +85,19 @@ default.}
 \item{ncp}{non-centrality parameter for the alternative.}
 \item{null.ncp}{non-centrality parameter for the null.}
 \item{t.alpha}{critical value(s).}
+\item{r.squared}{model R-squared.}
 \item{power}{statistical power \eqn{(1-\beta)}.}
 \item{n}{sample size.}
 }
 \description{
-Calculates power or sample size (only one can be NULL at a time) to test a
-single coefficient in multiple linear regression. The predictor is assumed
-to be continuous by default. However, one can calculate power or sample size
-for a binary predictor (such as treatment and control groups in an
-experimental design) by specifying \code{sd.predictor = sqrt(p*(1-p))} where
-\code{p} is the proportion of subjects in one of the groups. The sample size
-in each group would be \code{n*p} and \code{n*(1-p)}.
-\code{power.t.regression()}\code{pwrss.t.regression()} are the same
-functions, as well as \code{power.t.reg()} and \code{pwrss.t.reg()}.
+Calculates power, sample size or effect size (only one can be NULL at a
+time) to test a single coefficient in multiple linear regression. By
+default, the predictor is assumed to be continuous. However, one can
+calculate power, sample size or effect size for a binary predictor (such
+as treatment and control groups in an experimental design) by specifying
+\code{sd.predictor = sqrt(p * (1 - p))} where \code{p} is the proportion
+of subjects in one of the groups. The sample size in each group would be
+\code{n * p} and \code{n * (1 - p)}.
 
 Minimal effect and equivalence tests are implemented in line with Hodges and
 Lehmann (1954), Kim and Robinson (2019), Phillips (1990), and Dupont and
@@ -115,6 +108,22 @@ PASS documentation, and tables in Bulus (2021).
 }
 \details{
 \itemize{
+\item When it is requested to calculate the effect size (by giving both their
+parameters \code{n} and \code{power}), \code{r.squared} must be empty and \code{beta} can be
+empty (\code{NULL}). By default, a linear regression with one predictor is
+assumed. If \code{beta}, \code{sd.predictor} and \code{sd.outcome} are given (i.e., in
+cases where it is not requested to calculate the effect size), \code{r.squared}
+is calculated as follows:
+\code{r.squared = (beta * sd.predictor / sd.outcome) ^ 2}. If the given
+\code{beta} results in an \code{r.squared} below this value, a warning will be
+issued. To calculate \code{beta} from \code{r.squared}, the following formula can be
+used: \code{beta = (sqrt(r.squared) * sd.outcome / sd.predictor)}.
+\item To consider other covariates in the model provide a value greater than the
+default value for \code{r.squared} (see above) along with the argument
+\code{k.total > 1}. However, in such case, the above formula for
+calculating \code{beta} can not be used.
+\item \code{power.t.regression()}, \code{pwrss.t.regression()},
+\code{power.t.reg()} and \code{pwrss.t.reg()} are the same functions.
 \item NB: The \code{pwrss.z.regression()} function and its alias
 \code{pwrss.z.reg()} are deprecated, but they will remain available as a
 wrapper for the \code{power.t.regression()} function during a transition
@@ -132,7 +141,7 @@ power.t.regression(beta = 0.20,
 # binary predictor x (and 4 covariates)
 p <- 0.50 # proportion of subjects in one group
 power.t.regression(beta = 0.20,
-            sd.predictor = sqrt(p*(1-p)),
+            sd.predictor = sqrt(p * (1 - p)),
             k.total = 5,
             r.squared = 0.30,
             power = 0.80)
@@ -152,7 +161,7 @@ p <- 0.50 # proportion of subjects in one group
 power.t.regression(beta = 0.20, # Cohen's d
             margin = 0.05, # superiority margin in Cohen's d unit
             alternative = "one.sided",
-            sd.predictor = sqrt(p*(1-p)),
+            sd.predictor = sqrt(p * (1 - p)),
             k.total = 5,
             r.squared = 0.30,
             power = 0.80)
@@ -162,7 +171,7 @@ p <- 0.50 # proportion of subjects in one group
 power.t.regression(beta = 0, # Cohen's d
             margin = c(-0.05, 0.05), # equivalence bounds in Cohen's d unit
             alternative = "two.one.sided",
-            sd.predictor = sqrt(p*(1 - p)),
+            sd.predictor = sqrt(p * (1 - p)),
             k.total = 5,
             r.squared = 0.30,
             power = 0.80)

@@ -16,7 +16,7 @@ power.f.ancova.shieh(
   contrast.matrix = NULL,
   power = NULL,
   alpha = 0.05,
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -64,7 +64,7 @@ as \eqn{1 - \beta}.}
 incorrectly rejecting a true null hypothesis, denoted
 as \eqn{\alpha}.}
 
-\item{ceiling}{logical; \code{TRUE} by default. If \code{FALSE}
+\item{ceil.n}{logical; \code{TRUE} by default. If \code{FALSE}
 sample sizes in each cell are NOT rounded up.}
 
 \item{verbose}{\code{1} by default (returns test, hypotheses, and
@@ -89,11 +89,11 @@ by default.}
 \item{n.total}{total sample size.}
 }
 \description{
-Calculates power or sample size for one-, two-, three-way ANCOVA. For
-factorial designs, use the argument \code{factor.levels} but note that
-unique combination of levels (cells in this case) should follow a specific
-order for the test of interaction. The order of marginal means and standard
-deviations is printed as a warning message.
+Calculates power, sample size or effect size for one-, two-, three-way
+ANCOVA. For factorial designs, use the argument \code{factor.levels} but
+note that unique combination of levels (cells in this case) should follow a
+specific order for the test of interaction. The order of marginal means and
+standard deviations is printed as a warning message.
 
 Formulas are validated using examples and tables in Shieh (2020).
 }

@@ -3,16 +3,16 @@
 \name{power.chisq.gof}
 \alias{power.chisq.gof}
 \alias{pwrss.chisq.gofit}
-\title{Power and Sample Size for Chi-square Goodness-of-Fit or Independence Tests}
+\title{Power Analysis for Chi-square Goodness-of-Fit or Independence Tests}
 \usage{
 power.chisq.gof(
-  w,
+  w = NULL,
   null.w = 0,
   df,
   n = NULL,
   power = NULL,
   alpha = 0.05,
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -41,7 +41,7 @@ rejecting a false null hypothesis, denoted as
 \item{alpha}{type 1 error rate, defined as the probability of incorrectly
 rejecting a true null hypothesis, denoted as \eqn{\alpha}.}
 
-\item{ceiling}{logical; whether sample size should be rounded up.
+\item{ceil.n}{logical; whether sample size should be rounded up.
 \code{TRUE} by default.}
 
 \item{verbose}{\code{1} by default (returns test, hypotheses, and results),
@@ -59,12 +59,13 @@ on the console.}
 \item{ncp}{non-centrality parameter under alternative.}
 \item{null.ncp}{non-centrality parameter under null.}
 \item{chisq.alpha}{critical value.}
+\item{w}{Cohen's w effect size under alternative.}
 \item{power}{statistical power \eqn{(1-\beta)}.}
 \item{n}{total sample size.}
 }
 \description{
-Calculates power or sample size (only one can be NULL at a time) for
-Chi-square goodness-of-fit or independence tests.
+Calculates power, sample size or effect size (only one can be NULL at a
+time) for Chi-square goodness-of-fit or independence tests.
 }
 \details{
 \itemize{

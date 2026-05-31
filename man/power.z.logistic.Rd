@@ -13,6 +13,7 @@ power.z.logistic(
   odds.ratio = NULL,
   beta0 = NULL,
   beta1 = NULL,
+  req.sign = "+",
   n = NULL,
   power = NULL,
   r.squared.predictor = 0,
@@ -20,7 +21,7 @@ power.z.logistic(
   alternative = c("two.sided", "one.sided"),
   method = c("demidenko(vc)", "demidenko", "hsieh"),
   distribution = "normal",
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -45,6 +46,9 @@ the predictor is zero).}
 
 \item{beta1}{regression coefficient for the predictor X defined as
 \code{beta1 = log((prob / (1 - prob)) / (base.prob / (1 - base.prob)))}}
+
+\item{req.sign}{sign of the beta1 coefficient (when minimum
+detectable effect or beta1 is of interest).}
 
 \item{n}{integer; sample size}
 
@@ -77,12 +81,12 @@ methods produce similar results but
 
 \item{distribution}{character; distribution family. Can be one of the
 \code{c("normal", "poisson", "uniform",
-                           "exponential", "binomial", "bernouilli",
-                           "lognormal")} for Demidenko (2007) procedure but
+"exponential", "binomial", "bernouilli",
+"lognormal")} for Demidenko (2007) procedure but
 only \code{c("normal", "binomial", "bernouilli")}
 for the Hsieh et al. (1998) procedure.}
 
-\item{ceiling}{logical; whether sample size should be rounded
+\item{ceil.n}{logical; whether sample size should be rounded
 up. \code{TRUE} by default.}
 
 \item{verbose}{\code{1} by default (returns test, hypotheses,

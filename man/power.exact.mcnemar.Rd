@@ -6,14 +6,15 @@
 \title{Power Analysis for McNemar's Exact Test (Paired Proportions)}
 \usage{
 power.exact.mcnemar(
-  prob10,
-  prob01,
+  prob10 = NULL,
+  prob01 = NULL,
+  req.sign = "+",
   n.paired = NULL,
   power = NULL,
   alpha = 0.05,
   alternative = c("two.sided", "one.sided"),
   method = c("exact", "approximate"),
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -26,6 +27,9 @@ failure in matched control (or before). 'prob10' and
 \item{prob01}{(joint) probability of failure in case (or after) but
 success in matched control (or before). prob10' and
 'prob01' are known as discordant probs.}
+
+\item{req.sign}{whether estimated prob is smaller or larger than the other
+(when minimum detectable prob is of interest).}
 
 \item{n.paired}{number of pairs, which is sum of cell frequencies in the
 2 x 2 table (f11 + f10 + f01 + f00), or number of rows in
@@ -47,11 +51,11 @@ incorrectly rejecting a true null hypothesis, denoted as
 specifies Fisher's exact test, while "approximate" refers
 to the z-test based on the normal approximation.}
 
-\item{ceiling}{logical; if \code{TRUE} rounds up sample size in each
+\item{ceil.n}{logical; if \code{TRUE} rounds up sample size in each
 cell. This procedure assumes symmetry for concordant
-probs, which are 'p11' and 'p00'). Thus results may
+probs, which are \code{p11} and \code{p00}). Thus results may
 differ from other software by a few units. To match
-results set 'ceiling = FALSE'.}
+results set \code{ceil.n} to FALSE.}
 
 \item{verbose}{\code{1} by default (returns test, hypotheses, and
 results), if \code{2} a more detailed output is given
@@ -134,15 +138,15 @@ power.exact.mcnemar(prob10 = 0.20, prob01 = 0.10,
 # we may not have 2 x 2 joint probs
 # convert marginal probs to joint probs
 joint.probs.2x2(prob1 = 0.55, # mean of case group (or after)
-                    prob2 = 0.45, # mean of matched control group (or before)
-                    # correlation between matched case-control or before-after
-                    rho = 0.4141414
+                prob2 = 0.45, # mean of matched control group (or before)
+                # correlation between matched case-control or before-after
+                rho = 0.4141414
 )
 
 }
 \references{
 Bennett, B. M., & Underwood, R. E. (1970). 283. Note: On McNemar's Test
-for the 2 * 2 Table and Its Power Function. *Biometrics, 26(2), 339-343.
+for the 2 * 2 Table and Its Power Function. \emph{Biometrics, 26}(2), 339-343.
 https://doi.org/10.2307/2529083
 
 Connor, R. J. (1987). Sample size for testing differences in proportions

@@ -9,7 +9,7 @@
 \title{Power Analysis for Student's t-Test}
 \usage{
 power.t.student(
-  d,
+  d = NULL,
   null.d = 0,
   margin = 0,
   n2 = NULL,
@@ -19,7 +19,7 @@ power.t.student(
   alternative = c("two.sided", "one.sided", "two.one.sided"),
   design = c("independent", "paired", "one.sample"),
   claim.basis = c("md.pval", "smd.ci"),
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -58,7 +58,7 @@ differences and p-values, "smd.ci" when claims are based
 on standardized mean differences and confidence
 intervals.}
 
-\item{ceiling}{logical; whether sample size should be rounded up.
+\item{ceil.n}{logical; whether sample size should be rounded up.
 \code{TRUE} by default.}
 
 \item{verbose}{\code{1} by default (returns test, hypotheses, and
@@ -70,7 +70,6 @@ output is printed on the console.}
 characters (if encoding allows for it). \code{FALSE} by
 default.}
 }
-
 \value{
 \item{parms}{list of parameters used in calculation.}
 \item{test}{type of the statistical test (T-Test).}
@@ -80,12 +79,10 @@ default.}
 \item{t.alpha}{critical value(s).}
 \item{power}{statistical power \eqn{(1-\beta)}.}
 \item{n}{sample size (\code{n} or \code{c(n1, n2)} depending on the design.}
-\item{n.total}{total sample size.}
 }
-
 \description{
-Calculates power or sample size (only one can be NULL at a time) for
-Student's t-Test.
+Calculates power, sample size or effect size (only one can be NULL at a
+time) for Student's t-Test.
 
 In contrast to previous versions, users can now specify whether their claims
 will be based on raw score mean difference with P-values or standardized

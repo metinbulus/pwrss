@@ -42,7 +42,7 @@
 #' @param beta1               the natural logarithm of the relative increase
 #'                            in the mean event rate for one unit increase in
 #'                            the predictor.
-#' @param sign                sign of the beta1 coefficient (when minimum 
+#' @param req.sign            sign of the beta1 coefficient (when minimum
 #'                            detectable effect or beta1 is of interest).
 #' @param mean.exposure       the mean exposure time (should be > 0), usually
 #'                            it is 1.
@@ -74,7 +74,7 @@
 #'                            \code{c("normal", "poisson", "uniform",
 #'                            "exponential", "binomial", "bernouilli",
 #'                            "lognormal")}.
-#' @param ceiling             logical; whether sample size should be rounded
+#' @param ceil.n              logical; whether sample size should be rounded
 #'                            up. \code{TRUE} by default.
 #' @param verbose             \code{1} by default (returns test, hypotheses,
 #'                            and results), if \code{2} a more detailed output
@@ -146,54 +146,51 @@
 #'                 dist = dist.x)
 #'
 #' @export power.z.poisson
-power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL,
-                            beta0 = NULL, beta1 = NULL, 
-                            sign = NULL,
-                            n = NULL, power = NULL,
-                            r.squared.predictor = 0, mean.exposure = 1,
-                            alpha = 0.05, alternative = c("two.sided", "one.sided"),
+power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL, beta0 = NULL, beta1 = NULL, req.sign = "+",
+                            n = NULL, power = NULL, r.squared.predictor = 0, mean.exposure = 1, alpha = 0.05,
+                            alternative = c("two.sided", "one.sided"),
                             method = c("demidenko(vc)", "demidenko", "signorini"),
-                            distribution = "normal", ceiling = TRUE,
-                            verbose = 1, utf = FALSE) {
+                            distribution = "normal", ceil.n = TRUE, verbose = 1, utf = FALSE) {
 
   alternative <- tolower(match.arg(alternative))
   method <- tolower(match.arg(method))
-  func.parms <- clean.parms(as.list(environment()))
+  func.parms <- as.list(environment())
 
   if (!is.null(n)) check.sample.size(n)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   check.proportion(r.squared.predictor)
   check.positive(mean.exposure)
   check.proportion(alpha)
-  check.logical(ceiling, utf)
-  verbose <- ensure_verbose(verbose)
-  
-  # requested <- check.n_power(n, power)
-  if(is.null(n)) requested <- "n"
-  if(is.null(power)) requested <- "power"
-  if(is.null(beta1) & is.null(rate.ratio)) requested <- "es"
-  
+  check.logical(ceil.n, utf)
+  verbose <- ensure.verbose(verbose)
+
   if (all(check.not_null(base.rate, rate.ratio))) {
     if (any(check.not_null(beta0, beta1)) && verbose >= 0)
       message("Using `base.rate` and `rate.ratio`, ignoring any specifications to `beta0` or `beta1`.")
     check.nonnegative(base.rate, rate.ratio)
     beta0 <- log(base.rate)
     beta1 <- log(rate.ratio)
-    if (beta0 == beta1) stop("`beta0` can not have the same value as `beta1`.", call. = FALSE)
   } else if (all(check.not_null(beta0, beta1))) {
     if (any(check.not_null(base.rate, rate.ratio)) && verbose >= 0)
       message("Using `beta0` and `beta1`, ignoring any specifications to `base.rate` or `rate.ratio`.")
     check.numeric(beta0, beta1)
     base.rate <- exp(beta0)
     rate.ratio <- exp(beta1)
-    if (base.rate == rate.ratio) stop("`base.rate` can not have the same value as `rate.ratio`.", call. = FALSE)
+  } else if (all(check.not_null(base.rate, n, power))) { # calculate effect size
+    check.nonnegative(base.rate)
+    if (any(check.not_null(rate.ratio, beta0, beta1)) && verbose >= 0)
+      message("Calculating the effect size (`rate.ratio`), ignoring any specifications to `rate.ratio`, `beta0` or `beta1`.")
+    rate.ratio <- beta1 <- NULL
+    beta0 <- log(base.rate)
   } else {
-    
-    if(is.null(n) || is.null(power)) 
-      stop("Specify `base.rate` & `rate.ratio` or\n`beta0` & `beta1`.", call. = FALSE)
-    
+    stop(paste("Specify `base.rate` & `rate.ratio`\n  or `beta0` & `beta1`\n  or `base.rate` & `n` & `power`",
+               "(the latter calculates `rate.ratio` as effect size)."), call. = FALSE)
   }
 
+  if (!is.null(beta1) && beta0 == beta1)
+    stop("`beta0` / `base.rate` can not have the same value as `beta1` / `rate.ratio`.", call. = FALSE)
+
+  requested <- get.requested(es = list(base.rate, rate.ratio), n = n, power = power)
 
   if (is.character(distribution) && length(distribution) == 1) {
     distribution <- switch(tolower(distribution),
@@ -225,8 +222,8 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL,
 
     if (tolower(distribution$dist) == "normal") {
 
-      min <- stats::qnorm(.0000001, mean = distribution$mean, sd = distribution$sd)
-      max <- stats::qnorm(.9999999, mean = distribution$mean, sd = distribution$sd)
+      min.thresh <- stats::qnorm(.0000001, mean = distribution$mean, sd = distribution$sd)
+      max.thresh <- stats::qnorm(.9999999, mean = distribution$mean, sd = distribution$sd)
 
       # define the distribution function and use integration (calcInt == FALSE)
       dist.func <- function(x) stats::dnorm(x, mean = distribution$mean, sd = distribution$sd)
@@ -234,8 +231,8 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL,
 
     } else if (tolower(distribution$dist) == "poisson") {
 
-      min <- 0
-      max <- stats::qpois(.999999999, lambda = distribution$lambda)
+      min.thresh <- 0
+      max.thresh <- stats::qpois(.999999999, lambda = distribution$lambda)
 
       # define the distribution function and use summation (calcInt == TRUE)
       dist.func <- function(x) stats::dpois(x, lambda = distribution$lambda)
@@ -243,17 +240,17 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL,
 
     } else if (tolower(distribution$dist) == "uniform") {
 
-      min <- distribution$min
-      max <- distribution$max
+      min.thresh <- distribution$min
+      max.thresh <- distribution$max
 
       # define the distribution function and use integration (calcInt == FALSE)
-      dist.func <- function(x) stats::dunif(x, min = min, max = max)
+      dist.func <- function(x) stats::dunif(x, min = min.thresh, max = max.thresh)
       calcInt <- FALSE
 
     } else if (tolower(distribution$dist) == "exponential") {
 
-      min <- 0
-      max <- stats::qexp(.9999999, rate = distribution$rate)
+      min.thresh <- 0
+      max.thresh <- stats::qexp(.9999999, rate = distribution$rate)
 
       # define the distribution function and use integration (calcInt == FALSE)
       dist.func <- function(x) stats::dexp(x, rate = distribution$rate)
@@ -261,17 +258,17 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL,
 
     } else if (tolower(distribution$dist) %in% c("binomial", "bernoulli")) {
 
-      min <- 0
-      max <- ifelse(tolower(distribution$dist) == "bernoulli", 1, distribution$size)
+      min.thresh <- 0
+      max.thresh <- ifelse(tolower(distribution$dist) == "bernoulli", 1, distribution$size)
 
       # define the distribution function and use summation (calcInt == TRUE)
-      dist.func <- function(x) stats::dbinom(x, size = max, prob = distribution$prob)
+      dist.func <- function(x) stats::dbinom(x, size = max.thresh, prob = distribution$prob)
       calcInt <- TRUE
 
     } else if (tolower(distribution$dist) == "lognormal") {
 
-      min <- stats::qlnorm(.0000001, meanlog = distribution$meanlog, sdlog = distribution$sdlog)
-      max <- stats::qlnorm(.9999999, meanlog = distribution$meanlog, sdlog = distribution$sdlog)
+      min.thresh <- stats::qlnorm(.0000001, meanlog = distribution$meanlog, sdlog = distribution$sdlog)
+      max.thresh <- stats::qlnorm(.9999999, meanlog = distribution$meanlog, sdlog = distribution$sdlog)
 
       # define the distribution function and use integration (calcInt == FALSE)
       dist.func <- function(x) stats::dlnorm(x, meanlog = distribution$meanlog, sdlog = distribution$sdlog)
@@ -287,7 +284,7 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL,
     if (calcInt) {
 
       # determine which sequence should be summed up
-      calc.seq <- seq(min, max)
+      calc.seq <- seq(min.thresh, max.thresh)
 
       # for mu: e1 [first parm.] = 0 -> x ^ e1 == 1, the log of which is beta0* (beta0s)
       # calculate mu and beta0s -                     | parms. to var.func
@@ -310,35 +307,31 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL,
     } else {
 
       # for mu: e1 [first parm.] = 0 -> x ^ e1 == 1, the log of which is beta0* (beta0s)
-      # calculate mu and beta0s -               | parms. to var.func
-      mu  <- stats::integrate(var.func, min, max, 0, beta0,  beta1)$value
+      # calculate mu and beta0s -                             | parms. to var.func
+      mu  <- stats::integrate(var.func, min.thresh, max.thresh, 0, beta0,  beta1)$value
       beta0s <- log(mu)
 
-      # variance under null -                   | parms. to var.func
-      i00 <- stats::integrate(var.func, min, max, 0, beta0s, 0)$value
-      i01 <- stats::integrate(var.func, min, max, 1, beta0s, 0)$value
-      i11 <- stats::integrate(var.func, min, max, 2, beta0s, 0)$value
+      # variance under null -                                 | parms. to var.func
+      i00 <- stats::integrate(var.func, min.thresh, max.thresh, 0, beta0s, 0)$value
+      i01 <- stats::integrate(var.func, min.thresh, max.thresh, 1, beta0s, 0)$value
+      i11 <- stats::integrate(var.func, min.thresh, max.thresh, 2, beta0s, 0)$value
       var.beta0 <- i00 / (i00 * i11 - i01 ^ 2)
 
-      # variance under alternative -            | parms. to var.func
-      i00 <- stats::integrate(var.func, min, max, 0, beta0,  beta1)$value
-      i01 <- stats::integrate(var.func, min, max, 1, beta0,  beta1)$value
-      i11 <- stats::integrate(var.func, min, max, 2, beta0,  beta1)$value
+      # variance under alternative -                          | parms. to var.func
+      i00 <- stats::integrate(var.func, min.thresh, max.thresh, 0, beta0,  beta1)$value
+      i01 <- stats::integrate(var.func, min.thresh, max.thresh, 1, beta0,  beta1)$value
+      i11 <- stats::integrate(var.func, min.thresh, max.thresh, 2, beta0,  beta1)$value
       var.beta1 <- i00 / (i00 * i11 - i01 ^ 2)
 
     }
 
-    list(var.beta0 = var.beta0, var.beta1 = var.beta1, 
+    list(var.beta0 = var.beta0, var.beta1 = var.beta1,
          distribution = tolower(distribution$dist),
-         min = min, max = max)
+         min = min.thresh, max = max.thresh)
 
   } # var.beta()
 
-  pwr.demidenko <- function(beta0, beta1, n,
-                            r.squared.predictor,
-                            alpha, alternative,
-                            method, distribution,
-                            mean.exposure) {
+  pwr <- function(beta0, beta1, n, r.squared.predictor, alpha, alternative, method, distribution, mean.exposure) {
 
     # variance correction factor
     if (method == "demidenko(vc)") {
@@ -359,23 +352,19 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL,
     # non-centrality parameter and standard deviation of the non-centrality parameter under alternative
     # Signorini, D. F. (1991). Sample size for poisson regression. Biometrika, 78, 446-450.
     # Demidenko, E. (2007). Sample size determination for logistic regression revisited. Statistics in Medicine, 26, 3385-3397.
-    if(method == "signorini") {
-      if(tolower(distribution$dist) == "normal") {
-        mean <- distribution$mean
-        sd <- distribution$sd
-        var.beta0 <- 1 / sd^2
-        var.beta1 <- exp(-(beta1 * mean + beta1^2 * sd^2 / 2)) / sd^2 
+    if (method == "signorini") {
+      if (tolower(distribution$dist) == "normal") {
+        var.beta0 <- 1 / distribution$sd ^ 2
+        var.beta1 <- exp(-(beta1 * distribution$mean + beta1 ^ 2 * distribution$sd ^ 2 / 2)) / distribution$sd ^ 2
         ncp <- beta1 / sqrt(var.beta0 / (n * (1 - r.squared.predictor) * mean.exposure))
         sd.ncp <- sqrt(var.beta1 / var.beta0)
-      } else if(tolower(distribution$dist) %in% c("binomial", "bernoulli")) {
-        ifelse(tolower(distribution$dist) == "bernoulli", size <- 1, size <- distribution$size)
-        prob <- distribution$prob
-        var.beta0 <- 1 / (prob * (1 - prob))
-        var.beta1 <- 1 / (1 - prob) + 1 / (prob * exp(beta1))
+      } else if (tolower(distribution$dist) %in% c("binomial", "bernoulli")) {
+        var.beta0 <- 1 / (distribution$prob * (1 - distribution$prob))
+        var.beta1 <- 1 / (1 - distribution$prob) + 1 / (distribution$prob * exp(beta1))
         ncp <- beta1 * sqrt(exp(beta0) * n * (1 - r.squared.predictor) * mean.exposure / var.beta0)
         sd.ncp <- sqrt(var.beta1 / var.beta0)
       } else {
-        stop("Distribution type is not supported by the Signorini procedure", call. = FALSE)
+        stop("Distribution type is not supported by the Signorini procedure.", call. = FALSE)
       }
     } else { # signorini
       var.obj <- var.beta(beta0 = beta0, beta1 = beta1, distribution = distribution)
@@ -385,117 +374,43 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL,
       sd.ncp <- sqrt((vcf * var.beta0 + (1 - vcf) * var.beta1) / var.beta1)
     } # demidenko and demidenko(vc)
 
-    pwr.obj <- power.z.test(mean = ncp, sd = sd.ncp, null.mean = 0,
-                            alpha = alpha, alternative = alternative,
-                            plot = FALSE, verbose = 0)
-    power <- pwr.obj$power
-    z.alpha <- pwr.obj$z.alpha
+    pwr.obj <- power.z.test(mean = ncp, sd = sd.ncp, null.mean = 0, alpha = alpha,
+                            alternative = alternative, plot = FALSE, verbose = 0)
 
-    list(power = power, ncp = ncp, sd.ncp = sd.ncp, vcf = vcf, z.alpha = z.alpha)
+    list(power = pwr.obj$power, ncp = ncp, sd.ncp = sd.ncp, vcf = vcf, z.alpha = pwr.obj$z.alpha)
 
-  } # pwr.demidenko()
+  } # pwr()
 
-  ss.demidenko <- function(beta0, beta1, power,
-                           r.squared.predictor,
-                           alpha, alternative,
-                           method, distribution,
-                           mean.exposure) {
-
-    n <- stats::uniroot(function(n) {
-      power - pwr.demidenko(beta0 = beta0, beta1 = beta1, n = n,
-                            r.squared.predictor = r.squared.predictor,
-                            alpha = alpha, alternative = alternative,
-                            method = method, distribution = distribution,
-                            mean.exposure = mean.exposure)$power
-    }, interval = c(2, 1e10))$root
-
-    n
-
-  } # ss.demidenko()
-  
-  es.demidenko <- function(beta0, sign, n, power, 
-                           r.squared.predictor,
-                           alpha, alternative,
-                           method, distribution, 
-                           mean.exposure) {
-    
-    var.obj <- var.beta(beta0 = beta0, beta1 = beta0, distribution = distribution)
-    min.x <- var.obj$min 
-    max.x <- var.obj$max 
-    
-    rate <- c(0.0001, 1e10)
-    bound.values <- c((log(min(rate)) - log(mean.exposure) - beta0) / c(min.x, max.x), 
-                      (log(max(rate)) - log(mean.exposure) - beta0) / c(min.x, max.x))
-    
-    beta1.min <- min(bound.values)
-    beta1.max <- max(bound.values)
-    
-    if(sign %in% c("-", -1, "-1", "negative")) {
-      beta1 <- try({
-        stats::uniroot(function(beta1) {
-          power - pwr.demidenko(beta0 = beta0, beta1 = beta1, n = n,
-                                r.squared.predictor = r.squared.predictor,
-                                alpha = alpha, alternative = alternative,
-                                method = method, distribution = distribution,
-                                mean.exposure = mean.exposure)$power
-        }, interval = c(beta1.min, 0))$root
-      })
-      
-      if(inherits(beta1, "try-error")) 
-        stop("Design is not feasible. Try sign = '+'", call. = FALSE)
-      
-    } # negative
-    
-    if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) {
-      beta1 <-  try({
-        stats::uniroot(function(beta1) {
-          power - pwr.demidenko(beta0 = beta0, beta1 = beta1, n = n,
-                                r.squared.predictor = r.squared.predictor,
-                                alpha = alpha, alternative = alternative,
-                                method = method, distribution = distribution,
-                                mean.exposure = mean.exposure)$power
-        }, interval = c(0, beta1.max))$root
-      })
-      
-      if(inherits(beta1, "try-error")) 
-        stop("Design is not feasible. Try sign = '-'", call. = FALSE)
-      
-      return(beta1)
-      
-    } # positive
-    
-  } # es.demidenko()
+  min.pwr <- function(beta1, n, power) {
+    power - pwr(beta0 = beta0, beta1 = beta1, n = n, r.squared.predictor = r.squared.predictor, alpha = alpha,
+                alternative = alternative, method = method, distribution = distribution, mean.exposure = mean.exposure)$power
+  } # min.pwr (for uniroot)
 
   if (requested == "n") {
 
-    n <- ss.demidenko(beta0 = beta0, beta1 = beta1, power = power,
-                      r.squared.predictor = r.squared.predictor,
-                      alpha = alpha, alternative = alternative,
-                      method = method, distribution = distribution,
-                      mean.exposure = mean.exposure)
+    n <- stats::uniroot(function(n) min.pwr(beta1, n, power), interval = c(2, 1e10))$root
 
-    if (ceiling) n <- ceiling(n)
+    if (ceil.n) n <- ceiling(n)
 
-  }
-  
-  if (requested == "es") {
-    
-    beta1 <- es.demidenko(beta0 = beta0, sign = sign, 
-                          n = n, power = power,
-                          r.squared.predictor = r.squared.predictor,
-                          alpha = alpha, alternative = alternative,
-                          method = method, distribution = distribution,
-                          mean.exposure = mean.exposure)
-    
+  } else if (requested == "es") {
+
+    var.obj <- var.beta(beta0 = beta0, beta1 = beta0, distribution = distribution)
+    bound.values <- c((log(min(1e-6)) - log(mean.exposure) - beta0) / c(var.obj$min, var.obj$max),
+                      (log(max(1e10)) - log(mean.exposure) - beta0) / c(var.obj$min, var.obj$max))
+    val.rng <- c(min(bound.values), 0, max(bound.values))[ifelse(check.pos_sign(req.sign), -1, -3)]
+
+    beta1 <-  try(stats::uniroot(function(beta1) min.pwr(beta1, n, power), interval = val.rng)$root)
+    if (inherits(beta1, "try-error"))
+      stop(sprintf("Design is not feasible. Try `req.sign` = \"%s\"", ifelse(check.pos_sign(req.sign), "-", "+")), call. = FALSE)
+
     base.rate <- exp(beta0)
     rate.ratio <- exp(beta1)
-    
-  }
 
-  # calculate power (if requested == "power") or update it (if requested == "n")
-  pwr.obj <- pwr.demidenko(beta0 = beta0, beta1 = beta1, n = n, r.squared.predictor = r.squared.predictor,
-                           alpha = alpha, alternative = alternative, method = method, distribution = distribution,
-                           mean.exposure = mean.exposure)
+  } # calculate sample size or effect size
+
+  # calculate power (if requested == "power") or update it (if requested == "n" / "es")
+  pwr.obj <- pwr(beta0 = beta0, beta1 = beta1, n = n, r.squared.predictor = r.squared.predictor, alpha = alpha,
+                 alternative = alternative, method = method, distribution = distribution, mean.exposure = mean.exposure)
 
   power <- pwr.obj$power
   z.alpha <- pwr.obj$z.alpha
@@ -565,7 +480,7 @@ pwrss.z.poisson <- function(exp.beta0 = 1.10, exp.beta1 = 1.16,
 
   alternative <- tolower(match.arg(alternative))
   method <- tolower(match.arg(method))
-  verbose <- ensure_verbose(verbose)
+  verbose <- ensure.verbose(verbose)
 
   if (alternative %in% c("less", "greater")) alternative <- "one.sided"
   if (alternative == "not equal") alternative <- "two.sided"
@@ -573,7 +488,7 @@ pwrss.z.poisson <- function(exp.beta0 = 1.10, exp.beta1 = 1.16,
   poisreg.obj <- power.z.poisson(beta0 = beta0, beta1 = beta1, n = n, power = power,
                                  r.squared.predictor = r2.other.x, mean.exposure = mean.exposure,
                                  alpha = alpha, alternative = alternative, method = method,
-                                 distribution = distribution, ceiling = TRUE, verbose = verbose)
+                                 distribution = distribution, ceil.n = TRUE, verbose = verbose)
 
   # cat("This function will be removed in the future. \n Please use power.z.poisson() function. \n")
 

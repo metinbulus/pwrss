@@ -4,14 +4,14 @@
 \alias{inflate.sample}
 \title{Inflate Sample Size for Attrition}
 \usage{
-inflate.sample(n, rate = 0.05, ceiling = TRUE, verbose = 1)
+inflate.sample(n, rate = 0.05, ceil.n = TRUE, verbose = 1)
 }
 \arguments{
 \item{n}{sample size.}
 
 \item{rate}{attrition rate.}
 
-\item{ceiling}{rounds-up the inflated sample size.}
+\item{ceil.n}{rounds-up the inflated sample size.}
 
 \item{verbose}{\code{1} by default (returns test, hypotheses, and results),
 if \code{2} a more detailed output is given (plus key

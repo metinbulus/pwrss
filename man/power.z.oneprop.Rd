@@ -6,7 +6,8 @@
 \title{Power Analysis for the Test of One Proportion (Normal Approximation Method)}
 \usage{
 power.z.oneprop(
-  prob,
+  prob = NULL,
+  req.sign = "+",
   null.prob = 0.5,
   n = NULL,
   power = NULL,
@@ -15,13 +16,16 @@ power.z.oneprop(
   std.error = c("null", "alternative"),
   arcsine = FALSE,
   correct = FALSE,
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
 }
 \arguments{
 \item{prob}{probability of success under alternative.}
+
+\item{req.sign}{whether \code{prob} is smaller or larger than \code{null.prob}
+(when minimum detectable prob is of interest).}
 
 \item{null.prob}{probability of success under null.}
 
@@ -52,7 +56,7 @@ applied. \code{FALSE} by default. Note that when
 \item{correct}{logical; whether Yate's continuity correction should be
 applied.}
 
-\item{ceiling}{logical; whether sample size should be rounded up.
+\item{ceil.n}{logical; whether sample size should be rounded up.
 \code{TRUE} by default.}
 
 \item{verbose}{\code{1} by default (returns test, hypotheses, and
@@ -93,14 +97,16 @@ transition period.
 }
 \examples{
 # power
-power.z.oneprop(prob = 0.45, null.prob = 0.50,
-                alpha = 0.05, n = 500,
-                alternative = "one.sided")
+power.z.oneprop(prob = 0.45, null.prob = 0.50, alpha = 0.05,
+                n = 500, alternative = "one.sided")
 
 # sample size
-power.z.oneprop(prob = 0.45, null.prob = 0.50,
-                alpha = 0.05, power = 0.80,
-                alternative = "one.sided")
+power.z.oneprop(prob = 0.45, null.prob = 0.50, alpha = 0.05,
+                power = 0.80, alternative = "one.sided")
+
+# effect size
+power.z.oneprop(req.sign = "+", null.prob = 0.50, alpha = 0.05,
+                n = 500, power = 0.80, alternative = "one.sided")
 
 }
 \references{

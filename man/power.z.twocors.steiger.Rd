@@ -6,19 +6,20 @@
 \title{Power Analysis for Dependent Correlations (Steiger's Z-Test)}
 \usage{
 power.z.twocors.steiger(
-  rho12,
-  rho13,
-  rho23,
+  rho12 = NULL,
+  rho13 = NULL,
+  rho23 = NULL,
   rho14 = NULL,
   rho24 = NULL,
   rho34 = NULL,
+  req.sign = "+",
   n = NULL,
   power = NULL,
   alpha = 0.05,
   alternative = c("two.sided", "one.sided"),
   pooled = TRUE,
   common.index = FALSE,
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -41,6 +42,12 @@ only). Check examples below.}
 
 \item{rho34}{correlation between variable V3 and V4 (no common index
 only). Check examples below.}
+
+\item{req.sign}{whether estimated rho is smaller or larger than the other
+(when minimum detectable rho is of interest).
+Sign comparison is between rho12 and rho13 with common index
+and between rho12 and rho34 with no common index.
+Note that sign comparison is relative to the known correlation.}
 
 \item{n}{integer; sample size.}
 
@@ -66,7 +73,7 @@ means calculations pertain to correlations with no
 common index (where all relevant correlations must be
 explicitly specified). Check examples below.}
 
-\item{ceiling}{logical; if \code{TRUE} rounds up sample size.}
+\item{ceil.n}{logical; if \code{TRUE} rounds up sample size.}
 
 \item{verbose}{\code{1} by default (returns test, hypotheses, and
 results), if \code{2} a more detailed output is given

@@ -4,7 +4,7 @@ test_that("printing.R works", {
     expect_equal(crrAsc, c("+--------------------------------------------------+",
                            "|             SAMPLE SIZE CALCULATION              |",
                            "+--------------------------------------------------+", "",
-                           "One-way Analysis of Variance (F-Test)", "",
+                           "One-Way Analysis of Variance (F-Test)", "",
                            "----------------------------------------------------",
                            "Hypotheses",
                            "----------------------------------------------------",
@@ -22,20 +22,21 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
-                           "  Total Sample Size    = 128  <<",
-                           "  Type 1 Error (alpha) = 0.050",
-                           "  Type 2 Error (beta)  = 0.197",
-                           "  Statistical Power    = 0.803", "",
+                           "  Effect Size (eta-squared) = 0.059",
+                           "  Total Sample Size         = 128  <<",
+                           "  Type 1 Error (alpha)      = 0.050",
+                           "  Type 2 Error (beta)       = 0.197",
+                           "  Statistical Power         = 0.803", "",
                            "----------------------------------------------------",
                            "Definitions",
                            "----------------------------------------------------",
-                           "  eta.squared      : (Partial) Eta-squared under alt.", ""))
+                           "  eta.squared      : (Partial) eta-squared under alt.", ""))
 
-    crrPty <- capture.output(power.f.ancova(eta.squared = 0.059, factor.levels = 2, alpha = 0.05, power = .80, verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    crrUTF <- capture.output(power.f.ancova(eta.squared = 0.059, factor.levels = 2, alpha = 0.05, power = .80, verbose = 2, utf = TRUE))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
                            "╚══════════════════════════════════════════════════╝", "",
-                           "One-way Analysis of Variance (F-Test)", "",
+                           "One-Way Analysis of Variance (F-Test)", "",
                            "────────────────────────────────────────────────────",
                            "Hypotheses",
                            "────────────────────────────────────────────────────",
@@ -53,6 +54,7 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (η²)   = 0.059",
                            "  \033[34mTotal Sample Size  = 128\033[0m  \033[1;35m◄◄\033[0m",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.197",
@@ -60,7 +62,7 @@ test_that("printing.R works", {
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "\033[36mDefinitions\033[0m",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
-                           "  \033[36mη²  : (Partial) Eta-squared under alternative\033[0m",
+                           "  \033[36mη²  : (Partial) eta-squared under alternative\033[0m",
                            "  \033[36mλ   : Non-centrality parameter under alternative\033[0m",
                            "  \033[36mλ₀  : Non-centrality parameter under null\033[0m", ""))
 
@@ -69,7 +71,7 @@ test_that("printing.R works", {
     expect_equal(crrAsc, c("+--------------------------------------------------+",
                            "|             SAMPLE SIZE CALCULATION              |",
                            "+--------------------------------------------------+", "",
-                           "One-way Analysis of Covariance (F-Test)", "",
+                           "One-Way Analysis of Covariance (F-Test)", "",
                            "----------------------------------------------------",
                            "Hypotheses",
                            "----------------------------------------------------",
@@ -87,21 +89,22 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
-                           "  Total Sample Size    = 66  <<",
-                           "  Type 1 Error (alpha) = 0.050",
-                           "  Type 2 Error (beta)  = 0.193",
-                           "  Statistical Power    = 0.807", "",
+                           "  Effect Size (eta-squared) = 0.111",
+                           "  Total Sample Size         = 66  <<",
+                           "  Type 1 Error (alpha)      = 0.050",
+                           "  Type 2 Error (beta)       = 0.193",
+                           "  Statistical Power         = 0.807", "",
                            "----------------------------------------------------",
                            "Definitions",
                            "----------------------------------------------------",
-                           "  eta.squared      : (Partial) Eta-squared under alt.", ""))
+                           "  eta.squared      : (Partial) eta-squared under alt.", ""))
 
-    crrPty <- capture.output(power.f.ancova.keppel(mu.vector = c(0.50, 0.00), sd.vector = rep(1, 2), p.vector = rep(0.50, 2),
+    crrUTF <- capture.output(power.f.ancova.keppel(mu.vector = c(0.50, 0.00), sd.vector = rep(1, 2), p.vector = rep(0.50, 2),
                                                    k.covariates = 1, r.squared = 0.50, alpha = 0.05, power = 0.80, verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
                            "╚══════════════════════════════════════════════════╝", "",
-                           "One-way Analysis of Covariance (F-Test)", "",
+                           "One-Way Analysis of Covariance (F-Test)", "",
                            "────────────────────────────────────────────────────",
                            "Hypotheses",
                            "────────────────────────────────────────────────────",
@@ -119,6 +122,7 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (η²)   = 0.111",
                            "  \033[34mTotal Sample Size  = 66\033[0m  \033[1;35m◄◄\033[0m",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.193",
@@ -126,7 +130,7 @@ test_that("printing.R works", {
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "\033[36mDefinitions\033[0m",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
-                           "  \033[36mη²  : (Partial) Eta-squared under alternative\033[0m",
+                           "  \033[36mη²  : (Partial) eta-squared under alternative\033[0m",
                            "  \033[36mλ   : Non-centrality parameter under alternative\033[0m",
                            "  \033[36mλ₀  : Non-centrality parameter under null\033[0m", ""))
 
@@ -135,7 +139,7 @@ test_that("printing.R works", {
     expect_equal(crrAsc, c("+--------------------------------------------------+",
                            "|                POWER CALCULATION                 |",
                            "+--------------------------------------------------+", "",
-                           "One-way Analysis of Covariance (F-Test)", "",
+                           "One-Way Analysis of Covariance (F-Test)", "",
                            "----------------------------------------------------",
                            "Hypotheses",
                            "----------------------------------------------------",
@@ -153,21 +157,22 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
-                           "  Total Sample Size    = 300",
-                           "  Type 1 Error (alpha) = 0.050",
-                           "  Type 2 Error (beta)  = 0.316",
-                           "  Statistical Power    = 0.684  <<", "",
+                           "  Effect Size (eta-squared) = 0.020",
+                           "  Total Sample Size         = 300",
+                           "  Type 1 Error (alpha)      = 0.050",
+                           "  Type 2 Error (beta)       = 0.316",
+                           "  Statistical Power         = 0.684  <<", "",
                            "----------------------------------------------------",
                            "Definitions",
                            "----------------------------------------------------",
-                           "  eta.squared      : (Partial) Eta-squared under alt.", ""))
+                           "  eta.squared      : (Partial) eta-squared under alt.", ""))
 
-    crrPty <- capture.output(power.f.ancova.shieh(mu.vector = c(0.20, 0), sd.vector = rep(1, 2), n.vector = rep(150, 2),
+    crrUTF <- capture.output(power.f.ancova.shieh(mu.vector = c(0.20, 0), sd.vector = rep(1, 2), n.vector = rep(150, 2),
                                                   r.squared = 0.50, k.covariates = 1, alpha = 0.05, verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
-                           "One-way Analysis of Covariance (F-Test)", "",
+                           "One-Way Analysis of Covariance (F-Test)", "",
                            "────────────────────────────────────────────────────",
                            "Hypotheses",
                            "────────────────────────────────────────────────────",
@@ -185,6 +190,7 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (η²)   = 0.020",
                            "  Total Sample Size  = 300",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.316",
@@ -192,7 +198,7 @@ test_that("printing.R works", {
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "\033[36mDefinitions\033[0m",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
-                           "  \033[36mη²  : (Partial) Eta-squared under alternative\033[0m",
+                           "  \033[36mη²  : (Partial) eta-squared under alternative\033[0m",
                            "  \033[36mλ   : Non-centrality parameter under alternative\033[0m",
                            "  \033[36mλ₀  : Non-centrality parameter under null\033[0m", ""))
 
@@ -220,18 +226,19 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
-                           "  Total Sample Size    = 90  <<",
-                           "  Type 1 Error (alpha) = 0.050",
-                           "  Type 2 Error (beta)  = 0.196",
-                           "  Statistical Power    = 0.804", "",
+                           "  Effect Size (eta-squared) = 0.022",
+                           "  Total Sample Size         = 90  <<",
+                           "  Type 1 Error (alpha)      = 0.050",
+                           "  Type 2 Error (beta)       = 0.196",
+                           "  Statistical Power         = 0.804", "",
                            "----------------------------------------------------",
                            "Definitions",
                            "----------------------------------------------------",
-                           "  eta.squared      : (Partial) Eta-squared under alt.", ""))
+                           "  eta.squared      : (Partial) eta-squared under alt.", ""))
 
-    crrPty <- capture.output(power.f.mixed.anova(eta.squared = 0.022,   factor.levels = c(1, 2), rho.within = 0.50,
+    crrUTF <- capture.output(power.f.mixed.anova(eta.squared = 0.022,   factor.levels = c(1, 2), rho.within = 0.50,
                                                  effect = "within", power = 0.80, alpha = 0.05, verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Repeated Measures Analysis of Variance (F-Test)", "",
@@ -252,6 +259,7 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (η²)   = 0.022",
                            "  \033[34mTotal Sample Size  = 90\033[0m  \033[1;35m◄◄\033[0m",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.196",
@@ -259,7 +267,7 @@ test_that("printing.R works", {
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "\033[36mDefinitions\033[0m",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
-                           "  \033[36mη²  : (Partial) Eta-squared under alternative\033[0m",
+                           "  \033[36mη²  : (Partial) eta-squared under alternative\033[0m",
                            "  \033[36mλ   : Non-centrality parameter under alternative\033[0m",
                            "  \033[36mλ₀  : Non-centrality parameter under null\033[0m", ""))
 
@@ -286,18 +294,19 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
-                           "  Total Sample Size    = 120",
-                           "  Type 1 Error (alpha) = 0.050",
-                           "  Type 2 Error (beta)  = 0.097",
-                           "  Statistical Power    = 0.903  <<", "",
+                           "  Effect Size (eta-squared) = 0.022",
+                           "  Total Sample Size         = 120",
+                           "  Type 1 Error (alpha)      = 0.050",
+                           "  Type 2 Error (beta)       = 0.097",
+                           "  Statistical Power         = 0.903  <<", "",
                            "----------------------------------------------------",
                            "Definitions",
                            "----------------------------------------------------",
-                           "  eta.squared      : (Partial) Eta-squared under alt.", ""))
+                           "  eta.squared      : (Partial) eta-squared under alt.", ""))
 
-    crrPty <- capture.output(power.f.mixed.anova(eta.squared = 0.022,   factor.levels = c(1, 2), rho.within = 0.50,
+    crrUTF <- capture.output(power.f.mixed.anova(eta.squared = 0.022,   factor.levels = c(1, 2), rho.within = 0.50,
                                                  effect = "within", n.total = 120, alpha = 0.05, verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Repeated Measures Analysis of Variance (F-Test)", "",
@@ -318,6 +327,7 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (η²)   = 0.022",
                            "  Total Sample Size  = 120",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.097",
@@ -325,7 +335,7 @@ test_that("printing.R works", {
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "\033[36mDefinitions\033[0m",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
-                           "  \033[36mη²  : (Partial) Eta-squared under alternative\033[0m",
+                           "  \033[36mη²  : (Partial) eta-squared under alternative\033[0m",
                            "  \033[36mλ   : Non-centrality parameter under alternative\033[0m",
                            "  \033[36mλ₀  : Non-centrality parameter under null\033[0m", ""))
 
@@ -363,6 +373,7 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (d)      = 0.141",
                            "  Total Sample Size    = 2400",
                            "  Type 1 Error (alpha) = 0.050",
                            "  Type 2 Error (beta)  = 0.067",
@@ -373,10 +384,10 @@ test_that("printing.R works", {
                            "  psi : Contrast estimate, sum(contrast[i] * mu[i])",
                            "  d   : Standardized contrast estimate", ""))
 
-    crrPty <- capture.output(power.t.contrast(mu.vector = c(0.20, 0.10), sd.vector = rep(1, 2), n.vector = rep(1200, 2),
+    crrUTF <- capture.output(power.t.contrast(mu.vector = c(0.20, 0.10), sd.vector = rep(1, 2), n.vector = rep(1200, 2),
                                               contrast.vector = c(1, -1), r.squared = 0.50, k.covariates = 1, alpha = 0.05,
                                               verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Single Contrast Analysis (T-Test)", "",
@@ -397,6 +408,7 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (d)    = 0.141",
                            "  Total Sample Size  = 2400",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.067",
@@ -404,10 +416,10 @@ test_that("printing.R works", {
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "\033[36mDefinitions\033[0m",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
-                           "  \033[36mψ    : Contrast est. defined as ∑(contrastᵢ * μᵢ)\033[0m",
-                           "  \033[36md    : Standardized contrast estimate\033[0m",
-                           "  \033[36mλ    : Non-centrality parameter under alternative\033[0m",
-                           "  \033[36mλ₀  : Non-centrality parameter under null\033[0m", ""))
+                           "  \033[36mψ  : Contrast est. defined as ∑(contrastᵢ * μᵢ)\033[0m",
+                           "  \033[36md  : Standardized contrast estimate\033[0m",
+                           "  \033[36mλ  : Non-centrality parameter under alternative\033[0m",
+                           "  \033[36mλ₀ : Non-centrality parameter under null\033[0m", ""))
     # ------------------------------------------------------------------------------------------------------------------
 
 
@@ -445,8 +457,8 @@ test_that("printing.R works", {
                            "  d   : Standardized contrast estimate",
                            "  ncp : Non-centrality parameter under alt.", ""))
 
-    crrPty <- capture.output(power.t.contrasts(crrRes, adjust.alpha = "fdr", verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    crrUTF <- capture.output(power.t.contrasts(crrRes, adjust.alpha = "fdr", verbose = 2, utf = TRUE))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Multiple Contrast Analyses (T-Tests)", "",
@@ -470,9 +482,9 @@ test_that("printing.R works", {
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "\033[36mDefinitions\033[0m",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
-                           "  \033[36mψ (psi)   : Contrast est. defined as ∑(contrastᵢ * μᵢ)\033[0m",
-                           "  \033[36md         : Standardized contrast estimate\033[0m",
-                           "  \033[36mλ₀        : Non-centrality parameter under alt.\033[0m", ""))
+                           "  \033[36mψ (psi) : Contrast est. defined as ∑(contrastᵢ * μᵢ)\033[0m",
+                           "  \033[36md       : Standardized contrast estimate\033[0m",
+                           "  \033[36mλ₀      : Non-centrality parameter under alt.\033[0m", ""))
     # ------------------------------------------------------------------------------------------------------------------
 
 
@@ -502,6 +514,7 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (rho12)  = 0.350 (vs. rho13 = 0.450)",
                            "  Sample Size          = 1000",
                            "  Type 1 Error (alpha) = 0.050",
                            "  Type 2 Error (beta)  = 0.253",
@@ -512,10 +525,10 @@ test_that("printing.R works", {
                            "  rho12 : Correlation between variable V1 and V2",
                            "  rho13 : Correlation between variable V1 and V3", ""))
 
-    crrPty <- capture.output(power.z.twocors.steiger(rho12 = 0.35, rho13 = 0.45, rho23 = 0.05, n = 1000, power = NULL,
+    crrUTF <- capture.output(power.z.twocors.steiger(rho12 = 0.35, rho13 = 0.45, rho23 = 0.05, n = 1000, power = NULL,
                                                      alpha = 0.05, alternative = "two.sided", common.index = TRUE,
                                                      verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Dependent Correlations", "",
@@ -528,16 +541,17 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Key Parameters",
                            "────────────────────────────────────────────────────",
-                           "  ρ₁₂ - ρ₁₃            = -0.100",
-                           "  Cohen's q            = -0.119",
-                           "  μ (Alternative)      = -2.625",
-                           "  σ (Alternative)      =  0.999",
-                           "  μ₀ (Null)            =  0",
-                           "  σ₀ (Null)            =  1",
-                           "  Z⁻¹(α, μ₀, σ₀)       = -1.960 and 1.960", "",
+                           "  ρ₁₂ - ρ₁₃       = -0.100",
+                           "  Cohen's q       = -0.119",
+                           "  μ (Alternative) = -2.625",
+                           "  σ (Alternative) =  0.999",
+                           "  μ₀ (Null)       =  0",
+                           "  σ₀ (Null)       =  1",
+                           "  Z⁻¹(α, μ₀, σ₀)  = -1.960 and 1.960", "",
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (ρ₁₂)  = 0.350 (vs. ρ₁₃ = 0.450)",
                            "  Sample Size        = 1000",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.253",
@@ -547,8 +561,8 @@ test_that("printing.R works", {
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "  \033[36mρ₁₂ : Correlation between variable V1 and V2\033[0m",
                            "  \033[36mρ₁₃ : Correlation between variable V1 and V3\033[0m",
-                           "  \033[36mμ   : Mean\033[0m",
-                           "  \033[36mσ   : Standard deviation\033[0m", ""))
+                           "  \033[36mμ   : Mean\033[0m",
+                           "  \033[36mσ   : Standard deviation\033[0m", ""))
 
     crrAsc <- capture.output(power.z.twocors.steiger(rho12 = 0.45, rho13 = 0.45, rho23 = 0.50, rho14 = 0.50, rho24 = 0.80, rho34 = 0.55,
                                                      power = 0.8, alpha = 0.05, alternative = "two.sided", common.index = FALSE, verbose = 2))
@@ -575,6 +589,7 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (rho12)  = 0.450 (vs. rho34 = 0.550)",
                            "  Sample Size          = 643  <<",
                            "  Type 1 Error (alpha) = 0.050",
                            "  Type 2 Error (beta)  = 0.200",
@@ -585,10 +600,10 @@ test_that("printing.R works", {
                            "  rho12 : Correlation between variable V1 and V2",
                            "  rho34 : Correlation between variable V3 and V4", ""))
 
-    crrPty <- capture.output(power.z.twocors.steiger(rho12 = 0.45, rho13 = 0.45, rho23 = 0.50, rho14 = 0.50, rho24 = 0.80, rho34 = 0.55,
+    crrUTF <- capture.output(power.z.twocors.steiger(rho12 = 0.45, rho13 = 0.45, rho23 = 0.50, rho14 = 0.50, rho24 = 0.80, rho34 = 0.55,
                                                      power = 0.8, alpha = 0.05, alternative = "two.sided", common.index = FALSE,
                                                      verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Dependent Correlations", "",
@@ -601,16 +616,17 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Key Parameters",
                            "────────────────────────────────────────────────────",
-                           "  ρ₁₂ - ρ₃₄            = -0.100",
-                           "  Cohen's q            = -0.134",
-                           "  μ (Alternative)      = -2.802",
-                           "  σ (Alternative)      =  1.000",
-                           "  μ₀ (Null)            =  0",
-                           "  σ₀ (Null)            =  1",
-                           "  Z⁻¹(α, μ₀, σ₀)       = -1.960 and 1.960", "",
+                           "  ρ₁₂ - ρ₃₄       = -0.100",
+                           "  Cohen's q       = -0.134",
+                           "  μ (Alternative) = -2.802",
+                           "  σ (Alternative) =  1.000",
+                           "  μ₀ (Null)       =  0",
+                           "  σ₀ (Null)       =  1",
+                           "  Z⁻¹(α, μ₀, σ₀)  = -1.960 and 1.960", "",
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (ρ₁₂)  = 0.450 (vs. ρ₃₄ = 0.550)",
                            "  \033[34mSample Size        = 643\033[0m  \033[1;35m◄◄\033[0m",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.200",
@@ -620,8 +636,8 @@ test_that("printing.R works", {
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "  \033[36mρ₁₂ : Correlation between variable V1 and V2\033[0m",
                            "  \033[36mρ₃₄ : Correlation between variable V3 and V4\033[0m",
-                           "  \033[36mμ   : Mean\033[0m",
-                           "  \033[36mσ   : Standard deviation\033[0m", ""))
+                           "  \033[36mμ   : Mean\033[0m",
+                           "  \033[36mσ   : Standard deviation\033[0m", ""))
     # ------------------------------------------------------------------------------------------------------------------
 
 
@@ -649,6 +665,7 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (rho1)   = 0.200 (vs. rho2 = 0.300)",
                            "  Sample Size          = 1380 and 1380  <<",
                            "  Type 1 Error (alpha) = 0.050",
                            "  Type 2 Error (beta)  = 0.200",
@@ -659,9 +676,9 @@ test_that("printing.R works", {
                            "  rho1 : Correlation (for some V1 ~ V2) in group 1",
                            "  rho2 : Correlation (for some V1 ~ V2) in group 2", ""))
 
-    crrPty <- capture.output(power.z.twocors(rho1 = 0.20, rho2 = 0.30, n2 = 1380, alpha = 0.05, alternative = "two.sided",
+    crrUTF <- capture.output(power.z.twocors(rho1 = 0.20, rho2 = 0.30, n2 = 1380, alpha = 0.05, alternative = "two.sided",
                                              verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Independent Correlations", "",
@@ -683,6 +700,7 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (ρ₁)   = 0.200 (vs. ρ₂ = 0.300)",
                            "  Sample Size        = 1380 and 1380",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.200",
@@ -692,11 +710,11 @@ test_that("printing.R works", {
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "  \033[36mρ₁ : Correlation (for some V1 ~ V2) in group 1\033[0m",
                            "  \033[36mρ₂ : Correlation (for some V1 ~ V2) in group 2\033[0m",
-                           "  \033[36mμ   : Mean\033[0m",
-                           "  \033[36mσ   : Standard deviation\033[0m", ""))
+                           "  \033[36mμ  : Mean\033[0m",
+                           "  \033[36mσ  : Standard deviation\033[0m", ""))
 
     crrAsc <- capture.output(power.z.twocors(rho1 = 0.20, rho2 = 0.30, power = 0.80, alpha = 0.05, alternative = "one.sided", verbose = 2))
-    expect_equal(crrAsc[c(5, 10, 11, 16:22, 35:36)],
+    expect_equal(crrAsc[c(5, 10, 11, 16:22, 27, 36:37)],
                  c("Independent Correlations",
                    "  H0 (Null)        : rho1 - rho2 >= 0",
                    "  H1 (Alternative) : rho1 - rho2  < 0",
@@ -707,13 +725,14 @@ test_that("printing.R works", {
                    "  Mean of Null   =  0",
                    "  SD of Null     =  1",
                    "  Critical Value = -1.645",
+                   "  Effect Size (rho1)   = 0.200 (vs. rho2 = 0.300)",
                    "  rho1 : Correlation (for some V1 ~ V2) in group 1",
                    "  rho2 : Correlation (for some V1 ~ V2) in group 2"))
-    expect_equal(length(crrAsc), 37)
+    expect_equal(length(crrAsc), 38)
 
-    crrPty <- capture.output(power.z.twocors(rho1 = 0.20, rho2 = 0.30, power = 0.80, alpha = 0.05, alternative = "one.sided",
+    crrUTF <- capture.output(power.z.twocors(rho1 = 0.20, rho2 = 0.30, power = 0.80, alpha = 0.05, alternative = "one.sided",
                                              verbose = 2, utf = TRUE))
-    expect_equal(crrPty[c(5, 10, 11, 16:22, 35:38)],
+    expect_equal(crrUTF[c(5, 10, 11, 16:22, 27, 36:39)],
                  c("Independent Correlations",
                    "  H₀ (Null)        : ρ₁ - ρ₂ ≥ 0",
                    "  H₁ (Alternative) : ρ₁ - ρ₂ < 0",
@@ -724,15 +743,16 @@ test_that("printing.R works", {
                    "  μ₀ (Null)       =  0",
                    "  σ₀ (Null)       =  1",
                    "  Z⁻¹(α, μ₀, σ₀)  = -1.645",
+                   "  Effect Size (ρ₁)   = 0.200 (vs. ρ₂ = 0.300)",
                    "  \033[36mρ₁ : Correlation (for some V1 ~ V2) in group 1\033[0m",
                    "  \033[36mρ₂ : Correlation (for some V1 ~ V2) in group 2\033[0m",
-                   "  \033[36mμ   : Mean\033[0m",
-                   "  \033[36mσ   : Standard deviation\033[0m"))
-    expect_equal(length(crrPty), 39)
+                   "  \033[36mμ  : Mean\033[0m",
+                   "  \033[36mσ  : Standard deviation\033[0m"))
+    expect_equal(length(crrUTF), 40)
 
     crrAsc <- capture.output(power.z.onecor(rho = 0.20, power = 0.80, alpha = 0.05, alternative = "two.sided", verbose = 2))
-    expect_equal(crrAsc[c(5, 10:11, 16:22, 35:36)],
-                 c("One-Sample Correlation",
+    expect_equal(crrAsc[c(5, 10:11, 16:22, 27, 36:37)],
+                 c("One-Sample Correlation (Approximate)",
                    "  H0 (Null)        : rho - null.rho  = 0",
                    "  H1 (Alternative) : rho - null.rho != 0",
                    "  rho - null.rho =  0.200",
@@ -742,13 +762,14 @@ test_that("printing.R works", {
                    "  Mean of Null   =  0",
                    "  SD of Null     =  1",
                    "  Critical Value = -1.960 and 1.960",
+                   "  Effect Size (rho)    = 0.200 (vs. null.rho = 0)",
                    "  rho      : Correlation (for some V1 ~ V2) under alt.",
                    "  null.rho : Correlation (for some V1 ~ V2) under null"))
-    expect_equal(length(crrAsc), 37)
+    expect_equal(length(crrAsc), 38)
 
-    crrPty <- capture.output(power.z.onecor(rho = 0.20, power = 0.80, alpha = 0.05, alternative = "two.sided", verbose = 2, utf = TRUE))
-    expect_equal(crrPty[c(5, 10:11, 16:22, 35:38)],
-                 c("One-Sample Correlation",
+    crrUTF <- capture.output(power.z.onecor(rho = 0.20, power = 0.80, alpha = 0.05, alternative = "two.sided", verbose = 2, utf = TRUE))
+    expect_equal(crrUTF[c(5, 10:11, 16:22, 27, 36:39)],
+                 c("One-Sample Correlation (Approximate)",
                    "  H₀ (Null)        : ρ - ρ₀ = 0",
                    "  H₁ (Alternative) : ρ - ρ₀ ≠ 0",
                    "  ρ₁ - ρ₀         =  0.200",
@@ -758,11 +779,48 @@ test_that("printing.R works", {
                    "  μ₀ (Null)       =  0",
                    "  σ₀ (Null)       =  1",
                    "  Z⁻¹(α, μ₀, σ₀)  = -1.960 and 1.960",
+                   "  Effect Size (ρ)    = 0.200 (vs. ρ₀ = 0)",
                    "  \033[36mρ₁ : Correlation (for some V1 ~ V2) under alternative\033[0m",
                    "  \033[36mρ₀ : Correlation (for some V1 ~ V2) under null\033[0m",
-                   "  \033[36mμ   : Mean\033[0m",
-                   "  \033[36mσ   : Standard deviation\033[0m"))
-    expect_equal(length(crrPty), 39)
+                   "  \033[36mμ  : Mean\033[0m",
+                   "  \033[36mσ  : Standard deviation\033[0m"))
+    expect_equal(length(crrUTF), 40)
+
+    crrAsc <- capture.output(power.exact.onecor(rho = 0.20, power = 0.80, alpha = 0.05, alternative = "two.sided", verbose = 2))
+    expect_equal(crrAsc[c(5, 10:11, 16:22, 27, 36:37)],
+                 c("One-Sample Correlation (Exact)",
+                   "  H0 (Null)        : rho - null.rho  = 0",
+                   "  H1 (Alternative) : rho - null.rho != 0",
+                   "  rho - null.rho = 0.200",
+                   "  Cohen's q      = 0.203",
+                   "  Mean of Alt.   = NA",
+                   "  SD of Alt.     = NA",
+                   "  Mean of Null   = NA",
+                   "  SD of Null     = NA",
+                   "  Critical Value = NA",
+                   "  Effect Size (rho)    = 0.200 (vs. null.rho = 0)",
+                   "  rho      : Correlation (for some V1 ~ V2) under alt.",
+                   "  null.rho : Correlation (for some V1 ~ V2) under null"))
+    expect_equal(length(crrAsc), 38)
+
+    crrUTF <- capture.output(power.exact.onecor(rho = 0.20, power = 0.80, alpha = 0.05, alternative = "two.sided", verbose = 2, utf = TRUE))
+    expect_equal(crrUTF[c(5, 10:11, 16:22, 27, 36:39)],
+                 c("One-Sample Correlation (Exact)",
+                   "  H₀ (Null)        : ρ - ρ₀ = 0",
+                   "  H₁ (Alternative) : ρ - ρ₀ ≠ 0",
+                   "  ρ₁ - ρ₀         = 0.200",
+                   "  Cohen's q       = 0.203",
+                   "  μ (Alternative) = NA",
+                   "  σ (Alternative) = NA",
+                   "  μ₀ (Null)       = NA",
+                   "  σ₀ (Null)       = NA",
+                   "  Z⁻¹(α, μ₀, σ₀)  = NA",
+                   "  Effect Size (ρ)    = 0.200 (vs. ρ₀ = 0)",
+                   "  \033[36mρ₁ : Correlation (for some V1 ~ V2) under alternative\033[0m",
+                   "  \033[36mρ₀ : Correlation (for some V1 ~ V2) under null\033[0m",
+                   "  \033[36mμ  : Mean\033[0m",
+                   "  \033[36mσ  : Standard deviation\033[0m"))
+    expect_equal(length(crrUTF), 40)
     # ------------------------------------------------------------------------------------------------------------------
 
 
@@ -788,6 +846,8 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (prob)   = 0.600 (vs. null.prob = 0.500)",
+                           "  Number of Trials     = 200",
                            "  Type 1 Error (alpha) = 0.038",
                            "  Type 2 Error (beta)  = 0.140",
                            "  Statistical Power    = 0.860  <<", "",
@@ -797,9 +857,9 @@ test_that("printing.R works", {
                            "  prob      : Probability under alt.",
                            "  null.prob : Probability under null", ""))
 
-    crrPty <- capture.output(power.binom.test(size = 200, prob = 0.6, null.prob = 0.5, alpha = 0.05, alternative = "one.sided",
+    crrUTF <- capture.output(power.binom.test(size = 200, prob = 0.6, null.prob = 0.5, alpha = 0.05, alternative = "one.sided",
                                               plot = FALSE, verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Generic Binomial Test", "",
@@ -818,6 +878,8 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (P)    = 0.600 (vs. P₀ = 0.500)",
+                           "  Number of Trials   = 200",
                            "  Type 1 Error (α)   = 0.038",
                            "  Type 2 Error (β)   = 0.140",
                            "  \033[34mStatistical Power  = 0.860\033[0m  \033[1;35m◄◄\033[0m", "",
@@ -838,8 +900,8 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Hypotheses",
                            "----------------------------------------------------",
-                           "  H0 (Null)        : ncp = ncp.null",
-                           "  H1 (Alternative) : ncp > ncp.null", "",
+                           "  H0 (Null)        : ncp = null.ncp",
+                           "  H1 (Alternative) : ncp > null.ncp", "",
                            "----------------------------------------------------",
                            "Key Parameters",
                            "----------------------------------------------------",
@@ -850,6 +912,8 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (ncp)    = 20 (vs. null.ncp = 0)",
+                           "  Degrees of Freedom   = 100",
                            "  Type 1 Error (alpha) = 0.050",
                            "  Type 2 Error (beta)  = 0.619",
                            "  Statistical Power    = 0.381  <<", "",
@@ -859,8 +923,8 @@ test_that("printing.R works", {
                            "  ncp      : Non-centrality parameter of alt.",
                            "  null.ncp : Non-centrality parameter of null", ""))
 
-    crrPty <- capture.output(power.chisq.test(ncp = 20, df = 100, alpha = 0.05, plot = FALSE, verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    crrUTF <- capture.output(power.chisq.test(ncp = 20, df = 100, alpha = 0.05, plot = FALSE, verbose = 2, utf = TRUE))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Generic Chi-square Test", "",
@@ -879,6 +943,8 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (λ)    = 20 (vs. λ₀ = 0)",
+                           "  Degrees of Freedom = 100",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.619",
                            "  \033[34mStatistical Power  = 0.381\033[0m  \033[1;35m◄◄\033[0m", "",
@@ -912,6 +978,8 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (ncp)    = 2 (vs. null.ncp = 0)",
+                           "  Presumed Sample S.   = 105",
                            "  Type 1 Error (alpha) = 0.050",
                            "  Type 2 Error (beta)  = 0.835",
                            "  Statistical Power    = 0.165  <<", "",
@@ -921,8 +989,8 @@ test_that("printing.R works", {
                            "  ncp      : Non-centrality parameter of alt.",
                            "  null.ncp : Non-centrality parameter of null", ""))
 
-    crrPty <- capture.output(power.f.test(ncp = 2, df1 = 4, df2 = 100, alpha = 0.05, plot = FALSE, verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    crrUTF <- capture.output(power.f.test(ncp = 2, df1 = 4, df2 = 100, alpha = 0.05, plot = FALSE, verbose = 2, utf = TRUE))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Generic F-Test", "",
@@ -942,6 +1010,8 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (λ)    = 2 (vs. λ₀ = 0)",
+                           "  Presumed Sample S. = 105",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.835",
                            "  \033[34mStatistical Power  = 0.165\033[0m  \033[1;35m◄◄\033[0m", "",
@@ -974,6 +1044,8 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (ncp)    = 1.960 (vs. null.ncp = 0)",
+                           "  Degrees of Freedom   = 100",
                            "  Type 1 Error (alpha) = 0.050",
                            "  Type 2 Error (beta)  = 0.507",
                            "  Statistical Power    = 0.493  <<", "",
@@ -983,8 +1055,8 @@ test_that("printing.R works", {
                            "  ncp      : Non-centrality parameter of alt.",
                            "  null.ncp : Non-centrality parameter of null", ""))
 
-    crrPty <- capture.output(power.t.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "two.sided", plot = FALSE, verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    crrUTF <- capture.output(power.t.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "two.sided", plot = FALSE, verbose = 2, utf = TRUE))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Generic t-Test", "",
@@ -1003,6 +1075,8 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (λ)    = 1.960 (vs. λ₀ = 0)",
+                           "  Degrees of Freedom = 100",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.507",
                            "  \033[34mStatistical Power  = 0.493\033[0m  \033[1;35m◄◄\033[0m", "",
@@ -1014,10 +1088,71 @@ test_that("printing.R works", {
 
     crrAsc <- capture.output(power.t.test(ncp = 1.96, df = Inf, alpha = 0.05, alternative = "two.sided", plot = FALSE, verbose = 2))
     expect_false(any(grepl("Degrees of Freedom", crrAsc)))
-    expect_equal(length(crrAsc), 32)
-    expect_equal(crrAsc[c(18, 24:25)], c("  Critical Value         = -1.960 and 1.960",
+    expect_equal(length(crrAsc), 33)
+    expect_equal(crrAsc[c(18, 25:26)], c("  Critical Value         = -1.960 and 1.960",
                                          "  Type 2 Error (beta)  = 0.500",
                                          "  Statistical Power    = 0.500  <<"))
+    crrAsc <- capture.output(power.lp.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "two.sided", plot = FALSE, verbose = 2))
+    expect_equal(crrAsc, c("+--------------------------------------------------+",
+                           "|                POWER CALCULATION                 |",
+                           "+--------------------------------------------------+", "",
+                           "Generic Lambda-Prime Distribution", "",
+                           "----------------------------------------------------",
+                           "Hypotheses",
+                           "----------------------------------------------------",
+                           "  H0 (Null)        : ncp  = null.ncp",
+                           "  H1 (Alternative) : ncp != null.ncp", "",
+                           "----------------------------------------------------",
+                           "Key Parameters",
+                           "----------------------------------------------------",
+                           "  Degrees of Freedom     =  100",
+                           "  Non-centrality of Alt. =  1.960",
+                           "  Non-centrality of Null =  0",
+                           "  Critical Value         = -1.960 and 1.960", "",
+                           "----------------------------------------------------",
+                           "Results",
+                           "----------------------------------------------------",
+                           "  Effect Size (ncp)    = 1.960 (vs. null.ncp = 0)",
+                           "  Degrees of Freedom   = 100",
+                           "  Type 1 Error (alpha) = 0.050",
+                           "  Type 2 Error (beta)  = 0.502",
+                           "  Statistical Power    = 0.498  <<", "",
+                           "----------------------------------------------------",
+                           "Definitions",
+                           "----------------------------------------------------",
+                           "  ncp      : Non-centrality parameter of alt.",
+                           "  null.ncp : Non-centrality parameter of null", ""))
+
+    crrUTF <- capture.output(power.lp.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "two.sided", plot = FALSE, verbose = 2, utf = TRUE))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
+                           "║               \033[34m POWER CALCULATION \033[0m                ║",
+                           "╚══════════════════════════════════════════════════╝", "",
+                           "Generic Lambda-Prime Distribution", "",
+                           "────────────────────────────────────────────────────",
+                           "Hypotheses",
+                           "────────────────────────────────────────────────────",
+                           "  H₀ (Null)        : λ = λ₀",
+                           "  H₁ (Alternative) : λ ≠ λ₀", "",
+                           "────────────────────────────────────────────────────",
+                           "Key Parameters",
+                           "────────────────────────────────────────────────────",
+                           "  df          =  100",
+                           "  λ           =  1.960",
+                           "  λ₀          =  0",
+                           "  T⁻¹(α, λ₀)   = -1.960 and 1.960", "",
+                           "────────────────────────────────────────────────────",
+                           "Results",
+                           "────────────────────────────────────────────────────",
+                           "  Effect Size (λ)    = 1.960 (vs. λ₀ = 0)",
+                           "  Degrees of Freedom = 100",
+                           "  Type 1 Error (α)   = 0.050",
+                           "  Type 2 Error (β)   = 0.502",
+                           "  \033[34mStatistical Power  = 0.498\033[0m  \033[1;35m◄◄\033[0m", "",
+                           "\033[36m────────────────────────────────────────────────────\033[0m",
+                           "\033[36mDefinitions\033[0m",
+                           "\033[36m────────────────────────────────────────────────────\033[0m",
+                           "  \033[36mλ  : Non-centrality parameter under alternative\033[0m",
+                           "  \033[36mλ₀ : Non-centrality parameter under null\033[0m", ""))
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -1051,8 +1186,8 @@ test_that("printing.R works", {
                            "  mean      : Mean of alt.",
                            "  null.mean : Mean of null", ""))
 
-    crrPty <- capture.output(power.z.test(mean = 1.96, alpha = 0.05, alternative = "two.sided", plot = FALSE, verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    crrUTF <- capture.output(power.z.test(mean = 1.96, alpha = 0.05, alternative = "two.sided", plot = FALSE, verbose = 2, utf = TRUE))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Generic z-Test", "",
@@ -1081,7 +1216,74 @@ test_that("printing.R works", {
     # ------------------------------------------------------------------------------------------------------------------
 
 
-    # .print.pwrss.student ---------------------------------------------------------------------------------------------
+    # .print.pwrss.ttest -----------------------------------------------------------------------------------------------
+    crrAsc <- capture.output(power.t.student(power = 0.80, n2 = 400, alternative = "two.sided", design = "independent", verbose = 2))
+    expect_equal(crrAsc, c("+--------------------------------------------------+",
+                           "|      MINIMUM DETECTABLE EFFECT CALCULATION       |",
+                           "+--------------------------------------------------+", "",
+                           "Student's T-Test (Independent Samples)", "",
+                           "----------------------------------------------------",
+                           "Hypotheses",
+                           "----------------------------------------------------",
+                           "  H0 (Null)        : d - null.d  = 0",
+                           "  H1 (Alternative) : d - null.d != 0", "",
+                           "----------------------------------------------------",
+                           "Key Parameters",
+                           "----------------------------------------------------",
+                           "  Margin                 =  0",
+                           "  Degrees of Freedom     =  798",
+                           "  Non-centrality of Alt. =  2.805",
+                           "  Non-centrality of Null =  0",
+                           "  Critical Value         = -1.963 and 1.963", "",
+                           "----------------------------------------------------",
+                           "Results",
+                           "----------------------------------------------------",
+                           "  Effect Size (d)      = 0.198 (vs. null.d = 0)  <<",
+                           "  Sample Size          = 400 and 400",
+                           "  Type 1 Error (alpha) = 0.050",
+                           "  Type 2 Error (beta)  = 0.200",
+                           "  Statistical Power    = 0.800", "",
+                           "----------------------------------------------------",
+                           "Definitions",
+                           "----------------------------------------------------",
+                           "  Margin : Smallest d - null.d difference that matters", ""))
+
+    crrUTF <- capture.output(power.t.student(power = 0.80, n2 = 400, alternative = "two.sided", design = "independent",
+                                             verbose = 2, utf = TRUE))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
+                           "║     \033[34m MINIMUM DETECTABLE EFFECT CALCULATION \033[0m      ║",
+                           "╚══════════════════════════════════════════════════╝", "",
+                           "Student's T-Test (Independent Samples)", "",
+                           "────────────────────────────────────────────────────",
+                           "Hypotheses",
+                           "────────────────────────────────────────────────────",
+                           "  H₀ (Null)        : d - d₀ = 0",
+                           "  H₁ (Alternative) : d - d₀ ≠ 0", "",
+                           "────────────────────────────────────────────────────",
+                           "Key Parameters",
+                           "────────────────────────────────────────────────────",
+                           "  δ           =  0",
+                           "  df          =  798",
+                           "  λ           =  2.805",
+                           "  λ₀          =  0",
+                           "  T⁻¹(α, λ₀)   = -1.963 and 1.963", "",
+                           "────────────────────────────────────────────────────",
+                           "Results",
+                           "────────────────────────────────────────────────────",
+                           "  \033[34mEffect Size (d)    = 0.198 (vs. d₀ = 0)\033[0m  \033[1;35m◄◄\033[0m",
+                           "  Sample Size        = 400 and 400",
+                           "  Type 1 Error (α)   = 0.050",
+                           "  Type 2 Error (β)   = 0.200",
+                           "  Statistical Power  = 0.800", "",
+                           "\033[36m────────────────────────────────────────────────────\033[0m",
+                           "\033[36mDefinitions\033[0m",
+                           "\033[36m────────────────────────────────────────────────────\033[0m",
+                           "  \033[36md  : Cohen's d under alternative\033[0m",
+                           "  \033[36md₀ : Cohen's d under null\033[0m",
+                           "  \033[36mδ  : Margin - ignorable d - d₀ difference\033[0m",
+                           "  \033[36mλ  : Non-centrality parameter under alternative\033[0m",
+                           "  \033[36mλ₀ : Non-centrality parameter under null\033[0m", ""))
+
     crrAsc <- capture.output(power.t.student(d = 0.20, power = 0.80, alternative = "two.sided", design = "independent", verbose = 2))
     expect_equal(crrAsc, c("+--------------------------------------------------+",
                            "|             SAMPLE SIZE CALCULATION              |",
@@ -1095,8 +1297,6 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Key Parameters",
                            "----------------------------------------------------",
-                           "  Cohen's d              =  0.200",
-                           "  Cohen's d Under Null   =  0",
                            "  Margin                 =  0",
                            "  Degrees of Freedom     =  786",
                            "  Non-centrality of Alt. =  2.807",
@@ -1105,6 +1305,7 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (d)      = 0.200 (vs. null.d = 0)",
                            "  Sample Size          = 394 and 394  <<",
                            "  Type 1 Error (alpha) = 0.050",
                            "  Type 2 Error (beta)  = 0.199",
@@ -1114,9 +1315,9 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "  Margin : Smallest d - null.d difference that matters", ""))
 
-    crrPty <- capture.output(power.t.student(d = 0.20, power = 0.80, alternative = "two.sided", design = "independent",
+    crrUTF <- capture.output(power.t.student(d = 0.20, power = 0.80, alternative = "two.sided", design = "independent",
                                              verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Student's T-Test (Independent Samples)", "",
@@ -1128,8 +1329,6 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Key Parameters",
                            "────────────────────────────────────────────────────",
-                           "  d           =  0.200",
-                           "  d₀          =  0",
                            "  δ           =  0",
                            "  df          =  786",
                            "  λ           =  2.807",
@@ -1138,6 +1337,7 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (d)    = 0.200 (vs. d₀ = 0)",
                            "  \033[34mSample Size        = 394 and 394\033[0m  \033[1;35m◄◄\033[0m",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.199",
@@ -1145,10 +1345,10 @@ test_that("printing.R works", {
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "\033[36mDefinitions\033[0m",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
-                           "  \033[36md   : Cohen's d under alternative\033[0m",
+                           "  \033[36md  : Cohen's d under alternative\033[0m",
                            "  \033[36md₀ : Cohen's d under null\033[0m",
-                           "  \033[36mδ   : Margin - ignorable d - d₀ difference\033[0m",
-                           "  \033[36mλ   : Non-centrality parameter under alternative\033[0m",
+                           "  \033[36mδ  : Margin - ignorable d - d₀ difference\033[0m",
+                           "  \033[36mλ  : Non-centrality parameter under alternative\033[0m",
                            "  \033[36mλ₀ : Non-centrality parameter under null\033[0m", ""))
 
     crrAsc <- capture.output(power.t.welch(d = 0.20, n.ratio = 2, var.ratio = 2, n2 = 237, alternative = "two.sided", verbose = 2))
@@ -1164,8 +1364,6 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Key Parameters",
                            "----------------------------------------------------",
-                           "  Cohen's d              =  0.200",
-                           "  Cohen's d Under Null   =  0",
                            "  Margin                 =  0",
                            "  Degrees of Freedom     =  629.777",
                            "  Non-centrality of Alt. =  2.811",
@@ -1174,6 +1372,7 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (d)      = 0.200 (vs. null.d = 0)",
                            "  Sample Size          = 474 and 237",
                            "  Type 1 Error (alpha) = 0.050",
                            "  Type 2 Error (beta)  = 0.199",
@@ -1183,9 +1382,9 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "  Margin : Smallest d - null.d difference that matters", ""))
 
-    crrPty <- capture.output(power.t.welch(d = 0.20, n.ratio = 2, var.ratio = 2, n2 = 237, alternative = "two.sided",
+    crrUTF <- capture.output(power.t.welch(d = 0.20, n.ratio = 2, var.ratio = 2, n2 = 237, alternative = "two.sided",
                                            verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Welch's T-Test (Independent Samples)", "",
@@ -1197,8 +1396,6 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Key Parameters",
                            "────────────────────────────────────────────────────",
-                           "  d           =  0.200",
-                           "  d₀          =  0",
                            "  δ           =  0",
                            "  df          =  629.777",
                            "  λ           =  2.811",
@@ -1207,6 +1404,7 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (d)    = 0.200 (vs. d₀ = 0)",
                            "  Sample Size        = 474 and 237",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.199",
@@ -1214,10 +1412,10 @@ test_that("printing.R works", {
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "\033[36mDefinitions\033[0m",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
-                           "  \033[36md   : Cohen's d under alternative\033[0m",
+                           "  \033[36md  : Cohen's d under alternative\033[0m",
                            "  \033[36md₀ : Cohen's d under null\033[0m",
-                           "  \033[36mδ   : Margin - ignorable d - d₀ difference\033[0m",
-                           "  \033[36mλ   : Non-centrality parameter under alternative\033[0m",
+                           "  \033[36mδ  : Margin - ignorable d - d₀ difference\033[0m",
+                           "  \033[36mλ  : Non-centrality parameter under alternative\033[0m",
                            "  \033[36mλ₀ : Non-centrality parameter under null\033[0m", ""))
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -1239,8 +1437,6 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Key Parameters",
                            "----------------------------------------------------",
-                           "  Cohen's d              =  0.250",
-                           "  Cohen's d Under Null   =  0",
                            "  Margin                 =  0",
                            "  Degrees of Freedom     =  504.113",
                            "  Non-centrality of Alt. =  2.812",
@@ -1249,6 +1445,7 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (d)      = 0.250 (vs. null.d = 0)",
                            "  Sample Size          = 265 and 265  <<",
                            "  Type 1 Error (alpha) = 0.050",
                            "  Type 2 Error (beta)  = 0.199",
@@ -1258,8 +1455,8 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "  Margin : Smallest d - null.d difference that matters", ""))
 
-    crrPty <- capture.output(power.np.wilcoxon(d = 0.25, power = 0.80, verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    crrUTF <- capture.output(power.np.wilcoxon(d = 0.25, power = 0.80, verbose = 2, utf = TRUE))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Wilcoxon Rank-Sum Test (Independent Samples) ",
@@ -1274,8 +1471,6 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Key Parameters",
                            "────────────────────────────────────────────────────",
-                           "  d           =  0.250",
-                           "  d₀          =  0",
                            "  δ           =  0",
                            "  df          =  504.113",
                            "  λ           =  2.812",
@@ -1284,6 +1479,7 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (d)    = 0.250 (vs. d₀ = 0)",
                            "  \033[34mSample Size        = 265 and 265\033[0m  \033[1;35m◄◄\033[0m",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.199",
@@ -1293,7 +1489,7 @@ test_that("printing.R works", {
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "  \033[36md  : Cohen's d under alternative\033[0m",
                            "  \033[36md₀ : Cohen's d under null\033[0m",
-                           "  \033[36mδ   : Margin - ignorable d - d₀ difference\033[0m",
+                           "  \033[36mδ  : Margin - ignorable d - d₀ difference\033[0m",
                            "  \033[36mλ  : Non-centrality parameter under alternative\033[0m",
                            "  \033[36mλ₀ : Non-centrality parameter under null\033[0m", ""))
 
@@ -1313,26 +1509,25 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Key Parameters",
                            "----------------------------------------------------",
-                           "  Cohen's d            =  0.250",
-                           "  Cohen's d Under Null =  0",
-                           "  Margin               =  0",
-                           "  Mean of Alt.         =  2.734",
-                           "  Mean of Null         =  0",
-                           "  Critical Value       = -1.960 and 1.960", "",
+                           "  Margin         =  0",
+                           "  Mean of Alt.   =  2.798",
+                           "  Mean of Null   =  0",
+                           "  Critical Value = -1.960 and 1.960", "",
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (d)      = 0.250 (vs. null.d = 0)",
                            "  Sample Size          = 265 and 265",
                            "  Type 1 Error (alpha) = 0.050",
-                           "  Type 2 Error (beta)  = 0.220",
-                           "  Statistical Power    = 0.780  <<", "",
+                           "  Type 2 Error (beta)  = 0.201",
+                           "  Statistical Power    = 0.799  <<", "",
                            "----------------------------------------------------",
                            "Definitions",
                            "----------------------------------------------------",
                            "  Margin : Smallest d - null.d difference that matters", ""))
 
-    crrPty <- capture.output(power.np.wilcoxon(d = 0.25, n2 = 265, method = "noether", verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    crrUTF <- capture.output(power.np.wilcoxon(d = 0.25, n2 = 265, method = "noether", verbose = 2, utf = TRUE))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Wilcoxon Rank-Sum Test (Independent Samples) ",
@@ -1347,25 +1542,24 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Key Parameters",
                            "────────────────────────────────────────────────────",
-                           "  d           =  0.250",
-                           "  d₀          =  0",
                            "  δ           =  0",
-                           "  μ           =  2.734",
+                           "  μ           =  2.798",
                            "  μ₀          =  0",
                            "  Z⁻¹(α, μ₀)   = -1.960 and 1.960", "",
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (d)    = 0.250 (vs. d₀ = 0)",
                            "  Sample Size        = 265 and 265",
                            "  Type 1 Error (α)   = 0.050",
-                           "  Type 2 Error (β)   = 0.220",
-                           "  \033[34mStatistical Power  = 0.780\033[0m  \033[1;35m◄◄\033[0m", "",
+                           "  Type 2 Error (β)   = 0.201",
+                           "  \033[34mStatistical Power  = 0.799\033[0m  \033[1;35m◄◄\033[0m", "",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "\033[36mDefinitions\033[0m",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "  \033[36md  : Cohen's d under alternative\033[0m",
                            "  \033[36md₀ : Cohen's d under null\033[0m",
-                           "  \033[36mδ   : Margin - ignorable d - d₀ difference\033[0m",
+                           "  \033[36mδ  : Margin - ignorable d - d₀ difference\033[0m",
                            "  \033[36mμ  : Mean of the alternative distribution\033[0m",
                            "  \033[36mμ₀ : Mean of the null distribution\033[0m", ""))
     # ------------------------------------------------------------------------------------------------------------------
@@ -1393,6 +1587,7 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (w)      = 0.030",
                            "  Sample Size          = 13069  <<",
                            "  Type 1 Error (alpha) = 0.050",
                            "  Type 2 Error (beta)  = 0.200",
@@ -1407,8 +1602,8 @@ test_that("printing.R works", {
                            "  P[i,.] : Marginal probability for row i (sum over j)",
                            "  P[.,j] : Marginal probability for column j (sum over i)", ""))
 
-    crrPty <- capture.output(power.chisq.gof(w = mtxW$w, df = mtxW$df, power = 0.80, alpha = 0.05, verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    crrUTF <- capture.output(power.chisq.gof(w = mtxW$w, df = mtxW$df, power = 0.80, alpha = 0.05, verbose = 2, utf = TRUE))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Chi-Square Test for Goodness-of-Fit or Independence", "",
@@ -1427,6 +1622,7 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (w)    = 0.030",
                            "  \033[34mSample Size        = 13069\033[0m  \033[1;35m◄◄\033[0m",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.200",
@@ -1440,7 +1636,7 @@ test_that("printing.R works", {
                            "  \033[36mP[i,.] : Marginal prob. for row i (sum over j)\033[0m",
                            "  \033[36mP[.,j] : Marginal prob. for column j (sum over i)\033[0m", "",
                            "  \033[36mλ      : Non-centrality parameter under alternative\033[0m",
-                           "  \033[36mλ₀      : Non-centrality parameter under null\033[0m", ""))
+                           "  \033[36mλ₀     : Non-centrality parameter under null\033[0m", ""))
     # ------------------------------------------------------------------------------------------------------------------
 
 
@@ -1460,7 +1656,7 @@ test_that("printing.R works", {
                            "Key Parameters",
                            "----------------------------------------------------",
                            "  prob - null.prob = -0.050",
-                           "  Odds Ratio       =  0.818",
+                           "  Odds Ratio (OR)  =  0.818",
                            "  Size             =  500",
                            "  Prob. Under Alt  =  0.450",
                            "  Prob. Under Null =  0.500",
@@ -1468,6 +1664,7 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (prob)   = 0.450 (vs. null.prob = 0.500)",
                            "  Sample Size          = 500",
                            "  Type 1 Error (alpha) = 0.049",
                            "  Type 2 Error (beta)  = 0.279",
@@ -1479,9 +1676,9 @@ test_that("printing.R works", {
                            "  Odds(prob)      : prob / (1 - prob)",
                            "  Odds(null.prob) : null.prob / (1 - null.prob)", ""))
 
-    crrPty <- capture.output(power.exact.oneprop(prob = 0.45, null.prob = 0.50, alpha = 0.05, n = 500, alternative = "one.sided",
+    crrUTF <- capture.output(power.exact.oneprop(prob = 0.45, null.prob = 0.50, alpha = 0.05, n = 500, alternative = "one.sided",
                                                  verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "One Proportion", "",
@@ -1494,15 +1691,16 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Key Parameters",
                            "────────────────────────────────────────────────────",
-                           "  P - P₀               = -0.050",
-                           "  Odds Ratio (OR       =  0.818",
-                           "  Size                 =  500",
-                           "  P                    =  0.450",
-                           "  P₀                   =  0.500",
-                           "  Bin⁻¹(α, P₀)         =  231", "",
+                           "  P - P₀          = -0.050",
+                           "  Odds Ratio (OR) =  0.818",
+                           "  Size            =  500",
+                           "  P               =  0.450",
+                           "  P₀              =  0.500",
+                           "  Bin⁻¹(α, P₀)    =  231", "",
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (P)    = 0.450 (vs. P₀ = 0.500)",
                            "  Sample Size        = 500",
                            "  Type 1 Error (α)   = 0.049",
                            "  Type 2 Error (β)   = 0.279",
@@ -1531,18 +1729,19 @@ test_that("printing.R works", {
                            "Key Parameters",
                            "----------------------------------------------------",
                            "  prob - null.prob = -0.050",
-                           "  Odds Ratio       =  0.818",
-                           "  Size             =  633",
+                           "  Odds Ratio (OR)  =  0.818",
+                           "  Size             =  631",
                            "  Prob. Under Alt  =  0.450",
                            "  Prob. Under Null =  0.500",
-                           "  Critical Value   =  295", "",
+                           "  Critical Value   =  294", "",
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
-                           "  Sample Size          = 633  <<",
+                           "  Effect Size (prob)   = 0.450 (vs. null.prob = 0.500)",
+                           "  Sample Size          = 631  <<",
                            "  Type 1 Error (alpha) = 0.047",
-                           "  Type 2 Error (beta)  = 0.197",
-                           "  Statistical Power    = 0.803", "",
+                           "  Type 2 Error (beta)  = 0.199",
+                           "  Statistical Power    = 0.801", "",
                            "----------------------------------------------------",
                            "Definitions",
                            "----------------------------------------------------",
@@ -1550,9 +1749,9 @@ test_that("printing.R works", {
                            "  Odds(prob)      : prob / (1 - prob)",
                            "  Odds(null.prob) : null.prob / (1 - null.prob)", ""))
 
-    crrPty <- capture.output(power.exact.oneprop(prob = 0.45, null.prob = 0.50, alpha = 0.05, power = 0.80, alternative = "one.sided",
+    crrUTF <- capture.output(power.exact.oneprop(prob = 0.45, null.prob = 0.50, alpha = 0.05, power = 0.80, alternative = "one.sided",
                                                  verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "One Proportion", "",
@@ -1565,19 +1764,20 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Key Parameters",
                            "────────────────────────────────────────────────────",
-                           "  P - P₀               = -0.050",
-                           "  Odds Ratio (OR       =  0.818",
-                           "  Size                 =  633",
-                           "  P                    =  0.450",
-                           "  P₀                   =  0.500",
-                           "  Bin⁻¹(α, P₀)         =  295", "",
+                           "  P - P₀          = -0.050",
+                           "  Odds Ratio (OR) =  0.818",
+                           "  Size            =  631",
+                           "  P               =  0.450",
+                           "  P₀              =  0.500",
+                           "  Bin⁻¹(α, P₀)    =  294", "",
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
-                           "  \033[34mSample Size        = 633\033[0m  \033[1;35m◄◄\033[0m",
+                           "  Effect Size (P)    = 0.450 (vs. P₀ = 0.500)",
+                           "  \033[34mSample Size        = 631\033[0m  \033[1;35m◄◄\033[0m",
                            "  Type 1 Error (α)   = 0.047",
-                           "  Type 2 Error (β)   = 0.197",
-                           "  Statistical Power  = 0.803", "",
+                           "  Type 2 Error (β)   = 0.199",
+                           "  Statistical Power  = 0.801", "",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "\033[36mDefinitions\033[0m",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
@@ -1605,13 +1805,14 @@ test_that("printing.R works", {
                            "Key Parameters",
                            "----------------------------------------------------",
                            "  prob - null.prob = -0.050",
-                           "  Odds Ratio       =  0.818",
+                           "  Odds Ratio (OR)  =  0.818",
                            "  Mean of Alt.     = -2.247",
                            "  Mean of Null     =  0",
                            "  Critical Value   = -1.653", "",
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (prob)   = 0.450 (vs. null.prob = 0.500)",
                            "  Sample Size          = 500",
                            "  Type 1 Error (alpha) = 0.050",
                            "  Type 2 Error (beta)  = 0.276",
@@ -1623,9 +1824,9 @@ test_that("printing.R works", {
                            "  Odds(prob)      : prob / (1 - prob)",
                            "  Odds(null.prob) : null.prob / (1 - null.prob)", ""))
 
-    crrPty <- capture.output(power.z.oneprop(prob = 0.45, null.prob = 0.50, alpha = 0.05, n = 500, alternative = "one.sided",
+    crrUTF <- capture.output(power.z.oneprop(prob = 0.45, null.prob = 0.50, alpha = 0.05, n = 500, alternative = "one.sided",
                                              verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "One Proportion", "",
@@ -1641,14 +1842,15 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Key Parameters",
                            "────────────────────────────────────────────────────",
-                           "  P - P₀               = -0.050",
-                           "  Odds Ratio (OR       =  0.818",
-                           "  μ₁                   = -2.247",
-                           "  μ₀                   =  0",
-                           "  Z⁻¹(α, μ₀)           = -1.653", "",
+                           "  P - P₀          = -0.050",
+                           "  Odds Ratio (OR) =  0.818",
+                           "  μ₁              = -2.247",
+                           "  μ₀              =  0",
+                           "  Z⁻¹(α, μ₀)      = -1.653", "",
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (P)    = 0.450 (vs. P₀ = 0.500)",
                            "  Sample Size        = 500",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.276",
@@ -1680,13 +1882,14 @@ test_that("printing.R works", {
                            "Key Parameters",
                            "----------------------------------------------------",
                            "  prob - null.prob = -0.050",
-                           "  Odds Ratio       =  0.818",
+                           "  Odds Ratio (OR)  =  0.818",
                            "  Mean of Alt.     = -2.496",
                            "  Mean of Null     =  0",
                            "  Critical Value   = -1.653", "",
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (prob)   = 0.450 (vs. null.prob = 0.500)",
                            "  Sample Size          = 617  <<",
                            "  Type 1 Error (alpha) = 0.050",
                            "  Type 2 Error (beta)  = 0.200",
@@ -1698,9 +1901,9 @@ test_that("printing.R works", {
                            "  Odds(prob)      : prob / (1 - prob)",
                            "  Odds(null.prob) : null.prob / (1 - null.prob)", ""))
 
-    crrPty <- capture.output(power.z.oneprop(prob = 0.45, null.prob = 0.50, alpha = 0.05, power = 0.80, alternative = "one.sided",
+    crrUTF <- capture.output(power.z.oneprop(prob = 0.45, null.prob = 0.50, alpha = 0.05, power = 0.80, alternative = "one.sided",
                                              verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "One Proportion", "",
@@ -1716,14 +1919,15 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Key Parameters",
                            "────────────────────────────────────────────────────",
-                           "  P - P₀               = -0.050",
-                           "  Odds Ratio (OR       =  0.818",
-                           "  μ₁                   = -2.496",
-                           "  μ₀                   =  0",
-                           "  Z⁻¹(α, μ₀)           = -1.653", "",
+                           "  P - P₀          = -0.050",
+                           "  Odds Ratio (OR) =  0.818",
+                           "  μ₁              = -2.496",
+                           "  μ₀              =  0",
+                           "  Z⁻¹(α, μ₀)      = -1.653", "",
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (P)    = 0.450 (vs. P₀ = 0.500)",
                            "  \033[34mSample Size        = 617\033[0m  \033[1;35m◄◄\033[0m",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.200",
@@ -1759,6 +1963,7 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (prob1)  = 0.600 (vs. prob2 = 0.400)",
                            "  Sample Size          = 50 and 50",
                            "  Type 1 Error (alpha) = 0.050",
                            "  Type 2 Error (beta)  = 0.538",
@@ -1772,8 +1977,8 @@ test_that("printing.R works", {
                            "  Odds(prob1) : prob1 / (1 - prob1)",
                            "  Odds(prob2) : prob2 / (1 - prob2)", ""))
 
-    crrPty <- capture.output(power.exact.fisher(prob1 = 0.60, prob2 = 0.40, n2 = 50, verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    crrUTF <- capture.output(power.exact.fisher(prob1 = 0.60, prob2 = 0.40, n2 = 50, verbose = 2, utf = TRUE))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Independent Proportions", "",
@@ -1791,6 +1996,7 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (P₁)   = 0.600 (vs. P₂ = 0.400)",
                            "  Sample Size        = 50 and 50",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.538",
@@ -1825,6 +2031,7 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (prob1)  = 0.700 (vs. prob2 = 0.600)",
                            "  Sample Size          = 302 and 302  <<",
                            "  Type 1 Error (alpha) = 0.050",
                            "  Type 2 Error (beta)  = 0.199",
@@ -1838,9 +2045,9 @@ test_that("printing.R works", {
                            "  Odds(prob1) : prob1 / (1 - prob1)",
                            "  Odds(prob2) : prob2 / (1 - prob2)", ""))
 
-    crrPty <- capture.output(power.exact.twoprops(prob1 = 0.70, prob2 = 0.60, alpha = 0.05, power = 0.80,
+    crrUTF <- capture.output(power.exact.twoprops(prob1 = 0.70, prob2 = 0.60, alpha = 0.05, power = 0.80,
                                                   alternative = "one.sided", verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Independent Proportions", "",
@@ -1858,6 +2065,7 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (P₁)   = 0.700 (vs. P₂ = 0.600)",
                            "  \033[34mSample Size        = 302 and 302\033[0m  \033[1;35m◄◄\033[0m",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.199",
@@ -1891,6 +2099,7 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (prob1)  = 0.650 (vs. prob2 = 0.600)",
                            "  Sample Size          = 500 and 500",
                            "  Type 1 Error (alpha) = 0.050",
                            "  Type 2 Error (beta)  = 0.533",
@@ -1904,9 +2113,9 @@ test_that("printing.R works", {
                            "  Odds(prob1) : prob1 / (1 - prob1)",
                            "  Odds(prob2) : prob2 / (1 - prob2)", ""))
 
-    crrPty <- capture.output(power.exact.twoprops(prob1 = 0.65, prob2 = 0.60, alpha = 0.05, n2 = 500,
+    crrUTF <- capture.output(power.exact.twoprops(prob1 = 0.65, prob2 = 0.60, alpha = 0.05, n2 = 500,
                                                   alternative = "one.sided", utf = TRUE, verbose = 2))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Independent Proportions", "",
@@ -1924,6 +2133,7 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (P₁)   = 0.650 (vs. P₂ = 0.600)",
                            "  Sample Size        = 500 and 500",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.533",
@@ -1959,6 +2169,7 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (prob1)  = 0.650 (vs. prob2 = 0.600)",
                            "  Sample Size          = 500 and 500",
                            "  Type 1 Error (alpha) = 0.050",
                            "  Type 2 Error (beta)  = 0.505",
@@ -1972,9 +2183,9 @@ test_that("printing.R works", {
                            "  Odds(prob1) : prob1 / (1 - prob1)",
                            "  Odds(prob2) : prob2 / (1 - prob2)", ""))
 
-    crrPty <- capture.output(power.z.twoprops(prob1 = 0.65, prob2 = 0.60, alpha = 0.05, n2 = 500, alternative = "one.sided",
+    crrUTF <- capture.output(power.z.twoprops(prob1 = 0.65, prob2 = 0.60, alpha = 0.05, n2 = 500, alternative = "one.sided",
                                               utf = TRUE, verbose = 2))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Independent Proportions", "",
@@ -1995,6 +2206,7 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (P₁)   = 0.650 (vs. P₂ = 0.600)",
                            "  Sample Size        = 500 and 500",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.505",
@@ -2032,6 +2244,7 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (prob1)  = 0.650 (vs. prob2 = 0.600)",
                            "  Sample Size          = 1159 and 1159  <<",
                            "  Type 1 Error (alpha) = 0.050",
                            "  Type 2 Error (beta)  = 0.200",
@@ -2045,9 +2258,9 @@ test_that("printing.R works", {
                            "  Odds(prob1) : prob1 / (1 - prob1)",
                            "  Odds(prob2) : prob2 / (1 - prob2)", ""))
 
-    crrPty <- capture.output(power.z.twoprops(prob1 = 0.65, prob2 = 0.60, alpha = 0.05, power = 0.80, alternative = "one.sided",
+    crrUTF <- capture.output(power.z.twoprops(prob1 = 0.65, prob2 = 0.60, alpha = 0.05, power = 0.80, alternative = "one.sided",
                                               verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Independent Proportions", "",
@@ -2068,6 +2281,7 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (P₁)   = 0.650 (vs. P₂ = 0.600)",
                            "  \033[34mSample Size        = 1159 and 1159\033[0m  \033[1;35m◄◄\033[0m",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.200",
@@ -2110,6 +2324,7 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (prob10) = 0.200 (vs. prob01 = 0.100)",
                            "  Paired Sample Size   = 100",
                            "  Type 1 Error (alpha) = 0.043",
                            "  Type 2 Error (beta)  = 0.627",
@@ -2124,9 +2339,9 @@ test_that("printing.R works", {
                            "                among DP, prob10 / (prob10 + prob01)",
                            "  DP          : Discordant pairs", ""))
 
-    crrPty <- capture.output(power.exact.mcnemar(prob10 = 0.20, prob01 = 0.10, n.paired = 100, alpha = 0.05, alternative = "two.sided",
+    crrUTF <- capture.output(power.exact.mcnemar(prob10 = 0.20, prob01 = 0.10, n.paired = 100, alpha = 0.05, alternative = "two.sided",
                              method = "exact", verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Paired Proportions", "",
@@ -2148,6 +2363,7 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (P₁₀)  = 0.200 (vs. P₀₁ = 0.100)",
                            "  Paired Sample Size = 100",
                            "  Type 1 Error (α)   = 0.043",
                            "  Type 2 Error (β)   = 0.627",
@@ -2183,6 +2399,7 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (prob10) = 0.200 (vs. prob01 = 0.100)",
                            "  Paired Sample Size   = 249  <<",
                            "  Type 1 Error (alpha) = 0.037",
                            "  Type 2 Error (beta)  = 0.199",
@@ -2197,9 +2414,9 @@ test_that("printing.R works", {
                            "                among DP, prob10 / (prob10 + prob01)",
                            "  DP          : Discordant pairs", ""))
 
-    crrPty <- capture.output(power.exact.mcnemar(prob10 = 0.20, prob01 = 0.10, power = 0.80, alpha = 0.05, alternative = "two.sided",
+    crrUTF <- capture.output(power.exact.mcnemar(prob10 = 0.20, prob01 = 0.10, power = 0.80, alpha = 0.05, alternative = "two.sided",
                              method = "exact", verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Paired Proportions", "",
@@ -2221,6 +2438,7 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (P₁₀)  = 0.200 (vs. P₀₁ = 0.100)",
                            "  \033[34mPaired Sample Size = 249\033[0m  \033[1;35m◄◄\033[0m",
                            "  Type 1 Error (α)   = 0.037",
                            "  Type 2 Error (β)   = 0.199",
@@ -2255,6 +2473,7 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
+                           "  Effect Size (prob10) = 0.200 (vs. prob01 = 0.100)",
                            "  Paired Sample Size   = 300",
                            "  Type 1 Error (alpha) = 0.050",
                            "  Type 2 Error (beta)  = 0.111",
@@ -2269,9 +2488,9 @@ test_that("printing.R works", {
                            "                among DP, prob10 / (prob10 + prob01)",
                            "  DP          : Discordant pairs", ""))
 
-    crrPty <- capture.output(power.exact.mcnemar(prob10 = 0.20, prob01 = 0.10, n = 300, alpha = 0.05, alternative = "two.sided",
+    crrUTF <- capture.output(power.exact.mcnemar(prob10 = 0.20, prob01 = 0.10, n = 300, alpha = 0.05, alternative = "two.sided",
                              method = "approximate", verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Paired Proportions", "",
@@ -2292,10 +2511,84 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (P₁₀)  = 0.200 (vs. P₀₁ = 0.100)",
                            "  Paired Sample Size = 300",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.111",
                            "  \033[34mStatistical Power  = 0.889\033[0m  \033[1;35m◄◄\033[0m", "",
+                           "\033[36m────────────────────────────────────────────────────\033[0m",
+                           "\033[36mDefinitions\033[0m",
+                           "\033[36m────────────────────────────────────────────────────\033[0m",
+                           "  \033[36mOR : P₁₀ / P₀₁\033[0m",
+                           "  \033[36mμ₁  : Mean of the alternative distribution\033[0m",
+                           "  \033[36mμ₀  : Mean of the null distribution\033[0m", ""))
+
+    crrAsc <- capture.output(power.z.twoprops(prob2 = 0.45, n2 = 100, power = 0.446, paired = TRUE, rho.paired = 0.4141414,
+                                              verbose = 2, utf = FALSE))
+    expect_equal(crrAsc, c("+--------------------------------------------------+",
+                           "|      MINIMUM DETECTABLE EFFECT CALCULATION       |",
+                           "+--------------------------------------------------+", "",
+                           "Paired Proportions", "",
+                           "  Method : Normal Approximation", "",
+                           "----------------------------------------------------",
+                           "Hypotheses",
+                           "----------------------------------------------------",
+                           "  H0 (Null)        : prob10 - prob01  = 0",
+                           "  H1 (Alternative) : prob10 - prob01 != 0", "",
+                           "----------------------------------------------------",
+                           "Key Parameters",
+                           "----------------------------------------------------",
+                           "  Odds Ratio      =  2.001",
+                           "  prob10 - prob01 =  0.100",
+                           "  Mean of Alt.    =  1.824",
+                           "  Mean of Null    =  0",
+                           "  Critical Value  = -1.960 and 1.960", "",
+                           "----------------------------------------------------",
+                           "Results",
+                           "----------------------------------------------------",
+                           "  Effect Size (prob10) = 0.200 (vs. prob01 = 0.100)  <<",
+                           "  Paired Sample Size   = 100",
+                           "  Type 1 Error (alpha) = 0.050",
+                           "  Type 2 Error (beta)  = 0.554",
+                           "  Statistical Power    = 0.446", "",
+                           "----------------------------------------------------",
+                           "Definitions",
+                           "----------------------------------------------------",
+                           "  Odds Ratio  : prob10 / prob01",
+                           "  prob10      : Joint prob. of observing {1,0}",
+                           "  prob01      : Joint prob. of observing {0,1}",
+                           "  prob10 | DP : Conditional prob. of observing {1,0}",
+                           "                among DP, prob10 / (prob10 + prob01)",
+                           "  DP          : Discordant pairs", ""))
+
+    crrUTF <- capture.output(power.z.twoprops(prob2 = 0.45, n2 = 100, power = 0.446, paired = TRUE, rho.paired = 0.4141414,
+                                              verbose = 2, utf = TRUE))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
+                           "║     \033[34m MINIMUM DETECTABLE EFFECT CALCULATION \033[0m      ║",
+                           "╚══════════════════════════════════════════════════╝", "",
+                           "Paired Proportions", "",
+                           "  Method : Normal Approximation", "",
+                           "────────────────────────────────────────────────────",
+                           "Hypotheses",
+                           "────────────────────────────────────────────────────",
+                           "  H₀ (Null)        : P₁₀ - P₀₁ = 0",
+                           "  H₁ (Alternative) : P₁₀ - P₀₁ ≠ 0", "",
+                           "────────────────────────────────────────────────────",
+                           "Key Parameters",
+                           "────────────────────────────────────────────────────",
+                           "  Odds Ratio (OR) =  2.001",
+                           "  P₁₀ - P₀₁       =  0.100",
+                           "  μ₁              =  1.824",
+                           "  μ₀              =  0",
+                           "  Z⁻¹(α, μ₀)       = -1.960 and 1.960", "",
+                           "────────────────────────────────────────────────────",
+                           "Results",
+                           "────────────────────────────────────────────────────",
+                           "  \033[34mEffect Size (P₁₀)  = 0.200 (vs. P₀₁ = 0.100)\033[0m  \033[1;35m◄◄\033[0m",
+                           "  Paired Sample Size = 100",
+                           "  Type 1 Error (α)   = 0.050",
+                           "  Type 2 Error (β)   = 0.554",
+                           "  Statistical Power  = 0.446", "",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "\033[36mDefinitions\033[0m",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
@@ -2329,17 +2622,18 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
-                           "  Sample Size          = 66  <<",
-                           "  Type 1 Error (alpha) = 0.050",
-                           "  Type 2 Error (beta)  = 0.199",
-                           "  Statistical Power    = 0.801", "",
+                           "  Effect Size (R-squared) = 0.150",
+                           "  Sample Size             = 66  <<",
+                           "  Type 1 Error (alpha)    = 0.050",
+                           "  Type 2 Error (beta)     = 0.199",
+                           "  Statistical Power       = 0.801", "",
                            "----------------------------------------------------",
                            "Definitions",
                            "----------------------------------------------------",
                            "  Margin : Smallest R-squared that matters", ""))
 
-    crrPty <- capture.output(power.f.regression(r.squared = 0.15, k.total = 3, power = 0.80, verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    crrUTF <- capture.output(power.f.regression(r.squared = 0.15, k.total = 3, power = 0.80, verbose = 2, utf = TRUE))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Linear Regression (F-Test)", "",
@@ -2361,6 +2655,7 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (R²)   = 0.150",
                            "  \033[34mSample Size        = 66\033[0m  \033[1;35m◄◄\033[0m",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.199",
@@ -2368,8 +2663,8 @@ test_that("printing.R works", {
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "\033[36mDefinitions\033[0m",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
-                           "  \033[36mδ   : Margin - ignorable R² or ΔR²\033[0m",
-                           "  \033[36mλ   : Non-centrality parameter under alternative\033[0m",
+                           "  \033[36mδ  : Margin - ignorable R² or ΔR²\033[0m",
+                           "  \033[36mλ  : Non-centrality parameter under alternative\033[0m",
                            "  \033[36mλ₀ : Non-centrality parameter under null\033[0m", ""))
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -2399,10 +2694,11 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
-                           "  Sample Size          = 140  <<",
-                           "  Type 1 Error (alpha) = 0.050",
-                           "  Type 2 Error (beta)  = 0.198",
-                           "  Statistical Power    = 0.802", "",
+                           "  Effect Size (R-squared) = 0.300",
+                           "  Sample Size             = 140  <<",
+                           "  Type 1 Error (alpha)    = 0.050",
+                           "  Type 2 Error (beta)     = 0.198",
+                           "  Statistical Power       = 0.802", "",
                            "----------------------------------------------------",
                            "Definitions",
                            "----------------------------------------------------",
@@ -2415,8 +2711,8 @@ test_that("printing.R works", {
                            "  SD(X)                : Standard deviation of the predictor",
                            "  SD(Y)                : Standard deviation of the outcome", ""))
 
-    crrPty <- capture.output(power.t.regression(beta = 0.20, k.total = 5, r.squared = 0.30, power = 0.80, verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    crrUTF <- capture.output(power.t.regression(beta = 0.20, k.total = 5, r.squared = 0.30, power = 0.80, verbose = 2, utf = TRUE))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Linear Regression Coefficient (T-Test)", "",
@@ -2438,6 +2734,7 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (R²)   = 0.300",
                            "  \033[34mSample Size        = 140\033[0m  \033[1;35m◄◄\033[0m",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.198",
@@ -2445,16 +2742,16 @@ test_that("printing.R works", {
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "\033[36mDefinitions\033[0m",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
-                           "  \033[36mβ      : Regression coefficient under alternative\033[0m",
+                           "  \033[36mβ       : Regression coefficient under alternative\033[0m",
                            "  \033[36mβ₀      : Regression coefficient under null\033[0m",
-                           "  \033[36mδ      : Margin(s) - ignorable β - β₀ difference\033[0m", "",
-                           "  \033[36mStd. β = β * [σ(X) / σ(Y)]\033[0m",
+                           "  \033[36mδ       : Margin(s) - ignorable β - β₀ difference\033[0m", "",
+                           "  \033[36mStd. β  = β  * [σ(X) / σ(Y)]\033[0m",
                            "  \033[36mStd. β₀ = β₀ * [σ(X) / σ(Y)]\033[0m",
-                           "  \033[36mStd. δ = δ * [σ(X) / σ(Y)]\033[0m", "",
-                           "  \033[36mσ(X)   : Standard devition of the predictor\033[0m",
-                           "  \033[36mσ(Y)   : Standard devition of the outcome\033[0m", "",
-                           "  \033[36mλ      : Non-centrality parameter under alternative\033[0m",
-                           "  \033[36mλ₀      : Non-centrality parameter under null\033[0m", ""))
+                           "  \033[36mStd. δ  = δ  * [σ(X) / σ(Y)]\033[0m", "",
+                           "  \033[36mσ(X)    : Standard devition of the predictor\033[0m",
+                           "  \033[36mσ(Y)    : Standard devition of the outcome\033[0m", "",
+                           "  \033[36mλ       : Non-centrality parameter under alternative\033[0m",
+                           "  \033[36mλ₀      : Non-centrality parameter under null\033[0m", ""))
 
     crrAsc <- capture.output(power.t.regression(beta = 0, margin = c(-0.05, 0.05), alternative = "two.one.sided",
                                                 sd.predictor = 0.5, k.total = 5, r.squared = 0.30, n = 9593,
@@ -2483,10 +2780,11 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
-                           "  Sample Size          = 9593",
-                           "  Type 1 Error (alpha) = 0.050",
-                           "  Type 2 Error (beta)  = 0.200",
-                           "  Statistical Power    = 0.800  <<", "",
+                           "  Effect Size (R-squared) = 0.300",
+                           "  Sample Size             = 9593",
+                           "  Type 1 Error (alpha)    = 0.050",
+                           "  Type 2 Error (beta)     = 0.200",
+                           "  Statistical Power       = 0.800  <<", "",
                            "----------------------------------------------------",
                            "Definitions",
                            "----------------------------------------------------",
@@ -2499,10 +2797,10 @@ test_that("printing.R works", {
                            "  SD(X)                : Standard deviation of the predictor",
                            "  SD(Y)                : Standard deviation of the outcome", ""))
 
-    crrPty <- capture.output(power.t.regression(beta = 0, margin = c(-0.05, 0.05), alternative = "two.one.sided",
+    crrUTF <- capture.output(power.t.regression(beta = 0, margin = c(-0.05, 0.05), alternative = "two.one.sided",
                                                 sd.predictor = 0.5, k.total = 5, r.squared = 0.30, n = 9593,
                                                 verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Linear Regression Coefficient (T-Test)", "",
@@ -2524,6 +2822,7 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
+                           "  Effect Size (R²)   = 0.300",
                            "  Sample Size        = 9593",
                            "  Type 1 Error (α)   = 0.050",
                            "  Type 2 Error (β)   = 0.200",
@@ -2531,16 +2830,16 @@ test_that("printing.R works", {
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "\033[36mDefinitions\033[0m",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
-                           "  \033[36mβ      : Regression coefficient under alternative\033[0m",
+                           "  \033[36mβ       : Regression coefficient under alternative\033[0m",
                            "  \033[36mβ₀      : Regression coefficient under null\033[0m",
-                           "  \033[36mδ      : Margin(s) - ignorable β - β₀ difference\033[0m", "",
-                           "  \033[36mStd. β = β * [σ(X) / σ(Y)]\033[0m",
+                           "  \033[36mδ       : Margin(s) - ignorable β - β₀ difference\033[0m", "",
+                           "  \033[36mStd. β  = β  * [σ(X) / σ(Y)]\033[0m",
                            "  \033[36mStd. β₀ = β₀ * [σ(X) / σ(Y)]\033[0m",
-                           "  \033[36mStd. δ = δ * [σ(X) / σ(Y)]\033[0m", "",
-                           "  \033[36mσ(X)   : Standard devition of the predictor\033[0m",
-                           "  \033[36mσ(Y)   : Standard devition of the outcome\033[0m", "",
-                           "  \033[36mλ      : Non-centrality parameter under alternative\033[0m",
-                           "  \033[36mλ₀      : Non-centrality parameter under null\033[0m", ""))
+                           "  \033[36mStd. δ  = δ  * [σ(X) / σ(Y)]\033[0m", "",
+                           "  \033[36mσ(X)    : Standard devition of the predictor\033[0m",
+                           "  \033[36mσ(Y)    : Standard devition of the outcome\033[0m", "",
+                           "  \033[36mλ       : Non-centrality parameter under alternative\033[0m",
+                           "  \033[36mλ₀      : Non-centrality parameter under null\033[0m", ""))
 
     crrAsc <- capture.output(power.t.regression(beta = 0, margin = c(-0.05, 0.05), alternative = "two.one.sided",
                                                 sd.predictor = 0.5, k.total = 5, r.squared = 0.30, power = 0.80))
@@ -2549,9 +2848,9 @@ test_that("printing.R works", {
                                   "  H1 (Alternative) : beta - null.beta  > min(margin) and",
                                   "                     beta - null.beta  < max(margin)"))
 
-    crrPty <- capture.output(power.t.regression(beta = 0, margin = c(-0.05, 0.05), alternative = "two.one.sided",
+    crrUTF <- capture.output(power.t.regression(beta = 0, margin = c(-0.05, 0.05), alternative = "two.one.sided",
                                                 sd.predictor = 0.5, k.total = 5, r.squared = 0.30, power = 0.80, utf = TRUE))
-    expect_equal(crrPty[10:11], c("  H₀ (Null)        : β - β₀ ≤ min(δ) ∪ β - β₀ ≥ max(δ)",
+    expect_equal(crrUTF[10:11], c("  H₀ (Null)        : β - β₀ ≤ min(δ) ∪ β - β₀ ≥ max(δ)",
                                   "  H₁ (Alternative) : min(δ) < β - β₀ < max(δ)"))
 
     crrAsc <- capture.output(power.t.regression(beta = 0, margin = c(0.05, 0.10), alternative = "two.one.sided",
@@ -2561,9 +2860,9 @@ test_that("printing.R works", {
                                   "  H1 (Alternative) : beta - null.beta  < min(margin) or",
                                   "                     beta - null.beta  > max(margin)"))
 
-    crrPty <- capture.output(power.t.regression(beta = 0, margin = c(0.05, 0.10), alternative = "two.one.sided",
+    crrUTF <- capture.output(power.t.regression(beta = 0, margin = c(0.05, 0.10), alternative = "two.one.sided",
                                                 sd.predictor = 0.5, k.total = 5, r.squared = 0.30, power = 0.80, utf = TRUE))
-    expect_equal(crrPty[10:11], c("  H₀ (Null)        : min(δ) ≤ β - β₀ ≤ max(δ)",
+    expect_equal(crrUTF[10:11], c("  H₀ (Null)        : min(δ) ≤ β - β₀ ≤ max(δ)",
                                   "  H₁ (Alternative) : β - β₀ < min(δ) ∪ β - β₀ > max(δ)"))
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -2596,10 +2895,11 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
-                           "  Sample Size          = 511  <<",
-                           "  Type 1 Error (alpha) = 0.050",
-                           "  Type 2 Error (beta)  = 0.199",
-                           "  Statistical Power    = 0.801", "",
+                           "  Effect Size (Odds Ratio) = 1.417",
+                           "  Sample Size              = 511  <<",
+                           "  Type 1 Error (alpha)     = 0.050",
+                           "  Type 2 Error (beta)      = 0.199",
+                           "  Statistical Power        = 0.801", "",
                            "----------------------------------------------------",
                            "Definitions",
                            "----------------------------------------------------",
@@ -2609,9 +2909,9 @@ test_that("printing.R works", {
                            "  beta1      = log(Odds Ratio)",
                            "  beta0      = log[base.prob/(1-base.prob)]", ""))
 
-    crrPty <- capture.output(power.z.logistic(base.prob = 0.15, prob = 0.20, alpha = 0.05, power = 0.80, distribution = "normal",
+    crrUTF <- capture.output(power.z.logistic(base.prob = 0.15, prob = 0.20, alpha = 0.05, power = 0.80, distribution = "normal",
                                               verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Logistic Regression Coefficient (Wald's Z-Test)", "",
@@ -2636,10 +2936,11 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
-                           "  \033[34mSample Size        = 511\033[0m  \033[1;35m◄◄\033[0m",
-                           "  Type 1 Error (α)   = 0.050",
-                           "  Type 2 Error (β)   = 0.199",
-                           "  Statistical Power  = 0.801", "",
+                           "  Effect Size (Odds Ratio) = 1.417",
+                           "  \033[34mSample Size              = 511\033[0m  \033[1;35m◄◄\033[0m",
+                           "  Type 1 Error (α)         = 0.050",
+                           "  Type 2 Error (β)         = 0.199",
+                           "  Statistical Power        = 0.801", "",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "\033[36mDefinitions\033[0m",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
@@ -2694,8 +2995,8 @@ test_that("printing.R works", {
                            "  SD(mediator)   : Standard deviation of the mediator",
                            "  SD(outcome)    : Standard deviation of the outcome", ""))
 
-    crrPty <- capture.output(power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, power = 0.80, verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    crrUTF <- capture.output(power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, power = 0.80, verbose = 2, utf = TRUE))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Indirect Effect in a Mediation Model", "",
@@ -2734,7 +3035,7 @@ test_that("printing.R works", {
                            "  \033[36mσ(mediator)  : Standard devition of the mediator\033[0m",
                            "  \033[36mσ(outcome)   : Standard devition of the outcome\033[0m", "",
                            "  \033[36mμ            : Mean of the alternative distribution\033[0m",
-                           "  \033[36mμ₀            : Mean of the null distribution\033[0m", ""))
+                           "  \033[36mμ₀           : Mean of the null distribution\033[0m", ""))
 
     set.seed(1)
     crrAsc <- capture.output(power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, n = 200, method = "monte.carlo", verbose = 2))
@@ -2774,9 +3075,9 @@ test_that("printing.R works", {
                            "  SD(mediator)   : Standard deviation of the mediator",
                            "  SD(outcome)    : Standard deviation of the outcome", ""))
 
-    crrPty <- capture.output(power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, n = 200, method = "joint",
+    crrUTF <- capture.output(power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, n = 200, method = "joint",
                              verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Indirect Effect in a Mediation Model", "",
@@ -2841,19 +3142,20 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
-                           "  Sample Size          = 474  <<",
-                           "  Type 1 Error (alpha) = 0.050",
-                           "  Type 2 Error (beta)  = 0.200",
-                           "  Statistical Power    = 0.800", "",
+                           "  Effect Size (Rate Ratio) = 0.905",
+                           "  Sample Size              = 474  <<",
+                           "  Type 1 Error (alpha)     = 0.050",
+                           "  Type 2 Error (beta)      = 0.200",
+                           "  Statistical Power        = 0.800", "",
                            "----------------------------------------------------",
                            "Definitions",
                            "----------------------------------------------------",
                            "  Base Rate       = exp(beta0)",
                            "  Rate Ratio (RR) = exp(beta1)", ""))
 
-    crrPty <- capture.output(power.z.poisson(beta0 = 0.50, beta1 = -0.10, alpha = 0.05, power = 0.80, dist = "normal",
+    crrUTF <- capture.output(power.z.poisson(beta0 = 0.50, beta1 = -0.10, alpha = 0.05, power = 0.80, dist = "normal",
                                              verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Poisson Regression Coefficient (Wald's Z-Test)", "",
@@ -2878,10 +3180,11 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
-                           "  \033[34mSample Size        = 474\033[0m  \033[1;35m◄◄\033[0m",
-                           "  Type 1 Error (α)   = 0.050",
-                           "  Type 2 Error (β)   = 0.200",
-                           "  Statistical Power  = 0.800", "",
+                           "  Effect Size (Rate Ratio) = 0.905",
+                           "  \033[34mSample Size              = 474\033[0m  \033[1;35m◄◄\033[0m",
+                           "  Type 1 Error (α)         = 0.050",
+                           "  Type 2 Error (β)         = 0.200",
+                           "  Statistical Power        = 0.800", "",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "\033[36mDefinitions\033[0m",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
@@ -2916,19 +3219,20 @@ test_that("printing.R works", {
                            "----------------------------------------------------",
                            "Results",
                            "----------------------------------------------------",
-                           "  Sample Size          = 474",
-                           "  Type 1 Error (alpha) = 0.050",
-                           "  Type 2 Error (beta)  = 0.200",
-                           "  Statistical Power    = 0.800  <<", "",
+                           "  Effect Size (Rate Ratio) = 0.905",
+                           "  Sample Size              = 474",
+                           "  Type 1 Error (alpha)     = 0.050",
+                           "  Type 2 Error (beta)      = 0.200",
+                           "  Statistical Power        = 0.800  <<", "",
                            "----------------------------------------------------",
                            "Definitions",
                            "----------------------------------------------------",
                            "  Base Rate       = exp(beta0)",
                            "  Rate Ratio (RR) = exp(beta1)", ""))
 
-    crrPty <- capture.output(power.z.poisson(beta0 = 0.50, beta1 = -0.10, alpha = 0.05, n = 474, dist = "normal",
+    crrUTF <- capture.output(power.z.poisson(beta0 = 0.50, beta1 = -0.10, alpha = 0.05, n = 474, dist = "normal",
                                              verbose = 2, utf = TRUE))
-    expect_equal(crrPty, c("╔══════════════════════════════════════════════════╗",
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
                            "║               \033[34m POWER CALCULATION \033[0m                ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Poisson Regression Coefficient (Wald's Z-Test)", "",
@@ -2953,10 +3257,11 @@ test_that("printing.R works", {
                            "────────────────────────────────────────────────────",
                            "Results",
                            "────────────────────────────────────────────────────",
-                           "  Sample Size        = 474",
-                           "  Type 1 Error (α)   = 0.050",
-                           "  Type 2 Error (β)   = 0.200",
-                           "  \033[34mStatistical Power  = 0.800\033[0m  \033[1;35m◄◄\033[0m", "",
+                           "  Effect Size (Rate Ratio) = 0.905",
+                           "  Sample Size              = 474",
+                           "  Type 1 Error (α)         = 0.050",
+                           "  Type 2 Error (β)         = 0.200",
+                           "  \033[34mStatistical Power        = 0.800\033[0m  \033[1;35m◄◄\033[0m", "",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
                            "\033[36mDefinitions\033[0m",
                            "\033[36m────────────────────────────────────────────────────\033[0m",
@@ -2965,4 +3270,7 @@ test_that("printing.R works", {
                            "  \033[36mμ               : Mean\033[0m",
                            "  \033[36mσ               : Standard deviation\033[0m", ""))
     # ------------------------------------------------------------------------------------------------------------------
+
+    expect_error(capture.output(.print.pwrss.ttest(list(requested = "n", alternative = "two.sided", d = 1, d = 1))),
+                 "`print.obj` contains more than one effect size.")
 })

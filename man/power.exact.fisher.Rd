@@ -6,15 +6,16 @@
 \title{Power Analysis for Fisher's Exact Test (Independent Proportions)}
 \usage{
 power.exact.fisher(
-  prob1,
-  prob2,
+  prob1 = NULL,
+  prob2 = NULL,
+  req.sign = "+",
   n.ratio = 1,
   n2 = NULL,
   power = NULL,
   alpha = 0.05,
   alternative = c("two.sided", "one.sided"),
   method = c("exact", "approximate"),
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -23,6 +24,9 @@ power.exact.fisher(
 \item{prob1}{probability of success in the first group.}
 
 \item{prob2}{probability of success in the second group.}
+
+\item{req.sign}{whether estimated prob is smaller or larger than the other
+(when minimum detectable prob is of interest).}
 
 \item{n.ratio}{n1 / n2 ratio.}
 
@@ -43,7 +47,7 @@ incorrectly rejecting a true null hypothesis, denoted as
 specifies Fisher's exact test, while "approximate" refers
 to the Z-Test based on the normal approximation.}
 
-\item{ceiling}{logical; if \code{TRUE} rounds up sample size in each
+\item{ceil.n}{logical; if \code{TRUE} rounds up sample size in each
 group.}
 
 \item{verbose}{\code{1} by default (returns test, hypotheses, and

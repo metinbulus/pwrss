@@ -17,7 +17,7 @@ power.t.contrast(
   power = NULL,
   alpha = 0.05,
   tukey.kramer = FALSE,
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -55,7 +55,7 @@ as \eqn{\alpha}.}
 \item{tukey.kramer}{logical; \code{FALSE} by default. If \code{TRUE}
 adjustments will be made to control Type 1 error.}
 
-\item{ceiling}{logical; \code{TRUE} by default. If \code{FALSE}
+\item{ceil.n}{logical; \code{TRUE} by default. If \code{FALSE}
 sample sizes in each cell are NOT rounded up.}
 
 \item{verbose}{\code{1} by default (returns test, hypotheses, and

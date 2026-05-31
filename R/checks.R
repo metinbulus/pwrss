@@ -3,13 +3,17 @@ check.proportion <- function(...) {
 
   args <- list(...)
   arg.names <- vapply(substitute(list(...))[-1], function(fn) paste0("`", deparse(fn, nlines = 1), "`"), character(1))
+  fnc.name <- as.character(match.call()[[1]])
+  val.rng <- c(ifelse(fnc.name == "check.power", 0.01, 0), ifelse(fnc.name == "check.power", 0.99, 1))
 
-  check <- vapply(args, function(x) length(x) == 1 && is.numeric(x) && x >= 0 && x <= 1, logical(1))
+  check <- vapply(args, function(x) length(x) == 1 && is.numeric(x) && x >= val.rng[1] && x <= val.rng[2], logical(1))
 
   if (any(!check))
-    stop(format_errmsg(arg.names[!check], as.character(match.call()[[1]])), call. = FALSE)
+    stop(format_errmsg(arg.names[!check], fnc.name), call. = FALSE)
 
-} # check.probs()
+} # check.proportion()
+
+check.power <- check.proportion
 
 check.correlation <- function(...) {
 
@@ -41,7 +45,7 @@ check.sample.size <- function(...) {
   args <- list(...)
   arg.names <- vapply(substitute(list(...))[-1], function(fn) paste0("`", deparse(fn, nlines = 1), "`"), character(1))
 
-  check <- vapply(args, function(x) length(x) == 1 && isInt(x) && is.finite(x) && x > 1, logical(1))
+  check <- vapply(args, function(x) length(x) == 1 && isInt(x) && is.finite(x) && x >= 2, logical(1))
 
   if (any(!check))
     stop(format_errmsg(arg.names[!check], as.character(match.call()[[1]])), call. = FALSE)
@@ -49,6 +53,18 @@ check.sample.size <- function(...) {
 } # check.sample.size
 
 check.factor.level <- check.sample.size # check.factor.level
+
+check.size <- function(...) {
+
+  args <- list(...)
+  arg.names <- vapply(substitute(list(...))[-1], function(fn) paste0("`", deparse(fn, nlines = 1), "`"), character(1))
+
+  check <- vapply(args, function(x) length(x) == 1 && isInt(x) && is.finite(x) && x >= 0, logical(1))
+
+  if (any(!check))
+    stop(format_errmsg(arg.names[!check], as.character(match.call()[[1]])), call. = FALSE)
+
+} # check.size
 
 check.nonnegative <- function(...) {
 
@@ -186,32 +202,39 @@ check.correlation.matrix <- function(x) {
 
 } # check.correlation.matrix()
 
-check.n_power <- function(n = NULL, power = NULL) {
+check.na <- function(...) {
 
-  n.name <- deparse(substitute(n), nlines = 1)
+  args <- list(...)
 
-  if (is.null(n) && is.null(power))
-    stop(sprintf("`%s` and `power` cannot be NULL at the same time.", n.name), call. = FALSE)
+  vapply(args, function(a) !is.null(a) && all(is.na(a)), logical(1))
 
-  if (!is.null(n) && !is.null(power))
-    stop(sprintf("Exactly / only one of the parameters `%s` or `power` should be NULL.", n.name), call. = FALSE)
-
-  invisible(ifelse(is.null(power), "power", "n")) # return what is requested / to be calculated
-
-} # check.power_n
+} # check.na
 
 check.null <- function(...) {
 
   args <- list(...)
 
   vapply(args, is.null, logical(1))
+
 } # check.null
 
 check.not_null <- function(...) !check.null(...) # check.not_null
 
+check.pos_sign <- function(req.sign, has.zero = FALSE) {
+  if (req.sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) {
+    TRUE
+  } else if (req.sign %in% c("-", -1, "-1", "negative")) {
+    FALSE
+  } else if (has.zero && req.sign %in% c(" ", 0, "0", "")) {
+    NULL
+  } else {
+    stop(sprintf("`req.sign` can only be `%s` for this function.", ifelse(has.zero, "+`, `-` and ` ", "+` and `-")), call. = FALSE)
+  }
+} # check.pos_sign
+
 # helper function(s) ---------------------------------------------------------------------------------------------------
 format_errmsg <- function(names = c(), fnc.name = NULL) {
-  sprintf("Argument%s %s %s not have %svalid %s value%s (must be length 1, %s)",
+  sprintf("Argument%s %s %s not have %svalid %s value%s (must be length 1, %s).",
           ifelse(length(names) > 1, "s", ""),
           paste(names, collapse = ifelse(length(names) > 2, ", ", " and ")),
           ifelse(length(names) > 1, "do", "does"),
@@ -229,12 +252,16 @@ fnc2type <- function(fnc.name = "") {
 valid.cond <- function(fnc.name = "") {
   if (fnc.name == "check.proportion") {
     "numeric, >= 0, and <= 1"
+  } else if (fnc.name == "check.power") {
+    "numeric, >= 0.01, and <= 0.99"
   } else if (fnc.name == "check.correlation") {
     "numeric, >= -1, and <= 1"
   } else if (fnc.name == "check.logical") {
     "TRUE or FALSE"
   } else if (fnc.name %in% c("check.sample.size", "check.factor.level")) {
     "integer-like, > 1, and finite"
+  } else if (fnc.name == "check.size") {
+    "integer-like, >= 0, and finite"
   } else if (fnc.name == "check.nonnegative") {
     "numeric, >= 0, and finite"
   } else if (fnc.name == "check.positive") {

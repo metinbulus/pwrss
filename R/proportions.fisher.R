@@ -13,7 +13,7 @@
 #'
 #' @param prob1       probability of success in the first group.
 #' @param prob2       probability of success in the second group.
-#' @param sign        whether estimated prob is smaller or larger than the other 
+#' @param req.sign    whether estimated prob is smaller or larger than the other
 #'                    (when minimum detectable prob is of interest).
 #' @param n2          integer; sample size for the second group.
 #' @param n.ratio     n1 / n2 ratio.
@@ -28,7 +28,7 @@
 #' @param method      character; method used for power calculation. "exact"
 #'                    specifies Fisher's exact test, while "approximate" refers
 #'                    to the Z-Test based on the normal approximation.
-#' @param ceiling     logical; if \code{TRUE} rounds up sample size in each
+#' @param ceil.n      logical; if \code{TRUE} rounds up sample size in each
 #'                    group.
 #' @param verbose     \code{1} by default (returns test, hypotheses, and
 #'                    results), if \code{2} a more detailed output is given
@@ -95,71 +95,61 @@
 #'                    prob01 = 0.16, prob00 = 0.24)
 #'
 #' @export power.exact.fisher
-power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, sign = "+",
+power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, req.sign = "+",
                                n.ratio = 1, n2 = NULL,
                                power = NULL, alpha = 0.05,
                                alternative = c("two.sided", "one.sided"),
                                method = c("exact", "approximate"),
-                               ceiling = TRUE, verbose = 1, utf = FALSE) {
+                               ceil.n = TRUE, verbose = 1, utf = FALSE) {
 
   alternative <- tolower(match.arg(alternative))
   method <- tolower(match.arg(method))
-  func.parms <- clean.parms(as.list(environment()))
+  func.parms <- as.list(environment())
 
   if (!is.null(prob1)) check.proportion(prob1)
   if (!is.null(prob2)) check.proportion(prob2)
-  if (!is.null(n2)) check.sample.size(n2)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(n2))    check.sample.size(n2)
+  if (!is.null(power)) check.power(power)
   check.positive(n.ratio)
   check.proportion(alpha)
-  check.logical(ceiling, utf)
-  verbose <- ensure_verbose(verbose)
-  
-  # requested <- check.n_power(n.paired, power)
-  if(is.null(n2)) requested <- "n"
-  if(is.null(power)) requested <- "power"
-  if(is.null(prob1) | is.null(prob2)) requested <- "es"
+  check.logical(ceil.n, utf)
+  verbose <- ensure.verbose(verbose)
+  requested <- get.requested(es = list(prob1, prob2), n = n2, power = power)
 
-  pwr.approx <- function(prob1, prob2, n2, n.ratio,
-                         alpha, alternative
-                         #, correct.continuity = FALSE,
-                         # pooled.stderr = FALSE
-                         ) {
+  pwr.approx <- function(prob1, prob2, n2, n.ratio, alpha, alternative,
+                         pooled.stderr = FALSE, correct.continuity = FALSE) {
 
+    n1 <- n.ratio * n2
     # Gpower
-    # sigma0 <- sqrt(((n1 * (1 - prob1) + n2 * (1 - prob2)) / (n1 * n2)) * ((n1 * prob1 + n2 *prob2) / (n1 + n2)))
+    # sigma0 <- sqrt(((n1 * (1 - prob1) + n2 * (1 - prob2)) / (n1 * n2)) * ((n1 * prob1 + n2 * prob2) / (n1 + n2)))
     # stderr <- (1 / sigma0) * sqrt((prob1 * (1 - prob1)) / n1 + (prob2 * (1 - prob2)) / n2)
     # delta <- (1 / sigma0) * (prob1 - prob2 - (k / 2) * (1 / n1 + 1 / n2)) # w/ continuity correction
 
-    n1 <- n.ratio * n2
-
-    delta <- prob1 - prob2
-
-    stderr <- sqrt((prob1 * (1 - prob1)) / n1 + (prob2 * (1 - prob2)) / n2)
-
-#    placeholders pooled std.err and continuity correction (not yet implemented)
 #    if (pooled.stderr) {
-#
+
 #      p.bar <- (n1 * prob1 + n2 * prob2) / (n1 + n2)
 #      stderr <- sqrt(p.bar * (1 - p.bar) * (1 / n1 + 1 / n2))
-#
+
 #    } else {
-#
-#      stderr (l. 130) goes here
-#
+
+      stderr <- sqrt((prob1 * (1 - prob1)) / n1 + (prob2 * (1 - prob2)) / n2)
+
 #    }
 
-#     if (correct.continuity) {
-#
-#       ifelse(prob1 < prob2, k <- -1, k <- 1)
-#       if (alternative %in% c("not equal", "two.sided")) k <- c(-1, 1)
-#       delta <- (prob1 - prob2 - (k / 2) * (1 / n1 + 1 / n2))
-#
-#     } else {
-#
-#       delta <- prob1 - prob2
-#
-#     }
+#    if (correct.continuity) {
+
+#      if (alternative %in% c("not equal", "two.sided")) {
+#        k <- c(-1, 1)
+#      } else {
+#        k <- ifelse(prob1 < prob2, -1, 1)
+#      }
+#      delta <- (prob1 - prob2 - (k / 2) * (1 / n1 + 1 / n2))
+
+#    } else {
+
+      delta <- prob1 - prob2
+
+#    }
 
     pwr.obj <- power.z.test(mean = delta / stderr, sd = 1, null.mean = 0, null.sd = 1,
                             alpha = alpha, alternative = alternative,
@@ -191,6 +181,7 @@ power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, sign = "+",
     n2
 
   } # ss.approx()
+
 
   pwr.exact <- function(prob1, prob2, n2, n.ratio, alpha, alternative) {
 
@@ -300,59 +291,43 @@ power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, sign = "+",
                      alpha = alpha, alternative = alternative)
       n1 <- n.ratio * n2
 
-      if (ceiling) {
+      if (ceil.n) {
         n1 <- ceiling(n1)
         n2 <- ceiling(n2)
       }
 
     } else if (requested == "power") {
 
-      n1 <- ifelse(ceiling, ceiling(n.ratio * n2), n.ratio * n2)
+      n1 <- ifelse(ceil.n, ceiling(n.ratio * n2), n.ratio * n2)
 
     } else if (requested == "es") {
-      
-      if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) {
-        if(is.null(prob1)) {min <- prob2; max <- 0.9999}
-        if(is.null(prob2)) {min <- prob1; max <- 0.9999}
-      }
-      
-      if(sign %in% c("-", -1, "-1", "negative")) {
-        if(is.null(prob1)) {min <- 0.0001; max <- prob2}
-        if(is.null(prob2)) {min <- 0.0001; max <- prob1}
-      }
-      
-      if(sign %in% c(" ", 0, "0", "")) {
-        stop("'sign' can only be '+' or '-'", call. = FALSE)
-      }
-      
-      if(is.null(prob1)) {
-        
-        prob1 <- optimize(
+
+      if (is.null(prob1)) {
+
+        prob1 <- stats::optimize(
           f = function(prob1) {
             (power - pwr.exact(prob1 = prob1, prob2 = prob2, n2 = n2, n.ratio = n.ratio,
-                               alpha = alpha, alternative = alternative))^2 
+                               alpha = alpha, alternative = alternative)) ^ 2
           },
           maximum = FALSE,
-          lower = min,
-          upper = max,
-        )$minimum
-        
+          lower = ifelse(check.pos_sign(req.sign),  prob2, 0.0001),
+          upper = ifelse(check.pos_sign(req.sign), 0.9999,  prob2))$minimum
+
       } else {
-        
-        prob2 <- optimize(
+
+        prob2 <- stats::optimize(
           f = function(prob2) {
             (power - pwr.exact(prob1 = prob1, prob2 = prob2, n2 = n2, n.ratio = n.ratio,
-                               alpha = alpha, alternative = alternative))^2 
+                               alpha = alpha, alternative = alternative)) ^ 2
           },
           maximum = FALSE,
-          lower = min,
-          upper = max,
-        )$minimum
-        
+          lower = ifelse(check.pos_sign(req.sign),  prob1, 0.0001),
+          upper = ifelse(check.pos_sign(req.sign), 0.9999,  prob1))$minimum
+
       } # prob1 or prob2?
-      
-      n1 <- ifelse(ceiling, ceiling(n.ratio * n2), n.ratio * n2)
-      
+
+      n1 <- ifelse(ceil.n, ceiling(n.ratio * n2), n.ratio * n2)
+
     } # n, power, es?
 
     n.total <- n1 + n2
@@ -373,65 +348,37 @@ power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, sign = "+",
 
       n2 <- ss.approx(prob1 = prob1, prob2 = prob2, power = power, n.ratio = n.ratio,
                       alpha = alpha, alternative = alternative)
-
-      n1 <- n.ratio * n2
-      n.total <- n1 + n2
-
-      if (ceiling) {
-        n1 <- ceiling(n1)
-        n2 <- ceiling(n2)
-      }
-
-    } else if (requested == "power") {
-
-      n1 <- ifelse(ceiling, ceiling(n.ratio * n2), n.ratio * n2)
+      n2 <- ifelse(ceil.n, ceiling(n2), n2)
 
     } else if (requested == "es") {
-      
-      if(sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) {
-        if(is.null(prob1)) {min <- prob2; max <- 0.9999}
-        if(is.null(prob2)) {min <- prob1; max <- 0.9999}
-      }
-      
-      if(sign %in% c("-", -1, "-1", "negative")) {
-        if(is.null(prob1)) {min <- 0.0001; max <- prob2}
-        if(is.null(prob2)) {min <- 0.0001; max <- prob1}
-      }
-      
-      if(sign %in% c(" ", 0, "0", "")) {
-        stop("'sign' can only be '+' or '-'", call. = FALSE)
-      }
-      
-      if(is.null(prob1)) {
-        
-        prob1 <- optimize(
+
+      if (is.null(prob1)) {
+
+        prob1 <- stats::optimize(
           f = function(prob1) {
             (power - pwr.approx(prob1 = prob1, prob2 = prob2, n2 = n2, n.ratio = n.ratio,
-                               alpha = alpha, alternative = alternative)$power)^2 
+                               alpha = alpha, alternative = alternative)$power) ^ 2
           },
           maximum = FALSE,
-          lower = min,
-          upper = max,
-        )$minimum
-        
+          lower = ifelse(check.pos_sign(req.sign),  prob2, 0.0001),
+          upper = ifelse(check.pos_sign(req.sign), 0.9999,  prob2))$minimum
+
       } else {
-        
-        prob2 <- optimize(
+
+        prob2 <- stats::optimize(
           f = function(prob2) {
             (power - pwr.approx(prob1 = prob1, prob2 = prob2, n2 = n2, n.ratio = n.ratio,
-                               alpha = alpha, alternative = alternative)$power)^2 
+                               alpha = alpha, alternative = alternative)$power) ^ 2
           },
           maximum = FALSE,
-          lower = min,
-          upper = max,
-        )$minimum
-        
+          lower = ifelse(check.pos_sign(req.sign),  prob1, 0.0001),
+          upper = ifelse(check.pos_sign(req.sign), 0.9999,  prob1))$minimum
+
       } # prob1 or prob2?
-      
-      n1 <- ifelse(ceiling, ceiling(n.ratio * n2), n.ratio * n2)
-      
+
     } # n, power, es?
 
+    n1 <- ifelse(ceil.n, ceiling(n.ratio * n2), n.ratio * n2)
     n.total <- n1 + n2
 
     # calculate power (if requested == "power") or update it (if requested == "n")
@@ -454,10 +401,13 @@ power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, sign = "+",
   if (verbose > 0) {
 
     print.obj <- list(requested = requested,
+                      tgt.effect = ifelse(is.null(func.parms[["prob2"]]), "prob2", "prob1"),
                       test = "Independent Proportions",
                       alpha = alpha,
                       alternative = alternative,
                       method = ifelse(method == "exact", "exact", "z"),
+                      prob1 = prob1,
+                      prob2 = prob2,
                       delta = prob1 - prob2,
                       margin = 0,
                       odds.ratio = (prob1 / (1 - prob1)) /  (prob2 / (1 - prob2)),

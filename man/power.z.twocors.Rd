@@ -8,14 +8,15 @@
 \title{Power Analysis for Independent Correlations}
 \usage{
 power.z.twocors(
-  rho1,
-  rho2,
+  rho1 = NULL,
+  rho2 = NULL,
+  req.sign = "+",
   n2 = NULL,
   n.ratio = 1,
   power = NULL,
   alpha = 0.05,
   alternative = c("two.sided", "one.sided"),
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -24,6 +25,9 @@ power.z.twocors(
 \item{rho1}{correlation in the first group.}
 
 \item{rho2}{correlation in the second group.}
+
+\item{req.sign}{whether estimated rho is smaller or larger than the other
+(when minimum detectable rho is of interest).}
 
 \item{n2}{sample size in the second group. Sample size in the first
 group can be calculated as \code{n2*kappa}. By default,
@@ -42,7 +46,7 @@ incorrectly rejecting a true null hypothesis, denoted as
 \item{alternative}{character; the direction or type of the hypothesis test:
 "two.sided" or "one.sided".}
 
-\item{ceiling}{logical; whether sample size should be rounded up.
+\item{ceil.n}{logical; whether sample size should be rounded up.
 \code{TRUE} by default.}
 
 \item{verbose}{\code{1} by default (returns test, hypotheses, and

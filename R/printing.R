@@ -5,8 +5,8 @@
 
     RC <- switch(requested,
                  `n` =     "           \033[34m SAMPLE SIZE CALCULATION \033[0m              ",
-                 `power` = "               \033[34m POWER CALCULATION \033[0m                ",
-                 `es` =   "     \033[34m MINIMUM DETECTABLE EFFECT CALCULATION \033[0m      ")
+                 `es` =    "     \033[34m MINIMUM DETECTABLE EFFECT CALCULATION \033[0m      ",
+                 `power` = "               \033[34m POWER CALCULATION \033[0m                ")
 
     paste0(paste0("\u2554", strrep("\u2550", 50), "\u2557", "\n"),
            paste0("\u2551", RC,                   "\u2551", "\n"),
@@ -16,8 +16,8 @@
 
     RC <- switch(requested,
                  `n` =     "             SAMPLE SIZE CALCULATION              ",
-                 `power` = "                POWER CALCULATION                 ",
-                 `es` =   "      MINIMUM DETECTABLE EFFECT CALCULATION       ")
+                 `es` =    "      MINIMUM DETECTABLE EFFECT CALCULATION       ",
+                 `power` = "                POWER CALCULATION                 ")
 
     paste0(paste0("+", strrep("-", 50), "+", "\n"),
            paste0("|", RC,              "|", "\n"),
@@ -41,7 +41,7 @@
 
 .fmt_val <- function(val = NA, digits = 3, spf_neg = "") {
   if (is.numeric(val)) {
-    fmt <- paste(rep(paste0("%", spf_neg, ifelse(isInt(val), "d", paste0(".", digits, "f"))), length(val)),
+    fmt <- paste(rep(paste0("%", spf_neg, paste0(".", ifelse(isInt(val), 0, digits), "f")), length(val)),
                  collapse = ifelse(length(val) < 3, " and ", ", "))
   } else if (is.character(val) || is.na(val)) {
     fmt <- paste0(strrep(" ", nchar(spf_neg)), "%s")
@@ -53,9 +53,41 @@
     do.call(sprintf, c(fmt = fmt, as.list(val)))
 }
 
+.fmt_utf <- function(n) {
+  rpl_list <- list(`0` = "\u2080", `1` = "\u2081", `2` = "\u2082", `3` = "\u2083", `4` = "\u2084", prob = "P",
+                   rho = "\u03C1", eta = "\u03B7")
+
+  for (r in names(rpl_list)) n <- gsub(r, rpl_list[[r]], n)
+
+  n
+}
+
+.fmt_adsc <- function(f, utf = FALSE) {
+  f <- gsub("odds.ratio", "Odds Ratio", gsub("rate.ratio", "Rate Ratio", f))
+  if (utf) {
+    .fmt_utf(gsub("ncp", "\u03BB", gsub(".squared|.squared.change", "\u00b2", gsub("^r\\.", "R.", f))))
+  } else {
+    gsub(".squared|.squared.change", "-squared", gsub("^r\\.", "R.", f))
+  }
+}
+
 .nspacer <- function(x) floor(length(gregexpr("\u2009", x)[[1]]) / 2)
 
 .pad <- function(dsc, maxlen) strrep(" ", maxlen + .nspacer(dsc) - nchar(dsc))
+
+.a_pad <- function(n, utf, tgt.effect = "") {
+  if        (any(grepl("^eta.squared", n))) {
+    ifelse(utf, 0, 5)
+  } else if (any(grepl("^rate.ratio",  n))) {
+    ifelse(utf, 6, 4)
+  } else if (any(grepl("^odds.ratio",  n)) && tgt.effect == "odds.ratio") {
+    ifelse(utf, 6, 4)
+  } else if (any(grepl("^r.squared",   n))) {
+    ifelse(utf, 0, 3)
+  } else {
+    0
+  }
+}
 
 .keyparms <- function(x, parms_mtx, utf = FALSE, digits = 3) {
   spf_neg   <- ifelse(any(stats::na.omit(suppressWarnings(as.numeric(unlist(x[parms_mtx[, 1]])))) < 0), "+", "")
@@ -123,8 +155,8 @@
 }
 
 .hypotheses <- function(h0_text, h1_text, utf = FALSE) {
-  if (length(h0_text) > 1) h0_text <- paste(h0_text, collapse = paste0("\n", strrep(" ", 21)))
-  if (length(h1_text) > 1) h1_text <- paste(h1_text, collapse = paste0("\n", strrep(" ", 21)))
+  if (length(h0_text) > 1) h0_text <- paste(h0_text, collapse = paste0("\n", .pad("", 21)))
+  if (length(h1_text) > 1) h1_text <- paste(h1_text, collapse = paste0("\n", .pad("", 21)))
 
   paste0(.topic("Hypotheses", utf),
          sprintf("  %s %s : %s\n",   ifelse(utf, "H\u2080", "H0"), "(Null)       ", h0_text),
@@ -132,62 +164,111 @@
 
 }
 
-# assembles "Sample Size" line
-.nline <- function(x, utf, digits = 3) {
-  # if "n" is requested, c_a[1 / 2] and c_a[3 / 5] are used for coloring (in utf) and empty for ascii; c_a[4] is used for <<
-  if (x$requested == "n" && utf)
-    c_a <- c("\033[34m", "\033[0m", "  \033[1;35m", "\u25C4\u25C4", "\033[0m")
-  else if (x$requested == "n" && !utf)
-    c_a <- c("",         "",        "  ",           "<<",           "")
+.c_a <- function(mark = FALSE, utf = FALSE) {
+  # if the parameter is requested (mark = TRUE), c_a[1 / 2] and c_a[3 / 5] are used for coloring (in utf)
+  # and empty for ascii; c_a[4] is used for <<
+  if (mark && utf)
+    c("\033[34m", "\033[0m", "  \033[1;35m", "\u25C4\u25C4", "\033[0m")
+  else if (mark && !utf)
+    c("",         "",        "  ",           "<<",           "")
   else
-    c_a <- rep("", 5)
+    rep("", 5)
+}
 
-  # assembles / formats the sample size line which requires a bit of formatting (Sample Size can be preceeded by Total or Paired)
-  if (any(c("n", "n.total", "n.paired") %in% names(x))) {
-    n_prefix <- ifelse(utils::hasName(x, "n.total") && !utils::hasName(x, "n"), "Total ", ifelse(utils::hasName(x, "n.paired"), "Paired ", ""))
-    n_pad    <- strrep(" ", ifelse(utf, 7, 9) - nchar(n_prefix))
-    n        <- x[[c("n", "n.total", "n.paired")[c("", "Total ", "Paired ") %in% n_prefix]]]
-    n_text   <- paste(round(n, digits), collapse = ifelse(length(n) == 2, " and ", ", "))
-    sprintf("  %s%sSample Size%s = %s%s%s%s%s\n", c_a[1], n_prefix, n_pad, n_text, c_a[2], c_a[3], c_a[4], c_a[5])
+# assembles / formats the "Minimum Detectable Effect" line
+.esline <- function(x, utf = FALSE, digits = 3, a_pad = 0) {
+  if ("tgt.effect" %in% names(x)) {
+    # some analyses have several options for what is determined and odds.ratio is used widely,
+    # thus, we need to determine beforehand which effect is the target effect
+    es_sel <- names(x) %in% x[["tgt.effect"]]
   } else {
+    es_sel <- names(x) %in% c("d", "eta.squared", "prob", "r.squared", "r.squared.change", "rate.ratio", "rho", "w")
+  }
+
+  if (sum(es_sel) == 1) {
+    # colors and arrows when requested, otherwise ""
+    c_a <- .c_a(x$requested == "es", utf)
+
+    # determine effect size and null
+    es_fld  <- names(x)[es_sel]
+    es_adsc <- .fmt_adsc(es_fld, utf)
+    es_pad  <- .pad(es_adsc, ifelse(utf, 4, 6) + a_pad)
+    es_val  <- sprintf("%s", .fmt_val(x[[es_fld]], digits))
+    if (paste0("null.", es_fld) %in% names(x)) {
+      es_ndsc <- ifelse(utf, paste0(es_adsc, "\u2080"), paste0("null.", es_adsc))
+      es_val  <- sprintf("%s (vs. %s = %s)", es_val, es_ndsc, .fmt_val(x[[paste0("null.", es_fld)]], digits))
+    } else if (es_fld %in% c("prob1", "prob2", "prob10", "prob01", "rho1", "rho2", "rho12", "rho13", "rho34")) {
+      if (es_fld %in% c("prob1", "prob2")) {
+        es_nfld <- ifelse(es_fld == "prob1", "prob2", "prob1")
+      } else if (es_fld %in% c("prob10", "prob01")) {
+        es_nfld <- ifelse(es_fld == "prob10", "prob01", "prob10")
+      } else if (es_fld %in% c("rho1", "rho2")) {
+        es_nfld <- ifelse(es_fld == "rho1", "rho2", "rho1")
+      } else if (es_fld %in% c("rho12", "rho13", "rho34")) {
+        es_nfld <- ifelse(es_fld != "rho12", "rho12", ifelse(x$common, "rho13", "rho34"))
+      }
+      es_val  <- sprintf("%s (vs. %s = %s)", es_val, ifelse(utf, .fmt_utf(es_nfld), es_nfld), .fmt_val(x[[es_nfld]], digits))
+    }
+    sprintf("  %sEffect Size (%s)%s = %s%s%s%s%s\n", c_a[1], es_adsc, es_pad, es_val, c_a[2], c_a[3], c_a[4], c_a[5])
+  } else if (sum(es_sel) == 0) {
+    # return an empty string (for the generic functions, that only calculate power)
+    ""
+  } else {
+    print(names(x))
+    stop("`print.obj` contains more than one effect size.", call. = FALSE)
+  }
+}
+
+# assembles "Sample Size" line
+.nline <- function(x, utf = FALSE, digits = 3, a_pad = 0) {
+  if (any(c("n", "n.total", "n.paired", "n.pres", "df", "size") %in% names(x))) {
+    # colors and arrows when requested, otherwise ""
+    c_a <- .c_a(x$requested == "n", utf)
+    # assembles / formats the sample size line
+    if (utils::hasName(x, "n.paired")) {
+      n_name <- "Paired Sample Size"
+      n <- x[["n.paired"]]
+    } else if (utils::hasName(x, "n")) {
+      n_name <- "Sample Size"
+      n <- x[["n"]]
+    } else if (utils::hasName(x, "n.total")) {
+      n_name <- "Total Sample Size"
+      n <- x[["n.total"]]
+    } else if (utils::hasName(x, "n.pres")) {
+      n_name <- "Presumed Sample S."
+      n <- x[["n.pres"]]
+    } else if (utils::hasName(x, "df")) {
+      if (!is.finite(x[["df"]])) return("")
+      n_name <- "Degrees of Freedom"
+      n <- x[["df"]]
+    } else if (utils::hasName(x, "size")) {
+      n_name <- "Number of Trials"
+      n <- x[["size"]]
+    }
+    n_pad    <- .pad(n_name, ifelse(utf, 18, 20) + a_pad)
+    n_text   <- paste(round(n, digits), collapse = ifelse(length(n) == 2, " and ", ", "))
+    sprintf("  %s%s%s = %s%s%s%s%s\n", c_a[1], n_name, n_pad, n_text, c_a[2], c_a[3], c_a[4], c_a[5])
+  } else {
+    # return an empty string (for the generic functions, that only calculate power)
     ""
   }
 }
 
 # assembles / formats the "Statistical Power" line
-.pline <- function(x, utf = FALSE, digits = 3) {
-  # if "power" is requested, c_a[1 / 2] and c_a[3 / 5] are used for coloring (in utf) and empty for ascii; c_a[4] is used for <<
-  if (x$requested == "power" && utf)
-    c_a <- c("\033[34m", "\033[0m", "  \033[1;35m", "\u25C4\u25C4", "\033[0m")
-  else if (x$requested == "power" && !utf)
-    c_a <- c("",         "",        "  ",           "<<",           "")
-  else
-    c_a <- rep("", 5)
-
-  sprintf("  %sStatistical Power%s = %.*f%s%s%s%s\n\n", c_a[1], strrep(" ", ifelse(utf, 1, 3)), digits, x$power, c_a[2], c_a[3], c_a[4], c_a[5])
-}
-
-# assembles / formats the "Minimum Detectable Effect" line
-.eline <- function(x, utf = FALSE, digits = 3) {
-  # if "power" is requested, c_a[1 / 2] and c_a[3 / 5] are used for coloring (in utf) and empty for ascii; c_a[4] is used for <<
-  if (x$requested == "es" && utf)
-    c_a <- c("\033[34m", "\033[0m", "  \033[1;35m", "\u25C4\u25C4", "\033[0m")
-  else if (x$requested == "es" && !utf)
-    c_a <- c("",         "",        "  ",           "<<",           "")
-  else
-    c_a <- rep("", 5)
-  
-  sprintf("  %sEffect Size%s = %.*f%s%s%s%s\n", c_a[1], strrep(" ", ifelse(utf, 1, 3)), digits, x$es, c_a[2], c_a[3], c_a[4], c_a[5])
+.pline <- function(x, utf = FALSE, digits = 3, a_pad = 0) {
+  # colors and arrows when requested, otherwise ""
+  c_a <- .c_a(x$requested == "power", utf)
+  sprintf("  %sStatistical Power%s = %.*f%s%s%s%s\n\n", c_a[1], .pad("", ifelse(utf, 1, 3) + a_pad), digits, x$power, c_a[2], c_a[3], c_a[4], c_a[5])
 }
 
 .results <- function(x, utf = FALSE, digits = 3) {
-
+  a_pad <- .a_pad(names(x), utf, ifelse(utils::hasName(x, "tgt.effect"), x[["tgt.effect"]], ""))
   paste0(.topic("Results", utf),
-         .nline(x, utf, digits),
-         sprintf("  Type 1 Error %s = %.*f\n", ifelse(utf, "(\u03B1)  ", "(alpha)"), digits, x$alpha),
-         sprintf("  Type 2 Error %s = %.*f\n", ifelse(utf, "(\u03B2)  ", "(beta) "), digits, 1 - x$power),
-         .pline(x, utf, digits),
-         .eline(x, utf, digits))
+         .esline(x, utf, digits, a_pad),
+         .nline(x,  utf, digits, a_pad),
+         sprintf("  Type 1 Error %s%s = %.*f\n", ifelse(utf, "(\u03B1)  ", "(alpha)"), .pad("", a_pad), digits, x$alpha),
+         sprintf("  Type 2 Error %s%s = %.*f\n", ifelse(utf, "(\u03B2)  ", "(beta) "), .pad("", a_pad), digits, 1 - x$power),
+         .pline(x,  utf, digits, a_pad))
 }
 
 .defs <- function(defs_mtx, utf = FALSE) {
@@ -204,7 +285,6 @@
 
   paste0(paste(defs_out, collapse = ""), "\n")
 }
-
 
 
 # print functions ------------------------------------------------------------------------------------------------------
@@ -225,7 +305,7 @@
   cat(.hypotheses(h0_text, h1_text, utf))
 
   if (verbose == 2) {
-    #                      | var.name        |  ascii           |  utf
+    #                      | var.n. |  ascii           |  utf
     parms_mtx <- t(matrix(c("effect",   "Design",                 "Design",
                             "df1",      "Num. Deg. of Freedom",   "df1",
                             "df2",      "Denom. Deg. of Freedom", "df2",
@@ -241,10 +321,10 @@
 
   if (verbose == 2) {
     #                     | ascii (utf at next line indented)
-    defs_mtx <- t(matrix(c("null.eta.squared : (Partial) Eta-squared under null",
-                             "\u03B7\u00B2\u2080 : (Partial) Eta-squared under null",
-                           "eta.squared      : (Partial) Eta-squared under alt.",
-                             "\u03B7\u00B2\u2009 : (Partial) Eta-squared under alternative",
+    defs_mtx <- t(matrix(c("null.eta.squared : (Partial) eta-squared under null",
+                             "\u03B7\u00B2\u2080 : (Partial) eta-squared under null",
+                           "eta.squared      : (Partial) eta-squared under alt.",
+                             "\u03B7\u00B2\u2009 : (Partial) eta-squared under alternative",
                            "",
                              "\u03BB\u2009  : Non-centrality parameter under alternative",
                            "",
@@ -286,13 +366,13 @@
   if (verbose == 2) {
     #                     | ascii (utf at next line indented)
     defs_mtx <- t(matrix(c("psi : Contrast estimate, sum(contrast[i] * mu[i])",
-                             "\u03C8  \u2009\u2009: Contrast est. defined as \u2211(contrast\u1D62 * \u03BC\u1D62)",
+                             "\u03C8\u2009 : Contrast est. defined as \u2211(contrast\u1D62 * \u03BC\u1D62)",
                            "d   : Standardized contrast estimate",
-                             "d  \u2009\u2009: Standardized contrast estimate",
+                             "d\u2009 : Standardized contrast estimate",
                            "",
-                             "\u03BB  \u2009\u2009: Non-centrality parameter under alternative",
+                             "\u03BB\u2009 : Non-centrality parameter under alternative",
                            "",
-                             "\u03BB\u2080  : Non-centrality parameter under null"),
+                             "\u03BB\u2080 : Non-centrality parameter under null"),
                   nrow = 2, dimnames = list(c("ascii", "utf"), NULL)))
 
     cat(.defs(defs_mtx, utf))
@@ -336,11 +416,11 @@
   if (verbose == 2) {
     #                     | ascii (utf at next line indented)
     defs_mtx <- t(matrix(c("psi : Contrast estimate, sum(contrast[i] * mu[i])",
-                             "\u03C8 (psi) \u2009\u2009: Contrast est. defined as \u2211(contrast\u1D62 * \u03BC\u1D62)",
+                             "\u03C8 (psi) : Contrast est. defined as \u2211(contrast\u1D62 * \u03BC\u1D62)",
                            "d   : Standardized contrast estimate",
-                             "d\u2009\u2009       : Standardized contrast estimate",
+                             "d       : Standardized contrast estimate",
                            "ncp : Non-centrality parameter under alt.",
-                             "\u03BB\u2080\u2009       : Non-centrality parameter under alt."),
+                             "\u03BB\u2080      : Non-centrality parameter under alt."),
                   nrow = 2, dimnames = list(c("ascii", "utf"), NULL)))
 
     cat(.defs(defs_mtx, utf))
@@ -366,8 +446,8 @@
 
   if (verbose == 2) {
     #                      | var.name         |  ascii          |  utf
-    parms_mtx <- t(matrix(c("delta",            "rho12 - rho13",  "\u03C1\u2081\u2082 - \u03C1\u2081\u2083          \u2009",
-                            "delta",            "rho12 - rho34",  "\u03C1\u2081\u2082 - \u03C1\u2083\u2084          \u2009",
+    parms_mtx <- t(matrix(c("delta",            "rho12 - rho13",  "\u03C1\u2081\u2082 - \u03C1\u2081\u2083\u2009",
+                            "delta",            "rho12 - rho34",  "\u03C1\u2081\u2082 - \u03C1\u2083\u2084\u2009",
                             "q",                "Cohen's q",      "Cohen's q",
                             "mean.alternative", "Mean of Alt.",   "\u03BC (Alternative)",
                             "sd.alternative",   "SD of Alt.",     "\u03C3 (Alternative)",
@@ -386,8 +466,8 @@
     defs_mtx <- t(matrix(c("rho12 : Correlation between variable V1 and V2", "\u03C1\u2081\u2082 : Correlation between variable V1 and V2",
                            "rho13 : Correlation between variable V1 and V3", "\u03C1\u2081\u2083 : Correlation between variable V1 and V3",
                            "rho34 : Correlation between variable V3 and V4", "\u03C1\u2083\u2084 : Correlation between variable V3 and V4",
-                           "",                                               "\u03BC  \u2009: Mean",
-                           "",                                               "\u03C3  \u2009: Standard deviation"),
+                           "",                                               "\u03BC\u2009  : Mean",
+                           "",                                               "\u03C3\u2009  : Standard deviation"),
                   nrow = 2, dimnames = list(c("ascii", "utf"), NULL)))
 
     cat(.defs(defs_mtx[-2 - as.integer(x$common), ], utf))
@@ -433,8 +513,8 @@
                            "rho2 : Correlation (for some V1 ~ V2) in group 2",     "\u03C1\u2082 : Correlation (for some V1 ~ V2) in group 2",
                            "rho      : Correlation (for some V1 ~ V2) under alt.", "\u03C1\u2081 : Correlation (for some V1 ~ V2) under alternative",
                            "null.rho : Correlation (for some V1 ~ V2) under null", "\u03C1\u2080 : Correlation (for some V1 ~ V2) under null",
-                           "",                                                     "\u03BC \u2009\u2009: Mean",
-                           "",                                                     "\u03C3 \u2009\u2009: Standard deviation"),
+                           "",                                                     "\u03BC\u2009 : Mean",
+                           "",                                                     "\u03C3\u2009 : Standard deviation"),
 
                   nrow = 2, dimnames = list(c("ascii", "utf"), NULL)))
 
@@ -452,16 +532,16 @@
 
   tgt <- ifelse(utf, "P",       "prob")
   mrg <- ifelse(utf, "P\u2080", "null.prob")
-  h0_text <- .h0_twoone(tgt, mrg, utf, alt = x$alternative, val.alt = x$prob.alternative, val.null = x$prob.null)
-  h1_text <- .h1_twoone(tgt, mrg, utf, alt = x$alternative, val.alt = x$prob.alternative, val.null = x$prob.null)
+  h0_text <- .h0_twoone(tgt, mrg, utf, alt = x$alternative, val.alt = x$prob, val.null = x$null.prob)
+  h1_text <- .h1_twoone(tgt, mrg, utf, alt = x$alternative, val.alt = x$prob, val.null = x$null.prob)
   cat(.hypotheses(h0_text, h1_text, utf))
 
   if (verbose == 2) {
-    #                      | var.name         |  ascii                  |  utf
-    parms_mtx <- t(matrix(c("size",             "Size",                   "Size",
-                            "prob.alternative", "Probability Under Alt.", "P",
-                            "prob.null",        "Probability Under Null", "P\u2080\u2009",
-                            "binom.alpha",      "Critical Value",         "Bin\u207B\u00B9(\u03B1, P\u2080)\u2009\u2009"),
+    #                      | var.name    |  ascii                  |  utf
+    parms_mtx <- t(matrix(c("size",        "Size",                   "Size",
+                            "prob",        "Probability Under Alt.", "P",
+                            "null.prob",   "Probability Under Null", "P\u2080\u2009",
+                            "binom.alpha", "Critical Value",         "Bin\u207B\u00B9(\u03B1, P\u2080)\u2009\u2009"),
                           nrow = 3, dimnames = list(c("var.name", "ascii", "utf"), NULL)))
 
     cat(.keyparms(x, parms_mtx, utf, digits))
@@ -488,20 +568,20 @@
   cat(x$test, "\n\n", sep = "")
 
   if (utf) {
-    h0_text <- ifelse(x$ncp.null == 0, "\u03BB = \u03BB\u2080", "0 \u2264 \u03BB \u2264 \u03BB\u2080")
-    h1_text <- ifelse(x$ncp.null == 0, "\u03BB > \u03BB\u2080", "\u03BB > \u03BB\u2080")
+    h0_text <- ifelse(x$null.ncp == 0, "\u03BB = \u03BB\u2080", "0 \u2264 \u03BB \u2264 \u03BB\u2080")
+    h1_text <- ifelse(x$null.ncp == 0, "\u03BB > \u03BB\u2080", "\u03BB > \u03BB\u2080")
   } else {
-    h0_text <- ifelse(x$ncp.null == 0, "ncp = ncp.null",        "0 <= ncp <= null.ncp")
-    h1_text <- ifelse(x$ncp.null == 0, "ncp > ncp.null",        "ncp > null.ncp")
+    h0_text <- ifelse(x$null.ncp == 0, "ncp = null.ncp",        "0 <= ncp <= null.ncp")
+    h1_text <- ifelse(x$null.ncp == 0, "ncp > null.ncp",        "ncp > null.ncp")
   }
   cat(.hypotheses(h0_text, h1_text, utf))
 
   if (verbose == 2) {
-    #                      | var.name        |  ascii                  |  utf
-    parms_mtx <- t(matrix(c("df",              "Degrees of Freedom",     "df",
-                            "ncp.alternative", "Non-centrality of Alt.", "\u03BB",
-                            "ncp.null",        "Non-centrality of Null", "\u03BB\u2080\u2009",
-                            "chisq.alpha",     "Critical Value",         "Inv-\u03C7\u00B2(\u03B1, \u03BB\u2080)\u2009"),
+    #                      | var.name    |  ascii                  |  utf
+    parms_mtx <- t(matrix(c("df",          "Degrees of Freedom",     "df",
+                            "ncp",         "Non-centrality of Alt.", "\u03BB",
+                            "null.ncp",    "Non-centrality of Null", "\u03BB\u2080\u2009",
+                            "chisq.alpha", "Critical Value",         "Inv-\u03C7\u00B2(\u03B1, \u03BB\u2080)\u2009"),
                           nrow = 3, dimnames = list(c("var.name", "ascii", "utf"), NULL)))
 
     cat(.keyparms(x, parms_mtx, utf, digits))
@@ -528,21 +608,21 @@
   cat(x$test, "\n\n", sep = "")
 
   if (utf) {
-    h0_text <- ifelse(x$ncp.null == 0, "\u03BB = \u03BB\u2080", "0 \u2264 \u03BB \u2264 \u03BB\u2080")
-    h1_text <- ifelse(x$ncp.null == 0, "\u03BB > \u03BB\u2080", "\u03BB > \u03BB\u2080")
+    h0_text <- ifelse(x$null.ncp == 0, "\u03BB = \u03BB\u2080", "0 \u2264 \u03BB \u2264 \u03BB\u2080")
+    h1_text <- ifelse(x$null.ncp == 0, "\u03BB > \u03BB\u2080", "\u03BB > \u03BB\u2080")
   } else {
-    h0_text <- ifelse(x$ncp.null == 0, "ncp = 0", "0 <= ncp <= null.ncp")
-    h1_text <- ifelse(x$ncp.null == 0, "ncp > 0", "ncp > null.ncp")
+    h0_text <- ifelse(x$null.ncp == 0, "ncp = 0", "0 <= ncp <= null.ncp")
+    h1_text <- ifelse(x$null.ncp == 0, "ncp > 0", "ncp > null.ncp")
   }
   cat(.hypotheses(h0_text, h1_text, utf))
 
   if (verbose == 2) {
-    #                      | var.name        |  ascii                  |  utf
-    parms_mtx <- t(matrix(c("df1",             "Num. Deg. of Freedom",   "df1",
-                            "df2",             "Denom. Deg. of Freedom", "df2",
-                            "ncp.alternative", "Non-centrality of Alt.", "\u03BB",
-                            "ncp.null",        "Non-centrality of Null", "\u03BB\u2080\u2009",
-                            "f.alpha",         "Critical Value",         "F\u207B\u00B9(\u03B1, \u03BB\u2080)\u2009\u2009"),
+    #                      | var.name |  ascii                  |  utf
+    parms_mtx <- t(matrix(c("df1",      "Num. Deg. of Freedom",   "df1",
+                            "df2",      "Denom. Deg. of Freedom", "df2",
+                            "ncp",      "Non-centrality of Alt.", "\u03BB",
+                            "null.ncp", "Non-centrality of Null", "\u03BB\u2080\u2009",
+                            "f.alpha",  "Critical Value",         "F\u207B\u00B9(\u03B1, \u03BB\u2080)\u2009\u2009"),
                           nrow = 3, dimnames = list(c("var.name", "ascii", "utf"), NULL)))
 
     cat(.keyparms(x, parms_mtx, utf, digits))
@@ -570,16 +650,16 @@
 
   tgt <- ifelse(utf, "\u03BB",       "ncp")
   mrg <- ifelse(utf, "\u03BB\u2080", "null.ncp")
-  h0_text <- .h0_twoone(tgt, mrg, utf, alt = x$alternative, val.alt = x$ncp.alternative, val.null = x$ncp.null)
-  h1_text <- .h1_twoone(tgt, mrg, utf, alt = x$alternative, val.alt = x$ncp.alternative, val.null = x$ncp.null)
+  h0_text <- .h0_twoone(tgt, mrg, utf, alt = x$alternative, val.alt = x$ncp, val.null = x$null.ncp)
+  h1_text <- .h1_twoone(tgt, mrg, utf, alt = x$alternative, val.alt = x$ncp, val.null = x$null.ncp)
   cat(.hypotheses(h0_text, h1_text, utf))
 
   if (verbose == 2) {
-    #                      | var.name        |  ascii                  |  utf
-    parms_mtx <- t(matrix(c("df",              "Degrees of Freedom",     "df",
-                            "ncp.alternative", "Non-centrality of Alt.", "\u03BB",
-                            "ncp.null",        "Non-centrality of Null", "\u03BB\u2080\u2009",
-                            "t.alpha",         "Critical Value",         "T\u207B\u00B9(\u03B1, \u03BB\u2080)\u2009\u2009"),
+    #                      | var.name |  ascii                  |  utf
+    parms_mtx <- t(matrix(c("df",       "Degrees of Freedom",     "df",
+                            "ncp",      "Non-centrality of Alt.", "\u03BB",
+                            "null.ncp", "Non-centrality of Null", "\u03BB\u2080\u2009",
+                            "t.alpha",  "Critical Value",         "T\u207B\u00B9(\u03B1, \u03BB\u2080)\u2009\u2009"),
                           nrow = 3, dimnames = list(c("var.name", "ascii", "utf"), NULL)))
     if (is.infinite(x$df)) parms_mtx <- parms_mtx[-1, ]
 
@@ -637,7 +717,7 @@
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-.print.pwrss.student <- function(x, digits = 3, verbose = 1, utf = TRUE, ...) {
+.print.pwrss.ttest <- function(x, digits = 3, verbose = 1, utf = TRUE, ...) {
 
 
   cat(.header(x$requested, utf))
@@ -645,19 +725,17 @@
 
   tgt <- ifelse(utf, "d - d\u2080", "d - null.d")
   mrg <- ifelse(utf, "\u03B4",      "margin")
-  h0_text <- .h0_twoone(tgt, mrg, utf, alt = x$alternative, val.alt = x$ncp.alternative, val.null = x$ncp.null, val.mrg = x$margin)
-  h1_text <- .h1_twoone(tgt, mrg, utf, alt = x$alternative, val.alt = x$ncp.alternative, val.null = x$ncp.null, val.mrg = x$margin)
+  h0_text <- .h0_twoone(tgt, mrg, utf, alt = x$alternative, val.alt = x$ncp, val.null = x$null.ncp, val.mrg = x$margin)
+  h1_text <- .h1_twoone(tgt, mrg, utf, alt = x$alternative, val.alt = x$ncp, val.null = x$null.ncp, val.mrg = x$margin)
   cat(.hypotheses(h0_text, h1_text, utf))
 
   if (verbose == 2) {
-    #                      | var.name        |  ascii                  |  utf
-    parms_mtx <- t(matrix(c("d",               "Cohen's d",              "d",
-                            "null.d",          "Cohen's d Under Null",   "d\u2080\u2009",
-                            "margin",          "Margin",                 "\u03B4",
-                            "df",              "Degrees of Freedom",     "df",
-                            "ncp.alternative", "Non-centrality of Alt.", "\u03BB",
-                            "ncp.null",        "Non-centrality of Null", "\u03BB\u2080\u2009",
-                            "t.alpha",         "Critical Value",         "T\u207B\u00B9(\u03B1, \u03BB\u2080)\u2009\u2009"),
+    #                      | var.name |  ascii                  |  utf
+    parms_mtx <- t(matrix(c("margin",   "Margin",                 "\u03B4",
+                            "df",       "Degrees of Freedom",     "df",
+                            "ncp",      "Non-centrality of Alt.", "\u03BB",
+                            "null.ncp", "Non-centrality of Null", "\u03BB\u2080\u2009",
+                            "t.alpha",  "Critical Value",         "T\u207B\u00B9(\u03B1, \u03BB\u2080)\u2009\u2009"),
                           nrow = 3, dimnames = list(c("var.name", "ascii", "utf"), NULL)))
 
     cat(.keyparms(x, parms_mtx, utf, digits))
@@ -667,17 +745,17 @@
 
   if (verbose == 2) {
     #                     | ascii                                                |  utf
-    defs_mtx <- t(matrix(c("",                                                     "d \u2009\u2009: Cohen's d under alternative",
+    defs_mtx <- t(matrix(c("",                                                     "d\u2009 : Cohen's d under alternative",
                            "",                                                     "d\u2080 : Cohen's d under null",
-                           "Margin : Smallest d - null.d difference that matters", "\u03B4 \u2009\u2009: Margin - ignorable d - d\u2080 difference",
-                           "",                                                     "\u03BB \u2009\u2009: Non-centrality parameter under alternative",
+                           "Margin : Smallest d - null.d difference that matters", "\u03B4\u2009 : Margin - ignorable d - d\u2080 difference",
+                           "",                                                     "\u03BB\u2009 : Non-centrality parameter under alternative",
                            "",                                                     "\u03BB\u2080 : Non-centrality parameter under null"),
                   nrow = 2, dimnames = list(c("ascii", "utf"), NULL)))
 
     cat(.defs(defs_mtx, utf))
   }
 
-} # .print.pwrss.student() ---------------------------------------------------------------------------------------------
+} # .print.pwrss.ttest() -----------------------------------------------------------------------------------------------
 
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -700,10 +778,8 @@
   cat(.hypotheses(h0_text, h1_text, utf))
 
   if (verbose == 2) {
-    #               | var.name  |  ascii                |  utf
-    parms_vec   <- c("d",         "Cohen's d",             "d",
-                     "null.d",    "Cohen's d Under Null",  "d\u2080\u2009",
-                     "margin",    "Margin",                "\u03B4")
+    #               | var.name  |  ascii                  |  utf
+    parms_vec   <- c("margin",    "Margin",                 "\u03B4")
     if (x$method == "guenther") {
       #             | var.name  |  ascii                  |  utf
       parms_vec <- c(parms_vec,
@@ -729,7 +805,7 @@
     #                     | ascii                                         |  utf
     defs_vec   <- c("",                                                     "d\u2009 : Cohen's d under alternative",
                     "",                                                     "d\u2080 : Cohen's d under null",
-                    "Margin : Smallest d - null.d difference that matters", "\u03B4 \u2009\u2009: Margin - ignorable d - d\u2080 difference")
+                    "Margin : Smallest d - null.d difference that matters", "\u03B4\u2009 : Margin - ignorable d - d\u2080 difference")
     if (x$method == "guenther") {
       #            | utf (ascii is "" to keep the correct shape)
       defs_vec <- c(defs_vec,
@@ -820,11 +896,11 @@
   cat(.hypotheses(h0_text, h1_text, utf))
 
   if (verbose == 2) {
-    #                      | var.name        |  ascii                  |  utf
-    parms_mtx <- t(matrix(c("df",              "Degrees of Freedom",     "df",
-                            "ncp.alternative", "Non-centrality of Alt.", "\u03BB",
-                            "ncp.null",        "Non-centrality of Null", "\u03BB\u2080\u2009",
-                            "chisq.alpha",     "Critical Value",         "Inv-\u03C7\u00B2(\u03B1, \u03BB\u2080)\u2009"),
+    #                      | var.name    |  ascii                  |  utf
+    parms_mtx <- t(matrix(c("df",          "Degrees of Freedom",     "df",
+                            "ncp",         "Non-centrality of Alt.", "\u03BB",
+                            "null.ncp",    "Non-centrality of Null", "\u03BB\u2080\u2009",
+                            "chisq.alpha", "Critical Value",         "Inv-\u03C7\u00B2(\u03B1, \u03BB\u2080)\u2009"),
                           nrow = 3, dimnames = list(c("var.name", "ascii", "utf"), NULL)))
 
     cat(.keyparms(x, parms_mtx, utf, digits))
@@ -841,7 +917,7 @@
                            "P[i,.] : Marginal probability for row i (sum over j)",       "P[i,.] : Marginal prob. for row i (sum over j)",
                            "P[.,j] : Marginal probability for column j (sum over i)",    "P[.,j] : Marginal prob. for column j (sum over i)\n",
                            "",                                                           "\u03BB      : Non-centrality parameter under alternative",
-                           "",                                                           "\u03BB\u2080     \u2009: Non-centrality parameter under null"),
+                           "",                                                           "\u03BB\u2080\u2009    : Non-centrality parameter under null"),
                   nrow = 2, dimnames = list(c("ascii", "utf"), NULL)))
 
     cat(.defs(defs_mtx, utf))
@@ -939,8 +1015,8 @@
 
   if (verbose == 2) {
     #               | var.name         |  ascii            |  utf
-    parms_vec <-   c("delta",            "prob - null.prob", "P - P\u2080             \u2009",
-                     "odds.ratio",       "Odds Ratio",       "Odds Ratio (OR")
+    parms_vec <-   c("delta",            "prob - null.prob", "P - P\u2080\u2009",
+                     "odds.ratio",       "Odds Ratio (OR)",  "Odds Ratio (OR)")
     if (x$method == "exact") {
       #             | var.name         |  ascii            |  utf
       parms_vec <- c(parms_vec,
@@ -1003,8 +1079,8 @@
                             "margin",           "Margin",                 "\u03B4",
                             "df1",              "Num. Deg. of Freedom",   "df1",
                             "df2",              "Denom. Deg. of Freedom", "df2",
-                            "ncp.alternative",  "Non-centrality of Alt.", "\u03BB",
-                            "ncp.null",         "Non-centrality of Null", "\u03BB\u2080\u2009",
+                            "ncp",              "Non-centrality of Alt.", "\u03BB",
+                            "null.ncp",         "Non-centrality of Null", "\u03BB\u2080\u2009",
                             "f.alpha",          "Critical Value",         "F\u207B\u00B9(\u03B1, \u03BB\u2080)\u2009\u2009"),
                           nrow = 3, dimnames = list(c("var.name", "ascii", "utf"), NULL)))
 
@@ -1016,8 +1092,8 @@
   if (verbose == 2) {
     mrg_def_ascii <- sprintf("Margin : Smallest %s that matters", gsub("Change", "change", rsq))
     #                     | ascii       |  utf
-    defs_mtx <- t(matrix(c(mrg_def_ascii, "\u03B4 \u2009\u2009: Margin - ignorable R\u00B2 or \u0394R\u00B2",
-                           "",            "\u03BB \u2009\u2009: Non-centrality parameter under alternative",
+    defs_mtx <- t(matrix(c(mrg_def_ascii, "\u03B4\u2009 : Margin - ignorable R\u00B2 or \u0394R\u00B2",
+                           "",            "\u03BB\u2009 : Non-centrality parameter under alternative",
                            "",            "\u03BB\u2080 : Non-centrality parameter under null"),
                   nrow = 2, dimnames = list(c("ascii", "utf"), NULL)))
 
@@ -1035,19 +1111,19 @@
 
   tgt <- ifelse(utf, "\u03B2 - \u03B2\u2080", "beta - null.beta")
   mrg <- ifelse(utf, "\u03B4",                "margin")
-  h0_text <- .h0_twoone(tgt, mrg, utf, alt = x$alternative, val.alt = x$ncp.alternative, val.null = x$ncp.null, val.mrg = x$margin)
-  h1_text <- .h1_twoone(tgt, mrg, utf, alt = x$alternative, val.alt = x$ncp.alternative, val.null = x$ncp.null, val.mrg = x$margin)
+  h0_text <- .h0_twoone(tgt, mrg, utf, alt = x$alternative, val.alt = x$ncp, val.null = x$null.ncp, val.mrg = x$margin)
+  h1_text <- .h1_twoone(tgt, mrg, utf, alt = x$alternative, val.alt = x$ncp, val.null = x$null.ncp, val.mrg = x$margin)
   cat(.hypotheses(h0_text, h1_text, utf))
 
   if (verbose == 2) {
-    #                      | var.name          | ascii                 | utf
-    parms_mtx <- t(matrix(c("std.beta",        "Std. Beta Under Alt.",   "Std. \u03B2",
-                            "std.null.beta",   "Std. Beta Under Null",   "Std. \u03B2\u2080\u2009",
-                            "std.margin",      "Std. Margin",            "Std. \u03B4",
-                            "df",              "Degrees of Freedom",     "df",
-                            "ncp.alternative", "Non-centrality of Alt.", "\u03BB (Alternative)",
-                            "ncp.null",        "Non-centrality of Null", "\u03BB\u2080 (Null)\u2009",
-                            "t.alpha",         "Critical Value",         "T\u207B\u00B9(\u03B1, \u03BB\u2080)\u2009\u2009"),
+    #                      | var.name      | ascii                 | utf
+    parms_mtx <- t(matrix(c("std.beta",      "Std. Beta Under Alt.",   "Std. \u03B2",
+                            "std.null.beta", "Std. Beta Under Null",   "Std. \u03B2\u2080\u2009",
+                            "std.margin",    "Std. Margin",            "Std. \u03B4",
+                            "df",            "Degrees of Freedom",     "df",
+                            "ncp",           "Non-centrality of Alt.", "\u03BB (Alternative)",
+                            "null.ncp",      "Non-centrality of Null", "\u03BB\u2080 (Null)\u2009",
+                            "t.alpha",       "Critical Value",         "T\u207B\u00B9(\u03B1, \u03BB\u2080)\u2009\u2009"),
                           nrow = 3, dimnames = list(c("var.name", "ascii", "utf"), NULL)))
 
     cat(.keyparms(x, parms_mtx, utf, digits))
@@ -1058,25 +1134,25 @@
   if (verbose == 2) {
     #                     | ascii (utf at next line indented)
     defs_mtx <- t(matrix(c("beta                 : Regression coefficient under alt.",
-                             "\u03B2      : Regression coefficient under alternative",
+                             "\u03B2       : Regression coefficient under alternative",
                            "null.beta            : Regression coefficient under null",
                              "\u03B2\u2080\u2009     : Regression coefficient under null",
                            "margin               : Smallest beta - null.beta difference that matters\n",
-                             "\u03B4      : Margin(s) - ignorable \u03B2 - \u03B2\u2080 difference\n",
+                             "\u03B4       : Margin(s) - ignorable \u03B2 - \u03B2\u2080 difference\n",
                            "Std. Beta Under Alt. = beta * [SD(X) / SD(Y)]",
-                             "Std. \u03B2 = \u03B2 * [\u03C3(X) / \u03C3(Y)]",
+                             "Std. \u03B2  = \u03B2  * [\u03C3(X) / \u03C3(Y)]",
                            "Std. Beta Under Null = null.beta * [SD(X) / SD(Y)]",
                              "Std. \u03B2\u2080\u2009= \u03B2\u2080 * [\u03C3(X) / \u03C3(Y)]",
                            "Std. Margin          = margin * [SD(X) / SD(Y)]\n",
-                             "Std. \u03B4 = \u03B4 * [\u03C3(X) / \u03C3(Y)]\n",
+                             "Std. \u03B4  = \u03B4  * [\u03C3(X) / \u03C3(Y)]\n",
                            "SD(X)                : Standard deviation of the predictor",
-                             "\u03C3(X)   : Standard devition of the predictor",
+                             "\u03C3(X)    : Standard devition of the predictor",
                            "SD(Y)                : Standard deviation of the outcome",
-                             "\u03C3(Y)   : Standard devition of the outcome\n",
+                             "\u03C3(Y)    : Standard devition of the outcome\n",
                            "",
-                             "\u03BB      : Non-centrality parameter under alternative",
+                             "\u03BB       : Non-centrality parameter under alternative",
                            "",
-                             "\u03BB\u2080     \u2009: Non-centrality parameter under null"),
+                             "\u03BB\u2080\u2009     : Non-centrality parameter under null"),
                   nrow = 2, dimnames = list(c("ascii", "utf"), NULL)))
 
     cat(.defs(defs_mtx, utf))
@@ -1187,7 +1263,7 @@
       #            | utf (ascii is "" to keep the correct shape)
       defs_vec <- c(defs_vec[seq(length(defs_vec) - 1)], paste0(defs_vec[length(defs_vec)], "\n"),
                     "", "\u03BC            : Mean of the alternative distribution",
-                    "", "\u03BC\u2080           \u2009: Mean of the null distribution")
+                    "", "\u03BC\u2080\u2009          : Mean of the null distribution")
     }
 
     defs_mtx <- t(matrix(defs_vec, nrow = 2, dimnames = list(c("ascii", "utf"), NULL)))

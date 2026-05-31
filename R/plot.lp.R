@@ -115,7 +115,7 @@
       t.alpha <- c(t.alpha.lower, t.alpha.upper)
 
       # yt.alpha <- sadists::dlambdap(t.alpha, df = df, t = null.ncp)
-      yt.alpha.lower<- sadists::dlambdap(t.alpha.lower, df = df, t = min(null.ncp))
+      yt.alpha.lower <- sadists::dlambdap(t.alpha.lower, df = df, t = min(null.ncp))
       yt.alpha.upper <- sadists::dlambdap(t.alpha.upper, df = df, t = max(null.ncp))
       yt.alpha <- c(yt.alpha.lower, yt.alpha.upper)
 
@@ -125,7 +125,7 @@
 
     t.alpha.upper <- sadists::qlambdap(alpha / 2, df = df, t = null.ncp, lower.tail = FALSE)
     t.alpha.lower <- sadists::qlambdap(alpha / 2, df = df, t = null.ncp, lower.tail = TRUE)
-    t.alpha <- rbind(t.alpha.lower, t.alpha.upper)
+    t.alpha <- c(t.alpha.lower, t.alpha.upper)
 
     yt.alpha <- sadists::dlambdap(t.alpha, df = df, t = null.ncp)
 
@@ -143,7 +143,7 @@
   # x-axis limits
   ifelse(df < 20, prob.extreme <- 0.001, prob.extreme <- 0.0001)
   lower <- min(min(sadists::qlambdap(prob.extreme, df = df, t = ncp, lower.tail = TRUE)),
-               sadists::qlambdap(prob.extreme, df = df, t = min(null.ncp), lower.tail = TRUE), 
+               sadists::qlambdap(prob.extreme, df = df, t = min(null.ncp), lower.tail = TRUE),
                sadists::qlambdap(prob.extreme, df = df, t = max(null.ncp), lower.tail = TRUE))
   upper <- max(max(sadists::qlambdap(1 - prob.extreme, df = df, t = ncp, lower.tail = TRUE)),
                sadists::qlambdap(1 - prob.extreme, df = df, t = min(null.ncp), lower.tail = TRUE),
@@ -238,28 +238,29 @@
     .paint.lp.dist(ncp = null.ncp, df = df, xlim = c(t.alpha[2], max(xlim)), type = 1)
 
     .paint.lp.dist(ncp = ncp, df = df, xlim = c(t.alpha[1], t.alpha[2]), type = 2)
-    
+
     # type S region
-    if(ncp > null.ncp) {
+    if (ncp > null.ncp) {
       .paint.lp.dist(ncp = ncp, df = df, xlim = c(min(t.alpha), min(xlim)), type = 1)
     } else {
       .paint.lp.dist(ncp = ncp, df = df, xlim = c(max(t.alpha), max(xlim)), type = 1)
     }
-    
+
     # type S
-    Phi.p <- pt(q = max(t.alpha), df = df, ncp = ncp)  
-    Phi.m <- pt(q = min(t.alpha), df = df, ncp = ncp)  
+    Phi.p <- stats::pt(q = max(t.alpha), df = df, ncp = ncp)
+    Phi.m <- stats::pt(q = min(t.alpha), df = df, ncp = ncp)
     type.s <- min(Phi.m, 1 - Phi.p) / (Phi.m + 1 - Phi.p)
     type.s <- round(type.s, digits)
 
     # type M
-    type.m <- suppressWarnings({ 
-      bounds <- sadists::qlambdap(c(1e-10, 1 - 1e-10), df = df, t = ncp)     
-      integrand <- function(t) abs(t) * sadists::dlambdap(t, df = df, t= ncp)
-      numerator <- integrate(integrand, min(bounds), min(t.alpha))$value +
-        integrate(integrand, max(t.alpha), max(bounds))$value
-      denominator  <- abs(ncp) * (pt(min(t.alpha), df = df, ncp = ncp) + pt(max(t.alpha), df = df, ncp = ncp, lower.tail = FALSE))
-      numerator / denominator 
+    type.m <- suppressWarnings({
+      bounds <- sadists::qlambdap(c(1e-10, 1 - 1e-10), df = df, t = ncp)
+      integrand <- function(t) abs(t) * sadists::dlambdap(t, df = df, t = ncp)
+      numerator <- stats::integrate(integrand, min(bounds), min(t.alpha))$value +
+                   stats::integrate(integrand, max(t.alpha), max(bounds))$value
+      denominator  <- abs(ncp) * (stats::pt(min(t.alpha), df = df, ncp = ncp, lower.tail = TRUE) +
+                                  stats::pt(max(t.alpha), df = df, ncp = ncp, lower.tail = FALSE))
+      numerator / denominator
     })
     type.m <- round(type.m, digits)
 
@@ -297,12 +298,12 @@
                     col.lab = grDevices::adjustcolor(1, alpha.f = 0.8))
   }
 
-  if (power < 0) power <- 0
+  power[power < 0] <- 0
   alpha <- round(alpha, digits)
   beta <- round(1 - power, digits)
   power <- round(power, digits)
 
-  if(alternative == "two.sided") {
+  if (alternative == "two.sided") {
     graphics::legend("topright", cex = cex.legend,
                      c(as.expression(bquote(Power == .(power))),
                        as.expression(bquote(alpha == .(alpha))),

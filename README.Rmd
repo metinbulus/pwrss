@@ -49,7 +49,6 @@ knitr::opts_chunk$set(
 This work is licensed under the [GPL 3](https://github.com/metinbulus/pwrss/blob/main/LICENSE).
 
 <!---
-[![License](reference/figures/license.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 ## Giving back
 

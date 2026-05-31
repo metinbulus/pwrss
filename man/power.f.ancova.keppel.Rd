@@ -15,7 +15,7 @@ power.f.ancova.keppel(
   k.covariates = 0,
   power = NULL,
   alpha = 0.05,
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -53,7 +53,7 @@ correctly rejecting a false null hypothesis, denoted as
 incorrectly rejecting a true null hypothesis, denoted
 as \eqn{\alpha}.}
 
-\item{ceiling}{logical; whether sample size should be rounded up.
+\item{ceil.n}{logical; whether sample size should be rounded up.
 \code{TRUE} by default.}
 
 \item{verbose}{\code{1} by default (returns test, hypotheses, and
@@ -76,10 +76,11 @@ by default.}
 \item{n.total}{total sample size.}
 }
 \description{
-Calculates power or sample size for one-way ANOVA/ANCOVA. Set \code{k.cov =
-0} for one-way ANOVA (without any pretest or covariate adjustment). Set
-\code{k.cov > 0} in combination with \code{r2 > 0} for one-way ANCOVA (with
-pretest or covariate adjustment).
+Calculates power, sample size or effect size for one-way ANOVA/ANCOVA. Set
+\code{k.covariates = 0} for one-way ANOVA (without any pretest or covariate
+adjustment). Set \code{k.covariates > 0} in combination with
+\code{r.squared > 0} for one-way ANCOVA (with pretest or covariate
+adjustment).
 
 Formulas are validated using the PASS documentation.
 }
@@ -97,7 +98,7 @@ power.f.ancova.keppel(mu.vector = c(0.50, 0), # marginal means
                       sd.vector = c(1, 1), # unadjusted standard deviations
                       n.vector = NULL, # sample size (will be calculated)
                       p.vector = c(0.50, 0.50), # balanced allocation
-                      k.cov = 1, # number of covariates
+                      k.covariates = 1, # number of covariates
                       r.squared = 0.50, # explanatory power of covariates
                       alpha = 0.05, # Type 1 error rate
                       power = .80)

@@ -37,8 +37,8 @@
                    col.ticks = "gray30", col.axis = "gray30")
 
     graphics::axis(side = 2,
-                   #at = seq(0, ymax, 0.02),
-                   #labels = seq(0, ymax, 0.02),
+                   #at = seq(0, y.max, 0.02),
+                   #labels = seq(0, y.max, 0.02),
                    tick = TRUE,
                    col.ticks = "gray30", col.axis = "gray30")
 
@@ -113,17 +113,13 @@
 
   alternative <- tolower(match.arg(alternative))
 
-  check.sample.size(size)
+  check.size(size)
   check.proportion(prob)
-  # null.prob checked below
+  null.prob <- check.margins(null.prob, check.proportion, alternative)
   check.proportion(alpha)
 
   if (size < 10)
     stop("Number of trials should be greater than 10 for plotting.", call. = FALSE)
-
-  if (alternative == "two.one.sided" && length(null.prob) == 1)
-    null.prob <- rbind(prob - abs(null.prob - prob), prob + abs(null.prob - prob))
-  check.margins(null.prob, check.proportion, alternative)
 
   # critical binom line segment coordinates
   if (alternative == "two.one.sided") {
@@ -205,11 +201,11 @@
 
 
   # y-axis limits
-  ymax.HA <- stats::dbinom(round(prob * size), size = size, prob = prob)
-  ymax.H0 <- stats::dbinom(round(null.prob * size), size = size, prob = null.prob)
+  y.max.HA <- stats::dbinom(round(prob * size), size = size, prob = prob)
+  y.max.H0 <- stats::dbinom(round(null.prob * size), size = size, prob = null.prob)
 
-  ymax <- max(c(ymax.HA, ymax.H0))
-  ylim <- c(0, ymax * 1.20)
+  y.max <- max(c(y.max.HA, y.max.H0))
+  ylim <- c(0, y.max * 1.20)
 
   plot.window.dim <- grDevices::dev.size("cm")
   cex.legend <- min(plot.window.dim[1] / 18, plot.window.dim[2] / 15)
@@ -226,11 +222,11 @@
     .plot.binom.dist(prob = prob, size = size, xlim = xlim, ylim = ylim, type = 2)
 
 
-    graphics::text(round(prob * size), ymax.HA * 1.05,
+    graphics::text(round(prob * size), y.max.HA * 1.05,
                    labels = expression(H[1]),
                    cex = cex.legend, col = grDevices::adjustcolor(4, alpha.f = 1))
 
-    graphics::text(round(null.prob * size), ymax.H0 * 1.05,
+    graphics::text(round(null.prob * size), y.max.H0 * 1.05,
                    labels = expression(H[0]),
                    cex = cex.legend, col = grDevices::adjustcolor(2, alpha.f = 1))
 
@@ -240,11 +236,11 @@
     graphics::par(new = TRUE)
     .plot.binom.dist(prob = null.prob, size = size, xlim = xlim, ylim = ylim, type = 1)
 
-    graphics::text(round(prob * size), ymax.HA * 1.05,
+    graphics::text(round(prob * size), y.max.HA * 1.05,
                    labels = expression(H[1]),
                    cex = cex.legend, col = grDevices::adjustcolor(4, alpha.f = 1))
 
-    graphics::text(round(null.prob * size), ymax.H0 * 1.05,
+    graphics::text(round(null.prob * size), y.max.H0 * 1.05,
                    labels = expression(H[0]),
                    cex = cex.legend, col = grDevices::adjustcolor(2, alpha.f = 1))
 
@@ -317,9 +313,9 @@
   graphics::title(main = plot.main, line = 2, cex.main = cex.title)
   graphics::title(sub = plot.sub, line = 3, cex.sub = cex.title)
   graphics::title(ylab = "Probability Density", line = 2.2, cex.lab = cex.label, col.lab = "grey30")
-  graphics::title(xlab = paste0("X ~ Binomial (n =", size, ")"), line = 2.2, cex.lab = cex.label, col.lab = "grey30")
+  graphics::title(xlab = sprintf("X ~ Binomial (n = %d)", size), line = 2.2, cex.lab = cex.label, col.lab = "grey30")
 
-  if (power < 0) power <- 0
+  power[power < 0] <- 0
   alpha <- round(alpha, 2)
   beta <- round(1 - power, 2)
   power <- round(power, 2)

@@ -2,11 +2,11 @@
 # Chi-square test for independence/goodness-of-fit #
 ####################################################
 
-#' Power and Sample Size for Chi-square Goodness-of-Fit or Independence Tests
+#' Power Analysis for Chi-square Goodness-of-Fit or Independence Tests
 #'
 #' @description
-#' Calculates power or sample size (only one can be NULL at a time) for
-#' Chi-square goodness-of-fit or independence tests.
+#' Calculates power, sample size or effect size (only one can be NULL at a
+#' time) for Chi-square goodness-of-fit or independence tests.
 #'
 #' @details
 #' * NB: The \code{pwrss.chisq.gofit()} function is deprecated. However, it
@@ -33,7 +33,7 @@
 #'                \eqn{1 - \beta}.
 #' @param alpha   type 1 error rate, defined as the probability of incorrectly
 #'                rejecting a true null hypothesis, denoted as \eqn{\alpha}.
-#' @param ceiling logical; whether sample size should be rounded up.
+#' @param ceil.n  logical; whether sample size should be rounded up.
 #'                \code{TRUE} by default.
 #' @param verbose \code{1} by default (returns test, hypotheses, and results),
 #'                if \code{2} a more detailed output is given (plus key
@@ -49,6 +49,7 @@
 #'   \item{ncp}{non-centrality parameter under alternative.}
 #'   \item{null.ncp}{non-centrality parameter under null.}
 #'   \item{chisq.alpha}{critical value.}
+#'   \item{w}{Cohen's w effect size under alternative.}
 #'   \item{power}{statistical power \eqn{(1-\beta)}.}
 #'   \item{n}{total sample size.}
 #'
@@ -81,7 +82,7 @@
 #' # girls are underdiagnosed with ADHD?                      #
 #' # ---------------------------------------------------------#
 #'
-#' ## from http://archive.today/E2hqM
+#' ## from https://web.archive.org/web/20250601054306/https://time.com/growing-up-with-adhd/
 #' ## 5.6 percent of girls and 13.2 percent of boys are diagnosed with ADHD
 #' prob.matrix <- rbind(c(0.056, 0.132),
 #'                      c(0.944, 0.868))
@@ -114,23 +115,23 @@
 #' power.chisq.gof(w = 0.03022008, df = 4, power = 0.80, alpha = 0.05)
 #'
 #' @export power.chisq.gof
-power.chisq.gof <- function(w, null.w = 0, df,
+power.chisq.gof <- function(w = NULL, null.w = 0, df,
                             n = NULL, power = NULL, alpha = 0.05,
-                            ceiling = TRUE, verbose = 1, utf = FALSE) {
+                            ceil.n = TRUE, verbose = 1, utf = FALSE) {
 
-  func.parms <- clean.parms(as.list(environment()))
+  func.parms <- as.list(environment())
 
-  check.positive(w)
-  check.nonnegative(null.w)
+  if (!is.null(w)) check.proportion(w)
+  check.proportion(null.w)
   check.positive(df)
   if (!is.null(n)) check.sample.size(n)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   check.proportion(alpha)
-  check.logical(ceiling, utf)
-  verbose <- ensure_verbose(verbose)
-  requested <- check.n_power(n, power)
+  check.logical(ceil.n, utf)
+  verbose <- ensure.verbose(verbose)
+  requested <- get.requested(es = w, n = n, power = power)
 
-  if (w < null.w)
+  if (!is.null(w) && w < null.w)
     stop("`w` should be greater than or equal to `null.w`.", call. = FALSE)
 
   pwr.chisq <- function(w, null.w, df, n, alpha) {
@@ -148,68 +149,52 @@ power.chisq.gof <- function(w, null.w = 0, df,
 
   } # pwr.chisq
 
-
-  ss.chisq <- function(w, null.w, df, power, alpha) {
-
-    n <- try(silent = TRUE,
-             suppressWarnings({
-               stats::uniroot(function(n) {
-                 power - pwr.chisq(w = w, null.w = null.w,
-                                   df = df, n = n, alpha = alpha)$power
-               }, interval = c(2, 1e10))$root
-             }) # supressWarnings
-
-    ) # try
-
-    if (inherits(n, "try-error") || n == 1e10)
-      stop("Design is not feasible.", call. = FALSE)
-
-    n
-
-  } # ss.chisq
-
+  min.pwr <- function(w, n, power) {
+    power - pwr.chisq(w = w, null.w = null.w, df = df, n = n, alpha = alpha)$power
+  } # min.pwr (for uniroot)
 
   if (requested == "n") {
 
-    n <- ss.chisq(w = w, null.w = null.w, df = df, power = power, alpha = alpha)
+    n <- try(stats::uniroot(function(n) min.pwr(w, n, power), interval = c(2, 1e10))$root, silent = TRUE)
+    if (inherits(n, "try-error") || n == 1e10) stop("Design is not feasible.", call. = FALSE)
 
-    if (ceiling) n <- ceiling(n)
+    if (ceil.n) n <- ceiling(n)
+
+  } else if (requested == "es") {
+
+    w <- try(stats::uniroot(function(w) min.pwr(w, n, power), interval = c(0, 1))$root, silent = TRUE)
+    if (inherits(w, "try-error")) stop("Design is not feasible.", call. = FALSE)
 
   }
 
-  # calculate power (if requested == "power") or update it (if requested == "n")
+  # calculate power (if requested == "power") or update it (if requested == "n" / "es")
   pwr.obj <- pwr.chisq(w = w, null.w = null.w, df = df, n = n, alpha = alpha)
-
-  power <- pwr.obj$power
-  ncp.alternative <- pwr.obj$lambda
-  ncp.null <- pwr.obj$null.lambda
-  chisq.alpha <- pwr.obj$chisq.alpha
-
-  test <- "Chi-Square Test for Goodness-of-Fit or Independence"
 
   if (verbose > 0) {
 
     print.obj <- list(requested = requested,
-                      test = test,
+                      test = "Chi-Square Test for Goodness-of-Fit or Independence",
+                      w = w,
                       n = n,
                       df = df,
-                      ncp.alternative = ncp.alternative,
-                      ncp.null = ncp.null,
-                      chisq.alpha = chisq.alpha,
+                      ncp = pwr.obj$lambda,
+                      null.ncp = pwr.obj$null.lambda,
+                      chisq.alpha = pwr.obj$chisq.alpha,
                       alpha = alpha,
-                      power = power)
+                      power = pwr.obj$power)
 
     .print.pwrss.gof(print.obj, verbose = verbose, utf = utf)
 
   }
 
   invisible(structure(list(parms = func.parms,
-                           test = test,
+                           test = "chisq",
                            df = df,
-                           ncp = ncp.alternative,
-                           null.ncp = ncp.null,
-                           chisq.alpha = chisq.alpha,
-                           power = power,
+                           ncp = pwr.obj$lambda,
+                           null.ncp = pwr.obj$null.lambda,
+                           chisq.alpha = pwr.obj$chisq.alpha,
+                           w = w,
+                           power = pwr.obj$power,
                            n = n),
                       class = c("pwrss", "chisq", "gof")))
 
@@ -221,10 +206,10 @@ pwrss.chisq.gofit <- function(p1 = NULL, p0 = NULL,
                               n = NULL, power = NULL,
                               alpha = 0.05, verbose = TRUE) {
 
-  verbose <- ensure_verbose(verbose)
+  verbose <- ensure.verbose(verbose)
 
   # p1, p0, w, and df are checked below
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   if (!is.null(n)) check.sample.size(n)
   check.proportion(alpha)
 
@@ -255,7 +240,7 @@ pwrss.chisq.gofit <- function(p1 = NULL, p0 = NULL,
 
   gof.obj <- power.chisq.gof(w = w, null.w = 0, df = df,
                              n = n, power = power, alpha = alpha,
-                             ceiling = TRUE, verbose = verbose)
+                             ceil.n = TRUE, verbose = verbose)
 
   # cat("This function will be removed in the future. \n Please use power.chisq.gof() function. \n")
 

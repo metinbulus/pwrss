@@ -12,6 +12,7 @@ power.z.poisson(
   rate.ratio = NULL,
   beta0 = NULL,
   beta1 = NULL,
+  req.sign = "+",
   n = NULL,
   power = NULL,
   r.squared.predictor = 0,
@@ -20,7 +21,7 @@ power.z.poisson(
   alternative = c("two.sided", "one.sided"),
   method = c("demidenko(vc)", "demidenko", "signorini"),
   distribution = "normal",
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -39,6 +40,9 @@ rate.}
 \item{beta1}{the natural logarithm of the relative increase
 in the mean event rate for one unit increase in
 the predictor.}
+
+\item{req.sign}{sign of the beta1 coefficient (when minimum
+detectable effect or beta1 is of interest).}
 
 \item{n}{integer; sample size.}
 
@@ -75,12 +79,10 @@ precise.}
 
 \item{distribution}{character; distribution family. Can be one of the
 \code{c("normal", "poisson", "uniform",
-                           "exponential", "binomial", "bernouilli",
-                           "lognormal")} for Demidenko procedures, and 
-                           \code{c("normal", "binomial", "bernouilli")} 
-                           for the Signorini procedure}
+"exponential", "binomial", "bernouilli",
+"lognormal")}.}
 
-\item{ceiling}{logical; whether sample size should be rounded
+\item{ceil.n}{logical; whether sample size should be rounded
 up. \code{TRUE} by default.}
 
 \item{verbose}{\code{1} by default (returns test, hypotheses,

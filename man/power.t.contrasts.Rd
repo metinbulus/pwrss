@@ -19,7 +19,7 @@ power.t.contrasts(
   alpha = 0.05,
   adjust.alpha = c("none", "tukey", "bonferroni", "holm", "hochberg", "hommel", "BH",
     "BY", "fdr"),
-  ceiling = TRUE,
+  ceil.n = TRUE,
   verbose = 1,
   utf = FALSE
 )
@@ -73,7 +73,7 @@ test of contrasts.}
 "BY", "fdr") to control Type 1 error. See
 \code{?stats::p.adjust}.}
 
-\item{ceiling}{logical; \code{TRUE} by default. If \code{FALSE}
+\item{ceil.n}{logical; \code{TRUE} by default. If \code{FALSE}
 sample sizes in each cell are NOT rounded up.}
 
 \item{verbose}{\code{1} by default (returns test, hypotheses, and

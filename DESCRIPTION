@@ -14,7 +14,6 @@ License: GPL (>= 3)
 Language: en-US
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
 VignetteBuilder: knitr
 URL: https://metinbulus.github.io/pwrss/
 BugReports: https://github.com/metinbulus/pwrss/issues
@@ -25,3 +24,4 @@ Suggests: knitr,
           testthat (>= 3.0.0)
 Config/testthat/edition: 3
 ByteCompile: yes
+Config/roxygen2/version: 8.0.0

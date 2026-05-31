@@ -7,10 +7,9 @@
 #' and Paired Designs)
 #'
 #' @description
-#' Calculates power or sample size (only one can be NULL at a time) for
-#' non-parametric rank-based tests. The following tests and designs are
-#' available:
-#'
+#' Calculates power, sample size or effect size (only one can be NULL at a
+#' time) for non-parametric rank-based tests. The following tests and designs
+#' are available:
 #' * Wilcoxon Signed-Rank Test (One Sample)
 #' * Wilcoxon Rank-Sum or Mann-Whitney U Test (Independent Samples)
 #' * Wilcoxon Matched-Pairs Signed-Rank Test (Paired Samples)
@@ -54,7 +53,7 @@
 #'                     "double.exponential", "laplace", or "logistic".
 #' @param method       character; non-parametric approach: "guenther" (default)
 #'                     or "noether"
-#' @param ceiling      logical; whether sample size should be rounded up.
+#' @param ceil.n       logical; whether sample size should be rounded up.
 #'                     \code{TRUE} by default.
 #' @param verbose      \code{1} by default (returns test, hypotheses, and
 #'                     results), if \code{2} a more detailed output is given
@@ -190,112 +189,96 @@
 #'                 alternative = "two.one.sided")
 #'
 #' @export power.np.wilcoxon
-power.np.wilcoxon <- function(d, null.d = 0, margin = 0,
+power.np.wilcoxon <- function(d = NULL, null.d = 0, margin = 0,
                               n.ratio = 1, n2 = NULL, power = NULL, alpha = 0.05,
                               alternative = c("two.sided", "one.sided", "two.one.sided"),
                               design = c("independent", "paired", "one.sample"),
                               distribution = c("normal", "uniform", "double.exponential", "laplace", "logistic"),
                               method = c("guenther", "noether"),
-                              ceiling = TRUE, verbose = 1, utf = FALSE) {
+                              ceil.n = TRUE, verbose = 1, utf = FALSE) {
 
   alternative <- tolower(match.arg(alternative))
   distribution <- tolower(match.arg(distribution))
   method <- tolower(match.arg(method))
   design <- tolower(match.arg(design))
-  func.parms <- clean.parms(as.list(environment()))
+  func.parms <- as.list(environment())
 
-  check.numeric(d, null.d)
-  check.margins(margin, check.numeric, alternative)
+  if (!is.null(d)) check.numeric(d)
+  check.numeric(null.d)
+  margin <- check.margins(margin, check.numeric, alternative)
   check.positive(n.ratio)
   if (!is.null(n2)) check.sample.size(n2)
-  if (!is.null(power)) check.proportion(power)
+  if (!is.null(power)) check.power(power)
   check.proportion(alpha)
-  check.logical(ceiling, utf)
-  verbose <- ensure_verbose(verbose)
-  requested <- check.n_power(n2, power)
+  check.logical(ceil.n, utf)
+  verbose <- ensure.verbose(verbose)
+  requested <- get.requested(es = d, n = n2, power = power)
 
   if (any(abs(margin) > 10))
       stop("Possibly incorrect value for `margin` (should be within -10 ... 10).", call. = FALSE)
 
-  independent <- (design == "independent")
+  if (method == "noether" && design != "independent")
+    stop("Specify `method` = \"guenther\" to request Wilcoxon signed-rank test for matched pairs.", call. = FALSE)
 
-  if (method == "noether" && isFALSE(independent))
-    stop("Specify `method` = 'guenther' to request Wilcoxon signed-rank test for matched pairs.", call. = FALSE)
+  if (requested == "es" && alternative == "two.one.sided")
+    stop("Determining the effect size is not possible if `alternative` is \"two.one.sided\".", call. = FALSE)
 
-  pwr.wilcox <- function(d, null.d, margin, n2, n.ratio, alpha, independent, alternative, method) {
+  propss <- n.ratio / (n.ratio + 1)
+
+  pwr.wilcox <- function(d, null.d, margin, n2, n.ratio, alpha, design, alternative, method) {
 
     n1 <- n2 * n.ratio
 
     if (method == "noether") {
 
-      propss <- n.ratio / (n.ratio + 1)
-
       prob <- d.to.cles(d = d, design = design, verbose = 0)$cles
       null.prob <- d.to.cles(d = null.d, design = design, verbose = 0)$cles
 
       if (alternative == "two.one.sided") {
-
         ignorable.prob.lower <- d.to.cles(d = min(margin) + null.d, design = design, verbose = 0)$cles
-        margin.prob.lower <- ignorable.prob.lower - null.prob
-
         ignorable.prob.upper <- d.to.cles(d = max(margin) + null.d, design = design, verbose = 0)$cles
-        margin.prob.upper <- ignorable.prob.upper - null.prob
-
-        margin.prob <-  c(margin.prob.lower,  margin.prob.upper)
-
+        margin.prob <-  c(ignorable.prob.lower, ignorable.prob.upper) - null.prob
       } else {
-
-        ignorable.prob <- d.to.cles(d = margin + null.d, design = design, verbose = 0)$cles
-        margin.prob <- ignorable.prob - null.prob
+        margin.prob <- d.to.cles(d = margin + null.d, design = design, verbose = 0)$cles - null.prob
       }
 
-      lambda <- sqrt(n2 + n2 * n.ratio) * sqrt(12 * propss * (1 - propss)) * (prob - null.prob)
+      lambda      <- sqrt(n2 + n2 * n.ratio) * sqrt(12 * propss * (1 - propss)) * (prob - null.prob)
       null.lambda <- sqrt(n2 + n2 * n.ratio) * sqrt(12 * propss * (1 - propss)) * (margin.prob)
 
-      pwr.obj <- power.z.test(mean = lambda, null.mean = null.lambda,
-                              alpha = alpha, alternative = alternative,
-                              plot = FALSE, verbose = 0)
-
-      list(power = pwr.obj$power,
-           z.alpha = pwr.obj$z.alpha,
-           mean = pwr.obj$mean,
-           null.mean = pwr.obj$null.mean)
+      power.z.test(mean = lambda, null.mean = null.lambda, alpha = alpha, alternative = alternative,
+                   plot = FALSE, verbose = 0)[c("power", "z.alpha", "mean", "null.mean")]
 
     } else if (method == "guenther") {
 
-      if (independent) {
+      if (design == "independent") {
         df <- n1 + n2 - 2
-        lambda <- (d - null.d) / sqrt(1 / n1 + 1 / n2)
-        null.lambda <- (margin) / sqrt(1 / n1 + 1 / n2)
+        lambda      <- (d - null.d) / sqrt(1 / n1 + 1 / n2)
+        null.lambda <- (margin)     / sqrt(1 / n1 + 1 / n2)
       } else {
         df <- n2 - 1
-        lambda <- (d - null.d) / sqrt(1 / n2)
-        null.lambda <- (margin) / sqrt(1 / n2)
+        lambda      <- (d - null.d) / sqrt(1 / n2)
+        null.lambda <- (margin)     / sqrt(1 / n2)
       }
 
-      pwr.obj <- power.t.test(ncp = lambda, null.ncp = null.lambda, df = df,
-                              alpha = alpha, alternative = alternative,
-                              plot = FALSE, verbose = 0)
-
-      list(power = pwr.obj$power,
-           t.alpha = pwr.obj$t.alpha,
-           ncp = pwr.obj$ncp,
-           null.ncp = pwr.obj$null.ncp,
-           df = pwr.obj$df)
+      power.t.test(ncp = lambda, null.ncp = null.lambda, df = df, alpha = alpha, alternative = alternative,
+                   plot = FALSE, verbose = 0)[c("power", "t.alpha", "ncp", "null.ncp", "df")]
 
     }
 
-  } # pwr
+  } # pwr.wilcox
 
   # wilcoxon adjustment for guenther method
-  w <- switch(distribution,
-              `uniform` = 1,
-              `double.exponential` = 2 / 3,
-              `laplace` = 2 / 3,
-              `logistic` = 9 / pi ^ 2,
-              `normal` = pi / 3)
+  if (method == "guenther") {
+    w <- switch(distribution, `uniform` = 1, `double.exponential` = 2 / 3, `laplace` = 2 / 3,
+                              `logistic` = 9 / pi ^ 2, `normal` = pi / 3)
+  } else {
+    w <- 1
+  }
 
-  # ifelse(method == "noether", w.adj <- 1, w.adj <- w)
+  min.pwr <- function(d, n2, power) {
+    power - suppressWarnings(pwr.wilcox(d = d, null.d = null.d, margin = margin, n2 = n2 / w, n.ratio = n.ratio, alpha = alpha,
+                                        design = design, alternative = alternative, method = method))$power
+  } # min.pwr (for stats::uniroot)
 
   # calculate sample size
   if (requested == "n") {
@@ -304,64 +287,52 @@ power.np.wilcoxon <- function(d, null.d = 0, margin = 0,
     lambda.max <- 4
 
     if (method == "noether") {
-
-      propss <- n.ratio / (n.ratio + 1)
-      n.tot.max <- (lambda.max / (sqrt(12 * propss * (1 - propss)) * (H1_H0.min))) ^ 2
-      n2.max <- n.tot.max / (1 + n.ratio)
-
+      n2.max <- (lambda.max / (sqrt(12 * propss * (1 - propss)) * (H1_H0.min))) ^ 2 / (1 + n.ratio)
     } else {
-
-      if (independent) {
-        n2.max <- (1 + 1 / n.ratio) / (H1_H0.min / lambda.max) ^ 2
-      } else {
-        n2.max <- (lambda.max / H1_H0.min) ^ 2
-      }
-
+      n2.max <- ifelse(design == "independent", (1 + 1 / n.ratio) / (H1_H0.min / lambda.max) ^ 2, (lambda.max / H1_H0.min) ^ 2)
     }
+    val.rng <- c(4, n2.max) # power.t.test requires at least df = 3, hence the minumum N is 4
 
-    # n2.max <- 1e+08
-    # too big of a number throws warning in stats::uniroot()
-    # full precision may not have been achieved in 'pnt{final}'
-    # because ncp is too large
+    # estimation, using wilcoxon adjustment (* w)
+    n2 <- try(stats::uniroot(function(n2) min.pwr(d, n2 * w, power), interval = val.rng)$root * w, silent = TRUE)
+    if (inherits(n2, "try-error") || n2 == 1e10) stop("Design is not feasible.", call. = FALSE)
 
-    n2 <- try(silent = TRUE,
-              suppressWarnings({
-                stats::uniroot(function(n2) {
-                  power - pwr.wilcox(d = d, null.d = null.d, margin = margin,
-                                     n2 = n2, n.ratio = n.ratio, alpha = alpha,
-                                     independent = independent, alternative = alternative,
-                                     method = method)$power
-                }, interval = c(2, n2.max))$root
-              }) # supressWarnings
-    ) # try
+    n2 <- ifelse(ceil.n, ceiling(n2), n2)
 
-    if (inherits(n2, "try-error") || n2 == 1e10)
+  } else if (requested == "es") {
+
+    # a bit complicated because uniroot may fail with large N's because no local minimum can be found
+    # as a (slighly nasty) hack, we can add a minimum offset to power (increased iteratively) which may solve this problem
+    # NB: 10 ^ -Inf == 0 (i.e., we start without an offset)
+    for (o in c(-Inf, seq(-12, -6 + log10(n2), 1 / 3))) {
+      d  <- try(stats::uniroot(function(d) min.pwr(d, n2, power + 10 ^ o), interval = c(0, 10), tol = 1e-12)$root, silent = TRUE)
+      # exit the loop, if there is no error, or another error than that indicating that no local minimum can be found
+      if (uniroot_break(d)) break
+    } # for (o ...)
+    if (inherits(d, "try-error"))
       stop("Design is not feasible.", call. = FALSE)
-
-    # reverse wilcoxon adjustment
-    n2 <- ifelse(ceiling, ceiling(n2 * w), n2 * w)
 
   }
 
   pwr.obj <- pwr.wilcox(d = d, null.d = null.d, margin = margin,
                         n2 = n2 / w, n.ratio = n.ratio, alpha = alpha,
-                        independent = independent, alternative = alternative,
+                        design = design, alternative = alternative,
                         method = method)
 
-  if (pwr.obj$power < 0) stop("Design is not feasible.", call. = FALSE)
-
-  n1 <- ifelse(ceiling, ceiling(n2 * n.ratio), n2 * n.ratio)
-  if (independent) n <- c(n1 = n1, n2 = n2) else n <- n2
+  n1 <- ifelse(ceil.n, ceiling(n2 * n.ratio), n2 * n.ratio)
+  if (design == "independent") n <- c(n1 = n1, n2 = n2) else n <- n2
 
   if (method == "guenther") {
-    list.out <- list(n = n,
+    list.out <- list(d = d,
+                     n = n,
                      power = pwr.obj$power,
                      t.alpha = pwr.obj$t.alpha,
                      ncp = pwr.obj$ncp,
                      null.ncp = pwr.obj$null.ncp,
                      df = pwr.obj$df)
   } else if (method == "noether") {
-    list.out <- list(n = n,
+    list.out <- list(d = d,
+                     n = n,
                      power = pwr.obj$power,
                      z.alpha = pwr.obj$z.alpha,
                      mean = pwr.obj$mean,
@@ -373,14 +344,9 @@ power.np.wilcoxon <- function(d, null.d = 0, margin = 0,
 
   if (verbose > 0) {
 
-    test <- switch(design,
-                   `independent` = "Wilcoxon Rank-Sum Test (Independent Samples) \n(Wilcoxon-Mann-Whitney or Mann-Whitney U Test)",
-                   `paired`      = "Wilcoxon Signed-Rank Test (Paired Samples)",
-                   `one.sample`  = "Wilcoxon Signed-Rank Test (One Sample)")
-
-    print.obj <- c(list(requested = requested, test = test,
+    print.obj <- c(list(requested = requested, test = fmt_test_wilcoxon(design),
                         design = design, method = method, dist = distribution,
-                        d = d, null.d = null.d, margin = margin,
+                        null.d = null.d, margin = margin, # d is in list.out
                         alpha = alpha, alternative = alternative),
                    list.out)
 
@@ -414,7 +380,7 @@ pwrss.np.2groups <- function(mu1 = 0.20, mu2 = 0,
   method <- tolower(match.arg(method))
   alternative <- tolower(match.arg(alternative))
   distribution <- tolower(match.arg(distribution))
-  verbose <- ensure_verbose(verbose)
+  verbose <- ensure.verbose(verbose)
 
   null.d <- 0
   d <- means.to.d(mu1 = mu1, mu2 = mu2,
@@ -465,7 +431,7 @@ pwrss.np.2groups <- function(mu1 = 0.20, mu2 = 0,
                                   alternative = alternative,
                                   distribution = distribution,
                                   method = method,
-                                  ceiling = TRUE,
+                                  ceil.n = TRUE,
                                   verbose = verbose)
 
   # cat("This function will be removed in the future. \n Please use `power.np.wilcoxon()`. \n")
@@ -473,6 +439,13 @@ pwrss.np.2groups <- function(mu1 = 0.20, mu2 = 0,
   invisible(wilcox.obj)
 
 } # end of pwrss.np.2groups()
+
+fmt_test_wilcoxon <- function(design) {
+  switch(design,
+         `independent` = "Wilcoxon Rank-Sum Test (Independent Samples) \n(Wilcoxon-Mann-Whitney or Mann-Whitney U Test)",
+         `paired`      = "Wilcoxon Signed-Rank Test (Paired Samples)",
+         `one.sample`  = "Wilcoxon Signed-Rank Test (One Sample)")
+}
 
 #' @export pwrss.np.2means
 pwrss.np.2means <- function(...) {

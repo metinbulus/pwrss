@@ -6,9 +6,11 @@
 \title{Power Analysis for the Generic Binomial Test}
 \usage{
 power.binom.test(
-  size,
-  prob,
+  power = NULL,
+  size = NULL,
+  prob = NULL,
   null.prob = 0.5,
+  req.sign = "+",
   alpha = 0.05,
   alternative = c("two.sided", "one.sided", "two.one.sided"),
   plot = TRUE,
@@ -17,11 +19,21 @@ power.binom.test(
 )
 }
 \arguments{
-\item{size}{number of trials (zero or more).}
+\item{power}{statistical power \eqn{(1 - \beta)}; either \code{power},
+\code{size}, or \code{prob} needs to be NULL (and is then
+estimated).}
 
-\item{prob}{probability of success on each trial under alternative.}
+\item{size}{number of trials (zero or more); either \code{power}, \code{size},
+or \code{prob} needs to be NULL (and is then estimated).}
+
+\item{prob}{probability of success on each trial under alternative;
+either \code{power}, \code{size} or \code{prob} needs to be NULL (and is
+then estimated).}
 
 \item{null.prob}{probability of success on each trial under null.}
+
+\item{req.sign}{whether 'prob' is expected to be greater '+1', less than
+'-1', or within '0' the null.prob' bounds.}
 
 \item{alpha}{type 1 error rate, defined as the probability of
 incorrectly rejecting a true null hypothesis, denoted as
@@ -46,27 +58,36 @@ characters (if encoding allows for it). \code{FALSE} by
 default.}
 }
 \value{
+\item{power}{statistical power \eqn{(1 - \beta)}.}
 \item{size}{number of trials (zero or more).}
 \item{prob}{probability of success on each trial under alternative.}
 \item{null.prob}{probability of success on each trial under null.}
+\item{alpha}{type 1 error rate.}
+\item{alternative}{direction or type of the hypothesis test.}
 \item{binom.alpha}{critical value(s).}
-\item{power}{statistical power \eqn{(1-\beta)}.}
 }
 \description{
-Calculates power for the generic binomial test with (optional) Type 1 and
-Type 2 error plots.
+Calculates power or find Probability (Non-Centrality) for the generic
+binomial test with (optional) Type 1 and Type 2 error plots.
 }
 \examples{
 # one-sided
-power.binom.test(size = 200, prob = 0.6, null.prob = 0.5,
+power.binom.test(size = 200, prob = 0.6, null.prob = 0.5, alpha = 0.05,
+                 alternative = "one.sided")
+power.binom.test(power = 0.80, size = 200, req.sign = "+", null.prob = 0.5,
                  alpha = 0.05, alternative = "one.sided")
 
 # two-sided
-power.binom.test(size = 200, prob = 0.4, null.prob = 0.5,
+power.binom.test(size = 200, prob = 0.4, null.prob = 0.5, alpha = 0.05,
+                 alternative = "two.sided")
+power.binom.test(power = 0.80, size = 200, req.sign = "+", null.prob = 0.5,
                  alpha = 0.05, alternative = "two.sided")
 
 # equivalence
 power.binom.test(size = 200, prob = 0.5, null.prob = c(0.4, 0.6),
                  alpha = 0.05, alternative = "two.one.sided")
+power.binom.test(power = 0.80, size = 200, req.sign = "0",
+                 null.prob = c(0.4, 0.6), alpha = 0.05,
+                 alternative = "two.one.sided")
 
 }
