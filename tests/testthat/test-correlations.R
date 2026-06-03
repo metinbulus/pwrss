@@ -36,9 +36,9 @@ test_that("power.z.twocors.steiger works", {
                       n = 1138, power = 0.80, alpha = 0.05, alternative = "two.sided", pooled = TRUE, common.index = TRUE,
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "paired", delta = -0.099986603, q = -0.119241257, mean = -2.8007849,
-                      sd = 0.99942712, null.mean = 0, null.sd = 1, alternative = "two.sided",
-                      z.alpha = c(-1.959964, 1.959964), n = 1138, power = 0.799911821))
+                 list(test = "z", design = "paired", delta = -0.099998248, q = -0.11925453, mean = -2.80109957,
+                      sd = 0.99942698, null.mean = 0, null.sd = 1, alternative = "two.sided",
+                      z.alpha = c(-1.959964, 1.959964), n = 1138, power = 0.8))
 
     crrRes <- power.z.twocors.steiger(rho12 = 0.35, rho13 = NULL, rho23 = 0.05, req.sign = "+", n = 1138, power = 0.8,
                                       alpha = 0.05, alternative = "two.sided", common.index = TRUE, verbose = 0)
@@ -50,9 +50,9 @@ test_that("power.z.twocors.steiger works", {
                       n = 1138, power = 0.80, alpha = 0.05, alternative = "two.sided", pooled = TRUE, common.index = TRUE,
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "paired", delta = -0.099996841, q = -0.119252563, mean = -2.80105465,
-                      sd = 0.999426993, null.mean = 0, null.sd = 1, alternative = "two.sided",
-                      z.alpha = c(-1.959964, 1.959964), n = 1138, power = 0.79998742))
+                 list(test = "z", design = "paired", delta = -0.099998378, q = -0.11925449, mean = -2.80109954,
+                      sd = 0.999426976, null.mean = 0, null.sd = 1, alternative = "two.sided",
+                      z.alpha = c(-1.959964, 1.959964), n = 1138, power = 0.8))
 
     crrRes <- power.z.twocors.steiger(rho12 = 0.45, rho13 = 0.45, rho23 = 0.50, rho14 = 0.50, rho24 = 0.80, rho34 = 0.55,
                                       power = 0.8, alpha = 0.05, alternative = "two.sided", common.index = FALSE, verbose = 0)
@@ -91,9 +91,9 @@ test_that("power.z.twocors.steiger works", {
                       n = 643, power = 0.80, alpha = 0.05, alternative = "two.sided", pooled = TRUE, common.index = FALSE,
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "paired", delta = -0.09999484, q = -0.133674564, mean = -2.8019375,
+                 list(test = "z", design = "paired", delta = -0.099980748, q = -0.133656894, mean = -2.801562952,
                       sd = 0.99997767, null.mean = 0, null.sd = 1, alternative = "two.sided",
-                      z.alpha = c(-1.959964, 1.959964), n = 643, power = 0.80010482))
+                      z.alpha = c(-1.959964, 1.959964), n = 643, power = 0.799999985))
 
     crrRes <- power.z.twocors.steiger(rho12 = 0.45, rho13 = 0.45, rho23 = 0.50, rho14 = 0.50, rho24 = 0.80, rho34 = NULL,
                                       req.sign = "+", n = 643, power = 0.8, alpha = 0.05, alternative = "two.sided",
@@ -106,9 +106,9 @@ test_that("power.z.twocors.steiger works", {
                       n = 643, power = 0.80, alpha = 0.05, alternative = "two.sided", pooled = TRUE, common.index = FALSE,
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "paired", delta = -0.099998172, q = -0.133678415, mean = -2.80202023,
+                 list(test = "z", design = "paired", delta = -0.099982812, q = -0.133656392, mean = -2.80156311,
                       sd = 0.99997767, null.mean = 0, null.sd = 1, alternative = "two.sided",
-                      z.alpha = c(-1.959964, 1.959964), n = 643, power = 0.800127984))
+                      z.alpha = c(-1.959964, 1.959964), n = 643, power = 0.800000032))
 
     crrRes <- power.z.twocors.steiger(rho12 = 0.45, rho13 = 0.45, rho23 = 0.50, rho14 = 0.50, rho24 = 0.80, rho34 = 0.55, power = 0.8,
                                       alpha = 0.05, alternative = "two.sided", pooled = FALSE, common.index = FALSE, verbose = 0)
@@ -279,9 +279,9 @@ test_that("power.z.twocors works", {
                       alternative = "two.sided", ceil.n = TRUE, verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha",
                           "n", "n.total", "power")],
-                 list(test = "z", design = "independent", delta = -0.099988365, q = -0.106774264, mean = -2.8016802,
+                 list(test = "z", design = "independent", delta = -0.099984952, q = -0.106770514, mean = -2.80158179,
                       sd = 1, null.mean = 0, null.sd = 1, alternative = "two.sided", z.alpha = c(-1.959964, 1.959964),
-                      n = c(n1 = 1380, n2 = 1380), n.total = 2760, power = 0.80002755))
+                      n = c(n1 = 1380, n2 = 1380), n.total = 2760, power = 0.8))
 
     crrRes <- power.z.twocors(rho2 = 0.30, req.sign = "-", power = 0.80, n2 = 1380, alpha = 0.05, alternative = "two.sided", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "twocors", "independent"))
@@ -292,9 +292,9 @@ test_that("power.z.twocors works", {
                       alternative = "two.sided", ceil.n = TRUE, verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha",
                           "n", "n.total", "power")],
-                 list(test = "z", design = "independent", delta = -0.099973094, q = -0.106759023, mean = -2.80128026,
+                 list(test = "z", design = "independent", delta = -0.099984124, q = -0.106770513, mean = -2.8015818,
                       sd = 1, null.mean = 0, null.sd = 1, alternative = "two.sided", z.alpha = c(-1.959964, 1.959964),
-                      n = c(n1 = 1380, n2 = 1380), n.total = 2760, power = 0.799915575))
+                      n = c(n1 = 1380, n2 = 1380), n.total = 2760, power = 0.8))
 
     crrRes <- power.z.twocors(rho1 = 0.30, rho2 = 0.20, power = 0.80, alpha = 0.05, alternative = "one.sided", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "twocors", "independent"))
@@ -332,9 +332,9 @@ test_that("power.z.twocors works", {
                       alternative = "one.sided", ceil.n = TRUE, verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha",
                           "n", "n.total", "power")],
-                 list(test = "z", design = "independent", delta = 0.099960387, q = 0.106745787, mean = 2.4862833, sd = 1,
+                 list(test = "z", design = "independent", delta = 0.099968284, q = 0.106754012, mean = 2.4864749, sd = 1,
                       null.mean = 0, null.sd = 1, alternative = "one.sided", z.alpha = 1.64485363,
-                      n = c(n1 = 1088, n2 = 1088), n.total = 2176, power = 0.799946366))
+                      n = c(n1 = 1088, n2 = 1088), n.total = 2176, power = 0.8))
 
     crrRes <- power.z.twocors(rho2 = 0.20, req.sign = "+", power = 0.80, n2 = 1088, alpha = 0.05, alternative = "one.sided", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "twocors", "independent"))
@@ -345,9 +345,9 @@ test_that("power.z.twocors works", {
                       alternative = "one.sided", ceil.n = TRUE, verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha",
                           "n", "n.total", "power")],
-                 list(test = "z", design = "independent", delta = 0.09997318, q = 0.10675758, mean = 2.486558, sd = 1,
-                      null.mean = 0, null.sd = 1, alternative = "one.sided", z.alpha = 1.64485363,
-                      n = c(n1 = 1088, n2 = 1088), n.total = 2176, power = 0.80002327))
+                 list(test = "z", design = "independent", delta = 0.099969934, q = 0.106754011, mean = 2.48647486,
+                      sd = 1, null.mean = 0, null.sd = 1, alternative = "one.sided", z.alpha = 1.64485363,
+                      n = c(n1 = 1088, n2 = 1088), n.total = 2176, power = 0.8))
 
     crrRes <- power.z.twocors(rho1 = 0.30, rho2 = 0.20, n.ratio = 2, power = 0.80, alpha = 0.05, alternative = "two.sided", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "twocors", "independent"))
@@ -472,9 +472,9 @@ test_that("power.z.onecor works", {
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "design", "rho", "null.rho", "delta", "q", "mean", "sd", "null.mean", "null.sd",
                           "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "one.sample", rho = 0.19997665, null.rho = 0, delta = 0.19997665,
-                      q = 0.202708229, mean = 2.80148346, sd = 1, null.mean = 0, null.sd = 1, alternative = "two.sided",
-                      z.alpha = c(-1.959964, 1.959964), n = 194, power = 0.799972471))
+                 list(test = "z", design = "one.sample", rho = 0.199983479, null.rho = 0, delta = 0.199983479,
+                      q = 0.202715345, mean = 2.8015818, sd = 1, null.mean = 0, null.sd = 1, alternative = "two.sided",
+                      z.alpha = c(-1.959964, 1.959964), n = 194, power = 0.8))
 
     crrRes <- power.z.onecor(rho = 0.20, null.rho = 0.10, power = 0.80, alpha = 0.05, alternative = "one.sided", verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "onecor"))
@@ -512,9 +512,9 @@ test_that("power.z.onecor works", {
                       alternative = "one.sided", ceil.n = TRUE, verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "design", "rho", "null.rho", "delta", "q", "mean", "sd", "null.mean", "null.sd",
                           "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "one.sample", rho = 0.19997583, null.rho = 0.1, delta = 0.09997583,
-                      q = 0.102372028, mean = 2.4866079, sd = 1, null.mean = 0, null.sd = 1, alternative = "one.sided",
-                      z.alpha = 1.64485363, n = 593, power = 0.80003725))
+                 list(test = "z", design = "one.sample", rho = 0.19997057, null.rho = 0.1, delta = 0.09997057,
+                      q = 0.10236655, mean = 2.4864749, sd = 1, null.mean = 0, null.sd = 1, alternative = "one.sided",
+                      z.alpha = 1.64485363, n = 593, power = 0.8))
 
     # example 3.3 from GPower manual (using approximation, using the exact approximation - see below)
     expect_equal(power.z.onecor(rho = 0.65, null.rho = 0.60, alpha = 0.05, power = 0.95, verbose = 0)[["n"]], 1929)

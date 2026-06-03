@@ -1,3 +1,8 @@
+# determine a valid range to search for correlations (when using optimize())
+get.cor.rng <- function(rho0 = 0, req.sign = "+") {
+  sort(c(rho0, ifelse(check.pos_sign(req.sign), ifelse(rho0 < 0, 0, 1), ifelse(rho0 > 0, 0, -1)))) + c(1e-8, -1e-8)
+}
+
 #######################################################################
 # Steiger's z-test for dependent correlations (Steiger, 1980, p. 247) #
 #######################################################################
@@ -68,14 +73,14 @@ rho.limits <- function(rho12 = NULL, rho13 = NULL, rho23 = NULL,
       idx <- which(diff(eigs >= -tol) == 1)   # transitions FALSE -> TRUE
       if (length(idx) == 0) return(min(feasible))
       tryCatch(
-        stats::uniroot(min.eig, interval = c(grid[idx[1]], grid[idx[1] + 1]))$root,
+        stats::uniroot(min.eig, interval = c(grid[idx[1]], grid[idx[1] + 1]), tol = 1e-12)$root,
         error = function(e) min(feasible)
       )
     } else {
       idx <- which(diff(eigs >= -tol) == -1)   # transitions TRUE -> FALSE
       if (length(idx) == 0) return(max(feasible))
       tryCatch(
-        stats::uniroot(min.eig, interval = c(grid[idx[length(idx)]], grid[idx[length(idx)] + 1]))$root,
+        stats::uniroot(min.eig, interval = c(grid[idx[length(idx)]], grid[idx[length(idx)] + 1]), tol = 1e-12)$root,
         error = function(e) max(feasible)
       )
     }
@@ -374,16 +379,18 @@ power.z.twocors.steiger <- function(rho12 = NULL, rho13 = NULL, rho23 = NULL,
 
   min.pwr <- function(rho12 = NULL, rho13 = NULL, rho34 = NULL, n = NULL) {
 
-    power - pwr(rho12 = rho12, rho13 = rho13, rho23 = rho23, rho14 = rho14, rho24 = rho24, rho34 = rho34,
-                n = n, alpha = alpha, alternative = alternative, common.index = common.index)$power
+    val.pwr <- pwr(rho12 = rho12, rho13 = rho13, rho23 = rho23, rho14 = rho14, rho24 = rho24, rho34 = rho34,
+                   n = n, alpha = alpha, alternative = alternative, common.index = common.index)$power
+    ifelse(val.pwr < 1, val.pwr - power, 1 + abs(ifelse(common.index, rho13, rho34) - rho12) + 0.1 * n)
 
   } # min.pwr()
 
   if (requested == "n") {
 
     n <- try(suppressWarnings(
-               stats::uniroot(function(n) min.pwr(rho12, rho13, rho34, n), interval = c(5, 1e10))$root),
+               stats::uniroot(function(n) min.pwr(rho12, rho13, rho34, n), interval = c(5, 1e10), tol = 1e-12)$root),
              silent = TRUE)
+
     if (inherits(n, "try-error") || n == 1e10) stop("Design is not feasible.", call. = FALSE)
 
     if (ceil.n) n <- ceiling(n)
@@ -395,22 +402,22 @@ power.z.twocors.steiger <- function(rho12 = NULL, rho13 = NULL, rho23 = NULL,
                                   common.index = common.index)
 
     if (common.index) {
-      val.rng <- c(ifelse(check.pos_sign(req.sign), max(rho12, rho13, miss.rho.limits$min), 1e-6),
-                   ifelse(check.pos_sign(req.sign), 1 - 1e-6, min(rho12, rho13, miss.rho.limits$max)))
+      val.rng <- c(ifelse(check.pos_sign(req.sign), max(rho12, rho13, miss.rho.limits$min), 1e-8),
+                   ifelse(check.pos_sign(req.sign), 1 - 1e-8, min(rho12, rho13, miss.rho.limits$max)))
     } else {
-      val.rng <- c(ifelse(check.pos_sign(req.sign), max(rho12, rho34, miss.rho.limits$min), 1e-6),
-                   ifelse(check.pos_sign(req.sign), 1 - 1e-6, min(rho12, rho34, miss.rho.limits$max)))
+      val.rng <- c(ifelse(check.pos_sign(req.sign), max(rho12, rho34, miss.rho.limits$min), 1e-8),
+                   ifelse(check.pos_sign(req.sign), 1 - 1e-8, min(rho12, rho34, miss.rho.limits$max)))
     }
 
     if (is.null(rho12)) {
       rho12 <- stats::optimize(function(rho12) min.pwr(rho12, rho13, rho34, n) ^ 2,
-                               interval = val.rng)$minimum
+                               interval = val.rng, tol = 1e-12)$minimum
     } else if (common.index == TRUE  && is.null(rho13)) {
       rho13 <- stats::optimize(function(rho13) min.pwr(rho12, rho13, rho34, n) ^ 2,
-                               interval = val.rng)$minimum
+                               interval = val.rng, tol = 1e-12)$minimum
     } else if (common.index == FALSE && is.null(rho34)) {
       rho34 <- stats::optimize(function(rho34) min.pwr(rho12, rho13, rho34, n) ^ 2,
-                               interval = val.rng)$minimum
+                               interval = val.rng, tol = 1e-12)$minimum
     }
 
   } # estimate sample size or effect size
@@ -608,11 +615,13 @@ power.z.twocors <- function(rho1 = NULL, rho2 = NULL, req.sign = "+",
     beta <- 1 - power
     if (alternative == "two.sided") {
       M <- stats::qnorm(alpha / 2, mean = 0, sd = 1, lower.tail = FALSE) + stats::qnorm(beta, mean = 0, sd = 1, lower.tail = FALSE)
-      n2 <- stats::uniroot(function(n2) M ^ 2 - (z1 - z2) ^ 2 / (1 / (n.ratio * n2 - 3) + 1 / (n2 - 3)), interval = c(-1e10, 1e10))$root
+      n2 <- stats::uniroot(function(n2) M ^ 2 - (z1 - z2) ^ 2 / (1 / (n.ratio * n2 - 3) + 1 / (n2 - 3)),
+                           interval = c(-1e10, 1e10), tol = 1e-12)$root
 
     } else if (alternative == "one.sided") {
       M <- stats::qnorm(alpha,     mean = 0, sd = 1, lower.tail = FALSE) + stats::qnorm(beta, mean = 0, sd = 1, lower.tail = FALSE)
-      n2 <- stats::uniroot(function(n2) M ^ 2 - (z1 - z2) ^ 2 / (1 / (n.ratio * n2 - 3) + 1 / (n2 - 3)), interval = c(0, 1e10))$root
+      n2 <- stats::uniroot(function(n2) M ^ 2 - (z1 - z2) ^ 2 / (1 / (n.ratio * n2 - 3) + 1 / (n2 - 3)),
+                           interval = c(0, 1e10), tol = 1e-12)$root
     }
 
     n2 <- ifelse(ceil.n, ceiling(n2), n2)
@@ -623,23 +632,19 @@ power.z.twocors <- function(rho1 = NULL, rho2 = NULL, req.sign = "+",
 
       rho1 <- stats::optimize(
         f = function(rho1) {
-          (power - pwr(rho1 = rho1, rho2 = rho2, n2 = n2, n.ratio = n.ratio,
-                       alpha = alpha, alternative = alternative)$power) ^ 2
+          val.pwr <- pwr(rho1 = rho1, rho2 = rho2, n2 = n2, n.ratio = n.ratio, alpha = alpha, alternative = alternative)$power
+          ifelse(val.pwr < 1, (val.pwr - power) ^ 2, 1 + abs(rho2 - rho1))
         },
-        maximum = FALSE,
-        lower = ifelse(check.pos_sign(req.sign), rho2, -0.9999),
-        upper = ifelse(check.pos_sign(req.sign), +0.9999, rho2))$minimum
+        interval = get.cor.rng(rho0 = rho2, req.sign = req.sign), tol = 1e-12)$minimum
 
     } else {
 
       rho2 <- stats::optimize(
         f = function(rho2) {
-          (power - pwr(rho1 = rho1, rho2 = rho2, n2 = n2, n.ratio = n.ratio,
-                       alpha = alpha, alternative = alternative)$power) ^ 2
+          val.pwr <- pwr(rho1 = rho1, rho2 = rho2, n2 = n2, n.ratio = n.ratio, alpha = alpha, alternative = alternative)$power
+          ifelse(val.pwr < 1, (val.pwr - power) ^ 2, 1 + abs(rho2 - rho1))
         },
-        maximum = FALSE,
-        lower = ifelse(check.pos_sign(req.sign), rho1, -0.9999),
-        upper = ifelse(check.pos_sign(req.sign), +0.9999, rho1))$minimum
+        interval = get.cor.rng(rho0 = rho1, req.sign = req.sign), tol = 1e-12)$minimum
 
     } # rho1 or rho2?
 
@@ -873,16 +878,12 @@ power.z.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0,
 
   } else if (requested == "es") {
 
-    # limit the borders of the value range (if they interval gets to large, no local minimum may be found below)
-    val.rng <- seq(null.rho, ifelse(check.pos_sign(req.sign), 1, -1), 0.1)
-    val.rng <- range(val.rng[vapply(val.rng,
-                                    function(rho) pwr(rho = rho, null.rho = null.rho, n = n, alpha = alpha, alternative = alternative)$power < 1,
-                                    logical(1))])
-    if (check.pos_sign(req.sign)) val.rng[2] <- min(val.rng[2] + 0.1, 0.9999) else val.rng[1] <- max(val.rng[1] - 0.1, -0.9999)
-
     rho <- stats::optimize(
-      f = function(rho) (power - pwr(rho = rho, null.rho = null.rho, n = n, alpha = alpha, alternative = alternative)$power) ^ 2,
-      interval = val.rng)$minimum
+      f = function(rho) {
+        val.pwr <- pwr(rho = rho, null.rho = null.rho, n = n, alpha = alpha, alternative = alternative)$power
+        ifelse(val.pwr < 1, (val.pwr - power) ^ 2, 1 + abs(null.rho - rho))
+      },
+      interval = get.cor.rng(rho0 = null.rho, req.sign = req.sign), tol = 1e-12)$minimum
 
   } # calculate sample size or effect size
 
@@ -1059,9 +1060,10 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0, n = NUL
     L[2] <- (1 + r * rho * L[1]) * sqrt(c2) / c1
     for (k in 2:n) L[k + 1] <- (2 - 1 / k) * sqrt(c2) * r * rho * L[k] / c1 + (1 - 1 / k) * c2 * L[k - 1] / c1
 
+    # different handling of odd and even N's
     acos(ifelse(n %% 2 == 0, rho, -r)) / pi +
-    (r * sqrt(1 - rho ^ 2) / pi) * sum(L[seq(ifelse(n %% 2 == 0, 1, 2), max(n - 2, 2), 2)]) -
-    (rho * sqrt(1 - r ^ 2) / pi) * sum(L[seq(ifelse(n %% 2 == 0, 2, 1), max(n - 2, 2), 2)])
+    (r   * sqrt(1 - rho ^ 2) / pi) * sum(L[seq(ifelse(n %% 2 == 0, 1, 2), max(n - 2, 2), 2)]) -
+    (rho * sqrt(1 - r   ^ 2) / pi) * sum(L[seq(ifelse(n %% 2 == 0, 2, 1), max(n - 2, 2), 2)])
 
   }
 
@@ -1073,14 +1075,14 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0, n = NUL
       if (null.rho == 0) {
 
         crit <- stats::uniroot(function(r) FR.exact(-r, rho = 0, n = n) + (1 - FR.exact(r, rho = 0, n = n)) - alpha,
-                               lower = 1e-8, upper = 1 - 1e-8, tol = 1e-12)$root * c(-1, 1)
+                               interval = c(1e-8, 1 - 1e-8), tol = 1e-12)$root * c(-1, 1)
 
       } else {
 
         crit <- c(stats::uniroot(function(r) FR.exact(r, rho = null.rho, n = n) -      alpha / 2,
-                                 lower = -1 + 1e-8, upper = null.rho - 1e-8, tol = 1e-12)$root,
+                                 interval = c(-1 + 1e-8, null.rho - 1e-8), tol = 1e-12)$root,
                   stats::uniroot(function(r) FR.exact(r, rho = null.rho, n = n) - (1 - alpha / 2),
-                                 lower = null.rho + 1e-8, upper = 1 - 1e-8, tol = 1e-12)$root)
+                                 interval = c(null.rho + 1e-8, +1 - 1e-8), tol = 1e-12)$root)
 
       }
 
@@ -1089,14 +1091,14 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0, n = NUL
     } else if (rho < null.rho) {
 
       crit <- stats::uniroot(function(r) FR.exact(r, rho = null.rho, n = n) - alpha,
-                             lower = -1 + 1e-8, upper = null.rho - 1e-8, tol = 1e-12)$root
+                             interval = c(-1 + 1e-8, null.rho - 1e-8), tol = 1e-12)$root
 
       pwr <- FR.exact(crit, rho = rho, n = n)
 
     } else if (rho > null.rho) {
 
       crit <- stats::uniroot(function(r) (1 - FR.exact(r, rho = null.rho, n = n)) - alpha,
-                             lower = null.rho + 1e-8, upper = 1 - 1e-8, tol = 1e-12)$root
+                             interval = c(null.rho + 1e-8, +1 - 1e-8), tol = 1e-12)$root
 
       pwr <- 1 - FR.exact(crit, rho = rho, n = n)
 
@@ -1142,7 +1144,7 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0, n = NUL
 
     pwr.at.rho <- function(rho) pwr.exact.rho(n = n, rho = rho, null.rho = null.rho, alpha = alpha, alternative = alternative)$power
 
-    # check bounds
+    # check bounds (rho.min and rho.max can be on different sides of 0, and can thus result in different values for power)
     if (pwr.at.rho(rho.min) < power && pwr.at.rho(rho.max)  < power)
       stop(sprintf("Target power not reached within [rho.min = %.4f, rho.max = %.4f]. Try increasing n.", rho.min, rho.max), call. = FALSE)
 
@@ -1175,11 +1177,19 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0, n = NUL
 
     pwr.obj <- pwr.exact.rho(n = n, rho = rho, null.rho = null.rho, alpha = alpha, alternative = alternative)
     normal.approx <- FALSE
-
+    mean.alternative <- sd.alternative <- mean.null <- sd.null <- z.alpha <- NA
+    rho.alpha <- pwr.obj$crit
+    
   } else {
 
-    pwr.obj <- power.z.onecor(rho = rho, null.rho = null.rho, n = n, alpha = alpha, alternative = alternative, verbose = verbose)
+    pwr.obj <- power.z.onecor(rho = rho, null.rho = null.rho, n = n, alpha = alpha, alternative = alternative, verbose = 0)
     normal.approx <- TRUE
+    mean.alternative = pwr.obj$mean
+    sd.alternative = pwr.obj$sd
+    mean.null = pwr.obj$null.mean
+    sd.null = pwr.obj$null.sd
+    z.alpha = pwr.obj$z.alpha
+    rho.alpha <- NA
 
   }
 
@@ -1196,14 +1206,12 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0, n = NUL
                        delta = rho - null.rho,
                        q = q,
                        alpha = alpha,
-                       #### for compatibility #### ----------------------------
-                       mean.alternative = NA,
-                       sd.alternative = NA,
-                       mean.null = NA,
-                       sd.null = NA,
-                       z.alpha = NA,
-                       #### for compatibility #### ----------------------------
-                       rho.alpha = pwr.obj$crit,
+                       mean.alternative = mean.alternative,
+                       sd.alternative = sd.alternative,
+                       mean.null = mean.null,
+                       sd.null = sd.null,
+                       z.alpha = z.alpha,
+                       rho.alpha = rho.alpha,
                        power = pwr.obj$power,
                        n = n)
 
@@ -1211,17 +1219,25 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0, n = NUL
 
   }
 
-  invisible(structure(list(parms = func.parms,
-                           test = ifelse(normal.approx, "z", "exact"),
-                           design = "one.sample",
-                           rho = rho,
-                           null.rho = null.rho,
-                           delta = rho - null.rho,
-                           q = q,
-                           alternative = alternative,
-                           rho.alpha = pwr.obj$crit, # critical value for cor
-                           n = n,
-                           power = pwr.obj$power),
-                      class = c("pwrss", ifelse(normal.approx, "z", "exact"), "onecor")))
+  if (n <= n.max) {
+
+    invisible(structure(list(parms = func.parms,
+                             test = ifelse(normal.approx, "z", "exact"),
+                             design = "one.sample",
+                             rho = rho,
+                             null.rho = null.rho,
+                             delta = rho - null.rho,
+                             q = q,
+                             alternative = alternative,
+                             rho.alpha = pwr.obj$crit,
+                             n = n,
+                             power = pwr.obj$power),
+                        class = c("pwrss", ifelse(normal.approx, "z", "exact"), "onecor")))
+
+  } else {
+
+    invisible(pwr.obj)
+
+  }
 
 } # power.exact.onecor
