@@ -61,8 +61,8 @@ test_that("power.exact.fisher works", {
                       alternative = "two.sided", method = "approximate", ceil.n = TRUE, verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "prob1", "prob2", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
                           "alternative", "z.alpha", "power", "n", "n.total")],
-                 list(test = "z", prob1 = 0.6, prob2 = 0.4, delta = 0.2, odds.ratio = 2.25, mean = NULL, sd = NULL,
-                      null.mean = NULL, null.sd = NULL, alternative = "two.sided", z.alpha = 1.95996398454 * c(-1, 1),
+                 list(test = "z", prob1 = 0.6, prob2 = 0.4, delta = 0.2, odds.ratio = 2.25, mean = 2.81365717, sd = 1,
+                      null.mean = 0, null.sd = 1, alternative = "two.sided", z.alpha = 1.95996398454 * c(-1, 1),
                       power = 0.8033634, n = c(n1 = 95, n2 = 95), n.total = 190))
 
     crrRes <- power.exact.fisher(prob1 = 0.60, prob2 = 0.40, method = "approximate", n2 = 95, verbose = 0)
@@ -74,8 +74,8 @@ test_that("power.exact.fisher works", {
                       alternative = "two.sided", method = "approximate", ceil.n = TRUE, verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "prob1", "prob2", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
                           "alternative", "z.alpha", "power", "n", "n.total")],
-                 list(test = "z", prob1 = 0.6, prob2 = 0.4, delta = 0.2, odds.ratio = 2.25, mean = NULL, sd = NULL,
-                      null.mean = NULL, null.sd = NULL, alternative = "two.sided", z.alpha = 1.95996398454 * c(-1, 1),
+                 list(test = "z", prob1 = 0.6, prob2 = 0.4, delta = 0.2, odds.ratio = 2.25, mean = 2.81365717, sd = 1,
+                      null.mean = 0, null.sd = 1, alternative = "two.sided", z.alpha = 1.95996398454 * c(-1, 1),
                       power = 0.8033634, n = c(n1 = 95, n2 = 95), n.total = 190))
 
     crrRes <- power.exact.fisher(prob1 = 0.60, req.sign = "-", method = "approximate", n2 = 95, power = 0.80, verbose = 0)
@@ -88,7 +88,7 @@ test_that("power.exact.fisher works", {
     expect_equal(crrRes[c("test", "prob1", "prob2", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
                           "alternative", "z.alpha", "power", "n", "n.total")],
                  list(test = "z", prob1 = 0.6, prob2 = 0.400823655, delta = 0.199176345, odds.ratio = 2.2422941,
-                      mean = NULL, sd = NULL, null.mean = NULL, null.sd = NULL, alternative = "two.sided",
+                      mean = 2.80159104, sd = 1, null.mean = 0, null.sd = 1, alternative = "two.sided",
                       z.alpha = 1.95996398454 * c(-1, 1), power = 0.8000026, n = c(n1 = 95, n2 = 95), n.total = 190))
 
     crrRes <- power.exact.fisher(prob2 = 0.40, req.sign = "+", method = "approximate", n2 = 95, power = 0.80, verbose = 0)
@@ -101,7 +101,7 @@ test_that("power.exact.fisher works", {
     expect_equal(crrRes[c("test", "prob1", "prob2", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
                           "alternative", "z.alpha", "power", "n", "n.total")],
                  list(test = "z", prob1 = 0.599176345, prob2 = 0.40, delta = 0.199176345, odds.ratio = 2.2422941,
-                      mean = NULL, sd = NULL, null.mean = NULL, null.sd = NULL, alternative = "two.sided",
+                      mean = 2.80159104, sd = 1, null.mean = 0, null.sd = 1, alternative = "two.sided",
                       z.alpha = 1.95996398454 * c(-1, 1), power = 0.8000026, n = c(n1 = 95, n2 = 95), n.total = 190))
 
 #    # NB: takes a lot of time, therefore commented out

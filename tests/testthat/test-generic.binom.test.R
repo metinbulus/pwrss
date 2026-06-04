@@ -19,11 +19,11 @@ test_that("generic.binom.test.R works", {
 
     expect_equal(power.binom.test(size = 200, power = 0.80, null.prob = 0.5, alpha = 0.05, alternative = "two.sided",
                                   plot = FALSE, verbose = 0),
-                 list(power = 0.80015963, size = 200, prob = 0.601607788, null.prob = 0.5, alpha = 0.040037192,
+                 list(power = 0.8, size = 200, prob = 0.60158815, null.prob = 0.5, alpha = 0.040037192,
                       alternative = "two.sided", binom.alpha = c(85, 114)))
     expect_equal(power.binom.test(size = 200, power = 0.80, null.prob = 0.5, alpha = 0.05, alternative = "one.sided",
                                   plot = FALSE, verbose = 0),
-                 list(power = 0.79993916, size = 200, prob = 0.591701527, null.prob = 0.5, alpha = 0.038418816,
+                 list(power = 0.8, size = 200, prob = 0.591709046, null.prob = 0.5, alpha = 0.038418816,
                       alternative = "one.sided", binom.alpha = 112))
     expect_equal(power.binom.test(size = 200, req.sign = "0", power = 0.80, null.prob = c(0.4, 0.6), alpha = 0.05,
                                   alternative = "two.one.sided", plot = FALSE, verbose = 0),
@@ -31,11 +31,11 @@ test_that("generic.binom.test.R works", {
                       alternative = "two.one.sided", binom.alpha = c(91, 108)))
     expect_equal(power.binom.test(size = 200, req.sign = "+", power = 0.80, null.prob = c(0.4, 0.6), alpha = 0.05,
                                   alternative = "two.one.sided", plot = FALSE, verbose = 0),
-                 list(power = 0.79994722, size = 200, prob = 0.694802783, null.prob = c(0.4, 0.6), alpha = 0.049432239,
+                 list(power = 0.79999998, size = 200, prob = 0.694808861, null.prob = c(0.4, 0.6), alpha = 0.049432239,
                       alternative = "two.one.sided", binom.alpha = c(66, 133)))
     expect_equal(power.binom.test(size = 200, req.sign = "-", power = 0.80, null.prob = c(0.4, 0.6), alpha = 0.05,
                                  alternative = "two.one.sided", plot = FALSE, verbose = 0),
-                 list(power = 0.79994722, size = 200, prob = 0.305197217, null.prob = c(0.4, 0.6), alpha = 0.049432239,
+                 list(power = 0.8, size = 200, prob = 0.305191136, null.prob = c(0.4, 0.6), alpha = 0.049432239,
                       alternative = "two.one.sided", binom.alpha = c(66, 133)))
     expect_equal(power.binom.test(power = 0.80, prob = 0.6, null.prob = 0.5, alpha = 0.05, alternative = "two.sided",
                                   plot = FALSE, verbose = 0),

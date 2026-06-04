@@ -172,7 +172,7 @@ power.binom.test <- function(power = NULL,
   } else if (requested == "es") {
 
     val.rng <- get.interval(null.ncp = null.prob, distribution = "binom", req.sign = req.sign)
-    prob <- stats::optimize(f = function(prob) min.pwr(prob, size, power) ^ 2, interval = val.rng)$minimum
+    prob <- stats::optimize(f = function(prob) min.pwr(prob, size, power) ^ 2, interval = val.rng, tol = 1e-12)$minimum
 
   }
 
@@ -187,6 +187,7 @@ power.binom.test <- function(power = NULL,
 
     print.obj <- list(test = "Generic Binomial Test",
                       requested = requested,
+                      tgt.ncp = "prob",
                       size = size,
                       prob = prob,
                       null.prob = null.prob,

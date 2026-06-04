@@ -97,10 +97,10 @@ power.chisq.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df = NULL, 
 
     print.obj <- list(test = "Generic Chi-square Test",
                       requested = requested,
-                      tgt.effect = "ncp",
+                      tgt.ncp = "lambda",
+                      lambda = ncp,
+                      null.lambda = null.ncp,
                       power = pwr.obj$power,
-                      ncp = ncp,
-                      null.ncp = null.ncp,
                       df = df,
                       alpha = alpha,
                       chisq.alpha = pwr.obj$chisq.alpha)

@@ -30,8 +30,8 @@ test_that("power.exact.oneprop works", {
                  list(prob = NULL, req.sign = "-", null.prob = 0.50, n = 500, power = 0.80, alpha = 0.05, alternative = "one.sided",
                       verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "prob", "null.prob", "delta", "odds.ratio", "size", "binom.alpha", "alpha", "power", "n")],
-                 list(test = "exact", prob = 0.44432015, null.prob = 0.50, delta = -0.055679851, odds.ratio = 0.799597372,
-                      size = 500, binom.alpha = 231, alpha = 0.048945014, power = 0.7998452, n = 500))
+                 list(test = "exact", prob = 0.44430789, null.prob = 0.50, delta = -0.055692113, odds.ratio = 0.79955766,
+                      size = 500, binom.alpha = 231, alpha = 0.048945014, power = 0.8, n = 500))
 
     crrRes <- power.exact.oneprop(prob = 0.80, null.prob = 0.65, n = 20, alternative = "one.sided", verbose = 0) # example 4.3 from GPower
     expect_equal(class(crrRes), c("pwrss", "exact", "oneprop"))
@@ -154,7 +154,7 @@ test_that("power.z.oneprop works", {
                       std.error = "alternative", arcsine = FALSE, correct = FALSE, ceil.n = TRUE, verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "prob", "null.prob", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n")],
                  list(test = "z", prob = 0.45, null.prob = c(0.40, 0.50), delta = 0.05 * c(1, -1), odds.ratio = c(1.2272727, 0.818181818),
-                      mean = 0, sd = 1, null.mean = 2.9267143 * c(1, -1), null.sd = 1, z.alpha = c(-1.28186067, 1.28186067),
+                      mean = 0, sd = 1, null.mean = 2.9267143 * c(-1, 1), null.sd = 1, z.alpha = c(-1.28186067, 1.28186067),
                       power = 0.800108473, n = 848))
 
     crrRes <- power.z.oneprop(prob = 0.45, null.prob = c(0.35, 0.40), alpha = 0.05, power = 0.80, alternative = "two.one.sided",
@@ -168,8 +168,8 @@ test_that("power.z.oneprop works", {
                       std.error = "alternative", arcsine = FALSE, correct = FALSE, ceil.n = TRUE, verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "prob", "null.prob", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n")],
                  list(test = "z", prob = 0.45, null.prob = c(0.35, 0.40), delta = 0.05 * c(2, 1), odds.ratio = c(1.519480519, 1.227272727),
-                      mean = 0, sd = 1, null.mean = 2.8033169385 * c(2, 1), null.sd = 1, z.alpha = c(0.843353, 7.5665979),
-                      power = 0.800484462, n = 778))
+                      mean = 0, sd = 1, null.mean = 2.9267143 * c(-1, 1), null.sd = 1, z.alpha = 1.28186067 * c(-1, 1),
+                      power = 0.800108473, n = 212))
     expect_equal(crrRes, pwrss.z.prop(p = 0.45, p0 = c(0.35, 0.40), alpha = 0.05, power = 0.80, alternative = "equivalent", verbose = FALSE))
 
     crrRes <- power.z.oneprop(null.prob = 0.50, req.sign = "-", alpha = 0.05, power = 0.80, n = 617, alternative = "one.sided", verbose = 0)

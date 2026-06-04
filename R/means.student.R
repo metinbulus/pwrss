@@ -398,21 +398,21 @@ power.t.student <- function(d = NULL, null.d = 0, margin = 0,
   pwr.obj <- pwr.student(d = d, null.d = null.d, margin = margin, n2 = n2, n.ratio = n.ratio, alpha = alpha,
                          alternative = alternative, design = design, claim.basis = claim.basis)
 
-  power <- pwr.obj$power
-  t.alpha <- pwr.obj$t.alpha
-  ncp <- pwr.obj$ncp
-  null.ncp <- pwr.obj$null.ncp
-  df <- pwr.obj$df
-
   if (verbose > 0) {
 
-    print.obj <- list(requested = requested, test = fmt_test_student(design),
-                      d = d, null.d = null.d, margin = margin,
-                      alpha = alpha, t.alpha = t.alpha,
-                      alternative = alternative, n = n, df = df,
-                      ncp = ncp,
-                      null.ncp = null.ncp,
-                      power = power)
+    print.obj <- list(test = fmt_test_student(design),
+                      requested = requested,
+                      d = d,
+                      null.d = null.d,
+                      margin = margin,
+                      alpha = alpha,
+                      t.alpha = pwr.obj$t.alpha,
+                      alternative = alternative,
+                      n = n,
+                      df = pwr.obj$df,
+                      ncp = pwr.obj$ncp,
+                      null.ncp = pwr.obj$null.ncp,
+                      power = pwr.obj$power)
 
     .print.pwrss.ttest(print.obj, verbose = verbose, utf = utf)
 
@@ -420,12 +420,12 @@ power.t.student <- function(d = NULL, null.d = 0, margin = 0,
 
   invisible(structure(list(parms = func.parms,
                            test = "t",
-                           df = df,
-                           ncp = ncp,
-                           null.ncp = null.ncp,
-                           t.alpha = t.alpha,
+                           df = pwr.obj$df,
+                           ncp = pwr.obj$ncp,
+                           null.ncp = pwr.obj$null.ncp,
+                           t.alpha = pwr.obj$t.alpha,
                            d = d,
-                           power = power,
+                           power = pwr.obj$power,
                            n = n,
                            n.total = sum(n)),
                       class = c("pwrss", "t", "student")))
@@ -633,23 +633,20 @@ power.t.welch <- function(d = NULL, null.d = 0, margin = 0,
   pwr.obj <- pwr.welch(d = d, null.d = null.d, margin = margin, var.ratio = var.ratio, n2 = n2, n.ratio = n.ratio,
                        alpha = alpha, alternative = alternative, claim.basis = claim.basis)
 
-  power <- pwr.obj$power
-  t.alpha <- pwr.obj$t.alpha
-  ncp <- pwr.obj$ncp
-  null.ncp <- pwr.obj$null.ncp
-  df <- pwr.obj$df
-
   if (verbose > 0) {
 
     print.obj <- list(requested = requested,
                       test = "Welch's T-Test (Independent Samples)",
                       d = d, null.d = null.d,
                       margin = margin,
-                      alpha = alpha, t.alpha = t.alpha,
-                      alternative = alternative, n = n, df = df,
-                      ncp = ncp,
-                      null.ncp = null.ncp,
-                      power = power)
+                      alpha = alpha,
+                      t.alpha = pwr.obj$t.alpha,
+                      alternative = alternative,
+                      n = n,
+                      df = pwr.obj$df,
+                      ncp = pwr.obj$ncp,
+                      null.ncp = pwr.obj$null.ncp,
+                      power = pwr.obj$power)
 
     .print.pwrss.ttest(print.obj, verbose = verbose, utf = utf)
 
@@ -657,12 +654,12 @@ power.t.welch <- function(d = NULL, null.d = 0, margin = 0,
 
   invisible(structure(list(parms = func.parms,
                            test = "t",
-                           df = df,
-                           ncp = ncp,
-                           null.ncp = null.ncp,
-                           t.alpha = t.alpha,
+                           df = pwr.obj$df,
+                           ncp = pwr.obj$ncp,
+                           null.ncp = pwr.obj$null.ncp,
+                           t.alpha = pwr.obj$t.alpha,
                            d = d,
-                           power = power,
+                           power = pwr.obj$power,
                            n = n,
                            n.total = sum(n)),
                       class = c("pwrss", "t", "welch")))

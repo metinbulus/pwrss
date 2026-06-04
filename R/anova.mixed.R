@@ -239,23 +239,23 @@ power.f.mixed.anova <- function(eta.squared = NULL,
                        n.total = n.total, n.levels.between = n.levels.between, n.levels.within = n.levels.within,
                        epsilon = epsilon, alpha = alpha, effect = effect)
 
-  power <- ncp <- pwr.obj$power
-  df1 <-  pwr.obj$df1
-  df2 <-  pwr.obj$df2
-  ncp <-  pwr.obj$lambda
-  null.ncp <-  pwr.obj$null.lambda
-  f.alpha <- pwr.obj$f.alpha
-
   effect_bw <- fmt_effect_bw(effect, n.levels.between, n.levels.within)
 
   if (verbose > 0) {
 
     print.obj <- list(test = fmt_test_anovamxd(n.levels.between, n.levels.within),
-                      effect = effect_bw, n.total = n.total,
-                      requested = requested, factor.levels = factor.levels,
-                      ncp = ncp, null.ncp = null.ncp,
-                      eta.squared = eta.squared, power = power, alpha = alpha,
-                      f.alpha = f.alpha, df1 = df1, df2 = df2)
+                      requested = requested,
+                      effect = effect_bw,
+                      n.total = n.total,
+                      factor.levels = factor.levels,
+                      ncp = pwr.obj$lambda,
+                      null.ncp = pwr.obj$null.lambda,
+                      eta.squared = eta.squared,
+                      power = pwr.obj$power,
+                      alpha = alpha,
+                      f.alpha = pwr.obj$f.alpha,
+                      df1 = pwr.obj$df1,
+                      df2 = pwr.obj$df2)
 
     .print.pwrss.ancova(print.obj, verbose = verbose, utf = utf)
 
@@ -264,13 +264,13 @@ power.f.mixed.anova <- function(eta.squared = NULL,
   invisible(structure(list(parms = func.parms,
                            test = "F",
                            effect = effect_bw,
-                           df1 = df1,
-                           df2 = df2,
-                           ncp = ncp,
-                           null.ncp = null.ncp,
-                           f.alpha = f.alpha,
+                           df1 = pwr.obj$df1,
+                           df2 = pwr.obj$df2,
+                           ncp = pwr.obj$lambda,
+                           null.ncp = pwr.obj$null.lambda,
+                           f.alpha = pwr.obj$f.alpha,
                            eta.squared = eta.squared,
-                           power = power,
+                           power = pwr.obj$power,
                            n.total = n.total),
                       class = c("pwrss", "f", "anova_mixed")))
 

@@ -47,7 +47,7 @@ on the console.}
 \value{
 \item{power}{statistical power \eqn{(1-\beta)}.}
 \item{ncp}{non-centrality parameter under alternative.}
-\item{ncp.null}{non-centrality parameter under null.}
+\item{null.ncp}{non-centrality parameter under null.}
 \item{df1}{numerator degrees of freedom.}
 \item{df2}{denominator degrees of freedom.}
 \item{f.alpha}{critical value(s).}

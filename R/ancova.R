@@ -262,19 +262,23 @@ power.f.ancova <- function(eta.squared = NULL,
                  f.squared = f.squared, null.f.squared = null.f.squared, alpha = alpha)
 
   df2 <- calc.df2(n.total, n.groups, k.covariates)
-  power <- ncp <- pwr.obj$power
-  ncp <-  pwr.obj$lambda
-  null.ncp <-  pwr.obj$null.lambda
-  f.alpha <- pwr.obj$f.alpha
 
   if (verbose > 0) {
 
     print.obj <- list(test = fmt_test_ancova(n.way, k.covariates),
-                      effect = effect, eta.squared = eta.squared,
-                      n.total = n.total, n.way = n.way,
-                      requested = requested, factor.levels = factor.levels,
-                      power = power, ncp = ncp, null.ncp = null.ncp,
-                      alpha = alpha, f.alpha = f.alpha, df1 = df1, df2 = df2)
+                      effect = effect,
+                      eta.squared = eta.squared,
+                      n.total = n.total,
+                      n.way = n.way,
+                      requested = requested,
+                      factor.levels = factor.levels,
+                      power = pwr.obj$power,
+                      ncp = pwr.obj$lambda,
+                      null.ncp = pwr.obj$null.lambda,
+                      alpha = alpha,
+                      f.alpha = pwr.obj$f.alpha,
+                      df1 = df1,
+                      df2 = df2)
 
     .print.pwrss.ancova(print.obj, verbose = verbose, utf = utf)
 
@@ -286,10 +290,10 @@ power.f.ancova <- function(eta.squared = NULL,
                            eta.squared = eta.squared,
                            df1 = df1,
                            df2 = df2,
-                           ncp = ncp,
-                           null.ncp = null.ncp,
-                           f.alpha = f.alpha,
-                           power = power,
+                           ncp = pwr.obj$lambda,
+                           null.ncp = pwr.obj$null.lambda,
+                           f.alpha = pwr.obj$f.alpha,
+                           power = pwr.obj$power,
                            n.total = n.total),
                       class = c("pwrss", "f", "ancova")))
 
@@ -503,19 +507,11 @@ power.f.ancova.keppel <- function(mu.vector,
   }
 
   # calculate power (if requested == "power") or update it (if requested == "n")
-  pwr.obj <- pwr.keppel(mu.vector = mu.vector, sd.vector = sd.vector,
-                        n.vector = n.vector, k.covariates = k.covariates,
-                        r.squared = r.squared, alpha = alpha,
-                        factor.levels = factor.levels)
+  pwr.obj <- pwr.keppel(mu.vector = mu.vector, sd.vector = sd.vector, n.vector = n.vector, k.covariates = k.covariates,
+                        r.squared = r.squared, alpha = alpha, factor.levels = factor.levels)
 
-  power <- pwr.obj$power
-  df1 <- pwr.obj$df1
-  df2 <- pwr.obj$df2
-  ncp <- pwr.obj$lambda
-  f.alpha <- pwr.obj$f.alpha
   n.total <- sum(n.vector)
   eta.squared <- pwr.obj$f.squared / (1 + pwr.obj$f.squared)
-
   effect <- paste0(c("A"), "(", factor.levels, ")")
   n.way <- length(factor.levels)
 
@@ -523,10 +519,20 @@ power.f.ancova.keppel <- function(mu.vector,
 
   if (verbose > 0) {
 
-    print.obj <- list(test = fmt_test_ancova(1, k.covariates), effect = effect, n.total = n.total,
-                      n.way = n.way, requested = requested, factor.levels = factor.levels,
-                      eta.squared = eta.squared, power = power, ncp = ncp, null.ncp = 0,
-                      alpha = alpha, f.alpha = f.alpha, df1 = df1, df2 = df2)
+    print.obj <- list(test = fmt_test_ancova(1, k.covariates),
+                      requested = requested,
+                      effect = effect,
+                      n.total = n.total,
+                      n.way = n.way,
+                      factor.levels = factor.levels,
+                      eta.squared = eta.squared,
+                      power = pwr.obj$power,
+                      ncp = pwr.obj$lambda,
+                      null.ncp = 0,
+                      alpha = alpha,
+                      f.alpha = pwr.obj$f.alpha,
+                      df1 = pwr.obj$df1,
+                      df2 = pwr.obj$df2)
 
     .print.pwrss.ancova(print.obj, verbose = verbose, utf = utf)
 
@@ -537,12 +543,12 @@ power.f.ancova.keppel <- function(mu.vector,
                            effect = effect,
                            eta.squared = eta.squared,
                            f = sqrt(pwr.obj$f.squared),
-                           df1 = df1,
-                           df2 = df2,
-                           ncp = ncp,
+                           df1 = pwr.obj$df1,
+                           df2 = pwr.obj$df2,
+                           ncp = pwr.obj$lambda,
                            null.ncp = 0,
-                           f.alpha = f.alpha,
-                           power = power,
+                           f.alpha = pwr.obj$f.alpha,
+                           power = pwr.obj$power,
                            n.vector = n.vector,
                            n.total = n.total),
                       class = c("pwrss", "f", "ancova", "keppel")))
@@ -1171,25 +1177,29 @@ power.f.ancova.shieh <- function(mu.vector,
                        n.vector = n.vector, k.covariates = k.covariates,
                        r.squared =  r.squared, alpha = alpha, contrast.matrix = contrast.matrix,
                        calculate.lambda = TRUE)
-  power <- pwr.obj$power
-  df1 <- pwr.obj$df1
-  df2 <- pwr.obj$df2
-  ncp <- pwr.obj$lambda
-  f.alpha <- pwr.obj$f.alpha
+
   n.total <- sum(n.vector)
-
   effect <- paste0(LETTERS[seq_along(factor.levels)], "(", factor.levels, ")", collapse = ":")
-
-  f.squared <- ncp / n.total
+  f.squared <- pwr.obj$lambda / n.total
   eta.squared <- f.squared / (1 + f.squared)
 
   check_var.ratio(sd.vector, n.vector)
 
   if (verbose > 0) {
 
-    print.obj <- list(test = fmt_test_ancova(n.way, k.covariates), effect = effect, n.total = n.total,
-                      requested = requested, factor.levels = factor.levels, eta.squared = eta.squared,
-                      power = power, ncp = ncp, null.ncp = 0, alpha = alpha, f.alpha = f.alpha, df1 = df1, df2 = df2)
+    print.obj <- list(test = fmt_test_ancova(n.way, k.covariates),
+                      requested = requested,
+                      effect = effect,
+                      n.total = n.total,
+                      factor.levels = factor.levels,
+                      eta.squared = eta.squared,
+                      power = pwr.obj$power,
+                      ncp = pwr.obj$lambda,
+                      null.ncp = 0,
+                      alpha = alpha,
+                      f.alpha = pwr.obj$f.alpha,
+                      df1 = pwr.obj$df1,
+                      df2 = pwr.obj$df2)
 
     .print.pwrss.ancova(print.obj, verbose = verbose, utf = utf)
 
@@ -1200,12 +1210,12 @@ power.f.ancova.shieh <- function(mu.vector,
                            effect = effect,
                            eta.squared = eta.squared,
                            f = sqrt(f.squared),
-                           df1 = df1,
-                           df2 = df2,
-                           ncp = ncp,
+                           df1 = pwr.obj$df1,
+                           df2 = pwr.obj$df2,
+                           ncp = pwr.obj$lambda,
                            null.ncp = 0,
-                           f.alpha = f.alpha,
-                           power = power,
+                           f.alpha = pwr.obj$f.alpha,
+                           power = pwr.obj$power,
                            n.vector = n.vector,
                            n.total = n.total),
                       class = c("pwrss", "f", "ancova", "shieh")))
@@ -1447,19 +1457,21 @@ power.t.contrast <- function(mu.vector, sd.vector,
                           k.covariates = k.covariates, r.squared = r.squared, alpha = alpha,
                           contrast.vector = contrast.vector, tukey.kramer = tukey.kramer, calculate.lambda = TRUE)
 
-  power <- pwr.obj$power
-  df <- pwr.obj$df
-  ncp <- pwr.obj$lambda
-  t.alpha <- pwr.obj$t.alpha
-  psi <- pwr.obj$psi
-  d <- pwr.obj$d
   n.total <- sum(n.vector)
 
   if (verbose > 0) {
 
-    print.obj <- list(test = "Single Contrast Analysis (T-Test)", requested = requested, psi = psi,
-                      d = d, n.total = n.total, power = power, ncp = ncp, null.ncp = 0,
-                      alpha = alpha, t.alpha = c(-t.alpha, t.alpha), df = df)
+    print.obj <- list(test = "Single Contrast Analysis (T-Test)",
+                      requested = requested,
+                      psi = pwr.obj$psi,
+                      d = pwr.obj$d,
+                      n.total = n.total,
+                      power = pwr.obj$power,
+                      ncp = pwr.obj$lambda,
+                      null.ncp = 0,
+                      alpha = alpha,
+                      t.alpha = pwr.obj$t.alpha * c(-1, 1),
+                      df = pwr.obj$df)
 
     .print.pwrss.contrast(print.obj, verbose = verbose, utf = utf)
 
@@ -1467,13 +1479,13 @@ power.t.contrast <- function(mu.vector, sd.vector,
 
   invisible(structure(list(parms = func.parms,
                            test = "t",
-                           psi = psi,
-                           d = d,
-                           df = df,
-                           t.alpha = c(-t.alpha, t.alpha),
-                           ncp = ncp,
-                           ncp.null = 0,
-                           power = power,
+                           psi = pwr.obj$psi,
+                           d = pwr.obj$d,
+                           df = pwr.obj$df,
+                           t.alpha = pwr.obj$t.alpha * c(-1, 1),
+                           ncp = pwr.obj$lambda,
+                           null.ncp = 0,
+                           power = pwr.obj$power,
                            n.vector = n.vector,
                            n.total = n.total),
                       class = c("pwrss", "t", "contrast")))
@@ -1492,7 +1504,7 @@ adjust.alpha <- function(n, alpha = 0.05,
 
   p.adj <- stats::uniroot(function(p) {
     alpha - stats::p.adjust(p = p, method = method, n = n)
-  }, interval = c(0, 1))$root
+  }, interval = c(0, 1), tol = 1e-12)$root
 
   p.adj
 
@@ -1723,8 +1735,11 @@ power.t.contrasts <- function(x = NULL,
                              n.total = round(power.out$n.total, 3),
                              power = round(power.out$power, 3))
 
-    print.obj <- list(test = "Multiple Contrast Analyses (T-Tests)", requested = requested,
-                      alpha = alpha, adjust.alpha = adjust.alpha, null.ncp = 0,
+    print.obj <- list(test = "Multiple Contrast Analyses (T-Tests)",
+                      requested = requested,
+                      alpha = alpha,
+                      adjust.alpha = adjust.alpha,
+                      null.ncp = 0,
                       data = print.data)
 
     .print.pwrss.contrasts(print.obj, verbose = verbose, utf = utf)

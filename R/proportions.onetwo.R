@@ -120,6 +120,7 @@ power.exact.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
   if (verbose > 0) {
 
     print.obj <- list(requested = requested,
+                      tgt.effect = "prob",
                       test = "One Proportion",
                       alpha = pwr.obj$alpha,
                       alternative = alternative,
@@ -129,8 +130,6 @@ power.exact.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
                       delta = delta,
                       odds.ratio = odds.ratio,
                       size = n,
-                      prob.alternative = prob,
-                      prob.null = null.prob,
                       binom.alpha = pwr.obj$binom.alpha,
                       power = pwr.obj$power,
                       n = n)
@@ -306,39 +305,14 @@ power.z.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
 
     } # if arcsine
 
-    null.dist.sd <- 1
-
-    if (std.error == "null") {
-
-      if (alternative %in% c("two.sided", "one.sided")) {
-        null.dist.sd <- sqrt((null.prob * (1 - null.prob)) / (prob * (1 - prob)))
-      }
-
-    } # std.error is null
-
+    null.sd <- ifelse(std.error == "null" && alternative %in% c("two.sided", "one.sided"),
+                      sqrt((null.prob * (1 - null.prob)) / (prob * (1 - prob))), 1)
 
     lambda <- h / sqrt(var.num / n)
-    if (alternative %in% c("two.sided", "one.sided")) {
-      pwr.obj <- power.z.test(mean = lambda, sd = 1, null.mean = 0, null.sd = null.dist.sd,
-                              alpha = alpha, alternative = alternative,
-                              plot = FALSE, verbose = 0)
-    } else {
-      pwr.obj <- power.z.test(mean = 0, sd = 1, null.mean = lambda, null.sd = null.dist.sd,
-                              alpha = alpha, alternative = alternative,
-                              plot = FALSE, verbose = 0)
-    }
 
-
-    power <- pwr.obj$power
-    mean.alternative <- pwr.obj$mean
-    sd.alternative <- pwr.obj$sd
-    mean.null <- pwr.obj$null.mean
-    sd.null <- pwr.obj$null.sd
-    z.alpha <- pwr.obj$z.alpha
-
-    list(power = power,  mean.alternative =  mean.alternative,
-         sd.alternative = sd.alternative, mean.null = mean.null,
-         sd.null = sd.null, z.alpha = z.alpha)
+    power.z.test(mean = ifelse(alternative %in% c("two.sided", "one.sided"), lambda, 0), sd = 1,
+                 null.mean = ifelse(alternative %in% c("two.sided", "one.sided"), 0, lambda), null.sd = null.sd,
+                 alpha = alpha, alternative = alternative, plot = FALSE, verbose = 0)
 
   } # pwr()
 
@@ -366,21 +340,19 @@ power.z.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
 
     } # if arcsine
 
-    ifelse(std.error == "null",
-           null.dist.sd <- sqrt((null.prob * (1 - null.prob)) / (prob * (1 - prob))),
-           null.dist.sd <- 1)
+    null.sd <- ifelse(std.error == "null", sqrt((null.prob * (1 - null.prob)) / (prob * (1 - prob))), 1)
 
     if (alternative == "two.sided") {
 
-      M <- stats::qnorm(alpha / 2, sd = null.dist.sd, lower.tail = FALSE) +
-        stats::qnorm(beta, sd = null.dist.sd, lower.tail = FALSE)
+      M <- stats::qnorm(alpha / 2, sd = null.sd, lower.tail = FALSE) +
+        stats::qnorm(beta, sd = null.sd, lower.tail = FALSE)
       n <- M ^ 2 * var.num / h ^ 2
     }
 
     if (alternative == "one.sided") {
 
-      M <- stats::qnorm(alpha, sd = null.dist.sd, lower.tail = FALSE) +
-        stats::qnorm(beta, sd = null.dist.sd, lower.tail = FALSE)
+      M <- stats::qnorm(alpha, sd = null.sd, lower.tail = FALSE) +
+        stats::qnorm(beta, sd = null.sd, lower.tail = FALSE)
       n <- M ^ 2 * var.num / h ^ 2
 
     }
@@ -389,12 +361,12 @@ power.z.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
 
       if (prob > min(null.prob) && prob < max(null.prob)) {
         # equivalence
-        M <- stats::qnorm(alpha,     sd = null.dist.sd, lower.tail = FALSE) +
-             stats::qnorm(beta / 2,  sd = null.dist.sd, lower.tail = FALSE)
+        M <- stats::qnorm(alpha,     sd = null.sd, lower.tail = FALSE) +
+             stats::qnorm(beta / 2,  sd = null.sd, lower.tail = FALSE)
       } else {
         # minimal effect
-        M <- stats::qnorm(alpha / 2, sd = null.dist.sd, lower.tail = FALSE) +
-             stats::qnorm(beta,      sd = null.dist.sd, lower.tail = FALSE)
+        M <- stats::qnorm(alpha / 2, sd = null.sd, lower.tail = FALSE) +
+             stats::qnorm(beta,      sd = null.sd, lower.tail = FALSE)
       }
       n <- M ^ 2 * var.num / h ^ 2
       n <- max(n)
@@ -464,19 +436,12 @@ power.z.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
   pwr.obj <- pwr(prob = prob, null.prob = null.prob, n = n, std.error = std.error,
                  arcsine = arcsine, correct = correct, alpha = alpha, alternative = alternative)
 
-  power <- pwr.obj$power
-  mean.alternative <- pwr.obj$mean.alternative
-  sd.alternative <- pwr.obj$sd.alternative
-  mean.null <- pwr.obj$mean.null
-  sd.null <- pwr.obj$sd.null
-  z.alpha <- pwr.obj$z.alpha
-
-  delta <- prob - null.prob
   odds.ratio <- (prob / (1 - prob)) /  (null.prob / (1 - null.prob))
 
   if (verbose > 0) {
 
     print.obj <- list(requested = requested,
+                      tgt.effect = "prob",
                       test = "One Proportion",
                       alpha = alpha,
                       alternative = alternative,
@@ -486,14 +451,14 @@ power.z.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
                       correct = correct,
                       prob = prob,
                       null.prob = null.prob,
-                      delta = delta,
+                      delta = prob - null.prob,
                       odds.ratio = odds.ratio,
-                      mean.alternative = mean.alternative,
-                      sd.alternative = sd.alternative,
-                      mean.null = mean.null,
-                      sd.null = sd.null,
-                      z.alpha = z.alpha,
-                      power = power,
+                      mean = pwr.obj$mean,
+                      sd = pwr.obj$sd,
+                      null.mean = pwr.obj$null.mean,
+                      null.sd = pwr.obj$null.sd,
+                      z.alpha = pwr.obj$z.alpha,
+                      power = pwr.obj$power,
                       n = n)
 
     .print.pwrss.oneprop(print.obj, verbose = verbose, utf = utf)
@@ -504,14 +469,14 @@ power.z.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
                            test = "z",
                            prob = prob,
                            null.prob = null.prob,
-                           delta = delta,
+                           delta = prob - null.prob,
                            odds.ratio = odds.ratio,
-                           mean = mean.alternative,
-                           sd = sd.alternative,
-                           null.mean = mean.null,
-                           null.sd = sd.null,
-                           z.alpha = z.alpha,
-                           power = power,
+                           mean = pwr.obj$mean,
+                           sd = pwr.obj$sd,
+                           null.mean = pwr.obj$null.mean,
+                           null.sd = pwr.obj$null.sd,
+                           z.alpha = pwr.obj$z.alpha,
+                           power = pwr.obj$power,
                            n = n),
                       class = c("pwrss", "z", "oneprop")))
 } # power.z.oneprop
@@ -861,7 +826,7 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
       null.stat <- 0
 
       stderr <- sqrt(1 / n1 + 1 / n2)
-      null.dist.sd <- 1
+      null.sd <- 1
 
     } else {
 
@@ -883,9 +848,9 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
       if (std.error == "pooled") {
         p.bar <- (prob1 * n1 + prob2 * n2) / (n1 + n2)
         stderr.pooled <- sqrt(p.bar * (1 - p.bar) * (1 / n1 + 1 / n2))
-        null.dist.sd <- stderr.pooled / stderr
+        null.sd <- stderr.pooled / stderr
       } else {
-        null.dist.sd <- 1
+        null.sd <- 1
       }
 
     } # if arcsine
@@ -893,17 +858,8 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
     lambda <- stat / stderr
     null.lambda <- null.stat / stderr
 
-    pwr.obj <- power.z.test(mean = lambda, sd = 1,
-                            null.mean  = null.lambda, null.sd = null.dist.sd,
-                            alpha = alpha, alternative =  alternative,
-                            plot = FALSE, verbose = 0)
-
-    list(power = pwr.obj$power,
-         mean.alternative = pwr.obj$mean,
-         sd.alternative = pwr.obj$sd,
-         mean.null = pwr.obj$null.mean,
-         sd.null = pwr.obj$null.sd,
-         z.alpha = pwr.obj$z.alpha)
+    power.z.test(mean = lambda, sd = 1, null.mean = null.lambda, null.sd = null.sd,
+                 alpha = alpha, alternative =  alternative, plot = FALSE, verbose = 0)
 
   } # pwr()
 
@@ -912,6 +868,7 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
                                       arcsine, alpha, alternative) {
 
     beta <- 1 - power
+    null.sd <- 1
 
     if (arcsine) {
 
@@ -923,12 +880,10 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
 
     } # if arcsine
 
-    null.dist.sd <- 1
-
     if (alternative == "one.sided") {
 
-      z.alpha <- stats::qnorm(alpha, sd = null.dist.sd, lower.tail = FALSE)
-      z.beta <- stats::qnorm(beta, sd = null.dist.sd, lower.tail = FALSE)
+      z.alpha <- stats::qnorm(alpha, sd = null.sd, lower.tail = FALSE)
+      z.beta <- stats::qnorm(beta, sd = null.sd, lower.tail = FALSE)
 
       if (arcsine) {
 
@@ -942,13 +897,10 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
 
       } # if arcsine
 
-    } # if alt
+    } else if (alternative == "two.sided") {
 
-    if (alternative == "two.sided") {
-
-
-      z.alpha <- stats::qnorm(alpha / 2, sd = null.dist.sd, lower.tail = FALSE)
-      z.beta <- stats::qnorm(beta, sd = null.dist.sd, lower.tail = FALSE)
+      z.alpha <- stats::qnorm(alpha / 2, sd = null.sd, lower.tail = FALSE)
+      z.beta <- stats::qnorm(beta, sd = null.sd, lower.tail = FALSE)
 
       if (arcsine) {
 
@@ -962,19 +914,17 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
 
       } # if arcsine
 
-    } # if alt
-
-    if (alternative == "two.one.sided") {
+    } else if (alternative == "two.one.sided") {
 
       if (prob1 - prob2 > min(margin) && prob1 - prob2 < max(margin)) {
-        z.alpha <- stats::qnorm(alpha, sd = null.dist.sd, lower.tail = FALSE)
-        z.beta <- stats::qnorm(beta / 2, sd = null.dist.sd, lower.tail = FALSE)
+        z.alpha <- stats::qnorm(alpha, sd = null.sd, lower.tail = FALSE)
+        z.beta <- stats::qnorm(beta / 2, sd = null.sd, lower.tail = FALSE)
       } else {
-        z.alpha <- stats::qnorm(alpha / 2, sd = null.dist.sd, lower.tail = FALSE)
-        z.beta <- stats::qnorm(beta, sd = null.dist.sd, lower.tail = FALSE)
+        z.alpha <- stats::qnorm(alpha / 2, sd = null.sd, lower.tail = FALSE)
+        z.beta <- stats::qnorm(beta, sd = null.sd, lower.tail = FALSE)
       }
 
-# arcsine currently not permitted (l. 556)
+# arcsine currently not permitted (l. 803)
 #      if (arcsine) {
 
 #        n2 <- ((z.alpha + z.beta) ^ 2 / stat ^ 2) * (n.ratio + 1) / n.ratio
@@ -1111,13 +1061,13 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
                         delta = pwr.obj$delta,
                         odds.ratio = pwr.obj$odds.ratio,
                         size = pwr.obj$size,
-                        prob.alternative = pwr.obj$prob,
-                        prob.null = pwr.obj$null.prob,
+                        prob = pwr.obj$prob,
+                        null.prob = pwr.obj$null.prob,
                         binom.alpha = pwr.obj$binom.alpha,
-                        mean.alternative = pwr.obj$mean,
-                        sd.alternative = pwr.obj$sd,
-                        mean.null = pwr.obj$null.mean,
-                        sd.null = pwr.obj$null.sd,
+                        mean = pwr.obj$mean,
+                        sd = pwr.obj$sd,
+                        null.mean = pwr.obj$null.mean,
+                        null.sd = pwr.obj$null.sd,
                         z.alpha = pwr.obj$z.alpha,
                         power = pwr.obj$power,
                         n.paired = pwr.obj$n.paired)
@@ -1194,10 +1144,10 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
                         delta = delta,
                         margin = margin,
                         odds.ratio = odds.ratio,
-                        mean.alternative = pwr.obj$mean.alternative,
-                        sd.alternative = pwr.obj$sd.alternative,
-                        mean.null = pwr.obj$mean.null,
-                        sd.null = pwr.obj$sd.null,
+                        mean = pwr.obj$mean,
+                        sd = pwr.obj$sd,
+                        null.mean = pwr.obj$null.mean,
+                        null.sd = pwr.obj$null.sd,
                         z.alpha = pwr.obj$z.alpha,
                         power = pwr.obj$power,
                         n = c(n1 = n1, n2 = n2),
@@ -1213,10 +1163,10 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
                              prob2 = prob2,
                              delta = delta,
                              odds.ratio = odds.ratio,
-                             mean = pwr.obj$mean.alternative,
-                             sd = pwr.obj$sd.alternative,
-                             null.mean = pwr.obj$mean.null,
-                             null.sd = pwr.obj$sd.null,
+                             mean = pwr.obj$mean,
+                             sd = pwr.obj$sd,
+                             null.mean = pwr.obj$null.mean,
+                             null.sd = pwr.obj$null.sd,
                              z.alpha = pwr.obj$z.alpha,
                              power = pwr.obj$power,
                              n = c(n1 = n1, n2 = n2),

@@ -172,8 +172,8 @@ power.chisq.gof <- function(w = NULL, null.w = 0, df,
 
   if (verbose > 0) {
 
-    print.obj <- list(requested = requested,
-                      test = "Chi-Square Test for Goodness-of-Fit or Independence",
+    print.obj <- list(test = "Chi-Square Test for Goodness-of-Fit or Independence",
+                      requested = requested,
                       w = w,
                       n = n,
                       df = df,

@@ -238,8 +238,8 @@ test_that("power.t.regression / pwrss.t.regression work", {
                       k.total = 5, n = NULL, power = 0.80, alpha = 0.05, alternative = "two.sided", ceil.n = FALSE,
                       verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp", "r.squared", "power", "n")],
-                 list(test = "t", std.beta = 0.2, std.null.beta = 0, std.margin = 0, df = 133.36039, t.alpha = c(-1.97791219, 1.97791219),
-                      ncp = 2.82195869, null.ncp = 0, r.squared = 0.30, power = 0.80, n = 139.36039))
+                 list(test = "t", std.beta = 0.2, std.null.beta = 0, std.margin = 0, df = 133.360372, t.alpha = c(-1.97791219, 1.97791219),
+                      ncp = 2.82195851, null.ncp = 0, r.squared = 0.30, power = 0.799999950, n = 139.360372))
 
     crrRes <- power.t.regression(beta = 0.20, k.total = 5, r.squared = 0.30, n = 140, verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "t", "regression"))

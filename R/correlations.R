@@ -388,7 +388,7 @@ power.z.twocors.steiger <- function(rho12 = NULL, rho13 = NULL, rho23 = NULL,
   if (requested == "n") {
 
     n <- try(suppressWarnings(
-               stats::uniroot(function(n) min.pwr(rho12, rho13, rho34, n), interval = c(5, 1e10), tol = 1e-12)$root),
+               stats::uniroot(function(n) min.pwr(rho12, rho13, rho34, n), interval = c(5, 1e10))$root),
              silent = TRUE)
 
     if (inherits(n, "try-error") || n == 1e10) stop("Design is not feasible.", call. = FALSE)
@@ -426,24 +426,16 @@ power.z.twocors.steiger <- function(rho12 = NULL, rho13 = NULL, rho23 = NULL,
   pwr.obj <- pwr(rho12 = rho12, rho13 = rho13, rho23 = rho23, rho14 = rho14, rho24 = rho24, rho34 = rho34,
                  n = n, alpha = alpha, alternative = alternative, common.index = common.index)
 
-  rho1 <- pwr.obj$rho1
-  rho2 <- pwr.obj$rho2
-  power <- pwr.obj$power
-  mean.alternative <- ifelse(alternative == "two.sided" && rho1 - rho2 < 0, -pwr.obj$mean, pwr.obj$mean)
-  sd.alternative <- pwr.obj$sd
-  mean.null <- pwr.obj$null.mean
-  sd.null <- pwr.obj$null.sd
-  z.alpha <- pwr.obj$z.alpha
-
-  delta <- rho1 - rho2
-  q <- cors.to.q(rho1, rho2, FALSE)$q
+  mean <- ifelse(alternative == "two.sided" && pwr.obj$rho1 - pwr.obj$rho2 < 0, -pwr.obj$mean, pwr.obj$mean)
+  delta <- pwr.obj$rho1 - pwr.obj$rho2
+  q <- cors.to.q(pwr.obj$rho1, pwr.obj$rho2, FALSE)$q
   rho2p <- ifelse(common.index, "rho13", "rho34")
 
   if (verbose > 0) {
 
-    print.obj <-  list(requested = requested,
+    print.obj <-  list(test = "Dependent Correlations",
+                       requested = requested,
                        tgt.effect = ifelse(is.null(func.parms[[rho2p]]), rho2p, "rho12"),
-                       test = "Dependent Correlations",
                        design = "paired",
                        alpha = alpha,
                        alternative = alternative,
@@ -453,13 +445,13 @@ power.z.twocors.steiger <- function(rho12 = NULL, rho13 = NULL, rho23 = NULL,
                        rho34 = rho34,
                        delta = delta,
                        q = q,
-                       mean.alternative = mean.alternative,
-                       sd.alternative = sd.alternative,
-                       mean.null = mean.null,
-                       sd.null = sd.null,
-                       z.alpha = z.alpha,
+                       mean = mean,
+                       sd = pwr.obj$sd,
+                       null.mean = pwr.obj$null.mean,
+                       null.sd = pwr.obj$null.sd,
+                       z.alpha = pwr.obj$z.alpha,
                        n = n,
-                       power = power)
+                       power = pwr.obj$power)
 
     .print.pwrss.steiger(print.obj, verbose = verbose, utf = utf)
 
@@ -474,14 +466,14 @@ power.z.twocors.steiger <- function(rho12 = NULL, rho13 = NULL, rho23 = NULL,
                            rho34 = rho34,
                            delta = delta,
                            q = q,
-                           mean = mean.alternative,
-                           sd = sd.alternative,
-                           null.mean = mean.null,
-                           null.sd = sd.null,
+                           mean = mean,
+                           sd = pwr.obj$sd,
+                           null.mean = pwr.obj$null.mean,
+                           null.sd = pwr.obj$null.sd,
                            alternative = alternative,
-                           z.alpha = z.alpha,
+                           z.alpha = pwr.obj$z.alpha,
                            n = n,
-                           power = power),
+                           power = pwr.obj$power),
                       class = c("pwrss", "z", "twocors", "paired")))
 
 } # power.z.twocors.steiger()
@@ -616,12 +608,12 @@ power.z.twocors <- function(rho1 = NULL, rho2 = NULL, req.sign = "+",
     if (alternative == "two.sided") {
       M <- stats::qnorm(alpha / 2, mean = 0, sd = 1, lower.tail = FALSE) + stats::qnorm(beta, mean = 0, sd = 1, lower.tail = FALSE)
       n2 <- stats::uniroot(function(n2) M ^ 2 - (z1 - z2) ^ 2 / (1 / (n.ratio * n2 - 3) + 1 / (n2 - 3)),
-                           interval = c(-1e10, 1e10), tol = 1e-12)$root
+                           interval = c(-1e10, 1e10))$root
 
     } else if (alternative == "one.sided") {
       M <- stats::qnorm(alpha,     mean = 0, sd = 1, lower.tail = FALSE) + stats::qnorm(beta, mean = 0, sd = 1, lower.tail = FALSE)
       n2 <- stats::uniroot(function(n2) M ^ 2 - (z1 - z2) ^ 2 / (1 / (n.ratio * n2 - 3) + 1 / (n2 - 3)),
-                           interval = c(0, 1e10), tol = 1e-12)$root
+                           interval = c(0, 1e10))$root
     }
 
     n2 <- ifelse(ceil.n, ceiling(n2), n2)
@@ -656,34 +648,26 @@ power.z.twocors <- function(rho1 = NULL, rho2 = NULL, req.sign = "+",
   pwr.obj <- pwr(rho1 = rho1, rho2 = rho2, n2 = n2, n.ratio = n.ratio,
                  alpha = alpha, alternative = alternative)
 
-  power <- pwr.obj$power
-  z.alpha <- pwr.obj$z.alpha
-  mean.alternative <- pwr.obj$lambda
-  sd.alternative <- 1
-  mean.null <- 0
-  sd.null <- 1
-
-  delta <- rho1 - rho2
   q <- cors.to.q(rho1, rho2, FALSE)$q
 
   if (verbose > 0) {
 
-    print.obj <- list(requested = requested,
+    print.obj <- list(test = "Independent Correlations",
+                      requested = requested,
                       tgt.effect = ifelse(is.null(func.parms[["rho2"]]), "rho2", "rho1"),
-                      test = "Independent Correlations",
                       design = "independent",
                       alpha = alpha,
                       alternative = alternative,
                       rho1 = rho1,
                       rho2 = rho2,
-                      delta = delta,
+                      delta = rho1 - rho2,
                       q = q,
-                      mean.alternative = mean.alternative,
-                      sd.alternative = sd.alternative,
-                      mean.null = mean.null,
-                      sd.null = sd.null,
-                      z.alpha = z.alpha,
-                      power = power,
+                      mean = pwr.obj$lambda,
+                      sd = 1,
+                      null.mean = 0,
+                      null.sd = 1,
+                      z.alpha = pwr.obj$z.alpha,
+                      power = pwr.obj$power,
                       n = c(n1 = n1, n2 = n2))
 
     .print.pwrss.twocors(print.obj, verbose = verbose, utf = utf)
@@ -695,17 +679,17 @@ power.z.twocors <- function(rho1 = NULL, rho2 = NULL, req.sign = "+",
                            design = "independent",
                            rho1 = rho1,
                            rho2 = rho2,
-                           delta = delta,
+                           delta = rho1 - rho2,
                            q = q,
-                           mean = mean.alternative,
-                           sd = sd.alternative,
-                           null.mean = mean.null,
-                           null.sd = sd.null,
+                           mean = pwr.obj$lambda,
+                           sd = 1,
+                           null.mean = 0,
+                           null.sd = 1,
                            alternative = alternative,
-                           z.alpha = z.alpha,
+                           z.alpha = pwr.obj$z.alpha,
                            n = c(n1 = n1, n2 = n2),
                            n.total = n1 + n2,
-                           power = power),
+                           power = pwr.obj$power),
                       class = c("pwrss", "z", "twocors", "independent")))
 
 } # power.z.twocors
@@ -895,8 +879,9 @@ power.z.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0,
 
   if (verbose > 0) {
 
-    print.obj <-  list(requested = requested,
-                       test = "One-Sample Correlation (Approximate)",
+    print.obj <-  list(test = "One-Sample Correlation (Approximate)",
+                       requested = requested,
+                       tgt.effect = "rho",
                        design = "one.sample",
                        alpha = alpha,
                        alternative = alternative,
@@ -904,10 +889,10 @@ power.z.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0,
                        null.rho = null.rho,
                        delta = delta,
                        q = q,
-                       mean.alternative = pwr.obj$lambda,
-                       sd.alternative = 1,
-                       mean.null = 0,
-                       sd.null = 1,
+                       mean = pwr.obj$lambda,
+                       sd = 1,
+                       null.mean = 0,
+                       null.sd = 1,
                        z.alpha = pwr.obj$z.alpha,
                        power = pwr.obj$power,
                        n = n)
@@ -1177,17 +1162,17 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0, n = NUL
 
     pwr.obj <- pwr.exact.rho(n = n, rho = rho, null.rho = null.rho, alpha = alpha, alternative = alternative)
     normal.approx <- FALSE
-    mean.alternative <- sd.alternative <- mean.null <- sd.null <- z.alpha <- NA
+    mean <- sd <- null.mean <- null.sd <- z.alpha <- NA
     rho.alpha <- pwr.obj$crit
-    
+
   } else {
 
     pwr.obj <- power.z.onecor(rho = rho, null.rho = null.rho, n = n, alpha = alpha, alternative = alternative, verbose = 0)
     normal.approx <- TRUE
-    mean.alternative = pwr.obj$mean
-    sd.alternative = pwr.obj$sd
-    mean.null = pwr.obj$null.mean
-    sd.null = pwr.obj$null.sd
+    mean = pwr.obj$mean
+    sd = pwr.obj$sd
+    null.mean = pwr.obj$null.mean
+    null.sd = pwr.obj$null.sd
     z.alpha = pwr.obj$z.alpha
     rho.alpha <- NA
 
@@ -1197,8 +1182,9 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0, n = NUL
 
   if (verbose > 0) {
 
-    print.obj <-  list(requested = requested,
-                       test = paste("One-Sample Correlation", ifelse(normal.approx, "(Approximate)", "(Exact)")),
+    print.obj <-  list(test = paste("One-Sample Correlation", ifelse(normal.approx, "(Approximate)", "(Exact)")),
+                       requested = requested,
+                       tgt.effect = "rho",
                        design = "one.sample",
                        alternative = alternative,
                        rho = rho,
@@ -1206,10 +1192,10 @@ power.exact.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0, n = NUL
                        delta = rho - null.rho,
                        q = q,
                        alpha = alpha,
-                       mean.alternative = mean.alternative,
-                       sd.alternative = sd.alternative,
-                       mean.null = mean.null,
-                       sd.null = sd.null,
+                       mean = mean,
+                       sd = sd,
+                       null.mean = null.mean,
+                       null.sd = null.sd,
                        z.alpha = z.alpha,
                        rho.alpha = rho.alpha,
                        power = pwr.obj$power,
