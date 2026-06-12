@@ -88,7 +88,7 @@ power.t.test(
 
   non-centrality parameter under alternative.
 
-- ncp.null:
+- null.ncp:
 
   non-centrality parameter under null.
 
@@ -133,13 +133,13 @@ power.t.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "two.sided")
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : ncp  = null.ncp
-#>   H1 (Alternative) : ncp != null.ncp
+#>   H0 (Null)        : lambda  = null.lambda
+#>   H1 (Alternative) : lambda != null.lambda
 #> 
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (ncp)    = 1.960 (vs. null.ncp = 0)
+#>   Target NCP (lambda)  = 1.960 (vs. null.lambda = 0)
 #>   Degrees of Freedom   = 100
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.507
@@ -148,7 +148,7 @@ power.t.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "two.sided")
 power.t.test(power = 0.80, df = 100, alpha = 0.05, alternative = "two.sided")
 
 #> +--------------------------------------------------+
-#> |      MINIMUM DETECTABLE EFFECT CALCULATION       |
+#> |      MINIMUM DETECTABLE NCP CALCULATION       |
 #> +--------------------------------------------------+
 #> 
 #> Generic t-Test
@@ -156,13 +156,13 @@ power.t.test(power = 0.80, df = 100, alpha = 0.05, alternative = "two.sided")
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : ncp  = null.ncp
-#>   H1 (Alternative) : ncp != null.ncp
+#>   H0 (Null)        : lambda  = null.lambda
+#>   H1 (Alternative) : lambda != null.lambda
 #> 
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (ncp)    = 2.829 (vs. null.ncp = 0)  <<
+#>   Target NCP (lambda)  = 2.829 (vs. null.lambda = 0)  <<
 #>   Degrees of Freedom   = 100
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -183,13 +183,13 @@ power.t.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "one.sided")
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : ncp <= null.ncp
-#>   H1 (Alternative) : ncp  > null.ncp
+#>   H0 (Null)        : lambda <= null.lambda
+#>   H1 (Alternative) : lambda  > null.lambda
 #> 
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (ncp)    = 1.960 (vs. null.ncp = 0)
+#>   Target NCP (lambda)  = 1.960 (vs. null.lambda = 0)
 #>   Degrees of Freedom   = 100
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.381
@@ -198,7 +198,7 @@ power.t.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "one.sided")
 power.t.test(power = 0.80, df = 100, alpha = 0.05, alternative = "one.sided")
 
 #> +--------------------------------------------------+
-#> |      MINIMUM DETECTABLE EFFECT CALCULATION       |
+#> |      MINIMUM DETECTABLE NCP CALCULATION       |
 #> +--------------------------------------------------+
 #> 
 #> Generic t-Test
@@ -206,13 +206,13 @@ power.t.test(power = 0.80, df = 100, alpha = 0.05, alternative = "one.sided")
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : ncp <= null.ncp
-#>   H1 (Alternative) : ncp  > null.ncp
+#>   H0 (Null)        : lambda <= null.lambda
+#>   H1 (Alternative) : lambda  > null.lambda
 #> 
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (ncp)    = 2.503 (vs. null.ncp = 0)  <<
+#>   Target NCP (lambda)  = 2.503 (vs. null.lambda = 0)  <<
 #>   Degrees of Freedom   = 100
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -235,15 +235,15 @@ power.t.test(ncp = 0, null.ncp = c(-2, 2), df = 100, alpha = 0.05,
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : ncp <= min(null.ncp) or
-#>                      ncp >= max(null.ncp)
-#>   H1 (Alternative) : ncp  > min(null.ncp) and
-#>                      ncp  < max(null.ncp)
+#>   H0 (Null)        : lambda <= min(null.lambda) or
+#>                      lambda >= max(null.lambda)
+#>   H1 (Alternative) : lambda  > min(null.lambda) and
+#>                      lambda  < max(null.lambda)
 #> 
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (ncp)    = 0 (vs. null.ncp = -2 and 2)
+#>   Target NCP (lambda)  = 0 (vs. null.lambda = -2 and 2)
 #>   Degrees of Freedom   = 100
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.723
@@ -253,7 +253,7 @@ power.t.test(power = 0.80, req.sign = "0", null.ncp = c(-2, 2),
              df = 100, alpha = 0.05, alternative = "two.one.sided")
 
 #> +--------------------------------------------------+
-#> |      MINIMUM DETECTABLE EFFECT CALCULATION       |
+#> |      MINIMUM DETECTABLE NCP CALCULATION       |
 #> +--------------------------------------------------+
 #> 
 #> Generic t-Test
@@ -261,15 +261,15 @@ power.t.test(power = 0.80, req.sign = "0", null.ncp = c(-2, 2),
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : ncp <= min(null.ncp) or
-#>                      ncp >= max(null.ncp)
-#>   H1 (Alternative) : ncp  > min(null.ncp) and
-#>                      ncp  < max(null.ncp)
+#>   H0 (Null)        : lambda <= min(null.lambda) or
+#>                      lambda >= max(null.lambda)
+#>   H1 (Alternative) : lambda  > min(null.lambda) and
+#>                      lambda  < max(null.lambda)
 #> 
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (ncp)    = -0.000 (vs. null.ncp = -2 and 2)  <<
+#>   Target NCP (lambda)  = -0.000 (vs. null.lambda = -2 and 2)  <<
 #>   Degrees of Freedom   = 100
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.723
@@ -292,15 +292,15 @@ power.t.test(ncp = 2, null.ncp = c(-1, 1), df = 100, alpha = 0.05,
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : ncp >= min(null.ncp) and
-#>                      ncp <= max(null.ncp)
-#>   H1 (Alternative) : ncp  < min(null.ncp) or
-#>                      ncp  > max(null.ncp)
+#>   H0 (Null)        : lambda >= min(null.lambda) and
+#>                      lambda <= max(null.lambda)
+#>   H1 (Alternative) : lambda  < min(null.lambda) or
+#>                      lambda  > max(null.lambda)
 #> 
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (ncp)    = 2 (vs. null.ncp = -1 and 1)
+#>   Target NCP (lambda)  = 2 (vs. null.lambda = -1 and 1)
 #>   Degrees of Freedom   = 100
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.837
@@ -310,7 +310,7 @@ power.t.test(power = 0.80, req.sign = "+", null.ncp = c(-1, 1),
              df = 100, alpha = 0.05, alternative = "two.one.sided")
 
 #> +--------------------------------------------------+
-#> |      MINIMUM DETECTABLE EFFECT CALCULATION       |
+#> |      MINIMUM DETECTABLE NCP CALCULATION       |
 #> +--------------------------------------------------+
 #> 
 #> Generic t-Test
@@ -318,15 +318,15 @@ power.t.test(power = 0.80, req.sign = "+", null.ncp = c(-1, 1),
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : ncp >= min(null.ncp) and
-#>                      ncp <= max(null.ncp)
-#>   H1 (Alternative) : ncp  < min(null.ncp) or
-#>                      ncp  > max(null.ncp)
+#>   H0 (Null)        : lambda >= min(null.lambda) and
+#>                      lambda <= max(null.lambda)
+#>   H1 (Alternative) : lambda  < min(null.lambda) or
+#>                      lambda  > max(null.lambda)
 #> 
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (ncp)    = 3.864 (vs. null.ncp = -1 and 1)  <<
+#>   Target NCP (lambda)  = 3.864 (vs. null.lambda = -1 and 1)  <<
 #>   Degrees of Freedom   = 100
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200

@@ -221,10 +221,10 @@ power.t.regression(beta = 0.50,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (R-squared) = 0.500
-#>   Sample Size             = 65  <<
-#>   Type 1 Error (alpha)    = 0.050
-#>   Type 2 Error (beta)     = 0.199
-#>   Statistical Power       = 0.801
+#>   Target Effect (Std. beta) = 0.250
+#>   Sample Size               = 65  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.199
+#>   Statistical Power         = 0.801
 #> 
 ```

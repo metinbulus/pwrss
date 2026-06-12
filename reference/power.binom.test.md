@@ -126,7 +126,7 @@ power.binom.test(size = 200, prob = 0.6, null.prob = 0.5, alpha = 0.05,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob)   = 0.600 (vs. null.prob = 0.500)
+#>   Target NCP (prob)    = 0.600 (vs. null.prob = 0.500)
 #>   Number of Trials     = 200
 #>   Type 1 Error (alpha) = 0.038
 #>   Type 2 Error (beta)  = 0.140
@@ -136,7 +136,7 @@ power.binom.test(power = 0.80, size = 200, req.sign = "+", null.prob = 0.5,
                  alpha = 0.05, alternative = "one.sided")
 
 #> +--------------------------------------------------+
-#> |      MINIMUM DETECTABLE EFFECT CALCULATION       |
+#> |      MINIMUM DETECTABLE NCP CALCULATION       |
 #> +--------------------------------------------------+
 #> 
 #> Generic Binomial Test
@@ -150,7 +150,7 @@ power.binom.test(power = 0.80, size = 200, req.sign = "+", null.prob = 0.5,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob)   = 0.592 (vs. null.prob = 0.500)  <<
+#>   Target NCP (prob)    = 0.592 (vs. null.prob = 0.500)  <<
 #>   Number of Trials     = 200
 #>   Type 1 Error (alpha) = 0.038
 #>   Type 2 Error (beta)  = 0.200
@@ -176,7 +176,7 @@ power.binom.test(size = 200, prob = 0.4, null.prob = 0.5, alpha = 0.05,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob)   = 0.400 (vs. null.prob = 0.500)
+#>   Target NCP (prob)    = 0.400 (vs. null.prob = 0.500)
 #>   Number of Trials     = 200
 #>   Type 1 Error (alpha) = 0.040
 #>   Type 2 Error (beta)  = 0.213
@@ -186,7 +186,7 @@ power.binom.test(power = 0.80, size = 200, req.sign = "+", null.prob = 0.5,
                  alpha = 0.05, alternative = "two.sided")
 
 #> +--------------------------------------------------+
-#> |      MINIMUM DETECTABLE EFFECT CALCULATION       |
+#> |      MINIMUM DETECTABLE NCP CALCULATION       |
 #> +--------------------------------------------------+
 #> 
 #> Generic Binomial Test
@@ -200,7 +200,7 @@ power.binom.test(power = 0.80, size = 200, req.sign = "+", null.prob = 0.5,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob)   = 0.602 (vs. null.prob = 0.500)  <<
+#>   Target NCP (prob)    = 0.602 (vs. null.prob = 0.500)  <<
 #>   Number of Trials     = 200
 #>   Type 1 Error (alpha) = 0.040
 #>   Type 2 Error (beta)  = 0.200
@@ -228,7 +228,7 @@ power.binom.test(size = 200, prob = 0.5, null.prob = c(0.4, 0.6),
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob)   = 0.500 (vs. null.prob = 0.400 and 0.600)
+#>   Target NCP (prob)    = 0.500 (vs. null.prob = 0.400 and 0.600)
 #>   Number of Trials     = 200
 #>   Type 1 Error (alpha) = 0.049
 #>   Type 2 Error (beta)  = 0.229
@@ -238,7 +238,7 @@ power.binom.test(power = 0.80, size = 200, req.sign = "0",
                  null.prob = c(0.4, 0.6), alpha = 0.05,
                  alternative = "two.one.sided")
 #> +--------------------------------------------------+
-#> |      MINIMUM DETECTABLE EFFECT CALCULATION       |
+#> |      MINIMUM DETECTABLE NCP CALCULATION       |
 #> +--------------------------------------------------+
 #> 
 #> Generic Binomial Test
@@ -254,7 +254,7 @@ power.binom.test(power = 0.80, size = 200, req.sign = "0",
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob)   = 0.500 (vs. null.prob = 0.400 and 0.600)  <<
+#>   Target NCP (prob)    = 0.500 (vs. null.prob = 0.400 and 0.600)  <<
 #>   Number of Trials     = 200
 #>   Type 1 Error (alpha) = 0.049
 #>   Type 2 Error (beta)  = 0.229

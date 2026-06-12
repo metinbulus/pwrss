@@ -177,7 +177,7 @@ power.z.oneprop(prob = 0.45, null.prob = 0.50, alpha = 0.05,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob)   = 0.450 (vs. null.prob = 0.500)
+#>   Target Effect (prob) = 0.450 (vs. null.prob = 0.500)
 #>   Sample Size          = 500
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.276
@@ -207,7 +207,7 @@ power.z.oneprop(prob = 0.45, null.prob = 0.50, alpha = 0.05,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob)   = 0.450 (vs. null.prob = 0.500)
+#>   Target Effect (prob) = 0.450 (vs. null.prob = 0.500)
 #>   Sample Size          = 617  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -237,7 +237,7 @@ power.z.oneprop(req.sign = "+", null.prob = 0.50, alpha = 0.05,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob)   = 0.555 (vs. null.prob = 0.500)  <<
+#>   Target Effect (prob) = 0.555 (vs. null.prob = 0.500)  <<
 #>   Sample Size          = 500
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200

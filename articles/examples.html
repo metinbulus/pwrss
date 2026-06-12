@@ -60,7 +60,7 @@
                         <h4 data-toc-skip class="author">Metin Bulus
 &amp; Sebastian Jentschke</h4>
             
-            <h4 data-toc-skip class="date">2026-05-30</h4>
+            <h4 data-toc-skip class="date">2026-06-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/metinbulus/pwrss/blob/main/vignettes/examples.Rmd" class="external-link"><code>vignettes/examples.Rmd</code></a></small>
       <div class="d-none name"><code>examples.Rmd</code></div>
@@ -182,13 +182,13 @@ statistic?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   H0 (Null)        : ncp  = null.ncp</span></span>
-<span><span class="co">#&gt;   H1 (Alternative) : ncp != null.ncp</span></span>
+<span><span class="co">#&gt;   H0 (Null)        : lambda  = null.lambda</span></span>
+<span><span class="co">#&gt;   H1 (Alternative) : lambda != null.lambda</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (ncp)    = -3.519 (vs. null.ncp = 0)</span></span>
+<span><span class="co">#&gt;   Target NCP (lambda)  = -3.519 (vs. null.lambda = 0)</span></span>
 <span><span class="co">#&gt;   Degrees of Freedom   = 29</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.075</span></span>
@@ -285,13 +285,13 @@ detect superiority under these criteria?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   H0 (Null)        : ncp &lt;= null.ncp</span></span>
-<span><span class="co">#&gt;   H1 (Alternative) : ncp  &gt; null.ncp</span></span>
+<span><span class="co">#&gt;   H0 (Null)        : lambda &lt;= null.lambda</span></span>
+<span><span class="co">#&gt;   H1 (Alternative) : lambda  &gt; null.lambda</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (ncp)    = 3.674 (vs. null.ncp = 0.735)</span></span>
+<span><span class="co">#&gt;   Target NCP (lambda)  = 3.674 (vs. null.lambda = 0.735)</span></span>
 <span><span class="co">#&gt;   Degrees of Freedom   = 117</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.104</span></span>
@@ -378,6 +378,7 @@ statistic for Wool B?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Target NCP (mean)    = -3.994 (vs. null.mean = 0)</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.021</span></span>
 <span><span class="co">#&gt;   Statistical Power    = 0.979  &lt;&lt;</span></span></code></pre>
@@ -458,6 +459,7 @@ level of 0.05. What is the power under these criteria?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Target NCP (mean)    = 2.961 (vs. null.mean = 0)</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.158</span></span>
 <span><span class="co">#&gt;   Statistical Power    = 0.842  &lt;&lt;</span></span></code></pre>
@@ -530,13 +532,13 @@ statistic?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   H0 (Null)        : ncp = 0</span></span>
-<span><span class="co">#&gt;   H1 (Alternative) : ncp &gt; 0</span></span>
+<span><span class="co">#&gt;   H0 (Null)        : lambda = 0</span></span>
+<span><span class="co">#&gt;   H1 (Alternative) : lambda &gt; 0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (ncp)    = 10.710 (vs. null.ncp = 0)</span></span>
+<span><span class="co">#&gt;   Target NCP (lambda)  = 10.710 (vs. null.lambda = 0)</span></span>
 <span><span class="co">#&gt;   Presumed Sample S.   = 31</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.115</span></span>
@@ -601,13 +603,13 @@ chi-squared test of independence?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   H0 (Null)        : ncp = null.ncp</span></span>
-<span><span class="co">#&gt;   H1 (Alternative) : ncp &gt; null.ncp</span></span>
+<span><span class="co">#&gt;   H0 (Null)        : lambda = null.lambda</span></span>
+<span><span class="co">#&gt;   H1 (Alternative) : lambda &gt; null.lambda</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (ncp)    = 138.290 (vs. null.ncp = 0)</span></span>
+<span><span class="co">#&gt;   Target NCP (lambda)  = 138.290 (vs. null.lambda = 0)</span></span>
 <span><span class="co">#&gt;   Degrees of Freedom   = 9</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.000</span></span>
@@ -681,13 +683,13 @@ difference between the full and reduced models?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Hypotheses</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   H0 (Null)        : ncp = null.ncp</span></span>
-<span><span class="co">#&gt;   H1 (Alternative) : ncp &gt; null.ncp</span></span>
+<span><span class="co">#&gt;   H0 (Null)        : lambda = null.lambda</span></span>
+<span><span class="co">#&gt;   H1 (Alternative) : lambda &gt; null.lambda</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (ncp)    = 18.463 (vs. null.ncp = 0)</span></span>
+<span><span class="co">#&gt;   Target NCP (lambda)  = 18.463 (vs. null.lambda = 0)</span></span>
 <span><span class="co">#&gt;   Degrees of Freedom   = 1</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.010</span></span>
@@ -761,7 +763,7 @@ proportion and sample size?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (prob)   = 0.643 (vs. null.prob = 0.500)</span></span>
+<span><span class="co">#&gt;   Target NCP (prob)    = 0.643 (vs. null.prob = 0.500)</span></span>
 <span><span class="co">#&gt;   Number of Trials     = 272</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.039</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.001</span></span>
@@ -813,7 +815,7 @@ a coin is fair.</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (prob)   = 0.500 (vs. null.prob = 0.495 and 0.505)</span></span>
+<span><span class="co">#&gt;   Target NCP (prob)    = 0.500 (vs. null.prob = 0.495 and 0.505)</span></span>
 <span><span class="co">#&gt;   Number of Trials     = 85632</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -861,7 +863,7 @@ Monte Carlo simulation.</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (prob)   = 0.050 (vs. null.prob = 0.045 and 0.055)</span></span>
+<span><span class="co">#&gt;   Target NCP (prob)    = 0.050 (vs. null.prob = 0.045 and 0.055)</span></span>
 <span><span class="co">#&gt;   Number of Trials     = 16424</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.049</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.198</span></span>
@@ -900,7 +902,7 @@ Monte Carlo simulation.</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (prob)   = 0.800 (vs. null.prob = 0.795 and 0.805)</span></span>
+<span><span class="co">#&gt;   Target NCP (prob)    = 0.800 (vs. null.prob = 0.795 and 0.805)</span></span>
 <span><span class="co">#&gt;   Number of Trials     = 55011</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
@@ -2550,7 +2552,7 @@ and 0.80 power, how many vehicles should be observed?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (prob)   = 0.800 (vs. null.prob = 0.900)</span></span>
+<span><span class="co">#&gt;   Target Effect (prob) = 0.800 (vs. null.prob = 0.900)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 69  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -2592,7 +2594,7 @@ differences. It can be useful for proportions towards the extreme.</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (prob)   = 0.800 (vs. null.prob = 0.900)</span></span>
+<span><span class="co">#&gt;   Target Effect (prob) = 0.800 (vs. null.prob = 0.900)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 54  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.197</span></span>
@@ -2628,7 +2630,7 @@ in more accurate test statistics.</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (prob)   = 0.800 (vs. null.prob = 0.900)</span></span>
+<span><span class="co">#&gt;   Target Effect (prob) = 0.800 (vs. null.prob = 0.900)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 79  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.198</span></span>
@@ -2668,7 +2670,7 @@ to use the <a href="#one-prop-exact">exact test</a>.</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (prob)   = 0.800 (vs. null.prob = 0.900)</span></span>
+<span><span class="co">#&gt;   Target Effect (prob) = 0.800 (vs. null.prob = 0.900)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 99  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -2706,7 +2708,7 @@ What is the minimum required sample size under this criterion?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (prob)   = 0.002 (vs. null.prob = 0)</span></span>
+<span><span class="co">#&gt;   Target Effect (prob) = 0.002 (vs. null.prob = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 804  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.000</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -2760,11 +2762,11 @@ yields power calculations that are acceptably accurate.
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (prob1)  = 0.600 (vs. prob2 = 0.500)</span></span>
-<span><span class="co">#&gt;   Sample Size          = 388 and 388  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.801</span></span>
+<span><span class="co">#&gt;   Target Effect (prob1) = 0.600 (vs. prob2 = 0.500)</span></span>
+<span><span class="co">#&gt;   Sample Size           = 388 and 388  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)  = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)   = 0.199</span></span>
+<span><span class="co">#&gt;   Statistical Power     = 0.801</span></span>
 <span></span>
 <span><span class="co"># find Cohen's h</span></span>
 <span><span class="fu"><a href="../reference/probs.to.h.html">probs.to.h</a></span><span class="op">(</span>prob1 <span class="op">=</span> <span class="fl">0.60</span>, prob2 <span class="op">=</span> <span class="fl">0.50</span><span class="op">)</span></span>
@@ -2851,11 +2853,11 @@ near 50% and that is fine.
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (prob1)  = 0.150 (vs. prob2 = 0.100)</span></span>
-<span><span class="co">#&gt;   Sample Size          = 540 and 540  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Target Effect (prob1) = 0.150 (vs. prob2 = 0.100)</span></span>
+<span><span class="co">#&gt;   Sample Size           = 540 and 540  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)  = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)   = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power     = 0.800</span></span></code></pre></div>
 <p><strong>Report</strong>: We conducted a power analysis to determine
 the required sample size for assessing whether gender differences exist
 in daytime sleepiness. The analysis assume a rate of 15% for females and
@@ -2887,11 +2889,11 @@ per group (1080 total).</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (prob1)  = 0.150 (vs. prob2 = 0.100)</span></span>
-<span><span class="co">#&gt;   Sample Size          = 536 and 536  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Target Effect (prob1) = 0.150 (vs. prob2 = 0.100)</span></span>
+<span><span class="co">#&gt;   Sample Size           = 536 and 536  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)  = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)   = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power     = 0.800</span></span></code></pre></div>
 <p><strong>Continuity correction</strong>:</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/power.z.twoprops.html">power.z.twoprops</a></span><span class="op">(</span>prob1 <span class="op">=</span> <span class="fl">0.15</span>,</span>
@@ -2917,11 +2919,11 @@ per group (1080 total).</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (prob1)  = 0.150 (vs. prob2 = 0.100)</span></span>
-<span><span class="co">#&gt;   Sample Size          = 580 and 580  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Target Effect (prob1) = 0.150 (vs. prob2 = 0.100)</span></span>
+<span><span class="co">#&gt;   Sample Size           = 580 and 580  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)  = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)   = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power     = 0.800</span></span></code></pre></div>
 <p><strong>Calculate the standard error using the unpooled standard
 deviations</strong>:</p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
@@ -2948,11 +2950,11 @@ deviations</strong>:</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (prob1)  = 0.150 (vs. prob2 = 0.100)</span></span>
-<span><span class="co">#&gt;   Sample Size          = 538 and 538  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Target Effect (prob1) = 0.150 (vs. prob2 = 0.100)</span></span>
+<span><span class="co">#&gt;   Sample Size           = 538 and 538  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)  = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)   = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power     = 0.800</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="exact-fisher">Exact (Fisher)<a class="anchor" aria-label="anchor" href="#exact-fisher"></a>
@@ -2997,11 +2999,11 @@ each group?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (prob1)  = 0.600 (vs. prob2 = 0.500)</span></span>
-<span><span class="co">#&gt;   Sample Size          = 321 and 321  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.199</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.801</span></span></code></pre></div>
+<span><span class="co">#&gt;   Target Effect (prob1) = 0.600 (vs. prob2 = 0.500)</span></span>
+<span><span class="co">#&gt;   Sample Size           = 321 and 321  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)  = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)   = 0.199</span></span>
+<span><span class="co">#&gt;   Statistical Power     = 0.801</span></span></code></pre></div>
 <p><strong>Report</strong>: We conducted a power analysis to estimate
 the required sample size for evaluating the relative effectiveness of
 two reminder systems. Assuming a 10% difference (from 50% to 60%), a
@@ -3050,11 +3052,11 @@ non-inferiority under this criterion?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (prob1)  = 0.010 (vs. prob2 = 0.020)</span></span>
-<span><span class="co">#&gt;   Sample Size          = 457 and 457  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span>
+<span><span class="co">#&gt;   Target Effect (prob1) = 0.010 (vs. prob2 = 0.020)</span></span>
+<span><span class="co">#&gt;   Sample Size           = 457 and 457  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)  = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)   = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power     = 0.800</span></span>
 <span></span>
 <span><span class="co"># consider 5% attrition rate</span></span>
 <span><span class="fu"><a href="../reference/inflate.sample.html">inflate.sample</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">914</span>, rate <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span>
@@ -3110,11 +3112,11 @@ required sample size to test for superiority under these conditions?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (prob1)  = 0.450 (vs. prob2 = 0.500)</span></span>
-<span><span class="co">#&gt;   Sample Size          = 1926 and 1926  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span>
+<span><span class="co">#&gt;   Target Effect (prob1) = 0.450 (vs. prob2 = 0.500)</span></span>
+<span><span class="co">#&gt;   Sample Size           = 1926 and 1926  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)  = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)   = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power     = 0.800</span></span>
 <span></span>
 <span><span class="co"># consider 5% attrition rate</span></span>
 <span><span class="fu"><a href="../reference/inflate.sample.html">inflate.sample</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">3852</span>, rate <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span>
@@ -3186,11 +3188,11 @@ equivalence under these conditions?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (prob1)  = 0.100 (vs. prob2 = 0.100)</span></span>
-<span><span class="co">#&gt;   Sample Size          = 3854 and 3854  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Target Effect (prob1) = 0.100 (vs. prob2 = 0.100)</span></span>
+<span><span class="co">#&gt;   Sample Size           = 3854 and 3854  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)  = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)   = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power     = 0.800</span></span></code></pre></div>
 <p><strong>Report</strong>: We conducted a power analysis to estimate
 the minimum required sample size to evaluate whether a new automated
 scoring system yields scholarship eligibility rates that are
@@ -3248,11 +3250,11 @@ minimum required number of complete applications to process?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (prob1)  = 0.130 (vs. prob2 = 0.100)</span></span>
-<span><span class="co">#&gt;   Sample Size          = 3992 and 3992  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Target Effect (prob1) = 0.130 (vs. prob2 = 0.100)</span></span>
+<span><span class="co">#&gt;   Sample Size           = 3992 and 3992  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)  = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)   = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power     = 0.800</span></span></code></pre></div>
 <p><strong>Report</strong>: We conducted a power analysis to estimate
 the minimum required number of complete scholarship applications to
 evaluate whether a new automated scoring system results in a gender
@@ -3317,11 +3319,11 @@ sample size for the newly recruited group.</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (prob10) = 0.178 (vs. prob01 = 0.078)</span></span>
-<span><span class="co">#&gt;   Paired Sample Size   = 200  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.196</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.804</span></span></code></pre></div>
+<span><span class="co">#&gt;   Target Effect (prob10) = 0.178 (vs. prob01 = 0.078)</span></span>
+<span><span class="co">#&gt;   Paired Sample Size     = 200  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)   = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)    = 0.196</span></span>
+<span><span class="co">#&gt;   Statistical Power      = 0.804</span></span></code></pre></div>
 <p><strong>Report</strong>: We conducted a power analysis to estimate
 the minimum required sample size to evaluate whether a new at-home
 screening strategy improves colorectal cancer screening completion among
@@ -3369,11 +3371,11 @@ power.</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (prob10) = 0.178 (vs. prob01 = 0.078)</span></span>
-<span><span class="co">#&gt;   Paired Sample Size   = 213  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.030</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.195</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.805</span></span></code></pre></div>
+<span><span class="co">#&gt;   Target Effect (prob10) = 0.178 (vs. prob01 = 0.078)</span></span>
+<span><span class="co">#&gt;   Paired Sample Size     = 213  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)   = 0.030</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)    = 0.195</span></span>
+<span><span class="co">#&gt;   Statistical Power      = 0.805</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -3420,7 +3422,7 @@ these criteria?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (rho)    = 0.200 (vs. null.rho = 0.100)</span></span>
+<span><span class="co">#&gt;   Target Effect (rho)  = 0.200 (vs. null.rho = 0.100)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 593  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -3468,7 +3470,7 @@ acceptably accurate.
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (rho1)   = 0.200 (vs. rho2 = 0.100)</span></span>
+<span><span class="co">#&gt;   Target Effect (rho1) = 0.200 (vs. rho2 = 0.100)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 1501 and 1501  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -3551,7 +3553,7 @@ these criteria?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (rho1)   = 0.100 (vs. rho2 = 0)</span></span>
+<span><span class="co">#&gt;   Target Effect (rho1) = 0.100 (vs. rho2 = 0)</span></span>
 <span><span class="co">#&gt;   Sample Size          = 1232 and 1232  &lt;&lt;</span></span>
 <span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
 <span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
@@ -3666,11 +3668,11 @@ these criteria?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (rho12)  = 0.500 (vs. rho13 = 0.400)</span></span>
-<span><span class="co">#&gt;   Sample Size          = 286  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span>
+<span><span class="co">#&gt;   Target Effect (rho12) = 0.500 (vs. rho13 = 0.400)</span></span>
+<span><span class="co">#&gt;   Sample Size           = 286  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)  = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)   = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power     = 0.800</span></span>
 <span></span>
 <span><span class="co"># calculate the effect size</span></span>
 <span><span class="fu"><a href="../reference/cors.to.q.html">cors.to.q</a></span><span class="op">(</span>rho1 <span class="op">=</span> <span class="fl">0.40</span>, rho2 <span class="op">=</span> <span class="fl">0.50</span><span class="op">)</span></span>
@@ -3769,11 +3771,11 @@ these criteria?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (rho12)  = 0.500 (vs. rho34 = 0.600)</span></span>
-<span><span class="co">#&gt;   Sample Size          = 317  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha) = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)  = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power    = 0.800</span></span>
+<span><span class="co">#&gt;   Target Effect (rho12) = 0.500 (vs. rho34 = 0.600)</span></span>
+<span><span class="co">#&gt;   Sample Size           = 317  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)  = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)   = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power     = 0.800</span></span>
 <span></span>
 <span><span class="co"># calculate the effect size</span></span>
 <span><span class="fu"><a href="../reference/cors.to.q.html">cors.to.q</a></span><span class="op">(</span>rho1 <span class="op">=</span> <span class="fl">0.60</span>, rho2 <span class="op">=</span> <span class="fl">0.50</span><span class="op">)</span></span>
@@ -4147,11 +4149,11 @@ default.</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (R-squared) = 0.300</span></span>
-<span><span class="co">#&gt;   Sample Size             = 140  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha)    = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)     = 0.198</span></span>
-<span><span class="co">#&gt;   Statistical Power       = 0.802</span></span></code></pre></div>
+<span><span class="co">#&gt;   Target Effect (Std. beta) = 0.200</span></span>
+<span><span class="co">#&gt;   Sample Size               = 140  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.198</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.802</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="unstandardized-input">Unstandardized Input<a class="anchor" aria-label="anchor" href="#unstandardized-input"></a>
@@ -4186,11 +4188,11 @@ minimum required sample size?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (R-squared) = 0.300</span></span>
-<span><span class="co">#&gt;   Sample Size             = 140  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha)    = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)     = 0.198</span></span>
-<span><span class="co">#&gt;   Statistical Power       = 0.802</span></span></code></pre></div>
+<span><span class="co">#&gt;   Target Effect (Std. beta) = 0.200</span></span>
+<span><span class="co">#&gt;   Sample Size               = 140  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.198</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.802</span></span></code></pre></div>
 <p>If the main predictor is binary (e.g. treatment / control), the
 standardized regression coefficient is Cohen’s <em>d</em>. Standard
 deviation of the main predictor is
@@ -4229,11 +4231,11 @@ proportion of subjects in one of the groups.</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (R-squared) = 0.300</span></span>
-<span><span class="co">#&gt;   Sample Size             = 552  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha)    = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)     = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power       = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Target Effect (Std. beta) = 0.100</span></span>
+<span><span class="co">#&gt;   Sample Size               = 552  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.800</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="non-inferiority-2">Non-inferiority<a class="anchor" aria-label="anchor" href="#non-inferiority-2"></a>
@@ -4279,11 +4281,11 @@ POSITIVE values.
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (R-squared) = 0.300</span></span>
-<span><span class="co">#&gt;   Sample Size             = 770  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha)    = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)     = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power       = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Target Effect (Std. beta) = 0.100</span></span>
+<span><span class="co">#&gt;   Sample Size               = 770  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.800</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="superiority-2">Superiority<a class="anchor" aria-label="anchor" href="#superiority-2"></a>
@@ -4329,11 +4331,11 @@ values.
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (R-squared) = 0.300</span></span>
-<span><span class="co">#&gt;   Sample Size             = 6934  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha)    = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)     = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power       = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Target Effect (Std. beta) = 0.100</span></span>
+<span><span class="co">#&gt;   Sample Size               = 6934  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.800</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="equivalence-3">Equivalence<a class="anchor" aria-label="anchor" href="#equivalence-3"></a>
@@ -4374,11 +4376,11 @@ sample size?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (R-squared) = 0.300</span></span>
-<span><span class="co">#&gt;   Sample Size             = 9593  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha)    = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)     = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power       = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Target Effect (Std. beta) = 0.100</span></span>
+<span><span class="co">#&gt;   Sample Size               = 9593  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.800</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="minimum-effect-3">Minimum Effect<a class="anchor" aria-label="anchor" href="#minimum-effect-3"></a>
@@ -4417,11 +4419,11 @@ minimum required sample size?</p>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
 <span><span class="co">#&gt; Results</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Effect Size (R-squared) = 0.300</span></span>
-<span><span class="co">#&gt;   Sample Size             = 981  &lt;&lt;</span></span>
-<span><span class="co">#&gt;   Type 1 Error (alpha)    = 0.050</span></span>
-<span><span class="co">#&gt;   Type 2 Error (beta)     = 0.200</span></span>
-<span><span class="co">#&gt;   Statistical Power       = 0.800</span></span></code></pre></div>
+<span><span class="co">#&gt;   Target Effect (Std. beta) = 0.100</span></span>
+<span><span class="co">#&gt;   Sample Size               = 981  &lt;&lt;</span></span>
+<span><span class="co">#&gt;   Type 1 Error (alpha)      = 0.050</span></span>
+<span><span class="co">#&gt;   Type 2 Error (beta)       = 0.200</span></span>
+<span><span class="co">#&gt;   Statistical Power         = 0.800</span></span></code></pre></div>
 <p><br><br></p>
 </div>
 </div>

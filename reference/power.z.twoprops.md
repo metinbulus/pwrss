@@ -195,11 +195,11 @@ https://doi.org/10.29299/kefad.1209913
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob1)  = 0.650 (vs. prob2 = 0.600)
-#>   Sample Size          = 500 and 500
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.505
-#>   Statistical Power    = 0.495  <<
+#>   Target Effect (prob1) = 0.650 (vs. prob2 = 0.600)
+#>   Sample Size           = 500 and 500
+#>   Type 1 Error (alpha)  = 0.050
+#>   Type 2 Error (beta)   = 0.505
+#>   Statistical Power     = 0.495  <<
 #> 
 
   # sample size
@@ -223,10 +223,10 @@ https://doi.org/10.29299/kefad.1209913
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob1)  = 0.650 (vs. prob2 = 0.600)
-#>   Sample Size          = 1159 and 1159  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Target Effect (prob1) = 0.650 (vs. prob2 = 0.600)
+#>   Sample Size           = 1159 and 1159  <<
+#>   Type 1 Error (alpha)  = 0.050
+#>   Type 2 Error (beta)   = 0.200
+#>   Statistical Power     = 0.800
 #> 
 ```

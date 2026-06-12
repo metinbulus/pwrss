@@ -152,7 +152,7 @@ power.z.twocors(rho1 = 0.20, rho2 = 0.30,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (rho1)   = 0.200 (vs. rho2 = 0.300)
+#>   Target Effect (rho1) = 0.200 (vs. rho2 = 0.300)
 #>   Sample Size          = 1380 and 1380  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -178,7 +178,7 @@ power.z.twocors(rho1 = 0.30, rho2 = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (rho1)   = 0.300 (vs. rho2 = 0.200)
+#>   Target Effect (rho1) = 0.300 (vs. rho2 = 0.200)
 #>   Sample Size          = 1088 and 1088  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200

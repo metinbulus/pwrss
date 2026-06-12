@@ -13,6 +13,8 @@
 
 ## Changes in pwrss v1.0.0
 
+CRAN release: 2025-09-16
+
 - Addition 1: ANCOVA procedures with means and contrasts (Shieh)
 - Addition 2: Exact tests for proportions (Fisher & McNemar)
 - Addition 3: Generic binomial test (with plotting feature)
@@ -49,12 +51,16 @@
 
 ## Changes in pwrss v0.3.1
 
+CRAN release: 2023-04-11
+
 - More detailed vignette (typo fixes)
 - Added web application links (shiny dashboards)
 - Minor bug fixes with
   [`plot()`](https://rdrr.io/r/graphics/plot.default.html) function
 
 ## Changes in pwrss v0.3.0
+
+CRAN release: 2023-03-12
 
 - Added
   [`pwrss.np.2means()`](https://metinbulus.github.io/pwrss/reference/power.np.wilcoxon.md),
@@ -77,6 +83,8 @@
 
 ## Changes in pwrss v0.2.0
 
+CRAN release: 2022-12-14
+
 - Added
   [`pwrss.t.reg()`](https://metinbulus.github.io/pwrss/reference/power.t.regression.md)
   and
@@ -84,5 +92,7 @@
   functions
 
 ## pwrss v0.1.0
+
+CRAN release: 2022-11-09
 
 - Initial release

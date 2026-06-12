@@ -122,13 +122,13 @@ power.t.test(ncp = -3.519, # t-value for hp variable
     #> ----------------------------------------------------
     #> Hypotheses
     #> ----------------------------------------------------
-    #>   H0 (Null)        : ncp  = null.ncp
-    #>   H1 (Alternative) : ncp != null.ncp
+    #>   H0 (Null)        : lambda  = null.lambda
+    #>   H1 (Alternative) : lambda != null.lambda
     #> 
     #> ----------------------------------------------------
     #> Results
     #> ----------------------------------------------------
-    #>   Effect Size (ncp)    = -3.519 (vs. null.ncp = 0)
+    #>   Target NCP (lambda)  = -3.519 (vs. null.lambda = 0)
     #>   Degrees of Freedom   = 29
     #>   Type 1 Error (alpha) = 0.050
     #>   Type 2 Error (beta)  = 0.075
@@ -223,13 +223,13 @@ power.t.test(ncp = ncp,
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : ncp <= null.ncp
-#>   H1 (Alternative) : ncp  > null.ncp
+#>   H0 (Null)        : lambda <= null.lambda
+#>   H1 (Alternative) : lambda  > null.lambda
 #> 
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (ncp)    = 3.674 (vs. null.ncp = 0.735)
+#>   Target NCP (lambda)  = 3.674 (vs. null.lambda = 0.735)
 #>   Degrees of Freedom   = 117
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.104
@@ -316,6 +316,7 @@ power.z.test(mean = -3.994, # z-value for wool B
     #> ----------------------------------------------------
     #> Results
     #> ----------------------------------------------------
+    #>   Target NCP (mean)    = -3.994 (vs. null.mean = 0)
     #>   Type 1 Error (alpha) = 0.050
     #>   Type 2 Error (beta)  = 0.021
     #>   Statistical Power    = 0.979  <<
@@ -400,6 +401,7 @@ power.z.test(mean = ncp,
     #> ----------------------------------------------------
     #> Results
     #> ----------------------------------------------------
+    #>   Target NCP (mean)    = 2.961 (vs. null.mean = 0)
     #>   Type 1 Error (alpha) = 0.050
     #>   Type 2 Error (beta)  = 0.158
     #>   Statistical Power    = 0.842  <<
@@ -467,13 +469,13 @@ power.f.test(ncp = 10.71, # non-centrality under alternative
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : ncp = 0
-#>   H1 (Alternative) : ncp > 0
+#>   H0 (Null)        : lambda = 0
+#>   H1 (Alternative) : lambda > 0
 #> 
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (ncp)    = 10.710 (vs. null.ncp = 0)
+#>   Target NCP (lambda)  = 10.710 (vs. null.lambda = 0)
 #>   Presumed Sample S.   = 31
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.115
@@ -535,13 +537,13 @@ power.chisq.test(ncp = 138.29, # X-squared
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : ncp = null.ncp
-#>   H1 (Alternative) : ncp > null.ncp
+#>   H0 (Null)        : lambda = null.lambda
+#>   H1 (Alternative) : lambda > null.lambda
 #> 
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (ncp)    = 138.290 (vs. null.ncp = 0)
+#>   Target NCP (lambda)  = 138.290 (vs. null.lambda = 0)
 #>   Degrees of Freedom   = 9
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.000
@@ -613,13 +615,13 @@ power.chisq.test(ncp = 18.463,
     #> ----------------------------------------------------
     #> Hypotheses
     #> ----------------------------------------------------
-    #>   H0 (Null)        : ncp = null.ncp
-    #>   H1 (Alternative) : ncp > null.ncp
+    #>   H0 (Null)        : lambda = null.lambda
+    #>   H1 (Alternative) : lambda > null.lambda
     #> 
     #> ----------------------------------------------------
     #> Results
     #> ----------------------------------------------------
-    #>   Effect Size (ncp)    = 18.463 (vs. null.ncp = 0)
+    #>   Target NCP (lambda)  = 18.463 (vs. null.lambda = 0)
     #>   Degrees of Freedom   = 1
     #>   Type 1 Error (alpha) = 0.050
     #>   Type 2 Error (beta)  = 0.010
@@ -693,7 +695,7 @@ power.binom.test(size = n.total, # number of eruptions
     #> ----------------------------------------------------
     #> Results
     #> ----------------------------------------------------
-    #>   Effect Size (prob)   = 0.643 (vs. null.prob = 0.500)
+    #>   Target NCP (prob)    = 0.643 (vs. null.prob = 0.500)
     #>   Number of Trials     = 272
     #>   Type 1 Error (alpha) = 0.039
     #>   Type 2 Error (beta)  = 0.001
@@ -744,7 +746,7 @@ power.binom.test(size = 85632, # number of tosses needed
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob)   = 0.500 (vs. null.prob = 0.495 and 0.505)
+#>   Target NCP (prob)    = 0.500 (vs. null.prob = 0.495 and 0.505)
 #>   Number of Trials     = 85632
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -796,7 +798,7 @@ power.binom.test(size = 16424, # number of replications needed
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob)   = 0.050 (vs. null.prob = 0.045 and 0.055)
+#>   Target NCP (prob)    = 0.050 (vs. null.prob = 0.045 and 0.055)
 #>   Number of Trials     = 16424
 #>   Type 1 Error (alpha) = 0.049
 #>   Type 2 Error (beta)  = 0.198
@@ -839,7 +841,7 @@ power.binom.test(size = 55011, # number of replications needed
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob)   = 0.800 (vs. null.prob = 0.795 and 0.805)
+#>   Target NCP (prob)    = 0.800 (vs. null.prob = 0.795 and 0.805)
 #>   Number of Trials     = 55011
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
@@ -2525,7 +2527,7 @@ power.z.oneprop(prob = 0.80, # probability of success under alternative
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob)   = 0.800 (vs. null.prob = 0.900)
+#>   Target Effect (prob) = 0.800 (vs. null.prob = 0.900)
 #>   Sample Size          = 69  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -2573,7 +2575,7 @@ power.z.oneprop(prob = 0.80, # probability of success under alternative
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob)   = 0.800 (vs. null.prob = 0.900)
+#>   Target Effect (prob) = 0.800 (vs. null.prob = 0.900)
 #>   Sample Size          = 54  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.197
@@ -2614,7 +2616,7 @@ power.z.oneprop(prob = 0.80, # probability of success under alternative
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob)   = 0.800 (vs. null.prob = 0.900)
+#>   Target Effect (prob) = 0.800 (vs. null.prob = 0.900)
 #>   Sample Size          = 79  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.198
@@ -2659,7 +2661,7 @@ power.z.oneprop(prob = 0.80, # probability of success under alternative
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob)   = 0.800 (vs. null.prob = 0.900)
+#>   Target Effect (prob) = 0.800 (vs. null.prob = 0.900)
 #>   Sample Size          = 99  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -2699,7 +2701,7 @@ power.exact.oneprop(prob = 0.002, # probability of success under alternative
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob)   = 0.002 (vs. null.prob = 0)
+#>   Target Effect (prob) = 0.002 (vs. null.prob = 0)
 #>   Sample Size          = 804  <<
 #>   Type 1 Error (alpha) = 0.000
 #>   Type 2 Error (beta)  = 0.200
@@ -2755,11 +2757,11 @@ power.z.twoprops(prob1 = 0.60, prob2 = 0.50,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob1)  = 0.600 (vs. prob2 = 0.500)
-#>   Sample Size          = 388 and 388  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Target Effect (prob1) = 0.600 (vs. prob2 = 0.500)
+#>   Sample Size           = 388 and 388  <<
+#>   Type 1 Error (alpha)  = 0.050
+#>   Type 2 Error (beta)   = 0.199
+#>   Statistical Power     = 0.801
 
 # find Cohen's h
 probs.to.h(prob1 = 0.60, prob2 = 0.50)
@@ -2849,11 +2851,11 @@ power.z.twoprops(prob1 = 0.15,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob1)  = 0.150 (vs. prob2 = 0.100)
-#>   Sample Size          = 540 and 540  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Target Effect (prob1) = 0.150 (vs. prob2 = 0.100)
+#>   Sample Size           = 540 and 540  <<
+#>   Type 1 Error (alpha)  = 0.050
+#>   Type 2 Error (beta)   = 0.200
+#>   Statistical Power     = 0.800
 ```
 
 **Report**: We conducted a power analysis to determine the required
@@ -2890,11 +2892,11 @@ power.z.twoprops(prob1 = 0.15,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob1)  = 0.150 (vs. prob2 = 0.100)
-#>   Sample Size          = 536 and 536  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Target Effect (prob1) = 0.150 (vs. prob2 = 0.100)
+#>   Sample Size           = 536 and 536  <<
+#>   Type 1 Error (alpha)  = 0.050
+#>   Type 2 Error (beta)   = 0.200
+#>   Statistical Power     = 0.800
 ```
 
 **Continuity correction**:
@@ -2924,11 +2926,11 @@ power.z.twoprops(prob1 = 0.15,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob1)  = 0.150 (vs. prob2 = 0.100)
-#>   Sample Size          = 580 and 580  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Target Effect (prob1) = 0.150 (vs. prob2 = 0.100)
+#>   Sample Size           = 580 and 580  <<
+#>   Type 1 Error (alpha)  = 0.050
+#>   Type 2 Error (beta)   = 0.200
+#>   Statistical Power     = 0.800
 ```
 
 **Calculate the standard error using the unpooled standard deviations**:
@@ -2958,11 +2960,11 @@ power.z.twoprops(prob1 = 0.15,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob1)  = 0.150 (vs. prob2 = 0.100)
-#>   Sample Size          = 538 and 538  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Target Effect (prob1) = 0.150 (vs. prob2 = 0.100)
+#>   Sample Size           = 538 and 538  <<
+#>   Type 1 Error (alpha)  = 0.050
+#>   Type 2 Error (beta)   = 0.200
+#>   Statistical Power     = 0.800
 ```
 
 #### Exact (Fisher)
@@ -3007,11 +3009,11 @@ power.exact.twoprops(prob1 = 0.60,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob1)  = 0.600 (vs. prob2 = 0.500)
-#>   Sample Size          = 321 and 321  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Target Effect (prob1) = 0.600 (vs. prob2 = 0.500)
+#>   Sample Size           = 321 and 321  <<
+#>   Type 1 Error (alpha)  = 0.050
+#>   Type 2 Error (beta)   = 0.199
+#>   Statistical Power     = 0.801
 ```
 
 **Report**: We conducted a power analysis to estimate the required
@@ -3062,11 +3064,11 @@ power.z.twoprops(prob1 = 0.01,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob1)  = 0.010 (vs. prob2 = 0.020)
-#>   Sample Size          = 457 and 457  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Target Effect (prob1) = 0.010 (vs. prob2 = 0.020)
+#>   Sample Size           = 457 and 457  <<
+#>   Type 1 Error (alpha)  = 0.050
+#>   Type 2 Error (beta)   = 0.200
+#>   Statistical Power     = 0.800
 
 # consider 5% attrition rate
 inflate.sample(n = 914, rate = 0.05)
@@ -3124,11 +3126,11 @@ power.z.twoprops(prob1 = 0.45,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob1)  = 0.450 (vs. prob2 = 0.500)
-#>   Sample Size          = 1926 and 1926  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Target Effect (prob1) = 0.450 (vs. prob2 = 0.500)
+#>   Sample Size           = 1926 and 1926  <<
+#>   Type 1 Error (alpha)  = 0.050
+#>   Type 2 Error (beta)   = 0.200
+#>   Statistical Power     = 0.800
 
 # consider 5% attrition rate
 inflate.sample(n = 3852, rate = 0.05)
@@ -3203,11 +3205,11 @@ power.z.twoprops(prob1 = 0.10,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob1)  = 0.100 (vs. prob2 = 0.100)
-#>   Sample Size          = 3854 and 3854  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Target Effect (prob1) = 0.100 (vs. prob2 = 0.100)
+#>   Sample Size           = 3854 and 3854  <<
+#>   Type 1 Error (alpha)  = 0.050
+#>   Type 2 Error (beta)   = 0.200
+#>   Statistical Power     = 0.800
 ```
 
 **Report**: We conducted a power analysis to estimate the minimum
@@ -3264,11 +3266,11 @@ power.z.twoprops(prob1 = 0.13,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob1)  = 0.130 (vs. prob2 = 0.100)
-#>   Sample Size          = 3992 and 3992  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Target Effect (prob1) = 0.130 (vs. prob2 = 0.100)
+#>   Sample Size           = 3992 and 3992  <<
+#>   Type 1 Error (alpha)  = 0.050
+#>   Type 2 Error (beta)   = 0.200
+#>   Statistical Power     = 0.800
 ```
 
 **Report**: We conducted a power analysis to estimate the minimum
@@ -3333,11 +3335,11 @@ power.z.twoprops(prob1 = 0.50,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob10) = 0.178 (vs. prob01 = 0.078)
-#>   Paired Sample Size   = 200  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.196
-#>   Statistical Power    = 0.804
+#>   Target Effect (prob10) = 0.178 (vs. prob01 = 0.078)
+#>   Paired Sample Size     = 200  <<
+#>   Type 1 Error (alpha)   = 0.050
+#>   Type 2 Error (beta)    = 0.196
+#>   Statistical Power      = 0.804
 ```
 
 **Report**: We conducted a power analysis to estimate the minimum
@@ -3387,11 +3389,11 @@ power.exact.twoprops(prob1 = 0.50,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob10) = 0.178 (vs. prob01 = 0.078)
-#>   Paired Sample Size   = 213  <<
-#>   Type 1 Error (alpha) = 0.030
-#>   Type 2 Error (beta)  = 0.195
-#>   Statistical Power    = 0.805
+#>   Target Effect (prob10) = 0.178 (vs. prob01 = 0.078)
+#>   Paired Sample Size     = 213  <<
+#>   Type 1 Error (alpha)   = 0.030
+#>   Type 2 Error (beta)    = 0.195
+#>   Statistical Power      = 0.805
 ```
 
 ## Correlations (Z-Test)
@@ -3438,7 +3440,7 @@ power.z.onecor(rho = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (rho)    = 0.200 (vs. null.rho = 0.100)
+#>   Target Effect (rho)  = 0.200 (vs. null.rho = 0.100)
 #>   Sample Size          = 593  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -3488,7 +3490,7 @@ power.z.twocors(rho1 = 0.20, rho2 = 0.10, power = .80)
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (rho1)   = 0.200 (vs. rho2 = 0.100)
+#>   Target Effect (rho1) = 0.200 (vs. rho2 = 0.100)
 #>   Sample Size          = 1501 and 1501  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -3573,7 +3575,7 @@ power.z.twocors(rho1 = 0.10,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (rho1)   = 0.100 (vs. rho2 = 0)
+#>   Target Effect (rho1) = 0.100 (vs. rho2 = 0)
 #>   Sample Size          = 1232 and 1232  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -3688,11 +3690,11 @@ power.z.twocors.steiger(rho12 = 0.50,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (rho12)  = 0.500 (vs. rho13 = 0.400)
-#>   Sample Size          = 286  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Target Effect (rho12) = 0.500 (vs. rho13 = 0.400)
+#>   Sample Size           = 286  <<
+#>   Type 1 Error (alpha)  = 0.050
+#>   Type 2 Error (beta)   = 0.200
+#>   Statistical Power     = 0.800
 
 # calculate the effect size
 cors.to.q(rho1 = 0.40, rho2 = 0.50)
@@ -3790,11 +3792,11 @@ power.z.twocors.steiger(rho12 = 0.50, # cor(V1, V2)
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (rho12)  = 0.500 (vs. rho34 = 0.600)
-#>   Sample Size          = 317  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800
+#>   Target Effect (rho12) = 0.500 (vs. rho34 = 0.600)
+#>   Sample Size           = 317  <<
+#>   Type 1 Error (alpha)  = 0.050
+#>   Type 2 Error (beta)   = 0.200
+#>   Statistical Power     = 0.800
 
 # calculate the effect size
 cors.to.q(rho1 = 0.60, rho2 = 0.50)
@@ -4094,11 +4096,11 @@ power.t.regression(beta = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (R-squared) = 0.300
-#>   Sample Size             = 140  <<
-#>   Type 1 Error (alpha)    = 0.050
-#>   Type 2 Error (beta)     = 0.198
-#>   Statistical Power       = 0.802
+#>   Target Effect (Std. beta) = 0.200
+#>   Sample Size               = 140  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.198
+#>   Statistical Power         = 0.802
 ```
 
 #### Unstandardized Input
@@ -4134,11 +4136,11 @@ power.t.regression(beta = 0.60,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (R-squared) = 0.300
-#>   Sample Size             = 140  <<
-#>   Type 1 Error (alpha)    = 0.050
-#>   Type 2 Error (beta)     = 0.198
-#>   Statistical Power       = 0.802
+#>   Target Effect (Std. beta) = 0.200
+#>   Sample Size               = 140  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.198
+#>   Statistical Power         = 0.802
 ```
 
 If the main predictor is binary (e.g. treatment / control), the
@@ -4177,11 +4179,11 @@ power.t.regression(beta = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (R-squared) = 0.300
-#>   Sample Size             = 552  <<
-#>   Type 1 Error (alpha)    = 0.050
-#>   Type 2 Error (beta)     = 0.200
-#>   Statistical Power       = 0.800
+#>   Target Effect (Std. beta) = 0.100
+#>   Sample Size               = 552  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.200
+#>   Statistical Power         = 0.800
 ```
 
 #### Non-inferiority
@@ -4227,11 +4229,11 @@ power.t.regression(beta = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (R-squared) = 0.300
-#>   Sample Size             = 770  <<
-#>   Type 1 Error (alpha)    = 0.050
-#>   Type 2 Error (beta)     = 0.200
-#>   Statistical Power       = 0.800
+#>   Target Effect (Std. beta) = 0.100
+#>   Sample Size               = 770  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.200
+#>   Statistical Power         = 0.800
 ```
 
 #### Superiority
@@ -4277,11 +4279,11 @@ power.t.regression(beta = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (R-squared) = 0.300
-#>   Sample Size             = 6934  <<
-#>   Type 1 Error (alpha)    = 0.050
-#>   Type 2 Error (beta)     = 0.200
-#>   Statistical Power       = 0.800
+#>   Target Effect (Std. beta) = 0.100
+#>   Sample Size               = 6934  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.200
+#>   Statistical Power         = 0.800
 ```
 
 #### Equivalence
@@ -4323,11 +4325,11 @@ power.t.regression(beta = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (R-squared) = 0.300
-#>   Sample Size             = 9593  <<
-#>   Type 1 Error (alpha)    = 0.050
-#>   Type 2 Error (beta)     = 0.200
-#>   Statistical Power       = 0.800
+#>   Target Effect (Std. beta) = 0.100
+#>   Sample Size               = 9593  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.200
+#>   Statistical Power         = 0.800
 ```
 
 #### Minimum Effect
@@ -4367,11 +4369,11 @@ power.t.regression(beta = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (R-squared) = 0.300
-#>   Sample Size             = 981  <<
-#>   Type 1 Error (alpha)    = 0.050
-#>   Type 2 Error (beta)     = 0.200
-#>   Statistical Power       = 0.800
+#>   Target Effect (Std. beta) = 0.100
+#>   Sample Size               = 981  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.200
+#>   Statistical Power         = 0.800
 ```
 
   

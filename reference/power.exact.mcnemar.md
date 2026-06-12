@@ -219,11 +219,11 @@ power.exact.mcnemar(prob10 = 0.20, prob01 = 0.10,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob10) = 0.200 (vs. prob01 = 0.100)
-#>   Paired Sample Size   = 100
-#>   Type 1 Error (alpha) = 0.043
-#>   Type 2 Error (beta)  = 0.627
-#>   Statistical Power    = 0.373  <<
+#>   Target Effect (prob10) = 0.200 (vs. prob01 = 0.100)
+#>   Paired Sample Size     = 100
+#>   Type 1 Error (alpha)   = 0.043
+#>   Type 2 Error (beta)    = 0.627
+#>   Statistical Power      = 0.373  <<
 #> 
 
 # required sample size for exact test
@@ -248,11 +248,11 @@ power.exact.mcnemar(prob10 = 0.20, prob01 = 0.10,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob10) = 0.200 (vs. prob01 = 0.100)
-#>   Paired Sample Size   = 249  <<
-#>   Type 1 Error (alpha) = 0.037
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Target Effect (prob10) = 0.200 (vs. prob01 = 0.100)
+#>   Paired Sample Size     = 249  <<
+#>   Type 1 Error (alpha)   = 0.037
+#>   Type 2 Error (beta)    = 0.199
+#>   Statistical Power      = 0.801
 #> 
 
 # we may not have 2 x 2 joint probs

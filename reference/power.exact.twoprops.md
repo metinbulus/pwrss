@@ -200,11 +200,11 @@ https://doi.org/10.29299/kefad.1209913
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob1)  = 0.700 (vs. prob2 = 0.600)
-#>   Sample Size          = 500 and 500
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.053
-#>   Statistical Power    = 0.947  <<
+#>   Target Effect (prob1) = 0.700 (vs. prob2 = 0.600)
+#>   Sample Size           = 500 and 500
+#>   Type 1 Error (alpha)  = 0.050
+#>   Type 2 Error (beta)   = 0.053
+#>   Statistical Power     = 0.947  <<
 #> 
 
   power.exact.twoprops(prob1 = 0.70, prob2 = 0.60,
@@ -228,11 +228,11 @@ https://doi.org/10.29299/kefad.1209913
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob10) = 0.168 (vs. prob01 = 0.068)
-#>   Paired Sample Size   = 500
-#>   Type 1 Error (alpha) = 0.040
-#>   Type 2 Error (beta)  = 0.001
-#>   Statistical Power    = 0.999  <<
+#>   Target Effect (prob10) = 0.168 (vs. prob01 = 0.068)
+#>   Paired Sample Size     = 500
+#>   Type 1 Error (alpha)   = 0.040
+#>   Type 2 Error (beta)    = 0.001
+#>   Statistical Power      = 0.999  <<
 #> 
 
   # sample size
@@ -256,11 +256,11 @@ https://doi.org/10.29299/kefad.1209913
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob1)  = 0.700 (vs. prob2 = 0.600)
-#>   Sample Size          = 302 and 302  <<
-#>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801
+#>   Target Effect (prob1) = 0.700 (vs. prob2 = 0.600)
+#>   Sample Size           = 302 and 302  <<
+#>   Type 1 Error (alpha)  = 0.050
+#>   Type 2 Error (beta)   = 0.199
+#>   Statistical Power     = 0.801
 #> 
 
   power.exact.twoprops(prob1 = 0.70, prob2 = 0.60,
@@ -284,10 +284,10 @@ https://doi.org/10.29299/kefad.1209913
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob10) = 0.168 (vs. prob01 = 0.068)
-#>   Paired Sample Size   = 158  <<
-#>   Type 1 Error (alpha) = 0.036
-#>   Type 2 Error (beta)  = 0.195
-#>   Statistical Power    = 0.805
+#>   Target Effect (prob10) = 0.168 (vs. prob01 = 0.068)
+#>   Paired Sample Size     = 158  <<
+#>   Type 1 Error (alpha)   = 0.036
+#>   Type 2 Error (beta)    = 0.195
+#>   Statistical Power      = 0.805
 #> 
 ```

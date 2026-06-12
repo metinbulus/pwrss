@@ -138,7 +138,7 @@ power.exact.oneprop(prob = 0.45, null.prob = 0.50,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob)   = 0.450 (vs. null.prob = 0.500)
+#>   Target Effect (prob) = 0.450 (vs. null.prob = 0.500)
 #>   Sample Size          = 500
 #>   Type 1 Error (alpha) = 0.049
 #>   Type 2 Error (beta)  = 0.279
@@ -166,7 +166,7 @@ power.exact.oneprop(prob = 0.45, null.prob = 0.50,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (prob)   = 0.450 (vs. null.prob = 0.500)
+#>   Target Effect (prob) = 0.450 (vs. null.prob = 0.500)
 #>   Sample Size          = 631  <<
 #>   Type 1 Error (alpha) = 0.047
 #>   Type 2 Error (beta)  = 0.199

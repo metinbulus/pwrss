@@ -149,6 +149,7 @@ power.z.test(mean = 1.96, alpha = 0.05, alternative = "two.sided")
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Target NCP (mean)    = 1.960 (vs. null.mean = 0)
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.500
 #>   Statistical Power    = 0.500  <<
@@ -156,7 +157,7 @@ power.z.test(mean = 1.96, alpha = 0.05, alternative = "two.sided")
 power.z.test(power = 0.80, alpha = 0.05, alternative = "two.sided")
 
 #> +--------------------------------------------------+
-#> |      MINIMUM DETECTABLE EFFECT CALCULATION       |
+#> |      MINIMUM DETECTABLE NCP CALCULATION       |
 #> +--------------------------------------------------+
 #> 
 #> Generic z-Test
@@ -170,6 +171,7 @@ power.z.test(power = 0.80, alpha = 0.05, alternative = "two.sided")
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Target NCP (mean)    = 2.802 (vs. null.mean = 0)  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
 #>   Statistical Power    = 0.800
@@ -195,6 +197,7 @@ power.z.test(mean = 1.96, alpha = 0.05, alternative = "one.sided")
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Target NCP (mean)    = 1.960 (vs. null.mean = 0)
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.376
 #>   Statistical Power    = 0.624  <<
@@ -202,7 +205,7 @@ power.z.test(mean = 1.96, alpha = 0.05, alternative = "one.sided")
 power.z.test(power = 0.80, alpha = 0.05, alternative = "one.sided")
 
 #> +--------------------------------------------------+
-#> |      MINIMUM DETECTABLE EFFECT CALCULATION       |
+#> |      MINIMUM DETECTABLE NCP CALCULATION       |
 #> +--------------------------------------------------+
 #> 
 #> Generic z-Test
@@ -216,6 +219,7 @@ power.z.test(power = 0.80, alpha = 0.05, alternative = "one.sided")
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Target NCP (mean)    = 2.486 (vs. null.mean = 0)  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
 #>   Statistical Power    = 0.800
@@ -245,6 +249,7 @@ power.z.test(mean = 0, null.mean = c(-2, 2), alpha = 0.05,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Target NCP (mean)    = 0 (vs. null.mean = -2 and 2)
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.722
 #>   Statistical Power    = 0.278  <<
@@ -253,7 +258,7 @@ power.z.test(power = 0.80, req.sign = "0", null.mean = c(-2, 2),
              alpha = 0.05, alternative = "two.one.sided")
 
 #> +--------------------------------------------------+
-#> |      MINIMUM DETECTABLE EFFECT CALCULATION       |
+#> |      MINIMUM DETECTABLE NCP CALCULATION       |
 #> +--------------------------------------------------+
 #> 
 #> Generic z-Test
@@ -269,6 +274,7 @@ power.z.test(power = 0.80, req.sign = "0", null.mean = c(-2, 2),
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Target NCP (mean)    = -0.000 (vs. null.mean = -2 and 2)  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.722
 #>   Statistical Power    = 0.278
@@ -298,6 +304,7 @@ power.z.test(mean = 2, null.mean = c(-1, 1), alpha = 0.05,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Target NCP (mean)    = 2 (vs. null.mean = -1 and 1)
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.831
 #>   Statistical Power    = 0.169  <<
@@ -306,7 +313,7 @@ power.z.test(power = 0.80, req.sign = "+", null.mean = c(-1, 1),
              alpha = 0.05, alternative = "two.one.sided")
 
 #> +--------------------------------------------------+
-#> |      MINIMUM DETECTABLE EFFECT CALCULATION       |
+#> |      MINIMUM DETECTABLE NCP CALCULATION       |
 #> +--------------------------------------------------+
 #> 
 #> Generic z-Test
@@ -322,6 +329,7 @@ power.z.test(power = 0.80, req.sign = "+", null.mean = c(-1, 1),
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
+#>   Target NCP (mean)    = 3.802 (vs. null.mean = -1 and 1)  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
 #>   Statistical Power    = 0.800

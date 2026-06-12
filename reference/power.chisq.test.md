@@ -103,13 +103,13 @@ power.chisq.test(ncp = 20, df = 100, alpha = 0.05)
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : ncp = null.ncp
-#>   H1 (Alternative) : ncp > null.ncp
+#>   H0 (Null)        : lambda = null.lambda
+#>   H1 (Alternative) : lambda > null.lambda
 #> 
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (ncp)    = 20 (vs. null.ncp = 0)
+#>   Target NCP (lambda)  = 20 (vs. null.lambda = 0)
 #>   Degrees of Freedom   = 100
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.619
@@ -118,7 +118,7 @@ power.chisq.test(ncp = 20, df = 100, alpha = 0.05)
 power.chisq.test(power = 0.80, df = 100, alpha = 0.05)
 
 #> +--------------------------------------------------+
-#> |      MINIMUM DETECTABLE EFFECT CALCULATION       |
+#> |      MINIMUM DETECTABLE NCP CALCULATION       |
 #> +--------------------------------------------------+
 #> 
 #> Generic Chi-square Test
@@ -126,13 +126,13 @@ power.chisq.test(power = 0.80, df = 100, alpha = 0.05)
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : ncp = null.ncp
-#>   H1 (Alternative) : ncp > null.ncp
+#>   H0 (Null)        : lambda = null.lambda
+#>   H1 (Alternative) : lambda > null.lambda
 #> 
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (ncp)    = 40.556 (vs. null.ncp = 0)  <<
+#>   Target NCP (lambda)  = 40.556 (vs. null.lambda = 0)  <<
 #>   Degrees of Freedom   = 100
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
@@ -149,13 +149,13 @@ power.chisq.test(power = 0.80, ncp = 20, alpha = 0.05)
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : ncp = null.ncp
-#>   H1 (Alternative) : ncp > null.ncp
+#>   H0 (Null)        : lambda = null.lambda
+#>   H1 (Alternative) : lambda > null.lambda
 #> 
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (ncp)    = 20 (vs. null.ncp = 0)
+#>   Target NCP (lambda)  = 20 (vs. null.lambda = 0)
 #>   Degrees of Freedom   = 17.673  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200

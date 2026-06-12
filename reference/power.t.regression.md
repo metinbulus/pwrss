@@ -221,11 +221,11 @@ power.t.regression(beta = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (R-squared) = 0.300
-#>   Sample Size             = 140  <<
-#>   Type 1 Error (alpha)    = 0.050
-#>   Type 2 Error (beta)     = 0.198
-#>   Statistical Power       = 0.802
+#>   Target Effect (Std. beta) = 0.200
+#>   Sample Size               = 140  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.198
+#>   Statistical Power         = 0.802
 #> 
 
 # binary predictor x (and 4 covariates)
@@ -250,11 +250,11 @@ power.t.regression(beta = 0.20,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (R-squared) = 0.300
-#>   Sample Size             = 552  <<
-#>   Type 1 Error (alpha)    = 0.050
-#>   Type 2 Error (beta)     = 0.200
-#>   Statistical Power       = 0.800
+#>   Target Effect (Std. beta) = 0.100
+#>   Sample Size               = 552  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.200
+#>   Statistical Power         = 0.800
 #> 
 
 # non-inferiority test with binary predictor x (and 4 covariates)
@@ -281,11 +281,11 @@ power.t.regression(beta = 0.20, # Cohen's d
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (R-squared) = 0.300
-#>   Sample Size             = 278  <<
-#>   Type 1 Error (alpha)    = 0.050
-#>   Type 2 Error (beta)     = 0.200
-#>   Statistical Power       = 0.800
+#>   Target Effect (Std. beta) = 0.100
+#>   Sample Size               = 278  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.200
+#>   Statistical Power         = 0.800
 #> 
 
 # superiority test with binary predictor x (and 4 covariates)
@@ -312,11 +312,11 @@ power.t.regression(beta = 0.20, # Cohen's d
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (R-squared) = 0.300
-#>   Sample Size             = 773  <<
-#>   Type 1 Error (alpha)    = 0.050
-#>   Type 2 Error (beta)     = 0.200
-#>   Statistical Power       = 0.800
+#>   Target Effect (Std. beta) = 0.100
+#>   Sample Size               = 773  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.200
+#>   Statistical Power         = 0.800
 #> 
 
 # equivalence test with binary predictor x (and 4 covariates)
@@ -345,10 +345,10 @@ power.t.regression(beta = 0, # Cohen's d
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (R-squared) = 0.300
-#>   Sample Size             = 9593  <<
-#>   Type 1 Error (alpha)    = 0.050
-#>   Type 2 Error (beta)     = 0.200
-#>   Statistical Power       = 0.800
+#>   Target Effect (Std. beta) = 0
+#>   Sample Size               = 9593  <<
+#>   Type 1 Error (alpha)      = 0.050
+#>   Type 2 Error (beta)       = 0.200
+#>   Statistical Power         = 0.800
 #> 
 ```

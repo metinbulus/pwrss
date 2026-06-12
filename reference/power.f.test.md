@@ -74,7 +74,7 @@ power.f.test(
 
   non-centrality parameter under alternative.
 
-- ncp.null:
+- null.ncp:
 
   non-centrality parameter under null.
 
@@ -106,13 +106,13 @@ power.f.test(ncp = 1, df1 = 4, df2 = 100, alpha = 0.05)
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : ncp = 0
-#>   H1 (Alternative) : ncp > 0
+#>   H0 (Null)        : lambda = 0
+#>   H1 (Alternative) : lambda > 0
 #> 
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (ncp)    = 1 (vs. null.ncp = 0)
+#>   Target NCP (lambda)  = 1 (vs. null.lambda = 0)
 #>   Presumed Sample S.   = 105
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.897
@@ -121,7 +121,7 @@ power.f.test(ncp = 1, df1 = 4, df2 = 100, alpha = 0.05)
 power.f.test(power = 0.80, df1 = 4, df2 = 100, alpha = 0.05)
 
 #> +--------------------------------------------------+
-#> |      MINIMUM DETECTABLE EFFECT CALCULATION       |
+#> |      MINIMUM DETECTABLE NCP CALCULATION       |
 #> +--------------------------------------------------+
 #> 
 #> Generic F-Test
@@ -129,13 +129,13 @@ power.f.test(power = 0.80, df1 = 4, df2 = 100, alpha = 0.05)
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : ncp = 0
-#>   H1 (Alternative) : ncp > 0
+#>   H0 (Null)        : lambda = 0
+#>   H1 (Alternative) : lambda > 0
 #> 
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Effect Size (ncp)    = 12.514 (vs. null.ncp = 0)  <<
+#>   Target NCP (lambda)  = 12.514 (vs. null.lambda = 0)  <<
 #>   Presumed Sample S.   = 105
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
