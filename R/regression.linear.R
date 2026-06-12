@@ -156,8 +156,8 @@ power.f.regression <- function(r.squared.change = NULL,
 
   if (verbose > 0) {
 
-    print.obj <- list(requested = requested,
-                      test = paste0(ifelse(k.tested == k.total, "", "Hierarchical "), "Linear Regression (F-Test)"),
+    print.obj <- list(test = paste0(ifelse(k.tested == k.total, "", "Hierarchical "), "Linear Regression (F-Test)"),
+                      requested = requested,
                       r.squared.change = r.squared.change,
                       k.total = k.total,
                       k.tested = k.tested,
@@ -454,7 +454,7 @@ power.t.regression <- function(beta = NULL, null.beta = 0, margin = 0,
   if (requested == "n") {
 
     n <- try(stats::uniroot(function(n) min.pwr(r.squared, beta, n, power),
-                            interval = c(k.total + 4, 1e10), tol = 1e-12)$root,
+                            interval = c(k.total + 4, 1e10))$root,
              silent = TRUE)
     if (inherits(n, "try-error") || n == 1e10) stop("Design is not feasible.", call. = FALSE)
 
@@ -483,8 +483,9 @@ power.t.regression <- function(beta = NULL, null.beta = 0, margin = 0,
 
   if (verbose > 0) {
 
-    print.obj <- list(requested = requested,
-                      test = "Linear Regression Coefficient (T-Test)",
+    print.obj <- list(test = "Linear Regression Coefficient (T-Test)",
+                      requested = requested,
+                      tgt.effect = "std.beta",
                       alternative = alternative,
                       std.beta = std.beta,
                       std.null.beta = std.null.beta,

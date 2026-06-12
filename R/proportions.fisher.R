@@ -151,19 +151,8 @@ power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, req.sign = "+",
 
 #    }
 
-    pwr.obj <- power.z.test(mean = delta / stderr, sd = 1, null.mean = 0, null.sd = 1,
-                            alpha = alpha, alternative = alternative,
-                            plot = FALSE, verbose = 0)
-
-    power <- pwr.obj$power
-    mean.alternative <- pwr.obj$mean.alternative
-    sd.alternative <- pwr.obj$sd.alternative
-    mean.null <- pwr.obj$mean.null
-    sd.null <- pwr.obj$sd.null
-    z.alpha <- pwr.obj$z.alpha
-
-    list(power = power, mean.alternative = mean.alternative, sd.alternative = sd.alternative,
-         mean.null = mean.null, sd.null = sd.null, z.alpha = z.alpha)
+    power.z.test(mean = delta / stderr, sd = 1, null.mean = 0, null.sd = 1,
+                 alpha = alpha, alternative = alternative, plot = FALSE, verbose = 0)
 
   } # pwr.approx
 
@@ -249,7 +238,7 @@ power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, req.sign = "+",
 
     } # if n2 > 2000
 
-    power
+    list(power = power, mean = NA, sd = NA, null.mean = NA, null.sd = NA, z.alpha = NA) # to match return from pwr.approx
 
   } # pwr.exact()
 
@@ -271,7 +260,7 @@ power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, req.sign = "+",
       achieved.power <- 0
       while (achieved.power < power) {
         achieved.power <- pwr.exact(prob1 = prob1, prob2 = prob2, n2 = n2, n.ratio = n.ratio,
-                                    alpha = alpha, alternative = alternative)
+                                    alpha = alpha, alternative = alternative)$power
         if (achieved.power < power) n2 <- n2 + step
       } # while
       # step is subtracted from n2 (for the larger steps), so that n2 can be approached with smaller steps
@@ -307,7 +296,7 @@ power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, req.sign = "+",
         prob1 <- stats::optimize(
           f = function(prob1) {
             (power - pwr.exact(prob1 = prob1, prob2 = prob2, n2 = n2, n.ratio = n.ratio,
-                               alpha = alpha, alternative = alternative)) ^ 2
+                               alpha = alpha, alternative = alternative)$power) ^ 2
           },
           maximum = FALSE,
           lower = ifelse(check.pos_sign(req.sign),  prob2, 0.0001),
@@ -318,7 +307,7 @@ power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, req.sign = "+",
         prob2 <- stats::optimize(
           f = function(prob2) {
             (power - pwr.exact(prob1 = prob1, prob2 = prob2, n2 = n2, n.ratio = n.ratio,
-                               alpha = alpha, alternative = alternative)) ^ 2
+                               alpha = alpha, alternative = alternative)$power) ^ 2
           },
           maximum = FALSE,
           lower = ifelse(check.pos_sign(req.sign),  prob1, 0.0001),
@@ -333,14 +322,8 @@ power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, req.sign = "+",
     n.total <- n1 + n2
 
     # calculate power (if requested == "power") or update it (if requested == "n")
-    power <- pwr.exact(prob1 = prob1, prob2 = prob2, n2 = n2, n.ratio = n.ratio,
-                       alpha = alpha, alternative = alternative)
-
-    mean.alternative <- NA
-    sd.alternative <- NA
-    mean.null <- NA
-    sd.null <- NA
-    z.alpha <- NA
+    pwr.obj <- pwr.exact(prob1 = prob1, prob2 = prob2, n2 = n2, n.ratio = n.ratio,
+                         alpha = alpha, alternative = alternative)
 
   } else if (method == "approximate") {
 
@@ -385,18 +368,7 @@ power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, req.sign = "+",
     pwr.obj <- pwr.approx(prob1 = prob1, prob2 = prob2, n2 = n2, n.ratio = n.ratio,
                           alpha = alpha, alternative = alternative)
 
-    power <- pwr.obj$power
-    mean.alternative <- pwr.obj$mean.alternative
-    sd.alternative <- pwr.obj$sd.alternative
-    mean.null <- pwr.obj$mean.null
-    sd.null <- pwr.obj$sd.null
-    z.alpha <- pwr.obj$z.alpha
-
   }  # method
-
-  ifelse(method == "exact",
-         class <- c("pwrss", "exact", "fisher"),
-         class <- c("pwrss", "z", "twoprops"))
 
   if (verbose > 0) {
 
@@ -411,12 +383,12 @@ power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, req.sign = "+",
                       delta = prob1 - prob2,
                       margin = 0,
                       odds.ratio = (prob1 / (1 - prob1)) /  (prob2 / (1 - prob2)),
-                      mean.alternative = mean.alternative,
-                      sd.alternative = sd.alternative,
-                      mean.null = mean.null,
-                      sd.null = sd.null,
-                      z.alpha = z.alpha,
-                      power = power,
+                      mean = pwr.obj$mean,
+                      sd = pwr.obj$sd,
+                      null.mean = pwr.obj$null.mean,
+                      null.sd = pwr.obj$null.sd,
+                      z.alpha = pwr.obj$z.alpha,
+                      power = pwr.obj$power,
                       n = c(n1 = n1, n2 = n2),
                       n.total = n.total)
 
@@ -430,16 +402,16 @@ power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, req.sign = "+",
                            prob2 = prob2,
                            delta = prob1 - prob2,
                            odds.ratio = (prob1 / (1 - prob1)) /  (prob2 / (1 - prob2)),
-                           mean = mean.alternative,
-                           sd = sd.alternative,
-                           null.mean = mean.null,
-                           null.sd = sd.null,
+                           mean = pwr.obj$mean,
+                           sd = pwr.obj$sd,
+                           null.mean = pwr.obj$null.mean,
+                           null.sd = pwr.obj$null.sd,
                            alternative = alternative,
-                           z.alpha = z.alpha,
-                           power = power,
+                           z.alpha = pwr.obj$z.alpha,
+                           power = pwr.obj$power,
                            n = c(n1 = n1, n2 = n2),
                            n.total = n.total),
-                      class = class))
+                      class = c("pwrss", ifelse(method == "exact", "exact", "z"), ifelse(method == "exact", "fisher", "twoprops"))))
 
 } # power.exact.fisher()
 

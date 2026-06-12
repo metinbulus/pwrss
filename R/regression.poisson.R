@@ -412,12 +412,6 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL, beta0 = NULL, b
   pwr.obj <- pwr(beta0 = beta0, beta1 = beta1, n = n, r.squared.predictor = r.squared.predictor, alpha = alpha,
                  alternative = alternative, method = method, distribution = distribution, mean.exposure = mean.exposure)
 
-  power <- pwr.obj$power
-  z.alpha <- pwr.obj$z.alpha
-  ncp <- pwr.obj$ncp
-  sd.ncp <- pwr.obj$sd.ncp
-  vcf <- pwr.obj$vcf
-
   if (verbose > 0) {
 
     print.obj <- list(requested = requested,
@@ -438,14 +432,14 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL, beta0 = NULL, b
                       base.rate = base.rate,
                       rate.ratio = rate.ratio,
                       n = n,
-                      mean.alternative = ncp,
-                      sd.alternative = sd.ncp,
-                      vcf = vcf,
-                      mean.null = 0,
-                      sd.null = 1,
-                      z.alpha = z.alpha,
+                      mean = pwr.obj$ncp,
+                      sd = pwr.obj$sd.ncp,
+                      null.mean = 0,
+                      null.sd = 1,
+                      vcf = pwr.obj$vcf,
+                      z.alpha = pwr.obj$z.alpha,
                       alpha = alpha,
-                      power = power)
+                      power = pwr.obj$power)
 
     .print.pwrss.poisson(print.obj, verbose = verbose, utf = utf)
 
@@ -455,13 +449,13 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL, beta0 = NULL, b
                            test = "z",
                            base.rate = base.rate,
                            rate.ratio = rate.ratio,
-                           mean = ncp,
-                           sd = sd.ncp,
-                           vcf = vcf,
+                           mean = pwr.obj$ncp,
+                           sd = pwr.obj$sd.ncp,
                            null.mean = 0,
                            null.sd = 1,
-                           z.alpha = z.alpha,
-                           power = power,
+                           vcf = pwr.obj$vcf,
+                           z.alpha = pwr.obj$z.alpha,
+                           power = pwr.obj$power,
                            n = n),
                       class = c("pwrss", "z", "poisson")))
 } # power.z.poisson()

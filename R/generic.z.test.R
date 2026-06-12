@@ -183,12 +183,12 @@ power.z.test <- function(power = NULL, mean = NULL, sd = 1, null.mean = 0, null.
 
     print.obj <- list(test = "Generic z-Test",
                       requested = requested,
-                      tgt.effect = "mean",
+                      tgt.ncp = "mean",
+                      mean = mean,
+                      sd = sd,
+                      null.mean = null.mean,
+                      null.sd = null.sd,
                       alternative = alternative,
-                      mean.alternative = mean,
-                      sd.alternative = sd,
-                      mean.null = null.mean,
-                      sd.null = null.sd,
                       alpha = alpha,
                       z.alpha = pwr.obj$z.alpha,
                       power = pwr.obj$power)

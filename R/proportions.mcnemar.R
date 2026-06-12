@@ -168,9 +168,8 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
     prod1 <- stats::dbinom(x = seq(0, ceiling(n.paired)), size = ceiling(n.paired), prob = prob01 + prob10)
     prod2 <- power.binom.test(prob = prob, null.prob = 0.50, size = seq(0, ceiling(n.paired)), alpha = alpha,
                               alternative = alternative, plot = FALSE, verbose = 0)$power
-    power <- sum(prod1 * prod2)
 
-    power
+    list(power = sum(prod1 * prod2), mean = NA, sd = NA, null.mean = NA, null.sd = NA, z.alpha = NA)
 
   } # pwr.exact()
 
@@ -187,7 +186,7 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
           achieved.power <- 0
           while (achieved.power < power) {
             achieved.power <- pwr.exact(prob10 = prob10, prob01 = prob01, n.paired = n.paired,
-                                        alpha = alpha, alternative = alternative)
+                                        alpha = alpha, alternative = alternative)$power
             if (achieved.power < power) n.paired <- n.paired + step.prob
           } # while
           n.paired <- n.paired - ifelse(step.prob > 1, step.prob, 0)
@@ -211,15 +210,15 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
     z.beta <- (sqrt((OR - 1) ^ 2 * PD * n.paired) - z.alpha * (1 + OR)) / sqrt((OR + 1) ^ 2 - (OR - 1) ^ 2 * PD)
     power <- stats::pnorm(z.beta, mean = 0, sd = 1, lower.tail = TRUE)
 
-    mean.alternative <- z.alpha + z.beta
+    mean <- z.alpha + z.beta
 
     if (OR < 1) {
-      mean.alternative <- -mean.alternative
+      mean <- -mean
       if (alternative == "one.sided") z.alpha <- -z.alpha
     }
     if (alternative == "two.sided") z.alpha <- c(-z.alpha, z.alpha)
 
-    list(power = power, mean.alternative = mean.alternative, sd.alternative = 1, mean.null = 0, sd.null = 1, z.alpha = z.alpha)
+    list(power = power, mean = mean, sd = 1, null.mean = 0, null.sd = 1, z.alpha = z.alpha)
 
   } # pwr.approx()
 
@@ -258,7 +257,7 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
         prob10 <- stats::optimize(
           f = function(prob10) {
             pwr.est <- pwr.exact(prob10 = prob10, prob01 = prob01, n.paired = n.paired,
-                                 alpha = alpha, alternative = alternative)
+                                 alpha = alpha, alternative = alternative)$power
             if (pwr.est == 1) 1 + max(prob10, prob01) else (power - pwr.est) ^ 2
           },
           lower = ifelse(check.pos_sign(req.sign),     prob01, 0.0001),
@@ -269,7 +268,7 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
         prob01 <- stats::optimize(
           f = function(prob01) {
             pwr.est <- pwr.exact(prob10 = prob10, prob01 = prob01, n.paired = n.paired,
-                                 alpha = alpha, alternative = alternative)
+                                 alpha = alpha, alternative = alternative)$power
             if (pwr.est == 1) 1 + max(prob10, prob01) else (power - pwr.est) ^ 2
           },
           lower = ifelse(check.pos_sign(req.sign),     prob10, 0.0001),
@@ -280,13 +279,7 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
     } # effect size
 
     # calculate power (if requested == "power") or update it (if requested == "n")
-    power <- pwr.exact(prob10 = prob10, prob01 = prob01, n.paired = n.paired, alpha = alpha, alternative = alternative)
-
-    mean.alternative <- NA
-    sd.alternative <- NA
-    mean.null <- NA
-    sd.null <- NA
-    z.alpha <- NA
+    pwr.obj <- pwr.exact(prob10 = prob10, prob01 = prob01, n.paired = n.paired, alpha = alpha, alternative = alternative)
 
   } else if (method == "approximate") {
 
@@ -328,19 +321,12 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
     # calculate power (if requested == "power") or update it (if requested == "n")
     pwr.obj <- pwr.approx(prob10 = prob10, prob01 = prob01, n.paired = n.paired, alpha = alpha, alternative = alternative)
 
-    power <- pwr.obj$power
-    mean.alternative <- pwr.obj$mean.alternative
-    sd.alternative <- pwr.obj$sd.alternative
-    mean.null <- pwr.obj$mean.null
-    sd.null <- pwr.obj$sd.null
-    z.alpha <- pwr.obj$z.alpha
-
   }  # method
 
   # efficient non-centrality parameter for the chi-squared dist
   # f10 <- prob10 * n.paired
   # f01 <- prob01 * n.paired
-  # ncp.alternative <- (f10 - f01) ^ 2 / (f10 + f01)
+  # ncp <- (f10 - f01) ^ 2 / (f10 + f01)
   # df <- 1
 
   # critical values for the binomial approach
@@ -388,8 +374,6 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
     }
   }
 
-  class <- c("pwrss", ifelse(method == "exact", "exact", "z"), ifelse(method == "exact", "mcnemar", "twoprops"))
-
   if (verbose > 0) {
 
     print.obj <- list(requested = requested,
@@ -403,15 +387,15 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
                       delta = prob10 - prob01,
                       odds.ratio = prob10 / prob01,
                       size = size,
-                      prob.alternative = prob10 / (prob10 + prob01),
-                      prob.null = 0.50,
+                      prob = prob10 / (prob10 + prob01),
+                      null.prob = 0.50,
                       binom.alpha = q.binom.alpha,
-                      mean.alternative = mean.alternative,
-                      sd.alternative = sd.alternative,
-                      mean.null = mean.null,
-                      sd.null = sd.null,
-                      z.alpha = z.alpha,
-                      power = power,
+                      mean = pwr.obj$mean,
+                      sd = pwr.obj$sd,
+                      null.mean = pwr.obj$null.mean,
+                      null.sd = pwr.obj$null.sd,
+                      z.alpha = pwr.obj$z.alpha,
+                      power = pwr.obj$power,
                       n.paired = n.paired)
 
     .print.pwrss.mcnemar(print.obj, verbose = verbose, utf = utf)
@@ -428,15 +412,15 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
                            prob = prob10 / (prob10 + prob01),
                            null.prob = 0.50,
                            binom.alpha = q.binom.alpha,
-                           mean = mean.alternative,
-                           sd = sd.alternative,
-                           null.mean = mean.null,
-                           null.sd = sd.null,
-                           z.alpha = z.alpha,
+                           mean = pwr.obj$mean,
+                           sd = pwr.obj$sd,
+                           null.mean = pwr.obj$null.mean,
+                           null.sd = pwr.obj$null.sd,
+                           z.alpha = pwr.obj$z.alpha,
                            alpha = approx.alpha,
-                           power = power,
+                           power = pwr.obj$power,
                            n.paired = n.paired),
-                      class = class))
+                      class = c("pwrss", ifelse(method == "exact", "exact", "z"), ifelse(method == "exact", "mcnemar", "twoprops"))))
 
 } # power.exact.mcnemar()
 

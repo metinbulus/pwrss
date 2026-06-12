@@ -43,7 +43,7 @@
 #' @return
 #'   \item{power}{statistical power \eqn{(1-\beta)}.}
 #'   \item{ncp}{non-centrality parameter under alternative.}
-#'   \item{ncp.null}{non-centrality parameter under null.}
+#'   \item{null.ncp}{non-centrality parameter under null.}
 #'   \item{df}{degrees of freedom.}
 #'   \item{alpha}{type 1 error rate (user-specified).}
 #'   \item{t.alpha}{critical value(s).}
@@ -189,9 +189,9 @@ power.t.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0,
 
     print.obj <- list(test = "Generic t-Test",
                       requested = requested,
-                      tgt.effect = "ncp",
-                      ncp = ncp,
-                      null.ncp = null.ncp,
+                      tgt.ncp = "lambda",
+                      lambda = ncp,
+                      null.lambda = null.ncp,
                       df = df,
                       alpha = alpha,
                       alternative = alternative,

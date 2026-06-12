@@ -665,14 +665,14 @@ test_that("power.f.ancova.shieh / power.t.contrasts / power.t.contrast work", {
                       c(crrRes[["parms"]][c("mu.vector", "sd.vector", "p.vector", "r.squared", "k.covariates", "alpha")],
                         list(contrast.vector = mtxCnt[1, ], power = 0.8, verbose = 0)))
     expect_equal(class(crrCnt), c("pwrss", "t", "contrast"))
-    expect_equal(names(crrCnt), c("parms", "test", "psi", "d", "df", "t.alpha", "ncp", "ncp.null", "power", "n.vector", "n.total"))
+    expect_equal(names(crrCnt), c("parms", "test", "psi", "d", "df", "t.alpha", "ncp", "null.ncp", "power", "n.vector", "n.total"))
     expect_equal(crrCnt[["parms"]],
                  list(mu.vector = c(0.15, 0.30, 0.20), sd.vector = rep(1, 3), n.vector = NULL, p.vector = rep(1 / 3, 3),
                       contrast.vector = mtxCnt[1, ], r.squared = 0.5, k.covariates = 1, power = 0.80, alpha = 0.05,
                       tukey.kramer = FALSE, ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrCnt[c("test", "psi", "d", "df", "t.alpha", "ncp", "ncp.null", "power", "n.vector", "n.total")],
+    expect_equal(crrCnt[c("test", "psi", "d", "df", "t.alpha", "ncp", "null.ncp", "power", "n.vector", "n.total")],
                  list(test = "t", psi = 0.075, d = 0.106066017, df = 1046, t.alpha = c(-1.9622345, 1.9622345), ncp = 2.8049032,
-                      ncp.null = 0, power = 0.800208158, n.vector = rep(350, 3), n.total = 1050))
+                      null.ncp = 0, power = 0.800208158, n.vector = rep(350, 3), n.total = 1050))
 
     mtxCnt <- factorial.contrasts(factor.levels = 3, coding = "poly", verbose = 0)$contrast.matrix
     crrRes <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), sd.vector = rep(1, 3), p.vector = rep(1 / 3, 3),
@@ -721,14 +721,14 @@ test_that("power.f.ancova.shieh / power.t.contrasts / power.t.contrast work", {
                       c(crrRes[["parms"]][c("mu.vector", "sd.vector", "p.vector", "r.squared", "k.covariates", "alpha")],
                         list(contrast.vector = mtxCnt[1, ], power = 0.8, verbose = 0)))
     expect_equal(class(crrCnt), c("pwrss", "t", "contrast"))
-    expect_equal(names(crrCnt), c("parms", "test", "psi", "d", "df", "t.alpha", "ncp", "ncp.null", "power", "n.vector", "n.total"))
+    expect_equal(names(crrCnt), c("parms", "test", "psi", "d", "df", "t.alpha", "ncp", "null.ncp", "power", "n.vector", "n.total"))
     expect_equal(crrCnt[["parms"]],
                  list(mu.vector = c(0.15, 0.30, 0.20), sd.vector = rep(1, 3), n.vector = NULL, p.vector = rep(1 / 3, 3),
                       contrast.vector = mtxCnt[1, ], r.squared = 0.5, k.covariates = 1, power = 0.80, alpha = 0.05,
                       tukey.kramer = FALSE, ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrCnt[c("test", "psi", "d", "df", "t.alpha", "ncp", "ncp.null", "power", "n.vector", "n.total")],
+    expect_equal(crrCnt[c("test", "psi", "d", "df", "t.alpha", "ncp", "null.ncp", "power", "n.vector", "n.total")],
                  list(test = "t", psi = 0.035355339, d = 0.05, df = 9419, t.alpha = c(-1.96021588, 1.96021588), ncp = 2.80208252,
-                      ncp.null = 0, power = 0.80006019, n.vector = rep(3141, 3), n.total = 9423))
+                      null.ncp = 0, power = 0.80006019, n.vector = rep(3141, 3), n.total = 9423))
 
     mtxCnt <- factorial.contrasts(factor.levels = 3, coding = "poly", verbose = 0)$contrast.matrix
     crrRes <- power.f.ancova.shieh(mu.vector = c(0.15, 0.30, 0.20), sd.vector = rep(1, 3), p.vector = rep(1 / 3, 3),
@@ -765,14 +765,14 @@ test_that("power.f.ancova.shieh / power.t.contrasts / power.t.contrast work", {
                       c(crrRes[["parms"]][c("mu.vector", "sd.vector", "p.vector", "r.squared", "k.covariates", "alpha")],
                         list(contrast.vector = crrRes$parms$contrast.matrix[2, ], power = 0.8, verbose = 0)))
     expect_equal(class(crrCnt), c("pwrss", "t", "contrast"))
-    expect_equal(names(crrCnt), c("parms", "test", "psi", "d", "df", "t.alpha", "ncp", "ncp.null", "power", "n.vector", "n.total"))
+    expect_equal(names(crrCnt), c("parms", "test", "psi", "d", "df", "t.alpha", "ncp", "null.ncp", "power", "n.vector", "n.total"))
     expect_equal(crrCnt[["parms"]],
                  list(mu.vector = c(0.15, 0.30, 0.20), sd.vector = rep(1, 3), n.vector = NULL, p.vector = rep(1 / 3, 3),
                       contrast.vector = mtxCnt[2, ], r.squared = 0.5, k.covariates = 2, power = 0.80,
                       alpha = 0.05, tukey.kramer = FALSE, ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrCnt[c("test", "psi", "d", "df", "t.alpha", "ncp", "ncp.null", "power", "n.vector", "n.total")],
+    expect_equal(crrCnt[c("test", "psi", "d", "df", "t.alpha", "ncp", "null.ncp", "power", "n.vector", "n.total")],
                  list(test = "t", psi = -0.102062073, d = -0.144337567, df = 1132, t.alpha = c(-1.96206183, 1.96206183),
-                      ncp = -2.8074314, ncp.null = 0, power = 0.80096821, n.vector = rep(379, 3), n.total = 1137))
+                      ncp = -2.8074314, null.ncp = 0, power = 0.80096821, n.vector = rep(379, 3), n.total = 1137))
 
     # custom contrasts
     mtxCnt <- rbind(c(A1 = 1, A2 = -0.50, A3 = -0.50), c(A1 = 0.50, A2 = 0.50, A3 = -1))
@@ -823,62 +823,62 @@ test_that("power.f.ancova.shieh / power.t.contrasts / power.t.contrast work", {
                       c(crrRes[["parms"]][c("mu.vector", "sd.vector", "p.vector", "r.squared", "k.covariates", "alpha")],
                         list(contrast.vector = crrRes$parms$contrast.matrix[1, ], power = 0.8, verbose = 0)))
     expect_equal(class(crrCnt), c("pwrss", "t", "contrast"))
-    expect_equal(names(crrCnt), c("parms", "test", "psi", "d", "df", "t.alpha", "ncp", "ncp.null", "power", "n.vector", "n.total"))
+    expect_equal(names(crrCnt), c("parms", "test", "psi", "d", "df", "t.alpha", "ncp", "null.ncp", "power", "n.vector", "n.total"))
     expect_equal(crrCnt[["parms"]],
                  list(mu.vector = c(0.15, 0.30, 0.20), sd.vector = rep(1, 3), n.vector = NULL, p.vector = rep(1 / 3, 3),
                       contrast.vector = mtxCnt[1, ], r.squared = 0.5, k.covariates = 1, power = 0.80, alpha = 0.05,
                       tukey.kramer = FALSE, ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrCnt[c("test", "psi", "d", "df", "t.alpha", "ncp", "ncp.null", "power", "n.vector", "n.total")],
+    expect_equal(crrCnt[c("test", "psi", "d", "df", "t.alpha", "ncp", "null.ncp", "power", "n.vector", "n.total")],
                  list(test = "t", psi = -0.1, d = -0.141421356, df = 1766, t.alpha = c(-1.96130819, 1.96130819), ncp = -2.80396433,
-                      ncp.null = 0, power = 0.8002398, n.vector = rep(590, 3), n.total = 1770))
+                      null.ncp = 0, power = 0.8002398, n.vector = rep(590, 3), n.total = 1770))
 
     crrCnt <- power.t.contrast(mu.vector = c(0.20, 0.10), sd.vector = rep(1, 2), n.vector = rep(1500, 2), contrast.vector = c(1, -1),
                                r.squared = 0.50, k.covariates = 1, alpha = 0.05, tukey.kramer = TRUE, verbose = 0)
     expect_equal(class(crrCnt), c("pwrss", "t", "contrast"))
-    expect_equal(names(crrCnt), c("parms", "test", "psi", "d", "df", "t.alpha", "ncp", "ncp.null", "power", "n.vector", "n.total"))
+    expect_equal(names(crrCnt), c("parms", "test", "psi", "d", "df", "t.alpha", "ncp", "null.ncp", "power", "n.vector", "n.total"))
     expect_equal(crrCnt[["parms"]],
                  list(mu.vector = c(0.20, 0.10), sd.vector = rep(1, 2), n.vector = rep(1500, 2), p.vector = NULL,
                       contrast.vector = c(1, -1), r.squared = 0.5, k.covariates = 1, power = NULL, alpha = 0.05,
                       tukey.kramer = TRUE, ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrCnt[c("test", "psi", "d", "df", "t.alpha", "ncp", "ncp.null", "power", "n.vector", "n.total")],
+    expect_equal(crrCnt[c("test", "psi", "d", "df", "t.alpha", "ncp", "null.ncp", "power", "n.vector", "n.total")],
                  list(test = "t", psi = 0.1, d = 0.141421356, df = 2997, t.alpha = c(-1.96075583, 1.96075583), ncp = 3.87233747,
-                      ncp.null = 0, power = 0.972006163, n.vector = rep(1500, 2), n.total = 3000))
+                      null.ncp = 0, power = 0.972006163, n.vector = rep(1500, 2), n.total = 3000))
 
     crrCnt <- power.t.contrast(mu.vector = c(0.20, 0.10), sd.vector = rep(1, 2), n.vector = rep(1500, 2), contrast.vector = c(1, -1),
                                r.squared = 0.50, k.covariates = 1, alpha = 0.05, tukey.kramer = FALSE, verbose = 0)
     expect_equal(class(crrCnt), c("pwrss", "t", "contrast"))
-    expect_equal(names(crrCnt), c("parms", "test", "psi", "d", "df", "t.alpha", "ncp", "ncp.null", "power", "n.vector", "n.total"))
+    expect_equal(names(crrCnt), c("parms", "test", "psi", "d", "df", "t.alpha", "ncp", "null.ncp", "power", "n.vector", "n.total"))
     expect_equal(crrCnt[["parms"]],
                  list(mu.vector = c(0.20, 0.10), sd.vector = rep(1, 2), n.vector = rep(1500, 2), p.vector = NULL,
                       contrast.vector = c(1, -1), r.squared = 0.5, k.covariates = 1, power = NULL, alpha = 0.05,
                       tukey.kramer = FALSE, ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrCnt[c("test", "psi", "d", "df", "t.alpha", "ncp", "ncp.null", "power", "n.vector", "n.total")],
+    expect_equal(crrCnt[c("test", "psi", "d", "df", "t.alpha", "ncp", "null.ncp", "power", "n.vector", "n.total")],
                  list(test = "t", psi = 0.1, d = 0.141421356, df = 2997, t.alpha = c(-1.96075583, 1.96075583), ncp = 3.87233747,
-                      ncp.null = 0, power = 0.972006163, n.vector = rep(1500, 2), n.total = 3000))
+                      null.ncp = 0, power = 0.972006163, n.vector = rep(1500, 2), n.total = 3000))
 
     crrCnt <- power.t.contrast(mu.vector = c(0.20, 0.10), sd.vector = rep(1, 2), p.vector = rep(0.5, 2), contrast.vector = c(1, -1),
                                r.squared = 0.50, k.covariates = 1, power = 0.972006163, alpha = 0.05, tukey.kramer = FALSE, verbose = 0)
     expect_equal(class(crrCnt), c("pwrss", "t", "contrast"))
-    expect_equal(names(crrCnt), c("parms", "test", "psi", "d", "df", "t.alpha", "ncp", "ncp.null", "power", "n.vector", "n.total"))
+    expect_equal(names(crrCnt), c("parms", "test", "psi", "d", "df", "t.alpha", "ncp", "null.ncp", "power", "n.vector", "n.total"))
     expect_equal(crrCnt[["parms"]],
                  list(mu.vector = c(0.20, 0.10), sd.vector = rep(1, 2), n.vector = NULL, p.vector = rep(0.5, 2),
                       contrast.vector = c(1, -1), r.squared = 0.5, k.covariates = 1, power = 0.972006163, alpha = 0.05,
                       tukey.kramer = FALSE, ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrCnt[c("test", "psi", "d", "df", "t.alpha", "ncp", "ncp.null", "power", "n.vector", "n.total")],
+    expect_equal(crrCnt[c("test", "psi", "d", "df", "t.alpha", "ncp", "null.ncp", "power", "n.vector", "n.total")],
                  list(test = "t", psi = 0.1, d = 0.141421356, df = 2997, t.alpha = c(-1.96075583, 1.96075583), ncp = 3.87233747,
-                      ncp.null = 0, power = 0.972006163, n.vector = rep(1500, 2), n.total = 3000))
+                      null.ncp = 0, power = 0.972006163, n.vector = rep(1500, 2), n.total = 3000))
 
     crrCnt <- power.t.contrast(mu.vector = c(1.5, 2, 3, 4), sd.vector = rep(2, 4), n.vector = rep(5, 4), contrast.vector = c(-3, -1, 1, 3),
                                k.covariates = 0, alpha = 0.05, verbose = 0) # example 11.3.3 from GPower
     expect_equal(class(crrCnt), c("pwrss", "t", "contrast"))
-    expect_equal(names(crrCnt), c("parms", "test", "psi", "d", "df", "t.alpha", "ncp", "ncp.null", "power", "n.vector", "n.total"))
+    expect_equal(names(crrCnt), c("parms", "test", "psi", "d", "df", "t.alpha", "ncp", "null.ncp", "power", "n.vector", "n.total"))
     expect_equal(crrCnt[["parms"]],
                  list(mu.vector = c(1.5, 2, 3, 4), sd.vector = rep(2, 4), n.vector = rep(5, 4), p.vector = NULL,
                       contrast.vector = c(-3, -1, 1, 3), r.squared = 0, k.covariates = 0, power = NULL, alpha = 0.05,
                       tukey.kramer = FALSE, ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrCnt[c("test", "psi", "d", "df", "t.alpha", "ncp", "ncp.null", "power", "n.vector", "n.total")],
+    expect_equal(crrCnt[c("test", "psi", "d", "df", "t.alpha", "ncp", "null.ncp", "power", "n.vector", "n.total")],
                  list(test = "t", psi = 8.5, d = 4.25, df = 16, t.alpha = 2.1199053 * c(-1, 1), ncp = 2.125,
-                      ncp.null = 0, power = 0.514737, n.vector = rep(5, 4), n.total = 20))
+                      null.ncp = 0, power = 0.514737, n.vector = rep(5, 4), n.total = 20))
     # results are nearly identical, but numerically different since GPower uses the F-distribition
     # power ~ 0.514736, crit. F / t = 4.493998 - sqrt(4.493998) = 2.1199053, ncp = 4.515617 / sqrt(4.515617) ~ 0.2125
 

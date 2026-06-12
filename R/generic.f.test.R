@@ -28,7 +28,7 @@
 #' @return
 #'   \item{power}{statistical power \eqn{(1-\beta)}.}
 #'   \item{ncp}{non-centrality parameter under alternative.}
-#'   \item{ncp.null}{non-centrality parameter under null.}
+#'   \item{null.ncp}{non-centrality parameter under null.}
 #'   \item{df1}{numerator degrees of freedom.}
 #'   \item{df2}{denominator degrees of freedom.}
 #'   \item{f.alpha}{critical value(s).}
@@ -90,9 +90,9 @@ power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
 
     print.obj <- list(test = "Generic F-Test",
                       requested = requested,
-                      tgt.effect = "ncp",
-                      ncp = ncp,
-                      null.ncp = null.ncp,
+                      tgt.ncp = "lambda",
+                      lambda = ncp,
+                      null.lambda = null.ncp,
                       df1 = df1,
                       df2 = df2,
                       n.pres = df1 + df2 + 1,

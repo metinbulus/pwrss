@@ -354,16 +354,9 @@ power.z.mediation  <- function(beta.a = NULL, beta.b = NULL, ab.ratio = 1, req.s
 
   # calculate power (if requested == "power") or update it (if requested == "n" or "es")
   pwr.obj <- pwr(beta.a = beta.a, beta.b = beta.b,
-                     sd.predictor = sd.predictor, sd.mediator = sd.mediator, sd.outcome = sd.outcome,
-                     r.squared.mediator = r.squared.mediator, r.squared.outcome = r.squared.outcome,
-                     n = n, method = method)
-
-  power <- pwr.obj$power
-  mean.alternative <- pwr.obj$mean
-  sd.alternative <- 1
-  mean.null <- pwr.obj$null.mean
-  sd.null <- 1
-  z.alpha <- pwr.obj$z.alpha
+                 sd.predictor = sd.predictor, sd.mediator = sd.mediator, sd.outcome = sd.outcome,
+                 r.squared.mediator = r.squared.mediator, r.squared.outcome = r.squared.outcome,
+                 n = n, method = method)
 
   beta.indirect <- beta.a * beta.b
   std.beta.a <- beta.a * sd.predictor / sd.mediator
@@ -380,15 +373,15 @@ power.z.mediation  <- function(beta.a = NULL, beta.b = NULL, ab.ratio = 1, req.s
                       std.beta.b = std.beta.b,
                       std.beta.cp = std.beta.cp,
                       std.beta.indirect = std.beta.indirect,
-                      mean.alternative = mean.alternative,
-                      sd.alternative = sd.alternative,
-                      mean.null = mean.null,
-                      sd.null = sd.null,
+                      mean = pwr.obj$mean,
+                      sd = 1,
+                      null.mean = pwr.obj$null.mean,
+                      null.sd = 1,
                       alpha = alpha,
                       alternative = alternative,
-                      z.alpha = z.alpha,
+                      z.alpha = pwr.obj$z.alpha,
                       n = n,
-                      power = power)
+                      power = pwr.obj$power)
 
     .print.pwrss.med(print.obj, verbose = verbose, utf = utf)
 
@@ -406,12 +399,12 @@ power.z.mediation  <- function(beta.a = NULL, beta.b = NULL, ab.ratio = 1, req.s
                            std.beta.b = std.beta.b,
                            std.beta.cp = std.beta.cp,
                            std.beta.indirect = std.beta.indirect,
-                           mean = mean.alternative,
-                           sd = sd.alternative,
-                           null.mean = mean.null,
-                           null.sd = sd.null,
-                           z.alpha = z.alpha,
-                           power = power,
+                           mean = pwr.obj$mean,
+                           sd = 1,
+                           null.mean = pwr.obj$null.mean,
+                           null.sd = 1,
+                           z.alpha = pwr.obj$z.alpha,
+                           power = pwr.obj$power,
                            n = n),
                       class = c("pwrss", "z", "mediation")))
 

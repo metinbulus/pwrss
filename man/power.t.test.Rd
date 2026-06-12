@@ -63,7 +63,7 @@ default.}
 \value{
 \item{power}{statistical power \eqn{(1-\beta)}.}
 \item{ncp}{non-centrality parameter under alternative.}
-\item{ncp.null}{non-centrality parameter under null.}
+\item{null.ncp}{non-centrality parameter under null.}
 \item{df}{degrees of freedom.}
 \item{alpha}{type 1 error rate (user-specified).}
 \item{t.alpha}{critical value(s).}
