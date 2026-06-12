@@ -100,6 +100,9 @@
 }
 
 .keyparms <- function(x, parms_mtx, utf = FALSE, digits = 3) {
+  # ensures that the variables in the parms_mtx exist in the printing object and remove those that are NA
+  parms_mtx <- parms_mtx[vapply(parms_mtx[, "var.name"], function(n) utils::hasName(x, n), logical(1)), ]
+  parms_mtx <- parms_mtx[vapply(parms_mtx[, "var.name"], function(n) !all(is.na(x[[n]])),  logical(1)), ]
   spf_neg   <- ifelse(any(stats::na.omit(suppressWarnings(as.numeric(unlist(x[parms_mtx[, 1]])))) < 0), "+", "")
   parms_col <- ifelse(utf, 3, 2)
   parms_max <- max(vapply(parms_mtx[, parms_col], function(x) nchar(x) - .nspacer(x), numeric(1)))
@@ -493,7 +496,6 @@
 
 # ----------------------------------------------------------------------------------------------------------------------
 .print.pwrss.twocors <- function(x, digits = 3, verbose = 1, utf = TRUE, ...) {
-
   cat(.header(x$requested, FALSE, utf))
   cat(x$test, "\n\n", sep = "")
 

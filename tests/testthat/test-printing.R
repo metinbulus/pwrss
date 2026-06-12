@@ -787,40 +787,30 @@ test_that("printing.R works", {
     expect_equal(length(crrUTF), 40)
 
     crrAsc <- capture.output(power.exact.onecor(rho = 0.20, power = 0.80, alpha = 0.05, alternative = "two.sided", verbose = 2))
-    expect_equal(crrAsc[c(5, 10:11, 16:22, 27, 36:37)],
+    expect_equal(crrAsc[c(5, 10:11, 16:17, 22, 31:32)],
                  c("One-Sample Correlation (Exact)",
                    "  H0 (Null)        : rho - null.rho  = 0",
                    "  H1 (Alternative) : rho - null.rho != 0",
                    "  rho - null.rho = 0.200",
                    "  Cohen's q      = 0.203",
-                   "  Mean of Alt.   = NA",
-                   "  SD of Alt.     = NA",
-                   "  Mean of Null   = NA",
-                   "  SD of Null     = NA",
-                   "  Critical Value = NA",
                    "  Target Effect (rho)  = 0.200 (vs. null.rho = 0)",
                    "  rho      : Correlation (for some V1 ~ V2) under alt.",
                    "  null.rho : Correlation (for some V1 ~ V2) under null"))
-    expect_equal(length(crrAsc), 38)
+    expect_equal(length(crrAsc), 33)
 
     crrUTF <- capture.output(power.exact.onecor(rho = 0.20, power = 0.80, alpha = 0.05, alternative = "two.sided", verbose = 2, utf = TRUE))
-    expect_equal(crrUTF[c(5, 10:11, 16:22, 27, 36:39)],
+    expect_equal(crrUTF[c(5, 10:11, 16:17, 22, 31:34)],
                  c("One-Sample Correlation (Exact)",
                    "  H₀ (Null)        : ρ - ρ₀ = 0",
                    "  H₁ (Alternative) : ρ - ρ₀ ≠ 0",
-                   "  ρ₁ - ρ₀         = 0.200",
-                   "  Cohen's q       = 0.203",
-                   "  μ (Alternative) = NA",
-                   "  σ (Alternative) = NA",
-                   "  μ₀ (Null)       = NA",
-                   "  σ₀ (Null)       = NA",
-                   "  Z⁻¹(α, μ₀, σ₀)  = NA",
+                   "  ρ₁ - ρ₀   = 0.200",
+                   "  Cohen's q = 0.203",
                    "  Target Effect (ρ)  = 0.200 (vs. ρ₀ = 0)",
                    "  \033[36mρ₁ : Correlation (for some V1 ~ V2) under alternative\033[0m",
                    "  \033[36mρ₀ : Correlation (for some V1 ~ V2) under null\033[0m",
                    "  \033[36mμ  : Mean\033[0m",
                    "  \033[36mσ  : Standard deviation\033[0m"))
-    expect_equal(length(crrUTF), 40)
+    expect_equal(length(crrUTF), 35)
     # ------------------------------------------------------------------------------------------------------------------
 
 
