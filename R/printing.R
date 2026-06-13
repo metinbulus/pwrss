@@ -22,8 +22,8 @@
                  `n` =        "             SAMPLE SIZE CALCULATION              ",
                  `power` =    "                POWER CALCULATION                 ",
                  `es` = ifelse(ncp,
-                               paste("      MINIMUM DETECTABLE EFFECT CALCULATION       "),
-                               paste("       MINIMUM DETECTABLE NCP CALCULATION         ")))
+                               paste("       MINIMUM DETECTABLE NCP CALCULATION         "),
+                               paste("      MINIMUM DETECTABLE EFFECT CALCULATION       ")))
 
     paste0(paste0("+", strrep("-", 50), "+", "\n"),
            paste0("|", RC,              "|", "\n"),
