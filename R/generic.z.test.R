@@ -163,10 +163,16 @@ power.z.test <- function(power = NULL, mean = NULL, sd = 1, null.mean = 0, null.
   } # min.pwr() (for uniroot and optimize)
 
   if (requested == "es") {
-
+    
+    if(alternative != "two.one.sided" & req.sign %in% c(0, "0")) stop("req.sign cannot be 0 for 'one.sided' and 'two.sided' alternative.", call. = FALSE)
+    
     val.rng <- get.interval(null.ncp = null.mean, distribution = "z", alpha = alpha, req.sign = req.sign, sd = sd)
     mean <- stats::optimize(f = function(mean) min.pwr(mean, power) ^ 2, interval = val.rng)$minimum
-
+    
+    if(alternative == "two.one.sided" & req.sign %in% c(0, "0"))
+      if(round(mean, 3) != 0) warning("Target NCP may be different from zero to satisfy the power rate. A zero NCP will produce a higher power rate with symmetric null bounds.", call. = FALSE)
+    if(round(min.pwr(mean, power), 3) != 0) warning("The target power rate cannot be achieved within the current null bounds.", call. = FALSE)
+      
   }
 
   pwr.obj <- pwr(mean = mean, sd = sd, null.mean = null.mean, null.sd = null.sd, alpha = alpha, alternative = alternative)
@@ -197,9 +203,10 @@ power.z.test <- function(power = NULL, mean = NULL, sd = 1, null.mean = 0, null.
 
   } # verbose
 
-  invisible(list(power = pwr.obj$power, mean = mean, sd = sd, null.mean = null.mean, null.sd = null.sd, alpha = alpha,
-                 alternative = alternative, z.alpha = pwr.obj$z.alpha, beta = 1 - pwr.obj$power,
-                 type.s = pwr.obj$type.s, type.m = pwr.obj$type.m))
+  invisible(structure(list(power = pwr.obj$power, mean = mean, sd = sd, null.mean = null.mean, null.sd = null.sd, alpha = alpha,
+                           alternative = alternative, z.alpha = pwr.obj$z.alpha, beta = 1 - pwr.obj$power,
+                           type.s = pwr.obj$type.s, type.m = pwr.obj$type.m),
+                      class = c("pwrss", "generic", "z")))
 
 } # end of power.z.test()
 

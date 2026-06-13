@@ -171,9 +171,14 @@ power.binom.test <- function(power = NULL,
 
   } else if (requested == "es") {
 
+    if(alternative != "two.one.sided" & req.sign %in% c(0, "0")) stop("req.sign cannot be 0 for 'one.sided' and 'two.sided' hypothesis tests.", call. = FALSE)
+    
     val.rng <- get.interval(null.ncp = null.prob, distribution = "binom", req.sign = req.sign)
     prob <- stats::optimize(f = function(prob) min.pwr(prob, size, power) ^ 2, interval = val.rng, tol = 1e-12)$minimum
-
+    
+    if(alternative == "two.one.sided" & req.sign %in% c(0, "0"))
+      if(round(min.pwr(prob, size, power), 3) != 0) warning("The target power rate cannot be achieved within the current null bounds.", call. = FALSE)
+    
   }
 
   # calculate power (if requested == "power") or update it (if requested == "n" or "es")
@@ -199,8 +204,9 @@ power.binom.test <- function(power = NULL,
     .print.pwrss.binom(print.obj, verbose = verbose, utf = utf)
 
   } # end of verbose
-
-  invisible(list(power = pwr.obj$power, size = size, prob = prob, null.prob = null.prob, alpha = pwr.obj$approx.alpha,
-                 alternative = alternative, binom.alpha = pwr.obj$binom.alpha))
+  
+  invisible(structure(list(power = pwr.obj$power, size = size, prob = prob, null.prob = null.prob, alpha = pwr.obj$approx.alpha,
+                           alternative = alternative, binom.alpha = pwr.obj$binom.alpha),
+                      class = c("pwrss", "generic", "binom")))
 
 } # power.binom.test()

@@ -103,14 +103,15 @@ power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
     .print.pwrss.f(print.obj, verbose = verbose, utf = utf)
 
   } # end of verbose
-
-  invisible(list(power = pwr.obj$power,
-                 ncp = ncp,
-                 null.ncp = null.ncp,
-                 df1 = df1,
-                 df2 = df2,
-                 alpha = alpha,
-                 f.alpha = pwr.obj$f.alpha))
+  
+  invisible(structure(list(power = pwr.obj$power,
+                           ncp = ncp,
+                           null.ncp = null.ncp,
+                           df1 = df1,
+                           df2 = df2,
+                           alpha = alpha,
+                           f.alpha = pwr.obj$f.alpha),
+                      class = c("pwrss", "generic", "f")))
 
 } # end of power.f.test()
 

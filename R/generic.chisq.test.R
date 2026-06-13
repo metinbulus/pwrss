@@ -108,9 +108,10 @@ power.chisq.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df = NULL, 
     .print.pwrss.chisq(print.obj, verbose = verbose, utf = utf)
 
   } # end of verbose
-
-  invisible(list(power = pwr.obj$power, ncp = ncp, null.ncp = null.ncp, df = df,
-                 alpha = alpha, chisq.alpha = pwr.obj$chisq.alpha))
+  
+  invisible(structure(list(power = pwr.obj$power, ncp = ncp, null.ncp = null.ncp, df = df,
+                           alpha = alpha, chisq.alpha = pwr.obj$chisq.alpha),
+                      class = c("pwrss", "generic", "chisq")))
 
 } # end of power.chisq.test()
 

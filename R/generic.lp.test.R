@@ -176,9 +176,15 @@ power.lp.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0
   } # min.pwr() (for uniroot and optimize)
 
   if (requested == "es") {
-
+    
+    if(alternative != "two.one.sided" & req.sign %in% c(0, "0")) stop("req.sign cannot be 0 for 'one.sided' and 'two.sided' alterantive.", call. = FALSE)
+    
     val.rng <- get.interval(null.ncp = null.ncp, distribution = "lp", alpha = alpha, req.sign = req.sign, df = df)
     ncp <- suppressMessages(stats::optimize(f = function(ncp) min.pwr(ncp, df, power) ^ 2, interval = val.rng))$minimum
+    
+    if(alternative == "two.one.sided" & req.sign %in% c(0, "0"))
+      if(round(ncp, 3) != 0) warning("Target NCP may be different from zero to satisfy the power rate. A zero NCP will produce a higher power rate with symmetric null bounds.", call. = FALSE)
+    if(round(min.pwr(ncp, df, power), 3) != 0) warning("The target power rate cannot be achieved within the current null bounds.", call. = FALSE)
 
   } else if (requested == "n") {
 
@@ -208,17 +214,18 @@ power.lp.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0
     .print.pwrss.t(print.obj, verbose = verbose, utf = utf)
 
   } # verbose
-
-  invisible(list(power = pwr.obj$power,
-                 ncp = ncp,
-                 null.ncp = null.ncp,
-                 df = df,
-                 alpha = alpha,
-                 alternative = alternative,
-                 t.alpha = pwr.obj$t.alpha,
-                 beta = 1 - pwr.obj$power,
-                 type.s = pwr.obj$type.s,
-                 type.m = pwr.obj$type.m))
+  
+  invisible(structure(list(power = pwr.obj$power,
+                           ncp = ncp,
+                           null.ncp = null.ncp,
+                           df = df,
+                           alpha = alpha,
+                           alternative = alternative,
+                           t.alpha = pwr.obj$t.alpha,
+                           beta = 1 - pwr.obj$power,
+                           type.s = pwr.obj$type.s,
+                           type.m = pwr.obj$type.m),
+                      class = c("pwrss", "generic", "lp")))
 
 } # end of power.lp.test()
 
