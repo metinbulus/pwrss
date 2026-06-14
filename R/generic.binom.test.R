@@ -90,6 +90,13 @@ power.binom.test <- function(power = NULL,
 
   pwr <- function(size = NULL, prob = NULL, null.prob = 0.5, alpha = 0.05,
                   alternative = c("two.sided", "one.sided", "two.one.sided")) {
+    
+    # initialize variables to prevent "not found" errors if logic blocks fail
+    approx.alpha <- NA
+    binom.alpha  <- NA
+    power        <- NA
+    
+    alternative <- match.arg(alternative)
 
     if (alternative == "two.sided") {
 
@@ -173,11 +180,35 @@ power.binom.test <- function(power = NULL,
 
     if(alternative != "two.one.sided" & req.sign %in% c(0, "0")) stop("req.sign cannot be 0 for 'one.sided' and 'two.sided' hypothesis tests.", call. = FALSE)
     
-    val.rng <- get.interval(null.ncp = null.prob, distribution = "binom", req.sign = req.sign)
-    prob <- stats::optimize(f = function(prob) min.pwr(prob, size, power) ^ 2, interval = val.rng, tol = 1e-12)$minimum
-    
-    if(alternative == "two.one.sided" & req.sign %in% c(0, "0"))
-      if(round(min.pwr(prob, size, power), 3) != 0) warning("The target power rate cannot be achieved within the current null bounds.", call. = FALSE)
+    if(alternative == "two.one.sided" & req.sign %in% c(0, "0")) {
+      
+      lower.int <- c(min(null.prob), mean(null.prob))
+      upper.int <- c(mean(null.prob), max(null.prob))
+      prob.lower <- stats::optimize(f = function(prob) min.pwr(prob, size, power) ^ 2, interval = lower.int, tol = 1e-12)$minimum
+      prob.upper <- stats::optimize(f = function(prob) min.pwr(prob, size, power) ^ 2, interval = upper.int, tol = 1e-12)$minimum
+      prob <- mean(c(prob.lower, prob.upper))
+      
+      pwr.lower <- pwr(size = size, prob = prob.lower, null.prob = null.prob, alpha = alpha, alternative = alternative)$power
+      pwr.upper <- pwr(size = size, prob = prob.upper, null.prob = null.prob, alpha = alpha, alternative = alternative)$power
+      
+      if(round(pwr.lower, 3) >= power & round(pwr.upper, 3) >= power) {
+        
+        warning(paste0("Target NCP ranges from ", round(prob.lower, 4),
+                       " to ", round(prob.upper, 4), " within the null bounds."), call. = FALSE)
+        
+      } else {
+        
+        warning("The target power rate cannot be achieved within the null bounds.", call. = FALSE)
+        
+      } 
+      
+    } else {
+      
+      val.rng <- get.interval(null.ncp = null.prob, distribution = "binom", req.sign = req.sign) + c(+1e-7, -1e-7)
+      # prob <- stats::optimize(f = function(prob) min.pwr(prob, size, power) ^ 2, interval = val.rng, tol = 1e-12)$minimum
+      prob <- stats::uniroot(f = function(prob) min.pwr(prob, size, power), interval = val.rng, tol = 1e-12)$root
+
+    }
     
   }
 
