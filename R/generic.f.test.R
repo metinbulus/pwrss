@@ -74,7 +74,7 @@ power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
 
   if (requested == "es") {
 
-    max.thresh <- stats::qf(1 - 1e-10, ncp = null.ncp, df1 = df1, df2 = df2)
+    max.thresh <- stats::qf(0.999, ncp = null.ncp, df1 = df1, df2 = df2)
     
     if(min.pwr(ncp = max.thresh, power = power) > 0) {
       while (min.pwr(ncp = max.thresh, power = power) > 0) max.thresh <- max.thresh * 1.1 
