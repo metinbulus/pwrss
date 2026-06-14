@@ -91,7 +91,7 @@ power.binom.test <- function(power = NULL,
   pwr <- function(size = NULL, prob = NULL, null.prob = 0.5, alpha = 0.05,
                   alternative = c("two.sided", "one.sided", "two.one.sided")) {
     
-    # initialize variables to prevent "not found" errors if logic blocks fail
+    # initialize variables to prevent "not found" errors
     approx.alpha <- NA
     binom.alpha  <- NA
     power        <- NA
