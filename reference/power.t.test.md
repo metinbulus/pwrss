@@ -148,7 +148,7 @@ power.t.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "two.sided")
 power.t.test(power = 0.80, df = 100, alpha = 0.05, alternative = "two.sided")
 
 #> +--------------------------------------------------+
-#> |      MINIMUM DETECTABLE NCP CALCULATION       |
+#> |       MINIMUM DETECTABLE NCP CALCULATION         |
 #> +--------------------------------------------------+
 #> 
 #> Generic t-Test
@@ -198,7 +198,7 @@ power.t.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "one.sided")
 power.t.test(power = 0.80, df = 100, alpha = 0.05, alternative = "one.sided")
 
 #> +--------------------------------------------------+
-#> |      MINIMUM DETECTABLE NCP CALCULATION       |
+#> |       MINIMUM DETECTABLE NCP CALCULATION         |
 #> +--------------------------------------------------+
 #> 
 #> Generic t-Test
@@ -251,9 +251,9 @@ power.t.test(ncp = 0, null.ncp = c(-2, 2), df = 100, alpha = 0.05,
 #> 
 power.t.test(power = 0.80, req.sign = "0", null.ncp = c(-2, 2),
              df = 100, alpha = 0.05, alternative = "two.one.sided")
-
+#> Warning: The target power rate cannot be achieved within the null bounds.
 #> +--------------------------------------------------+
-#> |      MINIMUM DETECTABLE NCP CALCULATION       |
+#> |       MINIMUM DETECTABLE NCP CALCULATION         |
 #> +--------------------------------------------------+
 #> 
 #> Generic t-Test
@@ -269,7 +269,7 @@ power.t.test(power = 0.80, req.sign = "0", null.ncp = c(-2, 2),
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Target NCP (lambda)  = -0.000 (vs. null.lambda = -2 and 2)  <<
+#>   Target NCP (lambda)  = 0 (vs. null.lambda = -2 and 2)  <<
 #>   Degrees of Freedom   = 100
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.723
@@ -310,7 +310,7 @@ power.t.test(power = 0.80, req.sign = "+", null.ncp = c(-1, 1),
              df = 100, alpha = 0.05, alternative = "two.one.sided")
 
 #> +--------------------------------------------------+
-#> |      MINIMUM DETECTABLE NCP CALCULATION       |
+#> |       MINIMUM DETECTABLE NCP CALCULATION         |
 #> +--------------------------------------------------+
 #> 
 #> Generic t-Test

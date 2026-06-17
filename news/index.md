@@ -3,6 +3,10 @@
 ## Changes in pwrss v1.2.0
 
 - Added unit tests for all procedures
+- Added minimum detectable effects
+- Added exact correlation (one sample)
+- Added type S and M errors for two-sided tests, available through
+  [`plot()`](https://rdrr.io/r/graphics/plot.default.html) function
 - Added `clean.parms`, unifying how the input parameters in the results
   list are returned
 - Added further input checks so that all input parameters are checked

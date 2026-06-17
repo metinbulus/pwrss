@@ -118,7 +118,7 @@ power.chisq.test(ncp = 20, df = 100, alpha = 0.05)
 power.chisq.test(power = 0.80, df = 100, alpha = 0.05)
 
 #> +--------------------------------------------------+
-#> |      MINIMUM DETECTABLE NCP CALCULATION       |
+#> |       MINIMUM DETECTABLE NCP CALCULATION         |
 #> +--------------------------------------------------+
 #> 
 #> Generic Chi-square Test

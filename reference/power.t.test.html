@@ -192,7 +192,7 @@ default.</p></dd>
 <span class="r-in"><span><span class="fu">power.t.test</span><span class="op">(</span>power <span class="op">=</span> <span class="fl">0.80</span>, df <span class="op">=</span> <span class="fl">100</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>, alternative <span class="op">=</span> <span class="st">"two.sided"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="power.t.test-2.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |      MINIMUM DETECTABLE NCP CALCULATION       |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |       MINIMUM DETECTABLE NCP CALCULATION         |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Generic t-Test</span>
@@ -242,7 +242,7 @@ default.</p></dd>
 <span class="r-in"><span><span class="fu">power.t.test</span><span class="op">(</span>power <span class="op">=</span> <span class="fl">0.80</span>, df <span class="op">=</span> <span class="fl">100</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>, alternative <span class="op">=</span> <span class="st">"one.sided"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="power.t.test-4.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |      MINIMUM DETECTABLE NCP CALCULATION       |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |       MINIMUM DETECTABLE NCP CALCULATION         |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Generic t-Test</span>
@@ -295,9 +295,9 @@ default.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">power.t.test</span><span class="op">(</span>power <span class="op">=</span> <span class="fl">0.80</span>, req.sign <span class="op">=</span> <span class="st">"0"</span>, null.ncp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>             df <span class="op">=</span> <span class="fl">100</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>, alternative <span class="op">=</span> <span class="st">"two.one.sided"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="power.t.test-6.png" alt="" width="700" height="433"></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The target power rate cannot be achieved within the null bounds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |      MINIMUM DETECTABLE NCP CALCULATION       |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |       MINIMUM DETECTABLE NCP CALCULATION         |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Generic t-Test</span>
@@ -313,7 +313,7 @@ default.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Results</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Target NCP (lambda)  = -0.000 (vs. null.lambda = -2 and 2)  &lt;&lt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Target NCP (lambda)  = 0 (vs. null.lambda = -2 and 2)  &lt;&lt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Degrees of Freedom   = 100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Type 1 Error (alpha) = 0.050</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Type 2 Error (beta)  = 0.723</span>
@@ -326,7 +326,7 @@ default.</p></dd>
 <span class="r-in"><span><span class="co"># critical value (for the lower bound).</span></span></span>
 <span class="r-in"><span><span class="fu">power.t.test</span><span class="op">(</span>ncp <span class="op">=</span> <span class="fl">2</span>, null.ncp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, df <span class="op">=</span> <span class="fl">100</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>,</span></span>
 <span class="r-in"><span>             alternative <span class="op">=</span> <span class="st">"two.one.sided"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="power.t.test-7.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="power.t.test-6.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |                POWER CALCULATION                 |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
@@ -352,9 +352,9 @@ default.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">power.t.test</span><span class="op">(</span>power <span class="op">=</span> <span class="fl">0.80</span>, req.sign <span class="op">=</span> <span class="st">"+"</span>, null.ncp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>             df <span class="op">=</span> <span class="fl">100</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>, alternative <span class="op">=</span> <span class="st">"two.one.sided"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="power.t.test-8.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="power.t.test-7.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |      MINIMUM DETECTABLE NCP CALCULATION       |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |       MINIMUM DETECTABLE NCP CALCULATION         |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Generic t-Test</span>

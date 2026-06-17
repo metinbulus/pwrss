@@ -19,6 +19,6 @@ https://doi.org/10.32614/CRAN.package.pwrss
       title = {{pwrss}: Statistical Power and Sample Size Calculation Tools},
       author = {Metin Bulus and Sebastian Jentschke},
       note = {R package version 1.2.0},
-      year = {2025},
+      year = {2026},
       url = {https://doi.org/10.32614/CRAN.package.pwrss},
     }
