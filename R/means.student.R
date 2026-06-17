@@ -371,9 +371,9 @@ power.t.student <- function(d = NULL, null.d = 0, margin = 0,
   } # min.pwr.student (for uniroot)
 
   if (requested == "n") {
-
-    n2 <- try(stats::uniroot(function(n2) min.pwr.student(d, n2, power), interval = c(4, 1e10))$root, silent = TRUE)
-    if (inherits(n2, "try-error") || n2 == 1e10) stop("Design is not feasible.", call. = FALSE)
+    
+    n2 <- try(stats::uniroot(function(n2) min.pwr.student(d, n2, power), interval = c(3, 1e10))$root, silent = TRUE)
+    if (inherits(n2, "try-error") || n2 == 1e10) stop("Design is not feasible. Possibly very large effect size.", call. = FALSE)
 
     n2 <- ifelse(ceil.n, ceiling(n2), n2)
 
@@ -605,10 +605,10 @@ power.t.welch <- function(d = NULL, null.d = 0, margin = 0,
   } # min.pwr.welch (for uniroot)
 
   if (requested == "n") {
-
+    
     n2 <- try(stats::uniroot(function(n2) min.pwr.welch(d, n2, power), interval = c(3, 1e10))$root, silent = TRUE)
-    if (inherits(n2, "try-error") || n2 == 1e10) stop("Design is not feasible.", call. = FALSE)
-
+    if (inherits(n2, "try-error") || n2 == 1e10) stop("Design is not feasible. Possibly very large effect size.", call. = FALSE)
+    
     n2 <- ifelse(ceil.n, ceiling(n2), n2)
 
   } else if (requested == "es") {
