@@ -74,8 +74,17 @@ power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
 
   if (requested == "es") {
 
-    max.thresh <- stats::qf(1 - 1e-10, ncp = null.ncp, df1 = df1, df2 = df2)
-    while (min.pwr(ncp = max.thresh, power = power) > 0) max.thresh <- max.thresh * 1.1
+    max.thresh <- stats::qf(0.999, ncp = null.ncp, df1 = df1, df2 = df2)
+    
+    if(min.pwr(ncp = max.thresh, power = power) > 0) {
+      while (min.pwr(ncp = max.thresh, power = power) > 0) max.thresh <- max.thresh * 1.1 
+      max.thresh <- max.thresh / 1.1
+    }
+     
+    if(min.pwr(ncp = max.thresh, power = power) < 0) {
+      while (min.pwr(ncp = max.thresh, power = power) < 0) max.thresh <- max.thresh * 0.9
+      max.thresh <- max.thresh / 0.9
+    }
 
     ncp <- stats::optimize(f = function(ncp) min.pwr(ncp, power) ^ 2, interval = c(0, max.thresh))$minimum
 
@@ -103,14 +112,15 @@ power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
     .print.pwrss.f(print.obj, verbose = verbose, utf = utf)
 
   } # end of verbose
-
-  invisible(list(power = pwr.obj$power,
-                 ncp = ncp,
-                 null.ncp = null.ncp,
-                 df1 = df1,
-                 df2 = df2,
-                 alpha = alpha,
-                 f.alpha = pwr.obj$f.alpha))
+  
+  invisible(structure(list(power = pwr.obj$power,
+                           ncp = ncp,
+                           null.ncp = null.ncp,
+                           df1 = df1,
+                           df2 = df2,
+                           alpha = alpha,
+                           f.alpha = pwr.obj$f.alpha),
+                      class = c("pwrss", "generic", "f")))
 
 } # end of power.f.test()
 

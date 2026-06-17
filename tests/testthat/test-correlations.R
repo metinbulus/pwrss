@@ -3,95 +3,95 @@ test_that("power.z.twocors.steiger works", {
     crrRes <- power.z.twocors.steiger(rho12 = 0.35, rho13 = 0.45, rho23 = 0.05, power = 0.8, alpha = 0.05,
                                       alternative = "two.sided", common.index = TRUE, verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "twocors", "paired"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "q", "mean", "sd", "null.mean", "null.sd",
+    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "mean", "sd", "null.mean", "null.sd",
                                   "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho12 = 0.35, rho13 = 0.45, rho23 = 0.05, rho14 = NULL, rho24 = NULL, rho34 = NULL, req.sign = "+",
                       n = NULL, power = 0.80, alpha = 0.05, alternative = "two.sided", pooled = TRUE, common.index = TRUE,
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "paired", delta = -0.1, q = -0.119256524, mean = -2.8011469, sd = 0.999426958, null.mean = 0,
+    expect_equal(crrRes[c("test", "design", "delta", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "paired", delta = -0.1, mean = -2.8011469, sd = 0.999426958, null.mean = 0,
                       null.sd = 1, alternative = "two.sided", z.alpha = c(-1.959964, 1.959964), n = 1138, power = 0.80001327))
 
     crrRes <- power.z.twocors.steiger(rho12 = 0.35, rho13 = 0.45, rho23 = 0.05, n = 1000, alpha = 0.05,
                                       alternative = "two.sided", common.index = TRUE, verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "twocors", "paired"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "q", "mean",
+    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "mean",
                                   "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho12 = 0.35, rho13 = 0.45, rho23 = 0.05, rho14 = NULL, rho24 = NULL, rho34 = NULL, req.sign = "+",
                       n = 1000, power = NULL, alpha = 0.05, alternative = "two.sided", pooled = TRUE, common.index = TRUE,
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "paired", delta = -0.1, q = -0.119256524, mean = -2.62533987, sd = 0.999426958, null.mean = 0,
+    expect_equal(crrRes[c("test", "design", "delta", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "paired", delta = -0.1, mean = -2.62533987, sd = 0.999426958, null.mean = 0,
                       null.sd = 1, alternative = "two.sided", z.alpha = c(-1.959964, 1.959964), n = 1000, power = 0.747219145))
 
     crrRes <- power.z.twocors.steiger(rho12 = NULL, rho13 = 0.45, rho23 = 0.05, req.sign = "-", n = 1138, power = 0.8,
                                       alpha = 0.05, alternative = "two.sided", common.index = TRUE, verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "twocors", "paired"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "q", "mean",
+    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "mean",
                                   "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho12 = NULL, rho13 = 0.45, rho23 = 0.05, rho14 = NULL, rho24 = NULL, rho34 = NULL, req.sign = "-",
                       n = 1138, power = 0.80, alpha = 0.05, alternative = "two.sided", pooled = TRUE, common.index = TRUE,
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "paired", delta = -0.099998248, q = -0.11925453, mean = -2.80109957,
+    expect_equal(crrRes[c("test", "design", "delta", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "paired", delta = -0.099998248, mean = -2.80109957,
                       sd = 0.99942698, null.mean = 0, null.sd = 1, alternative = "two.sided",
                       z.alpha = c(-1.959964, 1.959964), n = 1138, power = 0.8))
 
     crrRes <- power.z.twocors.steiger(rho12 = 0.35, rho13 = NULL, rho23 = 0.05, req.sign = "+", n = 1138, power = 0.8,
                                       alpha = 0.05, alternative = "two.sided", common.index = TRUE, verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "twocors", "paired"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "q", "mean",
+    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "mean",
                                   "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho12 = 0.35, rho13 = NULL, rho23 = 0.05, rho14 = NULL, rho24 = NULL, rho34 = NULL, req.sign = "+",
                       n = 1138, power = 0.80, alpha = 0.05, alternative = "two.sided", pooled = TRUE, common.index = TRUE,
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "paired", delta = -0.099998378, q = -0.11925449, mean = -2.80109954,
+    expect_equal(crrRes[c("test", "design", "delta", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "paired", delta = -0.099998378, mean = -2.80109954,
                       sd = 0.999426976, null.mean = 0, null.sd = 1, alternative = "two.sided",
                       z.alpha = c(-1.959964, 1.959964), n = 1138, power = 0.8))
 
     crrRes <- power.z.twocors.steiger(rho12 = 0.45, rho13 = 0.45, rho23 = 0.50, rho14 = 0.50, rho24 = 0.80, rho34 = 0.55,
                                       power = 0.8, alpha = 0.05, alternative = "two.sided", common.index = FALSE, verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "twocors", "paired"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "q", "mean",
+    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "mean",
                                   "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho12 = 0.45, rho13 = 0.45, rho23 = 0.50, rho14 = 0.50, rho24 = 0.80, rho34 = 0.55, req.sign = "+",
                       n = NULL, power = 0.80, alpha = 0.05, alternative = "two.sided", pooled = TRUE, common.index = FALSE,
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "paired", delta = -0.1, q = -0.133681035, mean = -2.80207461, sd = 0.99997767, null.mean = 0,
+    expect_equal(crrRes[c("test", "design", "delta", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "paired", delta = -0.1, mean = -2.80207461, sd = 0.99997767, null.mean = 0,
                       null.sd = 1, alternative = "two.sided", z.alpha = c(-1.959964, 1.959964), n = 643, power = 0.8001432))
 
     crrRes <- power.z.twocors.steiger(rho12 = 0.45, rho13 = 0.45, rho23 = 0.50, rho14 = 0.50, rho24 = 0.80, rho34 = 0.55, n = 643,
                                       alpha = 0.05, alternative = "two.sided", common.index = FALSE, verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "twocors", "paired"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "q", "mean",
+    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "mean",
                                   "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho12 = 0.45, rho13 = 0.45, rho23 = 0.50, rho14 = 0.50, rho24 = 0.80, rho34 = 0.55, req.sign = "+",
                       n = 643, power = NULL,  alpha = 0.05, alternative = "two.sided", pooled = TRUE, common.index = FALSE,
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "paired", delta = -0.1, q = -0.133681035, mean = -2.80207461, sd = 0.99997767, null.mean = 0,
+    expect_equal(crrRes[c("test", "design", "delta", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "paired", delta = -0.1, mean = -2.80207461, sd = 0.99997767, null.mean = 0,
                       null.sd = 1, alternative = "two.sided", z.alpha = c(-1.959964, 1.959964), n = 643, power = 0.8001432))
 
     crrRes <- power.z.twocors.steiger(rho12 = NULL, rho13 = 0.45, rho23 = 0.50, rho14 = 0.50, rho24 = 0.80, rho34 = 0.55,
                                       req.sign = "-", n = 643, power = 0.8, alpha = 0.05, alternative = "two.sided",
                                       common.index = FALSE, verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "twocors", "paired"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "q", "mean",
+    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "mean",
                                   "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho12 = NULL, rho13 = 0.45, rho23 = 0.50, rho14 = 0.50, rho24 = 0.80, rho34 = 0.55, req.sign = "-",
                       n = 643, power = 0.80, alpha = 0.05, alternative = "two.sided", pooled = TRUE, common.index = FALSE,
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "paired", delta = -0.099980748, q = -0.133656894, mean = -2.801562952,
+    expect_equal(crrRes[c("test", "design", "delta", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "paired", delta = -0.099980748, mean = -2.801562952,
                       sd = 0.99997767, null.mean = 0, null.sd = 1, alternative = "two.sided",
                       z.alpha = c(-1.959964, 1.959964), n = 643, power = 0.799999985))
 
@@ -99,82 +99,82 @@ test_that("power.z.twocors.steiger works", {
                                       req.sign = "+", n = 643, power = 0.8, alpha = 0.05, alternative = "two.sided",
                                       common.index = FALSE, verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "twocors", "paired"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "q", "mean",
+    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "mean",
                                   "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho12 = 0.45, rho13 = 0.45, rho23 = 0.50, rho14 = 0.50, rho24 = 0.80, rho34 = NULL, req.sign = "+",
                       n = 643, power = 0.80, alpha = 0.05, alternative = "two.sided", pooled = TRUE, common.index = FALSE,
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "paired", delta = -0.099982812, q = -0.133656392, mean = -2.80156311,
+    expect_equal(crrRes[c("test", "design", "delta", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "paired", delta = -0.099982812, mean = -2.80156311,
                       sd = 0.99997767, null.mean = 0, null.sd = 1, alternative = "two.sided",
                       z.alpha = c(-1.959964, 1.959964), n = 643, power = 0.800000032))
 
     crrRes <- power.z.twocors.steiger(rho12 = 0.45, rho13 = 0.45, rho23 = 0.50, rho14 = 0.50, rho24 = 0.80, rho34 = 0.55, power = 0.8,
                                       alpha = 0.05, alternative = "two.sided", pooled = FALSE, common.index = FALSE, verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "twocors", "paired"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "q", "mean",
+    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "mean",
                                   "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho12 = 0.45, rho13 = 0.45, rho23 = 0.50, rho14 = 0.50, rho24 = 0.80, rho34 = 0.55, req.sign = "+",
                       n = NULL, power = 0.80, alpha = 0.05, alternative = "two.sided", pooled = FALSE, common.index = FALSE,
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "paired", delta = -0.1, q = -0.133681035, mean = -2.81260658, sd = 1.011671015, null.mean = 0,
+    expect_equal(crrRes[c("test", "design", "delta", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "paired", delta = -0.1, mean = -2.81260658, sd = 1.011671015, null.mean = 0,
                       null.sd = 1, alternative = "two.sided", z.alpha = c(-1.959964, 1.959964), n = 633, power = 0.800332771))
 
     crrRes <- power.z.twocors.steiger(rho12 = 0.45, rho13 = 0.45, rho23 = 0.50, rho14 = 0.50, rho24 = 0.80, rho34 = 0.55, n = 633,
                                       alpha = 0.05, alternative = "two.sided", pooled = FALSE, common.index = FALSE, verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "twocors", "paired"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "q", "mean",
+    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "mean",
                                   "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho12 = 0.45, rho13 = 0.45, rho23 = 0.50, rho14 = 0.50, rho24 = 0.80, rho34 = 0.55, req.sign = "+",
                       n = 633, power = NULL, alpha = 0.05, alternative = "two.sided", pooled = FALSE, common.index = FALSE,
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "paired", delta = -0.1, q = -0.133681035, mean = -2.81260658, sd = 1.011671015, null.mean = 0,
+    expect_equal(crrRes[c("test", "design", "delta", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "paired", delta = -0.1, mean = -2.81260658, sd = 1.011671015, null.mean = 0,
                       null.sd = 1, alternative = "two.sided", z.alpha = c(-1.959964, 1.959964), n = 633, power = 0.800332771))
 
     crrRes <- power.z.twocors.steiger(rho12 = 0.35, rho13 = 0.45, rho23 = 0.05, power = 0.8, alpha = 0.05,
                                       alternative = "two.sided", pooled = FALSE, common.index = TRUE, verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "twocors", "paired"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "q", "mean",
+    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "mean",
                                   "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho12 = 0.35, rho13 = 0.45, rho23 = 0.05, rho14 = NULL, rho24 = NULL, rho34 = NULL, req.sign = "+",
                       n = NULL, power = 0.80, alpha = 0.05, alternative = "two.sided", pooled = FALSE, common.index = TRUE,
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "paired", delta = -0.1, q = -0.119256524, mean = -2.80946813, sd = 1.00818629, null.mean = 0,
+    expect_equal(crrRes[c("test", "design", "delta", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "paired", delta = -0.1, mean = -2.80946813, sd = 1.00818629, null.mean = 0,
                       null.sd = 1, alternative = "two.sided", z.alpha = c(-1.959964, 1.959964), n = 1125, power = 0.8002768))
 
 
     crrRes <- power.z.twocors.steiger(rho12 = 0.35, rho13 = 0.45, rho23 = 0.05, n = 1125, alpha = 0.05,
                                       alternative = "two.sided", pooled = FALSE, common.index = TRUE, verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "twocors", "paired"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "q", "mean",
+    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "mean",
                                   "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho12 = 0.35, rho13 = 0.45, rho23 = 0.05, rho14 = NULL, rho24 = NULL, rho34 = NULL, req.sign = "+",
                       n = 1125, power = NULL, alpha = 0.05, alternative = "two.sided", pooled = FALSE, common.index = TRUE,
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "paired", delta = -0.1, q = -0.119256524, mean = -2.80946813, sd = 1.00818629, null.mean = 0,
+    expect_equal(crrRes[c("test", "design", "delta", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "paired", delta = -0.1, mean = -2.80946813, sd = 1.00818629, null.mean = 0,
                       null.sd = 1, alternative = "two.sided", z.alpha = c(-1.959964, 1.959964), n = 1125, power = 0.8002768))
 
     # example 28.3 from the GPower manual (no common index)
     crrRes <- power.z.twocors.steiger(rho12 = 0.1, rho13 = 0.5, rho23 = -0.4, rho14 = 0.4, rho24 = 0.8, rho34 = 0.2, power = 0.8,
                                       alpha = 0.05, alternative = "one.sided", pooled = FALSE, common.index = FALSE, verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "twocors", "paired"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "q", "mean",
+    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "mean",
                                   "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho12 = 0.1, rho13 = 0.5, rho23 = -0.4, rho14 = 0.4, rho24 = 0.8, rho34 = 0.2, req.sign = "+",
                       n = NULL, power = 0.80, alpha = 0.05, alternative = "one.sided", pooled = FALSE, common.index = FALSE,
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "paired", delta = -0.1, q = -0.102397206, mean = -2.48614145, sd = 0.99894152,
+    expect_equal(crrRes[c("test", "design", "delta", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "paired", delta = -0.1, mean = -2.48614145, sd = 0.99894152,
                       null.mean = 0, null.sd = 1, alternative = "one.sided", z.alpha = -1.64485363, n = 886, power = 0.80015619))
     # results are nearly identical: z crit = -1.644854, power ~ 0.8001, n = 886
 
@@ -182,14 +182,14 @@ test_that("power.z.twocors.steiger works", {
     crrRes <- power.z.twocors.steiger(rho12 = 0.1, rho13 = 0, rho23 = 0, rho14 = 0, rho24 = 0, rho34 = 0.2, power = 0.8,
                                       alpha = 0.05, alternative = "one.sided", pooled = FALSE, common.index = FALSE, verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "twocors", "paired"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "q", "mean",
+    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "mean",
                                   "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho12 = 0.1, rho13 = 0, rho23 = 0, rho14 = 0, rho24 = 0, rho34 = 0.2, req.sign = "+", n = NULL,
                       power = 0.80, alpha = 0.05, alternative = "one.sided", pooled = FALSE, common.index = FALSE,
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "paired", delta = -0.1, q = -0.102397206, mean = -2.4872195, sd = 1,
+    expect_equal(crrRes[c("test", "design", "delta", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "paired", delta = -0.1, mean = -2.4872195, sd = 1,
                       null.mean = 0, null.sd = 1, alternative = "one.sided", z.alpha = -1.64485363, n = 1183, power = 0.80020841))
     expect_equal(crrRes[["n"]], power.z.twocors(rho1 = 0.1, rho2 = 0.2, power = 0.8, alternative = "one.sided", verbose = 0)[["n"]][[1]])
     # result is identical: n = 1183, as does the suggestion to use the procedure for independent correlations with a n.ratio of 1
@@ -198,14 +198,14 @@ test_that("power.z.twocors.steiger works", {
     crrRes <- power.z.twocors.steiger(rho12 = 0.4, rho13 = 0.2, rho23 = 0.5, power = 0.8, alpha = 0.05, alternative = "one.sided",
                                       pooled = FALSE, common.index = TRUE, verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "twocors", "paired"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "q", "mean",
+    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "mean",
                                   "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho12 = 0.4, rho13 = 0.2, rho23 = 0.5, rho14 = NULL, rho24 = NULL, rho34 = NULL, req.sign = "+",
                       n = NULL, power = 0.80, alpha = 0.05, alternative = "one.sided", pooled = FALSE, common.index = TRUE,
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "paired", delta = 0.2, q = 0.220916376, mean = 2.4636089, sd = 0.96805217,
+    expect_equal(crrRes[c("test", "design", "delta", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "paired", delta = 0.2, mean = 2.4636089, sd = 0.96805217,
                       null.mean = 0, null.sd = 1, alternative = "one.sided", z.alpha = 1.64485363, n = 144, power = 0.80116113))
     # results are identical: z crit = -1.644854, power ~ 0.801161, n = 144
 
@@ -213,14 +213,14 @@ test_that("power.z.twocors.steiger works", {
     crrRes <- power.z.twocors.steiger(rho12 = 0.4, rho13 = 0.047702, rho23 = -0.6, power = 0.8, alpha = 0.05, alternative = "one.sided",
                                       pooled = FALSE, common.index = TRUE, verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "z", "twocors", "paired"))
-    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "q", "mean",
+    expect_equal(names(crrRes), c("parms", "test", "design", "common", "rho12", "rho13", "rho34", "delta", "mean",
                                   "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power"))
     expect_equal(crrRes[["parms"]],
                  list(rho12 = 0.4, rho13 = 0.047702, rho23 = -0.6, rho14 = NULL, rho24 = NULL, rho34 = NULL, req.sign = "+",
                       n = NULL, power = 0.80, alpha = 0.05, alternative = "one.sided", pooled = FALSE, common.index = TRUE,
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
-    expect_equal(crrRes[c("test", "design", "delta", "q", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
-                 list(test = "z", design = "paired", delta = 0.352298, q = 0.3759107, mean = 2.48403976, sd = 0.997104865,
+    expect_equal(crrRes[c("test", "design", "delta", "mean", "sd", "null.mean", "null.sd", "alternative", "z.alpha", "n", "power")],
+                 list(test = "z", design = "paired", delta = 0.352298, mean = 2.48403976, sd = 0.997104865,
                       null.mean = 0, null.sd = 1, alternative = "one.sided", z.alpha = 1.64485363, n = 144, power = 0.80000042))
     # results are identical: z crit = -1.644854, power ~ 0.80, n = 144
 

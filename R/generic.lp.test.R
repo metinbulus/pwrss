@@ -176,14 +176,40 @@ power.lp.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0
   } # min.pwr() (for uniroot and optimize)
 
   if (requested == "es") {
-
-    val.rng <- get.interval(null.ncp = null.ncp, distribution = "lp", alpha = alpha, req.sign = req.sign, df = df)
-    ncp <- suppressMessages(stats::optimize(f = function(ncp) min.pwr(ncp, df, power) ^ 2, interval = val.rng))$minimum
-
+    
+    if(alternative == "two.one.sided" & req.sign %in% c(0, "0")) {
+      
+      lower.int <- c(min(null.ncp), mean(null.ncp))
+      upper.int <- c(mean(null.ncp), max(null.ncp))
+      ncp.lower <- suppressMessages(stats::optimize(f = function(ncp) min.pwr(ncp, df, power) ^ 2, interval = lower.int))$minimum
+      ncp.upper <- suppressMessages(stats::optimize(f = function(ncp) min.pwr(ncp, df, power) ^ 2, interval = upper.int))$minimum
+      ncp <- mean(c(ncp.lower, ncp.upper))
+      
+      pwr.lower <- pwr(ncp = ncp.lower, null.ncp = null.ncp, df = df, alpha = alpha, alternative = alternative)$power
+      pwr.upper <- pwr(ncp = ncp.upper, null.ncp = null.ncp, df = df, alpha = alpha, alternative = alternative)$power
+      
+      if(round(pwr.lower, 3) >= power & round(pwr.upper, 3) >= power) {
+        
+        warning(paste0("Target NCP ranges from ", round(ncp.lower, 3),
+                       " to ", round(ncp.upper, 3), " within the null bounds."), call. = FALSE)
+        
+      } else {
+        
+        warning("The target power rate cannot be achieved within the null bounds.", call. = FALSE)
+        
+      }
+      
+    } else {
+      
+      val.rng <- get.interval(null.ncp = null.ncp, distribution = "lp", alpha = alpha, req.sign = req.sign, df = df)
+      ncp <- suppressMessages(stats::optimize(f = function(ncp) min.pwr(ncp, df, power) ^ 2, interval = val.rng))$minimum
+      
+    }
+    
   } else if (requested == "n") {
 
     stop("Solving for degrees of freedom is currently not allowed due to numerical instability in PDQutils::AS269 function.", call. = FALSE)
-#    df <- suppressMessages(stats::optimize(f = function(df) min.pwr(ncp, df, power) ^ 2, interval = c(1, 1e10))$minimum)
+    #  df <- suppressMessages(stats::optimize(f = function(df) min.pwr(ncp, df, power) ^ 2, interval = c(1, 1e10))$minimum)
 
   }
 
@@ -208,17 +234,18 @@ power.lp.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0
     .print.pwrss.t(print.obj, verbose = verbose, utf = utf)
 
   } # verbose
-
-  invisible(list(power = pwr.obj$power,
-                 ncp = ncp,
-                 null.ncp = null.ncp,
-                 df = df,
-                 alpha = alpha,
-                 alternative = alternative,
-                 t.alpha = pwr.obj$t.alpha,
-                 beta = 1 - pwr.obj$power,
-                 type.s = pwr.obj$type.s,
-                 type.m = pwr.obj$type.m))
+  
+  invisible(structure(list(power = pwr.obj$power,
+                           ncp = ncp,
+                           null.ncp = null.ncp,
+                           df = df,
+                           alpha = alpha,
+                           alternative = alternative,
+                           t.alpha = pwr.obj$t.alpha,
+                           beta = 1 - pwr.obj$power,
+                           type.s = pwr.obj$type.s,
+                           type.m = pwr.obj$type.m),
+                      class = c("pwrss", "generic", "lp")))
 
 } # end of power.lp.test()
 

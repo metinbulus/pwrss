@@ -1,13 +1,16 @@
 # helper and formatting functions --------------------------------------------------------------------------------------
 .header <- function(requested, ncp = FALSE, utf = FALSE) {
 
-  eff.dsc <- ifelse(ncp, "NCP", "EFFECT")
+  # eff.dsc <- ifelse(ncp, "NCP", "EFFECT")
+  
   if (utf) {
 
     RC <- switch(requested,
                  `n` =        "           \033[34m SAMPLE SIZE CALCULATION \033[0m              ",
                  `power` =    "               \033[34m POWER CALCULATION \033[0m                ",
-                 `es` = paste("     \033[34m MINIMUM DETECTABLE", eff.dsc, "CALCULATION \033[0m      "))
+                 `es` = ifelse(ncp, 
+                               paste("      \033[34m MINIMUM DETECTABLE NCP CALCULATION \033[0m        "),
+                               paste("     \033[34m MINIMUM DETECTABLE EFFECT CALCULATION \033[0m      ")))
 
     paste0(paste0("\u2554", strrep("\u2550", 50), "\u2557", "\n"),
            paste0("\u2551", RC,                   "\u2551", "\n"),
@@ -18,7 +21,9 @@
     RC <- switch(requested,
                  `n` =        "             SAMPLE SIZE CALCULATION              ",
                  `power` =    "                POWER CALCULATION                 ",
-                 `es` = paste("      MINIMUM DETECTABLE", eff.dsc, "CALCULATION       "))
+                 `es` = ifelse(ncp,
+                               paste("       MINIMUM DETECTABLE NCP CALCULATION         "),
+                               paste("      MINIMUM DETECTABLE EFFECT CALCULATION       ")))
 
     paste0(paste0("+", strrep("-", 50), "+", "\n"),
            paste0("|", RC,              "|", "\n"),
