@@ -182,8 +182,8 @@ power.binom.test <- function(power = NULL,
     
     if(alternative == "two.one.sided" & req.sign %in% c(0, "0")) {
       
-      lower.int <- c(min(null.prob), mean(null.prob))
-      upper.int <- c(mean(null.prob), max(null.prob))
+      lower.int <- c(min(null.prob), mean(null.prob)) + c(+1e-7, 0)
+      upper.int <- c(mean(null.prob), max(null.prob)) + c(0, -1e-7)
       prob.lower <- stats::optimize(f = function(prob) min.pwr(prob, size, power) ^ 2, interval = lower.int, tol = 1e-12)$minimum
       prob.upper <- stats::optimize(f = function(prob) min.pwr(prob, size, power) ^ 2, interval = upper.int, tol = 1e-12)$minimum
       prob <- mean(c(prob.lower, prob.upper))
