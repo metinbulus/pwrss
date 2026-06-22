@@ -13,6 +13,7 @@ power.t.regression(
   beta = NULL,
   null.beta = 0,
   margin = 0,
+  req.sign = "+",
   sd.predictor = 1,
   sd.outcome = 1,
   r.squared = NULL,
@@ -40,6 +41,9 @@ default specifications.}
 
 \item{margin}{margin - ignorable \code{beta} - \code{null.beta}
 difference.}
+
+\item{req.sign}{whether estimated beta is smaller or larger than the margin
+(when minimum detectable beta is of interest).}
 
 \item{sd.predictor}{standard deviation of the predictor. For a binary
 predictor, \code{sd.predictor = sqrt(p * (1 - p))} where

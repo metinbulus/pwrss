@@ -12,6 +12,7 @@ power.np.wilcoxon(
   d = NULL,
   null.d = 0,
   margin = 0,
+  req.sign = "+",
   n.ratio = 1,
   n2 = NULL,
   power = NULL,
@@ -31,6 +32,9 @@ power.np.wilcoxon(
 \item{null.d}{Cohen's d or Hedges' g under null, typically 0 (zero).}
 
 \item{margin}{margin - ignorable \code{d} - \code{null.d} difference.}
+
+\item{req.sign}{whether estimated d is smaller or larger than the null.d
+(when minimum detectable d is of interest).}
 
 \item{n.ratio}{\code{n1 / n2} ratio (applies to independent samples
 only)}

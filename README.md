@@ -47,8 +47,7 @@ If you find the package and related material useful please cite as:
 <div style="background-color:rgb(245, 245, 245); padding: 20px 20px 1px; border-radius:5px;">
 
 <p>
-Bulus, M., & Jentschke, S. (2026). pwrss: Statistical Power and Sample
-Size Calculation Tools. R package version 1.2.0.
+Bulus, M., & Jentschke, S. (2026). pwrss: Statistical Power, Sample Size, and Detectable Effect Calculations. R package version 1.2.0. 
 <https://doi.org/10.32614/CRAN.package.pwrss>
 </p>
 

@@ -1,15 +1,14 @@
 Package: pwrss
 Version: 1.2.0
 Type: Package
-Title: Statistical Power and Sample Size Calculation Tools
+Title: Statistical Power, Sample Size, and Detectable Effect Calculations
 Authors@R: c(person(given = "Metin",     family = "Bulus",     email = "bulusmetin@gmail.com",       role = c("aut", "cre", "cph")),
              person(given = "Sebastian", family = "Jentschke", email = "sebastian.jentschke@uib.no", role = c("aut", "cph")))
 Maintainer: Metin Bulus <bulusmetin@gmail.com>
 Description:
-  The 'pwrss' R package provides flexible and comprehensive functions for
-  statistical power and minimum required sample size calculations across a wide
-  range of commonly used hypothesis tests in psychological, biomedical, and
-  social sciences.
+  Flexible and comprehensive functions for statistical power, minimum required 
+  sample size, and minimum detectable effect calculations across a wide range of
+  commonly used hypothesis tests in psychological, biomedical, and social sciences.
 License: GPL (>= 3)
 Language: en-US
 Encoding: UTF-8
