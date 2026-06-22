@@ -220,17 +220,28 @@ check.null <- function(...) {
 
 check.not_null <- function(...) !check.null(...) # check.not_null
 
-check.pos_sign <- function(req.sign, has.zero = FALSE) {
+check.pos_sign <- function(req.sign) {
   if (req.sign %in% c("+", 1, "1", "+1", "positive", "pozitive")) {
     TRUE
   } else if (req.sign %in% c("-", -1, "-1", "negative")) {
     FALSE
-  } else if (has.zero && req.sign %in% c(" ", 0, "0", "")) {
-    NULL
   } else {
-    stop(sprintf("`req.sign` can only be `%s` for this function.", ifelse(has.zero, "+`, `-` and ` ", "+` and `-")), call. = FALSE)
+    stop("`req.sign` can only be `+` and `-` for this function.", call. = FALSE)
   }
 } # check.pos_sign
+
+check.null_sign <- function(req.sign, alternative) {
+  if (req.sign %in% c(" ", 0, "0", "", "null")) {
+    if (alternative != "two.one.sided")
+      stop("`req.sign` can not be `0` for 'one.sided' or 'two.sided' hypothesis tests.", call. = FALSE)
+
+    TRUE
+  } else if (req.sign %in% c("+", 1, "1", "+1", "positive", "pozitive", "-", -1, "-1", "negative")) {
+    FALSE
+  } else {
+    stop("`req.sign` can only be `+`, `-` and ` ` for this function.", call. = FALSE)
+  }
+} # check.null_sign
 
 # helper function(s) ---------------------------------------------------------------------------------------------------
 format_errmsg <- function(names = c(), fnc.name = NULL) {

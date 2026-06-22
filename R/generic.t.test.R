@@ -170,34 +170,26 @@ power.t.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0,
   } # min.pwr() (for uniroot and optimize)
 
   if (requested == "es") {
-    
-    if(alternative == "two.one.sided" & req.sign %in% c(0, "0")) {
-      
+
+    if (check.null_sign(req.sign, alternative)) {
+
       lower.int <- c(min(null.ncp), mean(null.ncp))
       upper.int <- c(mean(null.ncp), max(null.ncp))
-      ncp.lower <- stats::optimize(f = function(ncp) min.pwr(ncp, df, power) ^ 2, interval = lower.int)$minimum
-      ncp.upper <- stats::optimize(f = function(ncp) min.pwr(ncp, df, power) ^ 2, interval = upper.int)$minimum
+      ncp.lower <- stats::optimize(f = function(ncp) min.pwr(ncp, df, power) ^ 2, interval = lower.int, tol = 1e-12)$minimum
+      ncp.upper <- stats::optimize(f = function(ncp) min.pwr(ncp, df, power) ^ 2, interval = upper.int, tol = 1e-12)$minimum
       ncp <- mean(c(ncp.lower, ncp.upper))
-      
-      pwr.lower <- pwr(ncp = ncp.lower, null.ncp = null.ncp, df = df, alpha = alpha, alternative = alternative)$power
-      pwr.upper <- pwr(ncp = ncp.upper, null.ncp = null.ncp, df = df, alpha = alpha, alternative = alternative)$power
-      
-      if(round(pwr.lower, 3) >= power & round(pwr.upper, 3) >= power) {
-        
-        warning(paste0("Target NCP ranges from ", round(ncp.lower, 3),
-                       " to ", round(ncp.upper, 3), " within the null bounds."), call. = FALSE)
-        
-      } else {
-        
-        warning("The target power rate cannot be achieved within the null bounds.", call. = FALSE)
-        
-      }
-      
+
+      warn.txt <- ifelse(max(abs(c(min.pwr(ncp.lower, df, power), min.pwr(ncp.upper, df, power)))) < 1e-6,
+                         sprintf("Target NCP ranges from %.4f to %.4f within the null bounds.", ncp.lower, ncp.upper),
+                         "The target power rate cannot be achieved within the null bounds.")
+      warning(warn.txt, call. = FALSE)
+
     } else {
-      
-      val.rng <- get.interval(null.ncp = null.ncp, distribution = "t", alpha = alpha, req.sign = req.sign, df = df)
-      ncp <- stats::optimize(f = function(ncp) min.pwr(ncp, df, power) ^ 2, interval = val.rng)$minimum
-      
+
+      val.rng <- get.interval(null.ncp = null.ncp, distribution = "t", alpha = alpha, alternative = alternative,
+                              req.sign = req.sign, df = df)
+      ncp <- stats::optimize(f = function(ncp) min.pwr(ncp, df, power) ^ 2, interval = val.rng, tol = 1e-12)$minimum
+
     }
 
   } else if (requested == "n") {
@@ -227,7 +219,7 @@ power.t.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0,
     .print.pwrss.t(print.obj, verbose = verbose, utf = utf)
 
   } # verbose
-  
+
   invisible(structure(list(power = pwr.obj$power,
                            ncp = ncp,
                            null.ncp = null.ncp,

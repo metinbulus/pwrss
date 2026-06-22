@@ -163,38 +163,28 @@ power.z.test <- function(power = NULL, mean = NULL, sd = 1, null.mean = 0, null.
   } # min.pwr() (for uniroot and optimize)
 
   if (requested == "es") {
-    
-    if(alternative != "two.one.sided" & req.sign %in% c(0, "0")) stop("req.sign cannot be 0 for 'one.sided' and 'two.sided' alternative.", call. = FALSE)
-    
-    if(alternative == "two.one.sided" & req.sign %in% c(0, "0")) {
-      
+
+    if (check.null_sign(req.sign, alternative)) {
+
       lower.int <- c(min(null.mean), mean(null.mean))
       upper.int <- c(mean(null.mean), max(null.mean))
-      mean.lower <- stats::optimize(f = function(mean) min.pwr(mean, power) ^ 2, interval = lower.int)$minimum
-      mean.upper <- stats::optimize(f = function(mean) min.pwr(mean, power) ^ 2, interval = upper.int)$minimum
+      mean.lower <- stats::optimize(f = function(mean) min.pwr(mean, power) ^ 2, interval = lower.int, tol = 1e-12)$minimum
+      mean.upper <- stats::optimize(f = function(mean) min.pwr(mean, power) ^ 2, interval = upper.int, tol = 1e-12)$minimum
       mean <- mean(c(mean.lower, mean.upper))
-      
-      pwr.lower <- pwr(mean = mean.lower, sd = sd, null.mean = null.mean, null.sd = null.sd, alpha = alpha, alternative = alternative)$power
-      pwr.upper <- pwr(mean = mean.upper, sd = sd, null.mean = null.mean, null.sd = null.sd, alpha = alpha, alternative = alternative)$power
-      
-      if(round(pwr.lower, 3) >= power & round(pwr.upper, 3) >= power) {
-        
-        warning(paste0("Target NCP ranges from ", round(mean.lower, 3),
-                       " to ", round(mean.upper, 3), " within the null bounds."), call. = FALSE)
-        
-      } else {
-        
-        warning("The target power rate cannot be achieved within the null bounds.", call. = FALSE)
-        
-      }
-        
+
+      warn.txt <- ifelse(max(abs(c(min.pwr(mean.lower, power), min.pwr(mean.upper, power)))) < 1e-6,
+                         sprintf("Target NCP ranges from %.4f to %.4f within the null bounds.", mean.lower, mean.upper),
+                         "The target power rate cannot be achieved within the null bounds.")
+      warning(warn.txt, call. = FALSE)
+
     } else {
-      
-      val.rng <- get.interval(null.ncp = null.mean, distribution = "z", alpha = alpha, req.sign = req.sign, sd = sd)
-      mean <- stats::optimize(f = function(mean) min.pwr(mean, power) ^ 2, interval = val.rng)$minimum
-      
+
+      val.rng <- get.interval(null.ncp = null.mean, distribution = "z", alpha = alpha, alternative = alternative,
+                              req.sign = req.sign, sd = sd)
+      mean <- stats::optimize(f = function(mean) min.pwr(mean, power) ^ 2, interval = val.rng, tol = 1e-12)$minimum
+
     }
-      
+
   }
 
   pwr.obj <- pwr(mean = mean, sd = sd, null.mean = null.mean, null.sd = null.sd, alpha = alpha, alternative = alternative)

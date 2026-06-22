@@ -80,7 +80,7 @@ power.chisq.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df = NULL, 
     max.thresh <- stats::qchisq(1 - 1e-10, ncp = null.ncp, df = df)
     while (min.pwr(max.thresh, df, power) > 0) max.thresh <- max.thresh * 1.10
 
-    ncp <- stats::optimize(f = function(ncp) min.pwr(ncp, df, power) ^ 2, interval = c(0, max.thresh))$minimum
+    ncp <- stats::optimize(f = function(ncp) min.pwr(ncp, df, power) ^ 2, interval = c(0, max.thresh), tol = 1e-12)$minimum
 
   } else if (requested == "n") {
 
@@ -108,9 +108,13 @@ power.chisq.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df = NULL, 
     .print.pwrss.chisq(print.obj, verbose = verbose, utf = utf)
 
   } # end of verbose
-  
-  invisible(structure(list(power = pwr.obj$power, ncp = ncp, null.ncp = null.ncp, df = df,
-                           alpha = alpha, chisq.alpha = pwr.obj$chisq.alpha),
+
+  invisible(structure(list(power = pwr.obj$power,
+                           ncp = ncp,
+                           null.ncp = null.ncp,
+                           df = df,
+                           alpha = alpha,
+                           chisq.alpha = pwr.obj$chisq.alpha),
                       class = c("pwrss", "generic", "chisq")))
 
 } # end of power.chisq.test()

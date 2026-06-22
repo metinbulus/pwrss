@@ -428,7 +428,6 @@ power.z.twocors.steiger <- function(rho12 = NULL, rho13 = NULL, rho23 = NULL,
 
   mean <- ifelse(alternative == "two.sided" && pwr.obj$rho1 - pwr.obj$rho2 < 0, -pwr.obj$mean, pwr.obj$mean)
   delta <- pwr.obj$rho1 - pwr.obj$rho2
-  q <- cors.to.q(pwr.obj$rho1, pwr.obj$rho2, FALSE)$q
   rho2p <- ifelse(common.index, "rho13", "rho34")
 
   if (verbose > 0) {
@@ -465,7 +464,6 @@ power.z.twocors.steiger <- function(rho12 = NULL, rho13 = NULL, rho23 = NULL,
                            rho13 = rho13,
                            rho34 = rho34,
                            delta = delta,
-                           # q = q,  # does not apply to dependent correlations
                            mean = mean,
                            sd = pwr.obj$sd,
                            null.mean = pwr.obj$null.mean,

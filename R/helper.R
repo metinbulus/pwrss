@@ -42,7 +42,8 @@ get.requested <- function(es = NULL, n = NULL, power = NULL) {
 
 } # get.requested
 
-get.interval <- function(null.ncp, distribution = c("z", "t", "lp", "binom"), alpha = 0.05, req.sign = "+", sd = NULL, df = NULL) {
+get.interval <- function(null.ncp, distribution = c("z", "t", "lp", "binom"), alpha = 0.05, alternative = "two.sided",
+                         req.sign = "+", sd = NULL, df = NULL) {
 
     if (distribution == "z") {
 
@@ -65,18 +66,17 @@ get.interval <- function(null.ncp, distribution = c("z", "t", "lp", "binom"), al
 
     } else if (distribution == "binom") {
 
-        min.alt <- 0.0001
-        max.alt <- 0.9999
+        min.alt <- 1e-4
+        max.alt <- 1 - 1e-4
 
     }
 
-    pos.sign <- check.pos_sign(req.sign, TRUE)
-    if (is.null(pos.sign)) {
+    if (check.null_sign(req.sign, alternative)) {
       sort(null.ncp)
-    } else if (pos.sign == FALSE) {
-      c(min.alt, min(null.ncp))
-    } else if (pos.sign == TRUE) {
+    } else if (check.pos_sign(req.sign)) {
       c(max(null.ncp), max.alt)
+    } else { # req.sign neither null nor positive
+      c(min.alt, min(null.ncp))
     }
 
 } # get.interval

@@ -2,13 +2,13 @@
 .header <- function(requested, ncp = FALSE, utf = FALSE) {
 
   # eff.dsc <- ifelse(ncp, "NCP", "EFFECT")
-  
+
   if (utf) {
 
     RC <- switch(requested,
                  `n` =        "           \033[34m SAMPLE SIZE CALCULATION \033[0m              ",
                  `power` =    "               \033[34m POWER CALCULATION \033[0m                ",
-                 `es` = ifelse(ncp, 
+                 `es` = ifelse(ncp,
                                paste("      \033[34m MINIMUM DETECTABLE NCP CALCULATION \033[0m        "),
                                paste("     \033[34m MINIMUM DETECTABLE EFFECT CALCULATION \033[0m      ")))
 
@@ -1028,11 +1028,12 @@
     cat("  Standard Error         : Calculated From ", stderr, "\n\n", sep = "")
   }
 
-  tgt <- ifelse(utf, "P - P\u2080", "prob - null.prob")
+  tgt <- ifelse(utf, "P",       "prob")
+  mrg <- ifelse(utf, "P\u2080", "null.prob")
   if (x$method == "exact") val.alt  <- x$prob      else val.alt  <- x$mean
   if (x$method == "exact") val.null <- x$null.prob else val.null <- x$null.mean
-  h0_text <- .h0_twoone(tgt, "0", utf, alt = x$alternative, val.alt = val.alt, val.null = val.null)
-  h1_text <- .h1_twoone(tgt, "0", utf, alt = x$alternative, val.alt = val.alt, val.null = val.null)
+  h0_text <- .h0_twoone(tgt, mrg, utf, alt = x$alternative, val.alt = x$prob, val.null = x$null.prob)
+  h1_text <- .h1_twoone(tgt, mrg, utf, alt = x$alternative, val.alt = x$prob, val.null = x$null.prob)
   cat(.hypotheses(h0_text, h1_text, utf))
 
   if (verbose == 2) {
