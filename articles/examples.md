@@ -2521,8 +2521,8 @@ power.z.oneprop(prob = 0.80, # probability of success under alternative
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : prob - null.prob >= 0
-#>   H1 (Alternative) : prob - null.prob  < 0
+#>   H0 (Null)        : prob >= null.prob
+#>   H1 (Alternative) : prob  < null.prob
 #> 
 #> ----------------------------------------------------
 #> Results
@@ -2569,8 +2569,8 @@ power.z.oneprop(prob = 0.80, # probability of success under alternative
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : prob - null.prob >= 0
-#>   H1 (Alternative) : prob - null.prob  < 0
+#>   H0 (Null)        : prob >= null.prob
+#>   H1 (Alternative) : prob  < null.prob
 #> 
 #> ----------------------------------------------------
 #> Results
@@ -2610,8 +2610,8 @@ power.z.oneprop(prob = 0.80, # probability of success under alternative
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : prob - null.prob >= 0
-#>   H1 (Alternative) : prob - null.prob  < 0
+#>   H0 (Null)        : prob >= null.prob
+#>   H1 (Alternative) : prob  < null.prob
 #> 
 #> ----------------------------------------------------
 #> Results
@@ -2655,8 +2655,8 @@ power.z.oneprop(prob = 0.80, # probability of success under alternative
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : prob - null.prob >= 0
-#>   H1 (Alternative) : prob - null.prob  < 0
+#>   H0 (Null)        : prob >= null.prob
+#>   H1 (Alternative) : prob  < null.prob
 #> 
 #> ----------------------------------------------------
 #> Results
@@ -2695,8 +2695,8 @@ power.exact.oneprop(prob = 0.002, # probability of success under alternative
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : prob - null.prob <= 0
-#>   H1 (Alternative) : prob - null.prob  > 0
+#>   H0 (Null)        : prob <= null.prob
+#>   H1 (Alternative) : prob  > null.prob
 #> 
 #> ----------------------------------------------------
 #> Results

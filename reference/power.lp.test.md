@@ -256,6 +256,7 @@ power.lp.test(ncp = 0, null.ncp = c(-2, 2), df = 100, alpha = 0.05,
 power.lp.test(power = 0.80, req.sign = "0", null.ncp = c(-2, 2),
               df = 100, alpha = 0.05, alternative = "two.one.sided")
 #> Warning: The target power rate cannot be achieved within the null bounds.
+
 #> +--------------------------------------------------+
 #> |       MINIMUM DETECTABLE NCP CALCULATION         |
 #> +--------------------------------------------------+
@@ -273,7 +274,7 @@ power.lp.test(power = 0.80, req.sign = "0", null.ncp = c(-2, 2),
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Target NCP (lambda)  = 0 (vs. null.lambda = -2 and 2)  <<
+#>   Target NCP (lambda)  = -0.000 (vs. null.lambda = -2 and 2)  <<
 #>   Degrees of Freedom   = 100
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.738

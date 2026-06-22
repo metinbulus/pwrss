@@ -135,10 +135,10 @@ power.f.test(power = 0.80, df1 = 4, df2 = 100, alpha = 0.05)
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Target NCP (lambda)  = 11.829 (vs. null.lambda = 0)  <<
+#>   Target NCP (lambda)  = 12.514 (vs. null.lambda = 0)  <<
 #>   Presumed Sample S.   = 105
 #>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.226
-#>   Statistical Power    = 0.774
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
 #> 
 ```

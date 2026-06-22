@@ -257,6 +257,7 @@ power.z.test(mean = 0, null.mean = c(-2, 2), alpha = 0.05,
 power.z.test(power = 0.80, req.sign = "0", null.mean = c(-2, 2),
              alpha = 0.05, alternative = "two.one.sided")
 #> Warning: The target power rate cannot be achieved within the null bounds.
+
 #> +--------------------------------------------------+
 #> |       MINIMUM DETECTABLE NCP CALCULATION         |
 #> +--------------------------------------------------+
@@ -274,7 +275,7 @@ power.z.test(power = 0.80, req.sign = "0", null.mean = c(-2, 2),
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Target NCP (mean)    = 0 (vs. null.mean = -2 and 2)  <<
+#>   Target NCP (mean)    = -0.000 (vs. null.mean = -2 and 2)  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.722
 #>   Statistical Power    = 0.278
