@@ -393,7 +393,7 @@ pwrss.f.reg <- pwrss.f.regression
 #'             power = 0.80)
 #'
 #' @export power.t.regression
-power.t.regression <- function(beta = NULL, null.beta = 0, margin = 0,
+power.t.regression <- function(beta = NULL, null.beta = 0, margin = 0, req.sign = "+",
                                sd.predictor = 1, sd.outcome = 1,
                                r.squared = NULL,
                                k.total = 1,
@@ -420,20 +420,20 @@ power.t.regression <- function(beta = NULL, null.beta = 0, margin = 0,
     r.squared <- (beta * sd.predictor / sd.outcome) ^ 2
   if (!is.null(r.squared) && !is.null(beta) && r.squared > 0 && r.squared < (beta * sd.predictor / sd.outcome) ^ 2)
     warning("`r.squared` is possibly larger.", call. = FALSE)
-  if (is.null(r.squared) && k.total > 1)
-    warning(paste("When requesting to calculate the effect size, `r.squared` is calculated assuming only one predictor.",
-                  "With several predictors, `beta` should not be calculated using the formula under Details in the help",
-                  "for this function."), call. = FALSE)
+  # if (is.null(r.squared) && k.total > 1)
+  #  warning(paste("When requesting to calculate the effect size, `r.squared` is calculated assuming only one predictor.",
+  #                "With several predictors, `beta` should not be calculated using the formula under Details in the help",
+  #                "for this function."), call. = FALSE)
 
   # NB: Needs more careful consideration, how the different options (beta, k.total) will affect r.squared
-  requested <- get.requested(es = r.squared, n = n, power = power)
+  requested <- get.requested(es = beta, n = n, power = power)
 
   pwr.t.reg <- function(beta, null.beta, margin, sd.outcome, sd.predictor, n, k.total, r.squared, alpha, alternative) {
 
     df <- n - k.total - 1
     lambda <- (beta - null.beta)  / ((sd.outcome / sd.predictor) * sqrt((1 - r.squared) / n))
     null.lambda <- margin / ((sd.outcome / sd.predictor) * sqrt((1 - r.squared) / n))
-
+    
     pwr.obj <- power.t.test(ncp = lambda, null.ncp = null.lambda, df = df, alpha = alpha,
                             alternative = alternative, plot = FALSE, verbose = 0)
 
@@ -441,11 +441,11 @@ power.t.regression <- function(beta = NULL, null.beta = 0, margin = 0,
 
   } # pwr.t.reg()
 
-  min.pwr <- function(r.squared, beta, n, power) {
+  min.pwr.t.reg <- function(beta, n, power) {
 
-    beta2min <- ifelse(!is.null(beta), beta, sqrt(r.squared) * sd.outcome / sd.predictor)
-
-    power - suppressWarnings(pwr.t.reg(beta = beta2min, null.beta = null.beta, margin = margin, sd.outcome = sd.outcome,
+    # beta2min <- ifelse(!is.null(beta), beta, sqrt(r.squared) * sd.outcome / sd.predictor)
+    
+    power - suppressWarnings(pwr.t.reg(beta = beta, null.beta = null.beta, margin = margin, sd.outcome = sd.outcome,
                                        sd.predictor = sd.predictor, n = n, k.total = k.total, r.squared = r.squared,
                                        alpha = alpha, alternative =  alternative))$power
 
@@ -453,7 +453,7 @@ power.t.regression <- function(beta = NULL, null.beta = 0, margin = 0,
 
   if (requested == "n") {
 
-    n <- try(stats::uniroot(function(n) min.pwr(r.squared, beta, n, power),
+    n <- try(stats::uniroot(function(n) min.pwr.t.reg(beta, n, power),
                             interval = c(k.total + 4, 1e10))$root,
              silent = TRUE)
     if (inherits(n, "try-error") || n == 1e10) stop("Design is not feasible.", call. = FALSE)
@@ -461,13 +461,60 @@ power.t.regression <- function(beta = NULL, null.beta = 0, margin = 0,
     if (ceil.n) n <- ceiling(n)
 
   } else if (requested == "es") {
+    
+    if(is.null(r.squared)) {
+      r.squared <- 0
+      warning("Setting r.squared = 0 to calculate the minimum detectable effect.", call. = FALSE)
+    }
+      
+    if(alternative != "two.one.sided" & req.sign %in% c(0, "0")) stop("req.sign cannot be 0 for 'one.sided' and 'two.sided' hypothesis tests.", call. = FALSE)
+    
+    if(alternative == "two.one.sided" & req.sign %in% c(0, "0")) {
+      
+      lower.int <- c(min(margin), mean(margin)) + c(+1e-7, 0)
+      upper.int <- c(mean(margin), max(margin)) + c(0, -1e-7)
+      beta.lower <- suppressWarnings(stats::optimize(f = function(beta) min.pwr.t.reg(beta, n, power) ^ 2, interval = lower.int, tol = 1e-12))$minimum
+      beta.upper <- suppressWarnings(stats::optimize(f = function(beta) min.pwr.t.reg(beta, n, power) ^ 2, interval = upper.int, tol = 1e-12))$minimum
+      
+      beta <- mean(c(beta.lower, beta.upper))
+      
+      pwr.lower <- suppressWarnings(pwr.t.reg(beta = beta.lower, null.beta = null.beta, margin = margin, sd.outcome = sd.outcome,
+                                              sd.predictor = sd.predictor, n = n, k.total = k.total, r.squared = r.squared,
+                                              alpha = alpha, alternative =  alternative))$power
+      pwr.upper <- suppressWarnings(pwr.t.reg(beta = beta.upper, null.beta = null.beta, margin = margin, sd.outcome = sd.outcome,
+                                              sd.predictor = sd.predictor, n = n, k.total = k.total, r.squared = r.squared,
+                                              alpha = alpha, alternative =  alternative))$power
+      
+      if(round(pwr.lower, 3) >= power & round(pwr.upper, 3) >= power) {
+        
+        warning(paste0("Target effect ranges from ", round(beta.lower, 4),
+                       " to ", round(beta.upper, 4), " within the null bounds."), call. = FALSE)
+        
+      } else {
+        
+        warning("The target power rate cannot be achieved within the null bounds.", call. = FALSE)
+        
+      } 
+      
+    } else {
+      
+      if(req.sign %in% c(-1, "-", "negative")) {
+        beta.int <- c(-1e10, min(margin)) + c(+1e-7, -1e-7)
+      } else {
+        beta.int <- c(max(margin), 1e10) + c(+1e-7, -1e-7)
+      }
+      
+      beta <- suppressWarnings(stats::uniroot(f = function(beta) min.pwr.t.reg(beta, n, power), interval = beta.int, tol = 1e-12))$root
+      if (inherits(beta, "try-error")) stop("Design is not feasible.", call. = FALSE)
+      
+    } # two.one.sided?
 
-    r.squared <- try(stats::uniroot(function(r.squared) min.pwr(r.squared, beta, n, power),
-                                    interval = c(1e-8, 1 - 1e-8), tol = 1e-12)$root,
-                     silent = TRUE)
-    if (inherits(r.squared, "try-error")) stop("Design is not feasible.", call. = FALSE)
+    # r.squared <- try(stats::uniroot(function(r.squared) min.pwr(r.squared, beta, n, power),
+    #                                interval = c(1e-8, 1 - 1e-8), tol = 1e-12)$root,
+    #                 silent = TRUE)
+    # if (inherits(r.squared, "try-error")) stop("Design is not feasible.", call. = FALSE)
 
-    beta <- ifelse(!is.null(beta), beta, sqrt(r.squared) * sd.outcome / sd.predictor)
+    # beta <- ifelse(!is.null(beta), beta, sqrt(r.squared) * sd.outcome / sd.predictor)
 
   }
 

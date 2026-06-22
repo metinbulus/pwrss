@@ -34,8 +34,8 @@ plot.pwrss <- function(x, ...) {
 
   } else if (all(c("pwrss", "exact") %in% class(x))) {
 
-    if (any(c("mcnemar", "fisher") %in% class(x)))
-      stop("Plotting is not available for Fisher's or McNemar's exact test.", call. = FALSE)
+    if (any(c("mcnemar", "fisher", "onecor") %in% class(x)))
+      stop("Plotting is not available for exact tests.", call. = FALSE)
 
     # proportions.onetwo (only exact.oneprop)
     power.binom.test(size = ceiling(x$size),

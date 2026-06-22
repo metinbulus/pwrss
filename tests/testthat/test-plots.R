@@ -101,7 +101,7 @@ test_that("plots work", {
     expect_error(plot(pwrss.z.mediation(power = 0.8, a = 0.25, b = 0.25, cp = 0.10, verbose = FALSE)),
                  "Plotting is no longer available for this type of object.")
     expect_error(plot(power.exact.fisher(power = 0.8, prob1 = 0.60, prob2 = 0.40, verbose = 0)),
-                 "Plotting is not available for Fisher's or McNemar's exact test.")
+                 "Plotting is not available for exact tests.")
     expect_error(plot.pwrss(NULL), "Not an object of the type 'pwrss'.")
     expect_error(.plot.binom.t1t2(size = 5, prob = 0.4, alternative = "two.sided"),
                  "Number of trials should be greater than 10 for plotting.")

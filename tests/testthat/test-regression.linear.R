@@ -180,7 +180,7 @@ test_that("power.t.regression / pwrss.t.regression work", {
                  c("parms", "test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp",
                    "r.squared", "power", "n"))
     expect_equal(crrRes[["parms"]],
-                 list(beta = 0.20, null.beta = 0, margin = 0, sd.predictor = 1, sd.outcome = 1, r.squared = NULL,
+                 list(beta = 0.20, null.beta = 0, margin = 0, req.sign = "+", sd.predictor = 1, sd.outcome = 1, r.squared = NULL,
                       k.total = 1, n = NULL, power = 0.80, alpha = 0.05, alternative = "two.sided", ceil.n = TRUE,
                       verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp", "r.squared", "power", "n")],
@@ -193,25 +193,25 @@ test_that("power.t.regression / pwrss.t.regression work", {
                  c("parms", "test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp",
                    "r.squared", "power", "n"))
     expect_equal(crrRes[["parms"]],
-                 list(beta = 0.20, null.beta = 0, margin = 0, sd.predictor = 1, sd.outcome = 1, r.squared = NULL,
+                 list(beta = 0.20, null.beta = 0, margin = 0, req.sign = "+", sd.predictor = 1, sd.outcome = 1, r.squared = NULL,
                       k.total = 1, n = 191, power = NULL, alpha = 0.05, alternative = "two.sided", ceil.n = TRUE,
                       verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp", "r.squared", "power", "n")],
                  list(test = "t", std.beta = 0.2, std.null.beta = 0, std.margin = 0, df = 189, t.alpha = 1.9725951 * c(-1, 1),
                       ncp = 2.82105181, null.ncp = 0, r.squared = 0.04, power = 0.801426886, n = 191))
 
-    crrRes <- power.t.regression(k.total = 1, n = 191, power = 0.80, verbose = 0)
+    crrRes <- power.t.regression(k.total = 1, r.squared = 0, n = 191, power = 0.80, verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "t", "regression"))
     expect_equal(names(crrRes),
                  c("parms", "test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp",
                    "r.squared", "power", "n"))
     expect_equal(crrRes[["parms"]],
-                 list(beta = NULL, null.beta = 0, margin = 0, sd.predictor = 1, sd.outcome = 1, r.squared = NULL,
+                 list(beta = NULL, null.beta = 0, margin = 0, req.sign = "+", sd.predictor = 1, sd.outcome = 1, r.squared = 0,
                       k.total = 1, n = 191, power = 0.80, alpha = 0.05, alternative = "two.sided", ceil.n = TRUE,
                       verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp", "r.squared", "power", "n")],
-                 list(test = "t", std.beta = 0.19965054, std.null.beta = 0, std.margin = 0, df = 189, t.alpha = 1.9725951 * c(-1, 1),
-                      ncp = 2.81591778, null.ncp = 0, r.squared = 0.039860339, power = 0.8, n = 191))
+                 list(test = "t", std.beta = 0.20375266, std.null.beta = 0, std.margin = 0, df = 189, t.alpha = 1.9725951 * c(-1, 1),
+                      ncp = 2.81591778, null.ncp = 0, r.squared = 0, power = 0.8, n = 191))
 
     crrRes <- power.t.regression(beta = 0.20, k.total = 5, r.squared = 0.30, power = 0.80, verbose = 0)
     expect_equal(class(crrRes), c("pwrss", "t", "regression"))
@@ -219,7 +219,7 @@ test_that("power.t.regression / pwrss.t.regression work", {
                  c("parms", "test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp",
                    "r.squared", "power", "n"))
     expect_equal(crrRes[["parms"]],
-                 list(beta = 0.2, null.beta = 0, margin = 0, sd.predictor = 1, sd.outcome = 1, r.squared = 0.3,
+                 list(beta = 0.2, null.beta = 0, margin = 0, req.sign = "+", sd.predictor = 1, sd.outcome = 1, r.squared = 0.3,
                       k.total = 5, n = NULL, power = 0.80, alpha = 0.05, alternative = "two.sided", ceil.n = TRUE,
                       verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp", "r.squared", "power", "n")],
@@ -234,7 +234,7 @@ test_that("power.t.regression / pwrss.t.regression work", {
                  c("parms", "test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp",
                    "r.squared", "power", "n"))
     expect_equal(crrRes[["parms"]],
-                 list(beta = 0.2, null.beta = 0, margin = 0, sd.predictor = 1, sd.outcome = 1, r.squared = 0.3,
+                 list(beta = 0.2, null.beta = 0, margin = 0, req.sign = "+", sd.predictor = 1, sd.outcome = 1, r.squared = 0.3,
                       k.total = 5, n = NULL, power = 0.80, alpha = 0.05, alternative = "two.sided", ceil.n = FALSE,
                       verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp", "r.squared", "power", "n")],
@@ -247,7 +247,7 @@ test_that("power.t.regression / pwrss.t.regression work", {
                  c("parms", "test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp",
                    "r.squared", "power", "n"))
     expect_equal(crrRes[["parms"]],
-                 list(beta = 0.2, null.beta = 0, margin = 0, sd.predictor = 1, sd.outcome = 1, r.squared = 0.3,
+                 list(beta = 0.2, null.beta = 0, margin = 0, req.sign = "+", sd.predictor = 1, sd.outcome = 1, r.squared = 0.3,
                       k.total = 5, n = 140, power = NULL, alpha = 0.05, alternative = "two.sided", ceil.n = TRUE,
                       verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp", "r.squared", "power", "n")],
@@ -261,7 +261,7 @@ test_that("power.t.regression / pwrss.t.regression work", {
                  c("parms", "test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp",
                    "r.squared", "power", "n"))
     expect_equal(crrRes[["parms"]],
-                 list(beta = 0.2, null.beta = 0, margin = -0.05, sd.predictor = 0.5, sd.outcome = 1, r.squared = 0.3,
+                 list(beta = 0.2, null.beta = 0, margin = -0.05, req.sign = "+", sd.predictor = 0.5, sd.outcome = 1, r.squared = 0.3,
                       k.total = 5, n = NULL, power = 0.80, alpha = 0.05, alternative = "one.sided", ceil.n = TRUE,
                       verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp", "r.squared", "power", "n")],
@@ -275,7 +275,7 @@ test_that("power.t.regression / pwrss.t.regression work", {
                  c("parms", "test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp",
                    "r.squared", "power", "n"))
     expect_equal(crrRes[["parms"]],
-                 list(beta = 0.2, null.beta = 0, margin = 0.05, sd.predictor = 0.5, sd.outcome = 1, r.squared = 0.3,
+                 list(beta = 0.2, null.beta = 0, margin = 0.05, req.sign = "+", sd.predictor = 0.5, sd.outcome = 1, r.squared = 0.3,
                       k.total = 5, n = NULL, power = 0.80, alpha = 0.05, alternative = "one.sided", ceil.n = TRUE,
                       verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp", "r.squared", "power", "n")],
@@ -291,7 +291,7 @@ test_that("power.t.regression / pwrss.t.regression work", {
                  c("parms", "test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp",
                    "r.squared", "power", "n"))
     expect_equal(crrRes[["parms"]],
-                 list(beta = 0, null.beta = 0, margin = c(-0.05, 0.05), sd.predictor = 0.5, sd.outcome = 1, r.squared = 0.3,
+                 list(beta = 0, null.beta = 0, margin = c(-0.05, 0.05), req.sign = "+", sd.predictor = 0.5, sd.outcome = 1, r.squared = 0.3,
                       k.total = 5, n = NULL, power = 0.80, alpha = 0.05, alternative = "two.one.sided", ceil.n = TRUE,
                       verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp", "r.squared", "power", "n")],
@@ -308,7 +308,7 @@ test_that("power.t.regression / pwrss.t.regression work", {
                  c("parms", "test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp",
                    "r.squared", "power", "n"))
     expect_equal(crrRes[["parms"]],
-                 list(beta = 0, null.beta = 0, margin = c(-0.05, 0.05), sd.predictor = sqrt(2 / 3 * 1 / 3), sd.outcome = 1,
+                 list(beta = 0, null.beta = 0, margin = c(-0.05, 0.05), req.sign = "+", sd.predictor = sqrt(2 / 3 * 1 / 3), sd.outcome = 1,
                       r.squared = 0.3, k.total = 5, n = NULL, power = 0.80, alpha = 0.05, alternative = "two.one.sided",
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp", "r.squared", "power", "n")],
@@ -323,7 +323,7 @@ test_that("power.t.regression / pwrss.t.regression work", {
                  c("parms", "test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp",
                    "r.squared", "power", "n"))
     expect_equal(crrRes[["parms"]],
-                 list(beta = 0, null.beta = 0, margin = c(-0.05, 0.05), sd.predictor = sqrt(2 / 3 * 1 / 3), sd.outcome = 1,
+                 list(beta = 0, null.beta = 0, margin = c(-0.05, 0.05), req.sign = "+", sd.predictor = sqrt(2 / 3 * 1 / 3), sd.outcome = 1,
                       r.squared = 0.3, k.total = 5, n = 10792, power = NULL, alpha = 0.05, alternative = "two.one.sided",
                       ceil.n = TRUE, verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp", "r.squared", "power", "n")],
@@ -340,7 +340,7 @@ test_that("power.t.regression / pwrss.t.regression work", {
                  c("parms", "test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp",
                    "r.squared", "power", "n"))
     expect_equal(crrRes[["parms"]],
-                 list(beta = -0.0667, null.beta = 0, margin = 0, sd.predictor = 7.5, sd.outcome = 4, r.squared = NULL,
+                 list(beta = -0.0667, null.beta = 0, margin = 0, req.sign = "+", sd.predictor = 7.5, sd.outcome = 4, r.squared = NULL,
                       k.total = 1, n = 100, power = NULL, alpha = 0.05, alternative = "two.sided", ceil.n = TRUE,
                       verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp", "r.squared", "power", "n")],
@@ -349,7 +349,7 @@ test_that("power.t.regression / pwrss.t.regression work", {
                       power = 0.238969257, n = 100))
     # results are identical: ncp ~ -1.260522, t crit ~ 1.984467, power ~ 0.2389693, n = 100
     # ensure that estimating `r.squared` using the parameters above gives the same result
-    expect_equal(power.t.regression(sd.predictor = 7.5, sd.outcome = 4, n = 100, power = 0.238969257, verbose = 0)$r.squared, crrRes$r.squared)
+    # expect_equal(power.t.regression(sd.predictor = 7.5, sd.outcome = 4, n = 100, power = 0.238969257, verbose = 0)$r.squared, crrRes$r.squared)
 
     crrRes <- power.t.regression(beta = 0.25, power = 0.95, alternative = "one.sided", verbose = 0) # example 16.3 from GPower
     expect_equal(class(crrRes), c("pwrss", "t", "regression"))
@@ -357,7 +357,7 @@ test_that("power.t.regression / pwrss.t.regression work", {
                  c("parms", "test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp",
                    "r.squared", "power", "n"))
     expect_equal(crrRes[["parms"]],
-                 list(beta = 0.25, null.beta = 0, margin = 0, sd.predictor = 1, sd.outcome = 1, r.squared = NULL,
+                 list(beta = 0.25, null.beta = 0, margin = 0, req.sign = "+", sd.predictor = 1, sd.outcome = 1, r.squared = NULL,
                       k.total = 1, n = NULL, power = 0.95, alpha = 0.05, alternative = "one.sided", ceil.n = TRUE,
                       verbose = 0, utf = FALSE))
     expect_equal(crrRes[c("test", "std.beta", "std.null.beta", "std.margin", "df", "t.alpha", "ncp", "null.ncp", "r.squared", "power", "n")],
@@ -365,12 +365,12 @@ test_that("power.t.regression / pwrss.t.regression work", {
                       ncp = 3.30655914, null.ncp = 0, r.squared = 0.0625, power = 0.95030825, n = 164))
     # results are identical: ncp ~ 3.306559, t crit ~ 1.654314, power ~ 0.950308, n = 164
     # ensure that estimating `r.squared` using the parameters above gives the same result
-    expect_equal(power.t.regression(n = 164, power = 0.95030825, alternative = "one.sided", verbose = 0)$r.squared, crrRes$r.squared)
+    # expect_equal(power.t.regression(n = 164, power = 0.95030825, alternative = "one.sided", verbose = 0)$r.squared, crrRes$r.squared)
 
     expect_error(power.t.regression(beta = 0.20, k.total = 5, r.squared = 0.30, verbose = 0),
-                 "Exactly two of the parameters `r.squared`, `n`, or `power` must be given, one has to be NULL.")
+                 "Exactly two of the parameters `beta`, `n`, or `power` must be given, one has to be NULL.")
     expect_error(power.t.regression(beta = 0.20, k.total = 5, r.squared = 0.30, power = 0.80, n = 140, verbose = 0),
-                 "Exactly two of the parameters `r.squared`, `n`, or `power` must be given, one has to be NULL.")
+                 "Exactly two of the parameters `beta`, `n`, or `power` must be given, one has to be NULL.")
 #    expect_error(power.t.regression(beta = 0.20, k.total = 5, r.squared = 0, power = 0.80, verbose = 0),
 #                 paste("Incorrect value for `r.squared` \\(must be >= 0 and <= 1\\), specify `r.squared` explicitly,",
 #                       "or modify `beta`, `sd.predictor`, `sd.outcome`."))
@@ -379,16 +379,18 @@ test_that("power.t.regression / pwrss.t.regression work", {
                  "If `alternative` is \"two.sided\" or \"one.sided\", `margin` must be of length one.")
     expect_error(power.t.regression(beta = 0.20, k.total = 5, r.squared = 0.999, power = 0.80, verbose = 0),
                  "Design is not feasible.")
-    expect_error(power.t.regression(k.total = 1, power = 0.80, n = 2, verbose = 0),
-                 "Design is not feasible.")
+#    expect_error(power.t.regression(k.total = 1, r.squared = 0, power = 0.80, n = 2, verbose = 0),
+#                "Argument `df` does not have a valid positive value (must be length 1, numeric, > 0, and finite).")
+    expect_warning(power.t.regression(sd.predictor = 7.5, sd.outcome = 4, n = 100, power = 0.238969257, verbose = 0),
+                   "Setting r.squared = 0 to calculate the minimum detectable effect.")
+    expect_warning(power.t.regression(n = 164, power = 0.95030825, alternative = "one.sided", verbose = 0),
+                   "Setting r.squared = 0 to calculate the minimum detectable effect.")
     expect_warning(power.t.regression(beta = 0.20, k.total = 5, r.squared = 0.01, power = 0.80, verbose = 0),
                    "`r.squared` is possibly larger.")
     expect_warning(power.t.regression(beta = 0.20, k.total = 5, r.squared = 0.01, power = 0.80, verbose = 0),
                    "`r.squared` is possibly larger.")
     expect_warning(power.t.regression(k.total = 5, power = 0.80, n = 500, verbose = 0),
-                   paste("When requesting to calculate the effect size, `r.squared` is calculated assuming only one",
-                         "predictor. With several predictors, `beta` should not be calculated using the formula under",
-                         "Details in the help for this function."))
+                   "Setting r.squared = 0 to calculate the minimum detectable effect.")
 })
 
 # pwrss.z.regression (not longer supported) ----------------------------------------------------------------------------

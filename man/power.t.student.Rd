@@ -12,6 +12,7 @@ power.t.student(
   d = NULL,
   null.d = 0,
   margin = 0,
+  req.sign = "+",
   n2 = NULL,
   n.ratio = 1,
   power = NULL,
@@ -30,6 +31,9 @@ power.t.student(
 \item{null.d}{Cohen's d or Hedges' g under null, typically 0(zero).}
 
 \item{margin}{margin - ignorable \code{d} - \code{null.d} difference.}
+
+\item{req.sign}{whether estimated d - null.d is smaller or larger than the margin
+(when minimum detectable d is of interest).}
 
 \item{n2}{integer; sample size in the second group (or for the
 single group in paired samples or one-sample).}
