@@ -83,6 +83,7 @@ PASS documentation, and tables in Bulus (2021).</p>
 <span>  beta <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  null.beta <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  margin <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  req.sign <span class="op">=</span> <span class="st">"+"</span>,</span>
 <span>  sd.predictor <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  sd.outcome <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  r.squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -119,6 +120,11 @@ default specifications.</p></dd>
 <dt id="arg-margin">margin<a class="anchor" aria-label="anchor" href="#arg-margin"></a></dt>
 <dd><p>margin - ignorable <code>beta</code> - <code>null.beta</code>
 difference.</p></dd>
+
+
+<dt id="arg-req-sign">req.sign<a class="anchor" aria-label="anchor" href="#arg-req-sign"></a></dt>
+<dd><p>whether estimated beta is smaller or larger than the margin
+(when minimum detectable beta is of interest).</p></dd>
 
 
 <dt id="arg-sd-predictor">sd.predictor<a class="anchor" aria-label="anchor" href="#arg-sd-predictor"></a></dt>

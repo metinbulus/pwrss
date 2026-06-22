@@ -35,6 +35,7 @@ power.t.welch(
   d = NULL,
   null.d = 0,
   margin = 0,
+  req.sign = "+",
   var.ratio = 1,
   n.ratio = 1,
   n2 = NULL,
@@ -61,6 +62,11 @@ power.t.welch(
 - margin:
 
   margin - ignorable `d` - `null.d` difference.
+
+- req.sign:
+
+  whether estimated d - null.d is smaller or larger than the margin
+  (when minimum detectable d is of interest).
 
 - var.ratio:
 

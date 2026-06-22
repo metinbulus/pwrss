@@ -71,6 +71,7 @@ However, we adopt the rounding convention used by G</em>Power.</p>
 <span>  d <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  null.d <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  margin <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  req.sign <span class="op">=</span> <span class="st">"+"</span>,</span>
 <span>  n.ratio <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  n2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  power <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -99,6 +100,11 @@ However, we adopt the rounding convention used by G</em>Power.</p>
 
 <dt id="arg-margin">margin<a class="anchor" aria-label="anchor" href="#arg-margin"></a></dt>
 <dd><p>margin - ignorable <code>d</code> - <code>null.d</code> difference.</p></dd>
+
+
+<dt id="arg-req-sign">req.sign<a class="anchor" aria-label="anchor" href="#arg-req-sign"></a></dt>
+<dd><p>whether estimated d is smaller or larger than the null.d
+(when minimum detectable d is of interest).</p></dd>
 
 
 <dt id="arg-n-ratio">n.ratio<a class="anchor" aria-label="anchor" href="#arg-n-ratio"></a></dt>

@@ -34,6 +34,7 @@ power.t.student(
   d = NULL,
   null.d = 0,
   margin = 0,
+  req.sign = "+",
   n2 = NULL,
   n.ratio = 1,
   power = NULL,
@@ -60,6 +61,11 @@ power.t.student(
 - margin:
 
   margin - ignorable `d` - `null.d` difference.
+
+- req.sign:
+
+  whether estimated d - null.d is smaller or larger than the margin
+  (when minimum detectable d is of interest).
 
 - n2:
 

@@ -21,6 +21,7 @@ power.np.wilcoxon(
   d = NULL,
   null.d = 0,
   margin = 0,
+  req.sign = "+",
   n.ratio = 1,
   n2 = NULL,
   power = NULL,
@@ -48,6 +49,11 @@ power.np.wilcoxon(
 - margin:
 
   margin - ignorable `d` - `null.d` difference.
+
+- req.sign:
+
+  whether estimated d is smaller or larger than the null.d (when minimum
+  detectable d is of interest).
 
 - n.ratio:
 
