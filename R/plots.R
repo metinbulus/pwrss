@@ -7,8 +7,8 @@ plot.pwrss <- function(x, ...) {
 
   if ("defunct" %in% class(x))
     stop("Plotting is no longer available for this type of object.", call. = FALSE)
-  
-  if (all(c("pwrss", "generic") %in% class(x))) 
+
+  if (all(c("pwrss", "generic") %in% class(x)))
     stop("Use plot = TRUE argument for generic tests.", call. = FALSE)
 
   if (all(c("pwrss", "t") %in% class(x))) {

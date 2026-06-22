@@ -309,26 +309,20 @@ power.z.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
                       sqrt((null.prob * (1 - null.prob)) / (prob * (1 - prob))), 1)
 
     lambda <- h / sqrt(var.num / n)
-    
-    if(alternative == "two.one.sided") {
+
+    if (alternative == "two.one.sided") {
       mean <- 0
       null.mean <- sort(-lambda)
     } else {
-      mean <- lambda
+      mean <- ifelse(sign(prob - null.prob) == -1 && alternative == "two.sided", -lambda, lambda)
       null.mean <- 0
-      
-      if(sign(prob - null.prob) == -1 & alternative == "two.sided")
-        mean <- -mean
-      
     }
-    
-    
 
     out.pwr <- power.z.test(mean = mean, sd = 1,
                             null.mean = null.mean, null.sd = null.sd,
-                            alpha = alpha, alternative = alternative, 
+                            alpha = alpha, alternative = alternative,
                             plot = FALSE, verbose = 0)
-    
+
     out.pwr
 
   } # pwr()
@@ -429,12 +423,12 @@ power.z.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
     list(n = n.init)
 
   } # ss()
-  
+
   min.pwr <- function(prob = NULL, n = NULL, power = NULL) {
-    
+
     power - pwr(prob = prob, null.prob = null.prob, n = n, std.error = std.error, arcsine = arcsine,
                 correct = correct, alpha = alpha, alternative = alternative)$power
-    
+
   } # min.pwr() (for uniroot and optimize)
 
   if (requested == "n") {
@@ -445,42 +439,26 @@ power.z.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
     if (ceil.n) n <- ceiling(n)
 
   } else if (requested == "es") { # sample size
-    
-    if(alternative != "two.one.sided" & req.sign %in% c(0, "0")) stop("req.sign cannot be 0 for 'one.sided' and 'two.sided' hypothesis tests.", call. = FALSE)
-    
-    if(alternative == "two.one.sided" & req.sign %in% c(0, "0")) {
-      
-      lower.int <- c(min(null.prob), mean(null.prob)) + c(+1e-7, 0)
-      upper.int <- c(mean(null.prob), max(null.prob)) + c(0, -1e-7)
-      # prob.lower <- stats::optimize(f = function(prob) min.pwr(prob, n, power) ^ 2, maximum  = FALSE, interval = lower.int, tol = 1e-12)$minimum
-      # prob.upper <- stats::optimize(f = function(prob) min.pwr(prob, n, power) ^ 2, maximum  = FALSE, interval = upper.int, tol = 1e-12)$minimum
-      prob.lower <- stats::uniroot(f = function(prob) min.pwr(prob, n, power), interval = lower.int, tol = 1e-12)$root
-      prob.upper <- stats::uniroot(f = function(prob) min.pwr(prob, n, power), interval = upper.int, tol = 1e-12)$root
-      
+
+    if (check.null_sign(req.sign, alternative)) {
+
+      int.lower <- c(min(null.prob) + 1e-6, mean(null.prob) - 1e-6)
+      int.upper <- c(mean(null.prob) + 1e-6, max(null.prob) - 1e-6)
+      prob.lower <- stats::optimize(f = function(prob) min.pwr(prob, n, power) ^ 2, interval = int.lower, tol = 1e-12)$minimum
+      prob.upper <- stats::optimize(f = function(prob) min.pwr(prob, n, power) ^ 2, interval = int.upper, tol = 1e-12)$minimum
+
       prob <- mean(c(prob.lower, prob.upper))
-      
-      pwr.lower <- pwr(prob = prob.lower, null.prob = null.prob, n = n, std.error = std.error, arcsine = arcsine,
-                       correct = correct, alpha = alpha, alternative = alternative)$power
-      pwr.upper <- pwr(prob = prob.upper, null.prob = null.prob, n = n, std.error = std.error, arcsine = arcsine,
-                       correct = correct, alpha = alpha, alternative = alternative)$power
-      
-      if(round(pwr.lower, 3) >= power & round(pwr.upper, 3) >= power) {
-        
-        warning(paste0("Target effect ranges from ", round(prob.lower, 4),
-                       " to ", round(prob.upper, 4), " within the null bounds."), call. = FALSE)
-        
-      } else {
-        
-        warning("The target power rate cannot be achieved within the null bounds.", call. = FALSE)
-        
-      } 
-      
+
+      warn.txt <- ifelse(max(abs(c(min.pwr(prob.lower, n, power), min.pwr(prob.upper, n, power)))) < 1e-6,
+                         sprintf("Target effect ranges from %.4f to %.4f within the null bounds.", prob.lower, prob.upper),
+                         "The target power rate cannot be achieved within the null bounds.")
+      warning(warn.txt, call. = FALSE)
+
     } else {
-      
-      val.rng <- get.interval(null.ncp = null.prob, distribution = "binom", req.sign = req.sign) + c(+1e-7, -1e-7)
-      # prob <- stats::optimize(f = function(prob) min.pwr(prob, n, power) ^ 2, interval = val.rng, tol = 1e-12)$minimum
-      prob <- stats::uniroot(f = function(prob) min.pwr(prob, n, power), interval = val.rng, tol = 1e-12)$root
-      
+
+      val.rng <- get.interval(null.ncp = null.prob, distribution = "binom", alternative = alternative, req.sign = req.sign)
+      prob <- stats::optimize(f = function(prob) min.pwr(prob, n, power) ^ 2, interval = val.rng, tol = 1e-12)$minimum
+
     }
 
   } # effect size
@@ -1140,15 +1118,14 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
 
     } else if (requested == "es") {
 
-      pos.sign <- check.pos_sign(req.sign, TRUE)
-      if  (is.null(pos.sign) && is.null(prob1)) {
+      if  (check.null_sign(req.sign, alternative) && is.null(prob1)) {
         val.rng <- c(min(prob2 + margin), max(prob2 + margin))
-      } else if (is.null(pos.sign) && is.null(prob2)) {
+      } else if (check.null_sign(req.sign, alternative) && is.null(prob2)) {
         val.rng <- c(min(prob1 - margin), max(prob1 - margin))
-      } else if (pos.sign == FALSE) {
-        val.rng <- c(0.0001, ifelse(is.null(prob1), min(prob2 + margin), min(prob1 - margin)))
-      } else if (pos.sign == TRUE) {
+      } else if (check.pos_sign(req.sign)) {
         val.rng <- c(ifelse(is.null(prob1), max(prob2 + margin), max(prob1 - margin)), 0.9999)
+      } else { # req.sign neither null nor positive
+        val.rng <- c(0.0001, ifelse(is.null(prob1), min(prob2 + margin), min(prob1 - margin)))
       }
 
       if (is.null(prob1)) {

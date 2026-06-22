@@ -74,19 +74,18 @@ power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
 
   if (requested == "es") {
 
-    max.thresh <- stats::qf(0.999, ncp = null.ncp, df1 = df1, df2 = df2)
-    
-    if(min.pwr(ncp = max.thresh, power = power) > 0) {
-      while (min.pwr(ncp = max.thresh, power = power) > 0) max.thresh <- max.thresh * 1.1 
-      max.thresh <- max.thresh / 1.1
-    }
-     
-    if(min.pwr(ncp = max.thresh, power = power) < 0) {
-      while (min.pwr(ncp = max.thresh, power = power) < 0) max.thresh <- max.thresh * 0.9
-      max.thresh <- max.thresh / 0.9
+    max.thresh <- stats::qf(1 - 1e-12, ncp = null.ncp, df1 = df1, df2 = df2)
+    # adjust max.thresh: if min.pwr < 0, max.thresh is multiplied with 10 / 9, if min.pwr > 0 it is multiplied with 9 / 10
+    for (chk.sign in c(-1, 1)) {
+      if (sign(min.pwr(ncp = max.thresh, power = power)) == chk.sign) {
+        while (sign(min.pwr(ncp = max.thresh, power = power)) == chk.sign) {
+          max.thresh <- max.thresh * ifelse(chk.sign == -1, 9 / 10, 10 / 9)
+        }
+        max.thresh <- max.thresh * ifelse(chk.sign == -1, 10 / 9, 9 / 10)
+      }
     }
 
-    ncp <- stats::optimize(f = function(ncp) min.pwr(ncp, power) ^ 2, interval = c(0, max.thresh))$minimum
+    ncp <- stats::optimize(f = function(ncp) min.pwr(ncp, power) ^ 2, interval = c(0, max.thresh), tol = 1e-12)$minimum
 
   }
 
@@ -112,7 +111,7 @@ power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
     .print.pwrss.f(print.obj, verbose = verbose, utf = utf)
 
   } # end of verbose
-  
+
   invisible(structure(list(power = pwr.obj$power,
                            ncp = ncp,
                            null.ncp = null.ncp,
