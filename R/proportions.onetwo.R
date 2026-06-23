@@ -457,7 +457,8 @@ power.z.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
     } else {
 
       val.rng <- get.interval(null.ncp = null.prob, distribution = "binom", alternative = alternative, req.sign = req.sign)
-      prob <- stats::optimize(f = function(prob) min.pwr(prob, n, power) ^ 2, interval = val.rng, tol = 1e-12)$minimum
+      # prob <- stats::optimize(f = function(prob) min.pwr(prob, n, power) ^ 2, interval = val.rng, tol = 1e-12)$minimum
+      prob <- stats::uniroot(f = function(prob) min.pwr(prob, n, power), interval = val.rng, tol = 1e-12)$root
 
     }
 
