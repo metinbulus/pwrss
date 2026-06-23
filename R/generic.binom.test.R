@@ -194,8 +194,9 @@ power.binom.test <- function(power = NULL,
     } else {
 
       val.rng <- get.interval(null.ncp = null.prob, distribution = "binom", alternative = alternative, req.sign = req.sign)
-      prob <- stats::optimize(f = function(prob) min.pwr(prob, size, power) ^ 2, interval = val.rng, tol = 1e-12)$minimum
-
+      # prob <- stats::optimize(f = function(prob) min.pwr(prob, size, power) ^ 2, interval = val.rng, tol = 1e-12)$minimum
+      prob <- stats::uniroot(f = function(prob) min.pwr(prob, size, power), interval = val.rng, tol = 1e-12)$root
+      
     }
 
   }
