@@ -2,6 +2,8 @@
 
 ## Changes in pwrss v1.2.0
 
+CRAN release: 2026-06-22
+
 - Added unit tests for all procedures
 - Added minimum detectable effects
 - Added exact correlation (one sample)
