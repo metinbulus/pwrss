@@ -59,8 +59,8 @@ power.t.regression(
 
 - req.sign:
 
-  whether estimated beta is smaller or larger than the margin (when
-  minimum detectable beta is of interest).
+  sign of the regression coefficient `beta` (when minimum detectable
+  effect or `beta` is of interest).
 
 - sd.predictor:
 

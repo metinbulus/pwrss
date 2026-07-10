@@ -48,19 +48,7 @@ These generic functions compute and return statistical power with the
 option to generate Type I and Type II error plots when test statistics
 and degrees of freedom are available. Users can input test statistics
 manually, valuable for custom designs outside the {pwrss} package’s
-scope, or extract them from statistical software output. This
-flexibility proves particularly advantageous since test statistics and
-degrees of freedom are typically accessible from programs like jamovi,
-JASP, SAS, SPSS, or Stata.
-
-Power calculations can be performed by entering the test statistic
-through the ncp or mean arguments. Post-hoc power estimates derived this
-way provide a sensitivity analysis, revealing the evidential strength of
-a study’s sample size relative to the observed effect size. This
-approach offers valuable insights for large samples, where effect
-estimates demonstrate greater stability. However, for small samples,
-where effect size estimates exhibit higher variability, post-hoc power
-requires cautious interpretation.
+scope, or extract them from statistical software output.
 
 ## T-Test
 
@@ -107,7 +95,7 @@ summary(model)
 #> F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12
 
 power.t.test(ncp = -3.519, # t-value for hp variable
-             df = 29, # residual degrees of freedom
+             df = 29,      # residual degrees of freedom
              alpha = 0.05, # type 1 error rate
              alternative = "two.sided",
              plot = TRUE)
@@ -142,6 +130,49 @@ power.t.test(ncp = -3.519, # t-value for hp variable
 had a 0.925 chance of detecting the observed relationship between
 horsepower and miles per gallon, if such a relationship exists. The
 analysis was conducted using an $`\alpha`$ level of 0.05.
+
+However, post-hoc power has limited practical value. Given such a sample
+size, minimum detectable test statistics (MDTS) is -2.899. The estimated
+value of -3.519 is much larger than the MDTS in absolute value. The Type
+M error of 1.16 for the MDTS suggests that the estimated effect is
+subject to only modest magnitude inflation and is therefore unlikely to
+be explained primarily by effect-size exaggeration.
+
+``` r
+
+power.t.test(ncp = NULL,     # calculate this
+             req.sign = "-", # direction of the test statistics
+             df = 29,        # residual degrees of freedom
+             alpha = 0.05,   # type 1 error rate
+             power = 0.80,
+             alternative = "two.sided",
+             plot = TRUE)
+```
+
+![](reference/figures/README-unnamed-chunk-8-1.png)
+
+``` R
+#> +--------------------------------------------------+
+#> |       MINIMUM DETECTABLE NCP CALCULATION         |
+#> +--------------------------------------------------+
+#> 
+#> Generic t-Test
+#> 
+#> ----------------------------------------------------
+#> Hypotheses
+#> ----------------------------------------------------
+#>   H0 (Null)        : lambda  = null.lambda
+#>   H1 (Alternative) : lambda != null.lambda
+#> 
+#> ----------------------------------------------------
+#> Results
+#> ----------------------------------------------------
+#>   Target NCP (lambda)  = -2.899 (vs. null.lambda = 0)  <<
+#>   Degrees of Freedom   = 29
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
+```
 
 ### User-Defined Design
 
@@ -194,14 +225,14 @@ detect superiority under these criteria?
 ``` r
 
 # define parameters
-d <- 0.50 # effect size under alternative
-null.d <- 0 # effect size under null
-margin <- 0.10 # smallest meaningful diff between d and null.d
+d <- 0.50           # effect size under alternative
+null.d <- 0         # effect size under null
+margin <- 0.10      # smallest meaningful diff between d and null.d
 
-p <- 0.50 # proportion of subjects in the intervention school
-n <- 120 # total sample size
-g <- 1 # number of covariates
-r.squared <- 0.50 # explanatory power of covariates
+p <- 0.50           # proportion of subjects in the intervention school
+n <- 120            # total sample size
+g <- 1              # number of covariates
+r.squared <- 0.50   # explanatory power of covariates
 rtx.squared <- 0.10 # squared point-biserial cor between trt dummy and outcome
 
 # calculate the standard error
@@ -298,12 +329,12 @@ summary(model)
 #> Number of Fisher Scoring iterations: 4
 
 power.z.test(mean = -3.994, # z-value for wool B
-             alpha = 0.05, # type 1 error rate
+             alpha = 0.05,  # type 1 error rate
              alternative = "two.sided",
              plot = TRUE)
 ```
 
-![](reference/figures/README-unnamed-chunk-9-1.png)
+![](reference/figures/README-unnamed-chunk-10-1.png)
 
 ``` R
 #> +--------------------------------------------------+
@@ -331,6 +362,46 @@ power.z.test(mean = -3.994, # z-value for wool B
 trials had a 0.979 chance of detecting the observed relationship between
 Wool B and number of warp breaks, if such a relationship exists. The
 analysis was conducted using an $`\alpha`$ level of 0.05.
+
+Given such a sample size, minimum detectable test statistics (MDTS) is
+-2.802. The estimated value of -3.994 is much larger than the MDTS in
+absolute value. The Type M error of 1.12 for the MDTS suggests that the
+estimated effect is subject to only modest magnitude inflation and is
+therefore unlikely to be explained primarily by effect-size
+exaggeration.
+
+``` r
+
+power.z.test(mean = NULL,   # calculate this
+             alpha = 0.05,  # type 1 error rate
+             power = 0.80,
+             alternative = "two.sided",
+             plot = TRUE)
+```
+
+![](reference/figures/README-unnamed-chunk-11-1.png)
+
+``` R
+#> +--------------------------------------------------+
+#> |       MINIMUM DETECTABLE NCP CALCULATION         |
+#> +--------------------------------------------------+
+#> 
+#> Generic z-Test
+#> 
+#> ----------------------------------------------------
+#> Hypotheses
+#> ----------------------------------------------------
+#>   H0 (Null)        : mean  = null.mean
+#>   H1 (Alternative) : mean != null.mean
+#> 
+#> ----------------------------------------------------
+#> Results
+#> ----------------------------------------------------
+#>   Target NCP (mean)    = 2.802 (vs. null.mean = 0)  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
+```
 
 ### User Defined Design
 
@@ -365,9 +436,9 @@ What is the power under these criteria?
 ``` r
 
 # define parameters
-rs <- 0.30 # spearman rho rank cor under alternative
+rs <- 0.30   # spearman rho rank cor under alternative
 null.rs <- 0 # spearman rho rank cor under null
-n <- 100 # sample size
+n <- 100     # sample size
 
 # apply Fisher's Z transformation
 z.rs <- cor.to.z(rs)$z
@@ -390,7 +461,7 @@ power.z.test(mean = ncp,
              plot = TRUE)
 ```
 
-![](reference/figures/README-unnamed-chunk-10-1.png)
+![](reference/figures/README-unnamed-chunk-12-1.png)
 
 ``` R
 #> +--------------------------------------------------+
@@ -463,9 +534,9 @@ summary(model)
 #> Multiple R-squared:  0.2697, Adjusted R-squared:  0.2445 
 #> F-statistic: 10.71 on 1 and 29 DF,  p-value: 0.002758
 
-power.f.test(ncp = 10.71, # non-centrality under alternative
-             df1 = 1, # numerator degrees of freedom
-             df2 = 29, # denominator degrees of freedom
+power.f.test(ncp = 10.71,  # non-centrality under alternative
+             df1 = 1,      # numerator degrees of freedom
+             df2 = 29,     # denominator degrees of freedom
              alpha = 0.05, # type 1 error rate
              plot = FALSE)
 #> +--------------------------------------------------+
@@ -494,6 +565,40 @@ power.f.test(ncp = 10.71, # non-centrality under alternative
 had a 0.885 chance of detecting the observed relationship between tree
 height and girth, if such a relationship exists in the population. The
 analysis was conducted using an $`\alpha`$ level of 0.05.
+
+Given such a sample size and research design, minimum detectable test
+statistics (MDTS) is 8.403. The estimated value of 10.71 is much larger
+than the MDTS.
+
+``` r
+
+power.f.test(ncp = NULL,   # calculate this
+             df1 = 1,      # numerator degrees of freedom
+             df2 = 29,     # denominator degrees of freedom
+             power = 0.80,
+             alpha = 0.05, # type 1 error rate
+             plot = FALSE)
+#> +--------------------------------------------------+
+#> |       MINIMUM DETECTABLE NCP CALCULATION         |
+#> +--------------------------------------------------+
+#> 
+#> Generic F-Test
+#> 
+#> ----------------------------------------------------
+#> Hypotheses
+#> ----------------------------------------------------
+#>   H0 (Null)        : lambda = 0
+#>   H1 (Alternative) : lambda > 0
+#> 
+#> ----------------------------------------------------
+#> Results
+#> ----------------------------------------------------
+#>   Target NCP (lambda)  = 8.403 (vs. null.lambda = 0)  <<
+#>   Presumed Sample S.   = 31
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
+```
 
 ## Chi-square Test
 
@@ -533,7 +638,7 @@ chisq.test(table)
 #> X-squared = 138.29, df = 9, p-value < 2.2e-16
 
 power.chisq.test(ncp = 138.29, # X-squared
-                 df = 9, # degrees of freedom
+                 df = 9,       # degrees of freedom
                  alpha = 0.05, # type 1 error rate
                  plot = FALSE)
 #> +--------------------------------------------------+
@@ -563,6 +668,39 @@ individuals had a 1.00 chance of detecting the observed relationship
 between hair and eye color, if such a relationship exists in the
 population. The analysis was conducted using an $`\alpha`$ level of
 0.05.
+
+Given such a sample size and research design, minimum detectable test
+statistics (MDTS) is 15.65. The estimated value of 138.29 is much larger
+than the MDTS.
+
+``` r
+
+power.chisq.test(ncp = NULL,    # calculate this
+                 df = 9,        # degrees of freedom
+                 power = 0.80,
+                 alpha = 0.05,  # type 1 error rate
+                 plot = FALSE)
+#> +--------------------------------------------------+
+#> |       MINIMUM DETECTABLE NCP CALCULATION         |
+#> +--------------------------------------------------+
+#> 
+#> Generic Chi-square Test
+#> 
+#> ----------------------------------------------------
+#> Hypotheses
+#> ----------------------------------------------------
+#>   H0 (Null)        : lambda = null.lambda
+#>   H1 (Alternative) : lambda > null.lambda
+#> 
+#> ----------------------------------------------------
+#> Results
+#> ----------------------------------------------------
+#>   Target NCP (lambda)  = 15.650 (vs. null.lambda = 0)  <<
+#>   Degrees of Freedom   = 9
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
+```
 
 ### Post-Hoc 2
 
@@ -612,7 +750,7 @@ power.chisq.test(ncp = 18.463,
                  plot = TRUE)
 ```
 
-![](reference/figures/README-unnamed-chunk-13-1.png)
+![](reference/figures/README-unnamed-chunk-17-1.png)
 
 ``` R
 #> +--------------------------------------------------+
@@ -643,6 +781,39 @@ of the number of induced abortions to infertility status, while
 controlling for other variables, assuming such a relationship exists in
 the population. The analysis was conducted using an $`\alpha`$ level of
 0.05.
+
+Given such a sample size and research design, minimum detectable test
+statistics (MDTS) is 7.849. The estimated value of 18.463 is much larger
+than the MDTS.
+
+``` r
+
+power.chisq.test(ncp = NULL,    # calculate this
+                 df = 1,        # degrees of freedom
+                 power = 0.80,
+                 alpha = 0.05,  # type 1 error rate
+                 plot = FALSE)
+#> +--------------------------------------------------+
+#> |       MINIMUM DETECTABLE NCP CALCULATION         |
+#> +--------------------------------------------------+
+#> 
+#> Generic Chi-square Test
+#> 
+#> ----------------------------------------------------
+#> Hypotheses
+#> ----------------------------------------------------
+#>   H0 (Null)        : lambda = null.lambda
+#>   H1 (Alternative) : lambda > null.lambda
+#> 
+#> ----------------------------------------------------
+#> Results
+#> ----------------------------------------------------
+#>   Target NCP (lambda)  = 7.849 (vs. null.lambda = 0)  <<
+#>   Degrees of Freedom   = 1
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
+```
 
 ## Binomial Test
 
@@ -680,15 +851,15 @@ binom.test(n.success, n.total, p = 0.50)
 #> probability of success 
 #>              0.6433824
 
-power.binom.test(size = n.total, # number of eruptions
+power.binom.test(size = n.total,             # number of eruptions
                  prob = n.success / n.total, # prob. of occurrence under alt.
-                 null.prob = 0.50, # prob. of occurrence under null
+                 null.prob = 0.50,           # prob. of occurrence under null
                  alpha = 0.05,
                  alternative = "one.sided",
                  plot = TRUE)
 ```
 
-![](reference/figures/README-unnamed-chunk-14-1.png)
+![](reference/figures/README-unnamed-chunk-19-1.png)
 
 ``` R
 #> +--------------------------------------------------+
@@ -725,24 +896,15 @@ one-sided test procedure with $`\alpha`$ = 0.05.
 
 ``` r
 
-# find the approximate solution
-power.z.oneprop(prob = 0.50, # prob. of head under alt.
-                null.prob = c(0.495, 0.505), # equivalence margins
-                power = 0.80,
-                alpha = 0.05, # type 1 error rate
-                alternative = "two.one.sided",
-                verbose = FALSE)$n
-#> [1] 85639
-
-# iterate to find the exact solution
-power.binom.test(size = 85632, # number of tosses needed
-                 prob = 0.50, # prob. of head under alt.
+power.binom.test(size = NULL,                 # number of tosses needed
+                 prob = 0.50,                 # prob. of head under alt.
                  null.prob = c(0.495, 0.505), # equivalence margins
-                 alpha = 0.05, # type 1 error rate
+                 power = 0.80,
+                 alpha = 0.05,                # type 1 error rate
                  alternative = "two.one.sided",
                  plot = FALSE)
 #> +--------------------------------------------------+
-#> |                POWER CALCULATION                 |
+#> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
 #> Generic Binomial Test
@@ -759,13 +921,13 @@ power.binom.test(size = 85632, # number of tosses needed
 #> Results
 #> ----------------------------------------------------
 #>   Target NCP (prob)    = 0.500 (vs. null.prob = 0.495 and 0.505)
-#>   Number of Trials     = 85632
+#>   Number of Trials     = 85826  <<
 #>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.200
-#>   Statistical Power    = 0.800  <<
+#>   Type 2 Error (beta)  = 0.201
+#>   Statistical Power    = 0.799
 ```
 
-**Report 1**: Power analysis indicated that at least 85,632 coin tosses
+**Report 1**: Power analysis indicated that at least 85,826 coin tosses
 are required to determine whether a coin is fair. The analysis assumes a
 fair coin has a 0.50 probability of landing heads, with equivalence
 margins set at 0.495 and 0.505, using a two one-sided test procedure
@@ -778,23 +940,15 @@ To reliably detect a type 1 error rate of 0.05:
 
 ``` r
 
-# find the approximate solution
-power.z.oneprop(prob = 0.05, # prob. of head under alt.
-                null.prob = c(0.045, 0.055), # equivalence margins
-                power = 0.80,
-                alpha = 0.05, # type 1 error rate
-                alternative = "two.one.sided", verbose = FALSE)$n
-#> [1] 16272
-
-# iterate to find the exact solution
-power.binom.test(size = 16424, # number of replications needed
-                 prob = 0.05, # prob. of falsely rejecting null
+power.binom.test(size = NULL,                 # number of replications needed
+                 prob = 0.05,                 # prob. of falsely rejecting null
                  null.prob = c(0.045, 0.055), # equivalence margins
+                 power = 0.80,
                  alpha = 0.05,
                  alternative = "two.one.sided",
                  plot = FALSE)
 #> +--------------------------------------------------+
-#> |                POWER CALCULATION                 |
+#> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
 #> Generic Binomial Test
@@ -811,33 +965,25 @@ power.binom.test(size = 16424, # number of replications needed
 #> Results
 #> ----------------------------------------------------
 #>   Target NCP (prob)    = 0.050 (vs. null.prob = 0.045 and 0.055)
-#>   Number of Trials     = 16424
-#>   Type 1 Error (alpha) = 0.049
+#>   Number of Trials     = 16387  <<
+#>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.198
-#>   Statistical Power    = 0.802  <<
+#>   Statistical Power    = 0.802
 ```
 
 To reliably detect a power rate of 0.80:
 
 ``` r
 
-# find the approximate solution
-power.z.oneprop(prob = 0.80, # prob. of correctly rejecting null
-                null.prob = c(0.795, 0.805), # equivalence margins
-                power = 0.80,
-                alpha = 0.05, # type 1 error rate
-                alternative = "two.one.sided", verbose = FALSE)$n
-#> [1] 54809
-
-# iterate to find the exact solution
-power.binom.test(size = 55011, # number of replications needed
-                 prob = 0.80, # prob. of correctly rejecting null
+power.binom.test(size = NULL,                 # number of replications needed
+                 prob = 0.80,                 # prob. of correctly rejecting null
                  null.prob = c(0.795, 0.805), # equivalence margins
+                 power = 0.80,
                  alpha = 0.05,
                  alternative = "two.one.sided",
                  plot = FALSE)
 #> +--------------------------------------------------+
-#> |                POWER CALCULATION                 |
+#> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
 #> Generic Binomial Test
@@ -854,16 +1000,16 @@ power.binom.test(size = 55011, # number of replications needed
 #> Results
 #> ----------------------------------------------------
 #>   Target NCP (prob)    = 0.800 (vs. null.prob = 0.795 and 0.805)
-#>   Number of Trials     = 55011
+#>   Number of Trials     = 55030  <<
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.199
-#>   Statistical Power    = 0.801  <<
+#>   Statistical Power    = 0.801
 ```
 
-**Report 2**: Power analysis indicated that at least 16,424 replications
+**Report 2**: Power analysis indicated that at least 16,387 replications
 are required to estimate the Type 1 error rate at $`\alpha`$ = 0.05.
 This analysis used a two one-sided test procedure with equivalence
-margins set at 0.045 and 0.055. In contrast, at least 55,011
+margins set at 0.045 and 0.055. In contrast, at least 55,030
 replications are needed to estimate statistical power at 0.80, assuming
 equivalence margins of 0.795 and 0.805, also using the two one-sided
 test procedure with $`\alpha`$ = 0.05.
@@ -874,7 +1020,8 @@ test procedure with $`\alpha`$ = 0.05.
 method) is a wrapper around the generic functions above. It creates a
 visual representation of both null and alternative distributions, with
 shaded areas indicating Type 1 error (false positive) and Type 2 error
-(false negative) regions.
+(false negative) regions. Two-sided tests also report Type S and Type M
+errors.
 
 Assign results of any `pwrss` function to an R object and pass it to the
 [`plot()`](https://rdrr.io/r/graphics/plot.default.html) function.
@@ -885,7 +1032,7 @@ power.t.student(d = 0.20, power = 0.80) |>
   plot()
 ```
 
-![](reference/figures/README-unnamed-chunk-18-1.png)
+![](reference/figures/README-unnamed-chunk-23-1.png)
 
 NOTE: In earlier versions of the {pwrss} package, the
 [`plot()`](https://rdrr.io/r/graphics/plot.default.html) function
@@ -947,7 +1094,7 @@ power.t.student(d = -0.20,
 #>   Statistical Power    = 0.800
 
 # account for attrition
-inflate.sample(n = 310, rate = 0) # control
+inflate.sample(n = 310, rate = 0)    # control
 #> 310
 inflate.sample(n = 310, rate = 0.05) # treatment
 #> 327
@@ -2533,8 +2680,8 @@ power.z.oneprop(prob = 0.80, # probability of success under alternative
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : prob - null.prob >= 0
-#>   H1 (Alternative) : prob - null.prob  < 0
+#>   H0 (Null)        : prob >= null.prob
+#>   H1 (Alternative) : prob  < null.prob
 #> 
 #> ----------------------------------------------------
 #> Results
@@ -2581,8 +2728,8 @@ power.z.oneprop(prob = 0.80, # probability of success under alternative
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : prob - null.prob >= 0
-#>   H1 (Alternative) : prob - null.prob  < 0
+#>   H0 (Null)        : prob >= null.prob
+#>   H1 (Alternative) : prob  < null.prob
 #> 
 #> ----------------------------------------------------
 #> Results
@@ -2622,8 +2769,8 @@ power.z.oneprop(prob = 0.80, # probability of success under alternative
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : prob - null.prob >= 0
-#>   H1 (Alternative) : prob - null.prob  < 0
+#>   H0 (Null)        : prob >= null.prob
+#>   H1 (Alternative) : prob  < null.prob
 #> 
 #> ----------------------------------------------------
 #> Results
@@ -2667,8 +2814,8 @@ power.z.oneprop(prob = 0.80, # probability of success under alternative
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : prob - null.prob >= 0
-#>   H1 (Alternative) : prob - null.prob  < 0
+#>   H0 (Null)        : prob >= null.prob
+#>   H1 (Alternative) : prob  < null.prob
 #> 
 #> ----------------------------------------------------
 #> Results
@@ -2707,8 +2854,8 @@ power.exact.oneprop(prob = 0.002, # probability of success under alternative
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : prob - null.prob <= 0
-#>   H1 (Alternative) : prob - null.prob  > 0
+#>   H0 (Null)        : prob <= null.prob
+#>   H1 (Alternative) : prob  > null.prob
 #> 
 #> ----------------------------------------------------
 #> Results

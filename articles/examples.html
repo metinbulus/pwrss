@@ -60,7 +60,7 @@
                         <h4 data-toc-skip class="author">Metin Bulus
 &amp; Sebastian Jentschke</h4>
             
-            <h4 data-toc-skip class="date">2026-06-23</h4>
+            <h4 data-toc-skip class="date">2026-07-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/metinbulus/pwrss/blob/main/vignettes/examples.Rmd" class="external-link"><code>vignettes/examples.Rmd</code></a></small>
       <div class="d-none name"><code>examples.Rmd</code></div>
@@ -3574,7 +3574,7 @@ acceptably accurate.
 <p>Here is an example that compares the two approaches:</p>
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># z-test approach</span></span>
-<span><span class="fu"><a href="../reference/power.z.twocors.html">power.z.twocors</a></span><span class="op">(</span>rho1 <span class="op">=</span> <span class="fl">0.20</span>, rho2 <span class="op">=</span> <span class="fl">0.10</span>, power <span class="op">=</span> <span class="fl">.80</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/power.z.twocors.html">power.z.twocors</a></span><span class="op">(</span>rho1 <span class="op">=</span> <span class="fl">0.20</span>, rho2 <span class="op">=</span> <span class="fl">0.10</span>, power <span class="op">=</span> <span class="fl">0.80</span><span class="op">)</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
 <span><span class="co">#&gt; |             SAMPLE SIZE CALCULATION              |</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
@@ -3655,7 +3655,7 @@ these criteria?</p>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/power.z.twocors.html">power.z.twocors</a></span><span class="op">(</span>rho1 <span class="op">=</span> <span class="fl">0.10</span>,</span>
 <span>                rho2 <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>                power <span class="op">=</span> <span class="fl">.80</span>,</span>
+<span>                power <span class="op">=</span> <span class="fl">0.80</span>,</span>
 <span>                alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>                alternative <span class="op">=</span> <span class="st">"one.sided"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
@@ -3686,7 +3686,7 @@ these criteria?</p>
 <span></span>
 <span><span class="co"># t-test approximation</span></span>
 <span><span class="fu"><a href="../reference/power.t.student.html">power.t.student</a></span><span class="op">(</span>d <span class="op">=</span> <span class="fl">0.1003353</span>,</span>
-<span>                power <span class="op">=</span> <span class="fl">.80</span>,</span>
+<span>                power <span class="op">=</span> <span class="fl">0.80</span>,</span>
 <span>                alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>                alternative <span class="op">=</span> <span class="st">"one.sided"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
@@ -4251,7 +4251,7 @@ default.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/power.t.regression.html">power.t.regression</a></span><span class="op">(</span>beta <span class="op">=</span> <span class="fl">0.20</span>,</span>
 <span>                   k.total <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>                   r.squared <span class="op">=</span> <span class="fl">0.30</span>,</span>
-<span>                   power <span class="op">=</span> <span class="fl">.80</span>,</span>
+<span>                   power <span class="op">=</span> <span class="fl">0.80</span>,</span>
 <span>                   alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>                   alternative <span class="op">=</span> <span class="st">"two.sided"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
@@ -4290,7 +4290,7 @@ minimum required sample size?</p>
 <span>                   sd.predictor <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>                   k.total <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>                   r.squared <span class="op">=</span> <span class="fl">0.30</span>,</span>
-<span>                   power <span class="op">=</span> <span class="fl">.80</span>,</span>
+<span>                   power <span class="op">=</span> <span class="fl">0.80</span>,</span>
 <span>                   alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>                   alternative <span class="op">=</span> <span class="st">"two.sided"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
@@ -4333,7 +4333,7 @@ proportion of subjects in one of the groups.</p>
 <span>                   sd.predictor <span class="op">=</span> <span class="va">sd.predictor</span>,</span>
 <span>                   k.total <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>                   r.squared <span class="op">=</span> <span class="fl">0.30</span>,</span>
-<span>                   power <span class="op">=</span> <span class="fl">.80</span>,</span>
+<span>                   power <span class="op">=</span> <span class="fl">0.80</span>,</span>
 <span>                   alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>                   alternative <span class="op">=</span> <span class="st">"two.sided"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
@@ -4383,7 +4383,7 @@ POSITIVE values.
 <span>                   sd.predictor <span class="op">=</span> <span class="va">sd.predictor</span>,</span>
 <span>                   k.total <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>                   r.squared <span class="op">=</span> <span class="fl">0.30</span>,</span>
-<span>                   power <span class="op">=</span> <span class="fl">.80</span>,</span>
+<span>                   power <span class="op">=</span> <span class="fl">0.80</span>,</span>
 <span>                   alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>                   alternative <span class="op">=</span> <span class="st">"one.sided"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
@@ -4433,7 +4433,7 @@ values.
 <span>                   sd.predictor <span class="op">=</span> <span class="va">sd.predictor</span>,</span>
 <span>                   k.total <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>                   r.squared <span class="op">=</span> <span class="fl">0.30</span>,</span>
-<span>                   power <span class="op">=</span> <span class="fl">.80</span>,</span>
+<span>                   power <span class="op">=</span> <span class="fl">0.80</span>,</span>
 <span>                   alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>                   alternative <span class="op">=</span> <span class="st">"one.sided"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
@@ -4476,7 +4476,7 @@ sample size?</p>
 <span>                   sd.predictor <span class="op">=</span> <span class="va">sd.predictor</span>,</span>
 <span>                   k.total <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>                   r.squared <span class="op">=</span> <span class="fl">0.30</span>,</span>
-<span>                   power <span class="op">=</span> <span class="fl">.80</span>,</span>
+<span>                   power <span class="op">=</span> <span class="fl">0.80</span>,</span>
 <span>                   alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>                   alternative <span class="op">=</span> <span class="st">"two.one.sided"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
@@ -4519,7 +4519,7 @@ minimum required sample size?</p>
 <span>                   sd.predictor <span class="op">=</span> <span class="va">sd.predictor</span>,</span>
 <span>                   k.total <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>                   r.squared <span class="op">=</span> <span class="fl">0.30</span>,</span>
-<span>                   power <span class="op">=</span> <span class="fl">.80</span>,</span>
+<span>                   power <span class="op">=</span> <span class="fl">0.80</span>,</span>
 <span>                   alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>                   alternative <span class="op">=</span> <span class="st">"two.one.sided"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; +--------------------------------------------------+</span></span>
@@ -6543,7 +6543,7 @@ depression severity and gender? Check the original article at <a href="https://d
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

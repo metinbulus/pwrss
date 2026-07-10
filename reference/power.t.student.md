@@ -56,7 +56,7 @@ power.t.student(
 
 - null.d:
 
-  Cohen's d or Hedges' g under null, typically 0(zero).
+  Cohen's d or Hedges' g under null, typically 0 (zero).
 
 - margin:
 
@@ -64,8 +64,8 @@ power.t.student(
 
 - req.sign:
 
-  whether estimated d - null.d is smaller or larger than the margin
-  (when minimum detectable d is of interest).
+  whether `d` is smaller or larger than `null.d` (when minimum
+  detectable prob is of interest).
 
 - n2:
 

@@ -52,8 +52,8 @@ power.np.wilcoxon(
 
 - req.sign:
 
-  whether estimated d is smaller or larger than the null.d (when minimum
-  detectable d is of interest).
+  whether `d` is smaller or larger than `null.d` (when minimum
+  detectable prob is of interest).
 
 - n.ratio:
 

@@ -70,8 +70,8 @@ power.z.poisson(
 
 - req.sign:
 
-  sign of the beta1 coefficient (when minimum detectable effect or beta1
-  is of interest).
+  sign of the `beta1` coefficient (when minimum detectable effect or
+  `beta1` is of interest).
 
 - n:
 
