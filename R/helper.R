@@ -65,7 +65,7 @@ get.interval <- function(null.ncp, req.sign, distribution = c("z", "t", "lp", "b
     alt.upr <- switch(distribution,
                       "z" = stats::qnorm(1 - 1e-10, mean = stats::qnorm(alpha.upr, mean = max(null.ncp), sd = sd), sd = sd),
                       "t" = suppressWarnings(stats::qt(1 - 1e-10, ncp = stats::qt(alpha.upr, ncp = max(null.ncp), df = df), df = df)),
-                      "lp" = suppressMessages(sadists::qlambdap(1 - 1e-10, t = sadists::qlambdap(alpha.upr, t = max(null.ncp), df = df), df = df)),
+                      "lp" = qlambdap(1 - 1e-10, t = qlambdap(alpha.upr, t = max(null.ncp), df = df), df = df),
                       "binom" = 1 - 1e-4)
     c(max(null.ncp), alt.upr)
 
@@ -75,7 +75,7 @@ get.interval <- function(null.ncp, req.sign, distribution = c("z", "t", "lp", "b
     alt.lwr <- switch(distribution,
                       "z" = stats::qnorm(1e-10, mean = stats::qnorm(alpha.lwr, mean = min(null.ncp), sd = sd), sd = sd),
                       "t" = suppressWarnings(stats::qt(1e-10, ncp = stats::qt(alpha.lwr, ncp = min(null.ncp), df = df), df = df)),
-                      "lp" = suppressMessages(sadists::qlambdap(1e-10, t = sadists::qlambdap(alpha.lwr, t = min(null.ncp), df = df), df = df)),
+                      "lp" = qlambdap(1e-10, t = qlambdap(alpha.lwr, t = min(null.ncp), df = df), df = df),
                       "binom" = 1e-4)
     c(alt.lwr, min(null.ncp))
 

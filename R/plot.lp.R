@@ -16,7 +16,7 @@
   color <- grDevices::adjustcolor(ifelse(type == 1, 2, 4), alpha.f = 1)
 
   # non-central lambda-prime function
-  funlp <- function(x) sadists::dlambdap(x, df = df, t = ncp)
+  funlp <- function(x) dlambdap(x, df = df, t = ncp)
 
   # plot central t distribution
   graphics::plot(funlp, xlim = xlim, ylim = ylim,
@@ -54,7 +54,7 @@
                   `s` = grDevices::adjustcolor(2, alpha.f = 0.6))
 
   x <- seq(min(xlim), max(xlim), by = 0.001)
-  y <- sadists::dlambdap(x, df = df, t = ncp)
+  y <- dlambdap(x, df = df, t = ncp)
   xs <- c(x, rev(x))
   ys <- c(y, rep(0, length(y)))
 
@@ -64,8 +64,8 @@
     graphics::polygon(x = xs, y = ys, col = color, density = 25, angle = 45, border = NA)
   }
 
-  invisible(sadists::plambdap(max(xlim), df = df, t = ncp, lower.tail = TRUE) -
-              sadists::plambdap(min(xlim), df = df, t = ncp, lower.tail = TRUE))
+  invisible(plambdap(max(xlim), df = df, t = ncp, lower.tail = TRUE) -
+            plambdap(min(xlim), df = df, t = ncp, lower.tail = TRUE))
 
 }
 
@@ -87,13 +87,13 @@
     # equivalence test
     if (ncp > min(null.ncp) && ncp < max(null.ncp)) {
 
-      t.alpha.upper <- sadists::qlambdap(alpha, df = df, t = min(null.ncp), lower.tail = FALSE)
-      t.alpha.lower <- sadists::qlambdap(alpha, df = df, t = max(null.ncp), lower.tail = TRUE)
+      t.alpha.upper <- qlambdap(alpha, df = df, t = min(null.ncp), lower.tail = FALSE)
+      t.alpha.lower <- qlambdap(alpha, df = df, t = max(null.ncp), lower.tail = TRUE)
       t.alpha <- c(t.alpha.lower, t.alpha.upper)
 
-      # yt.alpha <- sadists::dlambdap(t.alpha, df = df, t = null.ncp)
-      yt.alpha.upper <- sadists::dlambdap(t.alpha.upper, df = df, t = min(null.ncp))
-      yt.alpha.lower <- sadists::dlambdap(t.alpha.lower, df = df, t = max(null.ncp))
+      # yt.alpha <- dlambdap(t.alpha, df = df, t = null.ncp)
+      yt.alpha.upper <- dlambdap(t.alpha.upper, df = df, t = min(null.ncp))
+      yt.alpha.lower <- dlambdap(t.alpha.lower, df = df, t = max(null.ncp))
       yt.alpha <- c(yt.alpha.lower, yt.alpha.upper)
 
     }
@@ -101,40 +101,40 @@
     # minimum effect test
     if (ncp < min(null.ncp) || ncp > max(null.ncp)) {
 
-      t.alpha.lower <- sadists::qlambdap(alpha / 2, df = df, t = min(null.ncp), lower.tail = TRUE)
-      t.alpha.upper <- sadists::qlambdap(alpha / 2, df = df, t = max(null.ncp), lower.tail = FALSE)
+      t.alpha.lower <- qlambdap(alpha / 2, df = df, t = min(null.ncp), lower.tail = TRUE)
+      t.alpha.upper <- qlambdap(alpha / 2, df = df, t = max(null.ncp), lower.tail = FALSE)
       t.alpha <- c(t.alpha.lower, t.alpha.upper)
 
-      # yt.alpha <- sadists::dlambdap(t.alpha, df = df, t = null.ncp)
-      yt.alpha.lower <- sadists::dlambdap(t.alpha.lower, df = df, t = min(null.ncp))
-      yt.alpha.upper <- sadists::dlambdap(t.alpha.upper, df = df, t = max(null.ncp))
+      # yt.alpha <- dlambdap(t.alpha, df = df, t = null.ncp)
+      yt.alpha.lower <- dlambdap(t.alpha.lower, df = df, t = min(null.ncp))
+      yt.alpha.upper <- dlambdap(t.alpha.upper, df = df, t = max(null.ncp))
       yt.alpha <- c(yt.alpha.lower, yt.alpha.upper)
 
     }
 
   } else if (alternative == "two.sided") {
 
-    t.alpha.upper <- sadists::qlambdap(alpha / 2, df = df, t = null.ncp, lower.tail = FALSE)
-    t.alpha.lower <- sadists::qlambdap(alpha / 2, df = df, t = null.ncp, lower.tail = TRUE)
+    t.alpha.upper <- qlambdap(alpha / 2, df = df, t = null.ncp, lower.tail = FALSE)
+    t.alpha.lower <- qlambdap(alpha / 2, df = df, t = null.ncp, lower.tail = TRUE)
     t.alpha <- c(t.alpha.lower, t.alpha.upper)
 
-    yt.alpha <- sadists::dlambdap(t.alpha, df = df, t = null.ncp)
+    yt.alpha <- dlambdap(t.alpha, df = df, t = null.ncp)
 
   } else if (alternative == "one.sided") {
 
-    t.alpha <- sadists::qlambdap(alpha, df = df, t = null.ncp, lower.tail = ncp < null.ncp)
-    yt.alpha <- sadists::dlambdap(t.alpha, df = df, t = null.ncp)
+    t.alpha <- qlambdap(alpha, df = df, t = null.ncp, lower.tail = ncp < null.ncp)
+    yt.alpha <- dlambdap(t.alpha, df = df, t = null.ncp)
 
   } # alternative
 
   # x-axis limits
   prob.extreme <- ifelse(df < 20, 0.001, 0.0001)
-  lower <- min(min(sadists::qlambdap(prob.extreme, df = df, t = ncp, lower.tail = TRUE)),
-               sadists::qlambdap(prob.extreme, df = df, t = min(null.ncp), lower.tail = TRUE),
-               sadists::qlambdap(prob.extreme, df = df, t = max(null.ncp), lower.tail = TRUE))
-  upper <- max(max(sadists::qlambdap(1 - prob.extreme, df = df, t = ncp, lower.tail = TRUE)),
-               sadists::qlambdap(1 - prob.extreme, df = df, t = min(null.ncp), lower.tail = TRUE),
-               sadists::qlambdap(1 - prob.extreme, df = df, t = max(null.ncp), lower.tail = TRUE))
+  lower <- min(qlambdap(prob.extreme, df = df, t = ncp,           lower.tail = TRUE),
+               qlambdap(prob.extreme, df = df, t = min(null.ncp), lower.tail = TRUE),
+               qlambdap(prob.extreme, df = df, t = max(null.ncp), lower.tail = TRUE))
+  upper <- max(qlambdap(1 - prob.extreme, df = df, t = ncp,           lower.tail = TRUE),
+               qlambdap(1 - prob.extreme, df = df, t = min(null.ncp), lower.tail = TRUE),
+               qlambdap(1 - prob.extreme, df = df, t = max(null.ncp), lower.tail = TRUE))
   xlim <- c(lower, upper)
 
   plot.window.dim <- grDevices::dev.size("cm")
@@ -144,22 +144,21 @@
 
   # plots
   if (alternative == "two.one.sided") {
-
     .plot.lp.dist(ncp = null.ncp[1], df = df, xlim = xlim, type = 1, ticks = TRUE)
     graphics::par(new = TRUE)
     .plot.lp.dist(ncp = null.ncp[2], df = df, xlim = xlim, type = 1, ticks = FALSE)
     graphics::par(new = TRUE)
     .plot.lp.dist(ncp = ncp, df = df, xlim = xlim, type = 2, ticks = FALSE)
 
-    graphics::text(ncp, sadists::dlambdap(ncp, df = df, t = ncp) + 0.05,
+    graphics::text(ncp, dlambdap(ncp, df = df, t = ncp) + 0.05,
                    labels = expression(H[1]),
                    cex = cex.legend, col = grDevices::adjustcolor(4, alpha.f = 1))
 
-    graphics::text(null.ncp[1], sadists::dlambdap(null.ncp[1], df = df, t = null.ncp[1]) + 0.05,
+    graphics::text(null.ncp[1], dlambdap(null.ncp[1], df = df, t = null.ncp[1]) + 0.05,
                    labels = expression(H[0]),
                    cex = cex.legend, col = grDevices::adjustcolor(2, alpha.f = 1))
 
-    graphics::text(null.ncp[2], sadists::dlambdap(null.ncp[2], df = df, t = null.ncp[2]) + 0.05,
+    graphics::text(null.ncp[2], dlambdap(null.ncp[2], df = df, t = null.ncp[2]) + 0.05,
                    labels = expression(H[0]),
                    cex = cex.legend, col = grDevices::adjustcolor(2, alpha.f = 1))
 
@@ -169,11 +168,11 @@
     graphics::par(new = TRUE)
     .plot.lp.dist(ncp = null.ncp, df = df, xlim = xlim, type = 1, ticks = FALSE)
 
-    graphics::text(ncp, sadists::dlambdap(ncp, df = df, t = ncp) + 0.05,
+    graphics::text(ncp, dlambdap(ncp, df = df, t = ncp) + 0.05,
                    labels = expression(H[1]),
                    cex = cex.legend, col = grDevices::adjustcolor(4, alpha.f = 1))
 
-    graphics::text(null.ncp, sadists::dlambdap(null.ncp, df = df, t = null.ncp) + 0.05,
+    graphics::text(null.ncp, dlambdap(null.ncp, df = df, t = null.ncp) + 0.05,
                    labels = expression(H[0]),
                    cex = cex.legend, col = grDevices::adjustcolor(2, alpha.f = 1))
 
@@ -241,8 +240,8 @@
 
     # type M
     type.m <- suppressWarnings({
-      bounds <- sadists::qlambdap(c(1e-10, 1 - 1e-10), df = df, t = ncp)
-      integrand <- function(t) abs(t) * sadists::dlambdap(t, df = df, t = ncp)
+      bounds <- qlambdap(c(1e-10, 1 - 1e-10), df = df, t = ncp)
+      integrand <- function(t) abs(t) * dlambdap(t, df = df, t = ncp)
       numerator <- stats::integrate(integrand, min(bounds), min(t.alpha))$value +
                    stats::integrate(integrand, max(t.alpha), max(bounds))$value
       denominator  <- abs(ncp) * (stats::pt(min(t.alpha), df = df, ncp = ncp, lower.tail = TRUE) +

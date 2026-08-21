@@ -109,40 +109,40 @@ power.lp.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0
 
     if (alternative == "two.sided") {
 
-      t.alpha <- c(sadists::qlambdap(p = alpha / 2, df = df, t = 0, lower.tail = TRUE),
-                   sadists::qlambdap(p = alpha / 2, df = df, t = 0, lower.tail = FALSE))
-      power <- 1 - sadists::plambdap(q = t.alpha[2], df = df, t = abs(ncp)) +
-                   sadists::plambdap(q = t.alpha[1], df = df, t = abs(ncp))
+      t.alpha <- c(qlambdap(p = alpha / 2, df = df, t = 0, lower.tail = TRUE),
+                   qlambdap(p = alpha / 2, df = df, t = 0, lower.tail = FALSE))
+      power <- 1 - plambdap(q = t.alpha[2], df = df, t = abs(ncp)) +
+                   plambdap(q = t.alpha[1], df = df, t = abs(ncp))
 
       Phi.p <- stats::pt(q = max(t.alpha), df = df, ncp = ncp)
       Phi.m <- stats::pt(q = min(t.alpha), df = df, ncp = ncp)
       type.s <- min(Phi.m, 1 - Phi.p) / (Phi.m + 1 - Phi.p)
 
       type.m <- suppressMessages({
-        bounds <- sadists::qlambdap(c(1e-10, 1 - 1e-10), df = df, t = ncp)
-        integrand <- function(t) abs(t) * sadists::dlambdap(t, df = df, t = ncp)
+        bounds <- qlambdap(c(1e-10, 1 - 1e-10), df = df, t = ncp)
+        integrand <- function(t) abs(t) * dlambdap(t, df = df, t = ncp)
         numerator <- stats::integrate(integrand, min(bounds), min(t.alpha))$value +
                      stats::integrate(integrand, max(t.alpha), max(bounds))$value
-        denominator  <- abs(ncp) * (sadists::plambdap(min(t.alpha), df = df, t = ncp) +
-                                    sadists::plambdap(max(t.alpha), df = df, t = ncp, lower.tail = FALSE))
+        denominator  <- abs(ncp) * (plambdap(min(t.alpha), df = df, t = ncp) +
+                                    plambdap(max(t.alpha), df = df, t = ncp, lower.tail = FALSE))
         numerator / denominator
       })
 
     } else if (alternative == "one.sided") {
 
       lower.tail <- ncp < null.ncp
-      t.alpha <- sadists::qlambdap(p = alpha,   df = df, t = null.ncp, lower.tail = lower.tail)
-      power   <- sadists::plambdap(q = t.alpha, df = df, t = ncp,      lower.tail = lower.tail)
+      t.alpha <- qlambdap(p = alpha,   df = df, t = null.ncp, lower.tail = lower.tail)
+      power   <- plambdap(q = t.alpha, df = df, t = ncp,      lower.tail = lower.tail)
 
       type.s <- 0
       type.m <- NA
 
     } else if (alternative == "two.one.sided" && (ncp > min(null.ncp) && ncp < max(null.ncp))) {  # equivalence test
 
-      t.alpha.left  <- sadists::qlambdap(p = alpha,     df = df, t = min(null.ncp), lower.tail = FALSE)
-      t.alpha.right <- sadists::qlambdap(p = 1 - alpha, df = df, t = max(null.ncp), lower.tail = FALSE)
-      power <- sadists::plambdap(q = t.alpha.right, df = df, t = ncp) -
-               sadists::plambdap(q = t.alpha.left,  df = df, t = ncp)
+      t.alpha.left  <- qlambdap(p = alpha,     df = df, t = min(null.ncp), lower.tail = FALSE)
+      t.alpha.right <- qlambdap(p = 1 - alpha, df = df, t = max(null.ncp), lower.tail = FALSE)
+      power <- plambdap(q = t.alpha.right, df = df, t = ncp) -
+               plambdap(q = t.alpha.left,  df = df, t = ncp)
 
       t.alpha <- c(t.alpha.left,  t.alpha.right)
 
@@ -151,10 +151,10 @@ power.lp.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0
 
     } else if (alternative == "two.one.sided" && (ncp < min(null.ncp) || ncp > max(null.ncp))) {  # minimum effect test
 
-      t.alpha.right <- sadists::qlambdap(p = alpha / 2, df = df, t = max(null.ncp), lower.tail = FALSE)
-      t.alpha.left  <- sadists::qlambdap(p = alpha / 2, df = df, t = min(null.ncp), lower.tail = TRUE)
-      power <- sadists::plambdap(q = t.alpha.right, df = df, t = ncp, lower.tail = FALSE) +
-               sadists::plambdap(q = t.alpha.left,  df = df, t = ncp, lower.tail = TRUE)
+      t.alpha.right <- qlambdap(p = alpha / 2, df = df, t = max(null.ncp), lower.tail = FALSE)
+      t.alpha.left  <- qlambdap(p = alpha / 2, df = df, t = min(null.ncp), lower.tail = TRUE)
+      power <- plambdap(q = t.alpha.right, df = df, t = ncp, lower.tail = FALSE) +
+               plambdap(q = t.alpha.left,  df = df, t = ncp, lower.tail = TRUE)
 
       t.alpha <- c(t.alpha.left,  t.alpha.right)
 

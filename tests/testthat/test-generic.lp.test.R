@@ -3,7 +3,7 @@ test_that("generic.lp.test.R works", {
     expect_equal(power.lp.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "two.sided", plot = FALSE, verbose = 0),
                  structure(list(power = 0.49812069, ncp = 1.96, null.ncp = 0, df = 100, alpha = 0.05,
                                 alternative = "two.sided", t.alpha = 1.959964 * c(-1, 1), beta = 0.50187931,
-                                type.s = 0.000104670166, type.m = 1.410027),
+                                type.s = 0.000104670166, type.m = 1.410026951),
                            class = c("pwrss", "generic", "lp")))
     expect_equal(power.lp.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "one.sided", plot = FALSE, verbose = 0),
                  structure(list(power = 0.62069048, ncp = 1.96, null.ncp = 0, df = 100, alpha = 0.05,
@@ -25,7 +25,7 @@ test_that("generic.lp.test.R works", {
     expect_equal(power.lp.test(power = 0.80, df = 100, alpha = 0.05, alternative = "two.sided", plot = FALSE, verbose = 0),
                  structure(list(power = 0.8, ncp = 2.82524975, null.ncp = 0, df = 100, alpha = 0.05,
                                 alternative = "two.sided", t.alpha = 1.959964 * c(-1, 1), beta = 0.2,
-                                type.s = 0.00000135394609, type.m = 1.123801333),
+                                type.s = 0.00000135394609, type.m = 1.12380131),
                            class = c("pwrss", "generic", "lp")))
     expect_equal(power.lp.test(power = 0.80, df = 100, alpha = 0.05, alternative = "one.sided", plot = FALSE, verbose = 0),
                  structure(list(power = 0.8, ncp = 2.505827, null.ncp = 0, df = 100, alpha = 0.05,
