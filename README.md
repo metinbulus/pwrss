@@ -3617,7 +3617,7 @@ Here is an example that compares the two approaches:
 
 ``` r
 # z-test approach
-power.z.twocors(rho1 = 0.20, rho2 = 0.10, power = .80)
+power.z.twocors(rho1 = 0.20, rho2 = 0.10, power = 0.80)
 #> +--------------------------------------------------+
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
@@ -3703,7 +3703,7 @@ required sample size under these criteria?
 ``` r
 power.z.twocors(rho1 = 0.10,
                 rho2 = 0,
-                power = .80,
+                power = 0.80,
                 alpha = 0.05,
                 alternative = "one.sided")
 #> +--------------------------------------------------+
@@ -3734,7 +3734,7 @@ cors.to.q(rho1 = 0.10, rho2 = 0)
 
 # t-test approximation
 power.t.student(d = 0.1003353,
-                power = .80,
+                power = 0.80,
                 alpha = 0.05,
                 alternative = "one.sided")
 #> +--------------------------------------------------+
@@ -4213,7 +4213,7 @@ by default.
 power.t.regression(beta = 0.20,
                    k.total = 3,
                    r.squared = 0.30,
-                   power = .80,
+                   power = 0.80,
                    alpha = 0.05,
                    alternative = "two.sided")
 #> +--------------------------------------------------+
@@ -4252,7 +4252,7 @@ power.t.regression(beta = 0.60,
                    sd.predictor = 4,
                    k.total = 3,
                    r.squared = 0.30,
-                   power = .80,
+                   power = 0.80,
                    alpha = 0.05,
                    alternative = "two.sided")
 #> +--------------------------------------------------+
@@ -4294,7 +4294,7 @@ power.t.regression(beta = 0.20,
                    sd.predictor = sd.predictor,
                    k.total = 3,
                    r.squared = 0.30,
-                   power = .80,
+                   power = 0.80,
                    alpha = 0.05,
                    alternative = "two.sided")
 #> +--------------------------------------------------+
@@ -4347,7 +4347,7 @@ power.t.regression(beta = 0.20,
                    sd.predictor = sd.predictor,
                    k.total = 3,
                    r.squared = 0.30,
-                   power = .80,
+                   power = 0.80,
                    alpha = 0.05,
                    alternative = "one.sided")
 #> +--------------------------------------------------+
@@ -4400,7 +4400,7 @@ power.t.regression(beta = 0.20,
                    sd.predictor = sd.predictor,
                    k.total = 3,
                    r.squared = 0.30,
-                   power = .80,
+                   power = 0.80,
                    alpha = 0.05,
                    alternative = "one.sided")
 #> +--------------------------------------------------+
@@ -4443,7 +4443,7 @@ power.t.regression(beta = 0.20,
                    sd.predictor = sd.predictor,
                    k.total = 3,
                    r.squared = 0.30,
-                   power = .80,
+                   power = 0.80,
                    alpha = 0.05,
                    alternative = "two.one.sided")
 #> +--------------------------------------------------+
@@ -4486,7 +4486,7 @@ power.t.regression(beta = 0.20,
                    sd.predictor = sd.predictor,
                    k.total = 3,
                    r.squared = 0.30,
-                   power = .80,
+                   power = 0.80,
                    alpha = 0.05,
                    alternative = "two.one.sided")
 #> +--------------------------------------------------+

@@ -7,3 +7,4 @@ repo:
   branch: main
 template:
   bootstrap: 5
+  math-rendering: katex
