@@ -307,7 +307,8 @@ pwrss.f.rmanova <- function(eta2 = NULL, f2 = NULL,
 } # pwrss.f.rmanova()
 
 fmt_test_anovamxd <- function(n.levels.between, n.levels.within) {
-  paste0(ifelse(n.levels.within > 1, ifelse(n.levels.between > 1, "Mixed-Effects ", "Repeated Measures "), ""),
+  paste0(rep("Mixed-Effects ",     n.levels.between >  1 && n.levels.within > 1),
+         rep("Repeated Measures ", n.levels.between == 1 && n.levels.within > 1),
          "Analysis of Variance (F-Test)")
 }
 
