@@ -1,5 +1,5 @@
 Package: pwrss
-Version: 1.2.0
+Version: 1.3.0
 Type: Package
 Title: Statistical Power, Sample Size, and Detectable Effect Calculations
 Authors@R: c(person(given = "Metin",     family = "Bulus",     email = "bulusmetin@gmail.com",       role = c("aut", "cre", "cph")),

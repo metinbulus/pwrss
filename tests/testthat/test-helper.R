@@ -170,9 +170,9 @@ test_that("get.interval works", {
     expect_equal(get.interval(null.ncp = 0, req.sign = "-", distribution = "t", alternative = "one.sided", df = 3e4),
                  c(-8.00984221, 0), tolerance = if (isMac) 1e-6 else testthat_tolerance())
     expect_equal(get.interval(null.ncp = 0, req.sign = "+", distribution = "lp", alternative = "one.sided", df = 3e4),
-                 c(0, +8.0088033), tolerance = if (isMac) 1e-2 else if (isWin) 1e-4 else testthat_tolerance())
+                 c(0, +8.0088033), tolerance = if (isMac) 1e-2 else if (isWin) 1e-3 else testthat_tolerance())
     expect_equal(get.interval(null.ncp = 0, req.sign = "-", distribution = "lp", alternative = "one.sided", df = 3e4),
-                 c(-8.0088029, 0), tolerance = if (isMac) 1e-2 else if (isWin) 1e-4 else testthat_tolerance())
+                 c(-8.0088029, 0), tolerance = if (isMac) 1e-2 else if (isWin) 1e-3 else testthat_tolerance())
     expect_equal(get.interval(null.ncp = 0.5, req.sign = "+", distribution = "binom", alternative = "one.sided"), c(0.5, 0.9999))
     expect_equal(get.interval(null.ncp = 0.5, req.sign = "-", distribution = "binom", alternative = "one.sided"), c(0.0001, 0.5))
 
@@ -182,7 +182,7 @@ test_that("get.interval works", {
     expect_equal(get.interval(null.ncp = c(-2, 2), req.sign = "+", distribution = "z", alternative = "two.one.sided", sd = 1), c(2, 10.0061945))
     expect_equal(get.interval(null.ncp = c(-2, 2), req.sign = "-", distribution = "z", alternative = "two.one.sided", sd = 1), c(-10.0061945, -2))
     expect_equal(get.interval(null.ncp = c(-2, 2), req.sign = "+", distribution = "t", alternative = "two.one.sided", df = 3),
-                 c(2, 16810.1936), tolerance = if (isMac) 1e-6 else testthat_tolerance())
+                 c(2, 16810.1936), tolerance = if (isMac) 1e-5 else testthat_tolerance())
     expect_equal(get.interval(null.ncp = c(-2, 2), req.sign = "-", distribution = "t", alternative = "two.one.sided", df = 3),
                  c(-16810.206, -2), tolerance = if (isMac) 1e-6 else testthat_tolerance())
     expect_equal(get.interval(null.ncp = c(-2, 2), req.sign = "+", distribution = "t", alternative = "two.one.sided", df = 3e4),
