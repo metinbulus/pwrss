@@ -56,23 +56,37 @@
 #' # two-sided
 #' # power defined as the probability of observing test statistics greater
 #' # than the positive critical value OR less than the negative critical value
-#' power.lp.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "two.sided")
-#' power.lp.test(power = 0.80, df = 100, alpha = 0.05, alternative = "two.sided")
+#' power.lp.test(ncp = 1.960, df = 100, alpha = 0.05, alternative = "two.sided")
+#' power.lp.test(power = 0.800, df = 100, alpha = 0.05, alternative = "two.sided")
+#' # the two examples below estimate the df's based upon the first example
+#' # (revealing a power of 0.498; df = 94.11) and the second example (revealing
+#' # a ncp of 2.825; df = 101.06)
+#' power.lp.test(ncp = 1.960, power = 0.498, alpha = 0.05, alternative = "two.sided")
+#' power.lp.test(ncp = 2.825, power = 0.800, alpha = 0.05, alternative = "two.sided")
 #'
 #' # one-sided
 #' # power is defined as the probability of observing a test statistic greater
 #' # than the critical value
-#' power.lp.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "one.sided")
-#' power.lp.test(power = 0.80, df = 100, alpha = 0.05, alternative = "one.sided")
+#' power.lp.test(ncp = 1.960, df = 100, alpha = 0.05, alternative = "one.sided")
+#' power.lp.test(power = 0.800, df = 100, alpha = 0.05, alternative = "one.sided")
+#' # the two examples below estimate the df's based upon the first example
+#' # (revealing a power of 0.6207; df = 100.323) and the second example (revealing
+#' # a ncp of 2.506; df = 99.12)
+#' power.lp.test(ncp = 1.960, power = 0.6207, alpha = 0.05, alternative = "one.sided")
+#' power.lp.test(ncp = 2.506, power = 0.8000, alpha = 0.05, alternative = "one.sided")
 #'
 #' # equivalence
 #' # power is defined as the probability of observing a test statistic greater
 #' # than the upper critical value (for the lower bound) AND less than the
 #' # lower critical value (for the upper bound)
-#' power.lp.test(ncp = 0, null.ncp = c(-2, 2), df = 100, alpha = 0.05,
+#' power.lp.test(ncp = 0, null.ncp = c(-3, 3), df = 100, alpha = 0.05,
 #'               alternative = "two.one.sided")
-#' power.lp.test(power = 0.80, req.sign = "0", null.ncp = c(-2, 2),
+#' power.lp.test(power = 0.80, req.sign = "0", null.ncp = c(-3, 3),
 #'               df = 100, alpha = 0.05, alternative = "two.one.sided")
+#' # adjust the power based upon what is returned from the example above in
+#' # order to get a valid estimate of the df's (100.321; power = 0.8 -> 58.911)
+#' power.lp.test(ncp = 0, power = 0.8103, req.sign = "0", null.ncp = c(-3, 3),
+#'               alpha = 0.05, alternative = "two.one.sided")
 #'
 #' # minimal effect testing
 #' # power is defined as the probability of observing a test statistic greater
@@ -82,6 +96,10 @@
 #'               alternative = "two.one.sided")
 #' power.lp.test(power = 0.80, req.sign = "+", null.ncp = c(-1, 1),
 #'               df = 100, alpha = 0.05, alternative = "two.one.sided")
+#' # the first example (ncp = 2) reveals insufficient power (0.169), hence
+#' # use the ncp returned from the example above for estimating the df's
+#' power.lp.test(ncp = 3.844, power = 0.8, req.sign = "+", null.ncp = c(-3, 3),
+#'               alpha = 0.05, alternative = "two.one.sided")
 #'
 #' @export power.lp.test
 power.lp.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0,
@@ -181,8 +199,8 @@ power.lp.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0
 
       lower.int <- c(min(null.ncp), mean(null.ncp))
       upper.int <- c(mean(null.ncp), max(null.ncp))
-      ncp.lower <- suppressMessages(stats::optimize(f = function(ncp) min.pwr(ncp, df, power) ^ 2, interval = lower.int, tol = 1e-12))$minimum
-      ncp.upper <- suppressMessages(stats::optimize(f = function(ncp) min.pwr(ncp, df, power) ^ 2, interval = upper.int, tol = 1e-12))$minimum
+      ncp.lower <- stats::optimize(f = function(ncp) min.pwr(ncp, df, power) ^ 2, interval = lower.int, tol = 1e-12)$minimum
+      ncp.upper <- stats::optimize(f = function(ncp) min.pwr(ncp, df, power) ^ 2, interval = upper.int, tol = 1e-12)$minimum
       ncp <- mean(c(ncp.lower, ncp.upper))
 
       warn.txt <- ifelse(max(abs(c(min.pwr(ncp.lower, df, power), min.pwr(ncp.upper, df, power)))) < 1e-6,
@@ -194,21 +212,20 @@ power.lp.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0
 
       val.rng <- get.interval(null.ncp = null.ncp, distribution = "lp", alpha = alpha, alternative = alternative,
                               req.sign = req.sign, df = df)
-      ncp <- suppressMessages(stats::optimize(f = function(ncp) min.pwr(ncp, df, power) ^ 2, interval = val.rng, tol = 1e-12))$minimum
+      ncp <- stats::optimize(f = function(ncp) min.pwr(ncp, df, power) ^ 2, interval = val.rng, tol = 1e-12)$minimum
 
     }
 
   } else if (requested == "n") {
 
-    stop("Solving for degrees of freedom is currently not allowed due to numerical instability in PDQutils::AS269 function.", call. = FALSE)
-    #  df <- suppressMessages(stats::optimize(f = function(df) min.pwr(ncp, df, power) ^ 2, interval = c(1, 1e10))$minimum)
+    df <- stats::optimize(f = function(df) min.pwr(ncp, df, power) ^ 2, interval = c(1, 1e10))$minimum
 
   }
 
   pwr.obj <- pwr(ncp = ncp, null.ncp = null.ncp, df = df, alpha = alpha, alternative = alternative)
 
   if (plot)
-    suppressMessages(.plot.lp.t1t2(ncp = ncp, null.ncp = null.ncp, df = df, alpha = alpha, alternative = alternative))
+    .plot.lp.t1t2(ncp = ncp, null.ncp = null.ncp, df = df, alpha = alpha, alternative = alternative)
 
   if (verbose > 0) {
 
