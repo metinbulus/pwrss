@@ -87,11 +87,15 @@ isInt <- function(x) is.numeric(x) && !any(abs(x - round(x)) > .Machine$double.e
 
 # lenInt <- function(n) ifelse(n <= 1, 1, ceiling(log10(abs(n))) + as.integer(n %% 10 == 0))
 
+sign <- function(x) ifelse(abs(x) <= .Machine$double.eps, 0, base::sign(x))
+
 check.snap4plot <- function(snpFle = "", pltFnc = NULL, pltPrm = list(), pltWdt = 800, pltHgh = 800) {
-  if (nchar(Sys.getenv("GITHUB_ACTIONS")) == 0) { # ensures that the code only runs on a local machine, not as GitHub action
+  # ensures that the code only runs on a local machine, not as GitHub action or in a Docker
+  if (nchar(Sys.getenv("GITHUB_ACTIONS")) > 0 || any(file.exists(c("/.dockerenv", "/run/.containerenv")))) {
+    testthat::announce_snapshot_file(name = snpFle)
+  } else {
     tmpFle <- tempfile(fileext = ".png")
     addPrm <- list(alpha = 0.05, verbose = 0)[c("alpha", "verbose") %in% names(formals(pltFnc))]
-    testthat::announce_snapshot_file(name = snpFle)
     grDevices::png(tmpFle, width = pltWdt, height = pltHgh)
     if (any(c("plot", "plot.main") %in% names(formals(pltFnc)))) {
       do.call(pltFnc, c(pltPrm, addPrm))
