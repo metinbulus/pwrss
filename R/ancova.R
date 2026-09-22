@@ -1690,13 +1690,13 @@ power.t.contrasts <- function(x = NULL,
   for (i in seq_len(nrow(contrast.matrix))) {
 
     contrast.vector <- contrast.matrix[i, ]
-    contrast.sign <- sign(contrast.vector)
 
-    idx.poz <- which(contrast.sign == 1)
-    idx.neg <- which(contrast.sign == -1)
-
-    comparison.i <- sprintf("%s <=> %s", paste(levels[idx.poz], collapse = " "), paste(levels[idx.neg], collapse = " "))
-    comparison <- c(comparison, comparison.i)
+    # on some machines, contr.poly() is not working as expected (it may contain very small values in places that should
+    # be 0) - thus, the code below checks at which position the contrast vector contains positive or negative value
+    # above / below neg.eps / -.neg.eps (OBS: neg.obs is slightly smaller than .eps and thus used in this comparison)
+    comparison <- c(comparison, sprintf("%s <=> %s",
+                                        paste(levels[which(contrast.vector >=  .Machine$double.neg.eps)], collapse = " "),
+                                        paste(levels[which(contrast.vector <= -.Machine$double.neg.eps)], collapse = " ")))
 
     pwr.t.contr.obj <- power.t.contrast(mu.vector = mu.vector,
                                         sd.vector = sd.vector,

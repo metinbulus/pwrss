@@ -83,11 +83,9 @@ get.interval <- function(null.ncp, req.sign, distribution = c("z", "t", "lp", "b
 
 } # get.interval
 
-isInt <- function(x) is.numeric(x) && !any(abs(x - round(x)) > .Machine$double.eps ^ 2 / 3)
+isInt <- function(x) is.numeric(x) && !any(abs(x - round(x)) > .Machine$double.eps ^ (2 / 3))
 
 # lenInt <- function(n) ifelse(n <= 1, 1, ceiling(log10(abs(n))) + as.integer(n %% 10 == 0))
-
-sign <- function(x) ifelse(abs(x) <= .Machine$double.eps, 0, base::sign(x))
 
 check.snap4plot <- function(snpFle = "", pltFnc = NULL, pltPrm = list(), pltWdt = 800, pltHgh = 800) {
   # ensures that the code only runs on a local machine, not as GitHub action or in a Docker
