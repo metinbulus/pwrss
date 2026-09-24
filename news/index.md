@@ -11,7 +11,7 @@
 - Smaller improvements to satisfy the requirements / suggestions by the
   `goodpractice` R-package
 - Fix a bug arising from stats::poly() returning very small values
-  (~1e-16)in places where 0 is expected
+  (~1e-16) in places where 0 is expected
 - Small improvement to the unit tests, preventing that snapshots are
   deleted if a comparison is not run
 

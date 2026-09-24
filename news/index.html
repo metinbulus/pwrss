@@ -40,7 +40,7 @@
 <h2 class="pkg-version" data-toc-text="1.3.0" id="changes-in-pwrss-v130">Changes in pwrss v1.3.0<a class="anchor" aria-label="anchor" href="#changes-in-pwrss-v130"></a></h2>
 <ul><li>Replaced functions to calculate lambda prime (formerly provided by the R-package <code>sadists</code>) with own implementations (numerically, these implementations reveal results close to those provided by <code>sadists</code>; however, a problem with a numerical instability in that package doesn’t exists for these implementations, and df’s can be estimated in <code>power.lp.test</code>)</li>
 <li>Smaller improvements to satisfy the requirements / suggestions by the <code>goodpractice</code> R-package</li>
-<li>Fix a bug arising from stats::poly() returning very small values (~1e-16)in places where 0 is expected</li>
+<li>Fix a bug arising from stats::poly() returning very small values (~1e-16) in places where 0 is expected</li>
 <li>Small improvement to the unit tests, preventing that snapshots are deleted if a comparison is not run</li>
 </ul></div>
     <div class="section level2">
