@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head><title>R: Statistical Power, Sample Size, and Detectable Effect
+Calculations</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body><div class="container">
+<h1> Statistical Power, Sample Size, and Detectable Effect
+Calculations
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]">
+</h1>
+<hr>
+<div style="text-align: center;">
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]"></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]"></a>
+</div><h2>Documentation for package &lsquo;pwrss&rsquo; version 1.2.0</h2>
+
+<ul><li><a href="../DESCRIPTION" type="text/plain; charset=utf-8">DESCRIPTION file</a></li>
+<li><a href="../doc/index.html">User guides, package vignettes and other documentation</a></li>
+<li><a href="../NEWS.md">Package NEWS</a></li>
+</ul>
+
+<h2>Help Pages</h2>
+
+
+<table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="d.to.cles.html">cles.to.d</a></td>
+<td>Conversion from Cohen's d to Common Language Effect Size</td></tr>
+<tr><td style="width: 25%;"><a href="cor.to.z.html">cor.to.z</a></td>
+<td>Conversion from a correlation to a z-value (Fisher's z-transformation)</td></tr>
+<tr><td style="width: 25%;"><a href="cors.to.q.html">cors.to.q</a></td>
+<td>Conversion from a correlation Difference to Cohen's q</td></tr>
+<tr><td style="width: 25%;"><a href="d.to.cles.html">d.to.cles</a></td>
+<td>Conversion from Cohen's d to Common Language Effect Size</td></tr>
+<tr><td style="width: 25%;"><a href="etasq.to.f.html">etasq.to.f</a></td>
+<td>Conversion from Eta-squared to Cohen's f</td></tr>
+<tr><td style="width: 25%;"><a href="f.to.etasq.html">f.to.etasq</a></td>
+<td>Conversion between Cohen's f and Eta-squared</td></tr>
+<tr><td style="width: 25%;"><a href="f.to.rsq.html">f.to.rsq</a></td>
+<td>Conversion from Cohen's f to R-squared</td></tr>
+<tr><td style="width: 25%;"><a href="factorial.contrasts.html">factorial.contrasts</a></td>
+<td>Factorial Contrasts</td></tr>
+<tr><td style="width: 25%;"><a href="inflate.sample.html">inflate.sample</a></td>
+<td>Inflate Sample Size for Attrition</td></tr>
+<tr><td style="width: 25%;"><a href="joint.probs.2x2.html">joint.probs.2x2</a></td>
+<td>Helper function to converts joint probabilities to marginal probabilities for the McNemar test applied to paired binary data.</td></tr>
+<tr><td style="width: 25%;"><a href="marginal.probs.2x2.html">marginal.probs.2x2</a></td>
+<td>Helper function to converts marginal probabilities to joint probabilities for the McNemar test applied to paired binary data.</td></tr>
+<tr><td style="width: 25%;"><a href="means.to.d.html">means.to.d</a></td>
+<td>Conversion from Means and Standard Deviations to Cohen's d</td></tr>
+<tr><td style="width: 25%;"><a href="means.to.etasq.html">means.to.etasq</a></td>
+<td>Conversion from Means and Standard Deviations to Cohen's f and Eta-squared</td></tr>
+<tr><td style="width: 25%;"><a href="power.binom.test.html">power.binom</a></td>
+<td>Power Analysis for the Generic Binomial Test</td></tr>
+<tr><td style="width: 25%;"><a href="power.binom.test.html">power.binom.test</a></td>
+<td>Power Analysis for the Generic Binomial Test</td></tr>
+<tr><td style="width: 25%;"><a href="power.chisq.test.html">power.chisq</a></td>
+<td>Statistical Power for the Generic Chi-Square Test</td></tr>
+<tr><td style="width: 25%;"><a href="power.chisq.gof.html">power.chisq.gof</a></td>
+<td>Power Analysis for Chi-square Goodness-of-Fit or Independence Tests</td></tr>
+<tr><td style="width: 25%;"><a href="power.chisq.test.html">power.chisq.test</a></td>
+<td>Statistical Power for the Generic Chi-Square Test</td></tr>
+<tr><td style="width: 25%;"><a href="power.exact.fisher.html">power.exact.fisher</a></td>
+<td>Power Analysis for Fisher's Exact Test (Independent Proportions)</td></tr>
+<tr><td style="width: 25%;"><a href="power.exact.mcnemar.html">power.exact.mcnemar</a></td>
+<td>Power Analysis for McNemar's Exact Test (Paired Proportions)</td></tr>
+<tr><td style="width: 25%;"><a href="power.exact.onecor.html">power.exact.onecor</a></td>
+<td>Power Analysis for One-Sample Correlation (Exact)</td></tr>
+<tr><td style="width: 25%;"><a href="power.exact.oneprop.html">power.exact.oneprop</a></td>
+<td>Power Analysis for the Test of One Proportion (Exact Method)</td></tr>
+<tr><td style="width: 25%;"><a href="power.exact.twoprops.html">power.exact.twoprop</a></td>
+<td>Power Analysis for Testing Difference Between Two Proportions (Exact Method)</td></tr>
+<tr><td style="width: 25%;"><a href="power.exact.twoprops.html">power.exact.twoprops</a></td>
+<td>Power Analysis for Testing Difference Between Two Proportions (Exact Method)</td></tr>
+<tr><td style="width: 25%;"><a href="power.exact.fisher.html">power.exact.twoprops.fisher</a></td>
+<td>Power Analysis for Fisher's Exact Test (Independent Proportions)</td></tr>
+<tr><td style="width: 25%;"><a href="power.exact.mcnemar.html">power.exact.twoprops.mcnemar</a></td>
+<td>Power Analysis for McNemar's Exact Test (Paired Proportions)</td></tr>
+<tr><td style="width: 25%;"><a href="power.f.test.html">power.f</a></td>
+<td>Statistical Power for the Generic F-Test</td></tr>
+<tr><td style="width: 25%;"><a href="power.f.ancova.html">power.f.ancova</a></td>
+<td>Power Analysis for One-, Two-, Three-Way ANOVA/ANCOVA Using Effect Size (F-Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.f.ancova.keppel.html">power.f.ancova.keppel</a></td>
+<td>Power Analysis for One-Way ANOVA/ANCOVA Using Means and Standard Deviations (F test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.f.ancova.shieh.html">power.f.ancova.shieh</a></td>
+<td>Power Analysis for One-, Two-, Three-Way ANCOVA Using Means, Standard Deviations, and (Optionally) Contrasts (F test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.f.mixed.anova.html">power.f.mixed.anova</a></td>
+<td>Power Analysis for Mixed-Effects Analysis of Variance (F-Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.f.regression.html">power.f.reg</a></td>
+<td>Power Analysis for Linear Regression: R-squared or R-squared Change (F-Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.f.regression.html">power.f.regression</a></td>
+<td>Power Analysis for Linear Regression: R-squared or R-squared Change (F-Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.f.test.html">power.f.test</a></td>
+<td>Statistical Power for the Generic F-Test</td></tr>
+<tr><td style="width: 25%;"><a href="power.lp.test.html">power.lp</a></td>
+<td>Statistical Power for the Lambda-Prime Distribution</td></tr>
+<tr><td style="width: 25%;"><a href="power.lp.test.html">power.lp.test</a></td>
+<td>Statistical Power for the Lambda-Prime Distribution</td></tr>
+<tr><td style="width: 25%;"><a href="power.np.wilcoxon.html">power.np.wilcox</a></td>
+<td>Power Analysis for Non-parametric Rank-Based Tests (One-Sample, Independent, and Paired Designs)</td></tr>
+<tr><td style="width: 25%;"><a href="power.np.wilcoxon.html">power.np.wilcoxon</a></td>
+<td>Power Analysis for Non-parametric Rank-Based Tests (One-Sample, Independent, and Paired Designs)</td></tr>
+<tr><td style="width: 25%;"><a href="power.t.test.html">power.t</a></td>
+<td>Statistical Power for the Generic t-Test</td></tr>
+<tr><td style="width: 25%;"><a href="power.t.contrast.html">power.t.contrast</a></td>
+<td>Power Analysis for One-, Two-, Three-Way ANCOVA Contrasts and Multiple Comparisons (T-Tests)</td></tr>
+<tr><td style="width: 25%;"><a href="power.t.contrasts.html">power.t.contrasts</a></td>
+<td>Power Analysis for One-, Two-, Three-Way ANCOVA Contrasts and Multiple Comparisons (T-Tests)</td></tr>
+<tr><td style="width: 25%;"><a href="power.t.regression.html">power.t.reg</a></td>
+<td>Power Analysis for Linear Regression: Single Coefficient (T-Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.t.regression.html">power.t.regression</a></td>
+<td>Power Analysis for Linear Regression: Single Coefficient (T-Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.t.student.html">power.t.student</a></td>
+<td>Power Analysis for Student's t-Test</td></tr>
+<tr><td style="width: 25%;"><a href="power.t.test.html">power.t.test</a></td>
+<td>Statistical Power for the Generic t-Test</td></tr>
+<tr><td style="width: 25%;"><a href="power.t.welch.html">power.t.welch</a></td>
+<td>Power Analysis for Welch's t-Test</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.test.html">power.z</a></td>
+<td>Statistical Power for the Generic z-Test</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.logistic.html">power.z.logistic</a></td>
+<td>Power Analysis for Logistic Regression Coefficient (Wald's Z-Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.logistic.html">power.z.logreg</a></td>
+<td>Power Analysis for Logistic Regression Coefficient (Wald's Z-Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.mediation.html">power.z.med</a></td>
+<td>Power Analysis for Indirect Effects in a Mediation Model (Z, Joint, and Monte Carlo Tests)</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.mediation.html">power.z.mediation</a></td>
+<td>Power Analysis for Indirect Effects in a Mediation Model (Z, Joint, and Monte Carlo Tests)</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.onecor.html">power.z.onecor</a></td>
+<td>Power Analysis for One-Sample Correlation</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.oneprop.html">power.z.oneprop</a></td>
+<td>Power Analysis for the Test of One Proportion (Normal Approximation Method)</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.poisson.html">power.z.poisreg</a></td>
+<td>Power Analysis for Poisson Regression Coefficient (Wald's z Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.poisson.html">power.z.poisson</a></td>
+<td>Power Analysis for Poisson Regression Coefficient (Wald's z Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.twocors.steiger.html">power.z.steiger</a></td>
+<td>Power Analysis for Dependent Correlations (Steiger's Z-Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.test.html">power.z.test</a></td>
+<td>Statistical Power for the Generic z-Test</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.twocors.html">power.z.twocor</a></td>
+<td>Power Analysis for Independent Correlations</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.twocors.html">power.z.twocors</a></td>
+<td>Power Analysis for Independent Correlations</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.twocors.steiger.html">power.z.twocors.steiger</a></td>
+<td>Power Analysis for Dependent Correlations (Steiger's Z-Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.twoprops.html">power.z.twoprop</a></td>
+<td>Power Analysis for Testing Difference Between Two Proportions (Normal Approximation Method)</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.twoprops.html">power.z.twoprops</a></td>
+<td>Power Analysis for Testing Difference Between Two Proportions (Normal Approximation Method)</td></tr>
+<tr><td style="width: 25%;"><a href="probs.to.h.html">probs.to.h</a></td>
+<td>Conversion from Probability Difference to Cohen's h</td></tr>
+<tr><td style="width: 25%;"><a href="probs.to.w.html">probs.to.w</a></td>
+<td>Conversion from Probabilities to Cohen's w</td></tr>
+<tr><td style="width: 25%;"><a href="power.chisq.gof.html">pwrss.chisq.gofit</a></td>
+<td>Power Analysis for Chi-square Goodness-of-Fit or Independence Tests</td></tr>
+<tr><td style="width: 25%;"><a href="power.f.ancova.html">pwrss.f.ancova</a></td>
+<td>Power Analysis for One-, Two-, Three-Way ANOVA/ANCOVA Using Effect Size (F-Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.f.regression.html">pwrss.f.reg</a></td>
+<td>Power Analysis for Linear Regression: R-squared or R-squared Change (F-Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.f.regression.html">pwrss.f.regression</a></td>
+<td>Power Analysis for Linear Regression: R-squared or R-squared Change (F-Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.f.mixed.anova.html">pwrss.f.rmanova</a></td>
+<td>Power Analysis for Mixed-Effects Analysis of Variance (F-Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.np.wilcoxon.html">pwrss.np.2groups</a></td>
+<td>Power Analysis for Non-parametric Rank-Based Tests (One-Sample, Independent, and Paired Designs)</td></tr>
+<tr><td style="width: 25%;"><a href="power.np.wilcoxon.html">pwrss.np.2means</a></td>
+<td>Power Analysis for Non-parametric Rank-Based Tests (One-Sample, Independent, and Paired Designs)</td></tr>
+<tr><td style="width: 25%;"><a href="power.t.student.html">pwrss.t.2means</a></td>
+<td>Power Analysis for Student's t-Test</td></tr>
+<tr><td style="width: 25%;"><a href="power.t.contrast.html">pwrss.t.contrast</a></td>
+<td>Power Analysis for One-, Two-, Three-Way ANCOVA Contrasts and Multiple Comparisons (T-Tests)</td></tr>
+<tr><td style="width: 25%;"><a href="power.t.contrasts.html">pwrss.t.contrasts</a></td>
+<td>Power Analysis for One-, Two-, Three-Way ANCOVA Contrasts and Multiple Comparisons (T-Tests)</td></tr>
+<tr><td style="width: 25%;"><a href="power.t.student.html">pwrss.t.mean</a></td>
+<td>Power Analysis for Student's t-Test</td></tr>
+<tr><td style="width: 25%;"><a href="power.t.regression.html">pwrss.t.reg</a></td>
+<td>Power Analysis for Linear Regression: Single Coefficient (T-Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.t.regression.html">pwrss.t.regression</a></td>
+<td>Power Analysis for Linear Regression: Single Coefficient (T-Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.twocors.html">pwrss.z.2corr</a></td>
+<td>Power Analysis for Independent Correlations</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.twocors.html">pwrss.z.2corrs</a></td>
+<td>Power Analysis for Independent Correlations</td></tr>
+<tr><td style="width: 25%;"><a href="power.t.student.html">pwrss.z.2means</a></td>
+<td>Power Analysis for Student's t-Test</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.twoprops.html">pwrss.z.2prop</a></td>
+<td>Power Analysis for Testing Difference Between Two Proportions (Normal Approximation Method)</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.twoprops.html">pwrss.z.2props</a></td>
+<td>Power Analysis for Testing Difference Between Two Proportions (Normal Approximation Method)</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.onecor.html">pwrss.z.cor</a></td>
+<td>Power Analysis for One-Sample Correlation</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.onecor.html">pwrss.z.corr</a></td>
+<td>Power Analysis for One-Sample Correlation</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.logistic.html">pwrss.z.logistic</a></td>
+<td>Power Analysis for Logistic Regression Coefficient (Wald's Z-Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.logistic.html">pwrss.z.logreg</a></td>
+<td>Power Analysis for Logistic Regression Coefficient (Wald's Z-Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.t.student.html">pwrss.z.mean</a></td>
+<td>Power Analysis for Student's t-Test</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.mediation.html">pwrss.z.med</a></td>
+<td>Power Analysis for Indirect Effects in a Mediation Model (Z, Joint, and Monte Carlo Tests)</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.mediation.html">pwrss.z.mediation</a></td>
+<td>Power Analysis for Indirect Effects in a Mediation Model (Z, Joint, and Monte Carlo Tests)</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.poisson.html">pwrss.z.poisreg</a></td>
+<td>Power Analysis for Poisson Regression Coefficient (Wald's z Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.poisson.html">pwrss.z.poisson</a></td>
+<td>Power Analysis for Poisson Regression Coefficient (Wald's z Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.z.oneprop.html">pwrss.z.prop</a></td>
+<td>Power Analysis for the Test of One Proportion (Normal Approximation Method)</td></tr>
+<tr><td style="width: 25%;"><a href="power.t.regression.html">pwrss.z.reg</a></td>
+<td>Power Analysis for Linear Regression: Single Coefficient (T-Test)</td></tr>
+<tr><td style="width: 25%;"><a href="power.t.regression.html">pwrss.z.regression</a></td>
+<td>Power Analysis for Linear Regression: Single Coefficient (T-Test)</td></tr>
+<tr><td style="width: 25%;"><a href="q.to.cors.html">q.to.cors</a></td>
+<td>Conversion from a Cohen's q to a correlation difference</td></tr>
+<tr><td style="width: 25%;"><a href="rsq.to.f.html">rsq.to.f</a></td>
+<td>Conversion from R-squared to Cohen's f</td></tr>
+<tr><td style="width: 25%;"><a href="z.to.cor.html">z.to.cor</a></td>
+<td>Conversion from a z-value to a correlation (inverse Fisher's z-transformation)</td></tr>
+</table>
+</div></body></html>

@@ -1,0 +1,87 @@
+cor.to.z                Conversion from a correlation to a z-value
+                        (Fisher's z-transformation)
+cors.to.q               Conversion from a correlation Difference to
+                        Cohen's q
+d.to.cles               Conversion from Cohen's d to Common Language
+                        Effect Size
+etasq.to.f              Conversion from Eta-squared to Cohen's f
+f.to.etasq              Conversion between Cohen's f and Eta-squared
+f.to.rsq                Conversion from Cohen's f to R-squared
+factorial.contrasts     Factorial Contrasts
+inflate.sample          Inflate Sample Size for Attrition
+joint.probs.2x2         Helper function to converts joint probabilities
+                        to marginal probabilities for the McNemar test
+                        applied to paired binary data.
+marginal.probs.2x2      Helper function to converts marginal
+                        probabilities to joint probabilities for the
+                        McNemar test applied to paired binary data.
+means.to.d              Conversion from Means and Standard Deviations
+                        to Cohen's d
+means.to.etasq          Conversion from Means and Standard Deviations
+                        to Cohen's f and Eta-squared
+power.binom.test        Power Analysis for the Generic Binomial Test
+power.chisq.gof         Power Analysis for Chi-square Goodness-of-Fit
+                        or Independence Tests
+power.chisq.test        Statistical Power for the Generic Chi-Square
+                        Test
+power.exact.fisher      Power Analysis for Fisher's Exact Test
+                        (Independent Proportions)
+power.exact.mcnemar     Power Analysis for McNemar's Exact Test (Paired
+                        Proportions)
+power.exact.onecor      Power Analysis for One-Sample Correlation
+                        (Exact)
+power.exact.oneprop     Power Analysis for the Test of One Proportion
+                        (Exact Method)
+power.exact.twoprops    Power Analysis for Testing Difference Between
+                        Two Proportions (Exact Method)
+power.f.ancova          Power Analysis for One-, Two-, Three-Way
+                        ANOVA/ANCOVA Using Effect Size (F-Test)
+power.f.ancova.keppel   Power Analysis for One-Way ANOVA/ANCOVA Using
+                        Means and Standard Deviations (F test)
+power.f.ancova.shieh    Power Analysis for One-, Two-, Three-Way ANCOVA
+                        Using Means, Standard Deviations, and
+                        (Optionally) Contrasts (F test)
+power.f.mixed.anova     Power Analysis for Mixed-Effects Analysis of
+                        Variance (F-Test)
+power.f.regression      Power Analysis for Linear Regression: R-squared
+                        or R-squared Change (F-Test)
+power.f.test            Statistical Power for the Generic F-Test
+power.lp.test           Statistical Power for the Lambda-Prime
+                        Distribution
+power.np.wilcoxon       Power Analysis for Non-parametric Rank-Based
+                        Tests (One-Sample, Independent, and Paired
+                        Designs)
+power.t.contrast        Power Analysis for One-, Two-, Three-Way ANCOVA
+                        Contrasts and Multiple Comparisons (T-Tests)
+power.t.contrasts       Power Analysis for One-, Two-, Three-Way ANCOVA
+                        Contrasts and Multiple Comparisons (T-Tests)
+power.t.regression      Power Analysis for Linear Regression: Single
+                        Coefficient (T-Test)
+power.t.student         Power Analysis for Student's t-Test
+power.t.test            Statistical Power for the Generic t-Test
+power.t.welch           Power Analysis for Welch's t-Test
+power.z.logistic        Power Analysis for Logistic Regression
+                        Coefficient (Wald's Z-Test)
+power.z.mediation       Power Analysis for Indirect Effects in a
+                        Mediation Model (Z, Joint, and Monte Carlo
+                        Tests)
+power.z.onecor          Power Analysis for One-Sample Correlation
+power.z.oneprop         Power Analysis for the Test of One Proportion
+                        (Normal Approximation Method)
+power.z.poisson         Power Analysis for Poisson Regression
+                        Coefficient (Wald's z Test)
+power.z.test            Statistical Power for the Generic z-Test
+power.z.twocors         Power Analysis for Independent Correlations
+power.z.twocors.steiger
+                        Power Analysis for Dependent Correlations
+                        (Steiger's Z-Test)
+power.z.twoprops        Power Analysis for Testing Difference Between
+                        Two Proportions (Normal Approximation Method)
+probs.to.h              Conversion from Probability Difference to
+                        Cohen's h
+probs.to.w              Conversion from Probabilities to Cohen's w
+q.to.cors               Conversion from a Cohen's q to a correlation
+                        difference
+rsq.to.f                Conversion from R-squared to Cohen's f
+z.to.cor                Conversion from a z-value to a correlation
+                        (inverse Fisher's z-transformation)

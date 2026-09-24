@@ -6,6 +6,9 @@
 ^\.Rproj\.user$
 ^codemeta\.json$
 ^CONTRIBUTING.md$
+^cran-comments\.md$
+^CRAN-RELEASE$
+^CRAN-SUBMISSION$
 ^doc$
 ^docs$
 ^LICENSE$
@@ -14,3 +17,4 @@
 ^_pkgdown\.yml$
 ^README\.md$
 ^README\.Rmd$
+^CRAN-SUBMISSION$
