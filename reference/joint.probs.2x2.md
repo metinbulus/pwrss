@@ -1,7 +1,7 @@
-# Helper function to converts joint probabilities to marginal probabilities for the McNemar test applied to paired binary data.
+# Conversion from joint probabilities to marginal probabilities for the McNemar test applied to paired binary data.
 
-Helper function to converts joint probabilities to marginal
-probabilities for the McNemar test applied to paired binary data.
+Conversion from joint probabilities to marginal probabilities for the
+McNemar test applied to paired binary data.
 
 ## Usage
 

@@ -1,4 +1,4 @@
-# Power Analysis for Testing Difference Between Two Proportions (Exact Method)
+# Power Analysis for Testing the Difference Between Two Proportions (Exact Method)
 
 Calculates power or sample size (only one can be NULL at a time) for two
 proportions using the exact method. The function is a wrapper for

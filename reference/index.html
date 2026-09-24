@@ -36,9 +36,9 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
+      <h2 id="generic-power-analyses">Generic Power Analyses<a class="anchor" aria-label="anchor" href="#generic-power-analyses"></a></h2>
 
-
+      <div class="section-desc"><p>Power analyses based on core distributions</p></div>
 
       <dl></dl></div><div class="section level2">
 
@@ -47,103 +47,56 @@
 
       <dl><dt>
 
-          <code><a href="cor.to.z.html">cor.to.z()</a></code>
-
-        </dt>
-        <dd>Conversion from a correlation to a z-value (Fisher's z-transformation)</dd>
-
-        <dt>
-
-          <code><a href="cors.to.q.html">cors.to.q()</a></code>
-
-        </dt>
-        <dd>Conversion from a correlation Difference to Cohen's q</dd>
-
-        <dt>
-
-          <code><a href="d.to.cles.html">d.to.cles()</a></code>
-
-        </dt>
-        <dd>Conversion from Cohen's d to Common Language Effect Size</dd>
-
-        <dt>
-
-          <code><a href="etasq.to.f.html">etasq.to.f()</a></code>
-
-        </dt>
-        <dd>Conversion from Eta-squared to Cohen's f</dd>
-
-        <dt>
-
-          <code><a href="f.to.etasq.html">f.to.etasq()</a></code>
-
-        </dt>
-        <dd>Conversion between Cohen's f and Eta-squared</dd>
-
-        <dt>
-
-          <code><a href="f.to.rsq.html">f.to.rsq()</a></code>
-
-        </dt>
-        <dd>Conversion from Cohen's f to R-squared</dd>
-
-        <dt>
-
-          <code><a href="factorial.contrasts.html">factorial.contrasts()</a></code>
-
-        </dt>
-        <dd>Factorial Contrasts</dd>
-
-        <dt>
-
-          <code><a href="inflate.sample.html">inflate.sample()</a></code>
-
-        </dt>
-        <dd>Inflate Sample Size for Attrition</dd>
-
-        <dt>
-
-          <code><a href="joint.probs.2x2.html">joint.probs.2x2()</a></code>
-
-        </dt>
-        <dd>Helper function to converts joint probabilities to marginal probabilities for the McNemar test applied to paired binary data.</dd>
-
-        <dt>
-
-          <code><a href="lambdap.html">dlambdap()</a></code> <code><a href="lambdap.html">plambdap()</a></code> <code><a href="lambdap.html">qlambdap()</a></code> <code><a href="lambdap.html">rlambdap()</a></code>
-
-        </dt>
-        <dd>Distribution functions for the Lambda prime / non-central Lambda distribution</dd>
-
-        <dt>
-
-          <code><a href="marginal.probs.2x2.html">marginal.probs.2x2()</a></code>
-
-        </dt>
-        <dd>Helper function to converts marginal probabilities to joint probabilities for the McNemar test applied to paired binary data.</dd>
-
-        <dt>
-
-          <code><a href="means.to.d.html">means.to.d()</a></code>
-
-        </dt>
-        <dd>Conversion from Means and Standard Deviations to Cohen's d</dd>
-
-        <dt>
-
-          <code><a href="means.to.etasq.html">means.to.etasq()</a></code>
-
-        </dt>
-        <dd>Conversion from Means and Standard Deviations to Cohen's f and Eta-squared</dd>
-
-        <dt>
-
           <code><a href="power.binom.test.html">power.binom.test()</a></code>
 
         </dt>
         <dd>Power Analysis for the Generic Binomial Test</dd>
 
         <dt>
+
+          <code><a href="power.chisq.test.html">power.chisq.test()</a></code>
+
+        </dt>
+        <dd>Statistical Power for the Generic Chi-Square Test</dd>
+
+        <dt>
+
+          <code><a href="power.f.test.html">power.f.test()</a></code>
+
+        </dt>
+        <dd>Statistical Power for the Generic F-Test</dd>
+
+        <dt>
+
+          <code><a href="power.lp.test.html">power.lp.test()</a></code>
+
+        </dt>
+        <dd>Statistical Power for the Lambda-Prime Distribution</dd>
+
+        <dt>
+
+          <code><a href="power.t.test.html">power.t.test()</a></code>
+
+        </dt>
+        <dd>Statistical Power for the Generic t-Test</dd>
+
+        <dt>
+
+          <code><a href="power.z.test.html">power.z.test()</a></code>
+
+        </dt>
+        <dd>Statistical Power for the Generic z-Test</dd>
+      </dl></div><div class="section level2">
+      <h2 id="proportions">Proportions<a class="anchor" aria-label="anchor" href="#proportions"></a></h2>
+
+      <div class="section-desc"><p>Power analyses for one and two sample (independent and paired) proportions</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
 
           <code><a href="power.chisq.gof.html">power.chisq.gof()</a></code>
 
@@ -152,10 +105,31 @@
 
         <dt>
 
-          <code><a href="power.chisq.test.html">power.chisq.test()</a></code>
+          <code><a href="power.z.oneprop.html">power.z.oneprop()</a></code>
 
         </dt>
-        <dd>Statistical Power for the Generic Chi-Square Test</dd>
+        <dd>Power Analysis for the Test of One Proportion (Normal Approximation Method)</dd>
+
+        <dt>
+
+          <code><a href="power.exact.oneprop.html">power.exact.oneprop()</a></code>
+
+        </dt>
+        <dd>Power Analysis for the Test of One Proportion (Exact Method)</dd>
+
+        <dt>
+
+          <code><a href="power.z.twoprops.html">power.z.twoprops()</a></code>
+
+        </dt>
+        <dd>Power Analysis for Testing the Difference Between Two Proportions (Normal Approximation Method)</dd>
+
+        <dt>
+
+          <code><a href="power.exact.twoprops.html">power.exact.twoprops()</a></code>
+
+        </dt>
+        <dd>Power Analysis for Testing the Difference Between Two Proportions (Exact Method)</dd>
 
         <dt>
 
@@ -170,6 +144,22 @@
 
         </dt>
         <dd>Power Analysis for McNemar's Exact Test (Paired Proportions)</dd>
+      </dl></div><div class="section level2">
+      <h2 id="correlations">Correlations<a class="anchor" aria-label="anchor" href="#correlations"></a></h2>
+
+      <div class="section-desc"><p>Power analyses for (independent and dependent) correlations</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="power.z.onecor.html">power.z.onecor()</a></code>
+
+        </dt>
+        <dd>Power Analysis for One-Sample Correlation</dd>
 
         <dt>
 
@@ -180,17 +170,47 @@
 
         <dt>
 
-          <code><a href="power.exact.oneprop.html">power.exact.oneprop()</a></code>
+          <code><a href="power.z.twocors.html">power.z.twocors()</a></code>
 
         </dt>
-        <dd>Power Analysis for the Test of One Proportion (Exact Method)</dd>
+        <dd>Power Analysis for Independent Correlations</dd>
 
         <dt>
 
-          <code><a href="power.exact.twoprops.html">power.exact.twoprops()</a></code>
+          <code><a href="power.z.twocors.steiger.html">power.z.twocors.steiger()</a></code>
 
         </dt>
-        <dd>Power Analysis for Testing Difference Between Two Proportions (Exact Method)</dd>
+        <dd>Power Analysis for Dependent Correlations (Steiger's Z-Test)</dd>
+      </dl></div><div class="section level2">
+      <h2 id="means-differences">Means Differences<a class="anchor" aria-label="anchor" href="#means-differences"></a></h2>
+
+      <div class="section-desc"><p>Power analyses for mean differences (t-tests, Wilcoxon) and ANOVA / ANCOVA models</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="power.t.student.html">power.t.student()</a></code>
+
+        </dt>
+        <dd>Power Analysis for Student's t-Test</dd>
+
+        <dt>
+
+          <code><a href="power.t.welch.html">power.t.welch()</a></code>
+
+        </dt>
+        <dd>Power Analysis for Welch's t-Test</dd>
+
+        <dt>
+
+          <code><a href="power.np.wilcoxon.html">power.np.wilcoxon()</a></code>
+
+        </dt>
+        <dd>Power Analysis for Non-parametric Rank-Based Tests (One-Sample, Independent, and Paired Designs)</dd>
 
         <dt>
 
@@ -215,38 +235,10 @@
 
         <dt>
 
-          <code><a href="power.f.mixed.anova.html">power.f.mixed.anova()</a></code>
+          <code><a href="factorial.contrasts.html">factorial.contrasts()</a></code>
 
         </dt>
-        <dd>Power Analysis for Mixed-Effects Analysis of Variance (F-Test)</dd>
-
-        <dt>
-
-          <code><a href="power.f.regression.html">power.f.regression()</a></code>
-
-        </dt>
-        <dd>Power Analysis for Linear Regression: R-squared or R-squared Change (F-Test)</dd>
-
-        <dt>
-
-          <code><a href="power.f.test.html">power.f.test()</a></code>
-
-        </dt>
-        <dd>Statistical Power for the Generic F-Test</dd>
-
-        <dt>
-
-          <code><a href="power.lp.test.html">power.lp.test()</a></code>
-
-        </dt>
-        <dd>Statistical Power for the Lambda-Prime Distribution</dd>
-
-        <dt>
-
-          <code><a href="power.np.wilcoxon.html">power.np.wilcoxon()</a></code>
-
-        </dt>
-        <dd>Power Analysis for Non-parametric Rank-Based Tests (One-Sample, Independent, and Paired Designs)</dd>
+        <dd>Factorial Contrasts</dd>
 
         <dt>
 
@@ -264,38 +256,33 @@
 
         <dt>
 
+          <code><a href="power.f.mixed.anova.html">power.f.mixed.anova()</a></code>
+
+        </dt>
+        <dd>Power Analysis for Mixed-Effects Analysis of Variance (F-Test)</dd>
+      </dl></div><div class="section level2">
+      <h2 id="regression-models">Regression Models<a class="anchor" aria-label="anchor" href="#regression-models"></a></h2>
+
+      <div class="section-desc"><p>Power analyses for linear, logistic, and Poisson regressions</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="power.f.regression.html">power.f.regression()</a></code>
+
+        </dt>
+        <dd>Power Analysis for Linear Regression: R-squared or R-squared Change (F-Test)</dd>
+
+        <dt>
+
           <code><a href="power.t.regression.html">power.t.regression()</a></code>
 
         </dt>
         <dd>Power Analysis for Linear Regression: Single Coefficient (T-Test)</dd>
-
-        <dt>
-
-          <code><a href="power.t.student.html">power.t.student()</a></code>
-
-        </dt>
-        <dd>Power Analysis for Student's t-Test</dd>
-
-        <dt>
-
-          <code><a href="power.t.test.html">power.t.test()</a></code>
-
-        </dt>
-        <dd>Statistical Power for the Generic t-Test</dd>
-
-        <dt>
-
-          <code><a href="power.t.welch.html">power.t.welch()</a></code>
-
-        </dt>
-        <dd>Power Analysis for Welch's t-Test</dd>
-
-        <dt>
-
-          <code><a href="power.z.logistic.html">power.z.logistic()</a></code>
-
-        </dt>
-        <dd>Power Analysis for Logistic Regression Coefficient (Wald's Z-Test)</dd>
 
         <dt>
 
@@ -306,17 +293,10 @@
 
         <dt>
 
-          <code><a href="power.z.onecor.html">power.z.onecor()</a></code>
+          <code><a href="power.z.logistic.html">power.z.logistic()</a></code>
 
         </dt>
-        <dd>Power Analysis for One-Sample Correlation</dd>
-
-        <dt>
-
-          <code><a href="power.z.oneprop.html">power.z.oneprop()</a></code>
-
-        </dt>
-        <dd>Power Analysis for the Test of One Proportion (Normal Approximation Method)</dd>
+        <dd>Power Analysis for Logistic Regression Coefficient (Wald's Z-Test)</dd>
 
         <dt>
 
@@ -324,34 +304,92 @@
 
         </dt>
         <dd>Power Analysis for Poisson Regression Coefficient (Wald's z Test)</dd>
+      </dl></div><div class="section level2">
+      <h2 id="helper-and-effect-size-conversions">Helper and Effect Size Conversions<a class="anchor" aria-label="anchor" href="#helper-and-effect-size-conversions"></a></h2>
+
+      <div class="section-desc"><p>Helper functions, and functions to transform and convert effect size metrics</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="inflate.sample.html">inflate.sample()</a></code>
+
+        </dt>
+        <dd>Inflate Sample Size for Attrition</dd>
 
         <dt>
 
-          <code><a href="power.z.test.html">power.z.test()</a></code>
+          <code><a href="d.to.cles.html">d.to.cles()</a></code>
 
         </dt>
-        <dd>Statistical Power for the Generic z-Test</dd>
+        <dd>Conversion from Cohen's d to Common Language Effect Size</dd>
 
         <dt>
 
-          <code><a href="power.z.twocors.html">power.z.twocors()</a></code>
+          <code><a href="cor.to.z.html">cor.to.z()</a></code>
 
         </dt>
-        <dd>Power Analysis for Independent Correlations</dd>
+        <dd>Conversion from a correlation to a z-value (Fisher's z-transformation)</dd>
 
         <dt>
 
-          <code><a href="power.z.twocors.steiger.html">power.z.twocors.steiger()</a></code>
+          <code><a href="cors.to.q.html">cors.to.q()</a></code>
 
         </dt>
-        <dd>Power Analysis for Dependent Correlations (Steiger's Z-Test)</dd>
+        <dd>Conversion from a correlation Difference to Cohen's q</dd>
 
         <dt>
 
-          <code><a href="power.z.twoprops.html">power.z.twoprops()</a></code>
+          <code><a href="etasq.to.f.html">etasq.to.f()</a></code>
 
         </dt>
-        <dd>Power Analysis for Testing Difference Between Two Proportions (Normal Approximation Method)</dd>
+        <dd>Conversion from Eta-squared to Cohen's f</dd>
+
+        <dt>
+
+          <code><a href="f.to.etasq.html">f.to.etasq()</a></code>
+
+        </dt>
+        <dd>Conversion between Cohen's f and Eta-squared</dd>
+
+        <dt>
+
+          <code><a href="f.to.rsq.html">f.to.rsq()</a></code>
+
+        </dt>
+        <dd>Conversion from Cohen's f to R-squared</dd>
+
+        <dt>
+
+          <code><a href="joint.probs.2x2.html">joint.probs.2x2()</a></code>
+
+        </dt>
+        <dd>Conversion from joint probabilities to marginal probabilities for the McNemar test applied to paired binary data.</dd>
+
+        <dt>
+
+          <code><a href="marginal.probs.2x2.html">marginal.probs.2x2()</a></code>
+
+        </dt>
+        <dd>Conversion from marginal probabilities to joint probabilities for the McNemar test applied to paired binary data.</dd>
+
+        <dt>
+
+          <code><a href="means.to.d.html">means.to.d()</a></code>
+
+        </dt>
+        <dd>Conversion from Means and Standard Deviations to Cohen's d</dd>
+
+        <dt>
+
+          <code><a href="means.to.etasq.html">means.to.etasq()</a></code>
+
+        </dt>
+        <dd>Conversion from Means and Standard Deviations to Cohen's f and Eta-squared</dd>
 
         <dt>
 
@@ -387,8 +425,25 @@
 
         </dt>
         <dd>Conversion from a z-value to a correlation (inverse Fisher's z-transformation)</dd>
+      </dl></div><div class="section level2">
+      <h2 id="lambda-prime">Lambda Prime<a class="anchor" aria-label="anchor" href="#lambda-prime"></a></h2>
+
+      <div class="section-desc"><p>Distribution functions for the lambda prime distribution</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="lambdap.html">dlambdap()</a></code> <code><a href="lambdap.html">plambdap()</a></code> <code><a href="lambdap.html">qlambdap()</a></code> <code><a href="lambdap.html">rlambdap()</a></code>
+
+        </dt>
+        <dd>Distribution functions for the Lambda prime / non-central Lambda distribution</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
