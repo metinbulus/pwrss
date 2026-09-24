@@ -133,13 +133,13 @@
 .h0_sign <- function(alt = c("two.sided", "one.sided"), less = FALSE, utf = FALSE) {
   alt <- match.arg(alt)
 
-  ifelse(alt == "two.sided", .eq(utf), ifelse(less, .ge(utf), .le(utf)))
+  if (alt == "two.sided") .eq(utf) else if (alt == "one.sided" && less) .ge(utf) else if (alt == "one.sided" && !less) .le(utf)
 }
 
 .h1_sign <- function(alt = c("two.sided", "one.sided"), less = FALSE, utf = FALSE) {
   alt <- match.arg(alt)
 
-  ifelse(alt == "two.sided", .ne(utf), ifelse(less, .ls(utf), .gt(utf)))
+  if (alt == "two.sided") .ne(utf) else if (alt == "one.sided" && less) .ls(utf) else if (alt == "one.sided" && !less) .gt(utf)
 }
 
 .h0_twoone <- function(tgt, mrg, utf, alt = "two.sided", val.alt = NA, val.null = NA, val.mrg = NULL) {
@@ -222,13 +222,13 @@
       es_val  <- sprintf("%s (vs. %s = %s)", es_val, es_ndsc, .fmt_val(x[[paste0("null.", es_fld)]], digits))
     } else if (es_fld %in% c("prob1", "prob2", "prob10", "prob01", "rho1", "rho2", "rho12", "rho13", "rho34")) {
       if (es_fld %in% c("prob1", "prob2")) {
-        es_nfld <- ifelse(es_fld == "prob1", "prob2", "prob1")
+        es_nfld <- setdiff(c("prob1", "prob2"), es_fld)
       } else if (es_fld %in% c("prob10", "prob01")) {
-        es_nfld <- ifelse(es_fld == "prob10", "prob01", "prob10")
+        es_nfld <- setdiff(c("prob10", "prob01"), es_fld)
       } else if (es_fld %in% c("rho1", "rho2")) {
-        es_nfld <- ifelse(es_fld == "rho1", "rho2", "rho1")
+        es_nfld <- setdiff(c("rho1", "rho2"), es_fld)
       } else if (es_fld %in% c("rho12", "rho13", "rho34")) {
-        es_nfld <- ifelse(es_fld != "rho12", "rho12", ifelse(x$common, "rho13", "rho34"))
+        es_nfld <- if (es_fld != "rho12") "rho12" else if (x$common) "rho13" else "rho34"
       }
       es_val  <- sprintf("%s (vs. %s = %s)", es_val, ifelse(utf, .fmt_utf(es_nfld), es_nfld), .fmt_val(x[[es_nfld]], digits))
     }
@@ -1093,7 +1093,7 @@
   cat(.header(x$requested, FALSE, utf))
   cat(x$test, "\n\n", sep = "")
 
-  rsq <- ifelse(x$k.tested < x$k.total, ifelse(utf, "\u0394R\u00B2", "Change in R-squared"), ifelse(utf, "R\u00B2", "R-squared"))
+  rsq <- if (x$k.tested < x$k.total) ifelse(utf, "\u0394R\u00B2", "Change in R-squared") else ifelse(utf, "R\u00B2", "R-squared")
   h0_text <- ifelse(x$margin == 0, sprintf("%s = 0", rsq), sprintf("0 %s %s %s margin", .le(utf), rsq, .le(utf)))
   h1_text <- ifelse(x$margin == 0, sprintf("%s > 0", rsq), sprintf("%s > margin",                    rsq))
   cat(.hypotheses(h0_text, h1_text, utf))

@@ -1,5 +1,5 @@
 Package: pwrss
-Version: 1.2.0
+Version: 1.3.0
 Type: Package
 Title: Statistical Power, Sample Size, and Detectable Effect Calculations
 Authors@R: c(person(given = "Metin",     family = "Bulus",     email = "bulusmetin@gmail.com",       role = c("aut", "cre", "cph")),
@@ -18,9 +18,8 @@ URL: https://metinbulus.github.io/pwrss/
 BugReports: https://github.com/metinbulus/pwrss/issues
 Depends: R (>= 3.5.0)
 Suggests: knitr,
-          sadists,
           rmarkdown,
           testthat (>= 3.0.0)
 Config/testthat/edition: 3
 ByteCompile: yes
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0

@@ -1,3 +1,10 @@
+## Changes in pwrss v1.3.0
+  - Replaced functions to calculate lambda prime (formerly provided by the R-package `sadists`) with own implementations
+    (numerically, these implementations reveal results close to those provided by `sadists`; however, a problem with a
+    numerical instability in that package doesn't exists for these implementations, and df's can be estimated in
+    `power.lp.test`)
+  - Other smaller improvements to satisfy the requirements / suggestions by the `goodpractice` R-package
+
 ## Changes in pwrss v1.2.0
   - Added unit tests for all procedures
   - Added minimum detectable effects
