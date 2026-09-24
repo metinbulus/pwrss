@@ -3,7 +3,7 @@
 \name{power.exact.twoprops}
 \alias{power.exact.twoprops}
 \alias{power.exact.twoprop}
-\title{Power Analysis for Testing Difference Between Two Proportions (Exact Method)}
+\title{Power Analysis for Testing the Difference Between Two Proportions (Exact Method)}
 \usage{
 power.exact.twoprops(
   prob1 = NULL,

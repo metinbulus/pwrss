@@ -576,8 +576,8 @@ probs.to.h <- function(prob1, prob2 = 0.50, verbose = 1) {
 } # probs.to.h
 
 
-#' Helper function to converts joint probabilities to marginal probabilities
-#' for the McNemar test applied to paired binary data.
+#' Conversion from joint probabilities to marginal probabilities for the
+#' McNemar test applied to paired binary data.
 #'
 #'
 #' @param prob1   (marginal) probability of success in case group (or after).
@@ -773,8 +773,8 @@ prob.limits.paired <- function(prob1 = NULL, prob2 = NULL, rho = 0.50,
 } # prob.limits.paired
 
 
-#' Helper function to converts marginal probabilities to joint probabilities
-#' for the McNemar test applied to paired binary data.
+#' Conversion from marginal probabilities to joint probabilities for the
+#' McNemar test applied to paired binary data.
 #'
 #'
 #' @param prob11  (joint) probability of success in both groups. 'prob11' and

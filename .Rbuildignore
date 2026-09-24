@@ -17,4 +17,4 @@
 ^_pkgdown\.yml$
 ^README\.md$
 ^README\.Rmd$
-^CRAN-SUBMISSION$
+^revdep$

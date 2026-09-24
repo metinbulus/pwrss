@@ -1,10 +1,91 @@
-url: https://metinbulus.github.io/pwrss
+url: https://metinbulus.github.io/pwrss/
+
 repo:
   url:
     home: https://github.com/metinbulus/pwrss/
     source: https://github.com/metinbulus/pwrss/blob/main/
     issue: https://github.com/metinbulus/pwrss/issues/
   branch: main
+
 template:
   bootstrap: 5
   math-rendering: katex
+
+reference:
+  - title: "Generic Power Analyses"
+    desc: "Power analyses based on core distributions"
+    contents:
+      - power.binom.test
+      - power.chisq.test
+      - power.f.test
+      - power.lp.test
+      - power.t.test
+      - power.z.test
+
+  - title: "Proportions"
+    desc: "Power analyses for one and two sample (independent and paired) proportions"
+    contents:
+      - power.chisq.gof
+      - power.z.oneprop
+      - power.exact.oneprop
+      - power.z.twoprops
+      - power.exact.twoprops
+      - power.exact.fisher
+      - power.exact.mcnemar
+
+  - title: "Correlations"
+    desc: "Power analyses for (independent and dependent) correlations"
+    contents:
+      - power.z.onecor
+      - power.exact.onecor
+      - power.z.twocors
+      - power.z.twocors.steiger
+
+  - title: "Means Differences"
+    desc: "Power analyses for mean differences (t-tests, Wilcoxon) and ANOVA / ANCOVA models"
+    contents:
+      - power.t.student
+      - power.t.welch
+      - power.np.wilcoxon
+      - power.f.ancova
+      - power.f.ancova.keppel
+      - power.f.ancova.shieh
+      - factorial.contrasts
+      - power.t.contrast
+      - power.t.contrasts
+      - power.f.mixed.anova
+
+  - title: "Regression Models"
+    desc: "Power analyses for linear, logistic, and Poisson regressions"
+    contents:
+      - power.f.regression
+      - power.t.regression
+      - power.z.mediation
+      - power.z.logistic
+      - power.z.poisson
+
+  - title: "Helper and Effect Size Conversions"
+    desc: "Helper functions, and functions to transform and convert effect size metrics"
+    contents:
+      - inflate.sample
+      - cles.to.d
+      - cor.to.z
+      - cors.to.q
+      - d.to.cles
+      - etasq.to.f
+      - f.to.etasq
+      - f.to.rsq
+      - joint.probs.2x2
+      - marginal.probs.2x2
+      - means.to.d
+      - means.to.etasq
+      - probs.to.h
+      - probs.to.w
+      - q.to.cors
+      - rsq.to.f
+      - z.to.cor
+
+  - title: "Lambda Prime"
+    desc: "Distribution functions for the lambda prime distribution"
+    contents:
+      - lambdap

@@ -546,7 +546,7 @@ pwrss.z.prop <- function(p, p0 = 0.50, margin = 0, arcsin.trans = FALSE, alpha =
 # two proportions exact test #
 ##############################
 
-#' Power Analysis for Testing Difference Between Two Proportions (Exact Method)
+#' Power Analysis for Testing the Difference Between Two Proportions (Exact Method)
 #'
 #' @description
 #' Calculates power or sample size (only one can be NULL at a time) for two
@@ -710,7 +710,7 @@ power.exact.twoprop <- power.exact.twoprops
 # two proportions test #
 ########################
 
-#' Power Analysis for Testing Difference Between Two Proportions (Normal
+#' Power Analysis for Testing the Difference Between Two Proportions (Normal
 #' Approximation Method)
 #'
 #' @description

@@ -5,7 +5,7 @@
 \alias{power.z.twoprop}
 \alias{pwrss.z.2props}
 \alias{pwrss.z.2prop}
-\title{Power Analysis for Testing Difference Between Two Proportions (Normal
+\title{Power Analysis for Testing the Difference Between Two Proportions (Normal
 Approximation Method)}
 \usage{
 power.z.twoprops(
