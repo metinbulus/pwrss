@@ -36,17 +36,6 @@ power.z.twocor(
   verbose = 1,
   utf = FALSE
 )
-
-pwrss.z.2corrs(
-  r1 = 0.5,
-  r2 = 0.3,
-  alpha = 0.05,
-  kappa = 1,
-  alternative = c("not equal", "greater", "less"),
-  n2 = NULL,
-  power = NULL,
-  verbose = TRUE
-)
 ```
 
 ## Arguments

@@ -57,44 +57,6 @@ power.z.med(
   verbose = 1,
   utf = FALSE
 )
-
-pwrss.z.mediation(
-  a,
-  b,
-  cp = 0,
-  sdx = 1,
-  sdm = 1,
-  sdy = 1,
-  r2m.x = a^2 * sdx^2/sdm^2,
-  r2y.mx = (b^2 * sdm^2 + cp^2 * sdx^2)/sdy^2,
-  n = NULL,
-  power = NULL,
-  alpha = 0.05,
-  alternative = c("not equal", "less", "greater"),
-  mc = TRUE,
-  nsims = 1000,
-  ndraws = 1000,
-  verbose = TRUE
-)
-
-pwrss.z.med(
-  a,
-  b,
-  cp = 0,
-  sdx = 1,
-  sdm = 1,
-  sdy = 1,
-  r2m.x = a^2 * sdx^2/sdm^2,
-  r2y.mx = (b^2 * sdm^2 + cp^2 * sdx^2)/sdy^2,
-  n = NULL,
-  power = NULL,
-  alpha = 0.05,
-  alternative = c("not equal", "less", "greater"),
-  mc = TRUE,
-  nsims = 1000,
-  ndraws = 1000,
-  verbose = TRUE
-)
 ```
 
 ## Arguments
