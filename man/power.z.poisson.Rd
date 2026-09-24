@@ -44,38 +44,6 @@ power.z.poisreg(
   verbose = 1,
   utf = FALSE
 )
-
-pwrss.z.poisson(
-  exp.beta0 = 1.1,
-  exp.beta1 = 1.16,
-  beta0 = log(exp.beta0),
-  beta1 = log(exp.beta1),
-  mean.exposure = 1,
-  n = NULL,
-  power = NULL,
-  r2.other.x = 0,
-  alpha = 0.05,
-  alternative = c("not equal", "less", "greater"),
-  method = c("demidenko(vc)", "demidenko", "signorini"),
-  distribution = "normal",
-  verbose = TRUE
-)
-
-pwrss.z.poisreg(
-  exp.beta0 = 1.1,
-  exp.beta1 = 1.16,
-  beta0 = log(exp.beta0),
-  beta1 = log(exp.beta1),
-  mean.exposure = 1,
-  n = NULL,
-  power = NULL,
-  r2.other.x = 0,
-  alpha = 0.05,
-  alternative = c("not equal", "less", "greater"),
-  method = c("demidenko(vc)", "demidenko", "signorini"),
-  distribution = "normal",
-  verbose = TRUE
-)
 }
 \arguments{
 \item{base.rate}{the base mean event rate.}

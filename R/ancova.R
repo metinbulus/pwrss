@@ -299,7 +299,6 @@ power.f.ancova <- function(eta.squared = NULL,
 
 } # end of power.f.ancova()
 
-#' @rdname power.f.ancova
 #' @export pwrss.f.ancova
 pwrss.f.ancova <- function(eta2 = NULL, f2 = NULL,
                            n.way = length(n.levels),

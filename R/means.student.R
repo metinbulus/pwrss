@@ -726,7 +726,6 @@ power.t.welch <- function(d = NULL, null.d = 0, margin = 0, req.sign = "+",
 # one mean t test #
 ###################
 
-#' @rdname power.t.student
 #' @export pwrss.t.mean
 pwrss.t.mean <- function(mu, sd = 1, mu0 = 0, margin = 0, alpha = 0.05,
                          alternative = c("not equal", "greater", "less",
@@ -777,7 +776,6 @@ pwrss.t.mean <- function(mu, sd = 1, mu0 = 0, margin = 0, alpha = 0.05,
 
 } # pwrss.t.mean()
 
-#' @rdname power.t.student
 #' @export pwrss.t.2means
 pwrss.t.2means <- function(mu1, mu2 = 0, margin = 0,
                             sd1 = ifelse(paired, sqrt(1 / (2 * (1 - paired.r))), 1),
@@ -876,12 +874,10 @@ fmt_test_student <- function(design) {
 }
 
 # defunct
-#' @rdname power.t.student
 #' @export pwrss.z.mean
 pwrss.z.mean   <- function(...) {
   stop("This function is no longer available. Please use `power.t.student()`.", call. = FALSE)
 }
-#' @rdname power.t.student
 #' @export pwrss.z.2means
 pwrss.z.2means <- function(...) {
   stop("This function is no longer available. Please use `power.t.student()` or `power.t.welch()`.", call. = FALSE)

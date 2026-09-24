@@ -24,41 +24,6 @@ power.t.student(
   verbose = 1,
   utf = FALSE
 )
-
-pwrss.t.mean(
-  mu,
-  sd = 1,
-  mu0 = 0,
-  margin = 0,
-  alpha = 0.05,
-  alternative = c("not equal", "greater", "less", "equivalent", "non-inferior",
-    "superior"),
-  n = NULL,
-  power = NULL,
-  verbose = TRUE
-)
-
-pwrss.t.2means(
-  mu1,
-  mu2 = 0,
-  margin = 0,
-  sd1 = ifelse(paired, sqrt(1/(2 * (1 - paired.r))), 1),
-  sd2 = sd1,
-  kappa = 1,
-  paired = FALSE,
-  paired.r = 0.5,
-  alpha = 0.05,
-  welch.df = TRUE,
-  alternative = c("not equal", "greater", "less", "equivalent", "non-inferior",
-    "superior"),
-  n2 = NULL,
-  power = NULL,
-  verbose = TRUE
-)
-
-pwrss.z.mean(...)
-
-pwrss.z.2means(...)
 }
 \arguments{
 \item{d}{Cohen's d or Hedges' g.}

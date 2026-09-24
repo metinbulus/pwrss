@@ -599,7 +599,6 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
 power.z.logreg <- power.z.logistic
 
 
-#' @rdname power.z.logistic
 #' @export pwrss.z.logistic
 pwrss.z.logistic <- function(p1 = NULL, p0 = NULL, odds.ratio  = NULL,
                              beta0 = NULL, beta1 = NULL,
@@ -628,7 +627,6 @@ pwrss.z.logistic <- function(p1 = NULL, p0 = NULL, odds.ratio  = NULL,
 
 } # pwrss.z.logistic
 
-#' @rdname power.z.logistic
 #' @export pwrss.z.logreg
 pwrss.z.logreg <- pwrss.z.logistic
 

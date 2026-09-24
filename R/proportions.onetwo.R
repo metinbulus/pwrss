@@ -507,7 +507,6 @@ power.z.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
                       class = c("pwrss", "z", "oneprop")))
 } # power.z.oneprop
 
-#' @rdname power.z.oneprop
 #' @export pwrss.z.prop
 pwrss.z.prop <- function(p, p0 = 0.50, margin = 0, arcsin.trans = FALSE, alpha = 0.05,
                           alternative = c("not equal", "greater", "less",
@@ -1180,7 +1179,6 @@ power.z.twoprops <- function(prob1 = NULL, prob2 = NULL, req.sign = "+", margin 
 #' @export power.z.twoprop
 power.z.twoprop <- power.z.twoprops
 
-#' @rdname power.z.twoprops
 #' @export pwrss.z.2props
 pwrss.z.2props <- function(p1, p2, margin = 0, arcsin.trans = FALSE,
                            kappa = 1, alpha = 0.05,
@@ -1218,6 +1216,5 @@ pwrss.z.2props <- function(p1, p2, margin = 0, arcsin.trans = FALSE,
 
 } # pwrss.z.2props()
 
-#' @rdname power.z.twoprops
 #' @export pwrss.z.2props
 pwrss.z.2prop <- pwrss.z.2props

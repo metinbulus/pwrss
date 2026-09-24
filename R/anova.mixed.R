@@ -276,7 +276,6 @@ power.f.mixed.anova <- function(eta.squared = NULL,
 
 } # power.f.anova.mixed
 
-#' @rdname power.f.anova.mixed
 #' @export pwrss.f.rmanova
 pwrss.f.rmanova <- function(eta2 = NULL, f2 = NULL,
                             corr.rm = 0.50, n.levels = 2, n.rm = 2,

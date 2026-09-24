@@ -44,40 +44,6 @@ power.t.reg(
   verbose = 1,
   utf = FALSE
 )
-
-pwrss.t.regression(
-  beta1 = 0.25,
-  beta0 = 0,
-  margin = 0,
-  sdx = 1,
-  sdy = 1,
-  k = 1,
-  r2 = (beta1 * sdx/sdy)^2,
-  alpha = 0.05,
-  n = NULL,
-  power = NULL,
-  alternative = c("not equal", "less", "greater", "non-inferior", "superior",
-    "equivalent"),
-  verbose = TRUE
-)
-
-pwrss.t.reg(
-  beta1 = 0.25,
-  beta0 = 0,
-  margin = 0,
-  sdx = 1,
-  sdy = 1,
-  k = 1,
-  r2 = (beta1 * sdx/sdy)^2,
-  alpha = 0.05,
-  n = NULL,
-  power = NULL,
-  alternative = c("not equal", "less", "greater", "non-inferior", "superior",
-    "equivalent"),
-  verbose = TRUE
-)
-
-pwrss.z.regression(...)
 }
 \arguments{
 \item{beta}{regression coefficient. One can use standardized

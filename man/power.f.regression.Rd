@@ -32,28 +32,6 @@ power.f.reg(
   verbose = 1,
   utf = FALSE
 )
-
-pwrss.f.regression(
-  r2 = NULL,
-  f2 = NULL,
-  k = 1,
-  m = k,
-  alpha = 0.05,
-  n = NULL,
-  power = NULL,
-  verbose = TRUE
-)
-
-pwrss.f.reg(
-  r2 = NULL,
-  f2 = NULL,
-  k = 1,
-  m = k,
-  alpha = 0.05,
-  n = NULL,
-  power = NULL,
-  verbose = TRUE
-)
 }
 \arguments{
 \item{r.squared.change}{R-squared (or R-squared change).}

@@ -47,34 +47,6 @@ power.z.twoprop(
   verbose = 1,
   utf = FALSE
 )
-
-pwrss.z.2props(
-  p1,
-  p2,
-  margin = 0,
-  arcsin.trans = FALSE,
-  kappa = 1,
-  alpha = 0.05,
-  alternative = c("not equal", "greater", "less", "equivalent", "non-inferior",
-    "superior"),
-  n2 = NULL,
-  power = NULL,
-  verbose = TRUE
-)
-
-pwrss.z.2prop(
-  p1,
-  p2,
-  margin = 0,
-  arcsin.trans = FALSE,
-  kappa = 1,
-  alpha = 0.05,
-  alternative = c("not equal", "greater", "less", "equivalent", "non-inferior",
-    "superior"),
-  n2 = NULL,
-  power = NULL,
-  verbose = TRUE
-)
 }
 \arguments{
 \item{prob1}{probability of success in the first group.}

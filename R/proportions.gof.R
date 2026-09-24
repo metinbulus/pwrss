@@ -200,7 +200,6 @@ power.chisq.gof <- function(w = NULL, null.w = 0, df,
 
 } # end of power.chisq.gof()
 
-#' @rdname power.chisq.gof
 #' @export pwrss.chisq.gofit
 pwrss.chisq.gofit <- function(p1 = NULL, p0 = NULL,
                               w = NULL, df = NULL,

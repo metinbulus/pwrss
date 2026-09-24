@@ -414,7 +414,6 @@ power.z.mediation  <- function(beta.a = NULL, beta.b = NULL, ab.ratio = 1, req.s
 #' @export power.z.med
 power.z.med <- power.z.mediation
 
-#' @rdname power.z.mediation
 #' @export pwrss.z.mediation
 pwrss.z.mediation  <- function(a, b, cp = 0,
                                sdx = 1, sdm = 1, sdy = 1,
@@ -589,6 +588,5 @@ invisible(structure(list(parms = func.parms,
 
 } # pwrss.z.mediation()
 
-#' @rdname power.z.mediation
 #' @export pwrss.z.med
 pwrss.z.med  <- pwrss.z.mediation
