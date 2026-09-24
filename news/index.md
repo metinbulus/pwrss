@@ -1,5 +1,20 @@
 # Changelog
 
+## Changes in pwrss v1.3.0
+
+- Replaced functions to calculate lambda prime (formerly provided by the
+  R-package `sadists`) with own implementations (numerically, these
+  implementations reveal results close to those provided by `sadists`;
+  however, a problem with a numerical instability in that package
+  doesn’t exists for these implementations, and df’s can be estimated in
+  `power.lp.test`)
+- Smaller improvements to satisfy the requirements / suggestions by the
+  `goodpractice` R-package
+- Fix a bug arising from stats::poly() returning very small values
+  (~1e-16)in places where 0 is expected
+- Small improvement to the unit tests, preventing that snapshots are
+  deleted if a comparison is not run
+
 ## Changes in pwrss v1.2.0
 
 CRAN release: 2026-06-22

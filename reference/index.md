@@ -22,6 +22,12 @@
 - [`joint.probs.2x2()`](https://metinbulus.github.io/pwrss/reference/joint.probs.2x2.md)
   : Helper function to converts joint probabilities to marginal
   probabilities for the McNemar test applied to paired binary data.
+- [`dlambdap()`](https://metinbulus.github.io/pwrss/reference/lambdap.md)
+  [`plambdap()`](https://metinbulus.github.io/pwrss/reference/lambdap.md)
+  [`qlambdap()`](https://metinbulus.github.io/pwrss/reference/lambdap.md)
+  [`rlambdap()`](https://metinbulus.github.io/pwrss/reference/lambdap.md)
+  : Distribution functions for the Lambda prime / non-central Lambda
+  distribution
 - [`marginal.probs.2x2()`](https://metinbulus.github.io/pwrss/reference/marginal.probs.2x2.md)
   : Helper function to converts marginal probabilities to joint
   probabilities for the McNemar test applied to paired binary data.

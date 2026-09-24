@@ -129,7 +129,7 @@ power.t.test(ncp = -3.519, # t-value for hp variable
 **Report**: The post-hoc power analysis showed that a sample of 32 cars
 had a 0.925 chance of detecting the observed relationship between
 horsepower and miles per gallon, if such a relationship exists. The
-analysis was conducted using an $`\alpha`$ level of 0.05.
+analysis was conducted using an \alpha level of 0.05.
 
 However, post-hoc power has limited practical value. Given such a sample
 size, minimum detectable test statistics (MDTS) is -2.899. The estimated
@@ -180,18 +180,16 @@ Power calculation is not readily available for non-equivalent pre-test
 vs. post-test control-group-designs but the formula is already known.
 The approximate standard error is
 
-``` math
-SE = \sqrt{\frac{1 - R^2}{p(1 - p)n(1 - R^2_{TX})}}
-```
+SE = \sqrt{\frac{1 - R^2}{p(1 - p)n(1 - R^2\_{TX})}}
 
-with $`df = n - g - 2`$ where
+with df = n - g - 2 where
 
-- $`R^2`$ : Explanatory power of covariates
-- $`R^2_{TX}`$ : Squared point-biserial correlation between treatment
+- R^2 : Explanatory power of covariates
+- R^2\_{TX} : Squared point-biserial correlation between treatment
   indicator and pre-test
-- $`p`$ : Group allocation rate
-- $`n`$ : Total sample size
-- $`g`$ : Number of covariates
+- p : Group allocation rate
+- n : Total sample size
+- g : Number of covariates
 
 For details please see
 ([Bulus](https://dergipark.org.tr/tr/download/article-file/1783497),
@@ -275,9 +273,9 @@ power.t.test(ncp = ncp,
 120 students would be sufficient to detect the effect of a mindfulness
 intervention on emotional regulation. The analysis targeted a moderate
 effect size (d = 0.50) with a superiority margin of 0.10, using a
-one-tailed test at $`\alpha`$ = 0.05. This design yielded an estimated
-power of 0.90, indicating adequate sensitivity to detect the
-intervention effect.
+one-tailed test at \alpha = 0.05. This design yielded an estimated power
+of 0.90, indicating adequate sensitivity to detect the intervention
+effect.
 
 ## Z-Test
 
@@ -361,7 +359,7 @@ power.z.test(mean = -3.994, # z-value for wool B
 **Report**: The post-hoc power analysis showed that a sample of 54
 trials had a 0.979 chance of detecting the observed relationship between
 Wool B and number of warp breaks, if such a relationship exists. The
-analysis was conducted using an $`\alpha`$ level of 0.05.
+analysis was conducted using an \alpha level of 0.05.
 
 Given such a sample size, minimum detectable test statistics (MDTS) is
 -2.802. The estimated value of -3.994 is much larger than the MDTS in
@@ -405,17 +403,14 @@ power.z.test(mean = NULL,   # calculate this
 
 ### User Defined Design
 
-Power calculation is not readily available for Spearman’s $`\rho`$ rank
+Power calculation is not readily available for Spearman’s \rho rank
 correlation but the formula is already known. The approximate standard
 error for the Fisher’s Z-transformed correlation coefficient is
 
-``` math
 SE = \sqrt{\frac{1.06}{n - 3}}
-```
 
-where $`n`$ is the sample size. For details please see ([Fieller,
-Hartley, and Pearson](https://doi.org/10.1093/biomet/44.3-4.470), 1957,
-p. 472).
+where n is the sample size. For details please see ([Fieller, Hartley,
+and Pearson](https://doi.org/10.1093/biomet/44.3-4.470), 1957, p. 472).
 
 **Example**: A team of school counselors want to examine whether there
 is a relationship between students’ class rank (1st, 2nd, 3rd, etc.) and
@@ -423,15 +418,15 @@ their self-reported academic stress levels, measured on a 10-point scale
 (1 = no stress, 10 = extreme stress). Since class rank is an ordinal
 variable (lower ranks mean higher academic standing) and the stress
 scale is subjective and potentially not interval-scaled, the counselor
-uses Spearman’s rank-order correlation (Spearman’s $`\rho`$) to assess
+uses Spearman’s rank-order correlation (Spearman’s \rho) to assess
 whether higher-ranking students tend to report lower or higher levels of
 stress.
 
 Researchers hypothesize that students with higher class ranks (i.e.,
 lower rank numbers) report lower stress levels. They plan to recruit 100
-students, interested in detecting a Spearman’s $`\rho`$ as small as
-0.30, and will use a two-tailed test with an $`\alpha`$ level of 0.05.
-What is the power under these criteria?
+students, interested in detecting a Spearman’s \rho as small as 0.30,
+and will use a two-tailed test with an \alpha level of 0.05. What is the
+power under these criteria?
 
 ``` r
 
@@ -488,9 +483,9 @@ power.z.test(mean = ncp,
 **Report**: A power analysis was conducted to assess whether 100
 students are sufficient to detect association between students’ class
 rank and their self-reported academic stress levels. The analysis
-targeted a moderate Spearman’s $`\rho`$ of 0.30, a two-tailed test with
-$`\alpha`$ = 0.05. This configuration yielded an estimated power of
-0.84, indicating sufficient sensitivity to detect the hypothesized
+targeted a moderate Spearman’s \rho of 0.30, a two-tailed test with
+\alpha = 0.05. This configuration yielded an estimated power of 0.84,
+indicating sufficient sensitivity to detect the hypothesized
 association.
 
 ## F-Test
@@ -564,7 +559,7 @@ power.f.test(ncp = 10.71,  # non-centrality under alternative
 **Report**: The post-hoc power analysis showed that a sample of 31 trees
 had a 0.885 chance of detecting the observed relationship between tree
 height and girth, if such a relationship exists in the population. The
-analysis was conducted using an $`\alpha`$ level of 0.05.
+analysis was conducted using an \alpha level of 0.05.
 
 Given such a sample size and research design, minimum detectable test
 statistics (MDTS) is 8.403. The estimated value of 10.71 is much larger
@@ -666,8 +661,7 @@ power.chisq.test(ncp = 138.29, # X-squared
 **Report**: The post-hoc power analysis showed that a sample of 592
 individuals had a 1.00 chance of detecting the observed relationship
 between hair and eye color, if such a relationship exists in the
-population. The analysis was conducted using an $`\alpha`$ level of
-0.05.
+population. The analysis was conducted using an \alpha level of 0.05.
 
 Given such a sample size and research design, minimum detectable test
 statistics (MDTS) is 15.65. The estimated value of 138.29 is much larger
@@ -779,7 +773,7 @@ power.chisq.test(ncp = 18.463,
 women provided a 0.99 probability of detecting the unique contribution
 of the number of induced abortions to infertility status, while
 controlling for other variables, assuming such a relationship exists in
-the population. The analysis was conducted using an $`\alpha`$ level of
+the population. The analysis was conducted using an \alpha level of
 0.05.
 
 Given such a sample size and research design, minimum detectable test
@@ -888,7 +882,7 @@ power.binom.test(size = n.total,             # number of eruptions
 eruptions provided a 0.999 probability of detecting whether eruptions
 lasting more than 3 minutes occur more than 50% of the time, if it
 exists in the underlying eruption pattern. The analysis was based on a
-one-sided test procedure with $`\alpha`$ = 0.05.
+one-sided test procedure with \alpha = 0.05.
 
 ### User-Defined Designs
 
@@ -931,7 +925,7 @@ power.binom.test(size = NULL,                 # number of tosses needed
 are required to determine whether a coin is fair. The analysis assumes a
 fair coin has a 0.50 probability of landing heads, with equivalence
 margins set at 0.495 and 0.505, using a two one-sided test procedure
-with $`\alpha`$ = 0.05.
+with \alpha = 0.05.
 
 **Example 2**: Find optimal number of replications in a Monte Carlo
 simulation.
@@ -1007,12 +1001,12 @@ power.binom.test(size = NULL,                 # number of replications needed
 ```
 
 **Report 2**: Power analysis indicated that at least 16,387 replications
-are required to estimate the Type 1 error rate at $`\alpha`$ = 0.05.
-This analysis used a two one-sided test procedure with equivalence
-margins set at 0.045 and 0.055. In contrast, at least 55,030
-replications are needed to estimate statistical power at 0.80, assuming
-equivalence margins of 0.795 and 0.805, also using the two one-sided
-test procedure with $`\alpha`$ = 0.05.
+are required to estimate the Type 1 error rate at \alpha = 0.05. This
+analysis used a two one-sided test procedure with equivalence margins
+set at 0.045 and 0.055. In contrast, at least 55,030 replications are
+needed to estimate statistical power at 0.80, assuming equivalence
+margins of 0.795 and 0.805, also using the two one-sided test procedure
+with \alpha = 0.05.
 
 ## Error Plots
 
@@ -1734,9 +1728,9 @@ regulation, assessed at the end of the program using the Difficulties in
 Emotion Regulation Scale (DERS). A two-sided test will be conducted to
 determine whether emotional regulation improves or deteriorates in the
 online format in comparison to the in-person format. Researchers aim to
-detect a small effect (d = 0.20), using a two-sided test with $`\alpha`$
-= 0.05 and 0.80 power. What is the minimum required sample size under
-this criterion?
+detect a small effect (d = 0.20), using a two-sided test with \alpha =
+0.05 and 0.80 power. What is the minimum required sample size under this
+criterion?
 
 ``` r
 
@@ -1789,8 +1783,8 @@ measured on a 5-point scale (1 = Not at all, 5 = Extremely). Researchers
 aim to determine whether satisfaction ratings differ between the online
 and in-person formats. To test this, they plan to use the Wilcoxon
 signed-rank test for paired data, targeting a small effect size (d =
-0.20) with a two-sided significance level of $`\alpha`$ = 0.05. What is
-the minimum required sample size under these conditions?
+0.20) with a two-sided significance level of \alpha = 0.05. What is the
+minimum required sample size under these conditions?
 
 ``` r
 
@@ -2272,8 +2266,8 @@ the commonly used clinical threshold of 20 - is considered indicative of
 elevated stress that warrants attention. With an estimated standard
 deviation of 5, this two-point difference corresponds to a medium effect
 size (Cohen’s d = 0.40). Assume a one-tailed test with a significance
-level of $`\alpha`$ = 0.05 and a target power of 0.80. What is the
-minimum required sample size under this criterion?
+level of \alpha = 0.05 and a target power of 0.80. What is the minimum
+required sample size under this criterion?
 
 ``` r
 
@@ -2320,9 +2314,9 @@ using “Overall, I am satisfied with my job.” and responses range from 1
 (strongly disagree) to 5 (strongly agree). A mean score below the
 neutral point of 3 indicates dissatisfaction. The schools district
 considers a modest difference between average and neutral point (Cohen’s
-d = -0.20). Assume a one-tailed test with a significance level of
-$`\alpha`$ = 0.05 and a target power of 0.80. What is the minimum
-required sample size under this criterion?
+d = -0.20). Assume a one-tailed test with a significance level of \alpha
+= 0.05 and a target power of 0.80. What is the minimum required sample
+size under this criterion?
 
 ``` r
 
@@ -2372,8 +2366,8 @@ minimum meaningful effect by specifying `margin = 0.10` - which
 correspond to half-point increase in average stress level. Differences
 smaller than this margin are not considered practically significant or a
 cause for concern. Researchers plan to use a one-sided test with a
-significance level of $`\alpha`$ = 0.05 and a desired power of 0.80.
-What is the minimum required sample size under this configuration?
+significance level of \alpha = 0.05 and a desired power of 0.80. What is
+the minimum required sample size under this configuration?
 
 ``` r
 
@@ -2453,10 +2447,10 @@ supplement does not disrupt healthy sleep patterns, they plan to assess
 whether average nightly sleep duration among users falls within the
 clinically acceptable range of 6.5 to 8.5 hours, which is considered
 optimal for most adults. Using a one-sample equivalence t-test with
-equivalence bounds set at $`\pm`$ 1 hour around the target value of 7.5
+equivalence bounds set at \pm 1 hour around the target value of 7.5
 hours, the researchers aim to demonstrate that the supplement does not
 lead to under- or oversleeping. A two one-sided tests procedure will be
-conducted with a significance level of $`\alpha`$ = 0.05 and 0.80 power.
+conducted with a significance level of \alpha = 0.05 and 0.80 power.
 Assume a standard deviation of 1.2 hours and an expected mean of 7.5
 hours. What is the minimum required sample size under this criterion?
 
@@ -2532,7 +2526,7 @@ power.np.wilcoxon(d = d,
 **Report**: We conducted a power analysis to determine the required
 sample size for assessing whether sleep duration falls within a
 predefined acceptable range. Assuming no difference (d = 0) with an
-equivalence margin of d = $`\pm`$ 0.83, a two one-sided test with 0.05
+equivalence margin of d = \pm 0.83, a two one-sided test with 0.05
 significance level and 0.80 power, the analysis indicated that a minimum
 of 14 participants are needed.
 
@@ -2624,9 +2618,9 @@ power.np.wilcoxon(d = d,
 **Report**: We conducted a power analysis to determine the required
 sample size for assessing whether sleep duration falls outside of a
 predefined acceptable range. Assuming a large difference (d = 1.25) with
-an equivalence margin of d = $`\pm`$ 0.83, a two one-sided test with
-0.05 significance level and 0.80 power, the analysis indicated that a
-minimum of 74 participants are needed.
+an equivalence margin of d = \pm 0.83, a two one-sided test with 0.05
+significance level and 0.80 power, the analysis indicated that a minimum
+of 74 participants are needed.
 
   
   
@@ -2656,8 +2650,7 @@ compliance rate as a public safety benchmark, consistent with national
 targets promoted by the National Highway Traffic Safety Administration
 (NHTSA). A usage rate of 80% or lower would raise concern and
 potentially trigger enforcement campaigns. Assuming a one-sided test
-with $`\alpha = 0.05`$ and 0.80 power, how many vehicles should be
-observed?
+with \alpha = 0.05 and 0.80 power, how many vehicles should be observed?
 
 ``` r
 
@@ -3140,9 +3133,9 @@ if return rate for either of the group exceeds the other by at least 10
 percentage points. The decision will help which reminder system to
 invest on considering their cost. Because no prior data exist, planners
 adopt the “worst-case scenario” approach that maximizes required sample
-size: a rise from 50% to 60%. Using a one-sided test with $`\alpha`$ =
-0.05 and 0.80 power, what is the minimum number of patrons needed in
-each group?
+size: a rise from 50% to 60%. Using a one-sided test with \alpha = 0.05
+and 0.80 power, what is the minimum number of patrons needed in each
+group?
 
 ``` r
 
@@ -3324,9 +3317,8 @@ if interaction effects between variables create unexpected biases.
 Because of these concerns about algorithmic bias in the composite
 scoring methodology, the ministry wants the eligibility rates (eligible
 vs. not eligible) for the scholarship must remain equivalent across male
-and female students. Any disparity greater than $`\pm`$ 1% in
-eligibility rates would be flagged as a potential violation of gender
-equity policy.
+and female students. Any disparity greater than \pm 1% in eligibility
+rates would be flagged as a potential violation of gender equity policy.
 
 An equivalence trial is conducted to determine whether the new automated
 scoring system produces statistically equivalent scholarship eligibility
@@ -3376,10 +3368,10 @@ required sample size to evaluate whether a new automated scoring system
 yields scholarship eligibility rates that are statistically equivalent
 between male and female students. The analysis assumed a baseline
 eligibility rate of 10% for both groups under the standard rater-based
-system. Using an equivalence margin of $`\pm`$ 5%, a two one-sided test
-with a 0.05 significance level, and 0.80 power, the analysis indicated
-that a minimum of 3,854 applications should be processed per group
-(7,708 total).
+system. Using an equivalence margin of \pm 5%, a two one-sided test with
+a 0.05 significance level, and 0.80 power, the analysis indicated that a
+minimum of 3,854 applications should be processed per group (7,708
+total).
 
 ### Minimum Effect
 
@@ -3387,9 +3379,9 @@ that a minimum of 3,854 applications should be processed per group
 evaluates whether a new automated scoring system yields scholarship
 eligibility rates that are statistically equivalent between male and
 female students. The research team establishes that any gender
-difference in eligibility rates greater than $`\pm`$ 3% would constitute
-a meaningful disparity requiring algorithmic adjustment. They establish
-equivalence bounds of $`\pm`$ 1% in eligibility rates - a threshold
+difference in eligibility rates greater than \pm 3% would constitute a
+meaningful disparity requiring algorithmic adjustment. They establish
+equivalence bounds of \pm 1% in eligibility rates - a threshold
 considered the smallest practically important effect that warrants
 monitoring and potential intervention.
 
@@ -3436,8 +3428,8 @@ power.z.twoprops(prob1 = 0.13,
 required number of complete scholarship applications to evaluate whether
 a new automated scoring system results in a gender difference of 3% in
 eligibility rates (13% for females and 10% for males). Using equivalence
-bounds of $`\pm`$ 1%, a two one-sided test with a 0.05 significance
-level, and 0.80 power, the analysis indicated that a minimum of 3,992
+bounds of \pm 1%, a two one-sided test with a 0.05 significance level,
+and 0.80 power, the analysis indicated that a minimum of 3,992
 applications should be processed per group (7,984 total).
 
 ## Paired Samples
@@ -3464,7 +3456,7 @@ clinical characteristics available in health records,
 
 The binary outcome is screening completion (yes / no). The aim is to
 evaluate whether the at-home kit significantly improves uptake, with an
-expected 10% increase (from 40% to 50%). A two-sided test, $`\alpha`$ =
+expected 10% increase (from 40% to 50%). A two-sided test, \alpha =
 0.05, and 0.80 power is planned to estimate the minimum required sample
 size for the newly recruited group.
 
@@ -3573,8 +3565,8 @@ scores and academic stress scores is significantly greater than 0.10,
 which they define as the minimum meaningful effect size. Researchers
 define the difference between the expected correlation (0.20) and the
 benchmark value (0.10) as the minimum meaningful effect size that
-warrants attention. They plan a one-sided test with $`\alpha`$ = 0.05
-and 0.80 power. What is the minimum required sample size under these
+warrants attention. They plan a one-sided test with \alpha = 0.05 and
+0.80 power. What is the minimum required sample size under these
 criteria?
 
 ``` r
@@ -3633,7 +3625,7 @@ Here is an example that compares the two approaches:
 ``` r
 
 # z-test approach
-power.z.twocors(rho1 = 0.20, rho2 = 0.10, power = .80)
+power.z.twocors(rho1 = 0.20, rho2 = 0.10, power = 0.80)
 #> +--------------------------------------------------+
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
@@ -3709,14 +3701,14 @@ difference between the two correlations. They consider a minimum
 meaningful difference of 0.10 - representing the difference between a
 correlation of 0 and 0.10 in the worst-case scenario - which corresponds
 to a small effect size (Cohen’s q = 0.10). Researchers plan to use a
-one-sided test with $`\alpha`$ = 0.05 and 0.80 power. What is the
-minimum required sample size under these criteria?
+one-sided test with \alpha = 0.05 and 0.80 power. What is the minimum
+required sample size under these criteria?
 
 ``` r
 
 power.z.twocors(rho1 = 0.10,
                 rho2 = 0,
-                power = .80,
+                power = 0.80,
                 alpha = 0.05,
                 alternative = "one.sided")
 #> +--------------------------------------------------+
@@ -3747,7 +3739,7 @@ cors.to.q(rho1 = 0.10, rho2 = 0)
 
 # t-test approximation
 power.t.student(d = 0.1003353,
-                power = .80,
+                power = 0.80,
                 alpha = 0.05,
                 alternative = "one.sided")
 #> +--------------------------------------------------+
@@ -3802,9 +3794,9 @@ SES and academic achievement (`rho12 = 0.30`). A reduction from 0.30 to
 0.20 is meaningful and warrants attention (`rho13 = 0.30`). Also based
 on prior meta-analytic findings, it is common to observe a correlation
 of 0.70 between pre-test and post-test achievement scores
-(`rho23 = 0.30`). Researchers plan to use a one-sided test with
-$`\alpha`$ = 0.05 and 0.80 power. What is the minimum required sample
-size under these criteria?
+(`rho23 = 0.30`). Researchers plan to use a one-sided test with \alpha =
+0.05 and 0.80 power. What is the minimum required sample size under
+these criteria?
 
 ``` r
 
@@ -3869,16 +3861,16 @@ inflate.sample(n = 286, rate = 0.05)
 sample size required to detect a meaningful reduction in the correlation
 between SES and academic achievement following a parental engagement
 intervention. Based on prior meta-analyses, the correlation between SES
-and academic achievement is assumed to be $`\rho_{12}`$ = 0.30 at
-pre-test, with a post-test correlation of $`\rho_{13}`$ = 0.20
-representing a meaningful reduction (Cohen’s q = 0.126). The correlation
-between pre-test and post-test scores is assumed to be $`\rho_{23}`$ =
--0.70. The analysis uses a one-sided Steiger’s Z test to compare
-dependent correlations, with a significance level of 0.05 and a
-statistical power of 0.80. Under these assumptions, the minimum required
-sample size is 286 students. To account for an anticipated 5% attrition
-rate, an additional 16 students should be included, bringing the total
-target sample size to 302 students.
+and academic achievement is assumed to be \rho\_{12} = 0.30 at pre-test,
+with a post-test correlation of \rho\_{13} = 0.20 representing a
+meaningful reduction (Cohen’s q = 0.126). The correlation between
+pre-test and post-test scores is assumed to be \rho\_{23} = -0.70. The
+analysis uses a one-sided Steiger’s Z test to compare dependent
+correlations, with a significance level of 0.05 and a statistical power
+of 0.80. Under these assumptions, the minimum required sample size is
+286 students. To account for an anticipated 5% attrition rate, an
+additional 16 students should be included, bringing the total target
+sample size to 302 students.
 
 ### No Common Index
 
@@ -3900,8 +3892,8 @@ pre-test and post-test reading is `rho13 = 0.70`, the correlation
 between pre-test and post-test math is `rho24 = 0.70`, the correlation
 between pre-test reading and post-test math is `rho14 = 0.40`, and the
 correlation between pre-test math and post-test reading is
-`rho23 = 0.40`. Researchers plan to use a one-sided test with $`\alpha`$
-= 0.05 and 0.80 power. What is the minimum required sample size under
+`rho23 = 0.40`. Researchers plan to use a one-sided test with \alpha =
+0.05 and 0.80 power. What is the minimum required sample size under
 these criteria?
 
 ``` r
@@ -3972,19 +3964,18 @@ sample size required to detect a meaningful increase in the correlation
 between reading and math performance following an intervention involving
 meta-cognitive strategy instruction in reading. Based on prior
 meta-analyses, the correlation between reading and math scores is
-assumed to be $`\rho_{12} = 0.50`$ at pre-test, with a post-test
-correlation of $`\rho_{34} = 0.60`$ representing a meaningful increase
-(Cohen’s $`q = 0.144`$). The analysis also incorporates the following
-assumed correlations: $`\rho_{13} = 0.70`$ (pre-test reading - post-test
-reading), $`\rho_{24} = 0.70`$ (pre-test math - post-test math),
-$`\rho_{14} = 0.40`$ (pre-test reading - post-test math), and
-$`\rho_{23} = 0.40`$ (pre-test math - post-test reading). The analysis
-uses a one-sided Steiger’s Z test to compare dependent correlations,
-with a significance level of 0.05 and statistical power of 0.80. Under
-these assumptions, the minimum required sample size is 317 students. To
-account for an anticipated 5% attrition rate, an additional 17 students
-should be included, bringing the total target sample size to 334
-students.
+assumed to be \rho\_{12} = 0.50 at pre-test, with a post-test
+correlation of \rho\_{34} = 0.60 representing a meaningful increase
+(Cohen’s q = 0.144). The analysis also incorporates the following
+assumed correlations: \rho\_{13} = 0.70 (pre-test reading - post-test
+reading), \rho\_{24} = 0.70 (pre-test math - post-test math), \rho\_{14}
+= 0.40 (pre-test reading - post-test math), and \rho\_{23} = 0.40
+(pre-test math - post-test reading). The analysis uses a one-sided
+Steiger’s Z test to compare dependent correlations, with a significance
+level of 0.05 and statistical power of 0.80. Under these assumptions,
+the minimum required sample size is 317 students. To account for an
+anticipated 5% attrition rate, an additional 17 students should be
+included, bringing the total target sample size to 334 students.
 
   
   
@@ -3995,28 +3986,26 @@ students.
 
 ## Omnibus F-Test
 
-### $`R^2 > 0`$
+### R^2 \> 0
 
 The omnibus F-test in multiple linear regression is used to evaluate
 whether the model as a whole explains a statistically significant
 portion of variance in the outcome variable. The null hypothesis states
 that all regression coefficients (except the intercept) are equal to
 zero which means none of the predictors contributes meaningfully to
-explaining the outcome variable (or $`R^2`$ is equal to zero).
-Alternative hypothesis states that at least some regression coefficients
-(except the intercept) is different from zero (or $`R^2`$ is greater
-than zero).
+explaining the outcome variable (or R^2 is equal to zero). Alternative
+hypothesis states that at least some regression coefficients (except the
+intercept) is different from zero (or R^2 is greater than zero).
 
-**Example**: Assume that we want to predict a continuous variable $`Y`$
-using $`X_{1}`$, $`X_{2}`$, and $`X_{2}`$ variables (can be a
-combination of binary or continuous).
+**Example**: Assume that we want to predict a continuous variable Y
+using X\_{1}, X\_{2}, and X\_{2} variables (can be a combination of
+binary or continuous).
 
-``` math
-Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \sim N(0, \sigma ^ 2)
-```
+Y = \beta\_{0} + \beta\_{1}X\_{1} + \beta\_{2}X\_{2} +
+\beta\_{3}X\_{3} + r, \quad r \sim N(0, \sigma ^ 2)
 
-We are interested in a minimum $`R^2`$ = 0.10. What is the minimum
-required sample size?
+We are interested in a minimum R^2 = 0.10. What is the minimum required
+sample size?
 
 ``` r
 
@@ -4049,17 +4038,17 @@ power.f.regression(r.squared = 0.10,
 **Report**: We conducted a power analysis to determine the minimum
 required sample size to detect a small but meaningful effect in a
 multiple linear regression model predicting a continuous outcome
-variable $`Y`$ from three predictors ($`X_{1}`$, $`X_{2}`$, and
-$`X_{3}`$). We are interested in an effect as small as $`R^2 = 0.10`$
-using an omnibus F-test with a significance level of $`\alpha = 0.05`$
-and statistical power of 0.80. Under these assumptions, the minimum
-required sample size is 103 participants.
+variable Y from three predictors (X\_{1}, X\_{2}, and X\_{3}). We are
+interested in an effect as small as R^2 = 0.10 using an omnibus F-test
+with a significance level of \alpha = 0.05 and statistical power of
+0.80. Under these assumptions, the minimum required sample size is 103
+participants.
 
-### $`R^2`$ \> Margin
+### R^2 \> Margin
 
 **Example**: Consider the [earlier example](#reg-f-test). Now, instead
-of testing against a zero null hypothesis (i.e., $`R^2`$ = 0), we aim to
-set a practical null hypothesis for $`R^2`$ at 0.05 (`margin = 0.05`),
+of testing against a zero null hypothesis (i.e., R^2 = 0), we aim to set
+a practical null hypothesis for R^2 at 0.05 (`margin = 0.05`),
 representing the largest effect size considered practically null. What
 is the minimum required sample size under these conditions?
 
@@ -4095,27 +4084,27 @@ power.f.regression(r.squared = 0.10,
 **Report**: We conducted a power analysis to determine the minimum
 required sample size to detect a small but meaningful effect in a
 multiple linear regression model predicting a continuous outcome
-variable $`Y`$ from three predictors ($`X_{1}`$, $`X_{2}`$, and
-$`X_{3}`$). We are interested in an effect as small as $`R^2`$ = 0.10
-using an omnibus F-test with a significance level of $`\alpha = 0.05`$
-and statistical power of 0.80. An $`R^2`$ \< 0.05 is considered to have
-negligible practical significance. Under these assumptions, the minimum
-required sample size is 612 participants.
+variable Y from three predictors (X\_{1}, X\_{2}, and X\_{3}). We are
+interested in an effect as small as R^2 = 0.10 using an omnibus F-test
+with a significance level of \alpha = 0.05 and statistical power of
+0.80. An R^2 \< 0.05 is considered to have negligible practical
+significance. Under these assumptions, the minimum required sample size
+is 612 participants.
 
-### $`\Delta R^2`$ \> 0
+### \Delta R^2 \> 0
 
 **Example**: Assume that we want to test the incremental contribution of
-two additional predictors ($`X_{4}`$ and $`X_{5}`$) to an existing
-regression model. That is, we are testing whether adding these two
-predictors (k.tested = 2) results in a significant increase in explained
-variance. The full model includes five predictors in total (k.total =
-5). We are interested in detecting a meaningful increase in explained
-variance of $`\Delta R^2 = 0.10`$. What is the minimum required sample
-size under these criteria?
+two additional predictors (X\_{4} and X\_{5}) to an existing regression
+model. That is, we are testing whether adding these two predictors
+(k.tested = 2) results in a significant increase in explained variance.
+The full model includes five predictors in total (k.total = 5). We are
+interested in detecting a meaningful increase in explained variance of
+\Delta R^2 = 0.10. What is the minimum required sample size under these
+criteria?
 
-``` math
-Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + \beta_{4}X_{4} + \beta_{5}X_{5} + r, \quad r \sim N(0, \sigma ^ 2)
-```
+Y = \beta\_{0} + \beta\_{1}X\_{1} + \beta\_{2}X\_{2} +
+\beta\_{3}X\_{3} + \beta\_{4}X\_{4} + \beta\_{5}X\_{5} + r, \quad r \sim
+N(0, \sigma ^ 2)
 
 ``` r
 
@@ -4149,25 +4138,24 @@ power.f.regression(r.squared.change = 0.10,
 **Report**: We conducted a power analysis to determine the minimum
 required sample size to detect a small but meaningful effect in a
 multiple linear regression model predicting a continuous outcome
-variable $`Y`$ from five predictors ($`X_{1}`$ through $`X_{5}`$). Our
-primary interest is in testing the incremental contribution of two
-predictors ($`X_{4}`$ and $`X_{5}`$), beyond the initial model that
-includes $`X_{1}`$, $`X_{2}`$, and $`X_{3}`$. Specifically, we aim to
-detect an increase in explained variance of $`\Delta R^2 = 0.10`$ using
-an F-test with a significance level of $`\alpha = 0.05`$ and statistical
-power of 0.80. The total number of predictors in the final model is five
-(`k.total = 5`), and the number of predictors being tested is two
-(`k.tested = 2`). Under these assumptions, the minimum required sample
-size is 90 participants.
+variable Y from five predictors (X\_{1} through X\_{5}). Our primary
+interest is in testing the incremental contribution of two predictors
+(X\_{4} and X\_{5}), beyond the initial model that includes X\_{1},
+X\_{2}, and X\_{3}. Specifically, we aim to detect an increase in
+explained variance of \Delta R^2 = 0.10 using an F-test with a
+significance level of \alpha = 0.05 and statistical power of 0.80. The
+total number of predictors in the final model is five (`k.total = 5`),
+and the number of predictors being tested is two (`k.tested = 2`). Under
+these assumptions, the minimum required sample size is 90 participants.
 
-### $`\Delta R^2`$ \> Margin
+### \Delta R^2 \> Margin
 
 **Example**: Consider the [earlier example](#reg-f-test-rsq-change).
-Now, instead of testing against a zero null hypothesis (i.e.,
-$`\Delta R^2`$ = 0), we aim to set a practical null hypothesis for
-$`\Delta R^2`$ at 0.05 (`margin = 0.05`), representing the largest
-effect size considered practically null. What is the minimum required
-sample size under these conditions?
+Now, instead of testing against a zero null hypothesis (i.e., \Delta R^2
+= 0), we aim to set a practical null hypothesis for \Delta R^2 at 0.05
+(`margin = 0.05`), representing the largest effect size considered
+practically null. What is the minimum required sample size under these
+conditions?
 
 ``` r
 
@@ -4202,32 +4190,31 @@ power.f.regression(r.squared.change = 0.10,
 **Report**: We conducted a power analysis to determine the minimum
 required sample size to detect a small but meaningful effect in a
 multiple linear regression model predicting a continuous outcome
-variable $`Y`$ from five predictors ($`X_{1}`$ through $`X_{5}`$). Our
-specific interest lies in testing the incremental contribution of two
-predictors ($`X_{4}`$ and $`X_{5}`$) beyond an initial model containing
-three predictors ($`X_{1}`$, $`X_{2}`$, and $`X_{3}`$). We are
-interested in detecting an increase in explained variance of
-$`\Delta R^2 = 0.10`$ using an F-test with a significance level of
-$`\alpha = 0.05`$ and statistical power of 0.80. An $`\Delta R^2`$ less
-than 0.05 is considered to have negligible practical significance. Under
-these assumptions, the minimum required sample size is 606 participants.
+variable Y from five predictors (X\_{1} through X\_{5}). Our specific
+interest lies in testing the incremental contribution of two predictors
+(X\_{4} and X\_{5}) beyond an initial model containing three predictors
+(X\_{1}, X\_{2}, and X\_{3}). We are interested in detecting an increase
+in explained variance of \Delta R^2 = 0.10 using an F-test with a
+significance level of \alpha = 0.05 and statistical power of 0.80. An
+\Delta R^2 less than 0.05 is considered to have negligible practical
+significance. Under these assumptions, the minimum required sample size
+is 606 participants.
 
 ## Single Coefficient (T-Test)
 
 ### Standardized Input
 
 In the earlier example, assume that we want to predict a continuous
-variable $`Y`$ using a continuous predictor $`X_{1}`$ but control for
-$`X_{2}`$, and $`X_{2}`$ variables (can be a combination of binary or
-continuous). We are mainly interested in the effect of $`X_{1}`$ and
-expect a standardized regression coefficient of $`\beta_{1} = 0.20`$.
+variable Y using a continuous predictor X\_{1} but control for X\_{2},
+and X\_{2} variables (can be a combination of binary or continuous). We
+are mainly interested in the effect of X\_{1} and expect a standardized
+regression coefficient of \beta\_{1} = 0.20.
 
-``` math
-Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \sim N(0, \sigma ^ 2)
-```
+Y = \beta\_{0} + \beta\_{1}X\_{1} + \beta\_{2}X\_{2} +
+\beta\_{3}X\_{3} + r, \quad r \sim N(0, \sigma ^ 2)
 
 Again, we are expecting that these three variables explain 30% of the
-variance in the outcome ($`R^2 = 0.30`$). What is the minimum required
+variance in the outcome (R^2 = 0.30). What is the minimum required
 sample size? It is sufficient to provide standardized regression
 coefficient for `beta` because `sd.predictor = 1` and `sd.outcome = 1`
 by default.
@@ -4237,7 +4224,7 @@ by default.
 power.t.regression(beta = 0.20,
                    k.total = 3,
                    r.squared = 0.30,
-                   power = .80,
+                   power = 0.80,
                    alpha = 0.05,
                    alternative = "two.sided")
 #> +--------------------------------------------------+
@@ -4277,7 +4264,7 @@ power.t.regression(beta = 0.60,
                    sd.predictor = 4,
                    k.total = 3,
                    r.squared = 0.30,
-                   power = .80,
+                   power = 0.80,
                    alpha = 0.05,
                    alternative = "two.sided")
 #> +--------------------------------------------------+
@@ -4304,10 +4291,10 @@ power.t.regression(beta = 0.60,
 
 If the main predictor is binary (e.g. treatment / control), the
 standardized regression coefficient is Cohen’s *d*. Standard deviation
-of the main predictor is $`\sqrt{p(1-p)}`$ where *p* is the proportion
-of sample in one of the groups. Assume half of the sample is in the
-first group $`p = 0.50`$. What is the minimum required sample size? It
-is sufficient to provide Cohen’s *d* for `beta` (standardized difference
+of the main predictor is \sqrt{p(1-p)} where *p* is the proportion of
+sample in one of the groups. Assume half of the sample is in the first
+group p = 0.50. What is the minimum required sample size? It is
+sufficient to provide Cohen’s *d* for `beta` (standardized difference
 between two groups) but specify `sd.predictor = sqrt(p * (1 - p))` where
 *p* is the proportion of subjects in one of the groups.
 
@@ -4320,7 +4307,7 @@ power.t.regression(beta = 0.20,
                    sd.predictor = sd.predictor,
                    k.total = 3,
                    r.squared = 0.30,
-                   power = .80,
+                   power = 0.80,
                    alpha = 0.05,
                    alternative = "two.sided")
 #> +--------------------------------------------------+
@@ -4370,7 +4357,7 @@ power.t.regression(beta = 0.20,
                    sd.predictor = sd.predictor,
                    k.total = 3,
                    r.squared = 0.30,
-                   power = .80,
+                   power = 0.80,
                    alpha = 0.05,
                    alternative = "one.sided")
 #> +--------------------------------------------------+
@@ -4420,7 +4407,7 @@ power.t.regression(beta = 0.20,
                    sd.predictor = sd.predictor,
                    k.total = 3,
                    r.squared = 0.30,
-                   power = .80,
+                   power = 0.80,
                    alpha = 0.05,
                    alternative = "one.sided")
 #> +--------------------------------------------------+
@@ -4464,7 +4451,7 @@ power.t.regression(beta = 0.20,
                    sd.predictor = sd.predictor,
                    k.total = 3,
                    r.squared = 0.30,
-                   power = .80,
+                   power = 0.80,
                    alpha = 0.05,
                    alternative = "two.one.sided")
 #> +--------------------------------------------------+
@@ -4508,7 +4495,7 @@ power.t.regression(beta = 0.20,
                    sd.predictor = sd.predictor,
                    k.total = 3,
                    r.squared = 0.30,
-                   power = .80,
+                   power = 0.80,
                    alpha = 0.05,
                    alternative = "two.one.sided")
 #> +--------------------------------------------------+
@@ -4544,47 +4531,35 @@ power.t.regression(beta = 0.20,
 
 In logistic regression a binary outcome variable (0 / 1: failure /
 success, dead / alive, absent / present) is modeled by predicting
-probability of being in group 1 ($`P_1`$) via logit transformation
-(natural logarithm of odds). The base probability $`P_0`$ is the overall
-probability of being in group 1 without influence of predictors in the
-model (null). Under alternative hypothesis, the probability of being in
-group 1 ($`P_1`$) deviate from $`P_0`$ depending on the value of the
-predictor; whereas under null it is same as the $`P_0`$. A model with
-one main predictor ($`X_1`$) and two other covariates ($`X_2`$ and
-$`X_3`$) can be constructed as
+probability of being in group 1 (P_1) via logit transformation (natural
+logarithm of odds). The base probability P_0 is the overall probability
+of being in group 1 without influence of predictors in the model (null).
+Under alternative hypothesis, the probability of being in group 1 (P_1)
+deviate from P_0 depending on the value of the predictor; whereas under
+null it is same as the P_0. A model with one main predictor (X_1) and
+two other covariates (X_2 and X_3) can be constructed as
 
-``` math
-ln(\frac{P_1}{1 - P_1}) = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3}
-```
+ln(\frac{P_1}{1 - P_1}) = \beta\_{0} + \beta\_{1}X\_{1} +
+\beta\_{2}X\_{2} + \beta\_{3}X\_{3}
 
 where  
-``` math
-\beta_0 = ln(\frac{P_0}{1 - P_0})
-```
-  
-``` math
-\beta_1 = ln(\frac{P_1}{1 - P_1} / \frac{P_0}{1 - P_0})
-```
-  
-Odds ratio is defined as
-``` math
-OR = exp(\beta_1) = \frac{P_1}{1 - P_1} / \frac{P_0}{1 - P_0}
-```
-  
+\beta_0 = ln(\frac{P_0}{1 - P_0})  
+\beta_1 = ln(\frac{P_1}{1 - P_1} / \frac{P_0}{1 - P_0})  
+Odds ratio is defined as OR = exp(\beta_1) = \frac{P_1}{1 - P_1} /
+\frac{P_0}{1 - P_0}  
 
 **Example**:
 
 Assume
 
-- A squared multiple correlation of 0.20 between $`X_1`$ and other
+- A squared multiple correlation of 0.20 between X_1 and other
   covariates (`r2.other.x = 0.20` in the code). It can be found in the
-  form of adjusted R-square via regressing $`X_1`$ on $`X_2`$ and
-  $`X_3`$. Higher values require larger sample sizes. The default is 0
-  (zero).
-- A base probability of $`P_0 = 0.15`$. This is the rate when predictor
-  $`X_1 = 0`$ or when $`\beta_1 = 0`$.
-- Increasing $`X_1`$ from 0 to 1 reduces the probability of being in
-  group 1 from 0.15 to 0.10 ($`P_1 = 0.10`$).
+  form of adjusted R-square via regressing X_1 on X_2 and X_3. Higher
+  values require larger sample sizes. The default is 0 (zero).
+- A base probability of P_0 = 0.15. This is the rate when predictor X_1
+  = 0 or when \beta_1 = 0.
+- Increasing X_1 from 0 to 1 reduces the probability of being in group 1
+  from 0.15 to 0.10 (P_1 = 0.10).
 
 What is the minimum required sample size? There are three types of
 specification to statistical power or sample size calculations; (i)
@@ -4629,9 +4604,8 @@ power.z.logistic(prob = 0.10,
 
 ## Odds Ratio Specification
 
-``` math
-OR = \frac{P_1}{1 - P1} / \frac{P_0}{1 - P_0} = \frac{0.10}{1 - 0.10} / \frac{0.15}{1 - 0.15} = 0.6296
-```
+OR = \frac{P_1}{1 - P1} / \frac{P_0}{1 - P_0} = \frac{0.10}{1 - 0.10} /
+\frac{0.15}{1 - 0.15} = 0.6296
 
 ``` r
 
@@ -4669,9 +4643,8 @@ power.z.logistic(odds.ratio = 0.6296,
 
 ## Regression Coefficient
 
-``` math
-\beta_1 = ln(\frac{P_1}{1 - P1} / \frac{P_0}{1 - P_0}) = ln(0.6296) = -0.4626
-```
+\beta_1 = ln(\frac{P_1}{1 - P1} / \frac{P_0}{1 - P_0}) = ln(0.6296) =
+-0.4626
 
 ``` r
 
@@ -4848,31 +4821,24 @@ power.z.logistic(beta1 = -0.4626,
 
 In Poisson regression a count outcome variable (e.g. number of hospital
 / store / website visits, number of absence / dead / purchase in a day /
-week / month) is modeled by predicting incidence rate ($`\lambda`$) via
+week / month) is modeled by predicting incidence rate (\lambda) via
 logarithmic transformation (natural logarithm of rates). A model with
-one main predictor ($`X_1`$) and two other covariates ($`X_2`$ and
-$`X_3`$) can be constructed as
+one main predictor (X_1) and two other covariates (X_2 and X_3) can be
+constructed as
 
-``` math
-ln(\lambda) = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3}
-```
+ln(\lambda) = \beta\_{0} + \beta\_{1}X\_{1} + \beta\_{2}X\_{2} +
+\beta\_{3}X\_{3}
 
-where $`exp(\beta_0)`$ is the base incidence rate.  
-``` math
-\beta_1 = ln(\frac{\lambda(X_1=1)}{\lambda(X_1=0)})
-```
-  
-Incidence rate ratio is defined as
-``` math
-exp(\beta_1) = \frac{\lambda(X_1=1)}{\lambda(X_1=0)}
-```
-  
+where exp(\beta_0) is the base incidence rate.  
+\beta_1 = ln(\frac{\lambda(X_1=1)}{\lambda(X_1=0)})  
+Incidence rate ratio is defined as exp(\beta_1) =
+\frac{\lambda(X_1=1)}{\lambda(X_1=0)}  
 
 Assume
 
-- The expected base incidence rate is 1.65: $`exp(0.50) = 1.65`$.
-- Increasing $`X_1`$ from 0 to 1 reduces the mean incidence rate from
-  1.65 to 0.905: $`exp(-0.10) = 0.905`$.
+- The expected base incidence rate is 1.65: exp(0.50) = 1.65.
+- Increasing X_1 from 0 to 1 reduces the mean incidence rate from 1.65
+  to 0.905: exp(-0.10) = 0.905.
 
 What is the minimum required sample size? There are two types of
 specification; (i) rate ratio specification (exponentiated regression
@@ -5077,18 +5043,14 @@ Simple Mediation Model
 
 Regression models take the form of
 
-``` math
-\begin{eqnarray}
-M & = & \beta_{0M} + \beta_{a} X + e \\
-Y & = & \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
-\end{eqnarray}
-```
+\begin{eqnarray} M & = & \beta\_{0M} + \beta\_{a} X + e \\ Y & = &
+\beta\_{0Y} + \beta\_{b} M + \beta\_{cp} X + \epsilon \end{eqnarray}
 
 *Y* is the outcome, *M* is the mediator, and *X* is the main predictor.
-The indirect effect is the product of $`\beta_a`$ and $`\beta_b`$ path
-coefficients. $`\beta_{cp}`$ is the path coefficient for the direct
-effect. Path coefficients can be standardized or unstandardized. They
-are presumed to be standardized by default because the main predictor,
+The indirect effect is the product of \beta_a and \beta_b path
+coefficients. \beta\_{cp} is the path coefficient for the direct effect.
+Path coefficients can be standardized or unstandardized. They are
+presumed to be standardized by default because the main predictor,
 mediator, and outcome all have standard deviations of
 `sd.predictor = 1`, `sd.mediator = 1`, and `sd.outcome = 1` in the
 function. Standard deviations should be specified for unstandardized
@@ -5098,13 +5060,13 @@ reports / publications).
 ## Continuous Predictor
 
 Most software applications presume no covariates in the mediator and
-outcome models ($`R^2_M = 0`$ and $`R^2_M = 0`$). Even with no
-covariates, *X* explain some of the variance in *M* ($`R^2_M > 0`$) and
-*M* & *X* explains some of the variance in *Y* ($`R^2_Y > 0`$). We will
-almost never have an R-squared value of 0 (zero). The explained variance
-in the basic mediation model (the base R-squared values) can be
-non-trivial and is taken into account in the function by default. Thus,
-results may seem different from other software outputs.
+outcome models (R^2_M = 0 and R^2_M = 0). Even with no covariates, *X*
+explain some of the variance in *M* (R^2_M \> 0) and *M* & *X* explains
+some of the variance in *Y* (R^2_Y \> 0). We will almost never have an
+R-squared value of 0 (zero). The explained variance in the basic
+mediation model (the base R-squared values) can be non-trivial and is
+taken into account in the function by default. Thus, results may seem
+different from other software outputs.
 
 ``` r
 
@@ -5391,9 +5353,9 @@ such designs.
 ### One-way
 
 A researcher is expecting a difference of Cohen’s *d* = 0.50 between
-treatment and control groups (two levels) translating into
-$`\eta^2 = 0.059`$ (`eta.squared = 0.059`). Means are not adjusted for
-any covariates. What is the minimum required sample size?
+treatment and control groups (two levels) translating into \eta^2 =
+0.059 (`eta.squared = 0.059`). Means are not adjusted for any
+covariates. What is the minimum required sample size?
 
 ``` r
 
@@ -5425,10 +5387,10 @@ power.f.ancova(eta.squared = 0.059,
 
 ### Two-way
 
-A researcher is expecting a partial $`\eta^2 = 0.03`$
-(`eta.squared = 0.03`) for interaction of treatment / control (Factor A:
-two levels) with gender (Factor B: two levels). Thus,
-`factor.levels = c(2,2)`. What is the minimum required sample size?
+A researcher is expecting a partial \eta^2 = 0.03 (`eta.squared = 0.03`)
+for interaction of treatment / control (Factor A: two levels) with
+gender (Factor B: two levels). Thus, `factor.levels = c(2,2)`. What is
+the minimum required sample size?
 
 ``` r
 
@@ -5460,11 +5422,11 @@ power.f.ancova(eta.squared = 0.03,
 
 ### Three-way
 
-A researcher is expecting a partial $`\eta^2 = 0.02`$
-(`eta.squared = 0.02`) for interaction of treatment / control (Factor A:
-two levels), gender (Factor B: two levels), and socio-economic status
-(Factor C: three levels). Thus, `factor.levels = c(2, 2, 3)`. What is
-the minimum required sample size?
+A researcher is expecting a partial \eta^2 = 0.02 (`eta.squared = 0.02`)
+for interaction of treatment / control (Factor A: two levels), gender
+(Factor B: two levels), and socio-economic status (Factor C: three
+levels). Thus, `factor.levels = c(2, 2, 3)`. What is the minimum
+required sample size?
 
 ``` r
 
@@ -5497,10 +5459,9 @@ power.f.ancova(eta.squared = 0.02,
 ### Practical Effects
 
 The smallest effect size of interest for policy and practice may differ
-from zero. For example, if we want to test whether $`\eta^2 = 0.02`$ is
-meaningfully different from a null value of
-$`\eta^2_{\text{Null}} = 0.01`$, we can specify
-`null.eta.squared = 0.01`.
+from zero. For example, if we want to test whether \eta^2 = 0.02 is
+meaningfully different from a null value of \eta^2\_{\text{Null}} =
+0.01, we can specify `null.eta.squared = 0.01`.
 
 ``` r
 
@@ -5534,10 +5495,9 @@ power.f.ancova(eta.squared = 0.02,
 ## Means and SDs as Input
 
 A researcher is expecting a difference of Cohen’s *d* = 0.50 between
-treatment and control groups (two levels) translating into
-$`\eta^2 = 0.059`$, as in the earlier example. Means and standard
-deviations are not adjusted for any covariates. What is the minimum
-required sample size?
+treatment and control groups (two levels) translating into \eta^2 =
+0.059, as in the earlier example. Means and standard deviations are not
+adjusted for any covariates. What is the minimum required sample size?
 
 ``` r
 
@@ -5602,8 +5562,8 @@ outcome variable depends the group membership.
 
 A researcher is expecting a difference of Cohen’s *d* = 0.50 on the
 post-test score between treatment and control groups, translating into
-$`\eta^2 = 0.059`$. The test is administered at a single time point;
-thus, the number of repeated measures is 1. What is the minimum required
+\eta^2 = 0.059. The test is administered at a single time point; thus,
+the number of repeated measures is 1. What is the minimum required
 sample size?
 
 ``` r
@@ -5640,8 +5600,8 @@ power.f.mixed.anova(eta.squared = 0.059,
 **Example 2: Pre-test vs. post-test design with treatment group only.**
 
 A researcher is expecting a difference of Cohen’s *d* = 0.30 between
-post-test and pre-test scores, translating into $`\eta^2 = 0.022`$. The
-test is administered before and after the treatment; thus, the number of
+post-test and pre-test scores, translating into \eta^2 = 0.022. The test
+is administered before and after the treatment; thus, the number of
 repeated measures is 2. There is treatment group but no control group.
 The researcher also expects a correlation of 0.50 between pre-test and
 post-test scores. What is the minimum required sample size?
@@ -5682,7 +5642,7 @@ power.f.mixed.anova(eta.squared = 0.022,
 
 A researcher is expecting a difference of Cohen’s *d* = 0.40 on the
 post-test scores between treatment and control groups after controlling
-for pre-test, translating into partial $`\eta^2 = 0.038`$. The test is
+for pre-test, translating into partial \eta^2 = 0.038. The test is
 administered before and after the treatment; thus, the number of
 repeated measures is 2. The researcher also expects a correlation of
 0.50 between pre-test and post-test scores. What is the minimum required
@@ -5720,7 +5680,7 @@ power.f.mixed.anova(eta.squared = 0.038,
 
 A researcher is expecting a difference of Cohen’s *d* = 0.30 between
 post-test and pre-test scores after controlling for group membership,
-translating into partial $`\eta^2 = 0.022`$. There is both treatment and
+translating into partial \eta^2 = 0.022. There is both treatment and
 control groups. The researcher also expects a correlation of 0.50
 between pre-test and post-test scores. What is the minimum required
 sample size?
@@ -5758,8 +5718,8 @@ power.f.mixed.anova(eta.squared = 0.022,
 The rationale for inspecting the interaction is that the benefit of the
 treatment may depend on the pre-test score (e.g. those with higher
 scores on the pre-test improve or deteriorate more). A researcher is
-expecting an interaction effect of partial $`\eta^2 = 0.01`$. The test
-is administered before and after the treatment; thus, the number of
+expecting an interaction effect of partial \eta^2 = 0.01. The test is
+administered before and after the treatment; thus, the number of
 repeated measures is 2. There is both treatment and control groups. The
 researcher also expects a correlation of 0.50 between pre-test and
 post-test scores. What is the minimum required sample size?
@@ -5796,9 +5756,9 @@ power.f.mixed.anova(eta.squared = 0.01,
 
 ## Adjusted Eta-squared
 
-It is possible that $`\eta^2`$ is already adjusted for within-subject
-correlation. In this case instead of using unadjusted $`\eta^2 = 0.038`$
-use the adjusted $`\eta^2 = 0.05`$ but specify `rho.within = NA`.
+It is possible that \eta^2 is already adjusted for within-subject
+correlation. In this case instead of using unadjusted \eta^2 = 0.038 use
+the adjusted \eta^2 = 0.05 but specify `rho.within = NA`.
 
 ``` r
 
@@ -5833,10 +5793,9 @@ power.f.mixed.anova(eta.squared = 0.05,
 ## Practical Effects
 
 The smallest effect size of interest for policy and practice may differ
-from zero. For example, if we want to test whether $`\eta^2 = 0.05`$ is
-meaningfully different from a null value of
-$`\eta^2_{\text{Null}} = 0.01`$, we can specify
-`null.eta.squared = 0.01`.
+from zero. For example, if we want to test whether \eta^2 = 0.05 is
+meaningfully different from a null value of \eta^2\_{\text{Null}} =
+0.01, we can specify `null.eta.squared = 0.01`.
 
 ``` r
 
@@ -5883,7 +5842,7 @@ power.f.mixed.anova(eta.squared = 0.05,
 A researcher is expecting an adjusted difference of Cohen’s *d* = 0.45
 between treatment and control groups (`factor.levels = 2`) after
 controlling for the pre-test (`k.covariates = 1`) translating into
-partial $`\eta^2 = 0.048`$. What is the minimum required sample size?
+partial \eta^2 = 0.048. What is the minimum required sample size?
 
 ``` r
 
@@ -5920,7 +5879,7 @@ effect (`eta.squared`) is unadjusted or covariate-adjusted.
 
 ### Two-way
 
-A researcher is expecting a partial $`\eta^2 = 0.02`$ for interaction of
+A researcher is expecting a partial \eta^2 = 0.02 for interaction of
 treatment / control (Factor A) with gender (Factor B) adjusted for the
 pre-test (`k.covariates = 1`). What is the minimum required sample size?
 
@@ -5955,7 +5914,7 @@ power.f.ancova(eta.squared = 0.02,
 
 ### Three-way
 
-A researcher is expecting a partial $`\eta^2 = 0.01`$ for interaction of
+A researcher is expecting a partial \eta^2 = 0.01 for interaction of
 treatment / control (Factor A), gender (Factor B), and socio-economic
 status (Factor C: three levels) adjusted for the pre-test
 (`k.covariates = 1`). What is the minimum required sample size?
@@ -5992,10 +5951,9 @@ power.f.ancova(eta.squared = 0.01,
 ### Practical Effects
 
 The smallest effect size of interest for policy and practice may differ
-from zero. For example, if we want to test whether $`\eta^2 = 0.048`$ is
-meaningfully different from a null value of
-$`\eta^2_{\text{Null}} = 0.01`$, we can specify
-`null.eta.squared = 0.01`.
+from zero. For example, if we want to test whether \eta^2 = 0.048 is
+meaningfully different from a null value of \eta^2\_{\text{Null}} =
+0.01, we can specify `null.eta.squared = 0.01`.
 
 ``` r
 
@@ -6034,7 +5992,7 @@ power.f.ancova(eta.squared = 0.048,
 A researcher is expecting an adjusted difference of Cohen’s *d* = 0.318
 between treatment and control groups after controlling for the pre-test
 (`k.covariates = 1`) and explanatory power of the covariates
-(`r.squared = 0.50`). This translates into a partial $`\eta^2 = 0.048`$.
+(`r.squared = 0.50`). This translates into a partial \eta^2 = 0.048.
 What is the minimum required sample size?
 
 ``` r
@@ -6077,7 +6035,7 @@ NOTE: Keppel procedure allows only one-way ANOVA.
 A researcher is expecting an adjusted difference of Cohen’s *d* = 0.318
 between treatment and control groups after controlling for the pre-test
 (`k.covariates = 1`) and explanatory power of the covariates
-(`r.squared = 0.50`). This translates into a partial $`\eta^2 = 0.048`$.
+(`r.squared = 0.50`). This translates into a partial \eta^2 = 0.048.
 What is the minimum required sample size?
 
 ``` r
@@ -6118,8 +6076,7 @@ with gender (Factor B) adjusted for the pre-test (`k.covariates = 1`)
 and explanatory power of the covariate (`r.squared = 0.50`) are 0.30,
 0.09, 0.05, 0.245, corresponding to cells A1:B1, A1:B2, A2:B1, A2:B2,
 respectively, with unit standard deviation for each. This translates
-into a partial $`\eta^2 = 0.02`$. What is the minimum required sample
-size?
+into a partial \eta^2 = 0.02. What is the minimum required sample size?
 
 ``` r
 

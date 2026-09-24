@@ -126,7 +126,7 @@ power.lp.test(
 # two-sided
 # power defined as the probability of observing test statistics greater
 # than the positive critical value OR less than the negative critical value
-power.lp.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "two.sided")
+power.lp.test(ncp = 1.960, df = 100, alpha = 0.05, alternative = "two.sided")
 
 #> +--------------------------------------------------+
 #> |                POWER CALCULATION                 |
@@ -149,7 +149,7 @@ power.lp.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "two.sided")
 #>   Type 2 Error (beta)  = 0.502
 #>   Statistical Power    = 0.498  <<
 #> 
-power.lp.test(power = 0.80, df = 100, alpha = 0.05, alternative = "two.sided")
+power.lp.test(power = 0.800, df = 100, alpha = 0.05, alternative = "two.sided")
 
 #> +--------------------------------------------------+
 #> |       MINIMUM DETECTABLE NCP CALCULATION         |
@@ -172,11 +172,60 @@ power.lp.test(power = 0.80, df = 100, alpha = 0.05, alternative = "two.sided")
 #>   Type 2 Error (beta)  = 0.200
 #>   Statistical Power    = 0.800
 #> 
+# the two examples below estimate the df's based upon the first example
+# (revealing a power of 0.498; df = 94.11) and the second example (revealing
+# a ncp of 2.825; df = 101.06)
+power.lp.test(ncp = 1.960, power = 0.498, alpha = 0.05, alternative = "two.sided")
+
+#> +--------------------------------------------------+
+#> |             SAMPLE SIZE CALCULATION              |
+#> +--------------------------------------------------+
+#> 
+#> Generic Lambda-Prime Distribution
+#> 
+#> ----------------------------------------------------
+#> Hypotheses
+#> ----------------------------------------------------
+#>   H0 (Null)        : lambda  = null.lambda
+#>   H1 (Alternative) : lambda != null.lambda
+#> 
+#> ----------------------------------------------------
+#> Results
+#> ----------------------------------------------------
+#>   Target NCP (lambda)  = 1.960 (vs. null.lambda = 0)
+#>   Degrees of Freedom   = 94.11  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.502
+#>   Statistical Power    = 0.498
+#> 
+power.lp.test(ncp = 2.825, power = 0.800, alpha = 0.05, alternative = "two.sided")
+
+#> +--------------------------------------------------+
+#> |             SAMPLE SIZE CALCULATION              |
+#> +--------------------------------------------------+
+#> 
+#> Generic Lambda-Prime Distribution
+#> 
+#> ----------------------------------------------------
+#> Hypotheses
+#> ----------------------------------------------------
+#>   H0 (Null)        : lambda  = null.lambda
+#>   H1 (Alternative) : lambda != null.lambda
+#> 
+#> ----------------------------------------------------
+#> Results
+#> ----------------------------------------------------
+#>   Target NCP (lambda)  = 2.825 (vs. null.lambda = 0)
+#>   Degrees of Freedom   = 101.06  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
+#> 
 
 # one-sided
 # power is defined as the probability of observing a test statistic greater
 # than the critical value
-power.lp.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "one.sided")
+power.lp.test(ncp = 1.960, df = 100, alpha = 0.05, alternative = "one.sided")
 
 #> +--------------------------------------------------+
 #> |                POWER CALCULATION                 |
@@ -199,7 +248,7 @@ power.lp.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "one.sided")
 #>   Type 2 Error (beta)  = 0.379
 #>   Statistical Power    = 0.621  <<
 #> 
-power.lp.test(power = 0.80, df = 100, alpha = 0.05, alternative = "one.sided")
+power.lp.test(power = 0.800, df = 100, alpha = 0.05, alternative = "one.sided")
 
 #> +--------------------------------------------------+
 #> |       MINIMUM DETECTABLE NCP CALCULATION         |
@@ -222,12 +271,61 @@ power.lp.test(power = 0.80, df = 100, alpha = 0.05, alternative = "one.sided")
 #>   Type 2 Error (beta)  = 0.200
 #>   Statistical Power    = 0.800
 #> 
+# the two examples below estimate the df's based upon the first example
+# (revealing a power of 0.6207; df = 100.323) and the second example (revealing
+# a ncp of 2.506; df = 99.12)
+power.lp.test(ncp = 1.960, power = 0.6207, alpha = 0.05, alternative = "one.sided")
+
+#> +--------------------------------------------------+
+#> |             SAMPLE SIZE CALCULATION              |
+#> +--------------------------------------------------+
+#> 
+#> Generic Lambda-Prime Distribution
+#> 
+#> ----------------------------------------------------
+#> Hypotheses
+#> ----------------------------------------------------
+#>   H0 (Null)        : lambda <= null.lambda
+#>   H1 (Alternative) : lambda  > null.lambda
+#> 
+#> ----------------------------------------------------
+#> Results
+#> ----------------------------------------------------
+#>   Target NCP (lambda)  = 1.960 (vs. null.lambda = 0)
+#>   Degrees of Freedom   = 100.323  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.379
+#>   Statistical Power    = 0.621
+#> 
+power.lp.test(ncp = 2.506, power = 0.8000, alpha = 0.05, alternative = "one.sided")
+
+#> +--------------------------------------------------+
+#> |             SAMPLE SIZE CALCULATION              |
+#> +--------------------------------------------------+
+#> 
+#> Generic Lambda-Prime Distribution
+#> 
+#> ----------------------------------------------------
+#> Hypotheses
+#> ----------------------------------------------------
+#>   H0 (Null)        : lambda <= null.lambda
+#>   H1 (Alternative) : lambda  > null.lambda
+#> 
+#> ----------------------------------------------------
+#> Results
+#> ----------------------------------------------------
+#>   Target NCP (lambda)  = 2.506 (vs. null.lambda = 0)
+#>   Degrees of Freedom   = 99.12  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.200
+#>   Statistical Power    = 0.800
+#> 
 
 # equivalence
 # power is defined as the probability of observing a test statistic greater
 # than the upper critical value (for the lower bound) AND less than the
 # lower critical value (for the upper bound)
-power.lp.test(ncp = 0, null.ncp = c(-2, 2), df = 100, alpha = 0.05,
+power.lp.test(ncp = 0, null.ncp = c(-3, 3), df = 100, alpha = 0.05,
               alternative = "two.one.sided")
 
 #> +--------------------------------------------------+
@@ -247,15 +345,15 @@ power.lp.test(ncp = 0, null.ncp = c(-2, 2), df = 100, alpha = 0.05,
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Target NCP (lambda)  = 0 (vs. null.lambda = -2 and 2)
+#>   Target NCP (lambda)  = 0 (vs. null.lambda = -3 and 3)
 #>   Degrees of Freedom   = 100
 #>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.738
-#>   Statistical Power    = 0.262  <<
+#>   Type 2 Error (beta)  = 0.190
+#>   Statistical Power    = 0.810  <<
 #> 
-power.lp.test(power = 0.80, req.sign = "0", null.ncp = c(-2, 2),
+power.lp.test(power = 0.80, req.sign = "0", null.ncp = c(-3, 3),
               df = 100, alpha = 0.05, alternative = "two.one.sided")
-#> Warning: The target power rate cannot be achieved within the null bounds.
+#> Warning: Target NCP ranges from -0.2157 to 0.2157 within the null bounds.
 
 #> +--------------------------------------------------+
 #> |       MINIMUM DETECTABLE NCP CALCULATION         |
@@ -274,11 +372,39 @@ power.lp.test(power = 0.80, req.sign = "0", null.ncp = c(-2, 2),
 #> ----------------------------------------------------
 #> Results
 #> ----------------------------------------------------
-#>   Target NCP (lambda)  = -0.000 (vs. null.lambda = -2 and 2)  <<
+#>   Target NCP (lambda)  = 0 (vs. null.lambda = -3 and 3)  <<
 #>   Degrees of Freedom   = 100
 #>   Type 1 Error (alpha) = 0.050
-#>   Type 2 Error (beta)  = 0.738
-#>   Statistical Power    = 0.262
+#>   Type 2 Error (beta)  = 0.190
+#>   Statistical Power    = 0.810
+#> 
+# adjust the power based upon what is returned from the example above in
+# order to get a valid estimate of the df's (100.321; power = 0.8 -> 58.911)
+power.lp.test(ncp = 0, power = 0.8103, req.sign = "0", null.ncp = c(-3, 3),
+              alpha = 0.05, alternative = "two.one.sided")
+
+#> +--------------------------------------------------+
+#> |             SAMPLE SIZE CALCULATION              |
+#> +--------------------------------------------------+
+#> 
+#> Generic Lambda-Prime Distribution
+#> 
+#> ----------------------------------------------------
+#> Hypotheses
+#> ----------------------------------------------------
+#>   H0 (Null)        : lambda <= min(null.lambda) or
+#>                      lambda >= max(null.lambda)
+#>   H1 (Alternative) : lambda  > min(null.lambda) and
+#>                      lambda  < max(null.lambda)
+#> 
+#> ----------------------------------------------------
+#> Results
+#> ----------------------------------------------------
+#>   Target NCP (lambda)  = 0 (vs. null.lambda = -3 and 3)
+#>   Degrees of Freedom   = 100.321  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.190
+#>   Statistical Power    = 0.810
 #> 
 
 # minimal effect testing
@@ -336,5 +462,33 @@ power.lp.test(power = 0.80, req.sign = "+", null.ncp = c(-1, 1),
 #>   Type 1 Error (alpha) = 0.050
 #>   Type 2 Error (beta)  = 0.200
 #>   Statistical Power    = 0.800
+#> 
+# the first example (ncp = 2) reveals insufficient power (0.169), hence
+# use the ncp returned from the example above for estimating the df's
+power.lp.test(ncp = 3.844, power = 0.8, req.sign = "+", null.ncp = c(-3, 3),
+              alpha = 0.05, alternative = "two.one.sided")
+
+#> +--------------------------------------------------+
+#> |             SAMPLE SIZE CALCULATION              |
+#> +--------------------------------------------------+
+#> 
+#> Generic Lambda-Prime Distribution
+#> 
+#> ----------------------------------------------------
+#> Hypotheses
+#> ----------------------------------------------------
+#>   H0 (Null)        : lambda >= min(null.lambda) and
+#>                      lambda <= max(null.lambda)
+#>   H1 (Alternative) : lambda  < min(null.lambda) or
+#>                      lambda  > max(null.lambda)
+#> 
+#> ----------------------------------------------------
+#> Results
+#> ----------------------------------------------------
+#>   Target NCP (lambda)  = 3.844 (vs. null.lambda = -3 and 3)
+#>   Degrees of Freedom   = 9999844144.626  <<
+#>   Type 1 Error (alpha) = 0.050
+#>   Type 2 Error (beta)  = 0.868
+#>   Statistical Power    = 0.132
 #> 
 ```
