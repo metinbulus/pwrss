@@ -4,7 +4,7 @@
     numerical instability in that package doesn't exists for these implementations, and df's can be estimated in
     `power.lp.test`)
   - Smaller improvements to satisfy the requirements / suggestions by the `goodpractice` R-package
-  - Fix a bug arising from stats::poly() returning very small values (~1e-16)in places where 0 is expected
+  - Fix a bug arising from stats::poly() returning very small values (~1e-16) in places where 0 is expected
   - Small improvement to the unit tests, preventing that snapshots are deleted if a comparison is not run
 
 ## Changes in pwrss v1.2.0
