@@ -476,6 +476,7 @@ power.z.twocors.steiger <- function(rho12 = NULL, rho13 = NULL, rho23 = NULL,
 
 } # power.z.twocors.steiger()
 
+#' @rdname power.z.twocors.steiger
 #' @export power.z.steiger
 power.z.steiger <- power.z.twocors.steiger
 
@@ -692,10 +693,11 @@ power.z.twocors <- function(rho1 = NULL, rho2 = NULL, req.sign = "+",
 
 } # power.z.twocors
 
+#' @rdname power.z.twocors
 #' @export power.z.twocor
 power.z.twocor <- power.z.twocors
 
-
+#' @rdname power.z.twocors
 #' @export pwrss.z.2corrs
 pwrss.z.2corrs <- function(r1 = 0.50, r2 = 0.30,
                            alpha = 0.05, kappa = 1,
@@ -918,7 +920,7 @@ power.z.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0,
 
 } # power.z.onecor()
 
-
+#' @rdname power.z.onecor
 #' @export pwrss.z.corr
 pwrss.z.corr <- function(r = 0.50, r0 = 0, alpha = 0.05,
                          alternative = c("not equal", "greater", "less"),

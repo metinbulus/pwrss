@@ -81,13 +81,18 @@ error plots.
 # two-sided
 # power defined as the probability of observing test statistics greater
 # than the positive critical value OR less than the negative critical value
-power.lp.test(ncp = 1.960, df = 100, alpha = 0.05, alternative = "two.sided")
-power.lp.test(power = 0.800, df = 100, alpha = 0.05, alternative = "two.sided")
+power.lp.test(ncp = 1.960, df = 100, alpha = 0.05,
+              alternative = "two.sided", plot = FALSE)
+power.lp.test(power = 0.800, df = 100, alpha = 0.05,
+              alternative = "two.sided", plot = FALSE)
+
 # the two examples below estimate the df's based upon the first example
 # (revealing a power of 0.498; df = 94.11) and the second example (revealing
 # a ncp of 2.825; df = 101.06)
-power.lp.test(ncp = 1.960, power = 0.498, alpha = 0.05, alternative = "two.sided")
-power.lp.test(ncp = 2.825, power = 0.800, alpha = 0.05, alternative = "two.sided")
+power.lp.test(ncp = 1.960, power = 0.498, alpha = 0.05,
+              alternative = "two.sided", plot = FALSE)
+power.lp.test(ncp = 2.825, power = 0.800, alpha = 0.05,
+              alternative = "two.sided", plot = FALSE)
 
 # one-sided
 # power is defined as the probability of observing a test statistic greater
@@ -97,8 +102,10 @@ power.lp.test(power = 0.800, df = 100, alpha = 0.05, alternative = "one.sided")
 # the two examples below estimate the df's based upon the first example
 # (revealing a power of 0.6207; df = 100.323) and the second example (revealing
 # a ncp of 2.506; df = 99.12)
-power.lp.test(ncp = 1.960, power = 0.6207, alpha = 0.05, alternative = "one.sided")
-power.lp.test(ncp = 2.506, power = 0.8000, alpha = 0.05, alternative = "one.sided")
+power.lp.test(ncp = 1.960, power = 0.6207, alpha = 0.05,
+              alternative = "one.sided", plot = FALSE)
+power.lp.test(ncp = 2.506, power = 0.8000, alpha = 0.05,
+              alternative = "one.sided", plot = FALSE)
 
 # equivalence
 # power is defined as the probability of observing a test statistic greater

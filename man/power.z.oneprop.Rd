@@ -20,6 +20,19 @@ power.z.oneprop(
   verbose = 1,
   utf = FALSE
 )
+
+pwrss.z.prop(
+  p,
+  p0 = 0.5,
+  margin = 0,
+  arcsin.trans = FALSE,
+  alpha = 0.05,
+  alternative = c("not equal", "greater", "less", "equivalent", "non-inferior",
+    "superior"),
+  n = NULL,
+  power = NULL,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{prob}{probability of success under alternative.}

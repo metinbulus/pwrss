@@ -25,6 +25,45 @@ power.np.wilcoxon(
   verbose = 1,
   utf = FALSE
 )
+
+power.np.wilcox(
+  d = NULL,
+  null.d = 0,
+  margin = 0,
+  req.sign = "+",
+  n.ratio = 1,
+  n2 = NULL,
+  power = NULL,
+  alpha = 0.05,
+  alternative = c("two.sided", "one.sided", "two.one.sided"),
+  design = c("independent", "paired", "one.sample"),
+  distribution = c("normal", "uniform", "double.exponential", "laplace", "logistic"),
+  method = c("guenther", "noether"),
+  ceil.n = TRUE,
+  verbose = 1,
+  utf = FALSE
+)
+
+pwrss.np.2groups(
+  mu1 = 0.2,
+  mu2 = 0,
+  sd1 = ifelse(paired, sqrt(1/(2 * (1 - paired.r))), 1),
+  sd2 = sd1,
+  margin = 0,
+  alpha = 0.05,
+  paired = FALSE,
+  paired.r = 0.5,
+  kappa = 1,
+  n2 = NULL,
+  power = NULL,
+  alternative = c("not equal", "greater", "less", "non-inferior", "superior",
+    "equivalent"),
+  distribution = c("normal", "uniform", "double.exponential", "laplace", "logistic"),
+  method = c("guenther", "noether"),
+  verbose = TRUE
+)
+
+pwrss.np.2means(...)
 }
 \arguments{
 \item{d}{Cohen's d or Hedges' g.}

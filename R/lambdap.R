@@ -108,6 +108,7 @@ plambdap <- function(q, df, ncp, lower.tail = TRUE, log.p = FALSE) {
     stats::uniroot(zerof, flim, tol = 1e-12)$root
 }
 
+#' @rdname lambdap
 #' @export qlambdap
 qlambdap <- Vectorize(.qlambdap, vectorize.args = c("p", "df", "ncp"), SIMPLIFY = TRUE)
 
@@ -139,9 +140,11 @@ qlambdap <- Vectorize(.qlambdap, vectorize.args = c("p", "df", "ncp"), SIMPLIFY 
     }
 }
 
+#' @rdname lambdap
 #' @export dlambdap
 dlambdap <- Vectorize(.dlambdap, vectorize.args = c("x", "df", "ncp"), SIMPLIFY = TRUE)
 
+#' @rdname lambdap
 #' @export rlambdap
 rlambdap <- function(n, df, ncp) {
     stats::rnorm(n) + ncp * sqrt(stats::rchisq(n, df = df) / df)

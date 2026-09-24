@@ -189,9 +189,11 @@ power.f.regression <- function(r.squared.change = NULL,
 
 } # pwrss.f.regression()
 
+#' @rdname power.f.regression
 #' @export power.f.reg
 power.f.reg <- power.f.regression
 
+#' @rdname power.f.regression
 #' @export pwrss.f.regression
 pwrss.f.regression <- function(r2 = NULL, f2 = NULL,
                         k = 1, m = k, alpha = 0.05,
@@ -216,6 +218,7 @@ pwrss.f.regression <- function(r2 = NULL, f2 = NULL,
 
 } # pwrss.f.regression
 
+#' @rdname power.f.regression
 #' @export pwrss.f.reg
 pwrss.f.reg <- pwrss.f.regression
 
@@ -566,9 +569,11 @@ power.t.regression <- function(beta = NULL, null.beta = 0, margin = 0, req.sign 
                       class = c("pwrss", "t", "regression")))
 } # power.t.regression()
 
+#' @rdname power.t.regression
 #' @export power.t.reg
 power.t.reg <- power.t.regression
 
+#' @rdname power.t.regression
 #' @export pwrss.t.regression
 pwrss.t.regression <- function(beta1 = 0.25, beta0 = 0, margin = 0,
                                sdx = 1, sdy = 1,
@@ -600,11 +605,13 @@ pwrss.t.regression <- function(beta1 = 0.25, beta0 = 0, margin = 0,
 
 } # pwrss.t.regression
 
+#' @rdname power.t.regression
 #' @export pwrss.t.reg
 pwrss.t.reg <- pwrss.t.regression
 
 
 # defunct
+#' @rdname power.t.regression
 #' @export pwrss.z.regression
 #' @export pwrss.z.reg
 pwrss.z.regression <- pwrss.z.reg <- function(...) {

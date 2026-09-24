@@ -424,5 +424,6 @@ power.exact.mcnemar <- function(prob10 = NULL, prob01 = NULL,
 
 } # power.exact.mcnemar()
 
+#' @rdname power.exact.mcnemar
 #' @export power.exact.twoprops.mcnemar
 power.exact.twoprops.mcnemar <- power.exact.mcnemar

@@ -21,6 +21,23 @@ power.exact.twoprops(
   verbose = 1,
   utf = FALSE
 )
+
+power.exact.twoprop(
+  prob1 = NULL,
+  prob2 = NULL,
+  req.sign = "+",
+  n.ratio = 1,
+  n2 = NULL,
+  power = NULL,
+  alpha = 0.05,
+  alternative = c("two.sided", "one.sided"),
+  paired = FALSE,
+  rho.paired = 0.5,
+  method = c("exact", "approximate"),
+  ceil.n = TRUE,
+  verbose = 1,
+  utf = FALSE
+)
 }
 \arguments{
 \item{prob1}{probability of success in the first group.}

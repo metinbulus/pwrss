@@ -411,5 +411,6 @@ power.exact.fisher <- function(prob1 = NULL, prob2 = NULL, req.sign = "+",
 
 } # power.exact.fisher()
 
+#' @rdname power.exact.fisher
 #' @export power.exact.twoprops.fisher
 power.exact.twoprops.fisher <- power.exact.fisher

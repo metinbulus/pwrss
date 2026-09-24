@@ -20,6 +20,31 @@ power.z.twocors(
   verbose = 1,
   utf = FALSE
 )
+
+power.z.twocor(
+  rho1 = NULL,
+  rho2 = NULL,
+  req.sign = "+",
+  n2 = NULL,
+  n.ratio = 1,
+  power = NULL,
+  alpha = 0.05,
+  alternative = c("two.sided", "one.sided"),
+  ceil.n = TRUE,
+  verbose = 1,
+  utf = FALSE
+)
+
+pwrss.z.2corrs(
+  r1 = 0.5,
+  r2 = 0.3,
+  alpha = 0.05,
+  kappa = 1,
+  alternative = c("not equal", "greater", "less"),
+  n2 = NULL,
+  power = NULL,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{rho1}{correlation in the first group.}

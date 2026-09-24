@@ -16,6 +16,17 @@ power.chisq.gof(
   verbose = 1,
   utf = FALSE
 )
+
+pwrss.chisq.gofit(
+  p1 = NULL,
+  p0 = NULL,
+  w = NULL,
+  df = NULL,
+  n = NULL,
+  power = NULL,
+  alpha = 0.05,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{w}{Cohen's w effect size under alternative. It can be any of

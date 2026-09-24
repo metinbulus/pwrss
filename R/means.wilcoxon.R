@@ -388,12 +388,13 @@ power.np.wilcoxon <- function(d = NULL, null.d = 0, margin = 0, req.sign = "+",
                         list.out),
                       class = c("pwrss", "np", "wilcoxon", ifelse(method == "noether", "z", "t"))))
 
-} # end of pwrss.np.wilcoxon()
+} # end of power.np.wilcoxon()
 
+#' @rdname power.np.wilcoxon
 #' @export power.np.wilcox
 power.np.wilcox <- power.np.wilcoxon
 
-
+#' @rdname power.np.wilcoxon
 #' @export pwrss.np.2groups
 pwrss.np.2groups <- function(mu1 = 0.20, mu2 = 0,
                              sd1 = ifelse(paired, sqrt(1 / (2 * (1 - paired.r))), 1),
@@ -476,6 +477,7 @@ fmt_test_wilcoxon <- function(design) {
          `one.sample`  = "Wilcoxon Signed-Rank Test (One Sample)")
 }
 
+#' @rdname power.np.wilcoxon
 #' @export pwrss.np.2means
 pwrss.np.2means <- function(...) {
   stop("This function is no longer available. Please use `power.np.wilcoxon()`.", call. = FALSE)

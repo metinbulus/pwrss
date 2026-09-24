@@ -12,6 +12,12 @@ dlambdap(x, df, ncp, log = FALSE)
 plambdap(q, df, ncp, lower.tail = TRUE, log.p = FALSE)
 qlambdap(p, df, ncp, lower.tail = TRUE, log.p = FALSE)
 rlambdap(n, df, ncp)
+
+qlambdap(p, df, ncp, lower.tail = TRUE, log.p = FALSE)
+
+dlambdap(x, df, ncp, log = FALSE)
+
+rlambdap(n, df, ncp)
 }
 \arguments{
 \item{df}{the degrees of freedom of the distribution}
@@ -21,14 +27,14 @@ rlambdap(n, df, ncp)
 \item{lower.tail}{logical; if \code{TRUE} (default), probabilities are
 \eqn{P[X <= x]}, otherwise, \eqn{P[X > x]}}
 
-\item{x, q}{vector of quantiles}
-
 \item{p}{vector of probabilities}
 
-\item{n}{number of observations}
+\item{x, q}{vector of quantiles}
 
 \item{log, log.p}{logical; if \code{TRUE}, probabilities / densities are given
 as logarithms}
+
+\item{n}{number of observations}
 }
 \value{
 \code{dlambdap} gives the density, \code{plambdap} gives the

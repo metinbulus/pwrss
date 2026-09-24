@@ -18,6 +18,16 @@ power.z.onecor(
   verbose = 1,
   utf = FALSE
 )
+
+pwrss.z.corr(
+  r = 0.5,
+  r0 = 0,
+  alpha = 0.05,
+  alternative = c("not equal", "greater", "less"),
+  n = NULL,
+  power = NULL,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{rho}{correlation.}

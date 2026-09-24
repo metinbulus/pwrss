@@ -435,7 +435,7 @@ d.to.cles <- function(d, design = c("independent", "paired", "one.sample"), verb
 
 } # d.to.cles
 
-
+#' @rdname d.to.cles
 #' @export cles.to.d
 cles.to.d <- function(cles, design = c("independent", "paired", "one.sample"), verbose = 1) {
 
@@ -1100,6 +1100,7 @@ probs.to.w <- function(prob.matrix, null.prob.matrix = NULL, verbose = 1) {
 #'                n.vector = c(33, 33), # sample size (will be calculated)
 #'                k.cov = 1, # number of covariates
 #'                r.squared = 0.50)
+#'
 #' @export means.to.etasq
 means.to.etasq <- function(mu.vector, sd.vector, n.vector, k.covariates = 0, r.squared = 0, factor.levels = NULL, verbose = 1) {
 

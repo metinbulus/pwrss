@@ -460,10 +460,12 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL, beta0 = NULL, b
                       class = c("pwrss", "z", "poisson")))
 } # power.z.poisson()
 
+#' @rdname power.z.poisson
 #' @export power.z.poisreg
 power.z.poisreg <- power.z.poisson
 
 
+#' @rdname power.z.poisson
 #' @export pwrss.z.poisson
 pwrss.z.poisson <- function(exp.beta0 = 1.10, exp.beta1 = 1.16,
                             beta0 = log(exp.beta0), beta1 = log(exp.beta1),
@@ -490,5 +492,6 @@ pwrss.z.poisson <- function(exp.beta0 = 1.10, exp.beta1 = 1.16,
 
 } # pwrss.z.poisson
 
+#' @rdname power.z.poisson
 #' @export pwrss.z.poisreg
 pwrss.z.poisreg <- pwrss.z.poisson
