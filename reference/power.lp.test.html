@@ -169,8 +169,8 @@ default.</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># two-sided</span></span></span>
 <span class="r-in"><span><span class="co"># power defined as the probability of observing test statistics greater</span></span></span>
 <span class="r-in"><span><span class="co"># than the positive critical value OR less than the negative critical value</span></span></span>
-<span class="r-in"><span><span class="fu">power.lp.test</span><span class="op">(</span>ncp <span class="op">=</span> <span class="fl">1.960</span>, df <span class="op">=</span> <span class="fl">100</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>, alternative <span class="op">=</span> <span class="st">"two.sided"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="power.lp.test-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">power.lp.test</span><span class="op">(</span>ncp <span class="op">=</span> <span class="fl">1.960</span>, df <span class="op">=</span> <span class="fl">100</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>,</span></span>
+<span class="r-in"><span>              alternative <span class="op">=</span> <span class="st">"two.sided"</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |                POWER CALCULATION                 |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
@@ -192,8 +192,8 @@ default.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Type 2 Error (beta)  = 0.502</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Statistical Power    = 0.498  &lt;&lt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="fu">power.lp.test</span><span class="op">(</span>power <span class="op">=</span> <span class="fl">0.800</span>, df <span class="op">=</span> <span class="fl">100</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>, alternative <span class="op">=</span> <span class="st">"two.sided"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="power.lp.test-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">power.lp.test</span><span class="op">(</span>power <span class="op">=</span> <span class="fl">0.800</span>, df <span class="op">=</span> <span class="fl">100</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>,</span></span>
+<span class="r-in"><span>              alternative <span class="op">=</span> <span class="st">"two.sided"</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |       MINIMUM DETECTABLE NCP CALCULATION         |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
@@ -215,11 +215,12 @@ default.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Type 2 Error (beta)  = 0.200</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Statistical Power    = 0.800</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># the two examples below estimate the df's based upon the first example</span></span></span>
 <span class="r-in"><span><span class="co"># (revealing a power of 0.498; df = 94.11) and the second example (revealing</span></span></span>
 <span class="r-in"><span><span class="co"># a ncp of 2.825; df = 101.06)</span></span></span>
-<span class="r-in"><span><span class="fu">power.lp.test</span><span class="op">(</span>ncp <span class="op">=</span> <span class="fl">1.960</span>, power <span class="op">=</span> <span class="fl">0.498</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>, alternative <span class="op">=</span> <span class="st">"two.sided"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="power.lp.test-3.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">power.lp.test</span><span class="op">(</span>ncp <span class="op">=</span> <span class="fl">1.960</span>, power <span class="op">=</span> <span class="fl">0.498</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>,</span></span>
+<span class="r-in"><span>              alternative <span class="op">=</span> <span class="st">"two.sided"</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |             SAMPLE SIZE CALCULATION              |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
@@ -241,8 +242,8 @@ default.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Type 2 Error (beta)  = 0.502</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Statistical Power    = 0.498</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="fu">power.lp.test</span><span class="op">(</span>ncp <span class="op">=</span> <span class="fl">2.825</span>, power <span class="op">=</span> <span class="fl">0.800</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>, alternative <span class="op">=</span> <span class="st">"two.sided"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="power.lp.test-4.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">power.lp.test</span><span class="op">(</span>ncp <span class="op">=</span> <span class="fl">2.825</span>, power <span class="op">=</span> <span class="fl">0.800</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>,</span></span>
+<span class="r-in"><span>              alternative <span class="op">=</span> <span class="st">"two.sided"</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |             SAMPLE SIZE CALCULATION              |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
@@ -269,7 +270,7 @@ default.</p></dd>
 <span class="r-in"><span><span class="co"># power is defined as the probability of observing a test statistic greater</span></span></span>
 <span class="r-in"><span><span class="co"># than the critical value</span></span></span>
 <span class="r-in"><span><span class="fu">power.lp.test</span><span class="op">(</span>ncp <span class="op">=</span> <span class="fl">1.960</span>, df <span class="op">=</span> <span class="fl">100</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>, alternative <span class="op">=</span> <span class="st">"one.sided"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="power.lp.test-5.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="power.lp.test-1.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |                POWER CALCULATION                 |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
@@ -292,7 +293,7 @@ default.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Statistical Power    = 0.621  &lt;&lt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">power.lp.test</span><span class="op">(</span>power <span class="op">=</span> <span class="fl">0.800</span>, df <span class="op">=</span> <span class="fl">100</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>, alternative <span class="op">=</span> <span class="st">"one.sided"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="power.lp.test-6.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="power.lp.test-2.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |       MINIMUM DETECTABLE NCP CALCULATION         |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
@@ -317,8 +318,8 @@ default.</p></dd>
 <span class="r-in"><span><span class="co"># the two examples below estimate the df's based upon the first example</span></span></span>
 <span class="r-in"><span><span class="co"># (revealing a power of 0.6207; df = 100.323) and the second example (revealing</span></span></span>
 <span class="r-in"><span><span class="co"># a ncp of 2.506; df = 99.12)</span></span></span>
-<span class="r-in"><span><span class="fu">power.lp.test</span><span class="op">(</span>ncp <span class="op">=</span> <span class="fl">1.960</span>, power <span class="op">=</span> <span class="fl">0.6207</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>, alternative <span class="op">=</span> <span class="st">"one.sided"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="power.lp.test-7.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">power.lp.test</span><span class="op">(</span>ncp <span class="op">=</span> <span class="fl">1.960</span>, power <span class="op">=</span> <span class="fl">0.6207</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>,</span></span>
+<span class="r-in"><span>              alternative <span class="op">=</span> <span class="st">"one.sided"</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |             SAMPLE SIZE CALCULATION              |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
@@ -340,8 +341,8 @@ default.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Type 2 Error (beta)  = 0.379</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Statistical Power    = 0.621</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="fu">power.lp.test</span><span class="op">(</span>ncp <span class="op">=</span> <span class="fl">2.506</span>, power <span class="op">=</span> <span class="fl">0.8000</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>, alternative <span class="op">=</span> <span class="st">"one.sided"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="power.lp.test-8.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">power.lp.test</span><span class="op">(</span>ncp <span class="op">=</span> <span class="fl">2.506</span>, power <span class="op">=</span> <span class="fl">0.8000</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>,</span></span>
+<span class="r-in"><span>              alternative <span class="op">=</span> <span class="st">"one.sided"</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |             SAMPLE SIZE CALCULATION              |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
@@ -478,7 +479,7 @@ default.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">power.lp.test</span><span class="op">(</span>power <span class="op">=</span> <span class="fl">0.80</span>, req.sign <span class="op">=</span> <span class="st">"+"</span>, null.ncp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>              df <span class="op">=</span> <span class="fl">100</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>, alternative <span class="op">=</span> <span class="st">"two.one.sided"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="power.lp.test-9.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="power.lp.test-3.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |       MINIMUM DETECTABLE NCP CALCULATION         |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>

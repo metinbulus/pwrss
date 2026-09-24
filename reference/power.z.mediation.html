@@ -79,6 +79,67 @@ mediator and outcome model via specifying R-squared values accordingly.
 <span>  ceil.n <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  utf <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">power.z.med</span><span class="op">(</span></span>
+<span>  beta.a <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  beta.b <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ab.ratio <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  req.sign <span class="op">=</span> <span class="st">"+"</span>,</span>
+<span>  beta.cp <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  sd.predictor <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  sd.mediator <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  sd.outcome <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  r.squared.mediator <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  r.squared.outcome <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  n <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  power <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  alternative <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"two.sided"</span>, <span class="st">"one.sided"</span><span class="op">)</span>,</span>
+<span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sobel"</span>, <span class="st">"aroian"</span>, <span class="st">"goodman"</span>, <span class="st">"joint"</span>, <span class="st">"monte.carlo"</span><span class="op">)</span>,</span>
+<span>  n.simulation <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>  n.draws <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>  ceil.n <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  utf <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">pwrss.z.mediation</span><span class="op">(</span></span>
+<span>  <span class="va">a</span>,</span>
+<span>  <span class="va">b</span>,</span>
+<span>  cp <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  sdx <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  sdm <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  sdy <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  r2m.x <span class="op">=</span> <span class="va">a</span><span class="op">^</span><span class="fl">2</span> <span class="op">*</span> <span class="va">sdx</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="va">sdm</span><span class="op">^</span><span class="fl">2</span>,</span>
+<span>  r2y.mx <span class="op">=</span> <span class="op">(</span><span class="va">b</span><span class="op">^</span><span class="fl">2</span> <span class="op">*</span> <span class="va">sdm</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="va">cp</span><span class="op">^</span><span class="fl">2</span> <span class="op">*</span> <span class="va">sdx</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">/</span><span class="va">sdy</span><span class="op">^</span><span class="fl">2</span>,</span>
+<span>  n <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  power <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  alternative <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"not equal"</span>, <span class="st">"less"</span>, <span class="st">"greater"</span><span class="op">)</span>,</span>
+<span>  mc <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  nsims <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>  ndraws <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">pwrss.z.med</span><span class="op">(</span></span>
+<span>  <span class="va">a</span>,</span>
+<span>  <span class="va">b</span>,</span>
+<span>  cp <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  sdx <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  sdm <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  sdy <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  r2m.x <span class="op">=</span> <span class="va">a</span><span class="op">^</span><span class="fl">2</span> <span class="op">*</span> <span class="va">sdx</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="va">sdm</span><span class="op">^</span><span class="fl">2</span>,</span>
+<span>  r2y.mx <span class="op">=</span> <span class="op">(</span><span class="va">b</span><span class="op">^</span><span class="fl">2</span> <span class="op">*</span> <span class="va">sdm</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="va">cp</span><span class="op">^</span><span class="fl">2</span> <span class="op">*</span> <span class="va">sdx</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">/</span><span class="va">sdy</span><span class="op">^</span><span class="fl">2</span>,</span>
+<span>  n <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  power <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  alternative <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"not equal"</span>, <span class="st">"less"</span>, <span class="st">"greater"</span><span class="op">)</span>,</span>
+<span>  mc <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  nsims <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>  ndraws <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 

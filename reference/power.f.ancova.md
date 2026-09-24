@@ -26,6 +26,18 @@ power.f.ancova(
   verbose = 1,
   utf = FALSE
 )
+
+pwrss.f.ancova(
+  eta2 = NULL,
+  f2 = NULL,
+  n.way = length(n.levels),
+  n.levels = 2,
+  n.covariates = 0,
+  alpha = 0.05,
+  n = NULL,
+  power = NULL,
+  verbose = TRUE
+)
 ```
 
 ## Arguments

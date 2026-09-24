@@ -10,6 +10,12 @@ dlambdap(x, df, ncp, log = FALSE)
 plambdap(q, df, ncp, lower.tail = TRUE, log.p = FALSE)
 qlambdap(p, df, ncp, lower.tail = TRUE, log.p = FALSE)
 rlambdap(n, df, ncp)
+
+qlambdap(p, df, ncp, lower.tail = TRUE, log.p = FALSE)
+
+dlambdap(x, df, ncp, log = FALSE)
+
+rlambdap(n, df, ncp)
 ```
 
 ## Arguments
@@ -27,21 +33,21 @@ rlambdap(n, df, ncp)
   logical; if `TRUE` (default), probabilities are \\P\[X \<= x\]\\,
   otherwise, \\P\[X \> x\]\\
 
-- x, q:
-
-  vector of quantiles
-
 - p:
 
   vector of probabilities
 
-- n:
+- x, q:
 
-  number of observations
+  vector of quantiles
 
 - log, log.p:
 
   logical; if `TRUE`, probabilities / densities are given as logarithms
+
+- n:
+
+  number of observations
 
 ## Value
 

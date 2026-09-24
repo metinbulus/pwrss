@@ -48,6 +48,57 @@ power.z.logistic(
   verbose = 1,
   utf = FALSE
 )
+
+power.z.logreg(
+  prob = NULL,
+  base.prob = NULL,
+  odds.ratio = NULL,
+  beta0 = NULL,
+  beta1 = NULL,
+  req.sign = "+",
+  n = NULL,
+  power = NULL,
+  r.squared.predictor = 0,
+  alpha = 0.05,
+  alternative = c("two.sided", "one.sided"),
+  method = c("demidenko(vc)", "demidenko", "hsieh"),
+  distribution = "normal",
+  ceil.n = TRUE,
+  verbose = 1,
+  utf = FALSE
+)
+
+pwrss.z.logistic(
+  p1 = NULL,
+  p0 = NULL,
+  odds.ratio = NULL,
+  beta0 = NULL,
+  beta1 = NULL,
+  n = NULL,
+  power = NULL,
+  r2.other.x = 0,
+  alpha = 0.05,
+  alternative = c("not equal", "less", "greater"),
+  method = c("demidenko(vc)", "demidenko", "hsieh"),
+  distribution = "normal",
+  verbose = TRUE
+)
+
+pwrss.z.logreg(
+  p1 = NULL,
+  p0 = NULL,
+  odds.ratio = NULL,
+  beta0 = NULL,
+  beta1 = NULL,
+  n = NULL,
+  power = NULL,
+  r2.other.x = 0,
+  alpha = 0.05,
+  alternative = c("not equal", "less", "greater"),
+  method = c("demidenko(vc)", "demidenko", "hsieh"),
+  distribution = "normal",
+  verbose = TRUE
+)
 ```
 
 ## Arguments

@@ -27,6 +27,54 @@ power.z.twoprops(
   verbose = 1,
   utf = FALSE
 )
+
+power.z.twoprop(
+  prob1 = NULL,
+  prob2 = NULL,
+  req.sign = "+",
+  margin = 0,
+  n.ratio = 1,
+  n2 = NULL,
+  power = NULL,
+  alpha = 0.05,
+  alternative = c("two.sided", "one.sided", "two.one.sided"),
+  arcsine = FALSE,
+  correct = FALSE,
+  paired = FALSE,
+  rho.paired = 0.5,
+  std.error = c("pooled", "unpooled"),
+  ceil.n = TRUE,
+  verbose = 1,
+  utf = FALSE
+)
+
+pwrss.z.2props(
+  p1,
+  p2,
+  margin = 0,
+  arcsin.trans = FALSE,
+  kappa = 1,
+  alpha = 0.05,
+  alternative = c("not equal", "greater", "less", "equivalent", "non-inferior",
+    "superior"),
+  n2 = NULL,
+  power = NULL,
+  verbose = TRUE
+)
+
+pwrss.z.2prop(
+  p1,
+  p2,
+  margin = 0,
+  arcsin.trans = FALSE,
+  kappa = 1,
+  alpha = 0.05,
+  alternative = c("not equal", "greater", "less", "equivalent", "non-inferior",
+    "superior"),
+  n2 = NULL,
+  power = NULL,
+  verbose = TRUE
+)
 ```
 
 ## Arguments

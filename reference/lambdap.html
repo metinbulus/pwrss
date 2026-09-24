@@ -49,6 +49,12 @@ the lambda prime distribution.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">dlambdap</span><span class="op">(</span><span class="va">x</span>, <span class="va">df</span>, <span class="va">ncp</span>, log <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu">plambdap</span><span class="op">(</span><span class="va">q</span>, <span class="va">df</span>, <span class="va">ncp</span>, lower.tail <span class="op">=</span> <span class="cn">TRUE</span>, log.p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu">qlambdap</span><span class="op">(</span><span class="va">p</span>, <span class="va">df</span>, <span class="va">ncp</span>, lower.tail <span class="op">=</span> <span class="cn">TRUE</span>, log.p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">rlambdap</span><span class="op">(</span><span class="va">n</span>, <span class="va">df</span>, <span class="va">ncp</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">qlambdap</span><span class="op">(</span><span class="va">p</span>, <span class="va">df</span>, <span class="va">ncp</span>, lower.tail <span class="op">=</span> <span class="cn">TRUE</span>, log.p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">dlambdap</span><span class="op">(</span><span class="va">x</span>, <span class="va">df</span>, <span class="va">ncp</span>, log <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">rlambdap</span><span class="op">(</span><span class="va">n</span>, <span class="va">df</span>, <span class="va">ncp</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -69,21 +75,21 @@ the lambda prime distribution.</p>
 \(P[X &lt;= x]\), otherwise, \(P[X &gt; x]\)</p></dd>
 
 
-<dt id="arg-x-q">x, q<a class="anchor" aria-label="anchor" href="#arg-x-q"></a></dt>
-<dd><p>vector of quantiles</p></dd>
-
-
 <dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
 <dd><p>vector of probabilities</p></dd>
 
 
-<dt id="arg-n">n<a class="anchor" aria-label="anchor" href="#arg-n"></a></dt>
-<dd><p>number of observations</p></dd>
+<dt id="arg-x-q">x, q<a class="anchor" aria-label="anchor" href="#arg-x-q"></a></dt>
+<dd><p>vector of quantiles</p></dd>
 
 
 <dt id="arg-log-log-p">log, log.p<a class="anchor" aria-label="anchor" href="#arg-log-log-p"></a></dt>
 <dd><p>logical; if <code>TRUE</code>, probabilities / densities are given
 as logarithms</p></dd>
+
+
+<dt id="arg-n">n<a class="anchor" aria-label="anchor" href="#arg-n"></a></dt>
+<dd><p>number of observations</p></dd>
 
 </dl></div>
     <div class="section level2">

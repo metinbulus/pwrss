@@ -6581,21 +6581,29 @@ Power analyses for one and two sample (independent and paired)
 proportions
 
 - [`power.chisq.gof()`](https://metinbulus.github.io/pwrss/reference/power.chisq.gof.md)
+  [`pwrss.chisq.gofit()`](https://metinbulus.github.io/pwrss/reference/power.chisq.gof.md)
   : Power Analysis for Chi-square Goodness-of-Fit or Independence Tests
 - [`power.z.oneprop()`](https://metinbulus.github.io/pwrss/reference/power.z.oneprop.md)
+  [`pwrss.z.prop()`](https://metinbulus.github.io/pwrss/reference/power.z.oneprop.md)
   : Power Analysis for the Test of One Proportion (Normal Approximation
   Method)
 - [`power.exact.oneprop()`](https://metinbulus.github.io/pwrss/reference/power.exact.oneprop.md)
   : Power Analysis for the Test of One Proportion (Exact Method)
 - [`power.z.twoprops()`](https://metinbulus.github.io/pwrss/reference/power.z.twoprops.md)
+  [`power.z.twoprop()`](https://metinbulus.github.io/pwrss/reference/power.z.twoprops.md)
+  [`pwrss.z.2props()`](https://metinbulus.github.io/pwrss/reference/power.z.twoprops.md)
+  [`pwrss.z.2prop()`](https://metinbulus.github.io/pwrss/reference/power.z.twoprops.md)
   : Power Analysis for Testing the Difference Between Two Proportions
   (Normal Approximation Method)
 - [`power.exact.twoprops()`](https://metinbulus.github.io/pwrss/reference/power.exact.twoprops.md)
+  [`power.exact.twoprop()`](https://metinbulus.github.io/pwrss/reference/power.exact.twoprops.md)
   : Power Analysis for Testing the Difference Between Two Proportions
   (Exact Method)
 - [`power.exact.fisher()`](https://metinbulus.github.io/pwrss/reference/power.exact.fisher.md)
+  [`power.exact.twoprops.fisher()`](https://metinbulus.github.io/pwrss/reference/power.exact.fisher.md)
   : Power Analysis for Fisher's Exact Test (Independent Proportions)
 - [`power.exact.mcnemar()`](https://metinbulus.github.io/pwrss/reference/power.exact.mcnemar.md)
+  [`power.exact.twoprops.mcnemar()`](https://metinbulus.github.io/pwrss/reference/power.exact.mcnemar.md)
   : Power Analysis for McNemar's Exact Test (Paired Proportions)
 
 ## Correlations
@@ -6603,12 +6611,16 @@ proportions
 Power analyses for (independent and dependent) correlations
 
 - [`power.z.onecor()`](https://metinbulus.github.io/pwrss/reference/power.z.onecor.md)
+  [`pwrss.z.corr()`](https://metinbulus.github.io/pwrss/reference/power.z.onecor.md)
   : Power Analysis for One-Sample Correlation
 - [`power.exact.onecor()`](https://metinbulus.github.io/pwrss/reference/power.exact.onecor.md)
   : Power Analysis for One-Sample Correlation (Exact)
 - [`power.z.twocors()`](https://metinbulus.github.io/pwrss/reference/power.z.twocors.md)
+  [`power.z.twocor()`](https://metinbulus.github.io/pwrss/reference/power.z.twocors.md)
+  [`pwrss.z.2corrs()`](https://metinbulus.github.io/pwrss/reference/power.z.twocors.md)
   : Power Analysis for Independent Correlations
 - [`power.z.twocors.steiger()`](https://metinbulus.github.io/pwrss/reference/power.z.twocors.steiger.md)
+  [`power.z.steiger()`](https://metinbulus.github.io/pwrss/reference/power.z.twocors.steiger.md)
   : Power Analysis for Dependent Correlations (Steiger's Z-Test)
 
 ## Means Differences
@@ -6617,13 +6629,21 @@ Power analyses for mean differences (t-tests, Wilcoxon) and ANOVA /
 ANCOVA models
 
 - [`power.t.student()`](https://metinbulus.github.io/pwrss/reference/power.t.student.md)
+  [`pwrss.t.mean()`](https://metinbulus.github.io/pwrss/reference/power.t.student.md)
+  [`pwrss.t.2means()`](https://metinbulus.github.io/pwrss/reference/power.t.student.md)
+  [`pwrss.z.mean()`](https://metinbulus.github.io/pwrss/reference/power.t.student.md)
+  [`pwrss.z.2means()`](https://metinbulus.github.io/pwrss/reference/power.t.student.md)
   : Power Analysis for Student's t-Test
 - [`power.t.welch()`](https://metinbulus.github.io/pwrss/reference/power.t.welch.md)
   : Power Analysis for Welch's t-Test
 - [`power.np.wilcoxon()`](https://metinbulus.github.io/pwrss/reference/power.np.wilcoxon.md)
+  [`power.np.wilcox()`](https://metinbulus.github.io/pwrss/reference/power.np.wilcoxon.md)
+  [`pwrss.np.2groups()`](https://metinbulus.github.io/pwrss/reference/power.np.wilcoxon.md)
+  [`pwrss.np.2means()`](https://metinbulus.github.io/pwrss/reference/power.np.wilcoxon.md)
   : Power Analysis for Non-parametric Rank-Based Tests (One-Sample,
   Independent, and Paired Designs)
 - [`power.f.ancova()`](https://metinbulus.github.io/pwrss/reference/power.f.ancova.md)
+  [`pwrss.f.ancova()`](https://metinbulus.github.io/pwrss/reference/power.f.ancova.md)
   : Power Analysis for One-, Two-, Three-Way ANOVA/ANCOVA Using Effect
   Size (F-Test)
 - [`power.f.ancova.keppel()`](https://metinbulus.github.io/pwrss/reference/power.f.ancova.keppel.md)
@@ -6648,16 +6668,32 @@ ANCOVA models
 Power analyses for linear, logistic, and Poisson regressions
 
 - [`power.f.regression()`](https://metinbulus.github.io/pwrss/reference/power.f.regression.md)
+  [`power.f.reg()`](https://metinbulus.github.io/pwrss/reference/power.f.regression.md)
+  [`pwrss.f.regression()`](https://metinbulus.github.io/pwrss/reference/power.f.regression.md)
+  [`pwrss.f.reg()`](https://metinbulus.github.io/pwrss/reference/power.f.regression.md)
   : Power Analysis for Linear Regression: R-squared or R-squared Change
   (F-Test)
 - [`power.t.regression()`](https://metinbulus.github.io/pwrss/reference/power.t.regression.md)
+  [`power.t.reg()`](https://metinbulus.github.io/pwrss/reference/power.t.regression.md)
+  [`pwrss.t.regression()`](https://metinbulus.github.io/pwrss/reference/power.t.regression.md)
+  [`pwrss.t.reg()`](https://metinbulus.github.io/pwrss/reference/power.t.regression.md)
+  [`pwrss.z.regression()`](https://metinbulus.github.io/pwrss/reference/power.t.regression.md)
   : Power Analysis for Linear Regression: Single Coefficient (T-Test)
 - [`power.z.mediation()`](https://metinbulus.github.io/pwrss/reference/power.z.mediation.md)
+  [`power.z.med()`](https://metinbulus.github.io/pwrss/reference/power.z.mediation.md)
+  [`pwrss.z.mediation()`](https://metinbulus.github.io/pwrss/reference/power.z.mediation.md)
+  [`pwrss.z.med()`](https://metinbulus.github.io/pwrss/reference/power.z.mediation.md)
   : Power Analysis for Indirect Effects in a Mediation Model (Z, Joint,
   and Monte Carlo Tests)
 - [`power.z.logistic()`](https://metinbulus.github.io/pwrss/reference/power.z.logistic.md)
+  [`power.z.logreg()`](https://metinbulus.github.io/pwrss/reference/power.z.logistic.md)
+  [`pwrss.z.logistic()`](https://metinbulus.github.io/pwrss/reference/power.z.logistic.md)
+  [`pwrss.z.logreg()`](https://metinbulus.github.io/pwrss/reference/power.z.logistic.md)
   : Power Analysis for Logistic Regression Coefficient (Wald's Z-Test)
 - [`power.z.poisson()`](https://metinbulus.github.io/pwrss/reference/power.z.poisson.md)
+  [`power.z.poisreg()`](https://metinbulus.github.io/pwrss/reference/power.z.poisson.md)
+  [`pwrss.z.poisson()`](https://metinbulus.github.io/pwrss/reference/power.z.poisson.md)
+  [`pwrss.z.poisreg()`](https://metinbulus.github.io/pwrss/reference/power.z.poisson.md)
   : Power Analysis for Poisson Regression Coefficient (Wald's z Test)
 
 ## Helper and Effect Size Conversions
@@ -6668,6 +6704,7 @@ metrics
 - [`inflate.sample()`](https://metinbulus.github.io/pwrss/reference/inflate.sample.md)
   : Inflate Sample Size for Attrition
 - [`d.to.cles()`](https://metinbulus.github.io/pwrss/reference/d.to.cles.md)
+  [`cles.to.d()`](https://metinbulus.github.io/pwrss/reference/d.to.cles.md)
   : Conversion from Cohen's d to Common Language Effect Size
 - [`cor.to.z()`](https://metinbulus.github.io/pwrss/reference/cor.to.z.md)
   : Conversion from a correlation to a z-value (Fisher's

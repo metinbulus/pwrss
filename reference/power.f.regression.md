@@ -24,6 +24,41 @@ power.f.regression(
   verbose = 1,
   utf = FALSE
 )
+
+power.f.reg(
+  r.squared.change = NULL,
+  margin = 0,
+  k.total,
+  k.tested = k.total,
+  n = NULL,
+  power = NULL,
+  alpha = 0.05,
+  ceil.n = TRUE,
+  verbose = 1,
+  utf = FALSE
+)
+
+pwrss.f.regression(
+  r2 = NULL,
+  f2 = NULL,
+  k = 1,
+  m = k,
+  alpha = 0.05,
+  n = NULL,
+  power = NULL,
+  verbose = TRUE
+)
+
+pwrss.f.reg(
+  r2 = NULL,
+  f2 = NULL,
+  k = 1,
+  m = k,
+  alpha = 0.05,
+  n = NULL,
+  power = NULL,
+  verbose = TRUE
+)
 ```
 
 ## Arguments

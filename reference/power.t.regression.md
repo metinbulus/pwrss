@@ -36,6 +36,58 @@ power.t.regression(
   verbose = 1,
   utf = FALSE
 )
+
+power.t.reg(
+  beta = NULL,
+  null.beta = 0,
+  margin = 0,
+  req.sign = "+",
+  sd.predictor = 1,
+  sd.outcome = 1,
+  r.squared = NULL,
+  k.total = 1,
+  n = NULL,
+  power = NULL,
+  alpha = 0.05,
+  alternative = c("two.sided", "one.sided", "two.one.sided"),
+  ceil.n = TRUE,
+  verbose = 1,
+  utf = FALSE
+)
+
+pwrss.t.regression(
+  beta1 = 0.25,
+  beta0 = 0,
+  margin = 0,
+  sdx = 1,
+  sdy = 1,
+  k = 1,
+  r2 = (beta1 * sdx/sdy)^2,
+  alpha = 0.05,
+  n = NULL,
+  power = NULL,
+  alternative = c("not equal", "less", "greater", "non-inferior", "superior",
+    "equivalent"),
+  verbose = TRUE
+)
+
+pwrss.t.reg(
+  beta1 = 0.25,
+  beta0 = 0,
+  margin = 0,
+  sdx = 1,
+  sdy = 1,
+  k = 1,
+  r2 = (beta1 * sdx/sdy)^2,
+  alpha = 0.05,
+  n = NULL,
+  power = NULL,
+  alternative = c("not equal", "less", "greater", "non-inferior", "superior",
+    "equivalent"),
+  verbose = TRUE
+)
+
+pwrss.z.regression(...)
 ```
 
 ## Arguments

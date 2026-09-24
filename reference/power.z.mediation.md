@@ -34,6 +34,67 @@ power.z.mediation(
   verbose = 1,
   utf = FALSE
 )
+
+power.z.med(
+  beta.a = NULL,
+  beta.b = NULL,
+  ab.ratio = 1,
+  req.sign = "+",
+  beta.cp = 0,
+  sd.predictor = 1,
+  sd.mediator = 1,
+  sd.outcome = 1,
+  r.squared.mediator = NULL,
+  r.squared.outcome = NULL,
+  n = NULL,
+  power = NULL,
+  alpha = 0.05,
+  alternative = c("two.sided", "one.sided"),
+  method = c("sobel", "aroian", "goodman", "joint", "monte.carlo"),
+  n.simulation = 1000,
+  n.draws = 1000,
+  ceil.n = TRUE,
+  verbose = 1,
+  utf = FALSE
+)
+
+pwrss.z.mediation(
+  a,
+  b,
+  cp = 0,
+  sdx = 1,
+  sdm = 1,
+  sdy = 1,
+  r2m.x = a^2 * sdx^2/sdm^2,
+  r2y.mx = (b^2 * sdm^2 + cp^2 * sdx^2)/sdy^2,
+  n = NULL,
+  power = NULL,
+  alpha = 0.05,
+  alternative = c("not equal", "less", "greater"),
+  mc = TRUE,
+  nsims = 1000,
+  ndraws = 1000,
+  verbose = TRUE
+)
+
+pwrss.z.med(
+  a,
+  b,
+  cp = 0,
+  sdx = 1,
+  sdm = 1,
+  sdy = 1,
+  r2m.x = a^2 * sdx^2/sdm^2,
+  r2y.mx = (b^2 * sdm^2 + cp^2 * sdx^2)/sdy^2,
+  n = NULL,
+  power = NULL,
+  alpha = 0.05,
+  alternative = c("not equal", "less", "greater"),
+  mc = TRUE,
+  nsims = 1000,
+  ndraws = 1000,
+  verbose = TRUE
+)
 ```
 
 ## Arguments

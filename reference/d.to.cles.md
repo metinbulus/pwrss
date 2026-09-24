@@ -17,6 +17,8 @@ randomly selected observation is greater than the reference value (e.g.,
 
 ``` r
 d.to.cles(d, design = c("independent", "paired", "one.sample"), verbose = 1)
+
+cles.to.d(cles, design = c("independent", "paired", "one.sample"), verbose = 1)
 ```
 
 ## Arguments
