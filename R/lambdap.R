@@ -112,7 +112,7 @@ plambdap <- function(q, df, ncp, lower.tail = TRUE, log.p = FALSE) {
 qlambdap <- Vectorize(.qlambdap, vectorize.args = c("p", "df", "ncp"), SIMPLIFY = TRUE)
 
 .dlambdap <- function(x, df, ncp, log = FALSE) {
-    gradf <- function(q) plambdap(q, df, ncp, lower.tail = TRUE, log.p = log) # used in l. 35
+    gradf <- function(q) plambdap(q, df, ncp, lower.tail = TRUE, log.p = log) # used 3 and 18 lines below
 
     x <- as.numeric(x)
     d <- stats::numericDeriv(quote(gradf(x)), "x")
