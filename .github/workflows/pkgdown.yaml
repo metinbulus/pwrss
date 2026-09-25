@@ -36,8 +36,7 @@ jobs:
           needs: website
 
       - name: Regenerate README
-        run: devtools::build_readme()
-        shell: Rscript {0}
+        run: Rscript -e 'if (file.exists("README.Rmd")) rmarkdown::render("README.Rmd")'
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
