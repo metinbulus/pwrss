@@ -3077,9 +3077,7 @@ Bulus, M., &amp; Jentschke, S. (2026). pwrss: Statistical Power, Sample Size, an
 <span class="math inline">\Delta R^2</span> &gt; 0<a class="anchor" aria-label="anchor" href="#delta-r2--0"></a>
 </h3>
 <p><strong>Example</strong>: Assume that we want to test the incremental contribution of two additional predictors (<span class="math inline">X_{4}</span> and <span class="math inline">X_{5}</span>) to an existing regression model. That is, we are testing whether adding these two predictors (k.tested = 2) results in a significant increase in explained variance. The full model includes five predictors in total (k.total = 5). We are interested in detecting a meaningful increase in explained variance of <span class="math inline">\Delta R^2 = 0.10</span>. What is the minimum required sample size under these criteria?</p>
-<p><span class="math display">
-Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + \beta_{4}X_{4} + \beta_{5}X_{5} + r, \quad r \sim N(0, \sigma ^ 2)
-</span></p>
+<p><span class="math display">Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + \beta_{4}X_{4} + \beta_{5}X_{5} + r, \quad r \sim N(0, \sigma ^ 2)</span></p>
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/power.f.regression.html">power.f.regression</a></span><span class="op">(</span>r.squared.change <span class="op">=</span> <span class="fl">0.10</span>,</span>
 <span>                   k.total <span class="op">=</span> <span class="fl">5</span>, <span class="co"># number of total predictors</span></span>
@@ -3150,9 +3148,7 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + \beta_{4}X_{4
 <h3 id="standardized-input">Standardized Input<a class="anchor" aria-label="anchor" href="#standardized-input"></a>
 </h3>
 <p>In the earlier example, assume that we want to predict a continuous variable <span class="math inline">Y</span> using a continuous predictor <span class="math inline">X_{1}</span> but control for <span class="math inline">X_{2}</span>, and <span class="math inline">X_{2}</span> variables (can be a combination of binary or continuous). We are mainly interested in the effect of <span class="math inline">X_{1}</span> and expect a standardized regression coefficient of <span class="math inline">\beta_{1} = 0.20</span>.</p>
-<p><span class="math display">
-Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \sim N(0, \sigma ^ 2)
-</span></p>
+<p><span class="math display">Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \sim N(0, \sigma ^ 2)</span></p>
 <p>Again, we are expecting that these three variables explain 30% of the variance in the outcome (<span class="math inline">R^2 = 0.30</span>). What is the minimum required sample size? It is sufficient to provide standardized regression coefficient for <code>beta</code> because <code>sd.predictor = 1</code> and <code>sd.outcome = 1</code> by default.</p>
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/power.t.regression.html">power.t.regression</a></span><span class="op">(</span>beta <span class="op">=</span> <span class="fl">0.20</span>,</span>
@@ -3650,9 +3646,7 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + r, \quad r \s
 </h1>
 <hr>
 <p>In Poisson regression a count outcome variable (e.g. number of hospital / store / website visits, number of absence / dead / purchase in a day / week / month) is modeled by predicting incidence rate (<span class="math inline">\lambda</span>) via logarithmic transformation (natural logarithm of rates). A model with one main predictor (<span class="math inline">X_1</span>) and two other covariates (<span class="math inline">X_2</span> and <span class="math inline">X_3</span>) can be constructed as</p>
-<p><span class="math display">
-ln(\lambda) = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3}
-</span></p>
+<p><span class="math display">ln(\lambda) = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3}</span></p>
 <p>where <span class="math inline">exp(\beta_0)</span> is the base incidence rate. <br><span class="math display">\beta_1 = ln(\frac{\lambda(X_1=1)}{\lambda(X_1=0)})</span> <br> Incidence rate ratio is defined as <span class="math display">exp(\beta_1) = \frac{\lambda(X_1=1)}{\lambda(X_1=0)}</span> <br></p>
 <p>Assume</p>
 <ul>
@@ -3839,12 +3833,10 @@ ln(\lambda) = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3}
 <figure><img src="./figures/med.png" alt="Simple Mediation Model"><figcaption aria-hidden="true">
 Simple Mediation Model
 </figcaption></figure><p>Regression models take the form of</p>
-<p><span class="math display">
-\begin{eqnarray}
+<p><span class="math display">\begin{eqnarray}
 M &amp; = &amp; \beta_{0M} + \beta_{a} X + e \\
 Y &amp; = &amp; \beta_{0Y} + \beta_{b} M + \beta_{cp} X + \epsilon
-\end{eqnarray}
-</span></p>
+\end{eqnarray}</span></p>
 <p><em>Y</em> is the outcome, <em>M</em> is the mediator, and <em>X</em> is the main predictor. The indirect effect is the product of <span class="math inline">\beta_a</span> and <span class="math inline">\beta_b</span> path coefficients. <span class="math inline">\beta_{cp}</span> is the path coefficient for the direct effect. Path coefficients can be standardized or unstandardized. They are presumed to be standardized by default because the main predictor, mediator, and outcome all have standard deviations of <code>sd.predictor = 1</code>, <code>sd.mediator = 1</code>, and <code>sd.outcome = 1</code> in the function. Standard deviations should be specified for unstandardized path coefficients (you can find these values in descriptive tables in reports / publications).</p>
 <div class="section level2">
 <h2 id="continuous-predictor">Continuous Predictor<a class="anchor" aria-label="anchor" href="#continuous-predictor"></a>
