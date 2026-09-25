@@ -723,7 +723,7 @@ factorial.contrasts <- function(factor.levels = c(3, 2),
 
     } else {
 
-      stop(sprintf("Contrast type \"%s\" not supported at the moment.", coding.scheme[i]), call. = FALSE)
+      stop("Contrast type \"", coding.scheme[i], "\" not supported at the moment.", call. = FALSE)
 
     }
 
