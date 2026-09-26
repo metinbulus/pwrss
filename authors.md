@@ -3,10 +3,10 @@
 ## Authors
 
 - **Metin Bulus**. Author, maintainer, copyright holder.
-  [](https://orcid.org/0000-0003-2576-5432)
+  [](https://orcid.org/0000-0003-4348-6322)
 
 - **Sebastian Jentschke**. Author, copyright holder.
-  [](https://orcid.org/0000-0003-4348-6322)
+  [](https://orcid.org/0000-0003-2576-5432)
 
 ## Citation
 
