@@ -12,7 +12,7 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }}) ${{ matrix.config.is_arm64 && '(ARM64)' || '' }}
 
     strategy:
       fail-fast: false
@@ -23,31 +23,59 @@ jobs:
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
           - {os: ubuntu-latest,   r: 'oldrel-1'}
+          - {os: ubuntu-latest,   r: 'release', is_arm64: true}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - uses: r-lib/actions/setup-pandoc@v2
+      - name: Set up Pandoc (Native)
+        if: ${{ !matrix.config.is_arm64 }}
+        uses: r-lib/actions/setup-pandoc@v2
 
-      - uses: r-lib/actions/setup-r@v2
+      - name: Set up R (Native)
+        if: ${{ !matrix.config.is_arm64 }}
+        uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
+      - name: Set up QEMU (ARM64 Emulation)
+        if: ${{ matrix.config.is_arm64 }}
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+
+      - name: Install Dependencies (Native)
+        if: ${{ !matrix.config.is_arm64 }}
+        uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck, any::XML, any::roxygen2
           needs: check
 
-      - name: Document
+      - name: Document (Native)
+        if: ${{ !matrix.config.is_arm64 }}
         run: roxygen2::roxygenise(roclets = "rd")
         shell: Rscript {0}
 
-      - uses: r-lib/actions/check-r-package@v2
+      - name: Run R Check (Native)
+        if: ${{ !matrix.config.is_arm64 }}
+        uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
+
+      - name: Run R Check (ARM64 Emulation)
+        if: ${{ matrix.config.is_arm64 }}
+        run: |
+          docker run --platform linux/arm64 --rm -v ${{ github.workspace }}:/pkg \
+            ghcr.io/r-hub/r-minimal/r-minimal:latest \
+            sh -c "apk update && apk add bash && \
+            R -e 'install.packages(c(\"remotes\", \"XML\", \"roxygen2\"))' && \
+            R -e 'remotes::install_deps(\"/pkg\", dependencies = TRUE)' && \
+            R -e 'roxygen2::roxygenise(\"/pkg\", roclets = \"rd\")' && \
+            R CMD build /pkg && R CMD check --as-cran /*.tar.gz"
