@@ -75,7 +75,7 @@ jobs:
           docker run --platform linux/arm64 --rm -v ${{ github.workspace }}:/pkg \
             ghcr.io/r-hub/r-minimal/r-minimal:latest \
             sh -c "apk update && apk add bash && \
-            R -e 'install.packages(c(\"remotes\", \"XML\", \"roxygen2\"))' && \
+            R -e 'install.packages(c(\"remotes\", \"XML\", \"roxygen2\"), repos = \"https://cran.r-project.org/\")' && \
             R -e 'remotes::install_deps(\"/pkg\", dependencies = TRUE)' && \
             R -e 'roxygen2::roxygenise(\"/pkg\", roclets = \"rd\")' && \
             R CMD build /pkg && R CMD check --as-cran /*.tar.gz"
