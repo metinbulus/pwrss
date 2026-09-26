@@ -12,7 +12,7 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }}) ${{ matrix.config.is_arm64 && '(ARM64)' || '' }}
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }}${{ matrix.config.is_arm64 && '; ARM64)' || ')' }}
 
     strategy:
       fail-fast: false
@@ -74,8 +74,10 @@ jobs:
         run: |
           docker run --platform linux/arm64 --rm -v ${{ github.workspace }}:/pkg \
             ghcr.io/r-hub/r-minimal/r-minimal:latest \
-            sh -c "apk update && apk add --no-cache bash build-base linux-headers libuv-dev libxml2-dev && \
-            R -e 'install.packages(c(\"remotes\", \"XML\", \"roxygen2\"), repos = \"https://cran.r-project.org/\")' && \
-            R -e 'remotes::install_deps(\"/pkg\", dependencies = TRUE)' && \
-            R -e 'roxygen2::roxygenise(\"/pkg\", roclets = \"rd\")' && \
-            R CMD build /pkg && R CMD check --as-cran /*.tar.gz"
+            sh -c "\
+              apk update && \
+              apk add --no-cache bash build-base linux-headers libuv-dev libxml2-dev pandoc-cli texlive texmf-dist && \
+              R -e 'install.packages(c(\"remotes\", \"XML\", \"roxygen2\"), repos = \"https://cran.r-project.org/\")' && \
+              R -e 'remotes::install_deps(\"/pkg\", dependencies = TRUE)' && \
+              R -e 'roxygen2::roxygenise(\"/pkg\", roclets = \"rd\")' && \
+              R CMD build /pkg && R CMD check --as-cran /*.tar.gz"
