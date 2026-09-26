@@ -81,4 +81,4 @@ jobs:
               R -e 'remotes::install_deps(\"/pkg\", dependencies = TRUE)' && \
               R -e 'roxygen2::roxygenise(\"/pkg\", roclets = \"rd\")' && \
               R CMD build /pkg --no-build-vignettes && \
-              R CMD check --as-cran /*.tar.gz"
+              R CMD check --as-cran *.tar.gz"
