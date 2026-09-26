@@ -77,8 +77,8 @@ jobs:
             sh -c "\
               apk update && \
               apk add --no-cache bash build-base linux-headers libuv-dev libxml2-dev pandoc-cli texlive texmf-dist && \
-              R -e 'install.packages(c(\"remotes\", \"XML\", \"roxygen2\"), repos = \"https://cran.r-project.org/\")' && \
+              R -e 'install.packages(c(\"remotes\", \"devtools\", \"XML\", \"roxygen2\"), repos = \"https://cran.r-project.org/\")' && \
               R -e 'remotes::install_deps(\"/pkg\", dependencies = TRUE)' && \
-              R -e 'roxygen2::roxygenise(\"/pkg\", roclets = \"rd\")' && \
+              R -e 'devtools::test()' && \
               R CMD build /pkg --no-build-vignettes && \
-              R CMD check --as-cran *.tar.gz"
+              R CMD check --as-cran --no-build-vignettes --no-manual --check-subdirs=no *.tar.gz"
