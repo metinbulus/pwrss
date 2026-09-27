@@ -211,7 +211,7 @@ test_that("get.interval works", {
     expect_equal(get.interval(null.ncp = c(-2, 2), req.sign = "-", distribution = "lp", alternative = "two.one.sided", df = 3e4),
                  c(-10.0084683, -2), tolerance = 1e-2)
 #                c(-10.0084683, -2), tolerance = if (isARM) 1e-2 else if (isWin) 1e-4 else testthat_tolerance())
-    if (Sys.info()["sysname"] == "Darwin")  expect_equal(unname(Sys.info()["machine"]), "aarch64")
+    if (Sys.info()["sysname"] == "Darwin")  expect_equal(unname(Sys.info()["machine"]), "arm64")
     if (Sys.info()["sysname"] == "Windows") expect_equal(unname(Sys.info()["machine"]), "x86-64")
     if (Sys.info()["sysname"] == "Linux")   expect_equal(unname(Sys.info()["machine"]), "x86_64")
 })
