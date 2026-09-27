@@ -140,7 +140,7 @@ test_that("get.interval works", {
     # when using the distribution values with rather large values (e.g., 8331.498), MacOS and Windows need lower
     # tolerances when comparing to the values determined on Linux; on MacOS or with ARM processors, this already occurs
     # for the t-distribution functions that are part of base R
-    isARM <- (Sys.info()["sysname"] == "Darwin" || Sys.info()[["machine"]] == "arm64")
+    isARM <- (Sys.info()["sysname"] == "Darwin" || Sys.info()[["machine"]] == "arm64" || Sys.info()[["machine"]] = "aarch64")
     isWin <- (Sys.info()["sysname"] == "Windows")
     expect_equal(get.interval(null.ncp = 0, req.sign = "+", distribution = "z", alternative = "two.sided", sd = 1), c(0, +8.32130487))
     expect_equal(get.interval(null.ncp = 0, req.sign = "-", distribution = "z", alternative = "two.sided", sd = 1), c(-8.32130487, 0))
