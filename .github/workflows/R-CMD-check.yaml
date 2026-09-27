@@ -79,6 +79,6 @@ jobs:
               apk add --no-cache bash build-base linux-headers libuv-dev libxml2-dev pandoc-cli texlive texmf-dist && \
               R -e 'install.packages(c(\"remotes\", \"testthat\", \"XML\"), repos = \"https://cran.r-project.org/\")' && \
               R -e 'remotes::install_deps(\"/pkg\", dependencies = TRUE)' && \
-              R -e 'testthat::test_local()' && \
+              R -e 'testthat::test_local(\"/pkg\")' && \
               R CMD build /pkg --no-build-vignettes && \
               R CMD check --as-cran --no-build-vignettes --no-manual --check-subdirs=no *.tar.gz"
