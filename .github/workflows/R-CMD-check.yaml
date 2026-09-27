@@ -78,7 +78,7 @@ jobs:
             ghcr.io/r-hub/r-minimal/r-minimal:latest \
             sh -c "\
               apk update && \
-              apk add --no-cache bash build-base linux-headers libuv-dev libxml2-dev pandoc-cli texlive texmf-dist && \
+              apk add --no-cache bash build-base linux-headers libuv-dev libxml2-dev && \
               R -e 'install.packages(c(\"remotes\", \"testthat\", \"XML\"), repos = \"https://cran.r-project.org/\")' && \
               R -e 'remotes::install_deps(\"/pkg\", dependencies = TRUE)' && \
               R -e 'testthat::test_local(\"/pkg\")' && \
