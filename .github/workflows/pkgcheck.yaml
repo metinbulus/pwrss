@@ -1,18 +1,15 @@
 name: pkgcheck
 
-# This will cancel running jobs once a new run is triggered
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}
   cancel-in-progress: true
 
 on:
-  # Manually trigger the Action under Actions/pkgcheck
   workflow_dispatch:
-  # Run on every push and pull requests to main / master
-  push:
-    branches: ['**']
-  pull_request:
-    branches: [main, master]
+  workflow_run:
+    workflows: ["R-CMD-check"]
+    types: [completed]
+    branches: [main, master, '**']
 
 env:
     ACTIONS_RUNNER_DEBUG: true
@@ -21,6 +18,7 @@ env:
 
 jobs:
   pkgcheck:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       issues: write
