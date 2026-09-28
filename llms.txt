@@ -2,11 +2,6 @@
 
   
 
-The original tutorial was published on CRAN and can be accessed at:
-<https://cran.r-project.org/package=pwrss/vignettes/examples.html>
-
-  
-
 Install and load pwrss R package:
 
 ``` r
