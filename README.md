@@ -24,17 +24,6 @@ issue](https://img.shields.io/github/issues/metinbulus/pwrss?color=%23fa251e&log
 coverage](https://codecov.io/gh/metinbulus/pwrss/branch/main/graph/badge.svg)](https://app.codecov.io/gh/metinbulus/pwrss?branch=main)
 <!-- badges: end -->
 
-<div style="background-color:rgb(255, 165, 90); padding: 20px 20px 1px; border-radius:5px;">
-
-<p>
-The original tutorial was published on CRAN and can be accessed at:
-<a href="https://cran.r-project.org/package=pwrss/vignettes/examples.html">https://cran.r-project.org/package=pwrss/vignettes/examples.html</a>
-</p>
-
-</div>
-
-<br>
-
 Install and load pwrss R package:
 
 ``` r
