@@ -20,7 +20,7 @@ https://doi.org/10.32614/CRAN.package.pwrss
     @Manual{,
       title = {{pwrss}: Statistical Power, Sample Size, and Detectable Effect Calculations},
       author = {Metin Bulus and Sebastian Jentschke},
-      note = {R package version 1.3.0},
+      note = {R package version 1.3.1},
       year = {2026},
       url = {https://doi.org/10.32614/CRAN.package.pwrss},
     }

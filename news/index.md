@@ -1,6 +1,6 @@
 # Changelog
 
-## Changes in pwrss v1.3.0
+## Changes in pwrss v1.3.0 / v1.3.1
 
 - Replaced functions to calculate lambda prime (formerly provided by the
   R-package `sadists`) with own implementations (numerically, these
