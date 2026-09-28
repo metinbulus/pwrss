@@ -43,11 +43,17 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 
+# output from revdep packages
+revdep/
+
 # pkgdown site
 docs/
 
 # PDF documentation
 inst/doc/
+
+# snaps (for testing the plots under testthat)
+tests/testthat/_snaps
 
 # translation temp files
 po/*~
