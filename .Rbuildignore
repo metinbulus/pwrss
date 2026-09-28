@@ -18,3 +18,4 @@
 ^README\.md$
 ^README\.Rmd$
 ^revdep$
+^tests/testthat/_snaps$
