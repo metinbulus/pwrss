@@ -1,7 +1,7 @@
 # CRAN Notes - pwrss
 
 ## Current version
-1.3.0
+1.3.1
 
 * Replaced functions to calculate lambda prime (formerly provided by the R-package `sadists`) with own implementations
   (numerically, these implementations reveal results close to those provided by `sadists`; however, a problem with a
@@ -13,10 +13,9 @@
 
 ## Test environments
 * `devtools::check()`
-  - local (Ubuntu 24.04, R 4.6 x86_64-pc-linux-gnu): 0 errors, 0 warnings, 0 notes
-* `R CMD check` (on .tar.gz)
-  - local (Ubuntu 24.04, R 4.6 x86_64-pc-linux-gnu): Status: OK
-* `rhub::rc_submit(platforms=c("linux", "windows", "macos"))`
-  - linux (r-devel), windows (r-devel), macos (r-devel): Status: OK for all OSes
+  - local (Ubuntu 24.04, R 4.6 x86_64-pc-linux-gnu): 0 errors, 0 warnings, 1 NOTE
+* `rhub::rc_submit(platforms=c("linux", "windows", "macos-arm64", "mkl"))`
+  - linux (r-devel), windows (r-devel), macos (r-devel): Status: 1 NOTE for all OSes
 * `devtools::check_win_devel()`
-  - Status: OK
+  - Status: 1 NOTE
+* NOTE due to the package being archived on CRAN
