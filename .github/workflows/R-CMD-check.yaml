@@ -12,7 +12,7 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})${{ matrix.config.mkl && ' + MKL' || '' }}
 
     strategy:
       fail-fast: false
@@ -21,6 +21,7 @@ jobs:
           - {os: macos-latest,    r: 'release'}
           - {os: windows-latest,  r: 'release'}
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
+          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release', mkl: true}
           - {os: ubuntu-latest,   r: 'release'}
           - {os: ubuntu-latest,   r: 'oldrel-1'}
           - {os: ubuntu-26.04-arm, r: 'release'}
@@ -29,10 +30,17 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
+      MKL_THREADING_LAYER: GNU      # avoid conflicts between MKL and GNU OpenMP (ignored by non-MKL jobs)
 
     steps:
       - name: Check out package
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
+
+      - name: Install Intel MKL     # this step only executes if mkl is set to true in the matrix configuration
+        if: ${{ matrix.config.mkl == true }}
+        run: |
+          sudo apt-get update
+          curl -s https://githubusercontent.com | sudo bash
 
       - name: Set up pandoc
         uses: r-lib/actions/setup-pandoc@v2
