@@ -1,6 +1,8 @@
 # Changelog
 
-## Changes in pwrss v1.3.x
+## pwrss 1.3.1
+
+CRAN release: 2026-09-29
 
 - Replaced functions to calculate lambda prime (formerly provided by the
   R-package `sadists`) with own implementations (numerically, these
@@ -14,8 +16,9 @@
   (~1e-16) in places where 0 is expected
 - Small improvement to the unit tests, preventing that snapshots are
   deleted if a comparison is not run
+- Added a `NEWS.md` file to track changes to the package.
 
-## Changes in pwrss v1.2.0
+## pwrss v1.2.0
 
 CRAN release: 2026-06-22
 
@@ -32,7 +35,7 @@ CRAN release: 2026-06-22
 - Added `target.effect` to determine effect of interest in
   `power.f.ancova`
 
-## Changes in pwrss v1.0.0
+## pwrss v1.0.0
 
 CRAN release: 2025-09-16
 
@@ -53,7 +56,7 @@ CRAN release: 2025-09-16
 - Minor bug fixes to
   [`plot()`](https://rdrr.io/r/graphics/plot.default.html) function
 
-## Changes in pwrss v0.3.2 (not released to CRAN)
+## pwrss v0.3.2 (not released to CRAN)
 
 - alternative = “less” now produce correct power rates in
   [`pwrss.z.prop()`](https://metinbulus.github.io/pwrss/reference/power.z.oneprop.md)
@@ -70,7 +73,7 @@ CRAN release: 2025-09-16
   less (or vice versa). Thanks to Jarrod Hadfield for reporting the
   issue.
 
-## Changes in pwrss v0.3.1
+## pwrss v0.3.1
 
 CRAN release: 2023-04-11
 
@@ -79,7 +82,7 @@ CRAN release: 2023-04-11
 - Minor bug fixes with
   [`plot()`](https://rdrr.io/r/graphics/plot.default.html) function
 
-## Changes in pwrss v0.3.0
+## pwrss v0.3.0
 
 CRAN release: 2023-03-12
 
@@ -102,7 +105,7 @@ CRAN release: 2023-03-12
 - More detailed and comprehensive examples in vignette
 - Bug fixes (Welch’s t test)
 
-## Changes in pwrss v0.2.0
+## pwrss v0.2.0
 
 CRAN release: 2022-12-14
 
