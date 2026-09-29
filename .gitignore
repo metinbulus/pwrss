@@ -22,10 +22,14 @@
 .Rproj.user/
 *.Rproj
 
+# man (figures in README)
+man/figures/README*
+
 # testthat - snapshot files for images
 tests/testthat/_snaps/*/plots/
 
-# produced vignettes
+# produced vignettes (.bib file is regenerated at each run)
+vignettes/examples.bib 
 vignettes/*.html
 vignettes/*.pdf
 
