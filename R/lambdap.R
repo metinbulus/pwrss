@@ -80,10 +80,11 @@
 
 .dlambdap <- function(x, df, ncp, log = FALSE) {
     if (is.na(df) || df <= 0) return(NaN)
+    x <- as.numeric(x)
 
     gf <- function(q) plambdap(q, df, ncp, lower.tail = TRUE, log.p = FALSE)
 
-    gd <- stats::numericDeriv(quote(gf(x)), "x")
+    gd <- stats::numericDeriv(quote(gf(x)), "x", rho = environment())
 
     if (attr(gd, "gradient") > 0) {
         d <- as.numeric(attr(gd, "gradient"))

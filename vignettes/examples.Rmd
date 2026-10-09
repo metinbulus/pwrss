@@ -17,6 +17,7 @@ output:
     number_sections: true
     toc_float: true
     toc_depth: 3
+    pandoc_args: --citeproc
 ---
 
 ```{r, include = FALSE}
