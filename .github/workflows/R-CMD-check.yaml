@@ -18,14 +18,21 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macos-latest,    r: 'release'}
-          - {os: windows-latest,  r: 'release'}
-          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
-          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release', mkl: true}
-          - {os: ubuntu-latest,   r: 'release'}
-          - {os: ubuntu-latest,   r: 'oldrel-1'}
+          - {os: macos-latest,     r: 'release'}
+          - {os: windows-latest,   r: 'release'}
+          - {os: ubuntu-latest,    r: 'devel', http-user-agent: 'release'}
+          - {os: ubuntu-latest,    r: 'devel', http-user-agent: 'release', mkl: true}
+          - {os: ubuntu-latest,    r: 'release'}
+          - {os: ubuntu-latest,    r: 'oldrel-1'}
+          - {os: ubuntu-latest,    r: 'nold',  container: 'ghcr.io/r-hub/containers/nold:latest'}
           - {os: ubuntu-26.04-arm, r: 'release'}
           - {os: ubuntu-26.04-arm, r: 'devel', http-user-agent: 'release'}
+          # Integrated noLD into your main matrix:
+          - {os: ubuntu-latest,   r: 'nold',  name: 'Ubuntu (noLD)', container: 'ghcr.io/r-hub/containers/nold:latest'}
+
+    # Dynamically apply the R-hub container only for the noLD target
+    container:
+      image: ${{ matrix.config.container || '' }}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -36,6 +43,7 @@ jobs:
       - name: Check out package
         uses: actions/checkout@v3
 
+      # --- STANDARD ACTIONS JOBS ONLY ---
       - name: Install Intel MKL     # this step only executes if mkl is set to true in the matrix configuration
         if: ${{ matrix.config.mkl == true }}
         run: |
@@ -43,9 +51,11 @@ jobs:
           curl -s https://githubusercontent.com | sudo bash
 
       - name: Set up pandoc
+        if: ${{ matrix.config.r != 'nold' }}
         uses: r-lib/actions/setup-pandoc@v2
 
       - name: Set up R
+        if: ${{ matrix.config.r != 'nold' }}
         uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
@@ -53,16 +63,35 @@ jobs:
           use-public-rspm: true
 
       - name: Install dependencies
+        # (all except from noLD)
+        if: ${{ matrix.config.r != 'nold' }}
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck, any::XML, any::roxygen2
           needs: check
+
+      - name: Install dependencies
+        # (noLD only)
+        if: ${{ matrix.config.r == 'nold' }}
+        run: |
+          install.packages('pak', repos = 'https://r-lib.github.io/p3m/dev')
+          pak::local_install_dev_deps(upgrade = TRUE)
+          pak::pkg_install(c('rcmdcheck', 'XML', 'roxygen2'))
+        shell: Rscript {0}
 
       - name: Document
         run: roxygen2::roxygenise(roclets = "rd")
         shell: Rscript {0}
 
       - name: Run R check
+        if: ${{ matrix.config.r != 'nold' }}
         uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
+
+      - name: Run R check
+        if: ${{ matrix.config.r == 'nold' }}
+        run: |
+          R CMD build .
+          R CMD check --as-cran *.tar.gz
+        shell: bash
