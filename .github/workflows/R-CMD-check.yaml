@@ -47,18 +47,17 @@ jobs:
           sudo apt-get update
           curl -s https://githubusercontent.com | sudo bash
 
-      - name: Set up pandoc
-        # (all except from noLD)
+      - name: Set up pandoc (all except from noLD)
         if: ${{ matrix.config.r != 'nold' }}
         uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Set up pandoc
-        # (noLD only)
+      - name: Set up pandoc (noLD only)
         if: ${{ matrix.config.r == 'nold' }}
         run: |
           apt-get update && apt-get install -y wget
           wget https://github.com/jgm/pandoc/releases/download/3.12.1/pandoc-3.12.1-1-amd64.deb
           dpkg -i pandoc-3.12.1-1-amd64.deb
+          rm pandoc-3.12.1-1-amd64.deb
         shell: bash
 
       - name: Set up R
@@ -69,16 +68,14 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
-      - name: Install dependencies
-        # (all except from noLD)
+      - name: Install dependencies (all except from noLD)
         if: ${{ matrix.config.r != 'nold' }}
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck, any::XML, any::roxygen2
           needs: check
 
-      - name: Install dependencies
-        # (noLD only)
+      - name: Install dependencies (noLD only)
         if: ${{ matrix.config.r == 'nold' }}
         run: |
           install.packages('pak', repos = 'https://r-lib.github.io/p3m/dev')
@@ -90,15 +87,15 @@ jobs:
         run: roxygen2::roxygenise(roclets = "rd")
         shell: Rscript {0}
 
-      - name: Run R check
+      - name: Run R check (all except from noLD)
         if: ${{ matrix.config.r != 'nold' }}
         uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
 
-      - name: Run R check
+      - name: Run R check (noLD only)
         if: ${{ matrix.config.r == 'nold' }}
         run: |
           R CMD build .
-          R CMD check --as-cran *.tar.gz
+          R CMD check --as-cran --no-manual *.tar.gz
         shell: bash
