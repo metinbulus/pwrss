@@ -3,33 +3,23 @@ title: "Practical Power Analysis in R"
 author: "Metin Bulus & Sebastian Jentschke"
 date: "`r Sys.Date()`"
 bibliography: examples.bib
-csl: https://githubusercontent.com
+csl: https://raw.githubusercontent.com/citation-style-language/styles/refs/heads/master/apa.csl
 nocite: "@R-pwrss, @R-base"
 vignette: >
   %\VignetteIndexEntry{Practical Power Analysis in R}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 output:
-  rmarkdown::html_vignette:
-    pandoc_args: [ "--citeproc" ]
+  rmarkdown::html_document:
+    # theme: cerulean  # or united, cosmo, readable, lumen, etc.
+    css: examples.css
     toc: true
     number_sections: true
+    toc_float: true
     toc_depth: 3
 ---
 
-```{css, echo=FALSE}
-body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-.references {
-  padding-left: 2em;
-  text-indent: -2em;
-  line-height: 2;
-}
-```
-
-```{r setup, include=FALSE}
+```{r, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE,
                       comment = "#>",
                       collapse = TRUE,

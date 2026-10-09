@@ -39,7 +39,7 @@ them as:
 <div style="background-color:rgb(245, 245, 245); padding: 20px 20px 1px; border-radius:5px;">
 
 <p>
-Bulus M, Jentschke S (????). <em>pwrss: Statistical Power, Sample Size,
+Bulus M, Jentschke S (2026). <em>pwrss: Statistical Power, Sample Size,
 and Detectable Effect Calculations</em>. R package version 1.3.1.9000,
 <a href="https://doi.org/10.32614/CRAN.package.pwrss">https://doi.org/10.32614/CRAN.package.pwrss</a>.
 </p>
@@ -128,7 +128,7 @@ power.t.test(ncp = -3.519, # t-value for hp variable
              plot = TRUE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" alt="" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-7-1.png" alt="" width="100%" style="display: block; margin: auto;" />
 
     #> +--------------------------------------------------+
     #> |                POWER CALCULATION                 |
@@ -173,7 +173,7 @@ power.t.test(ncp = NULL,     # calculate this
              plot = TRUE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" alt="" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-8-1.png" alt="" width="100%" style="display: block; margin: auto;" />
 
     #> +--------------------------------------------------+
     #> |       MINIMUM DETECTABLE NCP CALCULATION         |
@@ -353,7 +353,7 @@ power.z.test(mean = -3.994, # z-value for wool B
              plot = TRUE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" alt="" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-10-1.png" alt="" width="100%" style="display: block; margin: auto;" />
 
     #> +--------------------------------------------------+
     #> |                POWER CALCULATION                 |
@@ -395,7 +395,7 @@ power.z.test(mean = NULL,   # calculate this
              plot = TRUE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-1.png" alt="" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-11-1.png" alt="" width="100%" style="display: block; margin: auto;" />
 
     #> +--------------------------------------------------+
     #> |       MINIMUM DETECTABLE NCP CALCULATION         |
@@ -472,7 +472,7 @@ power.z.test(mean = ncp,
              plot = TRUE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-11-1.png" alt="" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-12-1.png" alt="" width="100%" style="display: block; margin: auto;" />
 
     #> +--------------------------------------------------+
     #> |                POWER CALCULATION                 |
@@ -753,7 +753,7 @@ power.chisq.test(ncp = 18.463,
                  plot = TRUE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-16-1.png" alt="" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-17-1.png" alt="" width="100%" style="display: block; margin: auto;" />
 
     #> +--------------------------------------------------+
     #> |                POWER CALCULATION                 |
@@ -858,7 +858,7 @@ power.binom.test(size = n.total,             # number of eruptions
                  plot = TRUE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-18-1.png" alt="" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-19-1.png" alt="" width="100%" style="display: block; margin: auto;" />
 
     #> +--------------------------------------------------+
     #> |                POWER CALCULATION                 |
@@ -1024,7 +1024,7 @@ power.t.student(d = 0.20, power = 0.80) |>
   plot()
 ```
 
-<img src="man/figures/README-unnamed-chunk-22-1.png" alt="" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-23-1.png" alt="" width="100%" style="display: block; margin: auto;" />
 
 NOTE: In earlier versions of the {pwrss} package, the `plot()` function
 generated multiple panel plots for ANCOVA designs and mediation models.
@@ -6489,6 +6489,8 @@ Please send any bug reports, feedback or questions to [bulusmetin \[at\]
 gmail.com](mailto:bulusmetin@gmail.com).
 
 </div>
+
+# References
 
 ------------------------------------------------------------------------
 

@@ -4,6 +4,6 @@ bibentry(
     title   = "{pwrss}: Statistical Power, Sample Size, and Detectable Effect Calculations",
     author  = c(as.person("Metin Bulus"), as.person("Sebastian Jentschke")),
     note    = paste("R package version", meta$Version),
-    year    = sub("-.*", "", meta$Date),
+    year    = if (!is.null(meta$`Date/Publication`)) sub("-.*", "", meta$`Date/Publication`) else format(Sys.Date(), "%Y"),
     url     = "https://doi.org/10.32614/CRAN.package.pwrss",
 )
