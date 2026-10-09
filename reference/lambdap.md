@@ -120,5 +120,5 @@ summary(qv)
 # the quantile vector calculated from the probabilities of the
 # original random vector (< 1e-12)
 max(abs(qv - rv)) # 0.0000000000002498002
-#> [1] 2.498002e-13
+#> [1] 2.029488e-13
 ```
