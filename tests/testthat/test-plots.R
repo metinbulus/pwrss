@@ -1,8 +1,25 @@
 test_that("plots work", {
     expect_error(plot(power.z(power = 0.8, plot = FALSE, verbose = 0)), "Use plot = TRUE argument for generic tests.")
 
-    # uses check.snap4plot in helper.R =================================================================================
-    # to create snaps for the first time, use `crtSnp <- TRUE` before running `devtools::test()`
+    # check.snap4plot; to create snaps for the first time, use `crtSnp <- TRUE` before running `devtools::test()` ------
+    check.snap4plot <- function(snpFle = "", pltFnc = NULL, pltPrm = list(), pltWdt = 800, pltHgh = 800) {
+        # ensures that the code only runs on a local machine, not as GitHub action or in a Docker
+        if (nchar(Sys.getenv("GITHUB_ACTIONS")) > 0 || any(file.exists(c("/.dockerenv", "/run/.containerenv")))) {
+            testthat::announce_snapshot_file(name = snpFle)
+        } else {
+            tmpFle <- tempfile(fileext = ".png")
+            addPrm <- list(alpha = 0.05, verbose = 0)[c("alpha", "verbose") %in% names(formals(pltFnc))]
+            grDevices::png(tmpFle, width = pltWdt, height = pltHgh)
+            if (any(c("plot", "plot.main") %in% names(formals(pltFnc)))) {
+                do.call(pltFnc, c(pltPrm, addPrm))
+            } else {
+                plot(do.call(pltFnc, c(pltPrm, addPrm)))
+            }
+            grDevices::dev.off()
+            testthat::expect_snapshot_file(path = tmpFle, name = snpFle, variant = Sys.info()[["sysname"]])
+            unlink(tmpFle)
+        }
+    }
 
     # binomial-tests ---------------------------------------------------------------------------------------------------
     check.snap4plot("binom_plot_1", power.binom.test, list(size = 200, prob = 0.6, null.prob = 0.5,         alternative = "one.sided"))

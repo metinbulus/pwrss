@@ -1,27 +1,28 @@
 # CRAN Notes - pwrss
 
 ## R CMD check results
-
-0 errors | 0 warnings | 1 note
-
-* This is a new release.
-* NOTE due to the package being archived on CRAN
+* update to an existing package
+* Status: 0 errors, 0 warnings, 0 notes
 
 ## Other test environments
 * `devtools::check()`
-  - local (Ubuntu 24.04, R 4.6 x86_64-pc-linux-gnu): 0 errors, 0 warnings, 1 NOTE
+  - local (Ubuntu 24.04, R 4.6.1 x86_64-pc-linux-gnu): 0 errors, 0 warnings, 0 notes
 * `rhub::rc_submit(platforms=c("linux", "windows", "macos-arm64", "mkl"))`
-  - linux (r-devel), windows (r-devel), macos (r-devel): Status: 1 NOTE for all OSes
+  - OS / R-versions: linux (r-devel), windows (r-devel), macos (r-devel), linux (r-devel, mkl), linux (r-devel, noLD)
+  - Status: 0 errors, 0 warnings, 0 notes for all OSes
 * `devtools::check_win_devel()`
-  - Status: 1 NOTE
+  - Status: 0 errors, 0 warnings, 0 notes
+* R-CMD-check as GitHub action (https://github.com/metinbulus/pwrss/actions/workflows/R-CMD-check.yaml)
+  - OS / R-versions: [1] MacOS / release; [2] Windows / release; [3 - 7] Ubuntu (x86_64) / devel,
+    devel with mkl, release, oldrel-1, nold (container, supposedly devel); [8 / 9] Ubuntu (ARM) / release, devel
+  - Status: 0 errors, 0 warnings, 1 note on noLD (examples for power.lp.test taking more than 5 secs)
 
 ## Current version
-1.3.1
+1.3.2
 
-* Replaced functions to calculate lambda prime (formerly provided by the R-package `sadists`) with own implementations
-  (numerically, these implementations reveal results close to those provided by `sadists`; however, a problem with a
-  numerical instability in that package doesn't exists for these implementations, and df's can be estimated in
-  `power.lp.test`)
-* Smaller improvements to satisfy the requirements / suggestions by the `goodpractice` R-package
-* Fix a bug arising from stats::poly() returning very small values (~1e-16) in places where 0 is expected
-* Small improvement to the unit tests, preventing that snapshots are deleted if a comparison is not run
+* fixed a mistake in the calculation of the density function for lambda prime
+* adjustments to cater for noLD being added as additional test in the CRAN package checks
+* smaller improvements to the vignette and inst/CITATION (takes date / year and versoin from the meta-data)
+* extended GitHub action R-CMD-check to include OS / R combinations recently added as additional test in the CRAN
+  package checks
+* implemented recommendations from `goodpractice`

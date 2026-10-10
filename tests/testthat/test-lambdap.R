@@ -30,7 +30,7 @@ test_that("lambdap distribution functions work", {
     # correct handling of n in rlambdap
     expect_length(rlambdap(runif(20),  df = 20, ncp = 0), 20)
     expect_length(rlambdap(0,          df = 20, ncp = 0),  0)
-    expect_length(rlambdap(c(),        df = 20, ncp = 0),  0)
+    expect_length(rlambdap(NULL,       df = 20, ncp = 0),  0)
     expect_length(rlambdap(numeric(0), df = 20, ncp = 0),  0)
 
     # log = TRUE / FALSE reveal the same results in dlambdap

@@ -86,22 +86,3 @@ get.interval <- function(null.ncp, req.sign, distribution = c("z", "t", "lp", "b
 isInt <- function(x) is.numeric(x) && !any(abs(x - round(x)) > .Machine$double.eps ^ (2 / 3))
 
 # lenInt <- function(n) ifelse(n <= 1, 1, ceiling(log10(abs(n))) + as.integer(n %% 10 == 0))
-
-check.snap4plot <- function(snpFle = "", pltFnc = NULL, pltPrm = list(), pltWdt = 800, pltHgh = 800) {
-  # ensures that the code only runs on a local machine, not as GitHub action or in a Docker
-  if (nchar(Sys.getenv("GITHUB_ACTIONS")) > 0 || any(file.exists(c("/.dockerenv", "/run/.containerenv")))) {
-    testthat::announce_snapshot_file(name = snpFle)
-  } else {
-    tmpFle <- tempfile(fileext = ".png")
-    addPrm <- list(alpha = 0.05, verbose = 0)[c("alpha", "verbose") %in% names(formals(pltFnc))]
-    grDevices::png(tmpFle, width = pltWdt, height = pltHgh)
-    if (any(c("plot", "plot.main") %in% names(formals(pltFnc)))) {
-      do.call(pltFnc, c(pltPrm, addPrm))
-    } else {
-      plot(do.call(pltFnc, c(pltPrm, addPrm)))
-    }
-    grDevices::dev.off()
-    testthat::expect_snapshot_file(path = tmpFle, name = snpFle, variant = Sys.info()[["sysname"]])
-    unlink(tmpFle)
-  }
-}
