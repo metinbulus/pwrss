@@ -5,16 +5,37 @@ test_that("lambdap distribution functions work", {
     expect_identical(qlambdap(1,    4, 1, lower.tail = FALSE, log.p = FALSE), -Inf)
     expect_identical(qlambdap(0,    4, 1, lower.tail = TRUE,  log.p = FALSE), -Inf)
     expect_identical(qlambdap(0,    4, 1, lower.tail = FALSE, log.p = FALSE),  Inf)
-    expect_true(is.na(qlambdap(2,   4, 1, lower.tail = FALSE, log.p = FALSE)))
+    expect_identical(qlambdap(2,    4, 1, lower.tail = FALSE, log.p = FALSE),  NaN)
     expect_identical(qlambdap(0,    4, 1, lower.tail = TRUE,  log.p = TRUE),   Inf)
     expect_identical(qlambdap(0,    4, 1, lower.tail = FALSE, log.p = TRUE),  -Inf)
     expect_identical(qlambdap(-Inf, 4, 1, lower.tail = TRUE,  log.p = TRUE),  -Inf)
     expect_identical(qlambdap(-Inf, 4, 1, lower.tail = FALSE, log.p = TRUE),   Inf)
-    expect_true(is.na(qlambdap(1,   4, 1, lower.tail = TRUE,  log.p = TRUE)))
+    expect_identical(qlambdap(1,    4, 1, lower.tail = TRUE,  log.p = TRUE),   NaN)
     expect_identical(plambdap(+Inf, 4, 1, lower.tail = TRUE),  1)
     expect_identical(plambdap(-Inf, 4, 1, lower.tail = FALSE), 1)
     expect_identical(plambdap(-Inf, 4, 1, lower.tail = TRUE),  0)
     expect_identical(plambdap(+Inf, 4, 1, lower.tail = FALSE), 0)
+
+    # check correct handling invalid df's (<= 0 or NaN)
+    expect_identical(dlambdap(0, df = 0,   ncp = 0), NaN)
+    expect_identical(dlambdap(0, df = -1,  ncp = 0), NaN)
+    expect_identical(dlambdap(0, df = NaN, ncp = 0), NaN)
+    expect_identical(plambdap(0, df = 0,   ncp = 0), NaN)
+    expect_identical(plambdap(0, df = -1,  ncp = 0), NaN)
+    expect_identical(plambdap(0, df = NaN, ncp = 0), NaN)
+    expect_identical(qlambdap(0, df = 0,   ncp = 0), NaN)
+    expect_identical(plambdap(0, df = -1,  ncp = 0), NaN)
+    expect_identical(qlambdap(0, df = NaN, ncp = 0), NaN)
+
+    # correct handling of n in rlambdap
+    expect_length(rlambdap(runif(20),  df = 20, ncp = 0), 20)
+    expect_length(rlambdap(0,          df = 20, ncp = 0),  0)
+    expect_length(rlambdap(c(),        df = 20, ncp = 0),  0)
+    expect_length(rlambdap(numeric(0), df = 20, ncp = 0),  0)
+
+    # log = TRUE / FALSE reveal the same results in dlambdap
+    xs <- as.numeric(seq(-10, 10))
+    expect_equal(log(dlambdap(xs, df = 10, ncp = 2)), dlambdap(xs, df = 10, ncp = 2, log = TRUE))
 
     # p's for very high quantiles (> +10) should be 1, and for very low quantiles (< -10) 0
     expect_equal(plambdap(q = seq(+10, +100, +10), df = 10, ncp = 2.5), rep(1, 10))
@@ -40,7 +61,7 @@ test_that("lambdap distribution functions work", {
     set.seed(1)
     expect_true(all(abs(as.numeric(summary(rlambdap(500, df = 20, ncp = 3))[c(2, 3, 5)]) - qlambdap(c(0.25, 0.50, 0.75), df = 20, ncp = 3)) < 0.1))
 
-    expect_equal(dlambdap(11.1, 9, 10), 0.129447060)
+    expect_equal(dlambdap(11.1, 9, 10), 0.129447059)
     expect_equal(plambdap(11.1, 9, 10), 0.713413419)
     expect_equal(qlambdap(0.01, 9, 10), 4.245346922)
     # the lower-tail-quantiles for 0.01 < p < 0.99 should be equal to the upper-tail-quantiles for 0.99 > p > 0.01
@@ -52,12 +73,14 @@ test_that("lambdap distribution functions work", {
 
     # converting a vector of p's into quantiles and back under different settings (varying df, ncp, and which tail)
     ps <- seq(0.01, 0.99, 0.01)
+    lps <- log(ps)
     for (df in 2 ^ seq(4)) {
         for (ncp in seq(-4, 4, 1)) {
             for (lt in c(TRUE, FALSE)) {
-                qs <- suppressWarnings(vapply(ps, qlambdap, numeric(1), df = df, ncp = ncp, lower.tail = lt))
+                qs <- vapply(ps, qlambdap, numeric(1), df = df, ncp = ncp, lower.tail = lt)
                 expect_true(all(sign(diff(qs)) == ifelse(lt, 1, -1)))
                 expect_equal(plambdap(qs, df = df, ncp = ncp, lower.tail = lt), ps, tolerance = 1e-5)
+                expect_equal(qs, suppressWarnings(vapply(lps, qlambdap, numeric(1), df = df, ncp = ncp, lower.tail = lt, log = TRUE)))
             }
         }
     }

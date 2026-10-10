@@ -77,75 +77,72 @@
 #' LeCoutre, B. (2007). Another look at confidence intervals for the noncentral
 #' t distribution. Journal of Modern Applied Statistical Methods, 6(1),
 #' 107–116. https://doi.org/10.22237/jmasm/1177992600
-#'
-#' @export plambdap
-plambdap <- function(q, df, ncp, lower.tail = TRUE, log.p = FALSE) {
-    suppressWarnings(stats::pt(q = ncp, df = df, ncp = q, lower.tail = !lower.tail, log.p = log.p))
-}
-
-.qlambdap <- function(p, df, ncp, lower.tail = TRUE, log.p = FALSE) {
-    # handle border-cases
-    if (log.p) {
-        if (p == -Inf) return(ifelse(lower.tail, -Inf, Inf))
-        if (p == 0)    return(ifelse(lower.tail,  Inf, -Inf))
-        if (p  > 0)    return(NA)
-    } else {
-        if (p == 1) return(ifelse(lower.tail,  Inf, -Inf))
-        if (p == 0) return(ifelse(lower.tail, -Inf,  Inf))
-        if (p < 0 || p > 1) return(NA)
-    }
-
-    if (lower.tail) {
-        zerof <- function(q)     plambdap(q, df = df, ncp = ncp, lower.tail = lower.tail, log.p = log.p) - p
-    } else {
-        zerof <- function(q) p - plambdap(q, df = df, ncp = ncp, lower.tail = lower.tail, log.p = log.p)
-    }
-    zmax <- 2 * max(stats::qnorm(p, lower.tail = TRUE,  log.p = log.p),
-                    stats::qnorm(p, lower.tail = FALSE, log.p = log.p))
-    flim <- c(min(-1, ncp - zmax), max(1, ncp + zmax))
-    for (i in seq(2)) while (sign(zerof(flim[i])) == ifelse(i == 1, 1, -1) && abs(flim[i]) < 1e8) flim[i] <- 2 * flim[i]
-
-    stats::uniroot(zerof, flim, tol = 1e-12)$root
-}
-
-#' @rdname lambdap
-#' @export qlambdap
-qlambdap <- Vectorize(.qlambdap, vectorize.args = c("p", "df", "ncp"), SIMPLIFY = TRUE)
 
 .dlambdap <- function(x, df, ncp, log = FALSE) {
-    gradf <- function(q) plambdap(q, df, ncp, lower.tail = TRUE, log.p = log) # used 3 and 18 lines below
-
+    if (is.na(df) || df <= 0) return(NaN)
     x <- as.numeric(x)
-    d <- stats::numericDeriv(quote(gradf(x)), "x")
-    if (attr(d, "gradient") >  0) {
-        as.numeric(attr(d, "gradient"))
+
+    gf <- function(q) plambdap(q, df, ncp, lower.tail = TRUE, log.p = FALSE)
+
+    gd <- stats::numericDeriv(quote(gf(x)), "x", rho = environment())
+
+    if (attr(gd, "gradient") > 0) {
+        d <- as.numeric(attr(gd, "gradient"))
     } else {
         # if no gradient is found, this can either be due to the value being positioned at the outer ends
         # of the tails of the distribution (either being smaller than the tol or larger than 1 - tol);
         # here 0 is the appropriate return value
         tol <- sqrt(.Machine$double.eps)
-        if (d < tol || d > (1 - tol)) {
-            0
+        if (gd < tol || gd > (1 - tol)) {
+            d <- 0
         # the alternative where no gradient is found is around the peak, where tol is to low to
         # derive a value for density; this happens very rarely; to return a value, several parameter
         # settings for eps are tried out, and the one of those which reveals the most consistent
         # results is selected, and the median of these results is selected
         } else {
-            epsf <- function(e) as.numeric(attr(stats::numericDeriv(quote(gradf(x)), "x", eps = e), "gradient"))
+            epsf <- function(e) as.numeric(attr(stats::numericDeriv(quote(gf(x)), "x", eps = e), "gradient"))
             epsv <- vapply(seq(0, 3), function(e) vapply(seq(tol, 10 ^ -e, length.out = 1e3), epsf, numeric(1)), numeric(1e3))
-            epsv <- epsv[, colSums(epsv == 0) < 1e2, drop = FALSE]  # ensure sufficient valid values
-            epsv <- epsv[, which.min(apply(epsv, 2, stats::sd))]    # select column with the highest consistency
-            stats::median(epsv[epsv != 0 & !is.na(epsv)])
+            epsv <- epsv[, colSums(epsv == 0) < 1e2, drop = FALSE]
+            epsv <- epsv[, which.min(apply(epsv, 2, stats::sd))]
+            d <- stats::median(epsv[epsv != 0 & !is.na(epsv)])
         }
     }
+
+    if (log) log(d) else d
 }
 
 #' @rdname lambdap
 #' @export dlambdap
 dlambdap <- Vectorize(.dlambdap, vectorize.args = c("x", "df", "ncp"), SIMPLIFY = TRUE)
 
+.plambdap <- function(q, df, ncp, lower.tail = TRUE, log.p = FALSE) {
+    if (is.na(df) || df <= 0) return(NaN)
+
+    suppressWarnings(stats::pt(q = ncp, df = df, ncp = q, lower.tail = !lower.tail, log.p = log.p))
+}
+
+#' @rdname lambdap
+#' @export plambdap
+plambdap <- Vectorize(.plambdap, vectorize.args = c("q", "df", "ncp"), SIMPLIFY = TRUE)
+
+.qlambdap <- function(p, df, ncp, lower.tail = TRUE, log.p = FALSE) {
+    if (is.na(df) || df <= 0 || (log.p && p > 0) || (!log.p && (p < 0 || p > 1))) return(NaN)
+    if (ifelse(log.p, exp(p), p) == 0) return(ifelse(lower.tail, -Inf,  Inf))
+    if (ifelse(log.p, exp(p), p) == 1) return(ifelse(lower.tail,  Inf, -Inf))
+
+    stats::uniroot(f = function(q) plambdap(q, df = df, ncp = ncp, lower.tail = lower.tail, log.p = log.p) - p,
+                   interval = ncp + c(-10, 10) * ifelse(df > 2, sqrt(df / (df - 2)), 2), extendInt = "yes", tol = 1e-12)$root
+}
+
+#' @rdname lambdap
+#' @export qlambdap
+qlambdap <- Vectorize(.qlambdap, vectorize.args = c("p", "df", "ncp"), SIMPLIFY = TRUE)
+
 #' @rdname lambdap
 #' @export rlambdap
 rlambdap <- function(n, df, ncp) {
-    stats::rnorm(n) + ncp * sqrt(stats::rchisq(n, df = df) / df)
+    if (length(n) > 1) n <- length(n)
+    if (length(n) == 0 || n <= 0) return(numeric(0))
+
+    stats::rnorm(n) + ncp * sqrt(suppressWarnings(stats::rchisq(n, df = df)) / df)
 }

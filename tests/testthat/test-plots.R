@@ -1,4 +1,5 @@
 test_that("plots work", {
+    expect_error(plot(power.z(power = 0.8, plot = FALSE, verbose = 0)), "Use plot = TRUE argument for generic tests.")
 
     # uses check.snap4plot in helper.R =================================================================================
     # to create snaps for the first time, use `crtSnp <- TRUE` before running `devtools::test()`

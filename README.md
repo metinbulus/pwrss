@@ -31,17 +31,22 @@ install.packages("pwrss")
 library(pwrss)
 ```
 
-If you find the package and related material useful please cite as:
+</br>
+
+If you find the package and the related material useful, please cite
+them as:
 
 <div style="background-color:rgb(245, 245, 245); padding: 20px 20px 1px; border-radius:5px;">
 
 <p>
-Bulus, M., & Jentschke, S. (2026). pwrss: Statistical Power, Sample
-Size, and Detectable Effect Calculations. R package version 1.2.0.
-<https://doi.org/10.32614/CRAN.package.pwrss>
+Bulus M, Jentschke S (2026). <em>pwrss: Statistical Power, Sample Size,
+and Detectable Effect Calculations</em>. R package version 1.3.1.9000,
+<a href="https://doi.org/10.32614/CRAN.package.pwrss">https://doi.org/10.32614/CRAN.package.pwrss</a>.
 </p>
 
 </div>
+
+</br>
 
 **Acknowledgments**
 
@@ -6484,6 +6489,8 @@ Please send any bug reports, feedback or questions to [bulusmetin \[at\]
 gmail.com](mailto:bulusmetin@gmail.com).
 
 </div>
+
+# References
 
 ------------------------------------------------------------------------
 

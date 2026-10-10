@@ -1,7 +1,10 @@
 ---
 title: "Practical Power Analysis in R"
-author: Metin Bulus & Sebastian Jentschke
+author: "Metin Bulus & Sebastian Jentschke"
 date: "`r Sys.Date()`"
+bibliography: examples.bib
+csl: https://raw.githubusercontent.com/citation-style-language/styles/refs/heads/master/apa.csl
+nocite: "@R-pwrss, @R-base"
 vignette: >
   %\VignetteIndexEntry{Practical Power Analysis in R}
   %\VignetteEngine{knitr::rmarkdown}
@@ -14,6 +17,7 @@ output:
     number_sections: true
     toc_float: true
     toc_depth: 3
+    pandoc_args: --citeproc
 ---
 
 ```{r, include = FALSE}
@@ -26,11 +30,9 @@ knitr::opts_chunk$set(echo = TRUE,
                       fig.width = 7,
                       fig.align = "center",
                       out.width = "100%")
-```
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
 library(pwrss)
+knitr::write_bib(.packages(), file = "examples.bib")
+cat(readLines("otherrefs.bib"), file = "examples.bib", append = TRUE)
 ```
 
 Install and load pwrss R package:
@@ -38,12 +40,13 @@ Install and load pwrss R package:
 install.packages("pwrss")
 library(pwrss)
 ```
+</br>
 
-If you find the package and related material useful please cite as:
+If you find the package and the related material useful, please cite them as:
 
 <div style = "background-color:rgb(245, 245, 245); padding: 20px 20px 1px; border-radius:5px;">
-<p>Bulus, M., & Jentschke, S. (2026). pwrss: Statistical Power, Sample Size, and Detectable Effect Calculations. R package version 1.2.0. [https://doi.org/10.32614/CRAN.package.pwrss](https://doi.org/10.32614/CRAN.package.pwrss)</p>
-</div>
+`r format(citation("pwrss"), style = "html")`
+</div></br>
 
 **Acknowledgments**
 
@@ -2364,3 +2367,5 @@ power.chisq.gof(w = 0.03022008,
 <div style = "background-color:rgb(245, 245, 245); padding: 20px 20px 1px; border-radius:5px;">
 Please send any bug reports, feedback or questions to [bulusmetin [at] gmail.com](mailto:bulusmetin@gmail.com).
 </div>
+
+# References

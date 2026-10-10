@@ -53,7 +53,7 @@ test_that("generic.lp.test.R works", {
     expect_equal(power.lp.test(ncp = 2.82524975, power = 0.80, alpha = 0.05, alternative = "two.sided", plot = FALSE, verbose = 0),
                  structure(list(power = 0.8, ncp = 2.82524975, null.ncp = 0, df = 100, alpha = 0.05,
                                 alternative = "two.sided", t.alpha = 1.959964 * c(-1, 1), beta = 0.2,
-                                type.s = 0.00000135394605, type.m = 1.12380131),
+                                type.s = 0.000001353946075, type.m = 1.12380131),
                            class = c("pwrss", "generic", "lp")))
     expect_equal(power.lp.test(ncp = 2.505827, power = 0.80, alpha = 0.05, alternative = "one.sided", plot = FALSE, verbose = 0),
                  structure(list(power = 0.8, ncp = 2.505827, null.ncp = 0, df = 100.000057, alpha = 0.05,
