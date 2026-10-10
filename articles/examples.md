@@ -12,7 +12,7 @@ If you find the package and the related material useful, please cite
 them as:
 
 Bulus M, Jentschke S (2026). *pwrss: Statistical Power, Sample Size, and
-Detectable Effect Calculations*. R package version 1.3.1.9000,
+Detectable Effect Calculations*. R package version 1.3.2,
 <https://doi.org/10.32614/CRAN.package.pwrss>.
 
 **Acknowledgments**

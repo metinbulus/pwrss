@@ -1,6 +1,17 @@
 # Changelog
 
-## pwrss (development version)
+## pwrss 1.3.2
+
+- Fixed a mistake in the calculation of the density function for lambda
+  prime
+- Adjustments to cater for noLD being added as additional test in the
+  CRAN package checks, and extended GitHub action R-CMD-check to include
+  OS / R combinations recently added as additional test in the CRAN
+  package checks
+- Smaller improvements to the vignette and inst/CITATION (takes date /
+  year and versoin from the meta-data)
+- Smaller improvements to satisfy the requirements / suggestions by the
+  `goodpractice` R-package
 
 ## pwrss 1.3.1
 
@@ -18,7 +29,6 @@ CRAN release: 2026-09-29
   (~1e-16) in places where 0 is expected
 - Small improvement to the unit tests, preventing that snapshots are
   deleted if a comparison is not run
-- Added a `NEWS.md` file to track changes to the package.
 
 ## pwrss v1.2.0
 
