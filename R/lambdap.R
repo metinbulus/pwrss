@@ -78,8 +78,6 @@
 #' t distribution. Journal of Modern Applied Statistical Methods, 6(1),
 #' 107–116. https://doi.org/10.22237/jmasm/1177992600
 
-#  used for vectorization in dlambdap
-#' @noRd
 .dlambdap <- function(x, df, ncp, log = FALSE) {
     if (is.na(df) || df <= 0) return(NaN)
     x <- as.numeric(x)
@@ -117,8 +115,6 @@
 #' @export dlambdap
 dlambdap <- Vectorize(.dlambdap, vectorize.args = c("x", "df", "ncp"), SIMPLIFY = TRUE)
 
-#  used for vectorization in plambdap
-#' @noRd
 .plambdap <- function(q, df, ncp, lower.tail = TRUE, log.p = FALSE) {
     if (is.na(df) || df <= 0) return(NaN)
 
@@ -129,8 +125,6 @@ dlambdap <- Vectorize(.dlambdap, vectorize.args = c("x", "df", "ncp"), SIMPLIFY 
 #' @export plambdap
 plambdap <- Vectorize(.plambdap, vectorize.args = c("q", "df", "ncp"), SIMPLIFY = TRUE)
 
-#  used for vectorization in qlambdap
-#' @noRd
 .qlambdap <- function(p, df, ncp, lower.tail = TRUE, log.p = FALSE) {
     if (is.na(df) || df <= 0 || (log.p && p > 0) || (!log.p && (p < 0 || p > 1))) return(NaN)
     if (ifelse(log.p, exp(p), p) == 0) return(ifelse(lower.tail, -Inf,  Inf))
