@@ -97,10 +97,10 @@ test_that("lambdap distribution functions work", {
 
     # compare the values obtained with the lambdap implementation in pwrss to values to the calculation of confidence
     # intervals for the non-central t distribution in MBESS and effectsize
-    # NB: If you would like to confirm the code, 'MBESS' and 'effectsize' need to be installed
-    # NB: Results from MBESS were stored in lambda_CI.rds used below
+    # NB: If you would like to try the code, 'MBESS' and 'effectsize' need to be installed
+    # NB: Results from MBESS were stored in lambda_CI.rds for being used in the unit tests below
     # ------------------------------------------------------------------------------------------------------------------
-    # create functions to calculate CI's with our own implementation (f_ci_p) vs. MBESS (f_ci_s) and effectsize (f_ci_e)
+    ## create functions to calculate CI's with our own implementation (f_ci_p) vs. MBESS (f_ci_s) and effectsize (f_ci_e)
     #f_ci_p <- function(df, ncp, alpha) qlambdap(p = c(alpha / 2, 1 - alpha / 2), df = df, ncp = ncp)
     #f_ci_m <- function(df, ncp, alpha) as.numeric(MBESS::conf.limits.nct(ncp = ncp, df = df, conf.level = 1 - alpha)[c("Lower.Limit", "Upper.Limit")])
     #f_ci_e <- function(df, ncp, alpha) effectsize:::.get_ncp_t(t = ncp, df_error = df, conf.level = 1 - alpha)
