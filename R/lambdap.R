@@ -126,7 +126,7 @@ dlambdap <- Vectorize(.dlambdap, vectorize.args = c("x", "df", "ncp"), SIMPLIFY 
 plambdap <- Vectorize(.plambdap, vectorize.args = c("q", "df", "ncp"), SIMPLIFY = TRUE)
 
 .qlambdap <- function(p, df, ncp, lower.tail = TRUE, log.p = FALSE) {
-    if (is.na(df) || df <= 0 || (log.p && p > 0) || (!log.p && (p < 0 || p > 1))) return(NaN)
+    if (is.na(df) || df <= 0 || is.na(ncp) || (log.p && p > 0) || (!log.p && (p < 0 || p > 1))) return(NaN)
     if (ifelse(log.p, exp(p), p) == 0) return(ifelse(lower.tail, -Inf,  Inf))
     if (ifelse(log.p, exp(p), p) == 1) return(ifelse(lower.tail,  Inf, -Inf))
 

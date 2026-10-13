@@ -94,4 +94,43 @@ test_that("lambdap distribution functions work", {
     for (p in c(0.05, 0.25, 0.50, 0.75, 0.95)) {
         expect_equal(mean(qlambdap(p, df = 128, ts) >= true.ncp), p, tolerance = 10 ^ -1.6)
     }
+
+    # compare the values obtained with the lambdap implementation in pwrss to values to the calculation of confidence
+    # intervals for the non-central t distribution in MBESS and effectsize
+    # NB: If you would like to confirm the code, 'MBESS' and 'effectsize' need to be installed
+    # NB: Results from MBESS were stored in lambda_CI.rds used below
+    # ------------------------------------------------------------------------------------------------------------------
+    # create functions to calculate CI's with our own implementation (f_ci_p) vs. MBESS (f_ci_s) and effectsize (f_ci_e)
+    #f_ci_p <- function(df, ncp, alpha) qlambdap(p = c(alpha / 2, 1 - alpha / 2), df = df, ncp = ncp)
+    #f_ci_m <- function(df, ncp, alpha) as.numeric(MBESS::conf.limits.nct(ncp = ncp, df = df, conf.level = 1 - alpha)[c("Lower.Limit", "Upper.Limit")])
+    #f_ci_e <- function(df, ncp, alpha) effectsize:::.get_ncp_t(t = ncp, df_error = df, conf.level = 1 - alpha)
+    ## define vectors with alphas and df's of interest  
+    #s_alpha <- c(0.10, 0.05, 0.01, 0.001)
+    #s_df <- unique(round(exp(seq(log(2), log(30), length.out = 20))))
+    #res_ci_p <- res_ci_m <- res_ci_e <- array(NaN, c(length(s_df), 11, length(s_alpha), 2))
+    #for (i in seq_along(s_df)) {
+    #    l_ncp <- if (s_df[i] == 2) 10 else if (s_df[i] >= 3 && s_df[i] <= 7) 15 else 20
+    #    s_ncp <- seq(-l_ncp, l_ncp, length.out = 11)
+    #    for (j in seq_along(s_ncp)) {
+    #        for (k in seq_along(s_alpha)) {
+    #            res_ci_p[i, j, k, ] <- f_ci_p(df = s_df[i], ncp = s_ncp[j], alpha = s_alpha[k])
+    #            res_ci_m[i, j, k, ] <- f_ci_m(df = s_df[i], ncp = s_ncp[j], alpha = s_alpha[k])
+    #            res_ci_e[i, j, k, ] <- f_ci_e(df = s_df[i], ncp = s_ncp[j], alpha = s_alpha[k])
+    #        }
+    #    }
+    #    cat(".")
+    #}
+    # ------------------------------------------------------------------------------------------------------------------
+    res_ci <- readRDS("../lambdap_CI.rds")
+    s_df <- unique(round(exp(seq(log(2), log(30), length.out = 20)))) # providing good coverage of possible df's
+    s_alpha <- c(0.10, 0.05, 0.01, 0.001) # relect often used CI's (90, 95, 99, 99.9%)
+    for (i in seq_along(s_df)) {
+        l_ncp <- if (s_df[i] == 2) 10 else if (s_df[i] >= 3 && s_df[i] <= 7) 15 else 20
+        s_ncp <- seq(-l_ncp, l_ncp, length.out = 11) # adjusted dynamically depending on the number of df's
+        for (j in seq_along(s_ncp)) {
+            for (k in seq_along(s_alpha)) {
+                expect_equal(qlambdap(p = c(s_alpha[k] / 2, 1 - s_alpha[k] / 2), ncp = s_ncp[j], df = s_df[i]), res_ci[i, j, k, ])
+            }
+        }
+    }    
 })
