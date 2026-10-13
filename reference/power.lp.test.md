@@ -326,6 +326,7 @@ power.lp.test(ncp = 2.506, power = 0.8000, alpha = 0.05,
 # power is defined as the probability of observing a test statistic greater
 # than the upper critical value (for the lower bound) AND less than the
 # lower critical value (for the upper bound)
+# \donttest{
 power.lp.test(ncp = 0, null.ncp = c(-3, 3), df = 100, alpha = 0.05,
               alternative = "two.one.sided", plot = FALSE)
 #> +--------------------------------------------------+
@@ -377,8 +378,10 @@ power.lp.test(power = 0.80, req.sign = "0", null.ncp = c(-3, 3),
 #>   Type 2 Error (beta)  = 0.190
 #>   Statistical Power    = 0.810
 #> 
+# }
 # adjust the power based upon what is returned from the example above in
 # order to get a valid estimate of the df's (100.321; power = 0.8 -> 58.911)
+# \donttest{
 power.lp.test(ncp = 0, power = 0.8103, req.sign = "0", null.ncp = c(-3, 3),
               alpha = 0.05, alternative = "two.one.sided", plot = FALSE)
 #> +--------------------------------------------------+
@@ -404,11 +407,13 @@ power.lp.test(ncp = 0, power = 0.8103, req.sign = "0", null.ncp = c(-3, 3),
 #>   Type 2 Error (beta)  = 0.190
 #>   Statistical Power    = 0.810
 #> 
+# }
 
 # minimal effect testing
 # power is defined as the probability of observing a test statistic greater
 # than the upper critical value (for the upper bound) OR less than the lower
 # critical value (for the lower bound).
+# \donttest{
 power.lp.test(ncp = 2, null.ncp = c(-1, 1), df = 100, alpha = 0.05,
               alternative = "two.one.sided", plot = FALSE)
 #> +--------------------------------------------------+
@@ -460,8 +465,10 @@ power.lp.test(power = 0.80, req.sign = "+", null.ncp = c(-1, 1),
 #>   Type 2 Error (beta)  = 0.200
 #>   Statistical Power    = 0.800
 #> 
+# }
 # the first example (ncp = 2) reveals insufficient power (0.169), hence
 # use the ncp returned from the example above for estimating the df's
+# \donttest{
 power.lp.test(ncp = 3.844, power = 0.8, req.sign = "+", null.ncp = c(-3, 3),
               alpha = 0.05, alternative = "two.one.sided", plot = FALSE)
 #> +--------------------------------------------------+
@@ -487,4 +494,5 @@ power.lp.test(ncp = 3.844, power = 0.8, req.sign = "+", null.ncp = c(-3, 3),
 #>   Type 2 Error (beta)  = 0.868
 #>   Statistical Power    = 0.132
 #> 
+# }
 ```

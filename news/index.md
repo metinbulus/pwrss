@@ -1,5 +1,10 @@
 # Changelog
 
+## pwrss 1.3.3
+
+- Added around some examples to prevent the package failing at the
+  pretests on CRAN (it requires that examples run through within 5 secs)
+
 ## pwrss 1.3.2
 
 - Fixed a mistake in the calculation of the density function for lambda

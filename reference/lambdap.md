@@ -11,14 +11,20 @@ plambdap(q, df, ncp, lower.tail = TRUE, log.p = FALSE)
 qlambdap(p, df, ncp, lower.tail = TRUE, log.p = FALSE)
 rlambdap(n, df, ncp)
 
-qlambdap(p, df, ncp, lower.tail = TRUE, log.p = FALSE)
-
 dlambdap(x, df, ncp, log = FALSE)
+
+plambdap(q, df, ncp, lower.tail = TRUE, log.p = FALSE)
+
+qlambdap(p, df, ncp, lower.tail = TRUE, log.p = FALSE)
 
 rlambdap(n, df, ncp)
 ```
 
 ## Arguments
+
+- x, q:
+
+  vector of quantiles
 
 - df:
 
@@ -28,6 +34,10 @@ rlambdap(n, df, ncp)
 
   the non-centrality parameter (t) of the distribution
 
+- log, log.p:
+
+  logical; if `TRUE`, probabilities / densities are given as logarithms
+
 - lower.tail:
 
   logical; if `TRUE` (default), probabilities are \\P\[X \<= x\]\\,
@@ -36,14 +46,6 @@ rlambdap(n, df, ncp)
 - p:
 
   vector of probabilities
-
-- x, q:
-
-  vector of quantiles
-
-- log, log.p:
-
-  logical; if `TRUE`, probabilities / densities are given as logarithms
 
 - n:
 

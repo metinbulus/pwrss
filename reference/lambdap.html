@@ -9,7 +9,7 @@ the lambda prime distribution."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">pwrss</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,9 +51,11 @@ the lambda prime distribution.</p>
 <span><span class="fu">qlambdap</span><span class="op">(</span><span class="va">p</span>, <span class="va">df</span>, <span class="va">ncp</span>, lower.tail <span class="op">=</span> <span class="cn">TRUE</span>, log.p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu">rlambdap</span><span class="op">(</span><span class="va">n</span>, <span class="va">df</span>, <span class="va">ncp</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">qlambdap</span><span class="op">(</span><span class="va">p</span>, <span class="va">df</span>, <span class="va">ncp</span>, lower.tail <span class="op">=</span> <span class="cn">TRUE</span>, log.p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
 <span><span class="fu">dlambdap</span><span class="op">(</span><span class="va">x</span>, <span class="va">df</span>, <span class="va">ncp</span>, log <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">plambdap</span><span class="op">(</span><span class="va">q</span>, <span class="va">df</span>, <span class="va">ncp</span>, lower.tail <span class="op">=</span> <span class="cn">TRUE</span>, log.p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">qlambdap</span><span class="op">(</span><span class="va">p</span>, <span class="va">df</span>, <span class="va">ncp</span>, lower.tail <span class="op">=</span> <span class="cn">TRUE</span>, log.p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">rlambdap</span><span class="op">(</span><span class="va">n</span>, <span class="va">df</span>, <span class="va">ncp</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -62,12 +64,21 @@ the lambda prime distribution.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-df">df<a class="anchor" aria-label="anchor" href="#arg-df"></a></dt>
+<dl><dt id="arg-x-q">x, q<a class="anchor" aria-label="anchor" href="#arg-x-q"></a></dt>
+<dd><p>vector of quantiles</p></dd>
+
+
+<dt id="arg-df">df<a class="anchor" aria-label="anchor" href="#arg-df"></a></dt>
 <dd><p>the degrees of freedom of the distribution</p></dd>
 
 
 <dt id="arg-ncp">ncp<a class="anchor" aria-label="anchor" href="#arg-ncp"></a></dt>
 <dd><p>the non-centrality parameter (t) of the distribution</p></dd>
+
+
+<dt id="arg-log-log-p">log, log.p<a class="anchor" aria-label="anchor" href="#arg-log-log-p"></a></dt>
+<dd><p>logical; if <code>TRUE</code>, probabilities / densities are given
+as logarithms</p></dd>
 
 
 <dt id="arg-lower-tail">lower.tail<a class="anchor" aria-label="anchor" href="#arg-lower-tail"></a></dt>
@@ -77,15 +88,6 @@ the lambda prime distribution.</p>
 
 <dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
 <dd><p>vector of probabilities</p></dd>
-
-
-<dt id="arg-x-q">x, q<a class="anchor" aria-label="anchor" href="#arg-x-q"></a></dt>
-<dd><p>vector of quantiles</p></dd>
-
-
-<dt id="arg-log-log-p">log, log.p<a class="anchor" aria-label="anchor" href="#arg-log-log-p"></a></dt>
-<dd><p>logical; if <code>TRUE</code>, probabilities / densities are given
-as logarithms</p></dd>
 
 
 <dt id="arg-n">n<a class="anchor" aria-label="anchor" href="#arg-n"></a></dt>

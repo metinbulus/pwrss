@@ -11,7 +11,7 @@ error plots."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">pwrss</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -369,6 +369,7 @@ default.</p></dd>
 <span class="r-in"><span><span class="co"># power is defined as the probability of observing a test statistic greater</span></span></span>
 <span class="r-in"><span><span class="co"># than the upper critical value (for the lower bound) AND less than the</span></span></span>
 <span class="r-in"><span><span class="co"># lower critical value (for the upper bound)</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">power.lp.test</span><span class="op">(</span>ncp <span class="op">=</span> <span class="fl">0</span>, null.ncp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span>, df <span class="op">=</span> <span class="fl">100</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>,</span></span>
 <span class="r-in"><span>              alternative <span class="op">=</span> <span class="st">"two.one.sided"</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
@@ -420,8 +421,10 @@ default.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Type 2 Error (beta)  = 0.190</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Statistical Power    = 0.810</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="co"># adjust the power based upon what is returned from the example above in</span></span></span>
 <span class="r-in"><span><span class="co"># order to get a valid estimate of the df's (100.321; power = 0.8 -&gt; 58.911)</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">power.lp.test</span><span class="op">(</span>ncp <span class="op">=</span> <span class="fl">0</span>, power <span class="op">=</span> <span class="fl">0.8103</span>, req.sign <span class="op">=</span> <span class="st">"0"</span>, null.ncp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>              alpha <span class="op">=</span> <span class="fl">0.05</span>, alternative <span class="op">=</span> <span class="st">"two.one.sided"</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
@@ -447,11 +450,13 @@ default.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Type 2 Error (beta)  = 0.190</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Statistical Power    = 0.810</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># minimal effect testing</span></span></span>
 <span class="r-in"><span><span class="co"># power is defined as the probability of observing a test statistic greater</span></span></span>
 <span class="r-in"><span><span class="co"># than the upper critical value (for the upper bound) OR less than the lower</span></span></span>
 <span class="r-in"><span><span class="co"># critical value (for the lower bound).</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">power.lp.test</span><span class="op">(</span>ncp <span class="op">=</span> <span class="fl">2</span>, null.ncp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, df <span class="op">=</span> <span class="fl">100</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>,</span></span>
 <span class="r-in"><span>              alternative <span class="op">=</span> <span class="st">"two.one.sided"</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
@@ -503,8 +508,10 @@ default.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Type 2 Error (beta)  = 0.200</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Statistical Power    = 0.800</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="co"># the first example (ncp = 2) reveals insufficient power (0.169), hence</span></span></span>
 <span class="r-in"><span><span class="co"># use the ncp returned from the example above for estimating the df's</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">power.lp.test</span><span class="op">(</span>ncp <span class="op">=</span> <span class="fl">3.844</span>, power <span class="op">=</span> <span class="fl">0.8</span>, req.sign <span class="op">=</span> <span class="st">"+"</span>, null.ncp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>              alpha <span class="op">=</span> <span class="fl">0.05</span>, alternative <span class="op">=</span> <span class="st">"two.one.sided"</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +--------------------------------------------------+</span>
@@ -530,6 +537,7 @@ default.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Type 2 Error (beta)  = 0.868</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Statistical Power    = 0.132</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
