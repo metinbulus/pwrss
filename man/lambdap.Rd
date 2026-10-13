@@ -2,8 +2,9 @@
 % Please edit documentation in R/lambdap.R
 \name{lambdap}
 \alias{lambdap}
-\alias{plambdap}
+\alias{.dlambdap}
 \alias{dlambdap}
+\alias{plambdap}
 \alias{qlambdap}
 \alias{rlambdap}
 \title{Distribution functions for the Lambda prime / non-central Lambda distribution}
@@ -13,26 +14,28 @@ plambdap(q, df, ncp, lower.tail = TRUE, log.p = FALSE)
 qlambdap(p, df, ncp, lower.tail = TRUE, log.p = FALSE)
 rlambdap(n, df, ncp)
 
-qlambdap(p, df, ncp, lower.tail = TRUE, log.p = FALSE)
-
 dlambdap(x, df, ncp, log = FALSE)
+
+plambdap(q, df, ncp, lower.tail = TRUE, log.p = FALSE)
+
+qlambdap(p, df, ncp, lower.tail = TRUE, log.p = FALSE)
 
 rlambdap(n, df, ncp)
 }
 \arguments{
+\item{x, q}{vector of quantiles}
+
 \item{df}{the degrees of freedom of the distribution}
 
 \item{ncp}{the non-centrality parameter (t) of the distribution}
+
+\item{log, log.p}{logical; if \code{TRUE}, probabilities / densities are given
+as logarithms}
 
 \item{lower.tail}{logical; if \code{TRUE} (default), probabilities are
 \eqn{P[X <= x]}, otherwise, \eqn{P[X > x]}}
 
 \item{p}{vector of probabilities}
-
-\item{x, q}{vector of quantiles}
-
-\item{log, log.p}{logical; if \code{TRUE}, probabilities / densities are given
-as logarithms}
 
 \item{n}{number of observations}
 }

@@ -40,7 +40,7 @@ them as:
 
 <p>
 Bulus M, Jentschke S (2026). <em>pwrss: Statistical Power, Sample Size,
-and Detectable Effect Calculations</em>. R package version 1.3.1.9000,
+and Detectable Effect Calculations</em>. R package version 1.3.3,
 <a href="https://doi.org/10.32614/CRAN.package.pwrss">https://doi.org/10.32614/CRAN.package.pwrss</a>.
 </p>
 
