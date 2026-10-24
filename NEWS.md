@@ -1,3 +1,5 @@
+# pwrss (development version)
+
 # pwrss 1.3.3
 * Added \donottest around some examples to prevent the package failing at the pretests on CRAN (it requires that examples run through within 5 secs)
 
