@@ -1,5 +1,7 @@
 # Changelog
 
+## pwrss (development version)
+
 ## pwrss 1.3.3
 
 CRAN release: 2026-10-14
