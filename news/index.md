@@ -2,6 +2,8 @@
 
 ## pwrss 1.3.3
 
+CRAN release: 2026-10-14
+
 - Added around some examples to prevent the package failing at the
   pretests on CRAN (it requires that examples run through within 5 secs)
 
