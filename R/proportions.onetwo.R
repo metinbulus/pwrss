@@ -502,6 +502,8 @@ power.z.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
                            null.mean = pwr.obj$null.mean,
                            null.sd = pwr.obj$null.sd,
                            z.alpha = pwr.obj$z.alpha,
+                           std.error = std.error,
+                           alternative = alternative,
                            power = pwr.obj$power,
                            n = n),
                       class = c("pwrss", "z", "oneprop")))

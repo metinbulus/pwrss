@@ -43,14 +43,17 @@
 #' power.chisq.test(power = 0.80, ncp = 20, alpha = 0.05)
 #'
 #' @export power.chisq.test
-power.chisq.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df = NULL, alpha = 0.05, plot = TRUE,
-                             verbose = 1, utf = FALSE) {
+power.chisq.test <- function(power = NULL, ncp = NULL, null.ncp = 0,
+                             df = NULL, alpha = 0.05,
+                             alternative = c("greater", "less"),
+                             plot = TRUE, verbose = 1, utf = FALSE) {
 
   if (!is.null(power)) check.power(power)
   if (!is.null(ncp)) check.positive(ncp)
   check.nonnegative(null.ncp)
   if (!is.null(df)) check.positive(df)
   check.proportion(alpha)
+  alternative <- match.arg(alternative)
   check.logical(plot, utf)
   verbose <- ensure.verbose(verbose)
   requested <- get.requested(es = ncp, n = df, power = power)
@@ -60,38 +63,53 @@ power.chisq.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df = NULL, 
   if (!is.null(df) && df < 1)
     stop("Degrees of freedom can not be smaller than 1.", call. = FALSE)
 
-  pwr <- function(ncp = NULL, null.ncp = 0, df = NULL, alpha = 0.05) {
+  pwr <- function(ncp = NULL, null.ncp = 0, df = NULL, alpha = 0.05,
+                  alternative) {
 
-    chisq.alpha <- stats::qchisq(alpha, df = df, ncp = null.ncp, lower.tail = FALSE)
-    power <- stats::pchisq(chisq.alpha, df = df, ncp = ncp, lower.tail = FALSE)
+    chisq.alpha <- stats::qchisq(alpha, df = df, ncp = null.ncp, lower.tail = alternative == "less")
+    power <- stats::pchisq(chisq.alpha, df = df, ncp = ncp, lower.tail = alternative == "less")
 
-    list(power = power, chisq.alpha = chisq.alpha)
+    list(power = power, chisq.alpha = chisq.alpha, alternative = alternative)
 
   } # pwr()
 
-  min.pwr <- function(ncp = NULL, df = NULL, power = NULL) {
+  min.pwr <- function(ncp = NULL, df = NULL, power = NULL, alternative) {
 
-    power - pwr(ncp = ncp, null.ncp = null.ncp, df = df, alpha = alpha)$power
+    power - pwr(ncp = ncp, null.ncp = null.ncp, df = df, alpha = alpha, alternative = alternative)$power
 
   } # min.pwr() (for uniroot and optimize)
 
   if (requested == "es") {
 
-    max.thresh <- stats::qchisq(1 - 1e-10, ncp = null.ncp, df = df)
-    while (min.pwr(max.thresh, df, power) > 0) max.thresh <- max.thresh * 1.10
+    if(alternative == "less") {
+      max.thresh <- null.ncp
+    } else {
+      max.thresh <- stats::qchisq(1 - 1e-10, ncp = null.ncp, df = df)
+      while (min.pwr(max.thresh, df, power, alternative) > 0) max.thresh <- max.thresh * 1.10
+    }
 
-    ncp <- stats::optimize(f = function(ncp) min.pwr(ncp, df, power) ^ 2, interval = c(0, max.thresh), tol = 1e-12)$minimum
+    # ncp <- stats::optimize(f = function(ncp) min.pwr(ncp, df, power, alternative) ^ 2, interval = c(0, max.thresh), tol = 1e-12)$minimum
+    ncp <- stats::uniroot(
+      f = function(ncp) min.pwr(ncp, df, power, alternative),
+      interval = c(0, max.thresh),
+      tol = 1e-12
+    )$root
 
   } else if (requested == "n") {
 
-    df  <- stats::optimize(f = function(df)  min.pwr(ncp, df, power) ^ 2, interval = c(1, 1e10))$minimum
+    # df  <- stats::optimize(f = function(df)  min.pwr(ncp, df, power, alternative) ^ 2, interval = c(1, 1e10))$minimum
+    df <- stats::uniroot(
+      f = function(df) min.pwr(ncp, df, power, alternative),
+      interval = c(1, 1e10),
+      tol = 1e-12
+    )$root
 
   }
 
-  pwr.obj <- pwr(ncp = ncp, null.ncp = null.ncp, df = df, alpha = alpha)
+  pwr.obj <- pwr(ncp = ncp, null.ncp = null.ncp, df = df, alpha = alpha, alternative = alternative)
 
   if (plot)
-    .plot.chisq.t1t2(ncp = ncp, null.ncp = null.ncp, df = df, alpha = alpha)
+    .plot.chisq.t1t2(ncp = ncp, null.ncp = null.ncp, df = df, alpha = alpha, alternative = alternative)
 
   if (verbose > 0) {
 
@@ -103,6 +121,7 @@ power.chisq.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df = NULL, 
                       power = pwr.obj$power,
                       df = df,
                       alpha = alpha,
+                      alternative = alternative, 
                       chisq.alpha = pwr.obj$chisq.alpha)
 
     .print.pwrss.chisq(print.obj, verbose = verbose, utf = utf)
@@ -114,7 +133,9 @@ power.chisq.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df = NULL, 
                            null.ncp = null.ncp,
                            df = df,
                            alpha = alpha,
-                           chisq.alpha = pwr.obj$chisq.alpha),
+                           chisq.alpha = pwr.obj$chisq.alpha,
+                           alternative = alternative,
+                           utf = utf),
                       class = c("pwrss", "generic", "chisq")))
 
 } # end of power.chisq.test()

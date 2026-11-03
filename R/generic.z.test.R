@@ -217,7 +217,7 @@ power.z.test <- function(power = NULL, mean = NULL, sd = 1, null.mean = 0, null.
 
   invisible(structure(list(power = pwr.obj$power, mean = mean, sd = sd, null.mean = null.mean, null.sd = null.sd, alpha = alpha,
                            alternative = alternative, z.alpha = pwr.obj$z.alpha, beta = 1 - pwr.obj$power,
-                           type.s = pwr.obj$type.s, type.m = pwr.obj$type.m),
+                           type.s = pwr.obj$type.s, type.m = pwr.obj$type.m, utf = utf),
                       class = c("pwrss", "generic", "z")))
 
 } # end of power.z.test()

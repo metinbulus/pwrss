@@ -156,7 +156,7 @@ power.f.regression <- function(r.squared.change = NULL,
 
   if (verbose > 0) {
 
-    print.obj <- list(test = paste0(ifelse(k.tested == k.total, "", "Hierarchical "), "Linear Regression (F-Test)"),
+    print.obj <- list(test = paste0(ifelse(k.tested == k.total, "", "Hierarchical "), "Linear Regression (F-Test) - Fixed Pred."),
                       requested = requested,
                       r.squared.change = r.squared.change,
                       k.total = k.total,

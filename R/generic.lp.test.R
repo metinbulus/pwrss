@@ -268,7 +268,8 @@ power.lp.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0
                            t.alpha = pwr.obj$t.alpha,
                            beta = 1 - pwr.obj$power,
                            type.s = pwr.obj$type.s,
-                           type.m = pwr.obj$type.m),
+                           type.m = pwr.obj$type.m,
+                           utf = utf),
                       class = c("pwrss", "generic", "lp")))
 
 } # end of power.lp.test()

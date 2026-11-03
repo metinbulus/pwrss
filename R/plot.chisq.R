@@ -54,7 +54,7 @@
   color <- grDevices::adjustcolor(switch(type, `1` = 2, `2` = 4, `3` = 1), alpha.f = 0.3)
 
   x <- seq(min(xlim), max(xlim), by = 0.001)
-  y <- stats::dchisq(x, df = df, ncp = ncp)
+  y <- funchisq(x)
   xs <- c(x, rev(x))
   ys <- c(y, rep(0, length(y)))
 
@@ -72,6 +72,7 @@
 
 
 .plot.chisq.t1t2 <- function(ncp, null.ncp = 0, df, alpha = 0.05,
+                             alternative = "greater",
                              plot.main = NULL, plot.sub = NULL) {
 
   check.numeric(ncp)
@@ -79,12 +80,15 @@
   if (!is.numeric(df) || length(df) != 1 || df < 1 || !is.finite(df))
     stop("`df` must be numeric, finite, have a value of at least 1 and have a length of 1.", call. = FALSE)
 
-  chisq.alpha <- stats::qchisq(alpha, df = df, ncp = null.ncp, lower.tail = FALSE)
+  chisq.alpha <- stats::qchisq(alpha, df = df, ncp = null.ncp, lower.tail = alternative == "less")
   y.chisq.alpha <- stats::dchisq(chisq.alpha, df = df, ncp = null.ncp)
 
   # x-axis limits
-  lower <- stats::qchisq(ifelse(df < 2, 0.30, 0.001), df = df, ncp = 0)
-  upper <- stats::qchisq(0.999, df = df, ncp = ncp)
+  prob.lower <- ifelse(df < 2, 0.30, 0.001)
+  lower <- min(stats::qchisq(prob.lower, df = df, ncp = ncp),
+               stats::qchisq(prob.lower, df = df, ncp = null.ncp))
+  upper <- max(stats::qchisq(0.999, df = df, ncp = ncp),
+               stats::qchisq(0.999, df = df, ncp = null.ncp))
   xlim <- c(lower, upper)
 
   plot.window.dim <- grDevices::dev.size("cm")
@@ -119,11 +123,19 @@
   graphics::segments(x0 = chisq.alpha, y0 = rep(0, length(chisq.alpha)),
                      x1 = chisq.alpha, y1 = y.chisq.alpha, col = 2, lty = 2, lwd = 2)
 
-  # paint regions
-  .paint.chisq.dist(ncp = null.ncp, df = df,  xlim = c(chisq.alpha, max(xlim)), type = 1)
-  .paint.chisq.dist(ncp = ncp, df = df, xlim = c(lower, chisq.alpha), type = 2)
-  power <- .paint.chisq.dist(ncp = ncp, df = df, xlim = c(chisq.alpha, max(xlim)), type = 3)
-  # end of paint regions
+  if(alternative == "less") {
+    # paint regions
+    .paint.chisq.dist(ncp = null.ncp, df = df,  xlim = c(min(xlim), chisq.alpha), type = 1)
+    .paint.chisq.dist(ncp = ncp, df = df, xlim = c(chisq.alpha, upper), type = 2)
+    power <- .paint.chisq.dist(ncp = ncp, df = df, xlim = c(min(xlim), chisq.alpha), type = 3)
+    # end of paint regions
+  } else {
+    # paint regions
+    .paint.chisq.dist(ncp = null.ncp, df = df,  xlim = c(chisq.alpha, max(xlim)), type = 1)
+    .paint.chisq.dist(ncp = ncp, df = df, xlim = c(lower, chisq.alpha), type = 2)
+    power <- .paint.chisq.dist(ncp = ncp, df = df, xlim = c(chisq.alpha, max(xlim)), type = 3)
+    # end of paint regions
+  }
 
   # axes labels and subtitle
   graphics::title(main = plot.main, line = 2, cex.main = cex.title)

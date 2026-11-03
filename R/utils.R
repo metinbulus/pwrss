@@ -139,7 +139,7 @@ f.to.etasq <- function(f, verbose = 1) {
 #'   rsq.to.f(r.squared.full = 0.26) # large
 #'
 #' @export rsq.to.f
-rsq.to.f <- function(r.squared.full, r.squared.reduced = 0, verbose = 0) {
+rsq.to.f <- function(r.squared.full, r.squared.reduced = 0, verbose = 1) {
 
   check.nonnegative(r.squared.full, r.squared.reduced)
   verbose <- ensure.verbose(verbose)
@@ -191,7 +191,7 @@ rsq.to.f <- function(r.squared.full, r.squared.reduced = 0, verbose = 0) {
 #'   f.to.rsq(f = 0.59) # large
 #'
 #' @export f.to.rsq
-f.to.rsq <- function(f, r.squared.full = NULL, verbose = 0) {
+f.to.rsq <- function(f, r.squared.full = NULL, verbose = 1) {
 
   check.nonnegative(f)
   verbose <- ensure.verbose(verbose)
@@ -574,6 +574,40 @@ probs.to.h <- function(prob1, prob2 = 0.50, verbose = 1) {
   invisible(list(h = h, prob1 = prob1, prob2 = prob2))
 
 } # probs.to.h
+
+h.to.probs <- function(h, prob1 = NULL, prob2 = NULL, verbose = 1) {
+  
+  if (is.null(prob1) && is.null(prob2))
+    stop("Provide either prob1 or prob2, but not both.")
+  
+  if (!is.null(prob1) && !is.null(prob2))
+    stop("Only one of prob1 or prob2 must be NULL.")
+  
+  # solve for prob1
+  if (is.null(prob1)) {
+    A2 <- asin(sqrt(prob2))
+    A1 <- A2 + h/2
+    prob1 <- sin(A1)^2
+    
+    if (verbose > 0)
+      print(c(prob1 = prob1, h = h, prob2 = prob2))
+    
+    return(invisible(list(prob1 = prob1, prob2 = prob2, h = h)))
+  }
+  
+  # solve for prob2
+  if (is.null(prob2)) {
+    A1 <- asin(sqrt(prob1))
+    A2 <- A1 - h/2
+    prob2 <- sin(A2)^2
+    
+    if (verbose > 0)
+      print(c(prob2 = prob2, h = h, prob1 = prob1))
+    
+    return(invisible(list(prob1 = prob1, prob2 = prob2, h = h)))
+  }
+  
+} # h.to.probs
 
 
 #' Conversion from joint probabilities to marginal probabilities for the

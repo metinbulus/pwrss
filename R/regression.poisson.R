@@ -447,6 +447,9 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL, beta0 = NULL, b
 
   invisible(structure(list(parms = func.parms,
                            test = "z",
+                           distribution = distribution,
+                           beta0 = beta0,
+                           beta1 = beta1,
                            base.rate = base.rate,
                            rate.ratio = rate.ratio,
                            mean = pwr.obj$ncp,

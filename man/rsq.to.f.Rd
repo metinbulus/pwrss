@@ -4,7 +4,7 @@
 \alias{rsq.to.f}
 \title{Conversion from R-squared to Cohen's f}
 \usage{
-rsq.to.f(r.squared.full, r.squared.reduced = 0, verbose = 0)
+rsq.to.f(r.squared.full, r.squared.reduced = 0, verbose = 1)
 }
 \arguments{
 \item{r.squared.full}{R-squared for the full model.}

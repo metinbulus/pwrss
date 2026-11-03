@@ -3,7 +3,7 @@
 ############################
 
 # type = 1 for light red, 2 for light blue
-.plot.f.dist <- function(ncp = 1, null.ncp = 0, df1, df2, xlim, type = 1, ticks = TRUE) {
+.plot.f.dist <- function(ncp = 1, df1, df2, xlim, type = 1, ticks = TRUE) {
 
 
   plot.window.dim <- grDevices::dev.size("cm")
@@ -16,12 +16,10 @@
 
   # mod of f dist
   x.seq <- seq(xlim[1], xlim[2], length.out = 50)
-  y.max.alt <- max(stats::df(x.seq, df1 = df1, df2 = df2, ncp = ncp))
-  y.max.null <- max(stats::df(x.seq, df1 = df1, df2 = df2, ncp = null.ncp))
-  y.max <- max(c(y.max.alt, y.max.null))
+  y.max <- max(stats::df(x.seq, df1 = df1, df2 = df2, ncp = ncp))
+  ylim <- c(0, y.max + 0.05)
 
   # plot central f distribution
-  ylim <- c(0, y.max + 0.05)
   graphics::plot(funf, xlim = xlim, ylim = ylim,
                  xaxs = "i", yaxs = "i", bty = "l",
                  col = color, lwd = 2, lty = type,
@@ -54,7 +52,7 @@
   color <- grDevices::adjustcolor(switch(type, `1` = 2, `2` = 4, `3` = 1), alpha.f = 0.3)
 
   x <- seq(min(xlim), max(xlim), by = 0.001)
-  y <- stats::df(x, df1 = df1, df2 = df2, ncp = ncp)
+  y <- funf(x)
   xs <- c(x, rev(x))
   ys <- c(y, rep(0, length(y)))
 
@@ -70,7 +68,8 @@
 } # end of .paint.f.dist()
 
 
-.plot.f.t1t2 <- function(ncp, null.ncp = 0, df1, df2, alpha = 0.05,
+.plot.f.t1t2 <- function(ncp, null.ncp = 0, df1, df2, 
+                         alpha = 0.05, alternative = "greater",
                          plot.main = NULL, plot.sub = NULL) {
 
   check.numeric(ncp, null.ncp)
@@ -80,12 +79,15 @@
     stop("`df2` must be numeric, finite, have a value of at least 1 and have a length of 1.", call. = FALSE)
   check.proportion(alpha)
 
-  f.alpha <- stats::qf(alpha, df1 = df1, df2 = df2, ncp = null.ncp, lower.tail = FALSE)
+  f.alpha <- stats::qf(alpha, df1 = df1, df2 = df2, ncp = null.ncp, lower.tail = alternative == "less")
   yf.alpha <- stats::df(f.alpha, df1 = df1, df2 = df2, ncp = null.ncp)
 
   # x-axis limits
-  lower <- stats::qf(ifelse(df1 < 2, 0.30, 0.001), df1 = df1, df2 = df2, ncp = null.ncp)
-  upper <- stats::qf(0.999, df1 = df1, df2 = df2,  ncp = ncp)
+  prob.lower <- ifelse(df1 < 2, 0.30, 0.001)
+  lower <- min(stats::qf(prob.lower, df1 = df1, df2 = df2, ncp = ncp),
+               stats::qf(prob.lower, df1 = df1, df2 = df2, ncp = null.ncp))
+  upper <- max(stats::qf(0.999, df1 = df1, df2 = df2, ncp = ncp),
+               stats::qf(0.999, df1 = df1, df2 = df2, ncp = null.ncp))
   xlim <- c(lower, upper)
 
   plot.window.dim <- grDevices::dev.size("cm")
@@ -94,17 +96,16 @@
   cex.label <- min(plot.window.dim[1] / 12, plot.window.dim[2] / 12)
 
   # plots
-  .plot.f.dist(df1 = df1, df2 = df2, ncp = ncp, null.ncp = null.ncp,
+  .plot.f.dist(df1 = df1, df2 = df2, ncp = ncp,
                xlim = xlim, type = 2, ticks = TRUE)
   graphics::par(new = TRUE)
-  .plot.f.dist(df1 = df1, df2 = df2, ncp = null.ncp, null.ncp = null.ncp,
+  .plot.f.dist(df1 = df1, df2 = df2, ncp = null.ncp, 
                xlim = xlim, type = 1, ticks = FALSE)
 
   # mod of f dist
   x.seq <- seq(xlim[1], xlim[2], length.out = 50)
   y.seq.alt <- stats::df(x.seq, df1 = df1, df2 = df2, ncp = ncp)
   y.seq.null <- stats::df(x.seq, df1 = df1, df2 = df2, ncp = null.ncp)
-
   y.max.alt <- max(y.seq.alt)
   y.max.null <- max(y.seq.null)
   x.mod.alt <- x.seq[which(y.max.alt == y.seq.alt)]
@@ -122,14 +123,25 @@
   graphics::segments(x0 = f.alpha, y0 = rep(0, length(f.alpha)),
                      x1 = f.alpha, y1 = yf.alpha, col = 2, lty = 2, lwd = 2)
 
-  # paint regions
-  .paint.f.dist(df1 = df1, df2 = df2, ncp = null.ncp,
-                xlim = c(f.alpha, max(xlim)), type = 1)
-  .paint.f.dist(df1 = df1, df2 = df2, ncp = ncp,
-                xlim = c(lower, f.alpha), type = 2)
-  power <- .paint.f.dist(df1 = df1, df2 = df2, ncp = ncp,
-                         xlim = c(f.alpha, max(xlim)), type = 3)
-  # end of paint regions
+  if(alternative == "less") {
+    # paint regions
+    .paint.f.dist(df1 = df1, df2 = df2, ncp = null.ncp,
+                  xlim = c(min(xlim), f.alpha), type = 1)
+    .paint.f.dist(df1 = df1, df2 = df2, ncp = ncp,
+                  xlim = c(f.alpha, upper), type = 2)
+    power <- .paint.f.dist(df1 = df1, df2 = df2, ncp = ncp,
+                           xlim = c(min(xlim), f.alpha), type = 3)
+    # end of paint regions
+  } else {
+    # paint regions
+    .paint.f.dist(df1 = df1, df2 = df2, ncp = null.ncp,
+                  xlim = c(f.alpha, max(xlim)), type = 1)
+    .paint.f.dist(df1 = df1, df2 = df2, ncp = ncp,
+                  xlim = c(lower, f.alpha), type = 2)
+    power <- .paint.f.dist(df1 = df1, df2 = df2, ncp = ncp,
+                           xlim = c(f.alpha, max(xlim)), type = 3)
+    # end of paint regions
+  }
 
   # axes labels and subtitle
   graphics::title(main = plot.main, line = 2, cex.main = cex.title)

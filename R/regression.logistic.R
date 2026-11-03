@@ -392,6 +392,27 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
 
   } # var.beta
 
+  beta.logistic.range <- function(base.prob, req.sign = -1, precision = 1e-5) {
+    
+    if (req.sign == -1) {
+      prob.lower <- precision
+      prob.upper <- base.prob - precision
+      odds.ratio.lower <- (prob.lower / (1 - prob.lower)) / (base.prob / (1 - base.prob))
+      odds.ratio.upper <- (prob.upper / (1 - prob.upper)) / (base.prob / (1 - base.prob))
+      beta1.lower <- log(odds.ratio.lower)
+      beta1.upper <- log(odds.ratio.upper)
+      c(beta1.lower, beta1.upper)
+    } else {
+      prob.lower <- base.prob + precision
+      prob.upper <- 1 - precision
+      odds.ratio.lower <- (prob.lower / (1 - prob.lower)) / (base.prob / (1 - base.prob))
+      odds.ratio.upper <- (prob.upper / (1 - prob.upper)) / (base.prob / (1 - base.prob))
+      beta1.lower <- log(odds.ratio.lower)
+      beta1.upper <- log(odds.ratio.upper)
+      c(beta1.lower, beta1.upper)
+    }
+    
+  } # beta.logistic.range
 
   # Demidenko, E. (2007). Sample size determination for logistic
   # regression revisited. Statistics in Medicine, 26, 3385-3397.
@@ -425,7 +446,8 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
     power <- pwr.obj$power
     z.alpha <- pwr.obj$z.alpha
 
-    list(power = power, ncp = ncp, sd.ncp = sd.ncp, vcf = vcf, z.alpha = z.alpha)
+    list(power = power, ncp = ncp, sd.ncp = sd.ncp, vcf = vcf, z.alpha = z.alpha,
+         var.beta0 = var.beta0, var.beta1 = var.beta1)
 
   } # pwr.demidenko()
 
@@ -483,11 +505,12 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
     } else if (requested == "es") {
 
       # reasonable bounds for logistics
-      var.obj <- var.beta(beta0 = beta0, beta1 = beta0, distribution = distribution)
-      bound.values <- c((stats::qlogis(0.0001) - beta0) / c(var.obj$min, var.obj$max),
-                        (stats::qlogis(0.9999) - beta0) / c(var.obj$min, var.obj$max))
-      bound.values <- bound.values[is.finite(bound.values)]
-      val.rng <- c(min(bound.values), 0, max(bound.values))[ifelse(check.pos_sign(req.sign), -1, -3)]
+      val.rng <- beta.logistic.range(base.prob = base.prob, req.sign = req.sign) 
+      # var.obj <- var.beta(beta0 = beta0, beta1 = beta0, distribution = distribution)
+      # bound.values <- c((stats::qlogis(0.0001) - beta0) / c(var.obj$min, var.obj$max),
+      #                   (stats::qlogis(0.9999) - beta0) / c(var.obj$min, var.obj$max))
+      # bound.values <- bound.values[is.finite(bound.values)]
+      # val.rng2 <- c(min(bound.values), 0, max(bound.values))[ifelse(check.pos_sign(req.sign), -1, -3)]
 
       beta1 <- try(stats::uniroot(function(beta1) min.pwr.demidenko(beta1, n, power), interval = val.rng)$root, silent = TRUE)
       if (inherits(beta1, "try-error"))
@@ -508,6 +531,8 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
     ncp <- pwr.obj$ncp
     sd.ncp <- pwr.obj$sd.ncp
     vcf <- pwr.obj$vcf
+    var.beta0 <- pwr.obj$var.beta0
+    var.beta1 <- pwr.obj$var.beta1
 
   } else if (method == "hsieh") {
 
@@ -544,6 +569,8 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
     ncp <- ss.obj$ncp
     sd.ncp <- ss.obj$sd.ncp
     vcf <- ss.obj$vcf
+    var.beta0 <- NA
+    var.beta1 <- NA
 
   } # method
 
@@ -582,6 +609,11 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
 
   invisible(structure(list(parms = func.parms,
                            test = "z",
+                           distribution = distribution,
+                           beta0 = beta0,
+                           beta1 = beta1,
+                           prob = prob,
+                           base.prob = base.prob,
                            odds.ratio = odds.ratio,
                            mean = ncp,
                            sd = sd.ncp,

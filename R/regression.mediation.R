@@ -388,6 +388,7 @@ power.z.mediation  <- function(beta.a = NULL, beta.b = NULL, ab.ratio = 1, req.s
   } # verbose
 
   invisible(structure(list(parms = func.parms,
+                           method = method,
                            test = switch(method, `joint` = "joint", `monte.carlo` = "monte.carlo", "z"),
                            beta.a = beta.a,
                            beta.b = beta.b,

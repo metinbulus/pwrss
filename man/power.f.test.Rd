@@ -12,6 +12,7 @@ power.f.test(
   df1,
   df2,
   alpha = 0.05,
+  alternative = c("greater", "less"),
   plot = TRUE,
   verbose = 1,
   utf = FALSE
@@ -32,6 +33,8 @@ or \code{ncp} needs to be NULL (and is then estimated).}
 
 \item{alpha}{type 1 error rate, defined as the probability of incorrectly
 rejecting a true null hypothesis, denoted as \eqn{\alpha}.}
+
+\item{alternative}{character; whether \code{ncp} is greater or less than \code{null.ncp}.}
 
 \item{plot}{logical; \code{FALSE} switches off Type 1 and Type 2 error
 plot. \code{TRUE} by default.}

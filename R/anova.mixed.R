@@ -200,7 +200,7 @@ power.f.mixed.anova <- function(eta.squared = NULL,
     df1 <- prod(c(n.levels.between - 1, (n.levels.within - 1) * epsilon)[c(effect != "within", effect != "between")])
     df2 <- (n.total - n.levels.between) * ifelse(effect == "between", 1, (n.levels.within - 1) * epsilon)
 
-    if (df1 < 1 || df2 < 1) stop("Design is not feasible", call. = FALSE)
+    if (df1 < 1 || df2 < 1) stop("Design is not feasible due to insufficent degrees of freedom.", call. = FALSE)
     lambda <- f.squared * n.total * epsilon
     null.lambda <- null.f.squared * n.total * epsilon
     f.alpha <- stats::qf(alpha, df1 = df1, df2 = df2, ncp = null.lambda, lower.tail = FALSE)

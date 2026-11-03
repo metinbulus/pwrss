@@ -220,7 +220,7 @@ power.np.wilcoxon <- function(d = NULL, null.d = 0, margin = 0, req.sign = "+",
       stop("Possibly incorrect value for `margin` (should be within -10 ... 10).", call. = FALSE)
 
   if (method == "noether" && design != "independent")
-    stop("Specify `method` = \"guenther\" to request Wilcoxon signed-rank test for matched pairs.", call. = FALSE)
+    stop("Specify `method` = \"guenther\" to request Wilcoxon signed-rank test for one-sample or matched pairs.", call. = FALSE)
 
   # if (requested == "es" && alternative == "two.one.sided")
   #  stop("Determining the effect size is not possible if `alternative` is \"two.one.sided\".", call. = FALSE)
@@ -352,7 +352,9 @@ power.np.wilcoxon <- function(d = NULL, null.d = 0, margin = 0, req.sign = "+",
   if (design == "independent") n <- c(n1 = n1, n2 = n2) else n <- n2
 
   if (method == "guenther") {
-    list.out <- list(d = d,
+    list.out <- list(method = method,
+                     d = d,
+                     null.d = null.d,
                      n = n,
                      power = pwr.obj$power,
                      t.alpha = pwr.obj$t.alpha,
@@ -360,7 +362,9 @@ power.np.wilcoxon <- function(d = NULL, null.d = 0, margin = 0, req.sign = "+",
                      null.ncp = pwr.obj$null.ncp,
                      df = pwr.obj$df)
   } else if (method == "noether") {
-    list.out <- list(d = d,
+    list.out <- list(method = method,
+                     d = d,
+                     null.d = null.d,
                      n = n,
                      power = pwr.obj$power,
                      z.alpha = pwr.obj$z.alpha,

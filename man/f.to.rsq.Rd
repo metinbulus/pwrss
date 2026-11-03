@@ -4,7 +4,7 @@
 \alias{f.to.rsq}
 \title{Conversion from Cohen's f to R-squared}
 \usage{
-f.to.rsq(f, r.squared.full = NULL, verbose = 0)
+f.to.rsq(f, r.squared.full = NULL, verbose = 1)
 }
 \arguments{
 \item{f}{Cohen's f.}

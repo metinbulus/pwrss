@@ -592,12 +592,23 @@
   cat(x$test, "\n\n", sep = "")
 
   if (utf) {
-    h0_text <- ifelse(x$null.lambda == 0, "\u03BB = \u03BB\u2080", "0 \u2264 \u03BB \u2264 \u03BB\u2080")
-    h1_text <- ifelse(x$null.lambda == 0, "\u03BB > \u03BB\u2080", "\u03BB > \u03BB\u2080")
+    if (x$alternative == "greater") {
+      h0_text <- ifelse(x$null.lambda == 0, "\u03BB = \u03BB\u2080", "0 \u2264 \u03BB \u2264 \u03BB\u2080")
+      h1_text <- ifelse(x$null.lambda == 0, "\u03BB > \u03BB\u2080", "\u03BB > \u03BB\u2080")
+    } else {
+      h0_text <- ifelse(x$null.lambda == 0, "\u03BB > \u03BB\u2080", "\u03BB \u2265 \u03BB\u2080")
+      h1_text <- ifelse(x$null.lambda == 0, "\u03BB = \u03BB\u2080", "0 \u2264 \u03BB < \u03BB\u2080")
+    }
   } else {
-    h0_text <- ifelse(x$null.lambda == 0, "lambda = null.lambda",        "0 <= lambda <= null.lambda")
-    h1_text <- ifelse(x$null.lambda == 0, "lambda > null.lambda",        "lambda > null.lambda")
+    if (x$alternative == "greater") {
+      h0_text <- ifelse(x$null.lambda == 0, "lambda = null.lambda",        "0 <= lambda <= null.lambda")
+      h1_text <- ifelse(x$null.lambda == 0, "lambda > null.lambda",        "lambda > null.lambda")
+    } else {
+      h0_text <- ifelse(x$lambda == 0, "lambda > null.lambda",        "lambda >= null.lambda")
+      h1_text <- ifelse(x$lambda == 0, "lambda = null.lambda",        "0 <= lambda < null.lambda")
+    }
   }
+  
   cat(.hypotheses(h0_text, h1_text, utf))
 
   if (verbose == 2) {
@@ -632,12 +643,23 @@
   cat(x$test, "\n\n", sep = "")
 
   if (utf) {
-    h0_text <- ifelse(x$null.lambda == 0, "\u03BB = \u03BB\u2080", "0 \u2264 \u03BB \u2264 \u03BB\u2080")
-    h1_text <- ifelse(x$null.lambda == 0, "\u03BB > \u03BB\u2080", "\u03BB > \u03BB\u2080")
+    if(x$alternative == "greater") {
+      h0_text <- ifelse(x$null.lambda == 0, "\u03BB = \u03BB\u2080", "0 \u2264 \u03BB \u2264 \u03BB\u2080")
+      h1_text <- ifelse(x$null.lambda == 0, "\u03BB > \u03BB\u2080", "\u03BB > \u03BB\u2080")
+    } else {
+      h0_text <- ifelse(x$lambda == 0, "\u03BB > \u03BB\u2080", "\u03BB \u2265 \u03BB\u2080")
+      h1_text <- ifelse(x$lambda == 0, "\u03BB = \u03BB\u2080", "0 \u2264 \u03BB < \u03BB\u2080")
+    }
   } else {
-    h0_text <- ifelse(x$null.lambda == 0, "lambda = 0", "0 <= lambda <= null.lambda")
-    h1_text <- ifelse(x$null.lambda == 0, "lambda > 0", "lambda > null.lambda")
+    if(x$alternative == "greater") {
+      h0_text <- ifelse(x$null.lambda == 0, "lambda = null.lambda",        "0 <= lambda <= null.lambda")
+      h1_text <- ifelse(x$null.lambda == 0, "lambda > null.lambda",        "lambda > null.lambda")
+    } else {
+      h0_text <- ifelse(x$lambda == 0, "lambda > null.lambda",        "lambda >= null.lambda")
+      h1_text <- ifelse(x$lambda == 0, "lambda = null.lambda",        "0 <= lambda < null.lambda")
+    }
   }
+  
   cat(.hypotheses(h0_text, h1_text, utf))
 
   if (verbose == 2) {

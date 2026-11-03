@@ -41,7 +41,8 @@
 #'
 #' @export power.f.test
 power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
-                         alpha = 0.05, plot = TRUE, verbose = 1, utf = FALSE) {
+                         alpha = 0.05, alternative = c("greater", "less"), 
+                         plot = TRUE, verbose = 1, utf = FALSE) {
 
   if (!is.null(power)) check.power(power)
   if (!is.null(ncp)) check.positive(ncp)
@@ -49,6 +50,7 @@ power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
   check.positive(df1, df2)
   check.proportion(alpha)
   check.logical(plot, utf)
+  alternative <- match.arg(alternative)
   verbose <- ensure.verbose(verbose)
   requested <- get.requested(es = ncp, n = NA, power = power)
 
@@ -59,40 +61,43 @@ power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
   if (is.null(df2) || df2 < 3)
     stop("`df2` can not be NULL, and needs to be at least 3.", call. = FALSE)
 
-  pwr <- function(ncp, null.ncp = 0, df1, df2, alpha = 0.05) {
+  pwr <- function(ncp, null.ncp = 0, df1, df2, alpha = 0.05, alternative) {
 
-    f.alpha <- stats::qf(alpha, df1 = df1, df2 = df2, ncp = null.ncp, lower.tail = FALSE)
-    power   <- stats::pf(f.alpha, df1 = df1, df2 = df2, ncp = ncp, lower.tail = FALSE)
+    lower.tail <- alternative == "less"
 
-    list(power = power, f.alpha = f.alpha)
+    f.alpha <- stats::qf(alpha, df1 = df1, df2 = df2, ncp = null.ncp, lower.tail = lower.tail)
+    power   <- stats::pf(f.alpha, df1 = df1, df2 = df2, ncp = ncp, lower.tail = lower.tail)
+
+    list(power = power, f.alpha = f.alpha, alternative = alternative)
 
   } # pwr()
 
-  min.pwr <- function(ncp, power) {
-    power - pwr(ncp = ncp, null.ncp = null.ncp, df1 = df1, df2 = df2, alpha = alpha)$power
+  min.pwr <- function(ncp, power, alternative) {
+    power - pwr(ncp = ncp, null.ncp = null.ncp, df1 = df1, df2 = df2, alpha = alpha, alternative = alternative)$power
   } # min.pwr()
 
   if (requested == "es") {
 
-    max.thresh <- stats::qf(1 - 1e-12, ncp = null.ncp, df1 = df1, df2 = df2)
-    # adjust max.thresh: if min.pwr < 0, max.thresh is multiplied with 10 / 9, if min.pwr > 0 it is multiplied with 9 / 10
-    for (chk.sign in c(-1, 1)) {
-      if (sign(min.pwr(ncp = max.thresh, power = power)) == chk.sign) {
-        while (sign(min.pwr(ncp = max.thresh, power = power)) == chk.sign) {
-          max.thresh <- max.thresh * ifelse(chk.sign == -1, 9 / 10, 10 / 9)
-        }
-        max.thresh <- max.thresh * ifelse(chk.sign == -1, 10 / 9, 9 / 10)
-      }
+     if (alternative == "less") {
+       max.thresh <- null.ncp
+     } else {
+       max.thresh <- stats::qf(1 - 1e-12, ncp = null.ncp, df1 = df1, df2 = df2)
+       while (min.pwr(max.thresh, power, alternative) > 0) max.thresh <- max.thresh * 1.10
     }
 
-    ncp <- stats::optimize(f = function(ncp) min.pwr(ncp, power) ^ 2, interval = c(0, max.thresh), tol = 1e-12)$minimum
+    # ncp <- stats::optimize(f = function(ncp) min.pwr(ncp, power, alternative) ^ 2, interval = c(0, max.thresh), tol = 1e-12)$minimum
+    ncp <- stats::uniroot(
+      f = function(ncp) min.pwr(ncp, power, alternative),
+      interval = c(0, max.thresh),
+      tol = 1e-12
+    )$root
 
   }
 
-  pwr.obj <- pwr(ncp = ncp, null.ncp = null.ncp, df1 = df1, df2 = df2, alpha = alpha)
+  pwr.obj <- pwr(ncp = ncp, null.ncp = null.ncp, df1 = df1, df2 = df2, alpha = alpha, alternative = alternative)
 
   if (plot)
-    suppressWarnings(.plot.f.t1t2(ncp = ncp, null.ncp = null.ncp, df1 = df1, df2 = df2, alpha = alpha))
+    suppressWarnings(.plot.f.t1t2(ncp = ncp, null.ncp = null.ncp, df1 = df1, df2 = df2, alpha = alpha, alternative = alternative))
 
   if (verbose > 0) {
 
@@ -106,6 +111,7 @@ power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
                       n.pres = df1 + df2 + 1,
                       power = pwr.obj$power,
                       alpha = alpha,
+                      alternative = alternative,
                       f.alpha = pwr.obj$f.alpha)
 
     .print.pwrss.f(print.obj, verbose = verbose, utf = utf)
@@ -118,7 +124,9 @@ power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
                            df1 = df1,
                            df2 = df2,
                            alpha = alpha,
-                           f.alpha = pwr.obj$f.alpha),
+                           f.alpha = pwr.obj$f.alpha,
+                           alternative = alternative,
+                           utf = utf),
                       class = c("pwrss", "generic", "f")))
 
 } # end of power.f.test()

@@ -227,7 +227,8 @@ power.binom.test <- function(power = NULL,
                            null.prob = null.prob,
                            alpha = pwr.obj$approx.alpha,
                            alternative = alternative,
-                           binom.alpha = pwr.obj$binom.alpha),
+                           binom.alpha = pwr.obj$binom.alpha,
+                           utf = utf),
                       class = c("pwrss", "generic", "binom")))
 
 } # power.binom.test()

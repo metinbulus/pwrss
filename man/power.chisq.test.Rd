@@ -11,6 +11,7 @@ power.chisq.test(
   null.ncp = 0,
   df = NULL,
   alpha = 0.05,
+  alternative = c("greater", "less"),
   plot = TRUE,
   verbose = 1,
   utf = FALSE
@@ -32,6 +33,8 @@ independence df = (nrow - 1) * (ncol - 1); either \code{power},
 
 \item{alpha}{type 1 error rate, defined as the probability of incorrectly
 rejecting a true null hypothesis, denoted as \eqn{\alpha}.}
+
+\item{alternative}{character; whether \code{ncp} is greater or less than \code{null.ncp}.}
 
 \item{plot}{logical; \code{FALSE} switches off Type 1 and Type 2 error
 plot. \code{TRUE} by default.}
