@@ -392,7 +392,7 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
 
   } # var.beta
 
-  beta.logistic.range <- function(base.prob, req.sign = -1, precision = 1e-5) {
+  beta.logistic.range <- function(base.prob, req.sign = -1, precision = 1e-12) {
 
     if (req.sign == -1) {
       prob.lower <- precision
