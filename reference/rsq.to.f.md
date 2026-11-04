@@ -5,7 +5,7 @@ Helper function to convert between Cohen's f and R-squared.
 ## Usage
 
 ``` r
-rsq.to.f(r.squared.full, r.squared.reduced = 0, verbose = 0)
+rsq.to.f(r.squared.full, r.squared.reduced = 0, verbose = 1)
 ```
 
 ## Arguments
@@ -56,6 +56,12 @@ Article 111. https://doi.org/10.3389/fpsyg.2012.00111
 ``` r
 
   rsq.to.f(r.squared.full = 0.02) # small
+#>         f.squared                 f    r.squared.full r.squared.reduced 
+#>        0.02040816        0.14285714        0.02000000        0.00000000 
   rsq.to.f(r.squared.full = 0.13) # medium
+#>         f.squared                 f    r.squared.full r.squared.reduced 
+#>         0.1494253         0.3865557         0.1300000         0.0000000 
   rsq.to.f(r.squared.full = 0.26) # large
+#>         f.squared                 f    r.squared.full r.squared.reduced 
+#>         0.3513514         0.5927490         0.2600000         0.0000000 
 ```

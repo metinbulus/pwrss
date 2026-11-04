@@ -13,6 +13,7 @@ power.f.test(
   df1,
   df2,
   alpha = 0.05,
+  alternative = c("greater", "less"),
   plot = TRUE,
   verbose = 1,
   utf = FALSE
@@ -47,6 +48,10 @@ power.f.test(
 
   type 1 error rate, defined as the probability of incorrectly rejecting
   a true null hypothesis, denoted as \\\alpha\\.
+
+- alternative:
+
+  character; whether `ncp` is greater or less than `null.ncp`.
 
 - plot:
 
@@ -106,8 +111,8 @@ power.f.test(ncp = 1, df1 = 4, df2 = 100, alpha = 0.05)
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : lambda = 0
-#>   H1 (Alternative) : lambda > 0
+#>   H0 (Null)        : lambda = null.lambda
+#>   H1 (Alternative) : lambda > null.lambda
 #> 
 #> ----------------------------------------------------
 #> Results
@@ -129,8 +134,8 @@ power.f.test(power = 0.80, df1 = 4, df2 = 100, alpha = 0.05)
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : lambda = 0
-#>   H1 (Alternative) : lambda > 0
+#>   H0 (Null)        : lambda = null.lambda
+#>   H1 (Alternative) : lambda > null.lambda
 #> 
 #> ----------------------------------------------------
 #> Results

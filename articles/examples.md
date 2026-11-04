@@ -528,8 +528,8 @@ power.f.test(ncp = 10.71,  # non-centrality under alternative
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : lambda = 0
-#>   H1 (Alternative) : lambda > 0
+#>   H0 (Null)        : lambda = null.lambda
+#>   H1 (Alternative) : lambda > null.lambda
 #> 
 #> ----------------------------------------------------
 #> Results
@@ -567,8 +567,8 @@ power.f.test(ncp = NULL,   # calculate this
 #> ----------------------------------------------------
 #> Hypotheses
 #> ----------------------------------------------------
-#>   H0 (Null)        : lambda = 0
-#>   H1 (Alternative) : lambda > 0
+#>   H0 (Null)        : lambda = null.lambda
+#>   H1 (Alternative) : lambda > null.lambda
 #> 
 #> ----------------------------------------------------
 #> Results
@@ -3998,7 +3998,7 @@ power.f.regression(r.squared = 0.10,
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> Linear Regression (F-Test)
+#> Linear Regression (F-Test) - Fixed Pred.
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -4044,7 +4044,7 @@ power.f.regression(r.squared = 0.10,
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> Linear Regression (F-Test)
+#> Linear Regression (F-Test) - Fixed Pred.
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -4098,7 +4098,7 @@ power.f.regression(r.squared.change = 0.10,
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> Hierarchical Linear Regression (F-Test)
+#> Hierarchical Linear Regression (F-Test) - Fixed Pred.
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -4150,7 +4150,7 @@ power.f.regression(r.squared.change = 0.10,
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> Hierarchical Linear Regression (F-Test)
+#> Hierarchical Linear Regression (F-Test) - Fixed Pred.
 #> 
 #> ----------------------------------------------------
 #> Hypotheses

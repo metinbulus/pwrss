@@ -12,6 +12,7 @@ power.chisq.test(
   null.ncp = 0,
   df = NULL,
   alpha = 0.05,
+  alternative = c("greater", "less"),
   plot = TRUE,
   verbose = 1,
   utf = FALSE
@@ -44,6 +45,10 @@ power.chisq.test(
 
   type 1 error rate, defined as the probability of incorrectly rejecting
   a true null hypothesis, denoted as \\\alpha\\.
+
+- alternative:
+
+  character; whether `ncp` is greater or less than `null.ncp`.
 
 - plot:
 

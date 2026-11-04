@@ -188,7 +188,7 @@ power.f.regression(r.squared = 0.059,
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> Linear Regression (F-Test)
+#> Linear Regression (F-Test) - Fixed Pred.
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
@@ -302,7 +302,7 @@ power.f.regression(r.squared = 0.03,
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
 #> 
-#> Hierarchical Linear Regression (F-Test)
+#> Hierarchical Linear Regression (F-Test) - Fixed Pred.
 #> 
 #> ----------------------------------------------------
 #> Hypotheses
