@@ -7,23 +7,25 @@
 #' @aliases power.f
 #'
 #'
-#' @param power    statistical power \eqn{(1 - \beta)}; either `power` or `ncp`
-#'                 needs to be NULL (and is then estimated).
-#' @param ncp      non-centrality parameter for the alternative; either `power`
-#'                  or `ncp` needs to be NULL (and is then estimated).
-#' @param null.ncp non-centrality parameter for the null.
-#' @param alpha    type 1 error rate, defined as the probability of incorrectly
-#'                 rejecting a true null hypothesis, denoted as \eqn{\alpha}.
-#' @param df1      integer; numerator degrees of freedom.
-#' @param df2      integer; denominator degrees of freedom.
-#' @param plot     logical; \code{FALSE} switches off Type 1 and Type 2 error
-#'                 plot. \code{TRUE} by default.
-#' @param verbose  \code{1} by default (returns test, hypotheses, and results),
-#'                 if \code{2} a more detailed output is given (plus key
-#'                 parameters and definitions), if \code{0} no output is printed
-#'                 on the console.
-#' @param utf      logical; whether the output should show Unicode characters
-#'                 (if encoding allows for it). \code{FALSE} by default.
+#' @param power        statistical power \eqn{(1 - \beta)}; either `power` or `ncp`
+#'                     needs to be NULL (and is then estimated).
+#' @param ncp          non-centrality parameter for the alternative; either `power`
+#'                     or `ncp` needs to be NULL (and is then estimated).
+#' @param null.ncp     non-centrality parameter for the null.
+#' @param df1          integer; numerator degrees of freedom.
+#' @param df2          integer; denominator degrees of freedom.
+#' @param alpha        type 1 error rate, defined as the probability of incorrectly
+#'                     rejecting a true null hypothesis, denoted as \eqn{\alpha}.
+#' @param alternative  character; the direction or type of the hypothesis test:
+#'                     either "less" or "greater"
+#' @param plot         logical; \code{FALSE} switches off Type 1 and Type 2 error
+#'                     plot. \code{TRUE} by default.
+#' @param verbose      \code{1} by default (returns test, hypotheses, and results),
+#'                     if \code{2} a more detailed output is given (plus key
+#'                     parameters and definitions), if \code{0} no output is printed
+#'                     on the console.
+#' @param utf          logical; whether the output should show Unicode characters
+#'                     (if encoding allows for it). \code{FALSE} by default.
 #'
 #' @return
 #'   \item{power}{statistical power \eqn{(1-\beta)}.}

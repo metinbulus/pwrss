@@ -34,7 +34,8 @@ or \code{ncp} needs to be NULL (and is then estimated).}
 \item{alpha}{type 1 error rate, defined as the probability of incorrectly
 rejecting a true null hypothesis, denoted as \eqn{\alpha}.}
 
-\item{alternative}{character; whether \code{ncp} is greater or less than \code{null.ncp}.}
+\item{alternative}{character; the direction or type of the hypothesis test:
+either "less" or "greater"}
 
 \item{plot}{logical; \code{FALSE} switches off Type 1 and Type 2 error
 plot. \code{TRUE} by default.}

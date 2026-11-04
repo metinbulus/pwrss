@@ -17,8 +17,6 @@ hypothesis in the one-sample case).}
 if \code{2} a more detailed output is given (plus key
 parameters and definitions), if \code{0} no output is printed
 on the console.}
-
-\item{h}{Cohen's h effect size.}
 }
 \value{
 \item{h}{Cohen's h effect size.}

@@ -34,7 +34,8 @@ independence df = (nrow - 1) * (ncol - 1); either \code{power},
 \item{alpha}{type 1 error rate, defined as the probability of incorrectly
 rejecting a true null hypothesis, denoted as \eqn{\alpha}.}
 
-\item{alternative}{character; whether \code{ncp} is greater or less than \code{null.ncp}.}
+\item{alternative}{character; the direction or type of the hypothesis test:
+either "less" or "greater"}
 
 \item{plot}{logical; \code{FALSE} switches off Type 1 and Type 2 error
 plot. \code{TRUE} by default.}
@@ -54,6 +55,7 @@ printed on the console.}
 \item{df}{degrees of freedom.}
 \item{alpha}{type 1 error rate (user-specified).}
 \item{chisq.alpha}{critical value.}
+\item{alternative}{non-centrality parameter under null.}
 }
 \description{
 Determines power, the non-centrality parameter (NCP) for the generic

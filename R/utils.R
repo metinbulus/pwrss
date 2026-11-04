@@ -544,7 +544,6 @@ means.to.d <- function(mu1, mu2 = 0, sd1 = 1, sd2 = 1, n.ratio = 1, n2 = 1e10,
 #'                alternative hypothesis in the one-sample case).
 #' @param prob2   Probability of success in the second group, or under the null
 #'                hypothesis in the one-sample case).
-#' @param h       Cohen's h effect size.
 #' @param verbose \code{1} by default (returns test, hypotheses, and results),
 #'                if \code{2} a more detailed output is given (plus key
 #'                parameters and definitions), if \code{0} no output is printed
@@ -575,37 +574,54 @@ probs.to.h <- function(prob1, prob2 = 0.50, verbose = 1) {
 
 } # probs.to.h
 
+#' Conversion from Probability Difference to Cohen's h
+#'
+#' @description
+#' Helper function to convert probability difference to Cohen's h (and vice
+#' versa).
+#'
+#'
+#' @param h       Cohen's h effect size.
+#' @param prob1   Probability of success in the first group, or under the
+#'                alternative hypothesis in the one-sample case).
+#' @param prob2   Probability of success in the second group, or under the null
+#'                hypothesis in the one-sample case).
+#' @param verbose \code{1} by default (returns test, hypotheses, and results),
+#'                if \code{2} a more detailed output is given (plus key
+#'                parameters and definitions), if \code{0} no output is printed
+#'                on the console.
+#'
+#' @return
+#'   \item{h}{Cohen's h effect size.}
+#'   \item{prob1}{probability of success in the first group, or under the
+#'                alternative hypothesis in the one-sample case).}
+#'   \item{prob2}{probability of success in the second group, or under the
+#'                null hypothesis in the one-sample case).}
+#'
+#' @details h and either prob1 or prob2 are required
+#'
+#'
+#' @examples
+#' h.to.probs(h = 0.1, prob1 = 0.56)
+#' h.to.probs(h = 0.1, prob2 = 0.50)
+#'
+#' @export h.to.probs
 h.to.probs <- function(h, prob1 = NULL, prob2 = NULL, verbose = 1) {
 
-  if (is.null(prob1) && is.null(prob2))
-    stop("Provide either prob1 or prob2, but not both.")
-
-  if (!is.null(prob1) && !is.null(prob2))
-    stop("Only one of prob1 or prob2 must be NULL.")
-
-  # solve for prob1
-  if (is.null(prob1)) {
-    A2 <- asin(sqrt(prob2))
-    A1 <- A2 + h / 2
+  if (is.null(prob1) && !is.null(prob2)) {        # solve for prob1
+    A1 <- asin(sqrt(prob2)) + h / 2
     prob1 <- sin(A1) ^ 2
-
-    if (verbose > 0)
-      print(c(prob1 = prob1, h = h, prob2 = prob2))
-
-    return(invisible(list(prob1 = prob1, prob2 = prob2, h = h)))
-  }
-
-  # solve for prob2
-  if (is.null(prob2)) {
-    A1 <- asin(sqrt(prob1))
-    A2 <- A1 - h / 2
+  } else if (!is.null(prob1) && is.null(prob2)) { # solve for prob2
+    A2 <- asin(sqrt(prob1)) - h / 2
     prob2 <- sin(A2) ^ 2
-
-    if (verbose > 0)
-      print(c(prob2 = prob2, h = h, prob1 = prob1))
-
-    invisible(list(prob1 = prob1, prob2 = prob2, h = h))
+  } else {
+    stop("Provide either prob1 or prob2: One parameter must be NULL, the other can not be NULL.")
   }
+
+  if (verbose > 0)
+    print(c(prob1 = prob1, prob2 = prob2, h = h))
+
+  invisible(list(prob1 = prob1, prob2 = prob2, h = h))
 
 } # h.to.probs
 

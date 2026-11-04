@@ -322,9 +322,9 @@ test_that("regression.logistic.R works", {
                           method = "demidenko(vc)", distribution = "exponential", ceil.n = TRUE, verbose = 0, utf = FALSE))
     expect_equal(crrRes[setdiff(names(crrRes), "parms")],
                  list(test = "z", distribution = list(dist = "exponential", rate = 1), beta0 = -0.84729786,
-                      beta1 = 0.34830693, prob = 0.37777783, base.prob = 0.30, 
-                      odds.ratio = 1.416667, mean = 2.77189915, sd = 0.964603926, null.mean = 0, null.sd = 1, vcf = 1,
-                      z.alpha = 1.959964 * c(-1, 1), power = 0.800030653, n = 289))
+                      beta1 = 0.34830693, prob = 0.37777783, base.prob = 0.30, odds.ratio = 1.416667, mean = 2.77189915,
+                      sd = 0.964603926, null.mean = 0, null.sd = 1, vcf = 1, z.alpha = 1.959964 * c(-1, 1),
+                      power = 0.800030653, n = 289))
 
     crrRes <- power.z.logistic(base.prob = 0.30, odds.ratio = 1.416667, alpha = 0.05, n = 289,
                                distribution = "exponential", verbose = 0)

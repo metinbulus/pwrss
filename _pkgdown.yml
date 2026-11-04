@@ -75,6 +75,7 @@ reference:
       - etasq.to.f
       - f.to.etasq
       - f.to.rsq
+      - h.to.probs
       - joint.probs.2x2
       - marginal.probs.2x2
       - means.to.d

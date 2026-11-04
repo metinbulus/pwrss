@@ -180,7 +180,7 @@ test_that("means.to.d", {
                  c("        d ", "0.2236068 "))
 })
 
-# probs.to.h -------------------------------------------------------------------------------------------------------
+# probs.to.h -----------------------------------------------------------------------------------------------------------
 test_that("probs.to.h works", {
     expect_equal(probs.to.h(prob1 = 0.56,   prob2 = 0.50, verbose = 0), list(h = 0.120289882, prob1 = 0.56,   prob2 = 0.50))
     expect_equal(probs.to.h(prob1 = 0.60,   prob2 = 0.40, verbose = 0), list(h = 0.402715842, prob1 = 0.60,   prob2 = 0.40))
@@ -190,6 +190,18 @@ test_that("probs.to.h works", {
     expect_equal(capture.output(probs.to.h(prob1 = 0.60,   prob2 = 0.40)), c("        h     prob1     prob2 ", "0.4027158 0.6000000 0.4000000 "))
     expect_equal(capture.output(probs.to.h(prob1 = 0.25,   prob2 = 0.15)), c("        h     prob1     prob2 ", "0.2517987 0.2500000 0.1500000 "))
     expect_equal(capture.output(probs.to.h(prob1 = 8 / 15, prob2 = 0.40)), c("        h     prob1     prob2 ", "0.2680741 0.5333333 0.4000000 "))
+})
+
+# h.to.probs -----------------------------------------------------------------------------------------------------------
+test_that("h.to.probs works", {
+    expect_equal(h.to.probs(h = 0.120289882, prob1 = 0.56, verbose = 0), list(prob1 = 0.56,   prob2 = 0.50, h = 0.120289882))
+    expect_equal(h.to.probs(h = 0.402715842, prob1 = 0.60, verbose = 0), list(prob1 = 0.60,   prob2 = 0.40, h = 0.402715842))
+    expect_equal(h.to.probs(h = 0.251798721, prob2 = 0.15, verbose = 0), list(prob1 = 0.25,   prob2 = 0.15, h = 0.251798721))
+    expect_equal(h.to.probs(h = 0.268074069, prob2 = 0.40, verbose = 0), list(prob1 = 8 / 15, prob2 = 0.40, h = 0.268074069))
+    expect_equal(capture.output(h.to.probs(h = 0.120289882, prob2 = 0.50)),   c("    prob1     prob2         h ", "0.5600000 0.5000000 0.1202899 "))
+    expect_equal(capture.output(h.to.probs(h = 0.402715842, prob2 = 0.40)),   c("    prob1     prob2         h ", "0.6000000 0.4000000 0.4027158 "))
+    expect_equal(capture.output(h.to.probs(h = 0.251798721, prob1 = 0.25)),   c("    prob1     prob2         h ", "0.2500000 0.1500000 0.2517987 "))
+    expect_equal(capture.output(h.to.probs(h = 0.268074069, prob1 = 8 / 15)), c("    prob1     prob2         h ", "0.5333333 0.4000000 0.2680741 "))
 })
 
 # joint.probs.2x2 ------------------------------------------------------------------------------------------------------
