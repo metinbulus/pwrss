@@ -25,13 +25,13 @@ test_that("f.to.etasq works", {
 
 # rsq.to.f -------------------------------------------------------------------------------------------------------------
 test_that("rsq.to.f works", {
-    expect_equal(rsq.to.f(0.009900990),
+    expect_equal(rsq.to.f(0.009900990, verbose = 0),
                  list(f.squared = 0.0100, f = 0.10, r.squared.full = 0.009900990, r.squared.reduced = 0))
-    expect_equal(rsq.to.f(0.058823530),
+    expect_equal(rsq.to.f(0.058823530, verbose = 0),
                  list(f.squared = 0.0625, f = 0.25, r.squared.full = 0.058823530, r.squared.reduced = 0))
-    expect_equal(rsq.to.f(0.137931034),
+    expect_equal(rsq.to.f(0.137931034, verbose = 0),
                  list(f.squared = 0.1600, f = 0.40, r.squared.full = 0.137931034, r.squared.reduced = 0))
-    expect_error(rsq.to.f(0.1, 0.2), "Expecting `r.squared.full` > `r.squared.reduced`.")
+    expect_error(rsq.to.f(0.1, 0.2, verbose = 0), "Expecting `r.squared.full` > `r.squared.reduced`.")
     expect_equal(capture.output(rsq.to.f(0.137931034, verbose = 1)),
                  c("        f.squared                 f    r.squared.full r.squared.reduced ",
                    "         0.160000          0.400000          0.137931          0.000000 "))
@@ -39,11 +39,11 @@ test_that("rsq.to.f works", {
 
 # f.to.rsq -------------------------------------------------------------------------------------------------------------
 test_that("f.to.rsq works", {
-    expect_equal(f.to.rsq(0.10),
+    expect_equal(f.to.rsq(0.10, verbose = 0),
                  list(f.squared = 0.0100, f = 0.10, r.squared.full = 0.009900990, r.squared.reduced = 0))
-    expect_equal(f.to.rsq(0.25),
+    expect_equal(f.to.rsq(0.25, verbose = 0),
                  list(f.squared = 0.0625, f = 0.25, r.squared.full = 0.058823530, r.squared.reduced = 0))
-    expect_equal(f.to.rsq(0.40),
+    expect_equal(f.to.rsq(0.40, verbose = 0),
                  list(f.squared = 0.1600, f = 0.40, r.squared.full = 0.137931034, r.squared.reduced = 0))
     expect_equal(f.to.rsq(0.40, r.squared.full = 0.00862069, verbose = 0),
                  list(f.squared = 0.1600, f = 0.40, r.squared.full = 0.00862069, r.squared.reduced = -0.15))

@@ -4,9 +4,9 @@ test_that("regression.mediation.R works", {
     # power.z.mediation (= pwrss.z.mediation)
     crrRes <- power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, n = 200, verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "mediation"))
-    expect_named(crrRes, c("parms", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp", "r.squared.mediator",
-                                  "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp", "std.beta.indirect",
-                                  "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
+    expect_named(crrRes, c("parms", "method", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp",
+                           "r.squared.mediator", "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp",
+                           "std.beta.indirect", "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(beta.a = 0.25, beta.b = 0.25, ab.ratio = 1, req.sign = "+", beta.cp = 0.1, sd.predictor = 1,
                           sd.mediator = 1, sd.outcome = 1, r.squared.mediator = NULL, r.squared.outcome = NULL, n = 200,
@@ -22,9 +22,9 @@ test_that("regression.mediation.R works", {
 
     crrRes <- power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, power = 0.80, verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "mediation"))
-    expect_named(crrRes, c("parms", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp", "r.squared.mediator",
-                                  "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp", "std.beta.indirect",
-                                  "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
+    expect_named(crrRes, c("parms", "method", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp",
+                           "r.squared.mediator", "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp",
+                           "std.beta.indirect", "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(beta.a = 0.25, beta.b = 0.25, ab.ratio = 1, req.sign = "+", beta.cp = 0.1, sd.predictor = 1,
                           sd.mediator = 1, sd.outcome = 1, r.squared.mediator = NULL, r.squared.outcome = NULL, n = NULL,
@@ -78,9 +78,9 @@ test_that("regression.mediation.R works", {
 
     crrRes <- power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, n = 500, method = "sobel", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "mediation"))
-    expect_named(crrRes, c("parms", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp", "r.squared.mediator",
-                                  "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp", "std.beta.indirect",
-                                  "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
+    expect_named(crrRes, c("parms", "method", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp",
+                           "r.squared.mediator", "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp",
+                           "std.beta.indirect", "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(beta.a = 0.25, beta.b = 0.25, ab.ratio = 1, req.sign = "+", beta.cp = 0.1, sd.predictor = 1,
                           sd.mediator = 1, sd.outcome = 1, r.squared.mediator = NULL, r.squared.outcome = NULL, n = 500,
@@ -96,9 +96,9 @@ test_that("regression.mediation.R works", {
 
     crrRes <- power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, n = 500, method = "aroian", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "mediation"))
-    expect_named(crrRes, c("parms", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp", "r.squared.mediator",
-                                  "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp", "std.beta.indirect",
-                                  "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
+    expect_named(crrRes, c("parms", "method", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp",
+                           "r.squared.mediator", "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp",
+                           "std.beta.indirect", "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(beta.a = 0.25, beta.b = 0.25, ab.ratio = 1, req.sign = "+", beta.cp = 0.1, sd.predictor = 1,
                           sd.mediator = 1, sd.outcome = 1, r.squared.mediator = NULL, r.squared.outcome = NULL, n = 500,
@@ -114,9 +114,9 @@ test_that("regression.mediation.R works", {
 
     crrRes <- power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, n = 500, method = "goodman", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "mediation"))
-    expect_named(crrRes, c("parms", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp", "r.squared.mediator",
-                                  "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp", "std.beta.indirect",
-                                  "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
+    expect_named(crrRes, c("parms", "method", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp",
+                           "r.squared.mediator", "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp",
+                           "std.beta.indirect", "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(beta.a = 0.25, beta.b = 0.25, ab.ratio = 1, req.sign = "+", beta.cp = 0.1, sd.predictor = 1,
                           sd.mediator = 1, sd.outcome = 1, r.squared.mediator = NULL, r.squared.outcome = NULL, n = 500,
@@ -132,9 +132,9 @@ test_that("regression.mediation.R works", {
 
     crrRes <- power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, n = 500, method = "joint", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "mediation"))
-    expect_named(crrRes, c("parms", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp", "r.squared.mediator",
-                                  "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp", "std.beta.indirect",
-                                  "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
+    expect_named(crrRes, c("parms", "method", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp",
+                           "r.squared.mediator", "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp",
+                           "std.beta.indirect", "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(beta.a = 0.25, beta.b = 0.25, ab.ratio = 1, req.sign = "+", beta.cp = 0.1, sd.predictor = 1,
                           sd.mediator = 1, sd.outcome = 1, r.squared.mediator = NULL, r.squared.outcome = NULL, n = 500,
@@ -150,9 +150,9 @@ test_that("regression.mediation.R works", {
 
     crrRes <- power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, n = 500, method = "monte.carlo", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "mediation"))
-    expect_named(crrRes, c("parms", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp", "r.squared.mediator",
-                                  "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp", "std.beta.indirect",
-                                  "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
+    expect_named(crrRes, c("parms", "method", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp",
+                           "r.squared.mediator", "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp",
+                           "std.beta.indirect", "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(beta.a = 0.25, beta.b = 0.25, ab.ratio = 1, req.sign = "+", beta.cp = 0.1, sd.predictor = 1,
                           sd.mediator = 1, sd.outcome = 1, r.squared.mediator = NULL, r.squared.outcome = NULL,
@@ -168,9 +168,9 @@ test_that("regression.mediation.R works", {
 
     crrRes <- power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, r.squared.outcome = 0.50, power = 0.80, verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "mediation"))
-    expect_named(crrRes, c("parms", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp", "r.squared.mediator",
-                                  "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp", "std.beta.indirect",
-                                  "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
+    expect_named(crrRes, c("parms", "method", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp",
+                           "r.squared.mediator", "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp",
+                           "std.beta.indirect", "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(beta.a = 0.25, beta.b = 0.25, ab.ratio = 1, req.sign = "+", beta.cp = 0.1, sd.predictor = 1,
                           sd.mediator = 1, sd.outcome = 1, r.squared.mediator = NULL, r.squared.outcome = 0.50, n = NULL,
@@ -186,9 +186,9 @@ test_that("regression.mediation.R works", {
 
     crrRes <- power.z.mediation(beta.a = 0.40, beta.b = 0.25, beta.cp = 0.10, sd.predictor = 0.5, n = 200, verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "mediation"))
-    expect_named(crrRes, c("parms", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp", "r.squared.mediator",
-                                  "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp", "std.beta.indirect",
-                                  "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
+    expect_named(crrRes, c("parms", "method", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp",
+                           "r.squared.mediator", "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp",
+                           "std.beta.indirect", "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(beta.a = 0.40, beta.b = 0.25, ab.ratio = 1, req.sign = "+", beta.cp = 0.1, sd.predictor = 0.50,
                           sd.mediator = 1, sd.outcome = 1, r.squared.mediator = NULL, r.squared.outcome = NULL, n = 200,
@@ -204,9 +204,9 @@ test_that("regression.mediation.R works", {
 
     crrRes <- power.z.mediation(beta.a = 0.40, beta.b = 0.25, beta.cp = 0.10, sd.predictor = 0.5, power = 0.80, verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "mediation"))
-    expect_named(crrRes, c("parms", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp", "r.squared.mediator",
-                                  "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp", "std.beta.indirect",
-                                  "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
+    expect_named(crrRes, c("parms", "method", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp",
+                           "r.squared.mediator", "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp",
+                           "std.beta.indirect", "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(beta.a = 0.40, beta.b = 0.25, ab.ratio = 1, req.sign = "+", beta.cp = 0.1, sd.predictor = 0.50,
                           sd.mediator = 1, sd.outcome = 1, r.squared.mediator = NULL, r.squared.outcome = NULL, n = NULL,
@@ -223,9 +223,9 @@ test_that("regression.mediation.R works", {
     crrRes <- power.z.mediation(beta.a = 0.40, beta.b = 0.25, beta.cp = 0.10, r.squared.outcome = 0.50, sd.predictor = 0.5,
                                 power = 0.80, verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "mediation"))
-    expect_named(crrRes, c("parms", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp", "r.squared.mediator",
-                                  "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp", "std.beta.indirect",
-                                  "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
+    expect_named(crrRes, c("parms", "method", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp",
+                           "r.squared.mediator", "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp",
+                           "std.beta.indirect", "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(beta.a = 0.40, beta.b = 0.25, ab.ratio = 1, req.sign = "+", beta.cp = 0.1, sd.predictor = 0.50,
                           sd.mediator = 1, sd.outcome = 1, r.squared.mediator = NULL, r.squared.outcome = 0.50, n = NULL,
@@ -242,9 +242,9 @@ test_that("regression.mediation.R works", {
     crrRes <- power.z.mediation(beta.a = 0.40, beta.b = 0.25, beta.cp = 0.10, r.squared.outcome = 0.50,
                                 sd.predictor = sqrt(2 / 3 * 1 / 3), power = 0.80, verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "mediation"))
-    expect_named(crrRes, c("parms", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp", "r.squared.mediator",
-                                  "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp", "std.beta.indirect",
-                                  "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
+    expect_named(crrRes, c("parms", "method", "test", "beta.a", "beta.b", "beta.indirect", "beta.cp",
+                           "r.squared.mediator", "r.squared.outcome", "std.beta.a", "std.beta.b", "std.beta.cp",
+                           "std.beta.indirect", "mean", "sd", "null.mean", "null.sd", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(beta.a = 0.40, beta.b = 0.25, ab.ratio = 1, req.sign = "+", beta.cp = 0.1,
                           sd.predictor = sqrt(2 / 3 * 1 / 3), sd.mediator = 1, sd.outcome = 1, r.squared.mediator = NULL,

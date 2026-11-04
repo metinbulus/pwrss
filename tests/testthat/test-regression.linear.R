@@ -73,7 +73,7 @@ test_that("power.f.regression / pwrss.f.regression work", {
                  list(test = "F", df1 = 2, df2 = 84, ncp = 9.9867283, null.ncp = 0, f.alpha = 3.10515661,
                       r.squared.change = 0.09988054, power = 0.8, n = 90))
 
-    chgR2 <- f.to.rsq(sqrt(1 / 9))$r.squared.full
+    chgR2 <- f.to.rsq(sqrt(1 / 9), verbose = 0)$r.squared.full
     crrRes <- power.f.regression(r.squared.change = chgR2, k.total = 5,  n = 95, verbose = 0) # example 13.3.1 from GPower manual
     expect_s3_class(crrRes, c("pwrss", "f", "regression"))
     expect_named(crrRes, c("parms", "test", "df1", "df2", "ncp", "null.ncp", "f.alpha", "r.squared.change", "power", "n"))
@@ -85,7 +85,7 @@ test_that("power.f.regression / pwrss.f.regression work", {
                       r.squared.change = 0.10, power = 0.67358577, n = 95))
     # results are identical: ncp ~ 10.555555, f.crit ~ 2.316858, power ~ 0.673586, n = 95
 
-    chgR2 <- f.to.rsq(0.59309044)$r.squared.full
+    chgR2 <- f.to.rsq(0.59309044, verbose = 0)$r.squared.full
     crrRes <- power.f.regression(r.squared.change = chgR2, k.total = 3, n = 22, verbose = 0) # example 13.3.2 from GPower manual
     expect_s3_class(crrRes, c("pwrss", "f", "regression"))
     expect_named(crrRes, c("parms", "test", "df1", "df2", "ncp", "null.ncp", "f.alpha", "r.squared.change", "power", "n"))
@@ -144,7 +144,7 @@ test_that("power.f.regression / pwrss.f.regression work", {
                       r.squared.change = 0.06976744, power = 0.76698955, n = 200))
     # results are identical: ncp ~ 15, f.crit ~ 3.888052, power ~ 0.766990, n = 200
 
-    chgR2 <- f.to.rsq(0.25)$r.squared.full
+    chgR2 <- f.to.rsq(0.25, verbose = 0)$r.squared.full
     crrRes <- power.f.regression(r.squared.change = chgR2, k.total = 23, k.tested = 6, n = 120, alpha = 0.05,
                                  verbose = 0) # example 14.3.3 from GPower manual
     expect_s3_class(crrRes, c("pwrss", "f", "regression"))

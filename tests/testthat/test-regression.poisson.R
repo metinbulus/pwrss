@@ -3,7 +3,8 @@ test_that("power.z.poisson / pwrss.z.poisson work", {
     crrRes <- power.z.poisson(beta0 = 0.50, beta1 = -0.10, alpha = 0.05, power = 0.80, dist = "normal", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "poisson"))
     expect_named(crrRes,
-                 c("parms", "test", "base.rate", "rate.ratio", "mean", "sd", "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
+                 c("parms", "test", "distribution", "beta0", "beta1", "base.rate", "rate.ratio", "mean", "sd",
+                   "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(base.rate = NULL, rate.ratio = NULL, beta0 = 0.5, beta1 = -0.1, req.sign = "+", n = NULL,
                           power = 0.80, r.squared.predictor = 0, mean.exposure = 1, alpha = 0.05,
@@ -19,7 +20,8 @@ test_that("power.z.poisson / pwrss.z.poisson work", {
                               dist = "normal", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "poisson"))
     expect_named(crrRes,
-                 c("parms", "test", "base.rate", "rate.ratio", "mean", "sd", "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
+                 c("parms", "test", "distribution", "beta0", "beta1", "base.rate", "rate.ratio", "mean", "sd",
+                   "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(base.rate = NULL, rate.ratio = NULL, beta0 = 0.5, beta1 = -0.1, req.sign = "+", n = NULL,
                           power = 0.80, r.squared.predictor = 0, mean.exposure = 1, alpha = 0.05, alternative = "one.sided",
@@ -36,7 +38,8 @@ test_that("power.z.poisson / pwrss.z.poisson work", {
                               dist = "normal", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "poisson"))
     expect_named(crrRes,
-                 c("parms", "test", "base.rate", "rate.ratio", "mean", "sd", "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
+                 c("parms", "test", "distribution", "beta0", "beta1", "base.rate", "rate.ratio", "mean", "sd",
+                   "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(base.rate = NULL, rate.ratio = NULL, beta0 = 0.5, beta1 = -0.1, req.sign = "+", n = NULL,
                           power = 0.80, r.squared.predictor = 0, mean.exposure = 1, alpha = 0.05, alternative = "two.sided",
@@ -49,7 +52,8 @@ test_that("power.z.poisson / pwrss.z.poisson work", {
                               dist = "normal", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "poisson"))
     expect_named(crrRes,
-                 c("parms", "test", "base.rate", "rate.ratio", "mean", "sd", "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
+                 c("parms", "test", "distribution", "beta0", "beta1", "base.rate", "rate.ratio", "mean", "sd",
+                   "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(base.rate = NULL, rate.ratio = NULL, beta0 = 0.5, beta1 = -0.1, req.sign = "+", n = NULL,
                           power = 0.80, r.squared.predictor = 0, mean.exposure = 1, alpha = 0.05, alternative = "two.sided",
@@ -64,7 +68,8 @@ test_that("power.z.poisson / pwrss.z.poisson work", {
     crrRes <- power.z.poisson(beta0 = 0.50, beta1 = -0.10, alpha = 0.05, n = 474, dist = "normal", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "poisson"))
     expect_named(crrRes,
-                 c("parms", "test", "base.rate", "rate.ratio", "mean", "sd", "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
+                 c("parms", "test", "distribution", "beta0", "beta1", "base.rate", "rate.ratio", "mean", "sd",
+                   "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(base.rate = NULL, rate.ratio = NULL, beta0 = 0.5, beta1 = -0.1, req.sign = "+", n = 474,
                           power = NULL, r.squared.predictor = 0, mean.exposure = 1, alpha = 0.05, alternative = "two.sided",
@@ -77,7 +82,8 @@ test_that("power.z.poisson / pwrss.z.poisson work", {
                               dist = "normal", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "poisson"))
     expect_named(crrRes,
-                 c("parms", "test", "base.rate", "rate.ratio", "mean", "sd", "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
+                 c("parms", "test", "distribution", "beta0", "beta1", "base.rate", "rate.ratio", "mean", "sd",
+                   "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(base.rate = exp(0.50), rate.ratio = exp(-0.10), beta0 = NULL, beta1 = NULL, req.sign = "+",
                           n = NULL, power = 0.80, r.squared.predictor = 0, mean.exposure = 1, alpha = 0.05,
@@ -91,7 +97,8 @@ test_that("power.z.poisson / pwrss.z.poisson work", {
                               dist = "normal", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "poisson"))
     expect_named(crrRes,
-                 c("parms", "test", "base.rate", "rate.ratio", "mean", "sd", "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
+                 c("parms", "test", "distribution", "beta0", "beta1", "base.rate", "rate.ratio", "mean", "sd",
+                   "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(base.rate = exp(0.50), rate.ratio = NULL, beta0 = NULL, beta1 = NULL, req.sign = "-", n = 474,
                           power = 0.8, r.squared.predictor = 0, mean.exposure = 1, alpha = 0.05, alternative = "two.sided",
@@ -104,7 +111,8 @@ test_that("power.z.poisson / pwrss.z.poisson work", {
                               dist = list(dist = "normal", mean = 10, sd = 2), verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "poisson"))
     expect_named(crrRes,
-                 c("parms", "test", "base.rate", "rate.ratio", "mean", "sd", "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
+                 c("parms", "test", "distribution", "beta0", "beta1", "base.rate", "rate.ratio", "mean", "sd",
+                   "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(base.rate = exp(0.50), rate.ratio = exp(-0.10), beta0 = NULL, beta1 = NULL, req.sign = "+",
                           n = NULL, power = 0.80, r.squared.predictor = 0, mean.exposure = 1, alpha = 0.05,
@@ -118,7 +126,8 @@ test_that("power.z.poisson / pwrss.z.poisson work", {
     crrRes <- power.z.poisson(beta0 = 0.50, beta1 = -0.10, alpha = 0.05, power = 0.80, dist = "bernoulli", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "poisson"))
     expect_named(crrRes,
-                 c("parms", "test", "base.rate", "rate.ratio", "mean", "sd", "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
+                 c("parms", "test", "distribution", "beta0", "beta1", "base.rate", "rate.ratio", "mean", "sd",
+                   "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(base.rate = NULL, rate.ratio = NULL, beta0 = 0.5, beta1 = -0.1, req.sign = "+", n = NULL,
                           power = 0.80, r.squared.predictor = 0, mean.exposure = 1, alpha = 0.05, alternative = "two.sided",
@@ -130,7 +139,8 @@ test_that("power.z.poisson / pwrss.z.poisson work", {
     crrRes <- power.z.poisson(beta0 = 0.50, beta1 = -0.10, alpha = 0.05, n = 2003, dist = "bernoulli", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "poisson"))
     expect_named(crrRes,
-                 c("parms", "test", "base.rate", "rate.ratio", "mean", "sd", "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
+                 c("parms", "test", "distribution", "beta0", "beta1", "base.rate", "rate.ratio", "mean", "sd",
+                   "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(base.rate = NULL, rate.ratio = NULL, beta0 = 0.5, beta1 = -0.1, req.sign = "+", n = 2003,
                           power = NULL, r.squared.predictor = 0, mean.exposure = 1, alpha = 0.05, alternative = "two.sided",
@@ -143,7 +153,8 @@ test_that("power.z.poisson / pwrss.z.poisson work", {
                               dist = "bernoulli", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "poisson"))
     expect_named(crrRes,
-                 c("parms", "test", "base.rate", "rate.ratio", "mean", "sd", "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
+                 c("parms", "test", "distribution", "beta0", "beta1", "base.rate", "rate.ratio", "mean", "sd",
+                   "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(base.rate = exp(0.50), rate.ratio = exp(-0.10), beta0 = NULL, beta1 = NULL, req.sign = "+",
                           n = NULL, power = 0.80, r.squared.predictor = 0, mean.exposure = 1, alpha = 0.05,
@@ -157,7 +168,8 @@ test_that("power.z.poisson / pwrss.z.poisson work", {
                               dist = list(dist = "bernoulli", prob = 0.30), verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "poisson"))
     expect_named(crrRes,
-                 c("parms", "test", "base.rate", "rate.ratio", "mean", "sd", "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
+                 c("parms", "test", "distribution", "beta0", "beta1", "base.rate", "rate.ratio", "mean", "sd",
+                   "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(base.rate = exp(0.50), rate.ratio = exp(-0.10), beta0 = NULL, beta1 = NULL, req.sign = "+",
                           n = NULL, power = 0.80, r.squared.predictor = 0, mean.exposure = 1, alpha = 0.05,
@@ -172,7 +184,8 @@ test_that("power.z.poisson / pwrss.z.poisson work", {
                               method = "signorini", dist = "binomial", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "poisson"))
     expect_named(crrRes,
-                 c("parms", "test", "base.rate", "rate.ratio", "mean", "sd", "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
+                 c("parms", "test", "distribution", "beta0", "beta1", "base.rate", "rate.ratio", "mean", "sd",
+                   "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(base.rate = 0.85, rate.ratio = 1.3, beta0 = NULL, beta1 = NULL, req.sign = "+", n = NULL,
                           power = 0.95, r.squared.predictor = 0, mean.exposure = 1, alpha = 0.05, alternative = "one.sided",
@@ -191,7 +204,8 @@ test_that("power.z.poisson / pwrss.z.poisson work", {
                               method = "signorini", dist = "normal", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "z", "poisson"))
     expect_named(crrRes,
-                 c("parms", "test", "base.rate", "rate.ratio", "mean", "sd", "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
+                 c("parms", "test", "distribution", "beta0", "beta1", "base.rate", "rate.ratio", "mean", "sd",
+                   "null.mean", "null.sd", "vcf", "z.alpha", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(base.rate = exp(0.5), rate.ratio = exp(-0.1), beta0 = NULL, beta1 = NULL, req.sign = "+",
                           n = 200, power = NULL, r.squared.predictor = 0, mean.exposure = 1, alpha = 0.05,

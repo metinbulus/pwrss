@@ -60,7 +60,7 @@ test_that("power.z.oneprop works", {
     expect_s3_class(crrRes, c("pwrss", "z", "oneprop"))
     expect_named(crrRes,
                  c("parms", "test", "prob", "null.prob", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
-                   "z.alpha", "power", "n"))
+                   "z.alpha", "std.error", "alternative", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(prob = 0.45, req.sign = "+", null.prob = 0.50, n = 500, power = NULL, alpha = 0.05,
                           alternative = "one.sided", std.error = "null", arcsine = FALSE, correct = FALSE, ceil.n = TRUE,
@@ -73,7 +73,7 @@ test_that("power.z.oneprop works", {
     expect_s3_class(crrRes, c("pwrss", "z", "oneprop"))
     expect_named(crrRes,
                  c("parms", "test", "prob", "null.prob", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
-                   "z.alpha", "power", "n"))
+                   "z.alpha", "std.error", "alternative", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(prob = 0.45, req.sign = "+", null.prob = 0.50, n = 500, power = NULL, alpha = 0.05,
                           alternative = "one.sided", std.error = "null", arcsine = TRUE, correct = FALSE, ceil.n = TRUE,
@@ -86,7 +86,7 @@ test_that("power.z.oneprop works", {
     expect_s3_class(crrRes, c("pwrss", "z", "oneprop"))
     expect_named(crrRes,
                  c("parms", "test", "prob", "null.prob", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
-                   "z.alpha", "power", "n"))
+                   "z.alpha", "std.error", "alternative", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(prob = 0.45, req.sign = "+", null.prob = 0.50, n = 500, power = NULL, alpha = 0.05,
                           alternative = "one.sided", std.error = "null", arcsine = FALSE, correct = TRUE, ceil.n = TRUE,
@@ -99,7 +99,7 @@ test_that("power.z.oneprop works", {
     expect_s3_class(crrRes, c("pwrss", "z", "oneprop"))
     expect_named(crrRes,
                  c("parms", "test", "prob", "null.prob", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
-                   "z.alpha", "power", "n"))
+                   "z.alpha", "std.error", "alternative", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(prob = 0.45, req.sign = "+", null.prob = 0.50, n = NULL, power = 0.80, alpha = 0.05,
                           alternative = "one.sided", std.error = "null", arcsine = FALSE, correct = FALSE, ceil.n = TRUE,
@@ -113,7 +113,7 @@ test_that("power.z.oneprop works", {
     expect_s3_class(crrRes, c("pwrss", "z", "oneprop"))
     expect_named(crrRes,
                  c("parms", "test", "prob", "null.prob", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
-                   "z.alpha", "power", "n"))
+                   "z.alpha", "std.error", "alternative", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(prob = 0.45, req.sign = "+", null.prob = 0.50, n = NULL, power = 0.80, alpha = 0.05,
                           alternative = "one.sided", std.error = "null", arcsine = TRUE, correct = FALSE, ceil.n = TRUE,
@@ -126,7 +126,7 @@ test_that("power.z.oneprop works", {
     expect_s3_class(crrRes, c("pwrss", "z", "oneprop"))
     expect_named(crrRes,
                  c("parms", "test", "prob", "null.prob", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
-                   "z.alpha", "power", "n"))
+                   "z.alpha", "std.error", "alternative", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(prob = 0.45, req.sign = "+", null.prob = 0.50, n = NULL, power = 0.80, alpha = 0.05,
                           alternative = "one.sided", std.error = "null", arcsine = FALSE, correct = TRUE, ceil.n = TRUE,
@@ -139,7 +139,7 @@ test_that("power.z.oneprop works", {
     expect_s3_class(crrRes, c("pwrss", "z", "oneprop"))
     expect_named(crrRes,
                  c("parms", "test", "prob", "null.prob", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
-                   "z.alpha", "power", "n"))
+                   "z.alpha", "std.error", "alternative", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(prob = 0.45, req.sign = "+", null.prob = 0.50, n = NULL, power = 0.80, alpha = 0.05,
                           alternative = "two.sided", std.error = "null", arcsine = FALSE, correct = FALSE, ceil.n = TRUE,
@@ -155,7 +155,7 @@ test_that("power.z.oneprop works", {
     expect_s3_class(crrRes, c("pwrss", "z", "oneprop"))
     expect_named(crrRes,
                  c("parms", "test", "prob", "null.prob", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
-                   "z.alpha", "power", "n"))
+                   "z.alpha", "std.error", "alternative", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(prob = 0.45, req.sign = "+", null.prob = c(0.40, 0.50), n = NULL, power = 0.80, alpha = 0.05,
                           alternative = "two.one.sided", std.error = "alternative", arcsine = FALSE, correct = FALSE,
@@ -170,7 +170,7 @@ test_that("power.z.oneprop works", {
     expect_s3_class(crrRes, c("pwrss", "z", "oneprop"))
     expect_named(crrRes,
                  c("parms", "test", "prob", "null.prob", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
-                   "z.alpha", "power", "n"))
+                   "z.alpha", "std.error", "alternative", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(prob = 0.45, req.sign = "+", null.prob = c(0.35, 0.40), n = NULL, power = 0.80, alpha = 0.05,
                           alternative = "two.one.sided", std.error = "alternative", arcsine = FALSE, correct = FALSE,
@@ -186,7 +186,7 @@ test_that("power.z.oneprop works", {
     expect_s3_class(crrRes, c("pwrss", "z", "oneprop"))
     expect_named(crrRes,
                  c("parms", "test", "prob", "null.prob", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
-                   "z.alpha", "power", "n"))
+                   "z.alpha", "std.error", "alternative", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(prob = NULL, req.sign = "-", null.prob = 0.50, n = 617, power = 0.80, alpha = 0.05,
                           alternative = "one.sided", std.error = "null", arcsine = FALSE, correct = FALSE, ceil.n = TRUE,
@@ -201,7 +201,7 @@ test_that("power.z.oneprop works", {
     expect_s3_class(crrRes, c("pwrss", "z", "oneprop"))
     expect_named(crrRes,
                  c("parms", "test", "prob", "null.prob", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
-                   "z.alpha", "power", "n"))
+                   "z.alpha", "std.error", "alternative", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(prob = NULL, req.sign = "-", null.prob = 0.50, n = 621, power = 0.80, alpha = 0.05,
                           alternative = "one.sided", std.error = "null", arcsine = TRUE, correct = FALSE, ceil.n = TRUE,
@@ -216,7 +216,7 @@ test_that("power.z.oneprop works", {
     expect_s3_class(crrRes, c("pwrss", "z", "oneprop"))
     expect_named(crrRes,
                  c("parms", "test", "prob", "null.prob", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
-                   "z.alpha", "power", "n"))
+                   "z.alpha", "std.error", "alternative", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(prob = NULL, req.sign = "-", null.prob = 0.50, n = 637, power = 0.80, alpha = 0.05,
                           alternative = "one.sided", std.error = "null", arcsine = FALSE, correct = TRUE, ceil.n = TRUE,
@@ -232,7 +232,7 @@ test_that("power.z.oneprop works", {
     expect_s3_class(crrRes, c("pwrss", "z", "oneprop"))
     expect_named(crrRes,
                  c("parms", "test", "prob", "null.prob", "delta", "odds.ratio", "mean", "sd", "null.mean", "null.sd",
-                   "z.alpha", "power", "n"))
+                   "z.alpha", "std.error", "alternative", "power", "n"))
     expect_identical(crrRes[["parms"]],
                      list(prob = NULL, req.sign = "0", null.prob = c(0.60, 0.70), n = 800, power = 0.80, alpha = 0.05,
                           alternative = "two.one.sided", std.error = "alternative", arcsine = FALSE, correct = TRUE,
