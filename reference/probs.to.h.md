@@ -27,10 +27,6 @@ probs.to.h(prob1, prob2 = 0.5, verbose = 1)
   detailed output is given (plus key parameters and definitions), if `0`
   no output is printed on the console.
 
-- h:
-
-  Cohen's h effect size.
-
 ## Value
 
 - h:

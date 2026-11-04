@@ -6692,6 +6692,8 @@ metrics
   : Conversion between Cohen's f and Eta-squared
 - [`f.to.rsq()`](https://metinbulus.github.io/pwrss/reference/f.to.rsq.md)
   : Conversion from Cohen's f to R-squared
+- [`h.to.probs()`](https://metinbulus.github.io/pwrss/reference/h.to.probs.md)
+  : Conversion from Probability Difference to Cohen's h
 - [`joint.probs.2x2()`](https://metinbulus.github.io/pwrss/reference/joint.probs.2x2.md)
   : Conversion from joint probabilities to marginal probabilities for
   the McNemar test applied to paired binary data.

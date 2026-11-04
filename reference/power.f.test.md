@@ -51,7 +51,8 @@ power.f.test(
 
 - alternative:
 
-  character; whether `ncp` is greater or less than `null.ncp`.
+  character; the direction or type of the hypothesis test: either "less"
+  or "greater"
 
 - plot:
 
