@@ -81,7 +81,7 @@ power.chisq.test <- function(power = NULL, ncp = NULL, null.ncp = 0,
 
   if (requested == "es") {
 
-    if(alternative == "less") {
+    if (alternative == "less") {
       max.thresh <- null.ncp
     } else {
       max.thresh <- stats::qchisq(1 - 1e-10, ncp = null.ncp, df = df)
@@ -121,7 +121,7 @@ power.chisq.test <- function(power = NULL, ncp = NULL, null.ncp = 0,
                       power = pwr.obj$power,
                       df = df,
                       alpha = alpha,
-                      alternative = alternative, 
+                      alternative = alternative,
                       chisq.alpha = pwr.obj$chisq.alpha)
 
     .print.pwrss.chisq(print.obj, verbose = verbose, utf = utf)

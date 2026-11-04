@@ -104,7 +104,7 @@ test_that("lambdap distribution functions work", {
     #f_ci_p <- function(df, ncp, alpha) qlambdap(p = c(alpha / 2, 1 - alpha / 2), df = df, ncp = ncp)
     #f_ci_m <- function(df, ncp, alpha) as.numeric(MBESS::conf.limits.nct(ncp = ncp, df = df, conf.level = 1 - alpha)[c("Lower.Limit", "Upper.Limit")])
     #f_ci_e <- function(df, ncp, alpha) effectsize:::.get_ncp_t(t = ncp, df_error = df, conf.level = 1 - alpha)
-    ## define vectors with alphas and df's of interest  
+    ## define vectors with alphas and df's of interest
     #s_alpha <- c(0.10, 0.05, 0.01, 0.001)
     #s_df <- unique(round(exp(seq(log(2), log(30), length.out = 20))))
     #res_ci_p <- res_ci_m <- res_ci_e <- array(NaN, c(length(s_df), 11, length(s_alpha), 2))
@@ -132,5 +132,5 @@ test_that("lambdap distribution functions work", {
                 expect_equal(qlambdap(p = c(s_alpha[k] / 2, 1 - s_alpha[k] / 2), ncp = s_ncp[j], df = s_df[i]), res_ci[i, j, k, ])
             }
         }
-    }    
+    }
 })

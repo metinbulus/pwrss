@@ -41,7 +41,7 @@
 #'
 #' @export power.f.test
 power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
-                         alpha = 0.05, alternative = c("greater", "less"), 
+                         alpha = 0.05, alternative = c("greater", "less"),
                          plot = TRUE, verbose = 1, utf = FALSE) {
 
   if (!is.null(power)) check.power(power)

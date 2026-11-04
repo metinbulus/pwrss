@@ -393,7 +393,7 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
   } # var.beta
 
   beta.logistic.range <- function(base.prob, req.sign = -1, precision = 1e-5) {
-    
+
     if (req.sign == -1) {
       prob.lower <- precision
       prob.upper <- base.prob - precision
@@ -411,7 +411,7 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
       beta1.upper <- log(odds.ratio.upper)
       c(beta1.lower, beta1.upper)
     }
-    
+
   } # beta.logistic.range
 
   # Demidenko, E. (2007). Sample size determination for logistic
@@ -505,7 +505,7 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
     } else if (requested == "es") {
 
       # reasonable bounds for logistics
-      val.rng <- beta.logistic.range(base.prob = base.prob, req.sign = req.sign) 
+      val.rng <- beta.logistic.range(base.prob = base.prob, req.sign = req.sign)
       # var.obj <- var.beta(beta0 = beta0, beta1 = beta0, distribution = distribution)
       # bound.values <- c((stats::qlogis(0.0001) - beta0) / c(var.obj$min, var.obj$max),
       #                   (stats::qlogis(0.9999) - beta0) / c(var.obj$min, var.obj$max))

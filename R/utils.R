@@ -576,37 +576,37 @@ probs.to.h <- function(prob1, prob2 = 0.50, verbose = 1) {
 } # probs.to.h
 
 h.to.probs <- function(h, prob1 = NULL, prob2 = NULL, verbose = 1) {
-  
+
   if (is.null(prob1) && is.null(prob2))
     stop("Provide either prob1 or prob2, but not both.")
-  
+
   if (!is.null(prob1) && !is.null(prob2))
     stop("Only one of prob1 or prob2 must be NULL.")
-  
+
   # solve for prob1
   if (is.null(prob1)) {
     A2 <- asin(sqrt(prob2))
-    A1 <- A2 + h/2
-    prob1 <- sin(A1)^2
-    
+    A1 <- A2 + h / 2
+    prob1 <- sin(A1) ^ 2
+
     if (verbose > 0)
       print(c(prob1 = prob1, h = h, prob2 = prob2))
-    
+
     return(invisible(list(prob1 = prob1, prob2 = prob2, h = h)))
   }
-  
+
   # solve for prob2
   if (is.null(prob2)) {
     A1 <- asin(sqrt(prob1))
-    A2 <- A1 - h/2
-    prob2 <- sin(A2)^2
-    
+    A2 <- A1 - h / 2
+    prob2 <- sin(A2) ^ 2
+
     if (verbose > 0)
       print(c(prob2 = prob2, h = h, prob1 = prob1))
-    
-    return(invisible(list(prob1 = prob1, prob2 = prob2, h = h)))
+
+    invisible(list(prob1 = prob1, prob2 = prob2, h = h))
   }
-  
+
 } # h.to.probs
 
 

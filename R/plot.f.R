@@ -11,16 +11,14 @@
 
   color <- grDevices::adjustcolor(ifelse(type == 1, 2, 4), alpha.f = 1)
 
-  # non-central f function
-  funf <- function(x) stats::df(x, df1 = df1, df2 = df2, ncp = ncp)
-
   # mod of f dist
   x.seq <- seq(xlim[1], xlim[2], length.out = 50)
   y.max <- max(stats::df(x.seq, df1 = df1, df2 = df2, ncp = ncp))
   ylim <- c(0, y.max + 0.05)
 
   # plot central f distribution
-  graphics::plot(funf, xlim = xlim, ylim = ylim,
+  graphics::plot(function(x) stats::df(x, df1 = df1, df2 = df2, ncp = ncp),
+                 xlim = xlim, ylim = ylim,
                  xaxs = "i", yaxs = "i", bty = "l",
                  col = color, lwd = 2, lty = type,
                  xlab = "", ylab = "",
@@ -52,7 +50,7 @@
   color <- grDevices::adjustcolor(switch(type, `1` = 2, `2` = 4, `3` = 1), alpha.f = 0.3)
 
   x <- seq(min(xlim), max(xlim), by = 0.001)
-  y <- funf(x)
+  y <- stats::df(x, df1 = df1, df2 = df2, ncp = ncp)
   xs <- c(x, rev(x))
   ys <- c(y, rep(0, length(y)))
 
@@ -68,7 +66,7 @@
 } # end of .paint.f.dist()
 
 
-.plot.f.t1t2 <- function(ncp, null.ncp = 0, df1, df2, 
+.plot.f.t1t2 <- function(ncp, null.ncp = 0, df1, df2,
                          alpha = 0.05, alternative = "greater",
                          plot.main = NULL, plot.sub = NULL) {
 
@@ -99,7 +97,7 @@
   .plot.f.dist(df1 = df1, df2 = df2, ncp = ncp,
                xlim = xlim, type = 2, ticks = TRUE)
   graphics::par(new = TRUE)
-  .plot.f.dist(df1 = df1, df2 = df2, ncp = null.ncp, 
+  .plot.f.dist(df1 = df1, df2 = df2, ncp = null.ncp,
                xlim = xlim, type = 1, ticks = FALSE)
 
   # mod of f dist
@@ -123,7 +121,7 @@
   graphics::segments(x0 = f.alpha, y0 = rep(0, length(f.alpha)),
                      x1 = f.alpha, y1 = yf.alpha, col = 2, lty = 2, lwd = 2)
 
-  if(alternative == "less") {
+  if (alternative == "less") {
     # paint regions
     .paint.f.dist(df1 = df1, df2 = df2, ncp = null.ncp,
                   xlim = c(min(xlim), f.alpha), type = 1)

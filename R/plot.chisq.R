@@ -11,9 +11,6 @@
 
   color <- grDevices::adjustcolor(ifelse(type == 1, 2, 4), alpha.f = 1)
 
-  # non-central f function
-  funchisq <- function(x) stats::dchisq(x, df = df, ncp = ncp)
-
   # mod of f dist
   x.seq <- seq(xlim[1], xlim[2], length.out = 50)
   y.max.alt <- max(stats::dchisq(x.seq, df = df, ncp = ncp))
@@ -22,7 +19,8 @@
 
   # plot central f distribution
   ylim <- c(0, y.max + y.max * 0.05)
-  graphics::plot(funchisq, xlim = xlim, ylim = ylim,
+  graphics::plot(function(x) stats::dchisq(x, df = df, ncp = ncp),
+                 xlim = xlim, ylim = ylim,
                  xaxs = "i", yaxs = "i", bty = "l",
                  col = color, lwd = 2, lty = type,
                  xlab = "", ylab = "",
@@ -54,7 +52,7 @@
   color <- grDevices::adjustcolor(switch(type, `1` = 2, `2` = 4, `3` = 1), alpha.f = 0.3)
 
   x <- seq(min(xlim), max(xlim), by = 0.001)
-  y <- funchisq(x)
+  y <- stats::dchisq(x, df = df, ncp = ncp)
   xs <- c(x, rev(x))
   ys <- c(y, rep(0, length(y)))
 
@@ -123,7 +121,7 @@
   graphics::segments(x0 = chisq.alpha, y0 = rep(0, length(chisq.alpha)),
                      x1 = chisq.alpha, y1 = y.chisq.alpha, col = 2, lty = 2, lwd = 2)
 
-  if(alternative == "less") {
+  if (alternative == "less") {
     # paint regions
     .paint.chisq.dist(ncp = null.ncp, df = df,  xlim = c(min(xlim), chisq.alpha), type = 1)
     .paint.chisq.dist(ncp = ncp, df = df, xlim = c(chisq.alpha, upper), type = 2)
