@@ -128,9 +128,8 @@ power.t.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0,
 
     } else if (alternative == "one.sided") {
 
-      lower.tail <- ncp < null.ncp
-      t.alpha <- suppressWarnings(stats::qt(alpha,        df = df, ncp = null.ncp,      lower.tail = lower.tail))
-      power   <- suppressWarnings(stats::pt(t.alpha,      df = df, ncp = ncp,           lower.tail = lower.tail))
+      t.alpha <- suppressWarnings(stats::qt(alpha,        df = df, ncp = null.ncp,      lower.tail = ncp < null.ncp))
+      power   <- suppressWarnings(stats::pt(t.alpha,      df = df, ncp = ncp,           lower.tail = ncp < null.ncp))
 
       type.s <- 0
       type.m <- NA

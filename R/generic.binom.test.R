@@ -113,15 +113,13 @@ power.binom.test <- function(power = NULL,
 
     } else if (alternative == "one.sided") {
 
-      lower.tail <- prob < null.prob
-
-      q          <- stats::qbinom(alpha, size, null.prob, lower.tail = lower.tail)
-      prob.alpha <- stats::pbinom(q,     size, null.prob, lower.tail = lower.tail)
-      q[prob.alpha > alpha] <- q[prob.alpha > alpha] + ifelse(lower.tail, -1, 1)
-      approx.alpha <- stats::pbinom(q, size, null.prob, lower.tail = lower.tail)
+      q          <- stats::qbinom(alpha, size, null.prob, lower.tail = prob < null.prob)
+      prob.alpha <- stats::pbinom(q,     size, null.prob, lower.tail = prob < null.prob)
+      q[prob.alpha > alpha] <- q[prob.alpha > alpha] + ifelse(prob < null.prob, -1, 1)
+      approx.alpha <- stats::pbinom(q, size, null.prob, lower.tail = prob < null.prob)
       binom.alpha <- q
 
-      power <- stats::pbinom(q, size, prob, lower.tail = lower.tail)
+      power <- stats::pbinom(q, size, prob, lower.tail = prob < null.prob)
 
     } else if (alternative == "two.one.sided" && (prob > min(null.prob) && prob < max(null.prob))) {  # equivalence
 

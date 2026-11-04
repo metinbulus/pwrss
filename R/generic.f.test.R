@@ -63,10 +63,8 @@ power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
 
   pwr <- function(ncp, null.ncp = 0, df1, df2, alpha = 0.05, alternative) {
 
-    lower.tail <- alternative == "less"
-
-    f.alpha <- stats::qf(alpha, df1 = df1, df2 = df2, ncp = null.ncp, lower.tail = lower.tail)
-    power   <- stats::pf(f.alpha, df1 = df1, df2 = df2, ncp = ncp, lower.tail = lower.tail)
+    f.alpha <- stats::qf(alpha, df1 = df1, df2 = df2, ncp = null.ncp, lower.tail = alternative == "less")
+    power   <- stats::pf(f.alpha, df1 = df1, df2 = df2, ncp = ncp, lower.tail = alternative == "less")
 
     list(power = power, f.alpha = f.alpha, alternative = alternative)
 

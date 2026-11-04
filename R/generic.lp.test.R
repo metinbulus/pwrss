@@ -163,9 +163,8 @@ power.lp.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0
 
     } else if (alternative == "one.sided") {
 
-      lower.tail <- ncp < null.ncp
-      t.alpha <- qlambdap(p = alpha,   df = df, ncp = null.ncp, lower.tail = lower.tail)
-      power   <- plambdap(q = t.alpha, df = df, ncp = ncp,      lower.tail = lower.tail)
+      t.alpha <- qlambdap(p = alpha,   df = df, ncp = null.ncp, lower.tail = ncp < null.ncp)
+      power   <- plambdap(q = t.alpha, df = df, ncp = ncp,      lower.tail = ncp < null.ncp)
 
       type.s <- 0
       type.m <- NA

@@ -121,9 +121,8 @@ power.z.test <- function(power = NULL, mean = NULL, sd = 1, null.mean = 0, null.
 
     } else if (alternative == "one.sided") {
 
-      lower.tail <- mean < null.mean
-      z.alpha <- stats::qnorm(alpha,        mean = null.mean,      sd = null.sd, lower.tail = lower.tail)
-      power   <- stats::pnorm(z.alpha,      mean = mean,           sd = sd,      lower.tail = lower.tail)
+      z.alpha <- stats::qnorm(alpha,        mean = null.mean,      sd = null.sd, lower.tail = mean < null.mean)
+      power   <- stats::pnorm(z.alpha,      mean = mean,           sd = sd,      lower.tail = mean < null.mean)
 
       type.s <- 0
       type.m <- NA
