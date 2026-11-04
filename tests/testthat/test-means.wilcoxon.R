@@ -2,7 +2,7 @@
 test_that("power.np.wilcoxon / pwrss.np.2groups work", {
     crrRes <- power.np.wilcoxon(d = 0.25, power = 0.80, alternative = "two.sided", design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.25, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = NULL, power = 0.80,
                           alpha = 0.05, alternative = "two.sided", design = "independent", distribution = "normal",
@@ -14,7 +14,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = 0.25, n2 = 265, alternative = "two.sided", design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.25, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 265, power = NULL,
                           alpha = 0.05, alternative = "two.sided", design = "independent", distribution = "normal",
@@ -26,7 +26,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(n2 = 265, power = 0.80, alternative = "two.sided", design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = NULL, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 265, power = 0.80,
                           alpha = 0.05, alternative = "two.sided", design = "independent", distribution = "normal",
@@ -37,7 +37,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = 0.20, power = 0.80, alternative = "two.sided", design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.20, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = NULL, power = 0.80,
                           alpha = 0.05, alternative = "two.sided", design = "independent", distribution = "normal",
@@ -48,7 +48,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = 0.20, n2 = 412, alternative = "two.sided", design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.20, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 412, power = NULL,
                           alpha = 0.05, alternative = "two.sided", design = "independent", distribution = "normal",
@@ -59,7 +59,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(n2 = 412, power = 0.80, alternative = "two.sided", design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = NULL, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 412, power = 0.80,
                           alpha = 0.05, alternative = "two.sided", design = "independent", distribution = "normal",
@@ -70,7 +70,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(req.sign = "-", n2 = 412, power = 0.80, alternative = "two.sided", design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = NULL, null.d = 0, margin = 0, req.sign = "-", n.ratio = 1, n2 = 412, power = 0.80,
                           alpha = 0.05, alternative = "two.sided", design = "independent", distribution = "normal",
@@ -82,7 +82,8 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
     crrRes <- power.np.wilcoxon(d = 0.20, power = 0.80, alternative = "two.sided", design = "independent",
                                 method = "noether", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "z"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "z.alpha", "mean", "sd", "null.mean", "null.sd", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "z.alpha", "mean", "sd", "null.mean",
+                           "null.sd", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.20, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = NULL, power = 0.80,
                           alpha = 0.05, alternative = "two.sided", design = "independent", distribution = "normal",
@@ -94,7 +95,8 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
     crrRes <- power.np.wilcoxon(d = 0.20, n2 = 414, alternative = "two.sided", design = "independent",
                                 method = "noether", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "z"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "z.alpha", "mean", "sd", "null.mean", "null.sd", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "z.alpha", "mean", "sd", "null.mean",
+                           "null.sd", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.20, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 414, power = NULL,
                           alpha = 0.05, alternative = "two.sided", design = "independent", distribution = "normal",
@@ -106,7 +108,8 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
     crrRes <- power.np.wilcoxon(n2 = 414, power = 0.80, alternative = "two.sided", design = "independent",
                                 method = "noether", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "z"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "z.alpha", "mean", "sd", "null.mean", "null.sd", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "z.alpha", "mean", "sd", "null.mean",
+                           "null.sd", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = NULL, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 414, power = 0.80,
                           alpha = 0.05, alternative = "two.sided", design = "independent", distribution = "normal",
@@ -117,7 +120,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = 0.25, power = 0.80, alternative = "one.sided", design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.25, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = NULL, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "independent", distribution = "normal",
@@ -128,7 +131,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = 0.25, n2 = 208, alternative = "one.sided", design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.25, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 208, power = NULL,
                           alpha = 0.05, alternative = "one.sided", design = "independent", distribution = "normal",
@@ -139,7 +142,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(n2 = 208, power = 0.80, alternative = "one.sided", design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = NULL, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 208, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "independent", distribution = "normal",
@@ -150,7 +153,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = 0.20, power = 0.80, alternative = "one.sided", design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.20, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = NULL, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "independent", distribution = "normal",
@@ -162,7 +165,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = 0.10, margin = -0.05, power = 0.80, alternative = "one.sided", design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.10, null.d = 0, margin = -0.05, req.sign = "+", n.ratio = 1, n2 = NULL, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "independent", distribution = "normal",
@@ -173,7 +176,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = 0.20, margin = -0.05, power = 0.80, alternative = "one.sided", design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.20, null.d = 0, margin = -0.05, req.sign = "+", n.ratio = 1, n2 = NULL, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "independent", distribution = "normal",
@@ -184,7 +187,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = 0.10, margin = 0.05, power = 0.80, alternative = "one.sided", design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.10, null.d = 0, margin = 0.05, req.sign = "+", n.ratio = 1, n2 = NULL, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "independent", distribution = "normal",
@@ -195,7 +198,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = 0.10, margin = 0.05, n2 = 5184, alternative = "one.sided", design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.10, null.d = 0, margin = 0.05, req.sign = "+", n.ratio = 1, n2 = 5184, power = NULL,
                           alpha = 0.05, alternative = "one.sided", design = "independent", distribution = "normal",
@@ -206,7 +209,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(margin = 0.05, n2 = 5184, power = 0.80, alternative = "one.sided", design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = NULL, null.d = 0, margin = 0.05, req.sign = "+", n.ratio = 1, n2 = 5184, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "independent", distribution = "normal",
@@ -217,7 +220,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = 0.20, margin = 0.05, power = 0.80, alternative = "one.sided", design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.20, null.d = 0, margin = 0.05, req.sign = "+", n.ratio = 1, n2 = NULL, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "independent", distribution = "normal",
@@ -228,7 +231,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = 0.20, margin = 0.05, n2 = 578, alternative = "one.sided", design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.20, null.d = 0, margin = 0.05, req.sign = "+", n.ratio = 1, n2 = 578, power = NULL,
                           alpha = 0.05, alternative = "one.sided", design = "independent", distribution = "normal",
@@ -239,7 +242,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(margin = 0.05, n2 = 578, power = 0.80, alternative = "one.sided", design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = NULL, null.d = 0, margin = 0.05, req.sign = "+", n.ratio = 1, n2 = 578, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "independent", distribution = "normal",
@@ -251,7 +254,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
     crrRes <- power.np.wilcoxon(d = 0, margin = c(-0.05, 0.05), power = 0.80, alternative = "two.one.sided",
                                 design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0, null.d = 0, margin = 0.05 * c(-1, 1), req.sign = "+", n.ratio = 1, n2 = NULL,
                           power = 0.80, alpha = 0.05, alternative = "two.one.sided", design = "independent",
@@ -264,7 +267,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
     crrRes <- power.np.wilcoxon(d = 0, margin = c(-0.05, 0.05), n2 = 7175, alternative = "two.one.sided",
                                 design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0, null.d = 0, margin = 0.05 * c(-1, 1), req.sign = "+", n.ratio = 1, n2 = 7175,
                           power = NULL, alpha = 0.05, alternative = "two.one.sided", design = "independent",
@@ -276,7 +279,8 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
     crrRes <- power.np.wilcoxon(d = 0, margin = c(-0.05, 0.05), power = 0.80, alternative = "two.one.sided",
                                 design = "independent", method = "noether", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "z"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "z.alpha", "mean", "sd", "null.mean", "null.sd", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "z.alpha", "mean", "sd", "null.mean",
+                           "null.sd", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0, null.d = 0, margin = 0.05 * c(-1, 1), req.sign = "+", n.ratio = 1, n2 = NULL,
                           power = 0.80, alpha = 0.05, alternative = "two.one.sided", design = "independent",
@@ -288,7 +292,8 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
     crrRes <- power.np.wilcoxon(d = 0, margin = c(-0.05, 0.05), n2 = 7178, alternative = "two.one.sided",
                                 design = "independent", method = "noether", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "z"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "z.alpha", "mean", "sd", "null.mean", "null.sd", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "z.alpha", "mean", "sd", "null.mean",
+                           "null.sd", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0, null.d = 0, margin = 0.05 * c(-1, 1), req.sign = "+", n.ratio = 1, n2 = 7178,
                           power = NULL, alpha = 0.05, alternative = "two.one.sided", design = "independent",
@@ -300,7 +305,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
     crrRes <- power.np.wilcoxon(d = 0.05, margin = c(-0.10, -0.05), power = 0.80, alternative = "two.one.sided",
                                 design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.05, null.d = 0, margin = c(-0.10, -0.05), req.sign = "+", n.ratio = 1, n2 = NULL,
                           power = 0.80, alpha = 0.05, alternative = "two.one.sided", design = "independent",
@@ -312,7 +317,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
     crrRes <- power.np.wilcoxon(d = 0.05, margin = c(-0.10, -0.05), n2 = 1644, alternative = "two.one.sided",
                                 design = "independent", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.05, null.d = 0, margin = c(-0.10, -0.05), req.sign = "+", n.ratio = 1, n2 = 1644,
                           power = NULL, alpha = 0.05, alternative = "two.one.sided", design = "independent",
@@ -324,7 +329,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
     crrRes <- suppressWarnings(power.np.wilcoxon(margin = c(-0.05, 0.05), req.sign = "0", n2 = 7175, power = 0.80,
                                                  alternative = "two.one.sided", design = "independent", verbose = 0))
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = NULL, null.d = 0, margin = 0.05 * c(-1, 1), req.sign = "0", n.ratio = 1, n2 = 7175,
                           power = 0.80, alpha = 0.05, alternative = "two.one.sided", design = "independent",
@@ -335,7 +340,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = -0.25, power = 0.80, alternative = "two.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = -0.25, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = NULL, power = 0.80,
                           alpha = 0.05, alternative = "two.sided", design = "paired", distribution = "normal",
@@ -346,7 +351,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = -0.25, n2 = 134, alternative = "two.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = -0.25, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 134, power = NULL,
                           alpha = 0.05, alternative = "two.sided", design = "paired", distribution = "normal",
@@ -357,7 +362,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(n2 = 134, power = 0.8, alternative = "two.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = NULL, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 134, power = 0.80,
                           alpha = 0.05, alternative = "two.sided", design = "paired", distribution = "normal",
@@ -368,7 +373,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = -0.20, power = 0.80, alternative = "two.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = -0.20, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = NULL, power = 0.80,
                           alpha = 0.05, alternative = "two.sided", design = "paired", distribution = "normal",
@@ -379,7 +384,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = -0.20, n2 = 208, alternative = "two.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = -0.20, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 208, power = NULL,
                           alpha = 0.05, alternative = "two.sided", design = "paired", distribution = "normal",
@@ -390,7 +395,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(n2 = 208, power = 0.80, alternative = "two.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = NULL, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 208, power = 0.80,
                           alpha = 0.05, alternative = "two.sided", design = "paired", distribution = "normal",
@@ -401,7 +406,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = -0.25, power = 0.80, alternative = "one.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = -0.25, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = NULL, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "paired", distribution = "normal",
@@ -412,7 +417,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = -0.25, n2 = 106, alternative = "one.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = -0.25, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 106, power = NULL,
                           alpha = 0.05, alternative = "one.sided", design = "paired", distribution = "normal",
@@ -423,7 +428,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(n2 = 106, power = 0.80, alternative = "one.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = NULL, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 106, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "paired", distribution = "normal",
@@ -434,7 +439,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = -0.20, power = 0.80, alternative = "one.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = -0.20, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = NULL, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "paired", distribution = "normal",
@@ -445,7 +450,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = -0.20, n2 = 164, alternative = "one.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = -0.20, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 164, power = NULL,
                           alpha = 0.05, alternative = "one.sided", design = "paired", distribution = "normal",
@@ -456,7 +461,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = -0.10, margin = 0.05, power = 0.80, alternative = "one.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = -0.10, null.d = 0, margin = 0.05, req.sign = "+", n.ratio = 1, n2 = NULL, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "paired", distribution = "normal",
@@ -467,7 +472,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = -0.10, margin = 0.05, n2 = 289, alternative = "one.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = -0.10, null.d = 0, margin = 0.05, req.sign = "+", n.ratio = 1, n2 = 289, power = NULL,
                           alpha = 0.05, alternative = "one.sided", design = "paired", distribution = "normal",
@@ -478,7 +483,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = 0.20, margin = 0.05, power = 0.80, alternative = "one.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.20, null.d = 0, margin = 0.05, req.sign = "+", n.ratio = 1, n2 = NULL, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "paired", distribution = "normal",
@@ -489,7 +494,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = 0.20, margin = 0.05, n2 = 291, alternative = "one.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.20, null.d = 0, margin = 0.05, req.sign = "+", n.ratio = 1, n2 = 291, power = NULL,
                           alpha = 0.05, alternative = "one.sided", design = "paired", distribution = "normal",
@@ -500,7 +505,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(margin = 0.05, n2 = 291, power = 0.80, alternative = "one.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = NULL, null.d = 0, margin = 0.05, req.sign = "+", n.ratio = 1, n2 = 291, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "paired", distribution = "normal",
@@ -511,7 +516,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = -0.10, margin = -0.05, power = 0.80, alternative = "one.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = -0.10, null.d = 0, margin = -0.05, req.sign = "+", n.ratio = 1, n2 = NULL, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "paired", distribution = "normal",
@@ -522,7 +527,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = -0.10, margin = -0.05, n2 = 2599, alternative = "one.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = -0.10, null.d = 0, margin = -0.05, req.sign = "+", n.ratio = 1, n2 = 2599, power = NULL,
                           alpha = 0.05, alternative = "one.sided", design = "paired", distribution = "normal",
@@ -533,7 +538,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(margin = 0.05, n2 = 2599, power = 0.80, alternative = "one.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = NULL, null.d = 0, margin = 0.05, req.sign = "+", n.ratio = 1, n2 = 2599, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "paired", distribution = "normal",
@@ -544,7 +549,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = 0.20, margin = -0.05, power = 0.80, alternative = "one.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.20, null.d = 0, margin = -0.05, req.sign = "+", n.ratio = 1, n2 = NULL, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "paired", distribution = "normal",
@@ -555,7 +560,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = 0.20, margin = -0.05, n2 = 105, alternative = "one.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.20, null.d = 0, margin = -0.05, req.sign = "+", n.ratio = 1, n2 = 105, power = NULL,
                           alpha = 0.05, alternative = "one.sided", design = "paired", distribution = "normal",
@@ -566,7 +571,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(margin = -0.05, n2 = 105, power = 0.80, alternative = "one.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = NULL, null.d = 0, margin = -0.05, req.sign = "+", n.ratio = 1, n2 = 105, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "paired", distribution = "normal",
@@ -577,7 +582,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = 0, margin = c(-0.05, 0.05), power = 0.80, alternative = "two.one.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0, null.d = 0, margin = 0.05 * c(-1, 1), req.sign = "+", n.ratio = 1, n2 = NULL,
                           power = 0.80, alpha = 0.05, alternative = "two.one.sided", design = "paired",
@@ -588,7 +593,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = 0, margin = c(-0.05, 0.05), n2 = 3589, alternative = "two.one.sided", design = "paired", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0, null.d = 0, margin = 0.05 * c(-1, 1), req.sign = "+", n.ratio = 1, n2 = 3589,
                           power = NULL, alpha = 0.05, alternative = "two.one.sided", design = "paired",
@@ -599,7 +604,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = -0.25, power = 0.80, alternative = "two.sided", design = "one.sample", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = -0.25, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = NULL, power = 0.80,
                           alpha = 0.05, alternative = "two.sided", design = "one.sample", distribution = "normal",
@@ -610,7 +615,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = -0.25, n2 = 134, alternative = "two.sided", design = "one.sample", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = -0.25, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 134, power = NULL,
                           alpha = 0.05, alternative = "two.sided", design = "one.sample", distribution = "normal",
@@ -621,7 +626,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(n2 = 134, power = 0.80, alternative = "two.sided", design = "one.sample", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = NULL, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 134, power = 0.80,
                           alpha = 0.05, alternative = "two.sided", design = "one.sample", distribution = "normal",
@@ -632,7 +637,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = -0.20, power = 0.80, alternative = "two.sided", design = "one.sample", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = -0.20, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = NULL, power = 0.80,
                           alpha = 0.05, alternative = "two.sided", design = "one.sample", distribution = "normal",
@@ -643,7 +648,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = -0.25, power = 0.80, alternative = "one.sided", design = "one.sample", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = -0.25, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = NULL, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "one.sample", distribution = "normal",
@@ -654,7 +659,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = -0.20, power = 0.80, alternative = "one.sided", design = "one.sample", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = -0.20, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = NULL, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "one.sample", distribution = "normal",
@@ -665,7 +670,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(d = -0.20, n2 = 164, alternative = "one.sided", design = "one.sample", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = -0.20, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 164, power = NULL,
                           alpha = 0.05, alternative = "one.sided", design = "one.sample", distribution = "normal",
@@ -676,7 +681,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
 
     crrRes <- power.np.wilcoxon(n2 = 164, power = 0.80, alternative = "one.sided", design = "one.sample", verbose = 0)
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = NULL, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 164, power = 0.80,
                           alpha = 0.05, alternative = "one.sided", design = "one.sample", distribution = "normal",
@@ -688,7 +693,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
     crrRes <- power.np.wilcoxon(d = 0.1, n2 = 649, design = "one.sample", alternative = "one.sided", distribution = "normal",
                                 verbose = 0) # example 22.3 from the GPower manual
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.1, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 649, power = NULL,
                           alpha = 0.05, alternative = "one.sided", design = "one.sample", distribution = "normal",
@@ -702,7 +707,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
     crrRes <- power.np.wilcoxon(d = 0.8, n2 = 11, design = "one.sample", alternative = "one.sided",
                                 distribution = "laplace", verbose = 0) # example 22.3 from the GPower manual
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.8, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 11, power = NULL,
                           alpha = 0.05, alternative = "one.sided", design = "one.sample", distribution = "laplace",
@@ -715,7 +720,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
     crrRes <- power.np.wilcoxon(d = 1.13842, n2 = 5, design = "paired", alternative = "two.sided", distribution = "laplace",
                                 verbose = 0) # example 23.3 from the GPower manual
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 1.13842, null.d = 0, margin = 0, req.sign = "+", n.ratio = 1, n2 = 5, power = NULL,
                           alpha = 0.05, alternative = "two.sided", design = "paired", distribution = "laplace",
@@ -729,7 +734,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
     crrRes <- power.np.wilcoxon(d = 0.375, n.ratio = 2, n2 = 67, design = "independent", alternative = "two.sided",
                                 distribution = "laplace", verbose = 0) # example 24.3.1 from the GPower manual
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.375, null.d = 0, margin = 0, req.sign = "+", n.ratio = 2, n2 = 67, power = NULL,
                           alpha = 0.05, alternative = "two.sided", design = "independent", distribution = "laplace",
@@ -743,7 +748,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
     crrRes <- power.np.wilcoxon(d = 0.2911838, n.ratio = 2, n2 = 67, design = "independent", alternative = "one.sided",
                                 distribution = "logistic", verbose = 0) # example 24.3.2 from the GPower manual, using d instead of p1
     expect_s3_class(crrRes, c("pwrss", "np", "wilcoxon", "t"))
-    expect_named(crrRes, c("parms", "test", "d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
+    expect_named(crrRes, c("parms", "test", "method", "d", "null.d", "n", "power", "t.alpha", "ncp", "null.ncp", "df"))
     expect_identical(crrRes[["parms"]],
                      list(d = 0.2911838, null.d = 0, margin = 0, req.sign = "+", n.ratio = 2, n2 = 67, power = NULL,
                           alpha = 0.05, alternative = "one.sided", design = "independent", distribution = "logistic",
@@ -764,7 +769,7 @@ test_that("power.np.wilcoxon / pwrss.np.2groups work", {
     expect_error(power.np.wilcoxon(d = 0.10, margin = -11, power = 0.80, alternative = "one.sided", verbose = 0),
                  "Possibly incorrect value for `margin` \\(should be within -10 ... 10\\).")
     expect_error(power.np.wilcoxon(d = -0.20, power = 0.80, alternative = "two.sided", design = "paired", method = "noether", verbose = 0),
-                 "Specify `method` = \"guenther\" to request Wilcoxon signed-rank test for matched pairs.")
+                 "Specify `method` = \"guenther\" to request Wilcoxon signed-rank test for one-sample or matched pairs.")
     expect_error(power.np.wilcoxon(d = 0, alpha = 1e-4, power = 0.99, alternative = "two.sided"),
                  "Design is not feasible.")
     expect_error(power.np.wilcoxon(n2 = 4, alpha = 1e-4, power = 0.99, alternative = "two.sided"),
