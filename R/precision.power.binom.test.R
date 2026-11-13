@@ -7,32 +7,16 @@
 # set statistics = c(0.025, 0.975) for 95% CI
 precision.binom.test <- function(statistic, size, probs = c(0.025, 0.25, 0.50, 0.75, 0.975)) {
   
-  if (!is.numeric(size) ||
-      length(size) != 1L ||
-      !is.finite(size) ||
-      size < 1 ||
-      size != round(size)) {
-    stop("'size' must be one positive integer.",
-         call. = FALSE)
+  if (!is.numeric(size) || length(size) != 1L || !is.finite(size) || size < 1 || size != round(size)) {
+    stop("'size' must be one positive integer.", call. = FALSE)
   }
   
-  if (!is.numeric(statistic) ||
-      length(statistic) != 1L ||
-      !is.finite(statistic) ||
-      statistic < 0 ||
-      statistic > 1) {
-    stop("'statistic' must be one finite number between 0 and 1.",
-      call. = FALSE
-    )
+  if (!is.numeric(statistic) || length(statistic) != 1L || !is.finite(statistic) || statistic < 0 || statistic > 1) {
+    stop("'statistic' must be one finite number between 0 and 1.", call. = FALSE)
   }
   
-  if (!is.numeric(probs) ||
-      any(!is.finite(probs)) ||
-      any(is.na(probs)) ||
-      any(probs < 0.000001) ||
-      any(probs > 0.999999)) {
-    stop("'probs' must be between 0.000001 and 0.999999.",
-         call. = FALSE)
+  if (!is.numeric(probs) || any(!is.finite(probs)) || any(is.na(probs)) || any(probs < 0.000001) || any(probs > 0.999999)) {
+    stop("'probs' must be between 0.000001 and 0.999999.", call. = FALSE)
   }
   
   size <- as.integer(round(size))
@@ -51,11 +35,7 @@ precision.binom.test <- function(statistic, size, probs = c(0.025, 0.25, 0.50, 0
     ci[lower] <- if (x == 0L) {
       0
     } else {
-      stats::qbeta(
-        probs[lower],
-        shape1 = x,
-        shape2 = size - x + 1
-      )
+      stats::qbeta(probs[lower], shape1 = x, shape2 = size - x + 1)
     }
   }
   
@@ -64,11 +44,7 @@ precision.binom.test <- function(statistic, size, probs = c(0.025, 0.25, 0.50, 0
     ci[upper] <- if (x == size) {
       1
     } else {
-      stats::qbeta(
-        probs[upper],
-        shape1 = x + 1,
-        shape2 = size - x
-      )
+      stats::qbeta(probs[upper], shape1 = x + 1, shape2 = size - x)
     }
   }
   
@@ -86,23 +62,6 @@ precision.binom.test <- function(statistic, size, probs = c(0.025, 0.25, 0.50, 0
 } # precision.binom.test()
 
 precision.binom <- precision.binom.test
-
-ours <- precision.binom.test(
-  statistic = 0.40,
-  size = 100,
-  probs = c(0.025, 0.975)
-)$ci
-
-base.r <- stats::binom.test(
-  x = 40,
-  n = 100,
-  conf.level = 0.95
-)$conf.int
-
-rbind(
-  precision.binom.test = ours,
-  binom.test = base.r
-)
 
 
 precision.power.binom.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = TRUE, utf = FALSE) {
@@ -199,11 +158,3 @@ precision.power.binom.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose
 } # precision.power.binom.test()
 
 precision.power.binom <- precision.power.binom.test
-
-power.binom.test(
-  prob = 0.70,
-  size = 100,
-  verbose = 0,
-  plot = FALSE
-) |>
-  precision.power.binom.test(verbose = 2, utf = TRUE)

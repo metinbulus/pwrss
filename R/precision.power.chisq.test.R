@@ -1,4 +1,3 @@
-
 # statistic: observed chi-square test statistic
 # probs: inversion probabilities
 # set probs = c(0.025, 0.975) for 95% CI
@@ -127,14 +126,6 @@ precision.chisq.test <- function(statistic, df, probs = c(0.025, 0.25, 0.50, 0.7
 precision.chisq <- precision.chisq.test
 
 
-# validate with MBESS
-library(MBESS)
-precision.chisq.test(statistic = 50, df = 10)$ci
-MBESS::conf.limits.nc.chisq(50, df = 10)
-
-
-
-
 precision.power.chisq.test <- function(x, probs = c(0.025, 0.50, 0.975) , verbose = TRUE, utf = FALSE) {
   
   if(all(c("pwrss", "chisq") %in% class(x))) {
@@ -219,12 +210,3 @@ precision.power.chisq.test <- function(x, probs = c(0.025, 0.50, 0.975) , verbos
 } # precision.power.chisq.test
 
 precision.power.chisq <- precision.power.chisq.test
-
-power.chisq.test(ncp = 40, null.ncp = 10, df = 10, verbose = 1, plot = FALSE, utf = FALSE) |>
-  precision.power.chisq.test(probs = c(0.025, 0.50, 0.975), verbose = 2, utf = FALSE) 
-
-
-
-
-
-

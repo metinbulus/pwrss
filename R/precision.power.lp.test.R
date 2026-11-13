@@ -27,15 +27,8 @@ precision.lp.test <- function(statistic, df, probs = c(0.025, 0.25, 0.50, 0.75, 
          call. = FALSE)
   }
   
-  if (!requireNamespace("sadists", quietly = TRUE)) {
-    stop(
-      "Package 'sadists' is required for method = 'sadists'.",
-      call. = FALSE
-    )
-  }
-  
   ci <- tryCatch(
-    sadists::qlambdap(
+    qlambdap(
       p = probs,
       df = df,
       t = statistic,
@@ -72,41 +65,6 @@ precision.lp.test <- function(statistic, df, probs = c(0.025, 0.25, 0.50, 0.75, 
 precision.lp <- precision.lp.test
 
 
-
-t.ci <- precision.t.test(
-  statistic = 2.83,
-  df = 126
-)$ci
-
-lp.ci <- precision.lp.test(
-  statistic = 2.83,
-  df = 126
-)$ci
-
-rbind(
-  t.inversion = t.ci,
-  lambda.prime = lp.ci
-)
-
-all.equal(
-  t.ci,
-  lp.base.ci,
-  tolerance = 1e-10,
-  check.attributes = FALSE
-)
-
-
-lp.sadists.ci <- precision.lp.test(
-  statistic = 2.83,
-  df = 126
-)$ci
-
-rbind(
-  base = lp.base.ci,
-  sadists = lp.sadists.ci
-)
-
-
 precision.power.lp.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = TRUE, utf = FALSE) {
   
   if (all(c("pwrss", "lp") %in% class(x))) {
@@ -116,7 +74,7 @@ precision.power.lp.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = 
     alternative <- x$alternative
     df <- x$df
     
-    if(verbose > 0 && length(probs) > 10)
+    if (verbose > 0 && length(probs) > 10)
       stop("Printing is not allowed with large output. Try verbose = FALSE.",
            call. = FALSE)
     
@@ -199,13 +157,3 @@ precision.power.lp.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = 
 } # precision.power.lp.test()
 
 precision.power.lp <- precision.power.lp.test
-
-obj <- power.lp.test(
-  ncp = 1,
-  df = 100,
-  verbose = 1,
-  plot = FALSE
-) |>
-  precision.power.lp.test(verbose = 2, utf = FALSE)
-
-
