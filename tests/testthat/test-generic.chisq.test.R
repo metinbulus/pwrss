@@ -20,6 +20,16 @@ test_that("generic.chisq.test.R works", {
                  structure(list(power = 0.8, ncp = 40.5563986, null.ncp = 0, df = 100, alpha = 0.05, chisq.alpha = 124.342113,
                                 alternative = "greater", utf = FALSE),
                            class = c("pwrss", "generic", "chisq")))
+    expect_equal(power.chisq.test(ncp = 24.875 null.ncp = 63.68, df = df, alpha = 0.05, alternative = "less",
+                                  plot = FALSE, verbose = 0),
+                 structure(list(power = 0.75869673, ncp = 24.875, null.ncp = 63.68, df = df, alpha = 0.05,
+                                chisq.alpha = 84.32147, alternative = "less", utf = FALSE),
+                           class = c("pwrss", "generic", "chisq")))
+    expect_equal(power.chisq.test(ncp = 63.68, null.ncp = 24.875, df = df, alpha = 0.05, alternative = "greater",
+                                  plot = FALSE, verbose = 0),
+                 structure(list(power = 0.76910466, ncp = 63.68, null.ncp = 24.875, df = df, alpha = 0.05,
+                                chisq.alpha = 99.444053, alternative = "greater", utf = FALSE),
+                           class = c("pwrss", "generic", "chisq")))
 
     expect_error(power.chisq.test(ncp = NULL, df = NULL, alpha = 0.05),
                  "Exactly two of the parameters `ncp`, `df`, or `power` must be given, one has to be NULL.")

@@ -56,7 +56,9 @@ power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
   verbose <- ensure.verbose(verbose)
   requested <- get.requested(es = ncp, n = NA, power = power)
 
-  if (!is.null(ncp) && ncp < null.ncp)
+  if (!is.null(ncp) && alternative == "less" && ncp > null.ncp)
+    stop("`ncp` should be less than or equal to `null.ncp`.", call. = FALSE)
+  if (!is.null(ncp) && alternative == "greater" && ncp < null.ncp)
     stop("`ncp` should be greater than or equal to `null.ncp`.", call. = FALSE)
   if (is.null(df1) || df1 < 1)
     stop("`df1` can not be NULL, and needs to be at least 1.", call. = FALSE)
