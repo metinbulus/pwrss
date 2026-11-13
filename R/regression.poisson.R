@@ -474,7 +474,7 @@ pwrss.z.poisson <- function(exp.beta0 = 1.10, exp.beta1 = 1.16,
                             mean.exposure = 1, n = NULL, power = NULL, r2.other.x = 0,
                             alpha = 0.05, alternative = c("not equal", "less", "greater"),
                             method = c("demidenko(vc)", "demidenko", "signorini"),
-                            distribution = "normal", verbose = TRUE) {
+                            distribution = "normal", verbose = 1) {
 
   alternative <- match.arg(alternative)
   method <- match.arg(method)

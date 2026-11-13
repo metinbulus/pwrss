@@ -303,7 +303,7 @@ power.f.ancova <- function(eta.squared = NULL,
 pwrss.f.ancova <- function(eta2 = NULL, f2 = NULL,
                            n.way = length(n.levels),
                            n.levels = 2, n.covariates = 0, alpha = 0.05,
-                           n = NULL, power = NULL, verbose = TRUE) {
+                           n = NULL, power = NULL, verbose = 1) {
 
   verbose <- ensure.verbose(verbose)
 

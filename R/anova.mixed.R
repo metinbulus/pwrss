@@ -281,7 +281,7 @@ pwrss.f.rmanova <- function(eta2 = NULL, f2 = NULL,
                             corr.rm = 0.50, n.levels = 2, n.rm = 2,
                             epsilon = 1, alpha = 0.05,
                             type = c("between", "within", "interaction"),
-                            n = NULL, power = NULL, verbose = TRUE) {
+                            n = NULL, power = NULL, verbose = 1) {
 
   type <- match.arg(type)
   verbose <- ensure.verbose(verbose)

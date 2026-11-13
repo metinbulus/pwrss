@@ -732,7 +732,7 @@ power.t.welch <- function(d = NULL, null.d = 0, margin = 0, req.sign = "+",
 pwrss.t.mean <- function(mu, sd = 1, mu0 = 0, margin = 0, alpha = 0.05,
                          alternative = c("not equal", "greater", "less",
                                          "equivalent", "non-inferior", "superior"),
-                         n = NULL, power = NULL, verbose = TRUE) {
+                         n = NULL, power = NULL, verbose = 1) {
 
   alternative <- match.arg(alternative)
   verbose <- ensure.verbose(verbose)
@@ -785,7 +785,7 @@ pwrss.t.2means <- function(mu1, mu2 = 0, margin = 0,
                             alpha = 0.05, welch.df = TRUE,
                             alternative = c("not equal", "greater", "less",
                                             "equivalent", "non-inferior", "superior"),
-                            n2 = NULL, power = NULL, verbose = TRUE) {
+                            n2 = NULL, power = NULL, verbose = 1) {
 
   alternative <- match.arg(alternative)
   verbose <- ensure.verbose(verbose)

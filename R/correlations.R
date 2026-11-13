@@ -701,7 +701,7 @@ power.z.twocor <- power.z.twocors
 pwrss.z.2corrs <- function(r1 = 0.50, r2 = 0.30,
                            alpha = 0.05, kappa = 1,
                            alternative = c("not equal", "greater", "less"),
-                           n2 = NULL, power = NULL, verbose = TRUE) {
+                           n2 = NULL, power = NULL, verbose = 1) {
 
   alternative <- match.arg(alternative)
   verbose <- ensure.verbose(verbose)
@@ -922,7 +922,7 @@ power.z.onecor <- function(rho = NULL, req.sign = "+", null.rho = 0,
 #' @export pwrss.z.corr
 pwrss.z.corr <- function(r = 0.50, r0 = 0, alpha = 0.05,
                          alternative = c("not equal", "greater", "less"),
-                         n = NULL, power = NULL, verbose = TRUE) {
+                         n = NULL, power = NULL, verbose = 1) {
 
   alternative <- match.arg(alternative)
   verbose <- ensure.verbose(verbose)

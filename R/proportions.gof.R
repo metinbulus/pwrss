@@ -204,7 +204,7 @@ power.chisq.gof <- function(w = NULL, null.w = 0, df,
 pwrss.chisq.gofit <- function(p1 = NULL, p0 = NULL,
                               w = NULL, df = NULL,
                               n = NULL, power = NULL,
-                              alpha = 0.05, verbose = TRUE) {
+                              alpha = 0.05, verbose = 1) {
 
   verbose <- ensure.verbose(verbose)
 
