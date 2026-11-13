@@ -196,7 +196,7 @@ power.f.reg <- power.f.regression
 #' @export pwrss.f.regression
 pwrss.f.regression <- function(r2 = NULL, f2 = NULL,
                         k = 1, m = k, alpha = 0.05,
-                        n = NULL, power = NULL, verbose = TRUE) {
+                        n = NULL, power = NULL, verbose = 1) {
 
   verbose <- ensure.verbose(verbose)
 
@@ -578,7 +578,7 @@ pwrss.t.regression <- function(beta1 = 0.25, beta0 = 0, margin = 0,
                                alpha = 0.05, n = NULL, power = NULL,
                                alternative = c("not equal", "less", "greater",
                                                "non-inferior", "superior", "equivalent"),
-                               verbose = TRUE) {
+                               verbose = 1) {
 
   verbose <- ensure.verbose(verbose)
   alternative <- match.arg(alternative)

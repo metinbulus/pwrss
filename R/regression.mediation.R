@@ -422,7 +422,7 @@ pwrss.z.mediation  <- function(a, b, cp = 0,
                                r2y.mx = (b ^ 2 * sdm ^ 2 + cp ^ 2 * sdx ^ 2) / sdy ^ 2,
                                n = NULL, power = NULL,
                                alpha = 0.05, alternative = c("not equal", "less", "greater"),
-                               mc = TRUE, nsims = 1000, ndraws = 1000, verbose = TRUE) {
+                               mc = TRUE, nsims = 1000, ndraws = 1000, verbose = 1) {
 
   alternative <- match.arg(alternative)
   if (alternative %in% c("less", "greater")) alternative <- "one.sided"

@@ -513,7 +513,7 @@ power.z.oneprop <- function(prob = NULL, req.sign = "+", null.prob = 0.50,
 pwrss.z.prop <- function(p, p0 = 0.50, margin = 0, arcsin.trans = FALSE, alpha = 0.05,
                           alternative = c("not equal", "greater", "less",
                                           "equivalent", "non-inferior", "superior"),
-                          n = NULL, power = NULL, verbose = TRUE) {
+                          n = NULL, power = NULL, verbose = 1) {
 
   alternative <- match.arg(alternative)
   verbose <- ensure.verbose(verbose)
@@ -1186,7 +1186,7 @@ pwrss.z.2props <- function(p1, p2, margin = 0, arcsin.trans = FALSE,
                            kappa = 1, alpha = 0.05,
                            alternative = c("not equal", "greater", "less",
                                            "equivalent", "non-inferior", "superior"),
-                           n2 = NULL, power = NULL, verbose = TRUE) {
+                           n2 = NULL, power = NULL, verbose = 1) {
 
   alternative <- match.arg(alternative)
   verbose <- ensure.verbose(verbose)

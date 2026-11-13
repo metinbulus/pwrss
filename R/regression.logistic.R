@@ -637,7 +637,7 @@ pwrss.z.logistic <- function(p1 = NULL, p0 = NULL, odds.ratio  = NULL,
                              n = NULL, power = NULL, r2.other.x = 0,
                              alpha = 0.05, alternative = c("not equal", "less", "greater"),
                              method = c("demidenko(vc)", "demidenko", "hsieh"),
-                             distribution = "normal", verbose = TRUE) {
+                             distribution = "normal", verbose = 1) {
 
   method <- match.arg(method)
   alternative <- match.arg(alternative)

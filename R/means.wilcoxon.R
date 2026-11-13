@@ -408,7 +408,7 @@ pwrss.np.2groups <- function(mu1 = 0.20, mu2 = 0,
                              distribution = c("normal", "uniform", "double.exponential",
                                               "laplace", "logistic"),
                              method = c("guenther", "noether"),
-                             verbose = TRUE) {
+                             verbose = 1) {
 
   method <- match.arg(method)
   alternative <- match.arg(alternative)
