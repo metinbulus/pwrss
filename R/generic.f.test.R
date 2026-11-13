@@ -78,13 +78,13 @@ power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
 
   if (requested == "es") {
 
-     if (alternative == "less") {
-       max.thresh <- null.ncp
-     } else {
-       max.thresh <- stats::qf(1 - 1e-12, ncp = null.ncp, df1 = df1, df2 = df2)
-       while (min.pwr(max.thresh, power, alternative) > 0) max.thresh <- max.thresh * 1.10
+    if (alternative == "less") {
+      max.thresh <- null.ncp
+    } else {
+      max.thresh <- stats::qf(1 - 1e-12, ncp = null.ncp, df1 = df1, df2 = df2)
+      while (min.pwr(max.thresh, power, alternative) > 0) max.thresh <- max.thresh * 1.10
     }
-
+    
     # ncp <- stats::optimize(f = function(ncp) min.pwr(ncp, power, alternative) ^ 2, interval = c(0, max.thresh), tol = 1e-12)$minimum
     ncp <- stats::uniroot(
       f = function(ncp) min.pwr(ncp, power, alternative),
