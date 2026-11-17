@@ -2,56 +2,18 @@
 # probs: inversion probabilities
 # set probs = c(0.025, 0.975) for 95% CI
 precision.t.test <- function(statistic, df, probs = c(0.025, 0.25, 0.50, 0.75, 0.975)) {
-  
-  if (!is.numeric(statistic) ||
-      length(statistic) != 1L ||
-      !is.finite(statistic)) {
-    stop("'statistic' must be one finite number.",
-         call. = FALSE)
-  }
-  
-  if (!is.numeric(df) ||
-      length(df) != 1L ||
-      !is.finite(df) ||
-      df <= 0) {
-    stop("'df' must be one positive finite number.",
-         call. = FALSE)
-  }
-  
-  if (!is.numeric(probs) ||
-      any(!is.finite(probs)) ||
-      any(is.na(probs)) ||
-      any(probs < 0.000001) ||
-      any(probs > 0.999999)) {
-    stop("'probs' must be between 0.000001 and 0.999999.",
-         call. = FALSE)
-  }
-  
-  cdf <- function(ncp) {
-    tryCatch(
-      suppressWarnings(
-        stats::pt(
-          statistic,
-          df = df,
-          ncp = ncp
-        )
-      ),
-      error = function(e) NA_real_
-    )
-  }
+  check.numeric(statistic)
+  check.positive(df)
+  check.vector(probs, check.proportion)
   
   find.ncp.t <- function(target) {
     
-    # Function whose root we want:
-    # pt(...) = target
+    # Function whose root we want: pt(...) = target
     objective <- function(ncp) {
-      value <- cdf(ncp)
+      value <- tryCatch(suppressWarnings(stats::pt(statistic, df = df, ncp = ncp)),
+                        error = function(e) rep(NA_real_, length(probs)))
       
-      if (!is.finite(value)) {
-        return(NA_real_)
-      }
-      
-      value - target
+      if (is.finite(value)) value - target else rep(NA_real_, length(probs))
     }
     
     # The noncentrality parameter may be negative or positive.
@@ -67,81 +29,42 @@ precision.t.test <- function(statistic, df, probs = c(0.025, 0.25, 0.50, 0.75, 0
       value.at.lower <- objective(lower)
       value.at.upper <- objective(upper)
       
-      # The CDF decreases as ncp increases.
-      #
-      # A root is bracketed when:
-      # objective(lower) >= 0
-      # objective(upper) <= 0
-      if (is.finite(value.at.lower) &&
-          is.finite(value.at.upper) &&
-          value.at.lower >= 0 &&
-          value.at.upper <= 0) {
+      # The CDF decreases as ncp increases; a root is bracketed when: objective(lower) >= 0 and objective(upper) <= 0
+      if (is.finite(value.at.lower) && is.finite(value.at.upper) && value.at.lower >= 0 && value.at.upper <= 0) {
         bracketed <- TRUE
         break
       }
       
       width <- width * 2
       
-      if (!is.finite(width)) {
-        break
-      }
+      if (!is.finite(width)) break
     }
     
-    if (!bracketed) {
-      return(NA_real_)
-    }
+    if (!bracketed) return(rep(NA_real_, length(probs)))
     
-    tryCatch(
-      stats::uniroot(
-        objective,
-        interval = c(lower, upper),
-        tol = .Machine$double.eps^0.25,
-        maxiter = 500L
-      )$root,
-      error = function(e) NA_real_
-    )
+    tryCatch(stats::uniroot(objective, interval = c(lower, upper), tol = 1e-12, maxiter = 500L)$root,
+             error = function(e) rep(NA_real_, length(probs)))
     
   } # find.ncp.t
   
-  ci <- vapply(
-    1 - probs,
-    function(target) {
-      find.ncp.t(
-        target = target
-      )
-    },
-    numeric(1L)
-  )
-  
-  names(ci) <- paste0(round(probs * 100, 1), "%")
+  ci <- vapply(1 - probs, function(target) find.ncp.t(target = target), numeric(1L))
   
   if (any(abs(ci) > 35, na.rm = TRUE)) {
-    warning(
-      paste(
-        "At least one confidence limit exceeds 35 in magnitude;",
-        "base R noncentral-t probabilities may be inaccurate."
-      ),
-      call. = FALSE
-    )
+    warning("At least one confidence limit exceeds 35 in magnitude; base R noncentral-t probabilities may be inaccurate.",
+            call. = FALSE)
   }
   
-  list(
-    statistic = statistic,
-    df = df,
-    probs = probs,
-    ci = ci
-  )
-  
+  list(statistic = statistic, df = df, probs = probs, ci = setNames(ci, paste0(round(probs * 100, 1), "%")))
+
 } # precision.t.test()
 
 precision.t <- precision.t.test
 
 
-precision.power.t.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = TRUE) {
+precision.power.t.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = 1, utf = FALSE) {
   
-  if(verbose > 0 && length(probs) > 10)
-    stop("Printing is not allowed with large output. Try verbose = FALSE.",
-         call. = FALSE)
+  if (verbose > 0 && length(probs) > 10)
+    stop("Printing is not allowed with large output. Try verbose = 0.", call. = FALSE)
   
   if (all(c("pwrss", "t") %in% class(x))) {
     
@@ -176,11 +99,11 @@ precision.power.t.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
       numeric(1L)
     )
     
-    if(any(is.na(conf.int))) 
+    if (any(is.na(conf.int))) 
       stop("Calculating confidence interval for power is not possible with the current bounds.",
            call. = FALSE)
     
-    if("generic" %in% class(x)) {
+    if ("generic" %in% class(x)) {
       
       effect <- "t"
       effect.name <- "  t-value"
@@ -191,7 +114,7 @@ precision.power.t.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
       
     }
     
-    if("welch" %in% class(x)) {
+    if ("welch" %in% class(x)) {
       
       effect <- "d"
       effect.name <- "  Cohen's d"
@@ -228,7 +151,7 @@ precision.power.t.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
     } # welch
     
     
-    if("student" %in% class(x)) {
+    if ("student" %in% class(x)) {
       
       effect <- "d"
       effect.name <- "  Cohen's d"
@@ -284,7 +207,7 @@ precision.power.t.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
     } # student
     
       
-    if("regression" %in% class(x)) {
+    if ("regression" %in% class(x)) {
       
       effect1 <- "beta"
       effect2 <- "std.beta"
@@ -292,7 +215,7 @@ precision.power.t.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
       effect2.name <- "  Standardized Beta"
       
       parms.r.squared <- x$parms$r.squared
-      if(is.null(parms.r.squared)) stop("R-squared cannot be NULL with precision calculations.", call. = FALSE)
+      if (is.null(parms.r.squared)) stop("R-squared cannot be NULL with precision calculations.", call. = FALSE)
       sd.outcome <- x$parms$sd.outcome
       sd.predictor <- x$parms$sd.predictor
       r.squared <- x$r.squared
@@ -308,7 +231,7 @@ precision.power.t.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
     } # regression
     
     
-    if("wilcoxon" %in% class(x)) {
+    if ("wilcoxon" %in% class(x)) {
       
       effect1 <- "d"
       effect2 <- "cles"
@@ -367,7 +290,7 @@ precision.power.t.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
     
     
     colnames(precision.power.out) <-  paste0(round(probs * 100, 1), "%")
-    if(any(c("wilcoxon", "regression") %in% class(x))) { 
+    if (any(c("wilcoxon", "regression") %in% class(x))) { 
       rownames(precision.power.out) <- c("  NCP Uncertainty Distribution", 
                                   effect1.name, effect2.name,
                                   "  Conditional Statistical Power")
@@ -377,8 +300,8 @@ precision.power.t.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
                                   "  Conditional Statistical Power")
     }
     
-    if(verbose > 0) {
-      if(utf) {
+    if (verbose > 0) {
+      if (utf) {
         cat(paste0(paste0("\u2554", strrep("\u2550", 50), "\u2557", "\n"),
                    paste0("\u2551", 
                           "             \033[34m PRECISION CALCULATION \033[0m              ",
@@ -391,8 +314,8 @@ precision.power.t.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
             sep = "")
       }
       print(precision.power.out, digits = 3)
-      if(verbose > 1)
-        if(utf) {
+      if (verbose > 1)
+        if (utf) {
           cat(paste0("\033[36m",
                      "\n  NCP uncertainty distribution quantiles are obtained \n",
                      "  by inverting cumulative distribution function of the \n",
@@ -407,7 +330,7 @@ precision.power.t.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
     } # verbose
     
     precision.power.out <- rbind(probs, precision.power.out)
-    if(any(c("wilcoxon", "regression") %in% class(x))) { 
+    if (any(c("wilcoxon", "regression") %in% class(x))) { 
       rownames(precision.power.out) <- c("probs", "quantile", effect1, effect2, "power")
     } else {
       rownames(precision.power.out) <- c("probs", "quantile", effect, "power")

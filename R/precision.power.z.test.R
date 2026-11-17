@@ -11,55 +11,23 @@
 # probs: quantile probabilities
 # set probs = c(0.025, 0.975) for 95% CI
 precision.z.test <- function(statistic, probs = c(0.025, 0.25, 0.50, 0.75, 0.975)) {
+  check.numeric(statistic)
+  check.vector(probs, check.proportion)
   
-  if (!is.numeric(statistic) ||
-      length(statistic) != 1L ||
-      !is.finite(statistic)) {
-    stop(
-      "'statistic' must be one finite number.",
-      call. = FALSE
-    )
-  }
+  ci <- tryCatch(stats::qnorm(p = probs, mean = statistic, sd = 1, lower.tail = TRUE),
+                 error = function(e) NA_real_)
   
-  if (!is.numeric(probs) ||
-      any(!is.finite(probs)) ||
-      any(is.na(probs)) ||
-      any(probs < 0.000001) ||
-      any(probs > 0.999999)) {
-    stop("'probs' must be between 0.000001 and 0.999999.",
-         call. = FALSE)
-  }
-  
-  ci <- tryCatch(
-    stats::qnorm(
-      p = probs,
-      mean = statistic,
-      sd = 1,
-      lower.tail = TRUE
-    ),
-    error = function(e) {
-      NA_real_
-    }
-  )
-  
-  names(ci) <- paste0(round(probs * 100, 1), "%")
-  
-  list(
-    statistic = statistic,
-    probs = probs,
-    ci = ci
-  )
+  list(statistic = statistic, probs = probs, ci = setNames(ci, paste0(round(probs * 100, 1), "%")))
   
 } # precision.z.test()
 
 precision.z <- precision.z.test
 
 
-precision.power.z.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = TRUE) {
+precision.power.z.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = 1, utf = FALSE) {
   
-  if(verbose > 0 && length(probs) > 10)
-    stop("Printing is not allowed with large output. Try verbose = FALSE.",
-         call. = FALSE)
+  if (verbose > 0 && length(probs) > 10)
+    stop("Printing is not allowed with large output. Try verbose = 0.", call. = FALSE)
   
   if (all(c("pwrss", "z") %in% class(x))) {
     
@@ -73,11 +41,11 @@ precision.power.z.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
       probs = probs
     )$ci
     
-    if(any(is.na(conf.int))) 
+    if (any(is.na(conf.int))) 
       stop("Calculating confidence interval for power is not possible with the current bounds.",
            call. = FALSE)
     
-    if("generic" %in% class(x)) {
+    if ("generic" %in% class(x)) {
       
       effect <- "z"
       effect.name <- "  z-value"
@@ -88,7 +56,7 @@ precision.power.z.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
       
     } # generic
     
-    if("wilcoxon" %in% class(x)) {
+    if ("wilcoxon" %in% class(x)) {
       
       effect1 <- "d"
       effect2 <- "cles"
@@ -148,7 +116,7 @@ precision.power.z.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
     } # wilcoxon
     
     
-    if("logistic" %in% class(x)) {
+    if ("logistic" %in% class(x)) {
       
       effect1 <- "beta"
       effect2 <- "odds.ratio"
@@ -156,7 +124,7 @@ precision.power.z.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
       effect2.name <- "  Odds Ratio"
       
       method <- tolower(x$parms$method)
-      if(method == "hsieh") stop("Precision calculations for Hsieh method are not supported at the moment.", call. = FALSE)
+      if (method == "hsieh") stop("Precision calculations for Hsieh method are not supported at the moment.", call. = FALSE)
     
       r.squared.predictor <- x$parms$r.squared.predictor
       distribution <- x$distribution
@@ -188,7 +156,7 @@ precision.power.z.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
     } # logistic
       
         
-    if("poisson" %in% class(x)) {
+    if ("poisson" %in% class(x)) {
       
       effect1 <- "beta"
       effect2 <- "rate.ratio"
@@ -196,7 +164,7 @@ precision.power.z.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
       effect2.name <- "  Rate Ratio"
       
       method <- tolower(x$parms$method)
-      if(method == "signorini") stop("Precision calculations for Signorini method are not supported at the moment.", call. = FALSE)
+      if (method == "signorini") stop("Precision calculations for Signorini method are not supported at the moment.", call. = FALSE)
       
       r.squared.predictor <- x$parms$r.squared.predictor
       mean.exposure <- x$parms$mean.exposure
@@ -229,7 +197,7 @@ precision.power.z.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
     } # poisson
     
     
-    if("mediation" %in% class(x)) {
+    if ("mediation" %in% class(x)) {
       
       effect1 <- "beta.indirect"
       effect2 <- "std.beta.indirect"
@@ -267,7 +235,7 @@ precision.power.z.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
       
     } # mediation
     
-    if("oneprop" %in% class(x)) {
+    if ("oneprop" %in% class(x)) {
       
       z.to.prob <- function(z, null.prob, n, std.error, arcsine, correct, alternative) {
         
@@ -363,13 +331,13 @@ precision.power.z.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
       
       for(i in 1:length(conf.int)) {
         
-        if(alternative == "two.one.sided") {
+        if (alternative == "two.one.sided") {
           
           ######################################################################
-          if(all(sign(null.mean) == -1)) {
+          if (all(sign(null.mean) == -1)) {
             z <- conf.int[i] + abs(max(null.mean))
             null.prob <- max(null.prob)
-          } else if(all(sign(null.mean) == 1)) {
+          } else if (all(sign(null.mean) == 1)) {
             z <- conf.int[i] - min(null.mean)
             null.prob <- min(null.prob)
           } else {
@@ -412,7 +380,7 @@ precision.power.z.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
   
     # power calculations
     
-    if(any(c("logistic", "poisson") %in% class(x))) {
+    if (any(c("logistic", "poisson") %in% class(x))) {
       
       power <- mapply(FUN =      function(x, y) {
         tryCatch({
@@ -485,7 +453,7 @@ precision.power.z.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
     precision.power.out <- data.frame(rbind(precision.power.out, power))
     colnames(precision.power.out) <-  paste0(round(probs * 100, 1), "%")
 
-    if(any(c("logistic", "poisson", "wilcoxon", "mediation", "oneprop") %in% class(x))) { 
+    if (any(c("logistic", "poisson", "wilcoxon", "mediation", "oneprop") %in% class(x))) { 
       rownames(precision.power.out) <- c("  NCP Uncertainty Distribution", 
                                   effect1.name, effect2.name,
                                   "  Conditional Statistical Power")
@@ -495,8 +463,8 @@ precision.power.z.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
                                   "  Conditional Statistical Power")
     }
     
-    if(verbose > 0) {
-      if(utf) {
+    if (verbose > 0) {
+      if (utf) {
         cat(paste0(paste0("\u2554", strrep("\u2550", 50), "\u2557", "\n"),
                    paste0("\u2551", 
                           "             \033[34m PRECISION CALCULATION \033[0m              ",
@@ -509,8 +477,8 @@ precision.power.z.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
             sep = "")
       }
       print(round(precision.power.out, 3))
-      if(verbose > 1)
-        if(utf) {
+      if (verbose > 1)
+        if (utf) {
           cat(paste0("\033[36m",
                      "\n  NCP uncertainty distribution quantiles are obtained \n",
                      "  directly from the cumulative distribution function of \n",
@@ -526,7 +494,7 @@ precision.power.z.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
   
     precision.power.out <- data.frame(rbind(probs, precision.power.out))
    
-    if(any(c("logistic", "poisson", "wilcoxon", "mediation", "oneprop") %in% class(x))) { 
+    if (any(c("logistic", "poisson", "wilcoxon", "mediation", "oneprop") %in% class(x))) { 
       rownames(precision.power.out) <- c("probs", "quantile", effect1, effect2, "power")
     } else {
       rownames(precision.power.out) <- c("probs", "quantile", effect, "power")
@@ -537,10 +505,7 @@ precision.power.z.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = T
     
   } else {
     
-    stop(
-      "Object should be a class of 'pwrss' and 'z'",
-      call. = FALSE
-    )
+    stop("Object should be a class of 'pwrss' and 'z'", call. = FALSE)
   }
   
 } # precision.power.z.test()

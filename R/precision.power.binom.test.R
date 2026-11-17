@@ -6,65 +6,30 @@
 # probs: inversion probabilities
 # set statistics = c(0.025, 0.975) for 95% CI
 precision.binom.test <- function(statistic, size, probs = c(0.025, 0.25, 0.50, 0.75, 0.975)) {
+  check.proportion(statistic)
+  check.size(size)
+  check.vector(probs, check.proportion)
   
-  if (!is.numeric(size) || length(size) != 1L || !is.finite(size) || size < 1 || size != round(size)) {
-    stop("'size' must be one positive integer.", call. = FALSE)
-  }
-  
-  if (!is.numeric(statistic) || length(statistic) != 1L || !is.finite(statistic) || statistic < 0 || statistic > 1) {
-    stop("'statistic' must be one finite number between 0 and 1.", call. = FALSE)
-  }
-  
-  if (!is.numeric(probs) || any(!is.finite(probs)) || any(is.na(probs)) || any(probs < 0.000001) || any(probs > 0.999999)) {
-    stop("'probs' must be between 0.000001 and 0.999999.", call. = FALSE)
-  }
-  
-  size <- as.integer(round(size))
-  x.raw <- statistic * size
-  x <- as.integer(round(x.raw))
+  x <- as.integer(round(statistic * size))
   
   # generalized clopper–pearson quantiles
   ci <- numeric(length(probs))
   
   lower <- probs < 0.50
   upper <- probs > 0.50
-  middle <- probs == 0.50
+ 
+  # lower-tail, upper-tail and centre confidence quantiles from inversion probs
+  if (any(lower)) ci[lower] <- if (x == 0L)   0 else stats::qbeta(probs[lower], shape1 = x, shape2 = size - x + 1)
+  if (any(upper)) ci[upper] <- if (x == size) 1 else stats::qbeta(probs[upper], shape1 = x + 1, shape2 = size - x)
+  ci[probs == 0.50] <- x / size
   
-  # lower-tail confidence quantiles from inversion probs
-  if (any(lower)) {
-    ci[lower] <- if (x == 0L) {
-      0
-    } else {
-      stats::qbeta(probs[lower], shape1 = x, shape2 = size - x + 1)
-    }
-  }
-  
-  # upper-tail confidence quantiles from inversion probs
-  if (any(upper)) {
-    ci[upper] <- if (x == size) {
-      1
-    } else {
-      stats::qbeta(probs[upper], shape1 = x + 1, shape2 = size - x)
-    }
-  }
-  
-  # convention for the center
-  ci[middle] <- x / size
-  
-  names(ci) <- paste0(round(probs * 100, 1), "%")
-  
-  list(
-    statistic = statistic,
-    probs = probs,
-    ci = ci
-  )
-  
+  list(statistic = statistic, probs = probs, ci = setNames(ci, paste0(round(probs * 100, 1), "%")))
 } # precision.binom.test()
 
 precision.binom <- precision.binom.test
 
 
-precision.power.binom.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = TRUE, utf = FALSE) {
+precision.power.binom.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose = 0, utf = FALSE) {
   
   if (all(c("pwrss", "binom") %in% class(x))) {
     
@@ -73,19 +38,13 @@ precision.power.binom.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose
     null.prob <- x$null.prob
     alternative <- x$alternative
     
-    if(verbose > 0 && length(probs) > 10)
-      stop("Printing is not allowed with large output. Try verbose = FALSE.",
-           call. = FALSE)
+    if (verbose > 0 && length(probs) > 10)
+      stop("Printing is not allowed with large output. Try verbose = 0.", call. = FALSE)
     
-    conf.int <- precision.binom.test(
-      statistic = statistic,
-      size = x$size,
-      probs = probs
-    )$ci
+    conf.int <- precision.binom.test(statistic = statistic, size = x$size, probs = probs)$ci
     
-    if(any(is.na(conf.int))) 
-      stop("Calculating confidence interval for power is not possible with the current bounds.",
-           call. = FALSE)
+    if (any(is.na(conf.int))) 
+      stop("Calculating confidence interval for power is not possible with the current bounds.", call. = FALSE)
     
     power <- vapply(
       conf.int,
@@ -110,8 +69,8 @@ precision.power.binom.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose
     colnames(precision.power.out) <-  paste0(round(probs * 100, 1), "%")
     rownames(precision.power.out) <- c("  Prop. Uncertainty Distribution", "  Conditional Statistical Power")
     
-    if(verbose > 0) {
-      if(utf) {
+    if (verbose > 0) {
+      if (utf) {
         cat(paste0(paste0("\u2554", strrep("\u2550", 50), "\u2557", "\n"),
                    paste0("\u2551", 
                           "             \033[34m PRECISION CALCULATION \033[0m              ",
@@ -124,8 +83,8 @@ precision.power.binom.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose
             sep = "")
       }
       print(precision.power.out, digits = 3)
-      if(verbose > 1)
-        if(utf) {
+      if (verbose > 1)
+        if (utf) {
           cat(paste0("\033[36m",
                      "\n  Uncertainty distribution quantiles of proportions are  \n",
                      "  obtained directly from the inverse cumulative dist. \n",
@@ -145,14 +104,12 @@ precision.power.binom.test <- function(x, probs = c(0.025, 0.50, 0.975), verbose
     rownames(precision.power.out) <- c("probs", "quantile", "power")
     colnames(precision.power.out) <- NULL
     
-    return(invisible(as.data.frame(t(precision.power.out))))
+    invisible(as.data.frame(t(precision.power.out)))
     
   } else {
-    
-    stop(
-      "Object should be a class of 'pwrss' and 'binom'",
-      call. = FALSE
-    )
+
+    stop("Object should be a class of 'pwrss' and 'binom'", call. = FALSE)
+
   }
   
 } # precision.power.binom.test()
