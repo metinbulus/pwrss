@@ -161,6 +161,7 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL, beta0 = NULL, b
   check.proportion(r.squared.predictor)
   check.positive(mean.exposure)
   check.proportion(alpha)
+  distribution <- ensure.distribution(distribution)
   check.logical(ceil.n, utf)
   verbose <- ensure.verbose(verbose)
 
@@ -192,148 +193,8 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL, beta0 = NULL, b
 
   requested <- get.requested(es = list(base.rate, rate.ratio), n = n, power = power)
 
-  if (is.character(distribution) && length(distribution) == 1) {
-    distribution <- switch(tolower(distribution),
-                            `normal` = list(dist = "normal", mean = 0, sd = 1),
-                            `poisson` = list(dist = "poisson", lambda = 1),
-                            `uniform` = list(dist = "uniform", min = 0, max = 1),
-                            `exponential` = list(dist = "exponential", rate = 1),
-                            `binomial` = list(dist = "binomial", size = 1, prob = 0.50),
-                            `bernoulli` = list(dist = "bernoulli", prob = 0.50),
-                            `lognormal` = list(dist = "lognormal", meanlog = 0, sdlog = 1))
-  } else if (is.list(distribution)) {
-    if (length(distribution) > 3) stop("Unknown input type for `distribution` argument", call. = FALSE)
-    dist.list.names <- names(distribution)
-    dist.attrib <- c(dist.list.names, tolower(distribution$dist))
-    dist.invalid <- c(anyNA(match(dist.attrib, c("dist", "normal", "mean", "sd"))),
-                      anyNA(match(dist.attrib, c("dist", "lognormal", "meanlog", "sdlog"))),
-                      anyNA(match(dist.attrib, c("dist", "uniform", "min", "max"))),
-                      anyNA(match(dist.attrib, c("dist", "exponential", "rate"))),
-                      anyNA(match(dist.attrib, c("dist", "poisson", "lambda"))),
-                      anyNA(match(dist.attrib, c("dist", "binomial", "size", "prob"))),
-                      anyNA(match(dist.attrib, c("dist", "bernoulli", "prob"))))
-    if (all(dist.invalid)) stop("Unknown input type for `distribution` argument", call. = FALSE)
-  } else {
-    stop("Unknown input type for `distribution`.", call. = FALSE)
-  }
-
-  # asymptotic variances
-  var.beta <- function(beta0, beta1, distribution) {
-
-    if (tolower(distribution$dist) == "normal") {
-
-      min.thresh <- stats::qnorm(0.0000001, mean = distribution$mean, sd = distribution$sd)
-      max.thresh <- stats::qnorm(0.9999999, mean = distribution$mean, sd = distribution$sd)
-
-      # define the distribution function and use integration (calcInt == FALSE)
-      dist.func <- function(x) stats::dnorm(x, mean = distribution$mean, sd = distribution$sd)
-      calcInt <- FALSE
-
-    } else if (tolower(distribution$dist) == "poisson") {
-
-      min.thresh <- 0
-      max.thresh <- stats::qpois(0.999999999, lambda = distribution$lambda)
-
-      # define the distribution function and use summation (calcInt == TRUE)
-      dist.func <- function(x) stats::dpois(x, lambda = distribution$lambda)
-      calcInt <- TRUE
-
-    } else if (tolower(distribution$dist) == "uniform") {
-
-      min.thresh <- distribution$min
-      max.thresh <- distribution$max
-
-      # define the distribution function and use integration (calcInt == FALSE)
-      dist.func <- function(x) stats::dunif(x, min = min.thresh, max = max.thresh)
-      calcInt <- FALSE
-
-    } else if (tolower(distribution$dist) == "exponential") {
-
-      min.thresh <- 0
-      max.thresh <- stats::qexp(0.9999999, rate = distribution$rate)
-
-      # define the distribution function and use integration (calcInt == FALSE)
-      dist.func <- function(x) stats::dexp(x, rate = distribution$rate)
-      calcInt <- FALSE
-
-    } else if (tolower(distribution$dist) %in% c("binomial", "bernoulli")) {
-
-      min.thresh <- 0
-      max.thresh <- ifelse(tolower(distribution$dist) == "bernoulli", 1, distribution$size)
-
-      # define the distribution function and use summation (calcInt == TRUE)
-      dist.func <- function(x) stats::dbinom(x, size = max.thresh, prob = distribution$prob)
-      calcInt <- TRUE
-
-    } else if (tolower(distribution$dist) == "lognormal") {
-
-      min.thresh <- stats::qlnorm(0.0000001, meanlog = distribution$meanlog, sdlog = distribution$sdlog)
-      max.thresh <- stats::qlnorm(0.9999999, meanlog = distribution$meanlog, sdlog = distribution$sdlog)
-
-      # define the distribution function and use integration (calcInt == FALSE)
-      dist.func <- function(x) stats::dlnorm(x, meanlog = distribution$meanlog, sdlog = distribution$sdlog)
-      calcInt <- FALSE
-
-    }
-
-    # carry out the actual calculations
-    # [1] define the variance function
-    var.func <- function(x, e, b0, b1) x ^ e * dist.func(x) * exp(b0 + b1 * x)
-
-    # [2A] use summation to “integrate” integer sequences OR
-    if (calcInt) {
-
-      # determine which sequence should be summed up
-      calc.seq <- seq(min.thresh, max.thresh)
-
-      # for mu: e1 [first parm.] = 0 -> x ^ e1 == 1, the log of which is beta0* (beta0s)
-      # calculate mu and beta0s -                     | parms. to var.func
-      mu  <- sum(vapply(calc.seq, var.func, numeric(1), 0, beta0,  beta1), na.rm = TRUE)
-      beta0s <- log(mu)
-
-      # variance under null -                         | parms. to var.func
-      i00 <- sum(vapply(calc.seq, var.func, numeric(1), 0, beta0s, 0),     na.rm = TRUE)
-      i01 <- sum(vapply(calc.seq, var.func, numeric(1), 1, beta0s, 0),     na.rm = TRUE)
-      i11 <- sum(vapply(calc.seq, var.func, numeric(1), 2, beta0s, 0),     na.rm = TRUE)
-      var.beta0 <- i00 / (i00 * i11 - i01 ^ 2)
-
-      # variance under alternative -                  | parms. to var.func
-      i00 <- sum(vapply(calc.seq, var.func, numeric(1), 0, beta0,  beta1), na.rm = TRUE)
-      i01 <- sum(vapply(calc.seq, var.func, numeric(1), 1, beta0,  beta1), na.rm = TRUE)
-      i11 <- sum(vapply(calc.seq, var.func, numeric(1), 2, beta0,  beta1), na.rm = TRUE)
-      var.beta1 <- i00 / (i00 * i11 - i01 ^ 2)
-
-    # [2B] use integration for real numbers
-    } else {
-
-      # for mu: e1 [first parm.] = 0 -> x ^ e1 == 1, the log of which is beta0* (beta0s)
-      # calculate mu and beta0s -                             | parms. to var.func
-      mu  <- stats::integrate(var.func, min.thresh, max.thresh, 0, beta0,  beta1)$value
-      beta0s <- log(mu)
-
-      # variance under null -                                 | parms. to var.func
-      i00 <- stats::integrate(var.func, min.thresh, max.thresh, 0, beta0s, 0)$value
-      i01 <- stats::integrate(var.func, min.thresh, max.thresh, 1, beta0s, 0)$value
-      i11 <- stats::integrate(var.func, min.thresh, max.thresh, 2, beta0s, 0)$value
-      var.beta0 <- i00 / (i00 * i11 - i01 ^ 2)
-
-      # variance under alternative -                          | parms. to var.func
-      i00 <- stats::integrate(var.func, min.thresh, max.thresh, 0, beta0,  beta1)$value
-      i01 <- stats::integrate(var.func, min.thresh, max.thresh, 1, beta0,  beta1)$value
-      i11 <- stats::integrate(var.func, min.thresh, max.thresh, 2, beta0,  beta1)$value
-      var.beta1 <- i00 / (i00 * i11 - i01 ^ 2)
-
-    }
-
-    list(var.beta0 = var.beta0, var.beta1 = var.beta1,
-         distribution = tolower(distribution$dist),
-         min = min.thresh, max = max.thresh)
-
-  } # var.beta()
-
   pwr <- function(beta0, beta1, n, r.squared.predictor, alpha, alternative, method, distribution, mean.exposure) {
-
-    # variance correction factor
+#   vcf <- get.vcf(method = method, dist = distribution$dist)
     if (method == "demidenko(vc)") {
       vcf <- switch(tolower(distribution$dist),
                      `normal` = 1,
@@ -352,26 +213,17 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL, beta0 = NULL, b
     # non-centrality parameter and standard deviation of the non-centrality parameter under alternative
     # Signorini, D. F. (1991). Sample size for poisson regression. Biometrika, 78, 446-450.
     # Demidenko, E. (2007). Sample size determination for logistic regression revisited. Statistics in Medicine, 26, 3385-3397.
-    if (method == "signorini") {
-      if (tolower(distribution$dist) == "normal") {
-        var.beta0 <- 1 / distribution$sd ^ 2
-        var.beta1 <- exp(-(beta1 * distribution$mean + beta1 ^ 2 * distribution$sd ^ 2 / 2)) / distribution$sd ^ 2
-        ncp <- beta1 / sqrt(var.beta0 / (n * (1 - r.squared.predictor) * mean.exposure))
-        sd.ncp <- sqrt(var.beta1 / var.beta0)
-      } else if (tolower(distribution$dist) %in% c("binomial", "bernoulli")) {
-        var.beta0 <- 1 / (distribution$prob * (1 - distribution$prob))
-        var.beta1 <- 1 / (1 - distribution$prob) + 1 / (distribution$prob * exp(beta1))
-        ncp <- beta1 * sqrt(exp(beta0) * n * (1 - r.squared.predictor) * mean.exposure / var.beta0)
-        sd.ncp <- sqrt(var.beta1 / var.beta0)
-      } else {
-        stop("Distribution type is not supported by the Signorini procedure.", call. = FALSE)
-      }
+    var.obj <- var.beta.poisson(beta0 = beta0, beta1 = beta1, distribution = distribution, method = method)
+
+    if        (method == "signorini" && distribution$dist == "normal") {
+      ncp <- beta1 / sqrt(var.obj$var.beta0 / (n * (1 - r.squared.predictor) * mean.exposure))
+      sd.ncp <- sqrt(var.obj$var.beta1 / var.obj$var.beta0)
+    } else if (method == "signorini" && distribution$dist %in% c("binomial", "bernoulli")) {
+      ncp <- beta1 * sqrt(exp(beta0) * n * (1 - r.squared.predictor) * mean.exposure / var.obj$var.beta0)
+      sd.ncp <- sqrt(var.obj$var.beta1 / var.obj$var.beta0)
     } else { # signorini
-      var.obj <- var.beta(beta0 = beta0, beta1 = beta1, distribution = distribution)
-      var.beta0 <- var.obj$var.beta0
-      var.beta1 <- var.obj$var.beta1
-      ncp <- beta1 / sqrt(var.beta1 / (n * (1 - r.squared.predictor) * mean.exposure))
-      sd.ncp <- sqrt((vcf * var.beta0 + (1 - vcf) * var.beta1) / var.beta1)
+      ncp <- beta1 / sqrt(var.obj$var.beta1 / (n * (1 - r.squared.predictor) * mean.exposure))
+      sd.ncp <- sqrt((vcf * var.obj$var.beta0 + (1 - vcf) * var.obj$var.beta1) / var.obj$var.beta1)
     } # demidenko and demidenko(vc)
 
     pwr.obj <- power.z.test(mean = ncp, sd = sd.ncp, null.mean = 0, alpha = alpha,
@@ -394,9 +246,10 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL, beta0 = NULL, b
 
   } else if (requested == "es") {
 
-    var.obj <- var.beta(beta0 = beta0, beta1 = beta0, distribution = distribution)
-    bound.values <- c((log(min(1e-6)) - log(mean.exposure) - beta0) / c(var.obj$min, var.obj$max),
-                      (log(max(1e10)) - log(mean.exposure) - beta0) / c(var.obj$min, var.obj$max))
+    # reasonable bounds for beta1
+    var.obj <- var.beta.poisson(beta0 = beta0, beta1 = beta0, distribution = distribution, method = method)
+    bound.values <- c((log(min(1e-6)) - log(mean.exposure) - beta0) / c(var.obj$min.thresh, var.obj$max.thresh),
+                      (log(max(1e10)) - log(mean.exposure) - beta0) / c(var.obj$min.thresh, var.obj$max.thresh))
     val.rng <- c(min(bound.values), 0, max(bound.values))[ifelse(check.pos_sign(req.sign), -1, -3)]
 
     beta1 <-  try(stats::uniroot(function(beta1) min.pwr(beta1, n, power), interval = val.rng)$root)
@@ -420,7 +273,7 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL, beta0 = NULL, b
                                       `demidenko(vc)` = "Demidenko (Variance Corrected)",
                                       `demidenko` = "Demidenko",
                                       `signorini` = "Signorini"),
-                      dist = switch(tolower(distribution$dist),
+                      dist = switch(distribution$dist,
                                     `normal` = "Normal",
                                     `poisson` = "Poisson",
                                     `bernoulli` = "Bernoulli",
@@ -496,3 +349,78 @@ pwrss.z.poisson <- function(exp.beta0 = 1.10, exp.beta1 = 1.16,
 
 #' @export pwrss.z.poisreg
 pwrss.z.poisreg <- pwrss.z.poisson
+
+# calculate asymptotic variances
+var.beta.poisson <- function(beta0, beta1, distribution, method = "demidenko(vc)") {
+
+  dist.parms <- get.parms4integrate(distribution = distribution)
+
+  if (method == "signorini") {
+
+    if (distribution$dist == "normal") {
+      var.beta0 <- 1 / distribution$sd ^ 2
+      var.beta1 <- exp(-(beta1 * distribution$mean + beta1 ^ 2 * distribution$sd ^ 2 / 2)) / distribution$sd ^ 2
+    } else if (distribution$dist %in% c("binomial", "bernoulli")) {
+      var.beta0 <- 1 / (distribution$prob * (1 - distribution$prob))
+      var.beta1 <- 1 / (1 - distribution$prob) + 1 / (distribution$prob * exp(beta1))
+    } else {
+      stop("Distribution type is not supported by the Signorini procedure.", call. = FALSE)
+    }
+
+  } else { # signorini
+
+    # carry out the actual calculations
+    # [1] define the variance function
+    var.func <- function(x, e, b0, b1) x ^ e * dist.parms$func(x) * exp(b0 + b1 * x)
+
+    # [2A] use summation to “integrate” integer sequences OR
+    if (distribution$dist %in% c("poisson", "binomial", "bernoulli")) {
+
+      # determine which sequence should be summed up
+      calc.seq <- seq(dist.parms$min, dist.parms$max)
+
+      # for mu: e1 [first parm.] = 0 -> x ^ e1 == 1, the log of which is beta0* (beta0s)
+      # calculate mu and beta0s -                     | parms. to var.func
+      mu  <- sum(vapply(calc.seq, var.func, numeric(1), 0, beta0,  beta1), na.rm = TRUE)
+      beta0s <- log(mu)
+
+      # variance under null -                         | parms. to var.func
+      i00 <- sum(vapply(calc.seq, var.func, numeric(1), 0, beta0s, 0),     na.rm = TRUE)
+      i01 <- sum(vapply(calc.seq, var.func, numeric(1), 1, beta0s, 0),     na.rm = TRUE)
+      i11 <- sum(vapply(calc.seq, var.func, numeric(1), 2, beta0s, 0),     na.rm = TRUE)
+      var.beta0 <- i00 / (i00 * i11 - i01 ^ 2)
+
+      # variance under alternative -                  | parms. to var.func
+      i00 <- sum(vapply(calc.seq, var.func, numeric(1), 0, beta0,  beta1), na.rm = TRUE)
+      i01 <- sum(vapply(calc.seq, var.func, numeric(1), 1, beta0,  beta1), na.rm = TRUE)
+      i11 <- sum(vapply(calc.seq, var.func, numeric(1), 2, beta0,  beta1), na.rm = TRUE)
+      var.beta1 <- i00 / (i00 * i11 - i01 ^ 2)
+
+    # [2B] use integration for real numbers
+    } else if (distribution$dist %in% c("normal", "uniform", "exponential", "lognormal")) {
+
+      # for mu: e1 [first parm.] = 0 -> x ^ e1 == 1, the log of which is beta0* (beta0s)
+      # calculate mu and beta0s -                                     | parms. to var.func
+      mu  <- stats::integrate(var.func, dist.parms$min, dist.parms$max, 0, beta0,  beta1)$value
+      beta0s <- log(mu)
+
+      # variance under null -                                         | parms. to var.func
+      i00 <- stats::integrate(var.func, dist.parms$min, dist.parms$max, 0, beta0s, 0)$value
+      i01 <- stats::integrate(var.func, dist.parms$min, dist.parms$max, 1, beta0s, 0)$value
+      i11 <- stats::integrate(var.func, dist.parms$min, dist.parms$max, 2, beta0s, 0)$value
+      var.beta0 <- i00 / (i00 * i11 - i01 ^ 2)
+
+      # variance under alternative -                                  | parms. to var.func
+      i00 <- stats::integrate(var.func, dist.parms$min, dist.parms$max, 0, beta0,  beta1)$value
+      i01 <- stats::integrate(var.func, dist.parms$min, dist.parms$max, 1, beta0,  beta1)$value
+      i11 <- stats::integrate(var.func, dist.parms$min, dist.parms$max, 2, beta0,  beta1)$value
+      var.beta1 <- i00 / (i00 * i11 - i01 ^ 2)
+
+    }
+
+  } # demidenko and demidenko(vc)
+
+  list(var.beta0 = var.beta0, var.beta1 = var.beta1, distribution = distribution$dist, method = method,
+       min = dist.parms$min, max = dist.parms$max)
+
+} # var.beta.poisson()

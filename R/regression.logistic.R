@@ -203,6 +203,7 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
   if (!is.null(n)) check.sample.size(n)
   if (!is.null(power)) check.power(power)
   check.proportion(alpha)
+  distribution <- ensure.distribution(distribution)
   check.logical(ceil.n, utf)
   verbose <- ensure.verbose(verbose)
 
@@ -251,194 +252,17 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
 
   requested <- get.requested(es = list(base.prob, odds.ratio), n = n, power = power)
 
-  # check distribution
-  if (length(distribution) == 1 && is.character(distribution)) {
-    distribution <- switch(tolower(distribution),
-                           `normal` = list(dist = "normal", mean = 0, sd = 1),
-                           `poisson` = list(dist = "poisson", lambda = 1),
-                           `uniform` = list(dist = "uniform", min = 0, max = 1),
-                           `exponential` = list(dist = "exponential", rate = 1),
-                           `binomial` = list(dist = "binomial", size = 1, prob = 0.50),
-                           `bernoulli` = list(dist = "bernoulli", prob = 0.50),
-                           `lognormal` = list(dist = "lognormal", meanlog = 0, sdlog = 1))
-  } else if (is.list(distribution)) {
-    if (length(distribution) > 3) stop("Unknown input type for `distribution`.", call. = FALSE)
-    dist.list.names <- names(distribution)
-    dist.attrib <- c(dist.list.names, tolower(distribution$dist))
-    dist.invalid <- c(anyNA(match(dist.attrib, c("dist", "normal", "mean", "sd"))),
-                      anyNA(match(dist.attrib, c("dist", "poisson", "lambda"))),
-                      anyNA(match(dist.attrib, c("dist", "uniform", "min", "max"))),
-                      anyNA(match(dist.attrib, c("dist", "exponential", "rate"))),
-                      anyNA(match(dist.attrib, c("dist", "binomial", "size", "prob"))),
-                      anyNA(match(dist.attrib, c("dist", "bernoulli", "prob"))),
-                      anyNA(match(dist.attrib, c("dist", "lognormal", "meanlog", "sdlog"))))
-    if (all(dist.invalid)) stop("Unknown input type for `distribution`.", call. = FALSE)
-  } else {
-    stop("Unknown input type for `distribution`.", call. = FALSE)
-  }
-
-  # asymptotic variances
-  var.beta <- function(beta0, beta1, distribution) {
-    prec <- 1e-8
-
-    if (tolower(distribution$dist) == "normal") {
-
-      min.thresh <- stats::qnorm(prec,     mean = distribution$mean, sd = distribution$sd)
-      max.thresh <- stats::qnorm(1 - prec, mean = distribution$mean, sd = distribution$sd)
-
-      # define the distribution function and use integration (calcInt == FALSE)
-      dist.func <- function(x) stats::dnorm(x, mean = distribution$mean, sd = distribution$sd)
-      calcInt <- FALSE
-
-    }  else if (tolower(distribution$dist) == "poisson") {
-
-      min.thresh <- 0
-      max.thresh <- stats::qpois(1 - prec, lambda = distribution$lambda)
-
-      # define the distribution function and use summation (calcInt == TRUE)
-      dist.func <- function(x) stats::dpois(x, lambda = distribution$lambda)
-      calcInt <- TRUE
-
-    }  else if (tolower(distribution$dist) == "uniform") {
-
-      min.thresh <- distribution$min
-      max.thresh <- distribution$max
-
-      # define the distribution function and use integration (calcInt == FALSE)
-      dist.func <- function(x) stats::dunif(x, min = min.thresh, max = max.thresh)
-      calcInt <- FALSE
-
-    } else if (tolower(distribution$dist) == "exponential") {
-
-      min.thresh <- 0
-      max.thresh <- stats::qexp(1 - prec, rate = distribution$rate)
-
-      # define the distribution function and use integration (calcInt == FALSE)
-      dist.func <- function(x) stats::dexp(x, rate = distribution$rate)
-      calcInt <- FALSE
-
-    }  else if (tolower(distribution$dist) %in% c("binomial", "bernoulli")) {
-
-      min.thresh <- 0
-      max.thresh <- ifelse(tolower(distribution$dist) == "bernoulli", 1, distribution$size)
-
-      # define the distribution function and use summation (calcInt == TRUE)
-      dist.func <- function(x) stats::dbinom(x, size = max.thresh, prob = distribution$prob)
-      calcInt <- TRUE
-
-    } else if (tolower(distribution$dist) == "lognormal") {
-
-      min.thresh <- stats::qlnorm(prec,     meanlog = distribution$meanlog, sdlog = distribution$sdlog)
-      max.thresh <- stats::qlnorm(1 - prec, meanlog = distribution$meanlog, sdlog = distribution$sdlog)
-
-      # define the distribution function and use integration (calcInt == FALSE)
-      dist.func <- function(x) stats::dlnorm(x, meanlog = distribution$meanlog, sdlog = distribution$sdlog)
-      calcInt <- FALSE
-
-    } # log-normal
-
-    # carry out the actual calculations
-    # [1] define the variance function
-    var.func <- function(x, e1, b0, b1, e2) x ^ e1 * dist.func(x) * exp(b0 + b1 * x) / (1 + exp(b0 + b1 * x)) ^ e2
-
-    # [2A] use summation to “integrate” integer sequences OR
-    if (calcInt) {
-
-      # determine which sequence should be summed up
-      calc.seq <- seq(min.thresh, max.thresh)
-
-      # for mu: e1 [first parm.] = 0 -> x ^ e1 == 1, the log of which is beta0* (beta0s)
-      # calculate mu and beta0s -                     | parms. to var.func
-      mu  <- sum(vapply(calc.seq, var.func, numeric(1), 0, beta0,  beta1, 1), na.rm = TRUE)
-      beta0s <- log(mu / (1 - mu))
-
-      # variance under null -                         | parms. to var.func
-      i00 <- sum(vapply(calc.seq, var.func, numeric(1), 0, beta0s, 0,     2), na.rm = TRUE)
-      i01 <- sum(vapply(calc.seq, var.func, numeric(1), 1, beta0s, 0,     2), na.rm = TRUE)
-      i11 <- sum(vapply(calc.seq, var.func, numeric(1), 2, beta0s, 0,     2), na.rm = TRUE)
-      var.beta0 <- i00 / (i00 * i11 - i01 ^ 2)
-
-      # variance under alternative -                  | parms. to var.func
-      i00 <- sum(vapply(calc.seq, var.func, numeric(1), 0, beta0,  beta1, 2), na.rm = TRUE)
-      i01 <- sum(vapply(calc.seq, var.func, numeric(1), 1, beta0,  beta1, 2), na.rm = TRUE)
-      i11 <- sum(vapply(calc.seq, var.func, numeric(1), 2, beta0,  beta1, 2), na.rm = TRUE)
-      var.beta1 <- i00 / (i00 * i11 - i01 ^ 2)
-
-    # [2B] use integration for real numbers
-    } else {
-
-      # for mu: e1 [first parm.] = 0 -> x ^ e1 == 1, the log of which is beta0* (beta0s)
-      # calculate mu and beta0s -                             | parms. to var.func
-      mu  <- stats::integrate(var.func, min.thresh, max.thresh, 0, beta0,  beta1, 1)$value
-      beta0s <- log(mu / (1 - mu))
-
-      # variance under null -                                 | parms. to var.func
-      i00 <- stats::integrate(var.func, min.thresh, max.thresh, 0, beta0s, 0,     2)$value
-      i01 <- stats::integrate(var.func, min.thresh, max.thresh, 1, beta0s, 0,     2)$value
-      i11 <- stats::integrate(var.func, min.thresh, max.thresh, 2, beta0s, 0,     2)$value
-      var.beta0 <- i00 / (i00 * i11 - i01 ^ 2)
-
-      # variance under alternative -                          | parms. to var.func
-      i00 <- stats::integrate(var.func, min.thresh, max.thresh, 0, beta0,  beta1, 2)$value
-      i01 <- stats::integrate(var.func, min.thresh, max.thresh, 1, beta0,  beta1, 2)$value
-      i11 <- stats::integrate(var.func, min.thresh, max.thresh, 2, beta0,  beta1, 2)$value
-      var.beta1 <- i00 / (i00 * i11 - i01 ^ 2)
-
-    }
-
-    list(var.beta0 = var.beta0, var.beta1 = var.beta1,
-         distribution = tolower(distribution$dist),
-         min = min.thresh, max = max.thresh)
-
-  } # var.beta
-
-  beta.logistic.range <- function(base.prob, req.sign = -1, precision = 1e-12) {
-
-    if (req.sign == -1) {
-      prob.lower <- precision
-      prob.upper <- base.prob - precision
-      odds.ratio.lower <- (prob.lower / (1 - prob.lower)) / (base.prob / (1 - base.prob))
-      odds.ratio.upper <- (prob.upper / (1 - prob.upper)) / (base.prob / (1 - base.prob))
-      beta1.lower <- log(odds.ratio.lower)
-      beta1.upper <- log(odds.ratio.upper)
-      c(beta1.lower, beta1.upper)
-    } else {
-      prob.lower <- base.prob + precision
-      prob.upper <- 1 - precision
-      odds.ratio.lower <- (prob.lower / (1 - prob.lower)) / (base.prob / (1 - base.prob))
-      odds.ratio.upper <- (prob.upper / (1 - prob.upper)) / (base.prob / (1 - base.prob))
-      beta1.lower <- log(odds.ratio.lower)
-      beta1.upper <- log(odds.ratio.upper)
-      c(beta1.lower, beta1.upper)
-    }
-
-  } # beta.logistic.range
-
   # Demidenko, E. (2007). Sample size determination for logistic
   # regression revisited. Statistics in Medicine, 26, 3385-3397.
   pwr.demidenko <- function(beta0, beta1, n, r.squared.predictor, alpha, alternative, method, distribution) {
 
-    # variance correction factor
-    if (method == "demidenko(vc)") {
-      vcf <- switch(tolower(distribution$dist),
-                    `normal` = 1,
-                    `poisson` = 1,
-                    `uniform` = 1,
-                    `exponential` = 1,
-                    `binomial` = 0.85,
-                    `bernoulli` = 0.85,
-                    `lognormal` = 0.75)
-    } else if (tolower(method) == "demidenko") {
-      vcf <- 0
-    }
+    vcf <- get.vcf(method = method, dist = distribution$dist)
 
-    var.obj <- var.beta(beta0 = beta0, beta1 = beta1, distribution = distribution)
-    var.beta0 <- var.obj$var.beta0
-    var.beta1 <- var.obj$var.beta1
+    var.obj <- var.beta.logistic(beta0 = beta0, beta1 = beta1, distribution = distribution)
 
     # non-centrality parameter and standard deviation of the non-centrality parameter under alternative
-    ncp <- beta1 / sqrt(var.beta1 / (n * (1 - r.squared.predictor)))
-    sd.ncp <- sqrt((vcf * var.beta0 + (1 - vcf) * var.beta1) / var.beta1)
+    ncp <- beta1 / sqrt(var.obj$var.beta1 / (n * (1 - r.squared.predictor)))
+    sd.ncp <- sqrt((vcf * var.obj$var.beta0 + (1 - vcf) * var.obj$var.beta1) / var.obj$var.beta1)
 
     pwr.obj <- power.z.test(mean = ncp, sd = sd.ncp, null.mean = 0,
                             alpha = alpha, alternative = alternative,
@@ -447,7 +271,7 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
     z.alpha <- pwr.obj$z.alpha
 
     list(power = power, ncp = ncp, sd.ncp = sd.ncp, vcf = vcf, z.alpha = z.alpha,
-         var.beta0 = var.beta0, var.beta1 = var.beta1)
+         var.beta0 = var.obj$var.beta0, var.beta1 = var.obj$var.beta1)
 
   } # pwr.demidenko()
 
@@ -460,7 +284,7 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
     z.alpha <- stats::qnorm(alpha / ifelse(alternative == "two.sided", 2, 1), lower.tail = FALSE)
     z.beta  <- stats::qnorm(1 - power, lower.tail = FALSE)
 
-    if (tolower(distribution$dist) == "binomial" && distribution$size == 1) {
+    if (distribution$dist == "binomial" && distribution$size == 1) {
 
       dist.prob <- distribution$prob
       p.bar <- (1 - dist.prob) * base.prob + dist.prob * prob
@@ -468,7 +292,7 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
             z.beta  * sqrt(base.prob * (1 - base.prob) + prob * (1 - prob) * (1 - dist.prob) / dist.prob)) ^ 2 /
             ((base.prob - prob) ^ 2 * (1 - dist.prob))
 
-    } else if (tolower(distribution$dist) == "normal") {
+    } else if (distribution$dist == "normal") {
 
       n <- (z.alpha + z.beta) ^ 2 / (base.prob * (1 - base.prob) * beta1 ^ 2)
 
@@ -504,13 +328,11 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
 
     } else if (requested == "es") {
 
-      # reasonable bounds for logistics
-      val.rng <- beta.logistic.range(base.prob = base.prob, req.sign = req.sign)
-      # var.obj <- var.beta(beta0 = beta0, beta1 = beta0, distribution = distribution)
-      # bound.values <- c((stats::qlogis(0.0001) - beta0) / c(var.obj$min, var.obj$max),
-      #                   (stats::qlogis(0.9999) - beta0) / c(var.obj$min, var.obj$max))
-      # bound.values <- bound.values[is.finite(bound.values)]
-      # val.rng2 <- c(min(bound.values), 0, max(bound.values))[ifelse(check.pos_sign(req.sign), -1, -3)]
+      # reasonable bounds for beta1
+      prob.lower <- ifelse(check.pos_sign(req.sign), base.prob, 0) + 1e-12
+      prob.upper <- ifelse(check.pos_sign(req.sign), 1, base.prob) - 1e-12
+      val.rng <- c(log((prob.lower / (1 - prob.lower)) / (base.prob / (1 - base.prob))),
+                   log((prob.upper / (1 - prob.upper)) / (base.prob / (1 - base.prob))))
 
       beta1 <- try(stats::uniroot(function(beta1) min.pwr.demidenko(beta1, n, power), interval = val.rng)$root, silent = TRUE)
       if (inherits(beta1, "try-error"))
@@ -582,7 +404,7 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
                                       `demidenko(vc)` = "Demidenko (Variance Corrected)",
                                       `demidenko` = "Demidenko",
                                       `hsieh` = "Hsieh"),
-                      dist = switch(tolower(distribution$dist),
+                      dist = switch(distribution$dist,
                                     `normal` = "Normal",
                                     `poisson` = "Poisson",
                                     `bernoulli` = "Bernoulli",
@@ -665,3 +487,62 @@ pwrss.z.logreg <- pwrss.z.logistic
 odds2prob <- function(odds.ratio, base.prob) {
   odds.ratio * (base.prob / (1 - base.prob)) / (1 + odds.ratio * (base.prob / (1 - base.prob)))
 }
+
+# calculate asymptotic variances
+var.beta.logistic <- function(beta0, beta1, distribution) {
+
+  dist.parms <- get.parms4integrate(distribution = distribution)
+
+  # carry out the actual calculations
+  # [1] define the variance function
+  var.func <- function(x, e1, b0, b1, e2) x ^ e1 * dist.parms$func(x) * exp(b0 + b1 * x) / (1 + exp(b0 + b1 * x)) ^ e2
+
+  # [2A] use summation to “integrate” integer sequences OR
+  if (distribution$dist %in% c("binomial", "bernoulli", "poisson")) {
+
+    # determine which sequence should be summed up
+    calc.seq <- seq(dist.parms$min, dist.parms$max)
+
+    # for mu: e1 [first parm.] = 0 -> x ^ e1 == 1, the log of which is beta0* (beta0s)
+    # calculate mu and beta0s -                     | parms. to var.func
+    mu  <- sum(vapply(calc.seq, var.func, numeric(1), 0, beta0,  beta1, 1), na.rm = TRUE)
+    beta0s <- log(mu / (1 - mu))
+
+    # variance under null -                         | parms. to var.func
+    i00 <- sum(vapply(calc.seq, var.func, numeric(1), 0, beta0s, 0,     2), na.rm = TRUE)
+    i01 <- sum(vapply(calc.seq, var.func, numeric(1), 1, beta0s, 0,     2), na.rm = TRUE)
+    i11 <- sum(vapply(calc.seq, var.func, numeric(1), 2, beta0s, 0,     2), na.rm = TRUE)
+    var.beta0 <- i00 / (i00 * i11 - i01 ^ 2)
+
+    # variance under alternative -                  | parms. to var.func
+    i00 <- sum(vapply(calc.seq, var.func, numeric(1), 0, beta0,  beta1, 2), na.rm = TRUE)
+    i01 <- sum(vapply(calc.seq, var.func, numeric(1), 1, beta0,  beta1, 2), na.rm = TRUE)
+    i11 <- sum(vapply(calc.seq, var.func, numeric(1), 2, beta0,  beta1, 2), na.rm = TRUE)
+    var.beta1 <- i00 / (i00 * i11 - i01 ^ 2)
+
+  # [2B] use integration for real numbers
+  } else if (distribution$dist %in% c("normal", "uniform", "exponential", "lognormal")) {
+
+    # for mu: e1 [first parm.] = 0 -> x ^ e1 == 1, the log of which is beta0* (beta0s)
+    # calculate mu and beta0s -                                     | parms. to var.func
+    mu  <- stats::integrate(var.func, dist.parms$min, dist.parms$max, 0, beta0,  beta1, 1)$value
+    beta0s <- log(mu / (1 - mu))
+
+    # variance under null -                                         | parms. to var.func
+    i00 <- stats::integrate(var.func, dist.parms$min, dist.parms$max, 0, beta0s, 0,     2)$value
+    i01 <- stats::integrate(var.func, dist.parms$min, dist.parms$max, 1, beta0s, 0,     2)$value
+    i11 <- stats::integrate(var.func, dist.parms$min, dist.parms$max, 2, beta0s, 0,     2)$value
+    var.beta0 <- i00 / (i00 * i11 - i01 ^ 2)
+
+    # variance under alternative -                                  | parms. to var.func
+    i00 <- stats::integrate(var.func, dist.parms$min, dist.parms$max, 0, beta0,  beta1, 2)$value
+    i01 <- stats::integrate(var.func, dist.parms$min, dist.parms$max, 1, beta0,  beta1, 2)$value
+    i11 <- stats::integrate(var.func, dist.parms$min, dist.parms$max, 2, beta0,  beta1, 2)$value
+    var.beta1 <- i00 / (i00 * i11 - i01 ^ 2)
+  
+  }
+
+  list(var.beta0 = var.beta0, var.beta1 = var.beta1, distribution = distribution$dist,
+       min = dist.parms$min, max = dist.parms$max)
+
+} # var.beta.logistic

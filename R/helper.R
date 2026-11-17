@@ -10,6 +10,36 @@ ensure.verbose <- function(verbose = NULL) {
   }
 }
 
+# ensure valid values for distributions (in regression.logistic and regression.poisson)
+ensure.distribution <- function(distribution) {
+  if (is.character(distribution) && length(distribution) == 1) {
+    switch(tolower(distribution),
+           normal      = list(dist = "normal", mean = 0, sd = 1),
+           poisson     = list(dist = "poisson", lambda = 1),
+           uniform     = list(dist = "uniform", min = 0, max = 1),
+           exponential = list(dist = "exponential", rate = 1),
+           binomial    = list(dist = "binomial", size = 1, prob = 0.50),
+           bernoulli   = list(dist = "bernoulli", prob = 0.50),
+           lognormal   = list(dist = "lognormal", meanlog = 0, sdlog = 1),
+           stop("Unknown input type for `distribution`.", call. = FALSE))
+  } else if (is.list(distribution)) {
+    distribution$dist <- tolower(distribution$dist)
+    dist.invalid <- switch(distribution$dist,
+                           normal      = !identical(sort(names(distribution)), c("dist", "mean", "sd")),
+                           poisson     = !identical(sort(names(distribution)), c("dist", "lambda")),
+                           uniform     = !identical(sort(names(distribution)), c("dist", "max", "min")),
+                           exponential = !identical(sort(names(distribution)), c("dist", "rate")),
+                           binomial    = !identical(sort(names(distribution)), c("dist", "prob", "size")),
+                           bernoulli   = !identical(sort(names(distribution)), c("dist", "prob")),
+                           lognormal   = !identical(sort(names(distribution)), c("dist", "meanlog", "sdlog")),
+                           FALSE)
+    if (dist.invalid) stop("Unknown input type for `distribution`.", call. = FALSE)
+    distribution
+  } else {
+    stop("Unknown input type for `distribution`.", call. = FALSE)
+  }
+} # ensure.distribution
+
 # check the input parameters n, power and es, and return which calculation is requested
 get.requested <- function(es = NULL, n = NULL, power = NULL) {
 
@@ -82,6 +112,43 @@ get.interval <- function(null.ncp, req.sign, distribution = c("z", "t", "lp", "b
   }
 
 } # get.interval
+
+# determine / return variance correction factor
+get.vcf <- function(method, dist) {
+    if (method == "demidenko(vc)") {
+      switch(dist, binomial = 0.85, bernoulli = 0.85, lognormal = 0.75, 1)
+    } else if (method == "demidenko") {
+      0
+    } else {
+      NA
+    }
+} # get.vcf
+
+# define minimum and maximum threshold and the distribution function for the integration in var.beta....
+get.parms4integrate <- function(distribution, prec = 1e-8) {
+  switch(distribution$dist,
+         normal      = list(min  = stats::qnorm(prec,     mean = distribution$mean, sd = distribution$sd),
+                            max  = stats::qnorm(1 - prec, mean = distribution$mean, sd = distribution$sd),
+                            func = function(x) stats::dnorm(x, mean = distribution$mean, sd = distribution$sd)),
+         poisson     = list(min  = 0,
+                            max  = stats::qpois(1 - prec, lambda = distribution$lambda),
+                            func = function(x) stats::dpois(x, lambda = distribution$lambda)),
+         uniform     = list(min  = distribution$min,
+                            max  = distribution$max,
+                            func = function(x) stats::dunif(x, min = distribution$min, max = distribution$max)),
+         exponential = list(min  = 0,
+                            max  = stats::qexp(1 - prec, rate = distribution$rate),
+                            func = function(x) stats::dexp(x, rate = distribution$rate)),
+         binomial    = list(min  = 0,
+                            max  = distribution$size,
+                            func = function(x) stats::dbinom(x, size = distribution$size, prob = distribution$prob)),
+         bernoulli   = list(min  = 0,
+                            max  = 1,
+                            func = function(x) stats::dbinom(x, size = 1,                 prob = distribution$prob)),
+         lognormal   = list(min  = stats::qlnorm(prec,     meanlog = distribution$meanlog, sdlog = distribution$sdlog),
+                            max  = stats::qlnorm(1 - prec, meanlog = distribution$meanlog, sdlog = distribution$sdlog),
+                            func = function(x) stats::dlnorm(x, meanlog = distribution$meanlog, sdlog = distribution$sdlog)))
+} # get.parms4integrate
 
 isInt <- function(x) is.numeric(x) && !any(abs(x - round(x)) > .Machine$double.eps ^ (2 / 3))
 
