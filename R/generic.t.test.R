@@ -234,4 +234,114 @@ power.t.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0,
 
 } # end of power.t.test()
 
-power.t <- power.t.test
+
+# statistic: observed t-statistic
+# probs: inversion probabilities
+# set probs = c(0.025, 0.975) for 95% CI
+
+
+#' Precision Calculation for the Generic t-Test
+#'
+#' @description
+#' TBA...
+#'
+#' @aliases precision.t
+#'
+#'
+#' @param power       statistical power \eqn{(1 - \beta)}; either `power`,
+#'                    `ncp` or `df` needs to be NULL (and is then estimated).
+#' @param ncp         non-centrality parameter for the alternative; ; either
+#'                    `power`, `ncp` or `df` needs to be NULL (and is then
+#'                    estimated).
+#' @param null.ncp    non-centrality parameter for the null. When alternative =
+#'                    "two.one.sided", the function expects two values in the
+#'                    form `c(lower, upper)`. If a single value is provided, it
+#'                    is interpreted as the absolute bound and automatically
+#'                    expanded to `c(-value, +value)`.
+#' @param req.sign    whether `ncp` is expected to be greater '+1', less than
+#'                    '-1', or within '0' the `null.ncp` bounds; only relevant
+#'                    if `ncp` is to be estimated.
+#' @param df          degrees of freedom; either `power`, `ncp` or `df` needs
+#'                    to be NULL (and is then estimated).
+#' @param alpha       type 1 error rate, defined as the probability of
+#'                    incorrectly rejecting a true null hypothesis, denoted as
+#'                    \eqn{\alpha}.
+#' @param alternative character; the direction or type of the hypothesis test:
+#'                    "two.sided", "one.sided", or "two.one.sided".
+#'                    "two.one.sided" is used for equivalence and minimal
+#'                    effect testing.
+#' @param plot        logical; \code{FALSE} switches off Type 1 and Type 2
+#'                    error plot. \code{TRUE} by default.
+#' @param verbose     \code{1} by default (returns test, hypotheses, and
+#'                    results), if \code{2} a more detailed output is given
+#'                    (plus key parameters and definitions), if \code{0} no
+#'                    output is printed on the console.
+#' @param utf         logical; whether the output should show Unicode
+#'                    characters (if encoding allows for it). \code{FALSE} by
+#'                    default.
+#'
+#' @return
+#'   \item{power}{statistical power \eqn{(1-\beta)}.}
+#'   \item{ncp}{non-centrality parameter under alternative.}
+#'   \item{null.ncp}{non-centrality parameter under null.}
+#'   \item{df}{degrees of freedom.}
+#'   \item{alpha}{type 1 error rate (user-specified).}
+#'   \item{t.alpha}{critical value(s).}
+#'   \item{beta}{type 2 error rate.}
+#'   \item{type.s}{type S error rate (only for two-tailed test).}
+#'   \item{type.m}{type M error rate (only for two-tailed test).}
+#'
+#' @examples
+#' # TBA ...
+#'
+#' @export precision.t.test
+precision.t.test <- function(statistic, df, probs = c(0.025, 0.25, 0.50, 0.75, 0.975)) {
+  check.numeric(statistic)
+  check.positive(df)
+  check.vector(probs, check.proportion)
+
+  find.ncp.t <- function(target) {
+
+    # Function whose root we want: pt(...) = target
+    objective <- function(ncp) {
+      value <- tryCatch(suppressWarnings(stats::pt(q = statistic, df = df, ncp = ncp)),
+                        error = function(e) NA_real_)
+      if (is.finite(value)) value - target else NA_real_
+    }
+
+    # the noncentrality parameter may be negative or positive; start searching around the observed t statistic
+    width <- 1
+    bracketed <- FALSE
+    for (i in seq_len(500L)) {
+      # the CDF decreases as ncp increases; a root is bracketed when: objective(lower) >= 0 and objective(upper) <= 0
+      value.at.lower <- objective(statistic - width)
+      value.at.upper <- objective(statistic + width)
+      if (is.finite(value.at.lower) && is.finite(value.at.upper) && value.at.lower >= 0 && value.at.upper <= 0) {
+        bracketed <- TRUE
+        break
+      } else {
+        width <- width * 2
+        if (!is.finite(width)) break
+      }
+    }
+    if (!bracketed) return(NA_real_)
+
+    tryCatch(stats::uniroot(objective, interval = statistic + width * c(-1, 1), tol = 1e-12, maxiter = 500L)$root,
+             error = function(e) NA_real_)
+
+  } # find.ncp.t
+
+  ci <- vapply(1 - probs, function(target) find.ncp.t(target = target), numeric(1L))
+  if (any(abs(ci) > 35, na.rm = TRUE)) {
+    warning("At least one confidence limit exceeds 35 in magnitude; base R noncentral-t probabilities may be inaccurate.",
+            call. = FALSE)
+  }
+
+  invisible(list(statistic = statistic, df = df, probs = probs, ci = setNames(ci, paste0(round(probs * 100, 1), "%"))))
+
+} # precision.t.test()
+
+
+# aliases
+power.t     <- power.t.test
+precision.t <- precision.t.test

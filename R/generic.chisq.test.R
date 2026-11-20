@@ -145,4 +145,53 @@ power.chisq.test <- function(power = NULL, ncp = NULL, null.ncp = 0,
 
 } # end of power.chisq.test()
 
-power.chisq <- power.chisq.test
+
+# statistic: observed chi-square test statistic
+# probs: inversion probabilities
+# set probs = c(0.025, 0.975) for 95% CI
+precision.chisq.test <- function(statistic, df, probs = c(0.025, 0.25, 0.50, 0.75, 0.975)) {
+  check.numeric(statistic)
+  check.positive(df)
+  check.vector(probs, check.proportion)
+
+  find.ncp.chisq <- function(target, no.root = 0) {
+
+    objective <- function(ncp) suppressWarnings(stats::pchisq(statistic, df = df, ncp = ncp)) - target
+
+    # Evaluate the objective at the smallest possible ncp.
+    value.at.zero <- objective(0)
+
+    if (!is.finite(value.at.zero)) return(NA_real_)
+
+    # the CDF decreases as ncp increases, if the CDF is already below the target at ncp = 0, no nonnegative root exists
+    if (value.at.zero < 0) return(no.root)
+
+    # start searching with an upper boundary of 1.
+    upper <- 1
+
+    # increase the upper boundary until the objective changes from positive to negative
+    for (i in seq_len(500L)) {
+
+      value.at.upper <- objective(upper)
+      if (is.finite(value.at.upper) && value.at.upper <= 0) break
+
+      upper <- upper * 2
+    }
+
+    # if no valid upper boundary was found, return NA
+    if (!exists("value.at.upper") || !is.finite(value.at.upper) || value.at.upper > 0) return(NA_real_)
+
+    tryCatch(stats::uniroot(objective, interval = c(0, upper), tol = 1e-12, maxiter = 500L)$root, error = function(e) NA_real_)
+
+  } # find.ncp.chisq
+
+  ci <- vapply(1 - probs, function(target) find.ncp.chisq(target = target), numeric(1L))
+
+  list(statistic = statistic, df = df, probs = probs, ci = setNames(ci, paste0(round(probs * 100, 1), "%")))
+
+} # precision.chisq.test()
+
+
+# aliases
+power.chisq     <- power.chisq.test
+precision.chisq <- precision.chisq.test

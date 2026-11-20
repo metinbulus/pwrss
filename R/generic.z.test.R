@@ -221,4 +221,22 @@ power.z.test <- function(power = NULL, mean = NULL, sd = 1, null.mean = 0, null.
 
 } # end of power.z.test()
 
-power.z <- power.z.test
+
+# statistic: observed test statistic
+# probs: quantile probabilities
+# set probs = c(0.025, 0.975) for 95% CI
+precision.z.test <- function(statistic, probs = c(0.025, 0.25, 0.50, 0.75, 0.975)) {
+  check.numeric(statistic)
+  check.vector(probs, check.proportion)
+
+  ci <- tryCatch(stats::qnorm(p = probs, mean = statistic, sd = 1, lower.tail = TRUE),
+                 error = function(e) NA_real_)
+
+  list(statistic = statistic, probs = probs, ci = setNames(ci, paste0(round(probs * 100, 1), "%")))
+
+} # precision.z.test()
+
+
+# aliases
+power.z     <- power.z.test
+precision.z <- precision.z.test

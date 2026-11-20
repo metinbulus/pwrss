@@ -273,4 +273,28 @@ power.lp.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0
 
 } # end of power.lp.test()
 
-power.lp <- power.lp.test
+
+# statistic: observed t-statistic
+# probs: quantile probabilities
+# set probs = c(0.025, 0.975) for 95% CI
+precision.lp.test <- function(statistic, df, probs = c(0.025, 0.25, 0.50, 0.75, 0.975)) {
+  check.numeric(statistic)
+  check.positive(df)
+  check.vector(probs, check.proportion)
+
+  ci <- tryCatch(qlambdap(p = probs, df = df, ncp = statistic, lower.tail = TRUE, log.p = FALSE),
+                 error = function(e) rep(NA_real_, length(probs)))
+
+  if (any(abs(ci) > 35, na.rm = TRUE)) {
+    warning("At least one confidence limit exceeds 35 in magnitude; base R noncentral-t probabilities may be inaccurate.",
+            call. = FALSE)
+  }
+
+  list(statistic = statistic, df = df, probs = probs, ci = setNames(ci, paste0(round(probs * 100, 1), "%")))
+
+} # precision.lp.test()
+
+
+# aliases
+power.lp     <- power.lp.test
+precision.lp <- precision.lp.test

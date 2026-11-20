@@ -86,7 +86,7 @@ power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
       max.thresh <- stats::qf(1 - 1e-12, ncp = null.ncp, df1 = df1, df2 = df2)
       while (min.pwr(max.thresh, power, alternative) > 0) max.thresh <- max.thresh * 1.10
     }
-    
+
     # ncp <- stats::optimize(f = function(ncp) min.pwr(ncp, power, alternative) ^ 2, interval = c(0, max.thresh), tol = 1e-12)$minimum
     ncp <- stats::uniroot(
       f = function(ncp) min.pwr(ncp, power, alternative),
@@ -133,4 +133,52 @@ power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
 
 } # end of power.f.test()
 
+
+# statistic: observed F-statistic
+# probs: inversion probabilities
+# set probs = c(0.025, 0.975) for 95% CI
+precision.f.test <- function(statistic, df1, df2, probs = c(0.025, 0.25, 0.50, 0.75, 0.975)) {
+  check.numeric(statistic)
+  check.positive(df1, df2)
+  check.vector(probs, check.proportion)
+
+  find.ncp.f <- function(target, no.root = 0) {
+
+    objective <- function(ncp) suppressWarnings(stats::pf(statistic, df1 = df1, df2 = df2, ncp = ncp)) - target
+
+    # evaluate the objective at the smallest possible ncp
+    value.at.zero <- objective(0)
+
+    if (!is.finite(value.at.zero)) return(NA_real_)
+
+    # the CDF decreases as ncp increases; if the CDF is already below the target at ncp = 0, no nonnegative root exists
+    if (value.at.zero < 0) return(no.root)
+
+    # start searching with an upper boundary of 1, and increase the upper boundary until the objective changes from positive to negative
+    upper <- 1
+    for (i in seq_len(500L)) {
+
+      value.at.upper <- objective(upper)
+      if (is.finite(value.at.upper) && value.at.upper <= 0) break
+
+      upper <- upper * 2
+
+    }
+
+    # if no valid upper boundary was found, return NA
+    if (!exists("value.at.upper") || !is.finite(value.at.upper) || value.at.upper > 0) return(NA_real_)
+
+    tryCatch(stats::uniroot(objective, interval = c(0, upper), tol = 1e-12, maxiter = 500L)$root, error = function(e) NA_real_)
+
+  } # find.ncp.f
+
+  ci <- vapply(1 - probs, function(target) find.ncp.f(target = target), numeric(1L))
+
+  list(statistic = statistic, df1 = df1, df2 = df2, probs = probs, ci = setNames(ci, paste0(round(probs * 100, 1), "%")))
+
+} # precision.f.test()
+
+
+# aliases
 power.f <- power.f.test
+precision.f <- precision.f.test
