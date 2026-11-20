@@ -539,7 +539,7 @@ var.beta.logistic <- function(beta0, beta1, distribution) {
     i01 <- stats::integrate(var.func, dist.parms$min, dist.parms$max, 1, beta0,  beta1, 2)$value
     i11 <- stats::integrate(var.func, dist.parms$min, dist.parms$max, 2, beta0,  beta1, 2)$value
     var.beta1 <- i00 / (i00 * i11 - i01 ^ 2)
-  
+
   }
 
   list(var.beta0 = var.beta0, var.beta1 = var.beta1, distribution = distribution$dist,
