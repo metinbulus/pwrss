@@ -148,7 +148,7 @@ power.t.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "two.sided")
 power.t.test(power = 0.80, df = 100, alpha = 0.05, alternative = "two.sided")
 
 #> +--------------------------------------------------+
-#> |       MINIMUM DETECTABLE NCP CALCULATION         |
+#> |        MINIMUM DETECTABLE NCP CALCULATION        |
 #> +--------------------------------------------------+
 #> 
 #> Generic t-Test
@@ -198,7 +198,7 @@ power.t.test(ncp = 1.96, df = 100, alpha = 0.05, alternative = "one.sided")
 power.t.test(power = 0.80, df = 100, alpha = 0.05, alternative = "one.sided")
 
 #> +--------------------------------------------------+
-#> |       MINIMUM DETECTABLE NCP CALCULATION         |
+#> |        MINIMUM DETECTABLE NCP CALCULATION        |
 #> +--------------------------------------------------+
 #> 
 #> Generic t-Test
@@ -254,7 +254,7 @@ power.t.test(power = 0.80, req.sign = "0", null.ncp = c(-2, 2),
 #> Warning: The target power rate cannot be achieved within the null bounds.
 
 #> +--------------------------------------------------+
-#> |       MINIMUM DETECTABLE NCP CALCULATION         |
+#> |        MINIMUM DETECTABLE NCP CALCULATION        |
 #> +--------------------------------------------------+
 #> 
 #> Generic t-Test
@@ -311,7 +311,7 @@ power.t.test(power = 0.80, req.sign = "+", null.ncp = c(-1, 1),
              df = 100, alpha = 0.05, alternative = "two.one.sided")
 
 #> +--------------------------------------------------+
-#> |       MINIMUM DETECTABLE NCP CALCULATION         |
+#> |        MINIMUM DETECTABLE NCP CALCULATION        |
 #> +--------------------------------------------------+
 #> 
 #> Generic t-Test

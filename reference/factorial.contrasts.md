@@ -222,7 +222,7 @@ contrast.object$model.matrix
 
 # contrast matrix
 contrast.object$contrast.matrix
-#>             A1            A2        A3
-#> A.L -0.7071068  3.204938e-17 0.7071068
-#> A.Q  0.4082483 -8.164966e-01 0.4082483
+#>             A1         A2        A3
+#> A.L -0.7071068  0.0000000 0.7071068
+#> A.Q  0.4082483 -0.8164966 0.4082483
 ```

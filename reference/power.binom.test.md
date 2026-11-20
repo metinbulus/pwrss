@@ -136,7 +136,7 @@ power.binom.test(power = 0.80, size = 200, req.sign = "+", null.prob = 0.5,
                  alpha = 0.05, alternative = "one.sided")
 
 #> +--------------------------------------------------+
-#> |       MINIMUM DETECTABLE NCP CALCULATION         |
+#> |        MINIMUM DETECTABLE NCP CALCULATION        |
 #> +--------------------------------------------------+
 #> 
 #> Generic Binomial Test
@@ -186,7 +186,7 @@ power.binom.test(power = 0.80, size = 200, req.sign = "+", null.prob = 0.5,
                  alpha = 0.05, alternative = "two.sided")
 
 #> +--------------------------------------------------+
-#> |       MINIMUM DETECTABLE NCP CALCULATION         |
+#> |        MINIMUM DETECTABLE NCP CALCULATION        |
 #> +--------------------------------------------------+
 #> 
 #> Generic Binomial Test
@@ -240,7 +240,7 @@ power.binom.test(power = 0.80, size = 200, req.sign = "0",
 #> Warning: The target power rate cannot be achieved within the null bounds.
 
 #> +--------------------------------------------------+
-#> |       MINIMUM DETECTABLE NCP CALCULATION         |
+#> |        MINIMUM DETECTABLE NCP CALCULATION        |
 #> +--------------------------------------------------+
 #> 
 #> Generic Binomial Test
