@@ -257,7 +257,7 @@ precision.binom.test <- function(statistic, size, probs = c(0.025, 0.25, 0.50, 0
   if (any(upper)) ci[upper] <- if (x == size) 1 else stats::qbeta(probs[upper], shape1 = x + 1, shape2 = size - x)
   ci[probs == 0.50] <- x / size
 
-  list(statistic = statistic, probs = probs, ci = setNames(ci, paste0(round(probs * 100, 1), "%")))
+  list(statistic = statistic, probs = probs, ci = stats::setNames(ci, paste0(round(probs * 100, 1), "%")))
 } # precision.binom.test()
 
 

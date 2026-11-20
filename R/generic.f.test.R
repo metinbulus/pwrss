@@ -174,7 +174,7 @@ precision.f.test <- function(statistic, df1, df2, probs = c(0.025, 0.25, 0.50, 0
 
   ci <- vapply(1 - probs, function(target) find.ncp.f(target = target), numeric(1L))
 
-  list(statistic = statistic, df1 = df1, df2 = df2, probs = probs, ci = setNames(ci, paste0(round(probs * 100, 1), "%")))
+  list(statistic = statistic, df1 = df1, df2 = df2, probs = probs, ci = stats::setNames(ci, paste0(round(probs * 100, 1), "%")))
 
 } # precision.f.test()
 

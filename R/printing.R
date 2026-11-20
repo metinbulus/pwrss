@@ -1408,4 +1408,3 @@
   print(print.obj, digits = digits)
   if (verbose == 2) cat(.prec_info(class, utf = utf))
 } # .print.precision() -------------------------------------------------------------------------------------------------
-

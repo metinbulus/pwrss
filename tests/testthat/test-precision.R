@@ -1,25 +1,25 @@
 CIs <- c(0.80, 0.90, 0.95, 1 - (10 ^ seq(-2, -6)))
 # precision.binom.test (= precision.binom) -----------------------------------------------------------------------------
 test_that("precision.binom.test works", {
-    expect_equal(vapply(c(0.001, 0.01, seq(0.1, 0.9, 0.1), 0.99, 0.999), function(p)
-                   vapply(10 ^ seq(6), function(s) 
-                     vapply(CIs, function(c)
+    expect_equal(vapply(c(0.001, 0.01, seq(0.1, 0.9, 0.1), 0.99, 0.999), function(p) {
+                   vapply(10 ^ seq(6), function(s) {
+                     vapply(CIs, function(c) {
                                    if (isInt(p * s))
                                      as.numeric(precision.binom(statistic = p, size = s, probs = ci.to.probs(c))$ci)
                                    else
-                                     c(NA, NA),
-                            numeric(2)),
-                          numeric(16)),
+                                     c(NA, NA) },
+                            numeric(2)) },
+                          numeric(16)) },
                         numeric(96)),
-                 vapply(c(0.001, 0.01, seq(0.1, 0.9, 0.1), 0.99, 0.999), function(p)
-                   vapply(10 ^ seq(6), function(s) 
-                     vapply(CIs, function(c)
+                 vapply(c(0.001, 0.01, seq(0.1, 0.9, 0.1), 0.99, 0.999), function(p) {
+                   vapply(10 ^ seq(6), function(s) {
+                     vapply(CIs, function(c) {
                                    if (isInt(p * s))
                                      as.numeric(stats::binom.test(x = as.integer(p * s), n = s, conf.level = c)$conf.int)
                                    else
-                                     c(NA, NA),
-                            numeric(2)),
-                          numeric(16)),
+                                     c(NA, NA) },
+                            numeric(2)) },
+                          numeric(16)) },
                         numeric(96)))
 
     expect_equal(power.binom.test(prob = 0.70, size = 100, verbose = 0, plot = FALSE) |> precision(verbose = 0),
@@ -29,22 +29,22 @@ test_that("precision.binom.test works", {
 
 # precision.chisq.test (= precision.chisq) -----------------------------------------------------------------------------
 # code to create the comparison matrix (needs MBESS to be installed):
-# cmpRes <- vapply(c(0.1, 0.5, 1, 2, 4, 6, 10, 15, 20, 30), function(s)
-#             vapply(c(1, 2, 3, 5, 10, 20), function(d) 
-#               vapply(CIs, function(c)
-#                             as.numeric(MBESS::conf.limits.nc.chisq(s, df = d, conf.level = c)[c("Lower.Limit", "Upper.Limit")]),
-#                      numeric(2)),
-#                   numeric(16)),
+# cmpRes <- vapply(c(0.1, 0.5, 1, 2, 4, 6, 10, 15, 20, 30), function(s) {
+#             vapply(c(1, 2, 3, 5, 10, 20), function(d) {
+#               vapply(CIs, function(c) {
+#                             as.numeric(MBESS::conf.limits.nc.chisq(s, df = d, conf.level = c)[c("Lower.Limit", "Upper.Limit")]) },
+#                      numeric(2)) },
+#                   numeric(16)) },
 #                  numeric(96))
 # cmpRes[is.na(cmpRes)] <- 1e-12
 # saveRDS(cmpRes, "precision.chisq_2compare.rds")  NB: store the file in `tests` under the main directory of the package
 test_that("precision.chisq.test works", {
-    expect_equal(vapply(c(0.1, 0.5, 1, 2, 4, 6, 10, 15, 20, 30), function(s)
-                   vapply(c(1, 2, 3, 5, 10, 20), function(d) 
-                     vapply(CIs, function(c)
-                                   as.numeric(precision.chisq(statistic = s, df = d, probs = ci.to.probs(c))$ci),
-                            numeric(2)),
-                          numeric(16)),
+    expect_equal(vapply(c(0.1, 0.5, 1, 2, 4, 6, 10, 15, 20, 30), function(s) {
+                   vapply(c(1, 2, 3, 5, 10, 20), function(d) {
+                     vapply(CIs, function(c) {
+                                   as.numeric(precision.chisq(statistic = s, df = d, probs = ci.to.probs(c))$ci) },
+                            numeric(2)) },
+                          numeric(16)) },
                         numeric(96)),
                  readRDS("../precision.chisq_2compare.rds"), tolerance = 1e-4)
 
@@ -55,26 +55,26 @@ test_that("precision.chisq.test works", {
 
 # precision.f.test (= precision.f) -------------------------------------------------------------------------------------
 # code to create the comparison matrix (needs MBESS to be installed; NB: takes REALLY long!, reduced df = 20 -> 17.9):
-# cmpRes <- vapply(c(0.1, 0.5, 1, 2, 3, 5, 10, 17.9), function(s)
-#             vapply(c(1, 2, 4, 10, 30), function(d1)
-#               vapply(c(2, 5, 10, 30, 100), function(d2)
-#                 vapply(CIs, function(c)
-#                               as.numeric(MBESS::conf.limits.ncf(F.value = s, df.1 = d1, df.2 = d2, conf.level = c)[c("Lower.Limit", "Upper.Limit")]),
-#                        numeric(2)),
-#                      numeric(2 * 8)),
-#                    numeric(10 * 8)),
+# cmpRes <- vapply(c(0.1, 0.5, 1, 2, 3, 5, 10, 17.9), function(s) {
+#             vapply(c(1, 2, 4, 10, 30), function(d1) {
+#               vapply(c(2, 5, 10, 30, 100), function(d2) {
+#                 vapply(CIs, function(c) {
+#                               as.numeric(MBESS::conf.limits.ncf(F.value = s, df.1 = d1, df.2 = d2, conf.level = c)[c("Lower.Limit", "Upper.Limit")]) },
+#                        numeric(2)) },
+#                      numeric(2 * 8)) },
+#                    numeric(10 * 8)) },
 #                  numeric(50 * 8))
 # cmpRes[is.na(cmpRes)] <- 0
 # saveRDS(cmpRes, "precision.f_2compare.rds")  # NB: store the file in `tests` under the main directory of the package
 test_that("precision.f.test works", {
-    expect_equal(vapply(c(0.1, 0.5, 1, 2, 3, 5, 10, 17.9), function(s)
-                   vapply(c(1, 2, 4, 10, 30), function(d1)
-                     vapply(c(2, 5, 10, 30, 100), function(d2)
-                       vapply(CIs, function(c)
-                                     as.numeric(precision.f(statistic = s, df1 = d1, df2 = d2, probs = ci.to.probs(c))$ci),
-                              numeric(2)),
-                            numeric(2 * 8)),
-                          numeric(10 * 8)),
+    expect_equal(vapply(c(0.1, 0.5, 1, 2, 3, 5, 10, 17.9), function(s) {
+                   vapply(c(1, 2, 4, 10, 30), function(d1) {
+                     vapply(c(2, 5, 10, 30, 100), function(d2) {
+                       vapply(CIs, function(c) {
+                                     as.numeric(precision.f(statistic = s, df1 = d1, df2 = d2, probs = ci.to.probs(c))$ci) },
+                              numeric(2)) },
+                            numeric(2 * 8)) },
+                          numeric(10 * 8)) },
                         numeric(50 * 8)),
                  readRDS("../precision.f_2compare.rds"), tolerance = 1e-4)
 
@@ -103,7 +103,7 @@ test_that("precision.f.test works", {
                                      precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(7387.72518, 8108.71166, 8870.31736),
                             eta.squared = c(0.861256881, 0.872014356, 0.881703261), power = c(1, 1, 1)))
-    expect_equal(power.f.mixed.anova(eta.squared = 0.03386145, factor.levels = c(2,3), effect = "interaction",
+    expect_equal(power.f.mixed.anova(eta.squared = 0.03386145, factor.levels = c(2, 3), effect = "interaction",
                                      rho.within = 0.632544, epsilon = 0.9950807, n.total = 600, verbose = 0) |>
                                      precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(266.544427, 339.402880, 421.093821),
@@ -112,19 +112,19 @@ test_that("precision.f.test works", {
 
 # precision.lp.test (= precision.lp) -----------------------------------------------------------------------------------
 test_that("precision.lp.test works", {
-    expect_equal(vapply(c(-6, -3, -2, -1, 0, 1, 2, 3, 6), function(s)
-                   vapply(c(1, 2, 3, 5, 10, 30), function(d)
-                     vapply(CIs, function(c)
-                                   as.numeric(precision.lp(statistic = s, df = d, probs = ci.to.probs(c))$ci),
-                            numeric(2)),
-                          numeric(16)),
+    expect_equal(vapply(c(-6, -3, -2, -1, 0, 1, 2, 3, 6), function(s) {
+                   vapply(c(1, 2, 3, 5, 10, 30), function(d) {
+                     vapply(CIs, function(c) {
+                                   as.numeric(precision.lp(statistic = s, df = d, probs = ci.to.probs(c))$ci) },
+                            numeric(2)) },
+                          numeric(16)) },
                         numeric(96)),
-                 vapply(c(-6, -3, -2, -1, 0, 1, 2, 3, 6), function(s)
-                   vapply(c(1, 2, 3, 5, 10, 30), function(d)
-                     vapply(CIs, function(c)
-                                   as.numeric(precision.t(statistic = s, df = d, probs = ci.to.probs(c))$ci),
-                            numeric(2)),
-                          numeric(16)),
+                 vapply(c(-6, -3, -2, -1, 0, 1, 2, 3, 6), function(s) {
+                   vapply(c(1, 2, 3, 5, 10, 30), function(d) {
+                     vapply(CIs, function(c) {
+                                   as.numeric(precision.t(statistic = s, df = d, probs = ci.to.probs(c))$ci) },
+                            numeric(2)) },
+                          numeric(16)) },
                         numeric(96)))
 
     expect_equal(power.lp.test(ncp = 1, df = 100, verbose = 0, plot = FALSE) |> precision(verbose = 0),
@@ -134,21 +134,21 @@ test_that("precision.lp.test works", {
 
 # precision.t.test (= precision.t) -------------------------------------------------------------------------------------
 # code to create the comparison matrix (needs MBESS to be installed):
-# cmpRes <- vapply(c(-6, -3, -2, -1, 0, 1, 2, 3, 6), function(s)
-#             vapply(c(1, 2, 3, 5, 10, 30), function(d) 
-#               vapply(CIs, function(c)
-#                             as.numeric(MBESS::conf.limits.nct(s, df = d, conf.level = c)[c("Lower.Limit", "Upper.Limit")]),
-#                      numeric(2)),
-#                   numeric(16)),
+# cmpRes <- vapply(c(-6, -3, -2, -1, 0, 1, 2, 3, 6), function(s) {
+#             vapply(c(1, 2, 3, 5, 10, 30), function(d) {
+#               vapply(CIs, function(c) {
+#                             as.numeric(MBESS::conf.limits.nct(s, df = d, conf.level = c)[c("Lower.Limit", "Upper.Limit")]) },
+#                      numeric(2)) },
+#                   numeric(16)) },
 #                  numeric(96))
 # saveRDS(cmpRes, "precision.t_2compare.rds")  NB: store the file in `tests` under the main directory of the package
 test_that("precision.t.test works", {
-    expect_equal(vapply(c(-6, -3, -2, -1, 0, 1, 2, 3, 6), function(s)
-                   vapply(c(1, 2, 3, 5, 10, 30), function(d)
-                     vapply(CIs, function(c)
-                                   as.numeric(precision.t(statistic = s, df = d, probs = ci.to.probs(c))$ci),
-                            numeric(2)),
-                          numeric(16)),
+    expect_equal(vapply(c(-6, -3, -2, -1, 0, 1, 2, 3, 6), function(s) {
+                   vapply(c(1, 2, 3, 5, 10, 30), function(d) {
+                     vapply(CIs, function(c) {
+                                   as.numeric(precision.t(statistic = s, df = d, probs = ci.to.probs(c))$ci) },
+                            numeric(2)) },
+                          numeric(16)) },
                         numeric(96)),
                  readRDS("../precision.t_2compare.rds"))
 
@@ -212,15 +212,11 @@ test_that("precision.t.test works", {
 
 # precision.z.test (= precision.z) -------------------------------------------------------------------------------------
 test_that("precision.z.test works", {
-    expect_equal(vapply(c(-6, -3, -2, -1, 0, 1, 2, 3, 6), function(s)
-                   vapply(CIs, function(c)
-                                 as.numeric(precision.z(statistic = s, probs = ci.to.probs(c))$ci),
-                          numeric(2)),
+    expect_equal(vapply(c(-6, -3, -2, -1, 0, 1, 2, 3, 6), function(s) {
+                   vapply(CIs, function(c) as.numeric(precision.z(statistic = s, probs = ci.to.probs(c))$ci), numeric(2)) },
                         numeric(16)),
-                 vapply(c(-6, -3, -2, -1, 0, 1, 2, 3, 6), function(s)
-                   vapply(CIs, function(c)
-                                 s + qnorm(ci.to.probs(c)),
-                          numeric(2)),
+                 vapply(c(-6, -3, -2, -1, 0, 1, 2, 3, 6), function(s) {
+                   vapply(CIs, function(c) s + qnorm(ci.to.probs(c)), numeric(2)) },
                         numeric(16)))
 
     expect_equal(unname(power.z.test(mean = NULL,          power = 0.50, plot = FALSE, verbose = 0) |> precision(verbose = 0)),
@@ -229,7 +225,7 @@ test_that("precision.z.test works", {
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(-0.000111064, 1.959852921, 3.919816905),
                             z = c(-0.000111064, 1.959852921, 3.919816905), power = c(0.05, 0.5, 0.9749935)))
     expect_equal(power.np.wilcoxon(d = 0.50, n.ratio = 1, n2 = 64, design = "independent", method = "noether",
-                                   verbose = 0) |> precision(verbose = 0), 
+                                   verbose = 0) |> precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(0.7474706, 2.7074346, 4.6673986),
                             d = c(0.135424361, 0.5, 0.901916456), cles = c(0.5381442, 0.6381632, 0.7381822),
                             power = c(0.116052067, 0.772611768, 0.996609729)))
@@ -237,47 +233,47 @@ test_that("precision.z.test works", {
                                  std.error = "alternative", verbose = 0) |> precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(-1.959964, 0, 1.959964),
                             prop = c(0.510185651, 0.55, 0.589501558), h = c(-0.180985209, -0.1011905, -0.021384812),
-                            power = c(NA_real_, NA_real_, NA_real_)))
+                            power = c(0.997415545, 0.80052643, 0.132112452)))
     expect_equal(power.z.oneprop(prob = NULL, req.sign = 1, null.prob = c(0.40, 0.60), alternative = "two.one.sided",
                                  n = 1000, power = 0.80, std.error = "alternative", verbose = 0) |> precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(-1.959964, 0, 1.959964),
                             prop = c(0.999899673, 0.999899984, 0.999900293), h = c(1.34940539, 1.34943643, 1.34946737),
-                            power = c(NA_real_, NA_real_, NA_real_)))
+                            power = c(1, 1, 1)))
     expect_equal(power.z.logistic(beta0 = 0.50, beta1 = 1, n = 200, alpha = 0.05, distribution = "normal", verbose = 0) |>
                    precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(3.328446908, 5.288410892, 7.248374877),
                             beta = c(0.629385079, 1, 1.370614921), odds.ratio = c(1.87645635, 2.71828183, 3.93777137),
-                            power = c(0.939208682, 0.9999934, 1)))
+                            power = c(0.963375923, 0.999993401, 1)))
     expect_equal(power.z.logistic(beta0 = 0.50, beta1 = 1, n = 200, alpha = 0.05, distribution = "poisson", verbose = 0) |>
                    precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(1.9667499, 3.92671388, 5.88667787),
                             beta = c(0.50086407, 1, 1.49913593), odds.ratio = c(1.650146497, 2.718281828, 4.477818250),
-                            power = c(0.503220354, 0.998377017, 1)))
+                            power = c(0.504051499, 0.998377017, 0.999999998)))
     expect_equal(power.z.logistic(beta0 = 0.50, beta1 = 1, n = 200, alpha = 0.05, distribution = "uniform", verbose = 0) |>
                    precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(-0.1775751, 1.7823889, 3.7423529),
                             beta = c(-0.099627567, 1, 2.099627567), odds.ratio = c(0.905174472, 2.718281828, 8.163129126),
-                            power = c(0.05357613, 0.428201099, 0.97423447)))
+                            power = c(0.049145723, 0.428201099, 0.965471709)))
     expect_equal(power.z.logistic(beta0 = 0.50, beta1 = 1, n = 200, alpha = 0.05, distribution = "exponential", verbose = 0) |>
                    precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(1.2732960, 3.2332600, 5.1932240),
                             beta = c(0.393811823, 1, 1.606188177), odds.ratio = c(1.482621527, 2.718281828, 4.983777698),
-                            power = c(0.195826933, 0.989302699, 1)))
+                            power = c(0.107328038, 0.989302699, 0.999999997)))
     expect_equal(power.z.logistic(beta0 = 0.50, beta1 = 1, n = 200, alpha = 0.05, distribution = "binomial", verbose = 0) |>
                    precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(1.06063668, 3.02060066, 4.98056465),
                             beta = c(0.351134359, 1, 1.648865641), odds.ratio = c(1.420678194, 2.718281828, 5.201076593),
-                            power = c(0.184417184, 0.865667462, 0.999707289)))
+                            power = c(0.174960776, 0.865667462, 0.999184191)))
     expect_equal(power.z.logistic(beta0 = 0.50, beta1 = 1, n = 200, alpha = 0.05, distribution = "bernoulli", verbose = 0) |>
                    precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(1.06063668, 3.02060066, 4.98056465),
                             beta = c(0.351134359, 1, 1.648865641), odds.ratio = c(1.420678194, 2.718281828, 5.201076593),
-                            power = c(0.184417184, 0.865667462, 0.999707289)))
+                            power = c(0.174960776, 0.865667462, 0.999184191)))
     expect_equal(power.z.logistic(beta0 = 0.50, beta1 = 1, n = 200, alpha = 0.05, distribution = "lognormal", verbose = 0) |>
                    precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(1.2234986, 3.1834626, 5.1434266),
                             beta = c(0.38432951, 1, 1.61567049), odds.ratio = c(1.468629291, 2.718281828, 5.0312602),
-                            power = c(0.127945103, 0.986432659, 0.999999999)))
+                            power = c(0.091756157, 0.986432659, 0.999999996)))
     expect_equal(power.z.poisson(beta0 = 0.50, beta1 = 1, n = 200, alpha = 0.05, distribution = "normal", verbose = 0) |>
                    precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(21.35593664, 23.31590062, 25.27586461),
@@ -292,7 +288,7 @@ test_that("precision.z.test works", {
                    precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(4.7442012, 6.7041652, 8.6641292),
                             beta = c(0.7076498, 1, 1.2923502), rate.ratio = c(2.029216599, 2.718281828, 3.641334347),
-                            power = c(0.997591739, 0.999999421, 1)))
+                            power = c(0.997839263, 0.999999421, 1)))
     expect_equal(power.z.poisson(beta0 = 0.50, beta1 = 1, n = 200, alpha = 0.05, distribution = "exponential", verbose = 0) |>
                    precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(412.475115, 414.435079, 416.395043),

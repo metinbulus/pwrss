@@ -232,7 +232,7 @@ precision.z.test <- function(statistic, probs = c(0.025, 0.25, 0.50, 0.75, 0.975
   ci <- tryCatch(stats::qnorm(p = probs, mean = statistic, sd = 1, lower.tail = TRUE),
                  error = function(e) NA_real_)
 
-  list(statistic = statistic, probs = probs, ci = setNames(ci, paste0(round(probs * 100, 1), "%")))
+  list(statistic = statistic, probs = probs, ci = stats::setNames(ci, paste0(round(probs * 100, 1), "%")))
 
 } # precision.z.test()
 

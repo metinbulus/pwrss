@@ -290,7 +290,7 @@ precision.lp.test <- function(statistic, df, probs = c(0.025, 0.25, 0.50, 0.75, 
             call. = FALSE)
   }
 
-  list(statistic = statistic, df = df, probs = probs, ci = setNames(ci, paste0(round(probs * 100, 1), "%")))
+  list(statistic = statistic, df = df, probs = probs, ci = stats::setNames(ci, paste0(round(probs * 100, 1), "%")))
 
 } # precision.lp.test()
 

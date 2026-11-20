@@ -1292,7 +1292,7 @@ means.to.etasq <- function(mu.vector, sd.vector, n.vector, k.covariates = 0, r.s
 #' @export ci.to.probs
 ci.to.probs <- function(ci.level = 0.95) {
   check.proportion(ci.level)
-  
+
   (1 - ci.level) / 2 + c(0, ci.level)
 }
 
@@ -1315,16 +1315,16 @@ ci.to.probs <- function(ci.level = 0.95) {
 #' @return CI level (a numerical value)
 #'
 #' @examples
-#' probs.to.ci(c(0.025, 0.5, 0.975))                 # 0.95 
+#' probs.to.ci(c(0.025, 0.5, 0.975))                 # 0.95
 #' probs.to.ci(c(0.005, 0.025, 0.5, 0.975, 0.995))   # 0.99
 #' probs.to.ci(c(0.025, 0.975, 0.5, 0.005, 0.995))   # 0.99
 #' probs.to.ci(c(0.005, 0.025, 0.5, 0.975, 0.9995))  # -> throws an error, since 0.005 != (1 - 0.9995)
-#' 
+#'
 #' @export probs.to.ci
 probs.to.ci <- function(probs = c(0.025, 0.975)) {
   check.vector(probs, check.proportion)
   if (abs(log(min(probs) / (1 - max(probs)))) > (.Machine$double.eps / min(probs)))
     stop("Minimum and maximum probabilities need to be equidistant from 0 and 1, respectively.", call. = FALSE)
-  
+
   max(probs) - min(probs)
 }

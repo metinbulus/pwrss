@@ -187,7 +187,7 @@ precision.chisq.test <- function(statistic, df, probs = c(0.025, 0.25, 0.50, 0.7
 
   ci <- vapply(1 - probs, function(target) find.ncp.chisq(target = target), numeric(1L))
 
-  list(statistic = statistic, df = df, probs = probs, ci = setNames(ci, paste0(round(probs * 100, 1), "%")))
+  list(statistic = statistic, df = df, probs = probs, ci = stats::setNames(ci, paste0(round(probs * 100, 1), "%")))
 
 } # precision.chisq.test()
 

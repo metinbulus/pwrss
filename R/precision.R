@@ -218,14 +218,14 @@ precision <- precision.power
         var.delta <- (x$n[1] + x$n[2]) / (x$n[1] * x$n[2])
         d <- conf.int * sqrt(var.delta) + x$parms$null.d
       } else {
-        disc <- (-2 * x$parms$null.d) ^ 2 - 4 * (1 - (conf.int ^ 2) * (1 / (2 * df))) *
+        disc <- (-2 * x$parms$null.d) ^ 2 - 4 * (1 - (conf.int ^ 2) * (1 / (2 * x$df))) *
                 (x$parms$null.d ^ 2 - (conf.int ^ 2) * ((x$n[1] + x$n[2]) / (x$n[1] * x$n[2])))
         if (any(disc < 0)) {
           warning("No real solution for some d.", call. = FALSE)
           disc[disc < 0] <- NA_real_
         }
-        d1 <- (2 * x$parms$null.d + sqrt(disc)) / (2 * (1 - (conf.int ^ 2) * (1 / (2 * df))))
-        d2 <- (2 * x$parms$null.d - sqrt(disc)) / (2 * (1 - (conf.int ^ 2) * (1 / (2 * df))))
+        d1 <- (2 * x$parms$null.d + sqrt(disc)) / (2 * (1 - (conf.int ^ 2) * (1 / (2 * x$df))))
+        d2 <- (2 * x$parms$null.d - sqrt(disc)) / (2 * (1 - (conf.int ^ 2) * (1 / (2 * x$df))))
         d <- ifelse(sign(d1) == sign(conf.int), d1, d2)
       }
 
@@ -321,7 +321,7 @@ precision <- precision.power
                         two.one.sided = ifelse(all(sign(x$null.mean) == 1), min(x$null.prob), max(x$null.prob)),
                         x$null.prob)
 
-    for (i in 1:length(conf.int)) {
+    for (i in seq_along(conf.int)) {
 
       if (x$alternative == "two.one.sided") {
 
@@ -357,23 +357,18 @@ precision <- precision.power
     if (x$parms$method == "hsieh") stop("Precision calculations for Hsieh method are not supported at the moment.", call. = FALSE)
 
     var.obj <- var.beta.logistic(beta0 = x$beta0, beta1 = x$beta1, distribution = x$distribution)
-    var.beta0 <- var.obj$var.beta0
-    var.beta1 <- var.obj$var.beta1
 
-    # conf.int <- qnorm(probs, mean = 0, sd = 1, lower.tail = TRUE)
-    # beta1 <- beta1 + conf.int * sqrt(var.beta1 / (x$n * (1 - x$parms$r.squared.predictor)))
-    beta1 <- conf.int * sqrt(var.beta1 / (x$n * (1 - x$parms$r.squared.predictor)))
+    beta1 <- conf.int * sqrt(var.obj$var.beta1 / (x$n * (1 - x$parms$r.squared.predictor)))
     odds.ratio <- exp(beta1)
 
     ncp <- numeric(length(conf.int))
     sd.ncp <- numeric(length(conf.int))
-    for(i in 1:length(conf.int)) {
+    for (i in seq_along(conf.int)) {
       var.obj <- var.beta.logistic(beta0 = x$beta0, beta1 = beta1[i], distribution = x$distribution)
-      var.beta0 <- var.obj$var.beta0
-      var.beta1 <- var.obj$var.beta1
-      ncp[i] <- beta1[i] / sqrt(var.beta1 / (x$n * (1 - x$parms$r.squared.predictor)))
-      sd.ncp[i] <- sqrt((x$vcf * var.beta0 + (1 - x$vcf) * var.beta1) / var.beta1)
-      }
+
+      ncp[i] <- beta1[i] / sqrt(var.obj$var.beta1 / (x$n * (1 - x$parms$r.squared.predictor)))
+      sd.ncp[i] <- sqrt((x$vcf * var.obj$var.beta0 + (1 - x$vcf) * var.obj$var.beta1) / var.obj$var.beta1)
+    }
 
     prec.obj <- data.frame(rbind(conf.int, beta1, odds.ratio))
 
@@ -384,22 +379,17 @@ precision <- precision.power
     if (x$parms$method == "signorini") stop("Precision calculations for Signorini method are not supported at the moment.", call. = FALSE)
 
     var.obj <- var.beta.poisson(beta0 = x$beta0, beta1 = x$beta1, distribution = x$distribution)
-    var.beta0 <- var.obj$var.beta0
-    var.beta1 <- var.obj$var.beta1
 
-    # conf.int <- qnorm(probs, mean = 0, sd = 1, lower.tail = TRUE)
-    # beta1 <- x$beta1 + conf.int * sqrt(var.beta1 / (x$n * (1 - x$parms$r.squared.predictor) * x$parms$mean.exposure))
-    beta1 <- conf.int * sqrt(var.beta1 / (x$n * (1 - x$parms$r.squared.predictor) * x$parms$mean.exposure))
+    beta1 <- conf.int * sqrt(var.obj$var.beta1 / (x$n * (1 - x$parms$r.squared.predictor) * x$parms$mean.exposure))
     rate.ratio <- exp(beta1)
 
     ncp <- numeric(length(conf.int))
     sd.ncp <- numeric(length(conf.int))
-    for(i in 1:length(conf.int)) {
+    for (i in seq_along(conf.int)) {
       var.obj <- var.beta.poisson(beta0 = x$beta0, beta1 = beta1[i], distribution = x$distribution)
-      var.beta0 <- var.obj$var.beta0
-      var.beta1 <- var.obj$var.beta1
-      ncp[i] <- beta1[i] / sqrt(var.beta1 / (x$n * (1 - x$parms$r.squared.predictor) * x$parms$mean.exposure))
-      sd.ncp[i] <- sqrt((x$vcf * var.beta0 + (1 - x$vcf) * var.beta1) / var.beta1)
+
+      ncp[i] <- beta1[i] / sqrt(var.obj$var.beta1 / (x$n * (1 - x$parms$r.squared.predictor) * x$parms$mean.exposure))
+      sd.ncp[i] <- sqrt((x$vcf * var.obj$var.beta0 + (1 - x$vcf) * var.obj$var.beta1) / var.obj$var.beta1)
     }
 
     prec.obj <- data.frame(rbind(conf.int, beta1, rate.ratio))
@@ -435,7 +425,7 @@ precision <- precision.power
   if ("oneprop" %in% class(x)) {
 
     power <- mapply(FUN = function(mean, null.sd) {
-                    tryCatch(power.z.test(mean = mean, sd = 1, null.mean = x$null.mean, null.sd = sd,
+                    tryCatch(power.z.test(mean = mean, sd = 1, null.mean = x$null.mean, null.sd = x$sd,
                                           alternative = x$alternative, verbose = 0, plot = FALSE)$power,
                              error = function(e) NA_real_) },
                     conf.int, null.sd, SIMPLIFY = TRUE, USE.NAMES = FALSE)
@@ -443,7 +433,7 @@ precision <- precision.power
   } else if (any(c("logistic", "poisson") %in% class(x))) {
 
     power <- mapply(FUN = function(mean, sd) {
-                    tryCatch(power.z.test(mean = mean, sd = sd, null.mean = x$null.mean, null.sd = 1,
+                    tryCatch(power.z.test(mean = mean, sd = x$sd, null.mean = x$null.mean, null.sd = 1,
                                           alternative = x$alternative, verbose = 0, plot = FALSE)$power,
                              error = function(e) NA_real_) },
                     conf.int, sd.ncp, SIMPLIFY = TRUE, USE.NAMES = FALSE)
