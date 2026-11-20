@@ -1,36 +1,35 @@
 # helper and formatting functions --------------------------------------------------------------------------------------
 .header <- function(requested, ncp = FALSE, utf = FALSE) {
 
-  # eff.dsc <- ifelse(ncp, "NCP", "EFFECT")
+  RC <- switch(requested,
+               n     =       "SAMPLE SIZE CALCULATION",
+               power =       "POWER CALCULATION",
+               es    = paste("MINIMUM DETECTABLE", ifelse(ncp, "NCP", "EFFECT"), "CALCULATION"),
+               prec  =       "PRECISION CALCULATION")
 
   if (utf) {
 
-    RC <- switch(requested,
-                 `n` =        "           \033[34m SAMPLE SIZE CALCULATION \033[0m              ",
-                 `power` =    "               \033[34m POWER CALCULATION \033[0m                ",
-                 `es` = ifelse(ncp,
-                               paste("      \033[34m MINIMUM DETECTABLE NCP CALCULATION \033[0m        "),
-                               paste("     \033[34m MINIMUM DETECTABLE EFFECT CALCULATION \033[0m      ")))
-
-    paste0(paste0("\u2554", strrep("\u2550", 50), "\u2557", "\n"),
-           paste0("\u2551", RC,                   "\u2551", "\n"),
-           paste0("\u255A", strrep("\u2550", 50), "\u255D", "\n\n"))
+    paste0(paste0("\u2554", strrep("\u2550", 50),     "\u2557", "\n"),
+           paste0("\u2551", .pad_hdr(RC, utf = TRUE), "\u2551", "\n"),
+           paste0("\u255A", strrep("\u2550", 50),     "\u255D", "\n\n"))
 
   } else {
 
-    RC <- switch(requested,
-                 `n` =        "             SAMPLE SIZE CALCULATION              ",
-                 `power` =    "                POWER CALCULATION                 ",
-                 `es` = ifelse(ncp,
-                               paste("       MINIMUM DETECTABLE NCP CALCULATION         "),
-                               paste("      MINIMUM DETECTABLE EFFECT CALCULATION       ")))
-
     paste0(paste0("+", strrep("-", 50), "+", "\n"),
-           paste0("|", RC,              "|", "\n"),
+           paste0("|", .pad_hdr(RC),    "|", "\n"),
            paste0("+", strrep("-", 50), "+", "\n\n"))
 
   }
 
+}
+
+.pad_hdr <- function(RC, utf = FALSE) {
+  PC <- c(floor((50 - nchar(RC)) / 2), ceiling((50 - nchar(RC)) / 2))
+  if (utf) {
+    paste0(strrep(" ", PC[1] - 1), "\033[34m ", RC, " \033[0m", strrep(" ", PC[2] - 1))
+  } else {
+    paste0(strrep(" ", PC[1]), RC, strrep(" ", PC[2]))
+  }
 }
 
 .topic <- function(topic, utf = FALSE, emphasize = FALSE) {
@@ -309,6 +308,48 @@
   }
 
   paste0(paste(defs_out, collapse = ""), "\n")
+}
+
+.prec_info <- function(class, utf = FALSE) {
+  n_c <- function(name) name %in% class
+  if (n_c("binom")) {
+    paste0(ifelse(utf, "\033[36m", ""),
+           "\n  Uncertainty distribution quantiles of proportions are  \n",
+           "  obtained directly from the inverse cumulative dist. \n",
+           "  function of the beta-distribution given observed stat. (prop.), \n",
+           "  in line with Clopper and Pearson (1934).\n",
+           ifelse(utf, "\033[0m\n", "\n"))
+  } else if (n_c("chisq")) {
+    paste0(ifelse(utf, "\033[36m", ""),
+           "\n  NCP uncertainty distribution quantiles are obtained \n",
+           "  by inverting cumulative distribution function of the \n",
+           "  non-central F-distribution given the observed F-statistic.\n",
+           ifelse(utf, "\033[0m\n", "\n"))
+  } else if (n_c("f")) {
+    paste0(ifelse(utf, "\033[36m", ""),
+           "\n  NCP uncertainty distribution quantiles are obtained \n",
+           "  by inverting cumulative distribution function of the \n",
+           "  non-central F-distribution given the observed F-stat.\n",
+           ifelse(utf, "\033[0m\n", "\n"))
+  } else if (n_c("lp")) {
+    paste0(ifelse(utf, "\033[36m", ""),
+           "\n  NCP uncertainty distribution quantiles are obtained \n",
+           "  directly from the cumulative distribution function of the \n",
+           "  non-central LP-distribution given the observed LP-stat.\n",
+           ifelse(utf, "\033[0m\n", "\n"))
+  } else if (n_c("t")) {
+    paste0(ifelse(utf, "\033[36m", ""),
+           "\n  NCP uncertainty distribution quantiles are obtained \n",
+           "  by inverting cumulative distribution function of the \n",
+           "  non-central t-distribution given the observed t-stat.\n",
+           ifelse(utf, "\033[0m\n", "\n"))
+  } else if (n_c("z")) {
+    paste0(ifelse(utf, "\033[36m", ""),
+           "\n  NCP uncertainty distribution quantiles are obtained \n",
+           "  directly from the cumulative distribution function of \n",
+           "  non-central z-distribution given the observed z-stat.\n",
+           ifelse(utf, "\033[0m\n", "\n"))
+  }
 }
 
 
@@ -1360,3 +1401,11 @@
   }
 
 } # .print.pwrss.poisson() ---------------------------------------------------------------------------------------------
+
+# ----------------------------------------------------------------------------------------------------------------------
+.print.precision <- function(print.obj, verbose = 1, utf = FALSE, class = c(), digits = 3, ...) {
+  cat(.header("prec", utf = utf))
+  print(print.obj, digits = digits)
+  if (verbose == 2) cat(.prec_info(class, utf = utf))
+} # .print.precision() -------------------------------------------------------------------------------------------------
+

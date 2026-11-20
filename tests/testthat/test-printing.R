@@ -34,7 +34,7 @@ test_that("printing.R works", {
 
     crrUTF <- capture.output(power.f.ancova(eta.squared = 0.059, factor.levels = 2, alpha = 0.05, power = 0.80, verbose = 2, utf = TRUE))
     expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
-                           "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
+                           "║            \033[34m SAMPLE SIZE CALCULATION \033[0m             ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "One-Way Analysis of Variance (F-Test)", "",
                            "────────────────────────────────────────────────────",
@@ -102,7 +102,7 @@ test_that("printing.R works", {
     crrUTF <- capture.output(power.f.ancova.keppel(mu.vector = c(0.50, 0.00), sd.vector = rep(1, 2), p.vector = rep(0.50, 2),
                                                    k.covariates = 1, r.squared = 0.50, alpha = 0.05, power = 0.80, verbose = 2, utf = TRUE))
     expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
-                           "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
+                           "║            \033[34m SAMPLE SIZE CALCULATION \033[0m             ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "One-Way Analysis of Covariance (F-Test)", "",
                            "────────────────────────────────────────────────────",
@@ -239,7 +239,7 @@ test_that("printing.R works", {
     crrUTF <- capture.output(power.f.mixed.anova(eta.squared = 0.022,   factor.levels = c(1, 2), rho.within = 0.50,
                                                  effect = "within", power = 0.80, alpha = 0.05, verbose = 2, utf = TRUE))
     expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
-                           "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
+                           "║            \033[34m SAMPLE SIZE CALCULATION \033[0m             ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Repeated Measures Analysis of Variance (F-Test)", "",
                            "────────────────────────────────────────────────────",
@@ -601,7 +601,7 @@ test_that("printing.R works", {
                                                      power = 0.8, alpha = 0.05, alternative = "two.sided", common.index = FALSE,
                                                      verbose = 2, utf = TRUE))
     expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
-                           "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
+                           "║            \033[34m SAMPLE SIZE CALCULATION \033[0m             ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Dependent Correlations", "",
                            "  Common Index : FALSE", "",
@@ -1306,7 +1306,7 @@ test_that("printing.R works", {
     crrUTF <- capture.output(power.t.student(d = 0.20, power = 0.80, alternative = "two.sided", design = "independent",
                                              verbose = 2, utf = TRUE))
     expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
-                           "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
+                           "║            \033[34m SAMPLE SIZE CALCULATION \033[0m             ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Student's T-Test (Independent Samples)", "",
                            "────────────────────────────────────────────────────",
@@ -1445,7 +1445,7 @@ test_that("printing.R works", {
 
     crrUTF <- capture.output(power.np.wilcoxon(d = 0.25, power = 0.80, verbose = 2, utf = TRUE))
     expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
-                           "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
+                           "║            \033[34m SAMPLE SIZE CALCULATION \033[0m             ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Wilcoxon Rank-Sum Test (Independent Samples) ",
                            "(Wilcoxon-Mann-Whitney or Mann-Whitney U Test)", "",
@@ -1592,7 +1592,7 @@ test_that("printing.R works", {
 
     crrUTF <- capture.output(power.chisq.gof(w = mtxW$w, df = mtxW$df, power = 0.80, alpha = 0.05, verbose = 2, utf = TRUE))
     expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
-                           "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
+                           "║            \033[34m SAMPLE SIZE CALCULATION \033[0m             ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Chi-Square Test for Goodness-of-Fit or Independence", "",
                            "────────────────────────────────────────────────────",
@@ -1740,7 +1740,7 @@ test_that("printing.R works", {
     crrUTF <- capture.output(power.exact.oneprop(prob = 0.45, null.prob = 0.50, alpha = 0.05, power = 0.80, alternative = "one.sided",
                                                  verbose = 2, utf = TRUE))
     expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
-                           "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
+                           "║            \033[34m SAMPLE SIZE CALCULATION \033[0m             ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "One Proportion", "",
                            "  Method                 : Exact", "",
@@ -1892,7 +1892,7 @@ test_that("printing.R works", {
     crrUTF <- capture.output(power.z.oneprop(prob = 0.45, null.prob = 0.50, alpha = 0.05, power = 0.80, alternative = "one.sided",
                                              verbose = 2, utf = TRUE))
     expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
-                           "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
+                           "║            \033[34m SAMPLE SIZE CALCULATION \033[0m             ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "One Proportion", "",
                            "  Method                 : Normal Approximation",
@@ -2036,7 +2036,7 @@ test_that("printing.R works", {
     crrUTF <- capture.output(power.exact.twoprops(prob1 = 0.70, prob2 = 0.60, alpha = 0.05, power = 0.80,
                                                   alternative = "one.sided", verbose = 2, utf = TRUE))
     expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
-                           "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
+                           "║            \033[34m SAMPLE SIZE CALCULATION \033[0m             ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Independent Proportions", "",
                            "  Method : Fisher's Exact", "",
@@ -2249,7 +2249,7 @@ test_that("printing.R works", {
     crrUTF <- capture.output(power.z.twoprops(prob1 = 0.65, prob2 = 0.60, alpha = 0.05, power = 0.80, alternative = "one.sided",
                                               verbose = 2, utf = TRUE))
     expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
-                           "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
+                           "║            \033[34m SAMPLE SIZE CALCULATION \033[0m             ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Independent Proportions", "",
                            "  Method : Normal Approximation", "",
@@ -2405,7 +2405,7 @@ test_that("printing.R works", {
     crrUTF <- capture.output(power.exact.mcnemar(prob10 = 0.20, prob01 = 0.10, power = 0.80, alpha = 0.05, alternative = "two.sided",
                              method = "exact", verbose = 2, utf = TRUE))
     expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
-                           "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
+                           "║            \033[34m SAMPLE SIZE CALCULATION \033[0m             ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Paired Proportions", "",
                            "  Method : McNemar's Exact", "",
@@ -2622,7 +2622,7 @@ test_that("printing.R works", {
 
     crrUTF <- capture.output(power.f.regression(r.squared = 0.15, k.total = 3, power = 0.80, verbose = 2, utf = TRUE))
     expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
-                           "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
+                           "║            \033[34m SAMPLE SIZE CALCULATION \033[0m             ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Linear Regression (F-Test) - Fixed Pred.", "",
                            "────────────────────────────────────────────────────",
@@ -2701,7 +2701,7 @@ test_that("printing.R works", {
 
     crrUTF <- capture.output(power.t.regression(beta = 0.20, k.total = 5, r.squared = 0.30, power = 0.80, verbose = 2, utf = TRUE))
     expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
-                           "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
+                           "║            \033[34m SAMPLE SIZE CALCULATION \033[0m             ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Linear Regression Coefficient (T-Test)", "",
                            "────────────────────────────────────────────────────",
@@ -2900,7 +2900,7 @@ test_that("printing.R works", {
     crrUTF <- capture.output(power.z.logistic(base.prob = 0.15, prob = 0.20, alpha = 0.05, power = 0.80, distribution = "normal",
                                               verbose = 2, utf = TRUE))
     expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
-                           "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
+                           "║            \033[34m SAMPLE SIZE CALCULATION \033[0m             ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Logistic Regression Coefficient (Wald's Z-Test)", "",
                            "  Method          : Demidenko (Variance Corrected)",
@@ -2985,7 +2985,7 @@ test_that("printing.R works", {
 
     crrUTF <- capture.output(power.z.mediation(beta.a = 0.25, beta.b = 0.25, beta.cp = 0.10, power = 0.80, verbose = 2, utf = TRUE))
     expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
-                           "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
+                           "║            \033[34m SAMPLE SIZE CALCULATION \033[0m             ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Indirect Effect in a Mediation Model", "",
                            "  Method : Sobel", "",
@@ -3144,7 +3144,7 @@ test_that("printing.R works", {
     crrUTF <- capture.output(power.z.poisson(beta0 = 0.50, beta1 = -0.10, alpha = 0.05, power = 0.80, dist = "normal",
                                              verbose = 2, utf = TRUE))
     expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
-                           "║           \033[34m SAMPLE SIZE CALCULATION \033[0m              ║",
+                           "║            \033[34m SAMPLE SIZE CALCULATION \033[0m             ║",
                            "╚══════════════════════════════════════════════════╝", "",
                            "Poisson Regression Coefficient (Wald's Z-Test)", "",
                            "  Method          : Demidenko (Variance Corrected)",
