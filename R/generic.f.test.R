@@ -118,7 +118,7 @@ power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
 
     .print.pwrss.f(print.obj, verbose = verbose, utf = utf)
 
-  } # end of verbose
+  } # verbose
 
   invisible(structure(list(power = pwr.obj$power,
                            ncp = ncp,
@@ -131,15 +131,36 @@ power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
                            utf = utf),
                       class = c("pwrss", "generic", "f")))
 
-} # end of power.f.test()
+} # power.f.test()
 
 
-# statistic: observed F-statistic
-# probs: inversion probabilities
-# set probs = c(0.025, 0.975) for 95% CI
+#' Precision Calculation for the Generic F-Test
+#'
+#' @description
+#' TBA...
+#'
+#' @aliases precision.f
+#'
+#'
+#' @param statistic   observed test statistic (F)
+#' @param df1         integer; numerator degrees of freedom.
+#' @param df2         integer; denominator degrees of freedom.
+#' @param probs       quantile probabilities, e.g., c(0.025, 0.975) for 95% CI
+#'                    (default: c(0.025, 0.25, 0.50, 0.75, 0.975))
+#'
+#' @return
+#'   \item{statistic}{observed test statistic.}
+#'   \item{df1}{numerator degrees of freedom.}
+#'   \item{df2}{denominator degrees of freedom.}
+#'   \item{probs}{quantile probabilities.}
+#'   \item{stat.at.probs}{values for the test statistic at the defined probabilities.}
+#'
+#' @examples
+#' # TBA ...
+#'
+#' @export precision.f.test
 precision.f.test <- function(statistic, df1, df2, probs = c(0.025, 0.25, 0.50, 0.75, 0.975)) {
-  check.numeric(statistic)
-  check.positive(df1, df2)
+  check.positive(statistic, df1, df2)
   check.vector(probs, check.proportion)
 
   find.ncp.f <- function(target, no.root = 0) {
@@ -170,11 +191,11 @@ precision.f.test <- function(statistic, df1, df2, probs = c(0.025, 0.25, 0.50, 0
 
     tryCatch(stats::uniroot(objective, interval = c(0, upper), tol = 1e-12, maxiter = 500L)$root, error = function(e) NA_real_)
 
-  } # find.ncp.f
+  } # find.ncp.f()
 
-  ci <- vapply(1 - probs, function(target) find.ncp.f(target = target), numeric(1L))
+  stat.at.probs <- vapply(1 - probs, function(target) find.ncp.f(target = target), numeric(1L))
 
-  list(statistic = statistic, df1 = df1, df2 = df2, probs = probs, ci = stats::setNames(ci, paste0(round(probs * 100, 1), "%")))
+  invisible(list(statistic = statistic, df1 = df1, df2 = df2, probs = probs, stat.at.probs = name_probs(stat.at.probs, probs)))
 
 } # precision.f.test()
 

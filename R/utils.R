@@ -1318,7 +1318,7 @@ ci.to.probs <- function(ci.level = 0.95) {
 #' probs.to.ci(c(0.025, 0.5, 0.975))                 # 0.95
 #' probs.to.ci(c(0.005, 0.025, 0.5, 0.975, 0.995))   # 0.99
 #' probs.to.ci(c(0.025, 0.975, 0.5, 0.005, 0.995))   # 0.99
-#' probs.to.ci(c(0.005, 0.025, 0.5, 0.975, 0.9995))  # -> throws an error, since 0.005 != (1 - 0.9995)
+#' # probs.to.ci(c(0.005, 0.025, 0.5, 0.975, 0.9995))  # -> would throw an error, since 0.005 != (1 - 0.9995)
 #'
 #' @export probs.to.ci
 probs.to.ci <- function(probs = c(0.025, 0.975)) {

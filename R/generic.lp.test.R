@@ -271,26 +271,44 @@ power.lp.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0
                            utf = utf),
                       class = c("pwrss", "generic", "lp")))
 
-} # end of power.lp.test()
+} # power.lp.test()
 
 
-# statistic: observed t-statistic
-# probs: quantile probabilities
-# set probs = c(0.025, 0.975) for 95% CI
+#' Precision Calculation for the Lambda-Prime Distribution
+#'
+#' @description
+#' TBA...
+#'
+#' @aliases precision.lp
+#'
+#'
+#' @param statistic   observed test statistic (t)
+#' @param df          degrees of freedom
+#' @param probs       quantile probabilities, e.g., c(0.025, 0.975) for 95% CI
+#'                    (default: c(0.025, 0.25, 0.50, 0.75, 0.975))
+#'
+#' @return
+#'   \item{statistic}{observed test statistic.}
+#'   \item{df}{degrees of freedom.}
+#'   \item{probs}{quantile probabilities.}
+#'   \item{stat.at.probs}{values for the test statistic at the defined probabilities.}
+#'
+#' @examples
+#' # TBA ...
+#'
+#' @export precision.lp.test
 precision.lp.test <- function(statistic, df, probs = c(0.025, 0.25, 0.50, 0.75, 0.975)) {
   check.numeric(statistic)
   check.positive(df)
   check.vector(probs, check.proportion)
 
-  ci <- tryCatch(qlambdap(p = probs, df = df, ncp = statistic, lower.tail = TRUE, log.p = FALSE),
-                 error = function(e) rep(NA_real_, length(probs)))
-
-  if (any(abs(ci) > 35, na.rm = TRUE)) {
+  stat.at.probs <- tryCatch(qlambdap(p = probs, df = df, ncp = statistic, lower.tail = TRUE, log.p = FALSE),
+                            error = function(e) rep(NA_real_, length(probs)))
+  if (any(abs(stat.at.probs) > 35, na.rm = TRUE))
     warning("At least one confidence limit exceeds 35 in magnitude; base R noncentral-t probabilities may be inaccurate.",
             call. = FALSE)
-  }
 
-  list(statistic = statistic, df = df, probs = probs, ci = stats::setNames(ci, paste0(round(probs * 100, 1), "%")))
+  invisible(list(statistic = statistic, df = df, probs = probs, stat.at.probs = name_probs(stat.at.probs, probs)))
 
 } # precision.lp.test()
 

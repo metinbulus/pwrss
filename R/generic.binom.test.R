@@ -231,14 +231,34 @@ power.binom.test <- function(power = NULL,
 
 } # power.binom.test()
 
-
-# statistic: observed test statistic, which is a proportion
-# probs: inversion probabilities
-# set statistics = c(0.025, 0.975) for 95% CI
-#
-# Clopper, C. J., & Pearson, E. S. (1934).
-# The use of confidence or fiducial limits illustrated in the case of the binomial.
-# Biometrika, 26(4), 404–413. https://doi.org/10.2307/2331986
+#' Precision Calculation for the Generic Binomial Test
+#'
+#' @description
+#' TBA...
+#'
+#' @aliases precision.binom
+#'
+#'
+#' @param statistic   observed test statistic, which is a proportion
+#' @param size        number of trials (zero or more)
+#' @param probs       quantile probabilities, e.g., c(0.025, 0.975) for 95% CI
+#'                    (default: c(0.025, 0.25, 0.50, 0.75, 0.975))
+#'
+#' @return
+#'   \item{statistic}{observed test statistic.}
+#'   \item{size}{number of trials (zero or more).}
+#'   \item{probs}{quantile probabilities.}
+#'   \item{stat.at.probs}{values for the test statistic at the defined probabilities.}
+#'
+#' @references
+#'   Clopper, C. J., & Pearson, E. S. (1934). The use of confidence or fiducial
+#'   limits illustrated in the case of the binomial. *Biometrika, 26*(4),
+#'   404–413. https://doi.org/10.2307/2331986
+#'
+#' @examples
+#' # TBA ...
+#'
+#' @export precision.binom.test
 precision.binom.test <- function(statistic, size, probs = c(0.025, 0.25, 0.50, 0.75, 0.975)) {
   check.proportion(statistic)
   check.size(size)
@@ -247,17 +267,18 @@ precision.binom.test <- function(statistic, size, probs = c(0.025, 0.25, 0.50, 0
   x <- as.integer(round(statistic * size))
 
   # generalized clopper–pearson quantiles
-  ci <- numeric(length(probs))
+  stat.at.probs <- numeric(length(probs))
 
   lower <- probs < 0.50
   upper <- probs > 0.50
 
   # lower-tail, upper-tail and centre confidence quantiles from inversion probs
-  if (any(lower)) ci[lower] <- if (x == 0L)   0 else stats::qbeta(probs[lower], shape1 = x, shape2 = size - x + 1)
-  if (any(upper)) ci[upper] <- if (x == size) 1 else stats::qbeta(probs[upper], shape1 = x + 1, shape2 = size - x)
-  ci[probs == 0.50] <- x / size
+  if (any(lower)) stat.at.probs[lower] <- if (x == 0L)   0 else stats::qbeta(probs[lower], shape1 = x, shape2 = size - x + 1)
+  if (any(upper)) stat.at.probs[upper] <- if (x == size) 1 else stats::qbeta(probs[upper], shape1 = x + 1, shape2 = size - x)
+  stat.at.probs[probs == 0.50] <- x / size
 
-  list(statistic = statistic, probs = probs, ci = stats::setNames(ci, paste0(round(probs * 100, 1), "%")))
+  invisible(list(statistic = statistic, probs = probs, stat.at.probs = name_probs(stat.at.probs, probs)))
+
 } # precision.binom.test()
 
 

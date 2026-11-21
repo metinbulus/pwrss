@@ -145,13 +145,31 @@ power.chisq.test <- function(power = NULL, ncp = NULL, null.ncp = 0,
 
 } # end of power.chisq.test()
 
-
-# statistic: observed chi-square test statistic
-# probs: inversion probabilities
-# set probs = c(0.025, 0.975) for 95% CI
+#' Precision Calculation for the Generic Chi-Square Test
+#'
+#' @description
+#' TBA...
+#'
+#' @aliases precision.chisq
+#'
+#'
+#' @param statistic   observed test statistic (chi-square)
+#' @param df          degrees of freedom
+#' @param probs       quantile probabilities, e.g., c(0.025, 0.975) for 95% CI
+#'                    (default: c(0.025, 0.25, 0.50, 0.75, 0.975))
+#'
+#' @return
+#'   \item{statistic}{observed test statistic.}
+#'   \item{df}{degrees of freedom.}
+#'   \item{probs}{quantile probabilities.}
+#'   \item{stat.at.probs}{values for the test statistic at the defined probabilities.}
+#'
+#' @examples
+#' # TBA ...
+#'
+#' @export precision.chisq.test
 precision.chisq.test <- function(statistic, df, probs = c(0.025, 0.25, 0.50, 0.75, 0.975)) {
-  check.numeric(statistic)
-  check.positive(df)
+  check.positive(statistic, df)
   check.vector(probs, check.proportion)
 
   find.ncp.chisq <- function(target, no.root = 0) {
@@ -181,13 +199,14 @@ precision.chisq.test <- function(statistic, df, probs = c(0.025, 0.25, 0.50, 0.7
     # if no valid upper boundary was found, return NA
     if (!exists("value.at.upper") || !is.finite(value.at.upper) || value.at.upper > 0) return(NA_real_)
 
-    tryCatch(stats::uniroot(objective, interval = c(0, upper), tol = 1e-12, maxiter = 500L)$root, error = function(e) NA_real_)
+    tryCatch(stats::uniroot(objective, interval = c(0, upper), tol = 1e-12, maxiter = 500L)$root,
+             error = function(e) NA_real_)
 
   } # find.ncp.chisq
 
-  ci <- vapply(1 - probs, function(target) find.ncp.chisq(target = target), numeric(1L))
+  stat.at.probs <- vapply(1 - probs, function(target) find.ncp.chisq(target = target), numeric(1L))
 
-  list(statistic = statistic, df = df, probs = probs, ci = stats::setNames(ci, paste0(round(probs * 100, 1), "%")))
+  invisible(list(statistic = statistic, df = df, probs = probs, stat.at.probs = name_probs(stat.at.probs, probs)))
 
 } # precision.chisq.test()
 
