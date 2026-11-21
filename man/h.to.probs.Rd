@@ -35,6 +35,7 @@ versa).
 h and either prob1 or prob2 are required
 }
 \examples{
-probs.to.h(prob1 = 0.56, prob2 = 0.50)
+h.to.probs(h = 0.1, prob1 = 0.56)
+h.to.probs(h = 0.1, prob2 = 0.50)
 
 }
