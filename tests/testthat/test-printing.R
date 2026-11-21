@@ -3259,6 +3259,99 @@ test_that("printing.R works", {
                            "  \033[36mσ               : Standard deviation\033[0m", ""))
     # ------------------------------------------------------------------------------------------------------------------
 
+    # .print.precision -------------------------------------------------------------------------------------------------
+    crrAsc <- capture.output(power.binom.test(prob = 0.70, size = 100, plot = FALSE, verbose = 0) |> precision(verbose = 2))
+    expect_equal(crrAsc, c("+--------------------------------------------------+",
+                           "|              PRECISION CALCULATION               |",
+                           "+--------------------------------------------------+", "",
+                           "                                  2.5%   50% 97.5%",
+                           "  Prop. Uncertainty Distribution 0.600 0.700 0.788",
+                           "  Conditional Statistical Power  0.464 0.979 1.000", "",
+                           "  Uncertainty distribution quantiles of proportions ",
+                           "  are obtained directly from the inverse cumulative ",
+                           "  distribution function of the beta-distribution ",
+                           "  given the observed statistic (prop.), in line ",
+                           "  with Clopper and Pearson (1934).", ""))
+
+    crrUTF <- capture.output(power.binom.test(prob = 0.70, size = 100, plot = FALSE, verbose = 0, utf = TRUE) |>
+                               precision(verbose = 2))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
+                           "║             \033[34m PRECISION CALCULATION \033[0m              ║",
+                           "╚══════════════════════════════════════════════════╝", "",                                                                  
+                           "                                  2.5%   50% 97.5%",
+                           "  Prop. Uncertainty Distribution 0.600 0.700 0.788",
+                           "  Conditional Statistical Power  0.464 0.979 1.000", "\033[36m",
+                           "  Uncertainty distribution quantiles of proportions ",
+                           "  are obtained directly from the inverse cumulative ",
+                           "  distribution function of the beta-distribution ",
+                           "  given the observed statistic (prop.), in line ",
+                           "  with Clopper and Pearson (1934).", "\033[0m"))
+
+    crrUTF <- capture.output(power.chisq.test(ncp = 40, null.ncp = 10, df = 10, plot = FALSE, verbose = 0, utf = TRUE) |>
+                               precision(verbose = 2))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
+                           "║             \033[34m PRECISION CALCULATION \033[0m              ║",
+                           "╚══════════════════════════════════════════════════╝", "",
+                           "                                   2.5%    50%  97.5%",
+                           "  NCP Uncertainty Distribution  11.6303 30.957 58.300",
+                           "  Conditional Statistical Power  0.0763  0.698  0.993", "\033[36m",
+                           "  NCP uncertainty distribution quantiles are obtained ",
+                           "  by inverting cumulative distribution function of ",
+                           "  the non-central Chi-Square-distribution given the ", 
+                           "  observed Chi-Square-statistic.", "\033[0m"))
+
+    crrUTF <- capture.output(power.f.test(ncp = 10, df1 = 1, df2 = 99, plot = FALSE, verbose = 0, utf = TRUE) |>
+                               precision(verbose = 2))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
+                           "║             \033[34m PRECISION CALCULATION \033[0m              ║",
+                           "╚══════════════════════════════════════════════════╝", "",
+                           "                                  2.5%    50%  97.5%",
+                           "  NCP Uncertainty Distribution  1.2437 9.7518 26.328",
+                           "  Cohen's f-squared             0.0126 0.0985  0.266",
+                           "  Conditional Statistical Power 0.1972 0.8713  0.999", "\033[36m",
+                           "  NCP uncertainty distribution quantiles are obtained ",
+                           "  by inverting cumulative distribution function of ",
+                           "  the non-central F-distribution given the observed ",
+                           "  F-statistic.", "\033[0m"))
+
+    crrUTF <- capture.output(power.lp.test(ncp = 2, df = 10, plot = FALSE, verbose = 0) |> precision(verbose = 2, utf = TRUE))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
+                           "║             \033[34m PRECISION CALCULATION \033[0m              ║",
+                           "╚══════════════════════════════════════════════════╝", "",
+                           "                                   2.5%   50% 97.5%",
+                           "  NCP Uncertainty Distribution  -0.1835 1.948 4.101",
+                           "  Conditional Statistical Power  0.0539 0.477 0.937", "\033[36m",
+                           "  NCP uncertainty distribution quantiles are obtained ",
+                           "  directly from the cumulative distribution function ",
+                           "  of the non-central Lambda-Prime-distribution given ",
+                           "  the observed Lambda-Prime-statistic.", "\033[0m"))
+
+    crrUTF <- capture.output(power.t.test(df = 30, power = 0.50, plot = FALSE, verbose = 0) |> precision(verbose = 2, utf = TRUE))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
+                           "║             \033[34m PRECISION CALCULATION \033[0m              ║",
+                           "╚══════════════════════════════════════════════════╝", "",
+                           "                                   2.5%   50% 97.5%",
+                           "  NCP Uncertainty Distribution  -0.0162 2.008 4.034",
+                           "  Conditional Statistical Power  0.0500 0.493 0.974", "\033[36m",
+                           "  NCP uncertainty distribution quantiles are obtained ",
+                           "  by inverting cumulative distribution function of ",
+                           "  the non-central t-distribution given the observed ",
+                           "  t-statistic.", "\033[0m"))
+
+    crrUTF <- capture.output(power.z.test(power = 0.80, plot = FALSE, verbose = 0) |> precision(verbose = 2, utf = TRUE))
+    expect_equal(crrUTF, c("╔══════════════════════════════════════════════════╗",
+                           "║             \033[34m PRECISION CALCULATION \033[0m              ║",
+                           "╚══════════════════════════════════════════════════╝", "",
+                           "                                 2.5% 50% 97.5%",
+                           "  NCP Uncertainty Distribution  0.842 2.8 4.762",
+                           "  Conditional Statistical Power 0.134 0.8 0.997", "\033[36m",
+                           "  NCP uncertainty distribution quantiles are obtained ",
+                           "  directly from the cumulative distribution function ",
+                           "  of the non-central z-distribution given the observed ",
+                           "  z-statistic.", "\033[0m"))
+
+    # ------------------------------------------------------------------------------------------------------------------
+
     expect_error(capture.output(.print.pwrss.ttest(list(requested = "n", alternative = "two.sided", d = 1, d = 1))),
                  "`print.obj` contains more than one effect size.")
 })

@@ -41,20 +41,20 @@ precision <- precision.power
 # .precision.power.binom
 .precision.power.binom <- function(x, probs = c(0.025, 0.50, 0.975)) {
 
-  if (!all(c("pwrss", "binom") %in% class(x))) stop("Object should be a class of 'pwrss' and 'binom'", call. = FALSE)
+  if (!all(c("pwrss", "binom") %in% class(x))) stop("The object `x` should inherit class 'pwrss' and 'binom'.", call. = FALSE)
 
-  conf.int <- precision.binom.test(statistic = x$prob, size = x$size, probs = probs)$ci
-  if (any(is.na(conf.int)))
-    stop("Calculating confidence interval for power is not possible with the current bounds.", call. = FALSE)
+  stat.at.probs <- precision.binom.test(statistic = x$prob, size = x$size, probs = probs)$stat.at.probs
+  if (any(is.na(stat.at.probs)))
+    stop("Calculating the statistics at the given probabilities is not possible with the current bounds.", call. = FALSE)
 
-  power <- vapply(conf.int,
+  power <- vapply(stat.at.probs,
                   function(prob) {
                     tryCatch(power.binom.test(prob = prob, null.prob = x$null.prob, size = x$size,
                                               alternative = x$alternative, verbose = 0, plot = FALSE)$power,
                              error = function(e) NA_real_) },
                   numeric(1L))
 
-  prec.obj <- data.frame(rbind(conf.int, power))
+  prec.obj <- data.frame(rbind(stat.at.probs, power))
   rownames(prec.obj) <- c("  Prop. Uncertainty Distribution", "  Conditional Statistical Power")
   colnames(prec.obj) <- paste0(round(probs * 100, 1), "%")
 
@@ -67,20 +67,20 @@ precision <- precision.power
 # .precision.power.chisq
 .precision.power.chisq <- function(x, probs = c(0.025, 0.50, 0.975)) {
 
-  if (!all(c("pwrss", "chisq") %in% class(x))) stop("Object should be a class of 'pwrss' and 'chisq'", call. = FALSE)
+  if (!all(c("pwrss", "chisq") %in% class(x))) stop("The object `x` should inherit class 'pwrss' and 'chisq'.", call. = FALSE)
 
-  conf.int <- precision.chisq.test(statistic = x$ncp, df = x$df, probs = probs)$ci
-  if (any(is.na(conf.int)) || all(conf.int <= 0))
-    stop("Calculating confidence interval for power is not possible with the current bounds.", call. = FALSE)
-  conf.int[conf.int <= 0] <- 1e-12
+  stat.at.probs <- precision.chisq.test(statistic = x$ncp, df = x$df, probs = probs)$stat.at.probs
+  if (any(is.na(stat.at.probs)) || all(stat.at.probs <= 0))
+    stop("Calculating the statistics at the given probabilities is not possible with the current bounds.", call. = FALSE)
+  stat.at.probs[stat.at.probs <= 0] <- 1e-12
 
-  power <- vapply(conf.int,
+  power <- vapply(stat.at.probs,
                   function(ncp) {
                     tryCatch(power.chisq.test(ncp = ncp, null.ncp = x$null.ncp, df = x$df, verbose = 0, plot = FALSE)$power,
                              error = function(e) NA_real_) },
                   numeric(1L))
 
-  prec.obj <- data.frame(rbind(conf.int, power))
+  prec.obj <- data.frame(rbind(stat.at.probs, power))
   rownames(prec.obj) <- c("  NCP Uncertainty Distribution", "  Conditional Statistical Power")
   colnames(prec.obj) <- paste0(round(probs * 100, 1), "%")
 
@@ -93,7 +93,7 @@ precision <- precision.power
 # .precision.power.f
 .precision.power.f <- function(x, probs = c(0.025, 0.50, 0.975)) {
 
-  if (!all(c("pwrss", "f") %in% class(x))) stop("Object should be a class of 'pwrss' and 'f'", call. = FALSE)
+  if (!all(c("pwrss", "f") %in% class(x))) stop("The object `x` should inherit class 'pwrss' and 'f'.", call. = FALSE)
 
   if ("generic" %in% class(x)) {
     effect <- "  Cohen's f-squared"
@@ -109,19 +109,19 @@ precision <- precision.power
     f.statistic <- (x$ncp / x$n.total) * (x$df2 / x$df1)
   }
 
-  conf.int <- precision.f.test(statistic = f.statistic, df1 = x$df1, df2 = x$df2, probs = probs)$ci
-  if (any(is.na(conf.int)) || all(conf.int <= 0))
-    stop("Calculating confidence interval for power is not possible with the current bounds.", call. = FALSE)
-  conf.int[conf.int <= 0] <- 1e-12
-  f.squared.ci <- conf.int / x$df2
+  stat.at.probs <- precision.f.test(statistic = f.statistic, df1 = x$df1, df2 = x$df2, probs = probs)$stat.at.probs
+  if (any(is.na(stat.at.probs)) || all(stat.at.probs <= 0))
+    stop("Calculating the statistics at the given probabilities is not possible with the current bounds.", call. = FALSE)
+  stat.at.probs[stat.at.probs <= 0] <- 1e-12
+  f.squared.ci <- stat.at.probs / x$df2
 
-  power <- vapply(conf.int,
+  power <- vapply(stat.at.probs,
                   function(ncp) {
                     tryCatch(power.f.test(ncp = ncp, null.ncp = x$null.ncp, df1 = x$df1, df2 = x$df2, verbose = 0, plot = FALSE)$power,
                              error = function(e) NA_real_) },
                   numeric(1L))
 
-  prec.obj <- data.frame(rbind(conf.int, if ("generic" %in% class(x)) f.squared.ci else f.squared.ci / (1 + f.squared.ci), power))
+  prec.obj <- data.frame(rbind(stat.at.probs, if ("generic" %in% class(x)) f.squared.ci else f.squared.ci / (1 + f.squared.ci), power))
   colnames(prec.obj) <-  paste0(round(probs * 100, 1), "%")
   rownames(prec.obj) <- c("  NCP Uncertainty Distribution", effect, "  Conditional Statistical Power")
 
@@ -134,21 +134,20 @@ precision <- precision.power
 # .precision.power.lp
 .precision.power.lp <- function(x, probs = c(0.025, 0.50, 0.975)) {
 
-  if (!all(c("pwrss", "lp") %in% class(x))) stop("Object should be a class of 'pwrss' and 'lp'", call. = FALSE)
+  if (!all(c("pwrss", "lp") %in% class(x))) stop("The object `x` should inherit class 'pwrss' and 'lp'.", call. = FALSE)
 
-  conf.int <- precision.lp.test(statistic = x$ncp, df = x$df, probs = probs)$ci
+  stat.at.probs <- precision.lp.test(statistic = x$ncp, df = x$df, probs = probs)$stat.at.probs
+  if (any(is.na(stat.at.probs)))
+    stop("Calculating the statistics at the given probabilities is not possible with the current bounds.", call. = FALSE)
 
-  if (any(is.na(conf.int)))
-    stop("Calculating confidence interval for power is not possible with the current bounds.", call. = FALSE)
-
-  power <- vapply(conf.int,
+  power <- vapply(stat.at.probs,
                   function(ncp) {
                     tryCatch(power.lp.test(ncp = ncp, null.ncp = x$null.ncp, alternative = x$alternative, df = x$df,
                                            verbose = 0, plot = FALSE)$power,
                              error = function(e) NA_real_) },
                   numeric(1L))
 
-  prec.obj <- data.frame(rbind(conf.int, power))
+  prec.obj <- data.frame(rbind(stat.at.probs, power))
   colnames(prec.obj) <-  paste0(round(probs * 100, 1), "%")
   rownames(prec.obj) <- c("  NCP Uncertainty Distribution", "  Conditional Statistical Power")
 
@@ -161,13 +160,13 @@ precision <- precision.power
 # .precision.power.t
 .precision.power.t <- function(x, probs = c(0.025, 0.50, 0.975)) {
 
-  if (!all(c("pwrss", "t") %in% class(x))) stop("Object should be a class of 'pwrss' and 't'", call. = FALSE)
+  if (!all(c("pwrss", "t") %in% class(x))) stop("The object `x` should inherit class 'pwrss' and 't'.", call. = FALSE)
 
-  conf.int <- precision.t.test(statistic = x$ncp, df = x$df, probs = probs)$ci
-  if (any(is.na(conf.int)))
-    stop("Calculating confidence interval for power is not possible with the current bounds.", call. = FALSE)
+  stat.at.probs <- precision.t.test(statistic = x$ncp, df = x$df, probs = probs)$stat.at.probs
+  if (any(is.na(stat.at.probs)))
+    stop("Calculating the statistics at the given probabilities is not possible with the current bounds.", call. = FALSE)
 
-  power <- vapply(conf.int,
+  power <- vapply(stat.at.probs,
                   function(ncp) {
                     tryCatch(power.t.test(ncp = ncp, null.ncp = x$null.ncp, alternative = x$alternative, df = x$df,
                                           verbose = 0, plot = FALSE)$power,
@@ -177,8 +176,8 @@ precision <- precision.power
 
   if ("generic" %in% class(x)) {
 
-    effect <- "  t-value"
-    prec.obj <- data.frame(rbind(conf.int, conf.int, power))
+    effect <- c()
+    prec.obj <- data.frame(rbind(stat.at.probs, power))
 
   } else if ("welch" %in% class(x)) { # generic -> welch
 
@@ -193,20 +192,20 @@ precision <- precision.power
                ((2 * (x$n[1] - 1) * sd1 ^ 2 + 2 * (x$n[2] - 1) * sd2 ^ 2) * (x$n[1] + x$n[2] - 2))
 
     if (x$parms$claim.basis == "md.pval") {
-      d <- conf.int * sqrt(var.delta) + x$parms$null.d
+      d <- stat.at.probs * sqrt(var.delta) + x$parms$null.d
     } else {
-      disc <- (-2 * x$parms$null.d) ^ 2 - 4 * (1 - conf.int ^ 2 * (var.std   / std ^ 2)) *
-              (x$parms$null.d ^ 2 - conf.int ^ 2 * (var.delta / std ^ 2))
+      disc <- (-2 * x$parms$null.d) ^ 2 - 4 * (1 - stat.at.probs ^ 2 * (var.std   / std ^ 2)) *
+              (x$parms$null.d ^ 2 - stat.at.probs ^ 2 * (var.delta / std ^ 2))
       if (any(disc < 0)) {
         warning("No real solution for some d.", call. = FALSE)
         disc[disc < 0] <- NA_real_
       }
-      d1 <- (2 * x$parms$null.d + sqrt(disc)) / (2 * (1 - conf.int ^ 2 * (var.std   / std ^ 2)))
-      d2 <- (2 * x$parms$null.d - sqrt(disc)) / (2 * (1 - conf.int ^ 2 * (var.std   / std ^ 2)))
-      d <- ifelse(sign(d1) == sign(conf.int), d1, d2)
+      d1 <- (2 * x$parms$null.d + sqrt(disc)) / (2 * (1 - stat.at.probs ^ 2 * (var.std   / std ^ 2)))
+      d2 <- (2 * x$parms$null.d - sqrt(disc)) / (2 * (1 - stat.at.probs ^ 2 * (var.std   / std ^ 2)))
+      d <- ifelse(sign(d1) == sign(stat.at.probs), d1, d2)
     }
 
-    prec.obj <- data.frame(rbind(conf.int, d, power))
+    prec.obj <- data.frame(rbind(stat.at.probs, d, power))
 
   } else if ("student" %in% class(x)) { # welch -> student
 
@@ -216,39 +215,39 @@ precision <- precision.power
 
       if (x$parms$claim.basis == "md.pval") {
         var.delta <- (x$n[1] + x$n[2]) / (x$n[1] * x$n[2])
-        d <- conf.int * sqrt(var.delta) + x$parms$null.d
+        d <- stat.at.probs * sqrt(var.delta) + x$parms$null.d
       } else {
-        disc <- (-2 * x$parms$null.d) ^ 2 - 4 * (1 - (conf.int ^ 2) * (1 / (2 * x$df))) *
-                (x$parms$null.d ^ 2 - (conf.int ^ 2) * ((x$n[1] + x$n[2]) / (x$n[1] * x$n[2])))
+        disc <- (-2 * x$parms$null.d) ^ 2 - 4 * (1 - (stat.at.probs ^ 2) * (1 / (2 * x$df))) *
+                (x$parms$null.d ^ 2 - (stat.at.probs ^ 2) * ((x$n[1] + x$n[2]) / (x$n[1] * x$n[2])))
         if (any(disc < 0)) {
           warning("No real solution for some d.", call. = FALSE)
           disc[disc < 0] <- NA_real_
         }
-        d1 <- (2 * x$parms$null.d + sqrt(disc)) / (2 * (1 - (conf.int ^ 2) * (1 / (2 * x$df))))
-        d2 <- (2 * x$parms$null.d - sqrt(disc)) / (2 * (1 - (conf.int ^ 2) * (1 / (2 * x$df))))
-        d <- ifelse(sign(d1) == sign(conf.int), d1, d2)
+        d1 <- (2 * x$parms$null.d + sqrt(disc)) / (2 * (1 - (stat.at.probs ^ 2) * (1 / (2 * x$df))))
+        d2 <- (2 * x$parms$null.d - sqrt(disc)) / (2 * (1 - (stat.at.probs ^ 2) * (1 / (2 * x$df))))
+        d <- ifelse(sign(d1) == sign(stat.at.probs), d1, d2)
       }
 
     } else {
 
       if (x$parms$claim.basis == "md.pval") {
         var.delta <- 1 / x$n
-        d <- conf.int * sqrt(var.delta) + x$parms$null.d
+        d <- stat.at.probs * sqrt(var.delta) + x$parms$null.d
       } else {
-        disc <- (-2 * x$parms$null.d) ^ 2 - 4 * (1 - (conf.int ^ 2) * (1 / (2 * x$n))) *
-                (x$parms$null.d ^ 2 - (conf.int ^ 2) * (1 / x$n))
+        disc <- (-2 * x$parms$null.d) ^ 2 - 4 * (1 - (stat.at.probs ^ 2) * (1 / (2 * x$n))) *
+                (x$parms$null.d ^ 2 - (stat.at.probs ^ 2) * (1 / x$n))
         if (any(disc < 0)) {
           warning("No real solution for some d.", call. = FALSE)
           disc[disc < 0] <- NA_real_
         }
-        d1 <- (2 * x$parms$null.d  + sqrt(disc)) / (2 * (1 - (conf.int ^ 2) * (1 / (2 * x$n))))
-        d2 <- (2 * x$parms$null.d  - sqrt(disc)) / (2 * (1 - (conf.int ^ 2) * (1 / (2 * x$n))))
-        d <- ifelse(sign(d1) == sign(conf.int), d1, d2)
+        d1 <- (2 * x$parms$null.d  + sqrt(disc)) / (2 * (1 - (stat.at.probs ^ 2) * (1 / (2 * x$n))))
+        d2 <- (2 * x$parms$null.d  - sqrt(disc)) / (2 * (1 - (stat.at.probs ^ 2) * (1 / (2 * x$n))))
+        d <- ifelse(sign(d1) == sign(stat.at.probs), d1, d2)
       }
 
     } # independent?
 
-    prec.obj <- data.frame(rbind(conf.int, d, power))
+    prec.obj <- data.frame(rbind(stat.at.probs, d, power))
 
   } else if ("regression" %in% class(x)) { # student -> regression
 
@@ -257,21 +256,19 @@ precision <- precision.power
     if (is.null(x$parms$r.squared)) stop("R-squared cannot be NULL with precision calculations.", call. = FALSE)
 
     # lambda <- (beta - x$parms$null.beta)  / ((x$parms$sd.outcome / x$parms$sd.predictor) * sqrt((1 - x$r.squared) / x$n))
-    beta <- conf.int * ((x$parms$sd.outcome / x$parms$sd.predictor) * sqrt((1 - x$r.squared) / x$n)) + x$parms$null.beta
+    beta <- stat.at.probs * ((x$parms$sd.outcome / x$parms$sd.predictor) * sqrt((1 - x$r.squared) / x$n)) + x$parms$null.beta
     std.beta <- beta * (x$parms$sd.predictor / x$parms$sd.outcome)
 
-    prec.obj <- data.frame(rbind(conf.int, beta, std.beta, power))
+    prec.obj <- data.frame(rbind(stat.at.probs, beta, std.beta, power))
 
   }  else if ("wilcoxon" %in% class(x)) {  # regression -> wilcoxon
 
     effect <- c("  Cohen's d", "  Common Language Effect Size")
 
-    if (x$method != "guenther") stop("Only `method` == 'guenther' is valid here.", call. = FALSE)
-
-    d <- conf.int * sqrt(ifelse(x$parms$design == "independent", 1 / x$n[1] + 1 / x$n[2], 1 / x$n)) + x$parms$null.d
+    d <- stat.at.probs * sqrt(ifelse(x$parms$design == "independent", 1 / x$n[1] + 1 / x$n[2], 1 / x$n)) + x$parms$null.d
     cles <- vapply(d, function(di) d.to.cles(d = di, design = x$parms$design, verbose = 0)$cles, numeric(1))
 
-    prec.obj <- data.frame(rbind(conf.int, d, cles, power))
+    prec.obj <- data.frame(rbind(stat.at.probs, d, cles, power))
 
   } # wilcoxon
 
@@ -287,55 +284,53 @@ precision <- precision.power
 # .precision.power.z
 .precision.power.z <- function(x, probs = c(0.025, 0.50, 0.975)) {
 
-  if (!all(c("pwrss", "z") %in% class(x))) stop("Object should be a class of 'pwrss' and 'z'", call. = FALSE)
+  if (!all(c("pwrss", "z") %in% class(x))) stop("The object `x` should inherit class 'pwrss' and 'z'.", call. = FALSE)
 
-  conf.int <- precision.z.test(statistic = x$mean, probs = probs)$ci
-  if (any(is.na(conf.int)))
-    stop("Calculating confidence interval for power is not possible with the current bounds.", call. = FALSE)
+  stat.at.probs <- precision.z.test(statistic = x$mean, probs = probs)$stat.at.probs
+  if (any(is.na(stat.at.probs)))
+    stop("Calculating the statistics at the given probabilities is not possible with the current bounds.", call. = FALSE)
 
   if ("generic" %in% class(x)) {  # generic
 
-    effect <- "  z-value"
-    prec.obj <- data.frame(rbind(conf.int, conf.int))
+    effect <- c()
+    prec.obj <- as.data.frame(t(stat.at.probs))
 
   } else if ("wilcoxon" %in% class(x)) {  # generic -> wilcoxon
 
     effect <- c("  Cohen's d", "  Common Language Effect Size")
 
-    if (x$method != "noether") stop("Only `method` == 'noether' is valid here.", call. = FALSE)
-
     null.prob <- d.to.cles(d = x$parms$null.d, design = x$parms$design, verbose = 0)$cles
-    cles <- null.prob + conf.int /
+    cles <- null.prob + stat.at.probs /
       sqrt(12 * ifelse(x$parms$design == "independent", x$n[2], x$n) * x$parms$n.ratio / (1 + x$parms$n.ratio))
     d <- vapply(cles, function(clesi) cles.to.d(cles = clesi, design = x$parms$design, verbose = 0)$d, numeric(1))
 
-    prec.obj <- data.frame(rbind(conf.int, d, cles))
+    prec.obj <- data.frame(rbind(stat.at.probs, d, cles))
 
   } else if ("oneprop" %in% class(x)) {  # wilcoxon -> oneprop
 
     effect <- c("  Proportion", "  Cohen's h")
 
-    h <- props <- null.sd <- numeric(length(conf.int))
+    h <- props <- null.sd <- numeric(length(stat.at.probs))
 
     null.prob <- switch(x$alternative,
                         two.one.sided = ifelse(all(sign(x$null.mean) == 1), min(x$null.prob), max(x$null.prob)),
                         x$null.prob)
 
-    for (i in seq_along(conf.int)) {
+    for (i in seq_along(stat.at.probs)) {
 
       if (x$alternative == "two.one.sided") {
 
         if (all(sign(x$null.mean) == -1)) {
-          z <- conf.int[i] + abs(max(x$null.mean))
+          z <- stat.at.probs[i] + abs(max(x$null.mean))
         } else if (all(sign(x$null.mean) == 1)) {
-          z <- conf.int[i] - min(x$null.mean)
+          z <- stat.at.probs[i] - min(x$null.mean)
         } else {
-          z <- conf.int[i] - x$null.mean[sign(x$null.mean) == 1]
+          z <- stat.at.probs[i] - x$null.mean[sign(x$null.mean) == 1]
         }
 
       } else {
 
-        z <- conf.int[i]
+        z <- stat.at.probs[i]
 
       } # two.one.sided
 
@@ -348,51 +343,53 @@ precision <- precision.power
 
     } # for loop
 
-    prec.obj <- data.frame(rbind(conf.int, props, h))
+    prec.obj <- data.frame(rbind(stat.at.probs, props, h))
 
   } else if ("logistic" %in% class(x)) {  # oneprop -> logistic
 
     effect <- c("  Coefficient (Beta)", "  Odds Ratio")
 
-    if (x$parms$method == "hsieh") stop("Precision calculations for Hsieh method are not supported at the moment.", call. = FALSE)
+    if (x$parms$method == "hsieh")
+      stop("Precision calculations for `method` = 'hsieh' are currently not supported.", call. = FALSE)
 
     var.obj <- var.beta.logistic(beta0 = x$beta0, beta1 = x$beta1, distribution = x$distribution)
 
-    beta1 <- conf.int * sqrt(var.obj$var.beta1 / (x$n * (1 - x$parms$r.squared.predictor)))
+    beta1 <- stat.at.probs * sqrt(var.obj$var.beta1 / (x$n * (1 - x$parms$r.squared.predictor)))
     odds.ratio <- exp(beta1)
 
-    ncp <- numeric(length(conf.int))
-    sd.ncp <- numeric(length(conf.int))
-    for (i in seq_along(conf.int)) {
+    ncp <- numeric(length(stat.at.probs))
+    sd.ncp <- numeric(length(stat.at.probs))
+    for (i in seq_along(stat.at.probs)) {
       var.obj <- var.beta.logistic(beta0 = x$beta0, beta1 = beta1[i], distribution = x$distribution)
 
       ncp[i] <- beta1[i] / sqrt(var.obj$var.beta1 / (x$n * (1 - x$parms$r.squared.predictor)))
       sd.ncp[i] <- sqrt((x$vcf * var.obj$var.beta0 + (1 - x$vcf) * var.obj$var.beta1) / var.obj$var.beta1)
     }
 
-    prec.obj <- data.frame(rbind(conf.int, beta1, odds.ratio))
+    prec.obj <- data.frame(rbind(stat.at.probs, beta1, odds.ratio))
 
   } else if ("poisson" %in% class(x)) {  # logistic -> poisson
 
     effect <- c("  Coefficient (Beta)", "  Rate Ratio")
 
-    if (x$parms$method == "signorini") stop("Precision calculations for Signorini method are not supported at the moment.", call. = FALSE)
+    if (x$parms$method == "signorini")
+      stop("Precision calculations for `method` = 'signorini' are currently not supported.", call. = FALSE)
 
     var.obj <- var.beta.poisson(beta0 = x$beta0, beta1 = x$beta1, distribution = x$distribution)
 
-    beta1 <- conf.int * sqrt(var.obj$var.beta1 / (x$n * (1 - x$parms$r.squared.predictor) * x$parms$mean.exposure))
+    beta1 <- stat.at.probs * sqrt(var.obj$var.beta1 / (x$n * (1 - x$parms$r.squared.predictor) * x$parms$mean.exposure))
     rate.ratio <- exp(beta1)
 
-    ncp <- numeric(length(conf.int))
-    sd.ncp <- numeric(length(conf.int))
-    for (i in seq_along(conf.int)) {
+    ncp <- numeric(length(stat.at.probs))
+    sd.ncp <- numeric(length(stat.at.probs))
+    for (i in seq_along(stat.at.probs)) {
       var.obj <- var.beta.poisson(beta0 = x$beta0, beta1 = beta1[i], distribution = x$distribution)
 
       ncp[i] <- beta1[i] / sqrt(var.obj$var.beta1 / (x$n * (1 - x$parms$r.squared.predictor) * x$parms$mean.exposure))
       sd.ncp[i] <- sqrt((x$vcf * var.obj$var.beta0 + (1 - x$vcf) * var.obj$var.beta1) / var.obj$var.beta1)
     }
 
-    prec.obj <- data.frame(rbind(conf.int, beta1, rate.ratio))
+    prec.obj <- data.frame(rbind(stat.at.probs, beta1, rate.ratio))
 
   } else if ("mediation" %in% class(x)) {  # poisson -> mediation
 
@@ -413,10 +410,10 @@ precision <- precision.power
       # lambda <- (x$beta.a * x$beta.b) / se.indirect
     }
 
-    beta.indirect <- conf.int * se.indirect
+    beta.indirect <- stat.at.probs * se.indirect
     std.beta.indirect <-  beta.indirect * (x$parms$sd.predictor * x$parms$sd.outcome)
 
-    prec.obj <- data.frame(rbind(conf.int, beta.indirect, std.beta.indirect))
+    prec.obj <- data.frame(rbind(stat.at.probs, beta.indirect, std.beta.indirect))
 
   } # mediation
 
@@ -428,7 +425,7 @@ precision <- precision.power
                     tryCatch(power.z.test(mean = mean, sd = 1, null.mean = x$null.mean, null.sd = x$sd,
                                           alternative = x$alternative, verbose = 0, plot = FALSE)$power,
                              error = function(e) NA_real_) },
-                    conf.int, null.sd, SIMPLIFY = TRUE, USE.NAMES = FALSE)
+                    stat.at.probs, null.sd, SIMPLIFY = TRUE, USE.NAMES = FALSE)
 
   } else if (any(c("logistic", "poisson") %in% class(x))) {
 
@@ -436,11 +433,11 @@ precision <- precision.power
                     tryCatch(power.z.test(mean = mean, sd = x$sd, null.mean = x$null.mean, null.sd = 1,
                                           alternative = x$alternative, verbose = 0, plot = FALSE)$power,
                              error = function(e) NA_real_) },
-                    conf.int, sd.ncp, SIMPLIFY = TRUE, USE.NAMES = FALSE)
+                    stat.at.probs, sd.ncp, SIMPLIFY = TRUE, USE.NAMES = FALSE)
 
   } else {
 
-    power <- vapply(conf.int, function(mean) {
+    power <- vapply(stat.at.probs, function(mean) {
                     tryCatch(power.z.test(mean = mean, sd = 1, null.mean = x$null.mean, null.sd = 1,
                                           alternative = x$alternative, verbose = 0, plot = FALSE)$power,
                              error = function(e) NA_real_) },
@@ -448,7 +445,7 @@ precision <- precision.power
 
   } # oneprop, logistic / poisson or something else
 
-  prec.obj <- data.frame(rbind(prec.obj, power))
+  prec.obj <- rbind(prec.obj, power)
   rownames(prec.obj) <- c("  NCP Uncertainty Distribution", effect, "  Conditional Statistical Power")
   colnames(prec.obj) <- paste0(round(probs * 100, 1), "%")
 
@@ -467,10 +464,10 @@ precision <- precision.power
     effect <- if (n_c("generic")) "f.squared" else if (n_c("regression")) "r.squared" else "eta.squared"
     c("probs", "quantile", effect, "power")
   } else if (n_c("t")) {
-    effect <- if (n_c("generic")) "t" else if (n_c("regression")) c("beta", "std.beta") else if (n_c("wilcoxon")) c("d", "cles") else "d"
+    effect <- if (n_c("generic")) c() else if (n_c("regression")) c("beta", "std.beta") else if (n_c("wilcoxon")) c("d", "cles") else "d"
     c("probs", "quantile", effect, "power")
   } else if (n_c("z")) {
-    effect <- if (n_c("generic")) "z" else if (n_c("oneprop")) c("prop", "h") else if (n_c("wilcoxon")) c("d", "cles")
+    effect <- if (n_c("generic")) c() else if (n_c("oneprop")) c("prop", "h") else if (n_c("wilcoxon")) c("d", "cles")
                 else if (n_c("logistic")) c("beta", "odds.ratio") else if (n_c("poisson")) c("beta", "rate.ratio")
                 else if (n_c("mediation")) c("beta.indirect", "std.beta.indirect")
     c("probs", "quantile", effect, "power")

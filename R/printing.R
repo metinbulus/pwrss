@@ -314,40 +314,46 @@
   n_c <- function(name) name %in% class
   if (n_c("binom")) {
     paste0(ifelse(utf, "\033[36m", ""),
-           "\n  Uncertainty distribution quantiles of proportions are  \n",
-           "  obtained directly from the inverse cumulative dist. \n",
-           "  function of the beta-distribution given observed stat. (prop.), \n",
-           "  in line with Clopper and Pearson (1934).\n",
+           "\n  Uncertainty distribution quantiles of proportions \n",
+           "  are obtained directly from the inverse cumulative \n",
+           "  distribution function of the beta-distribution \n",
+           "  given the observed statistic (prop.), in line \n",
+           "  with Clopper and Pearson (1934).\n",
            ifelse(utf, "\033[0m\n", "\n"))
   } else if (n_c("chisq")) {
     paste0(ifelse(utf, "\033[36m", ""),
            "\n  NCP uncertainty distribution quantiles are obtained \n",
-           "  by inverting cumulative distribution function of the \n",
-           "  non-central F-distribution given the observed F-statistic.\n",
+           "  by inverting cumulative distribution function of \n",
+           "  the non-central Chi-Square-distribution given the \n",
+           "  observed Chi-Square-statistic.\n",
            ifelse(utf, "\033[0m\n", "\n"))
   } else if (n_c("f")) {
     paste0(ifelse(utf, "\033[36m", ""),
            "\n  NCP uncertainty distribution quantiles are obtained \n",
-           "  by inverting cumulative distribution function of the \n",
-           "  non-central F-distribution given the observed F-stat.\n",
+           "  by inverting cumulative distribution function of \n",
+           "  the non-central F-distribution given the observed \n",
+           "  F-statistic.\n",
            ifelse(utf, "\033[0m\n", "\n"))
   } else if (n_c("lp")) {
     paste0(ifelse(utf, "\033[36m", ""),
            "\n  NCP uncertainty distribution quantiles are obtained \n",
-           "  directly from the cumulative distribution function of the \n",
-           "  non-central LP-distribution given the observed LP-stat.\n",
+           "  directly from the cumulative distribution function \n",
+           "  of the non-central Lambda-Prime-distribution given \n",
+           "  the observed Lambda-Prime-statistic.\n",
            ifelse(utf, "\033[0m\n", "\n"))
   } else if (n_c("t")) {
     paste0(ifelse(utf, "\033[36m", ""),
            "\n  NCP uncertainty distribution quantiles are obtained \n",
-           "  by inverting cumulative distribution function of the \n",
-           "  non-central t-distribution given the observed t-stat.\n",
+           "  by inverting cumulative distribution function of \n",
+           "  the non-central t-distribution given the observed \n",
+           "  t-statistic.\n",
            ifelse(utf, "\033[0m\n", "\n"))
   } else if (n_c("z")) {
     paste0(ifelse(utf, "\033[36m", ""),
            "\n  NCP uncertainty distribution quantiles are obtained \n",
-           "  directly from the cumulative distribution function of \n",
-           "  non-central z-distribution given the observed z-stat.\n",
+           "  directly from the cumulative distribution function \n",
+           "  of the non-central z-distribution given the observed \n",
+           "  z-statistic.\n",
            ifelse(utf, "\033[0m\n", "\n"))
   }
 }

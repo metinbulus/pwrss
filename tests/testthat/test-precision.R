@@ -1,11 +1,21 @@
 CIs <- c(0.80, 0.90, 0.95, 1 - (10 ^ seq(-2, -6)))
-# precision.binom.test (= precision.binom) -----------------------------------------------------------------------------
-test_that("precision.binom.test works", {
+# precision.power (= precision) ----------------------------------------------------------------------------------------
+test_that("precision.power works", {
+    expect_error(precision(NULL, probs = numeric(11), verbose = 1),
+                 "Printing is not allowed with large output. Try verbose = 0.")
+    expect_error(precision(structure(list(ncp = 0, utf = FALSE), class = c("pwrss", "generic", "exact"))),
+                 "Uncertainty quantiles are not available for exact tests at the moment.")
+    expect_error(precision(structure(list(ncp = 0, utf = FALSE), class = c("pwrss", "generic", "invalid"))),
+                 "The object `x` should inherit class 'pwrss' and either 't', 'z', 'lp', 'f', 'chisq', or 'binom'.")
+})
+
+# precision.binom.test (= precision.binom) / .precision.power.binom ----------------------------------------------------
+test_that("precision.binom.test / .precision.power.binom works", {
     expect_equal(vapply(c(0.001, 0.01, seq(0.1, 0.9, 0.1), 0.99, 0.999), function(p) {
                    vapply(10 ^ seq(6), function(s) {
                      vapply(CIs, function(c) {
                                    if (isInt(p * s))
-                                     as.numeric(precision.binom(statistic = p, size = s, probs = ci.to.probs(c))$ci)
+                                     as.numeric(precision.binom(statistic = p, size = s, probs = ci.to.probs(c))$stat.at.probs)
                                    else
                                      c(NA, NA) },
                             numeric(2)) },
@@ -22,12 +32,16 @@ test_that("precision.binom.test works", {
                           numeric(16)) },
                         numeric(96)))
 
-    expect_equal(power.binom.test(prob = 0.70, size = 100, verbose = 0, plot = FALSE) |> precision(verbose = 0),
+    expect_equal(power.binom.test(prob = 0.70, size = 100, plot = FALSE, verbose = 0) |> precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(0.600185324, 0.7, 0.78759358),
                             power = c(0.463598612, 0.979011424, 0.999983617)))
+    expect_error(.precision.power.binom(structure(list(prob = 0, size = 0), class = c("pwrss", "generic", "invalid"))),
+                 "The object `x` should inherit class 'pwrss' and 'binom'.")
+    expect_error(.precision.power.binom(structure(list(prob = 0, size = 0), class = c("pwrss", "generic", "binom"))),
+                 "Calculating the statistics at the given probabilities is not possible with the current bounds.")
 })
 
-# precision.chisq.test (= precision.chisq) -----------------------------------------------------------------------------
+# precision.chisq.test (= precision.chisq) / .precision.power.chisq ----------------------------------------------------
 # code to create the comparison matrix (needs MBESS to be installed):
 # cmpRes <- vapply(c(0.1, 0.5, 1, 2, 4, 6, 10, 15, 20, 30), function(s) {
 #             vapply(c(1, 2, 3, 5, 10, 20), function(d) {
@@ -38,22 +52,26 @@ test_that("precision.binom.test works", {
 #                  numeric(96))
 # cmpRes[is.na(cmpRes)] <- 1e-12
 # saveRDS(cmpRes, "precision.chisq_2compare.rds")  NB: store the file in `tests` under the main directory of the package
-test_that("precision.chisq.test works", {
+test_that("precision.chisq.test / .precision.power.chisq works", {
     expect_equal(vapply(c(0.1, 0.5, 1, 2, 4, 6, 10, 15, 20, 30), function(s) {
                    vapply(c(1, 2, 3, 5, 10, 20), function(d) {
                      vapply(CIs, function(c) {
-                                   as.numeric(precision.chisq(statistic = s, df = d, probs = ci.to.probs(c))$ci) },
+                                   as.numeric(precision.chisq(statistic = s, df = d, probs = ci.to.probs(c))$stat.at.probs) },
                             numeric(2)) },
                           numeric(16)) },
                         numeric(96)),
                  readRDS("../precision.chisq_2compare.rds"), tolerance = 1e-4)
 
-    expect_equal(power.chisq.test(ncp = 40, null.ncp = 10, df = 10, verbose = 0, plot = FALSE) |> precision(verbose = 0),
+    expect_equal(power.chisq.test(ncp = 40, null.ncp = 10, df = 10, plot = FALSE, verbose = 0) |> precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(11.630277918, 30.956990019, 58.299646843),
                             power = c(0.076270961, 0.697786973, 0.993279069)))
+    expect_error(.precision.power.chisq(structure(list(ncp = 0, df = 0), class = c("pwrss", "generic", "invalid"))),
+                 "The object `x` should inherit class 'pwrss' and 'chisq'.")
+    expect_error(.precision.power.chisq(structure(list(ncp = 1e-12, df = 1), class = c("pwrss", "generic", "chisq"))),
+                 "Calculating the statistics at the given probabilities is not possible with the current bounds.")
 })
 
-# precision.f.test (= precision.f) -------------------------------------------------------------------------------------
+# precision.f.test (= precision.f) / .precision.power.f ----------------------------------------------------------------
 # code to create the comparison matrix (needs MBESS to be installed; NB: takes REALLY long!, reduced df = 20 -> 17.9):
 # cmpRes <- vapply(c(0.1, 0.5, 1, 2, 3, 5, 10, 17.9), function(s) {
 #             vapply(c(1, 2, 4, 10, 30), function(d1) {
@@ -66,18 +84,21 @@ test_that("precision.chisq.test works", {
 #                  numeric(50 * 8))
 # cmpRes[is.na(cmpRes)] <- 0
 # saveRDS(cmpRes, "precision.f_2compare.rds")  # NB: store the file in `tests` under the main directory of the package
-test_that("precision.f.test works", {
+test_that("precision.f.test / .precision.power.f works", {
     expect_equal(vapply(c(0.1, 0.5, 1, 2, 3, 5, 10, 17.9), function(s) {
                    vapply(c(1, 2, 4, 10, 30), function(d1) {
                      vapply(c(2, 5, 10, 30, 100), function(d2) {
                        vapply(CIs, function(c) {
-                                     as.numeric(precision.f(statistic = s, df1 = d1, df2 = d2, probs = ci.to.probs(c))$ci) },
+                                     as.numeric(precision.f(statistic = s, df1 = d1, df2 = d2, probs = ci.to.probs(c))$stat.at.probs) },
                               numeric(2)) },
                             numeric(2 * 8)) },
                           numeric(10 * 8)) },
                         numeric(50 * 8)),
                  readRDS("../precision.f_2compare.rds"), tolerance = 1e-4)
 
+    expect_equal(power.f.test(ncp = 4, df1 = 1, df2 = 99, plot = FALSE, verbose = 0) |> precision(verbose = 0),
+                 data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(0, 3.900454724, 15.637461015),
+                            f.squared = c(0, 0.039398533, 0.157954152), power = c(0.050, 0.498376684, 0.974756672)))
     expect_equal(power.f.regression(r.squared = 0.10, k.total = 3, n = 100, verbose = 0) |> precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(0.287345930, 8.569135549, 25.270096289),
                             r.squared = c(0.002984254, 0.081947082, 0.208378628),
@@ -108,31 +129,41 @@ test_that("precision.f.test works", {
                                      precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(266.544427, 339.402880, 421.093821),
                             eta.squared = c(0.18298316, 0.22190165, 0.26135248), power = c(1, 1, 1)))
+    expect_error(.precision.power.f(structure(list(ncp = 0, df1 = 1, df2 = 1), class = c("pwrss", "generic", "invalid"))),
+                 "The object `x` should inherit class 'pwrss' and 'f'.")
+    expect_error(.precision.power.f(structure(list(ncp = 1e-12, df1 = 1, df2 = 1), class = c("pwrss", "generic", "f"))),
+                 "Calculating the statistics at the given probabilities is not possible with the current bounds.")
 })
 
-# precision.lp.test (= precision.lp) -----------------------------------------------------------------------------------
-test_that("precision.lp.test works", {
+# precision.lp.test (= precision.lp) / .precision.power.lp -------------------------------------------------------------
+test_that("precision.lp.test / .precision.power.lp works", {
     expect_equal(vapply(c(-6, -3, -2, -1, 0, 1, 2, 3, 6), function(s) {
                    vapply(c(1, 2, 3, 5, 10, 30), function(d) {
                      vapply(CIs, function(c) {
-                                   as.numeric(precision.lp(statistic = s, df = d, probs = ci.to.probs(c))$ci) },
+                                   as.numeric(precision.lp(statistic = s, df = d, probs = ci.to.probs(c))$stat.at.probs) },
                             numeric(2)) },
                           numeric(16)) },
                         numeric(96)),
                  vapply(c(-6, -3, -2, -1, 0, 1, 2, 3, 6), function(s) {
                    vapply(c(1, 2, 3, 5, 10, 30), function(d) {
                      vapply(CIs, function(c) {
-                                   as.numeric(precision.t(statistic = s, df = d, probs = ci.to.probs(c))$ci) },
+                                   as.numeric(precision.t(statistic = s, df = d, probs = ci.to.probs(c))$stat.at.probs) },
                             numeric(2)) },
                           numeric(16)) },
                         numeric(96)))
 
-    expect_equal(power.lp.test(ncp = 1, df = 100, verbose = 0, plot = FALSE) |> precision(verbose = 0),
+    expect_equal(power.lp.test(ncp = 1, df = 100, plot = FALSE, verbose = 0) |> precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(-0.96733053, 0.99749901, 2.96236048),
                             power = c(0.16218038, 0.16948231, 0.83495012)))
+    expect_error(.precision.power.lp(structure(list(ncp = 0, df = 1), class = c("pwrss", "generic", "invalid"))),
+                 "The object `x` should inherit class 'pwrss' and 'lp'.")
+#    expect_error(.precision.power.lp(structure(list(ncp = 0, df = 1), class = c("pwrss", "generic", "lp"))),
+#                 "Calculating the statistics at the given probabilities is not possible with the current bounds.")
+    expect_warning(.precision.power.lp(structure(list(ncp = 100, df = 1), class = c("pwrss", "generic", "lp"))),
+                 "At least one confidence limit exceeds 35 in magnitude; base R noncentral-t probabilities may be inaccurate.")
 })
 
-# precision.t.test (= precision.t) -------------------------------------------------------------------------------------
+# precision.t.test (= precision.t) / .precision.power.t ----------------------------------------------------------------
 # code to create the comparison matrix (needs MBESS to be installed):
 # cmpRes <- vapply(c(-6, -3, -2, -1, 0, 1, 2, 3, 6), function(s) {
 #             vapply(c(1, 2, 3, 5, 10, 30), function(d) {
@@ -142,23 +173,23 @@ test_that("precision.lp.test works", {
 #                   numeric(16)) },
 #                  numeric(96))
 # saveRDS(cmpRes, "precision.t_2compare.rds")  NB: store the file in `tests` under the main directory of the package
-test_that("precision.t.test works", {
+test_that("precision.t.test / .precision.power.t works", {
     expect_equal(vapply(c(-6, -3, -2, -1, 0, 1, 2, 3, 6), function(s) {
                    vapply(c(1, 2, 3, 5, 10, 30), function(d) {
                      vapply(CIs, function(c) {
-                                   as.numeric(precision.t(statistic = s, df = d, probs = ci.to.probs(c))$ci) },
+                                   as.numeric(precision.t(statistic = s, df = d, probs = ci.to.probs(c))$stat.at.probs) },
                             numeric(2)) },
                           numeric(16)) },
                         numeric(96)),
                  readRDS("../precision.t_2compare.rds"))
 
-    expect_equal(power.t.test(ncp = NULL, df = 30, power = 0.50, verbose = 0, plot = FALSE) |> precision(verbose = 0),
+    expect_equal(power.t.test(ncp = NULL, df = 30, power = 0.50, plot = FALSE, verbose = 0) |> precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(-0.01620098, 2.00767839, 4.03434598),
-                            t = c(-0.01620098, 2.00767839, 4.03434598), power = c(0.0500282, 0.49338062, 0.97394176)))
+                            power = c(0.0500282, 0.49338062, 0.97394176)))
     expect_equal(power.t.test(ncp = NULL, null.ncp = c(-2, 2), df = 30, power = 0.50, alternative = "two.one.sided",
                               verbose = 0, plot = FALSE) |> precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(1.9665903, 4.1864067, 6.4271167),
-                            t = c(1.9665903, 4.1864067, 6.4271167), power = c(0.04330176, 0.48678743, 0.97275623)))
+                            power = c(0.04330176, 0.48678743, 0.97275623)))
     expect_equal(power.t.student(d = 0.3536124, n.ratio = 0.50, n2 = 1000, design = "independent", claim.basis = "md.pval",
                                  verbose = 0) |> precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(4.481438037, 6.454967319, 8.428534469),
@@ -167,6 +198,10 @@ test_that("precision.t.test works", {
                                  verbose = 0) |> precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(0.8322142, 2.8227631, 4.8137551),
                             d = c(0.147116083, 0.498998734, 0.85095972), power = c(0.131049958, 0.799889280, 0.997574822)))
+    expect_equal(power.t.student(d = 0.50, n.ratio = 1, n2 = 64, design = "independent", claim.basis = "smd.ci",
+                                 verbose = 0) |> precision(verbose = 0),
+                 data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(0.7893803, 2.7789984, 4.7690397),
+                            d = c(0.1397169, 0.49896736, 0.88388469), power = c(0.122721024, 0.787506336, 0.99721811)))
     expect_equal(power.t.student(d = NULL, margin = c(-0.05, 0.05), power = 0.80, n2 = 200, alternative = "two.one.sided",
                                  design = "independent", verbose = 0) |> precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(1.33680383, 3.3101839, 5.2836364),
@@ -180,6 +215,10 @@ test_that("precision.t.test works", {
                    precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(-16.604876435, -10.792003915, -5.720081120),
                             d = c(-5.2509230, -3.4127313, -1.8088485), power = c(1, 1, 0.9989675)))
+    expect_equal(suppressWarnings(power.t.student(d = -3.54, n2 = 10, design = "paired", claim.basis = "smd.ci", verbose = 0) |>
+                   precision(verbose = 0)),
+                 data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(-6.81706731, -4.01970414, -1.37359428),
+                            d = c(NA, -2.9002245, -0.4564313), power = c(0.99997151, 0.94564126, 0.23341313)))
     expect_equal(power.t.student(d = 0.3536124, n2 = 1000, design = "one.sample", claim.basis = "md.pval",
                                  verbose = 0) |> precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(9.159215, 11.179353, 13.199913),
@@ -208,27 +247,38 @@ test_that("precision.t.test works", {
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(20.4915723, 22.6885871, 24.8885946),
                             beta = c(0.334023765, 0.3698363, 0.405697617), std.beta = c(0.46348943, 0.51318270, 0.56294365),
                             power = c(1, 1, 1)))
+    expect_error(.precision.power.t(structure(list(ncp = 0, df = 0), class = c("pwrss", "generic", "invalid"))),
+                 "The object `x` should inherit class 'pwrss' and 't'.")
+#    expect_error(.precision.power.t(structure(list(ncp = 0, df = 1), class = c("pwrss", "generic", "t"))),
+#                 "Calculating the statistics at the given probabilities is not possible with the current bounds.")
+    expect_warning(.precision.power.t(structure(list(ncp = 100, df = 1), class = c("pwrss", "generic", "t"))),
+                   "At least one confidence limit exceeds 35 in magnitude; base R noncentral-t probabilities may be inaccurate.")
 })
 
-# precision.z.test (= precision.z) -------------------------------------------------------------------------------------
-test_that("precision.z.test works", {
+# precision.z.test (= precision.z) / .precision.power.binom ------------------------------------------------------------
+test_that("precision.z.test / .precision.power.binom works", {
     expect_equal(vapply(c(-6, -3, -2, -1, 0, 1, 2, 3, 6), function(s) {
-                   vapply(CIs, function(c) as.numeric(precision.z(statistic = s, probs = ci.to.probs(c))$ci), numeric(2)) },
+                   vapply(CIs, function(c) as.numeric(precision.z(statistic = s, probs = ci.to.probs(c))$stat.at.probs), numeric(2)) },
                         numeric(16)),
                  vapply(c(-6, -3, -2, -1, 0, 1, 2, 3, 6), function(s) {
                    vapply(CIs, function(c) s + qnorm(ci.to.probs(c)), numeric(2)) },
                         numeric(16)))
 
-    expect_equal(unname(power.z.test(mean = NULL,          power = 0.50, plot = FALSE, verbose = 0) |> precision(verbose = 0)),
-                 unname(power.t.test(ncp = NULL, df = 1e8, power = 0.50, plot = FALSE, verbose = 0) |> precision(verbose = 0)))
+    expect_equal(power.z.test(mean = NULL,          power = 0.50, plot = FALSE, verbose = 0) |> precision(verbose = 0),
+                 power.t.test(ncp = NULL, df = 1e8, power = 0.50, plot = FALSE, verbose = 0) |> precision(verbose = 0))
     expect_equal(power.z.test(mean = NULL,           power = 0.50, plot = FALSE, verbose = 0) |> precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(-0.000111064, 1.959852921, 3.919816905),
-                            z = c(-0.000111064, 1.959852921, 3.919816905), power = c(0.05, 0.5, 0.9749935)))
+                            power = c(0.05, 0.5, 0.9749935)))
     expect_equal(power.np.wilcoxon(d = 0.50, n.ratio = 1, n2 = 64, design = "independent", method = "noether",
                                    verbose = 0) |> precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(0.7474706, 2.7074346, 4.6673986),
                             d = c(0.135424361, 0.5, 0.901916456), cles = c(0.5381442, 0.6381632, 0.7381822),
                             power = c(0.116052067, 0.772611768, 0.996609729)))
+    expect_equal(power.z.oneprop(prob = 0.55, null.prob = 0.40, alternative = "two.sided", power = 0.80,
+                                 std.error = "alternative", verbose = 0) |> precision(verbose = 0),
+                 data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(0.85234662, 2.8123106, 4.77227458),
+                            prop = c(0.445417511, 0.55, 0.644850464), h = c(0.091974953, 0.301525342, 0.495272272),
+                            power = c(0.136472898, 0.80299004, 0.997540651)))
     expect_equal(power.z.oneprop(prob = 0.55, null.prob = c(0.40, 0.60), alternative = "two.one.sided", power = 0.80,
                                  std.error = "alternative", verbose = 0) |> precision(verbose = 0),
                  data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(-1.959964, 0, 1.959964),
@@ -315,6 +365,26 @@ test_that("precision.z.test works", {
                             beta.indirect = c(-0.01409659, 0.0625, 0.13909659),
                             std.beta.indirect = c(-0.007048295, 0.03125, 0.069548295),
                             power = c(0.065033931, 0.359345798, 0.945118431)))
+    expect_equal(power.z.mediation(beta.a = 0.25, sd.predictor = 0.50, beta.b = 0.25, beta.cp = 0.10, n = 200,
+                                   method = "aroian", verbose = 0) |> precision(verbose = 0),
+                 data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(-0.40751947, 1.55244452, 3.51240850),
+                            beta.indirect = c(-0.016406362, 0.0625, 0.141406362),
+                            std.beta.indirect = c(-0.008203181, 0.03125, 0.070703181),
+                            power = c(0.06923271, 0.342035282, 0.939722073)))
+    expect_equal(power.z.mediation(beta.a = 0.25, sd.predictor = 0.50, beta.b = 0.25, beta.cp = 0.10, n = 200,
+                                   method = "goodman", verbose = 0) |> precision(verbose = 0),
+                 data.frame(probs = c(0.025, 0.5, 0.975), quantile = c(-0.30938384, 1.65058014, 3.61054413),
+                            beta.indirect = c(-0.011714966, 0.0625, 0.136714966),
+                            std.beta.indirect = c(-0.005857483, 0.03125, 0.068357483),
+                            power = c(0.06103576, 0.37866756, 0.95058784)))
+    expect_error(.precision.power.z(structure(list(mean = -Inf), class = c("pwrss", "generic", "invalid"))),
+                 "The object `x` should inherit class 'pwrss' and 'z'.")
+    expect_error(power.z.logistic(beta0 = 1.2, beta1 = 1, n = 200, alpha = 0.05, distribution = "normal",
+                                  method = "hsieh", verbose = 0) |> precision(verbose = 0),
+                 "Precision calculations for `method` = 'hsieh' are currently not supported.")
+    expect_error(power.z.poisson(beta0 = 0.50, beta1 = 1, n = 200, alpha = 0.05, distribution = "normal",
+                                 method = "signorini", verbose = 0) |> precision(verbose = 0),
+                 "Precision calculations for `method` = 'signorini' are currently not supported.")
 })
 
 rm(CIs)
