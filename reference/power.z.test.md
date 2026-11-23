@@ -157,7 +157,7 @@ power.z.test(mean = 1.96, alpha = 0.05, alternative = "two.sided")
 power.z.test(power = 0.80, alpha = 0.05, alternative = "two.sided")
 
 #> +--------------------------------------------------+
-#> |        MINIMUM DETECTABLE NCP CALCULATION        |
+#> |       MINIMUM DETECTABLE NCP CALCULATION         |
 #> +--------------------------------------------------+
 #> 
 #> Generic z-Test
@@ -205,7 +205,7 @@ power.z.test(mean = 1.96, alpha = 0.05, alternative = "one.sided")
 power.z.test(power = 0.80, alpha = 0.05, alternative = "one.sided")
 
 #> +--------------------------------------------------+
-#> |        MINIMUM DETECTABLE NCP CALCULATION        |
+#> |       MINIMUM DETECTABLE NCP CALCULATION         |
 #> +--------------------------------------------------+
 #> 
 #> Generic z-Test
@@ -259,7 +259,7 @@ power.z.test(power = 0.80, req.sign = "0", null.mean = c(-2, 2),
 #> Warning: The target power rate cannot be achieved within the null bounds.
 
 #> +--------------------------------------------------+
-#> |        MINIMUM DETECTABLE NCP CALCULATION        |
+#> |       MINIMUM DETECTABLE NCP CALCULATION         |
 #> +--------------------------------------------------+
 #> 
 #> Generic z-Test
@@ -314,7 +314,7 @@ power.z.test(power = 0.80, req.sign = "+", null.mean = c(-1, 1),
              alpha = 0.05, alternative = "two.one.sided")
 
 #> +--------------------------------------------------+
-#> |        MINIMUM DETECTABLE NCP CALCULATION        |
+#> |       MINIMUM DETECTABLE NCP CALCULATION         |
 #> +--------------------------------------------------+
 #> 
 #> Generic z-Test

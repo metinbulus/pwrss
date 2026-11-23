@@ -17,23 +17,6 @@ Power analyses based on core distributions
 - [`power.z.test()`](https://metinbulus.github.io/pwrss/reference/power.z.test.md)
   : Statistical Power for the Generic z-Test
 
-## Precision Calculations
-
-Precision calculations for the core distributions
-
-- [`precision.binom.test()`](https://metinbulus.github.io/pwrss/reference/precision.binom.test.md)
-  : Precision Calculation for the Generic Binomial Test
-- [`precision.chisq.test()`](https://metinbulus.github.io/pwrss/reference/precision.chisq.test.md)
-  : Precision Calculation for the Generic Chi-Square Test
-- [`precision.f.test()`](https://metinbulus.github.io/pwrss/reference/precision.f.test.md)
-  : Precision Calculation for the Generic F-Test
-- [`precision.lp.test()`](https://metinbulus.github.io/pwrss/reference/precision.lp.test.md)
-  : Precision Calculation for the Lambda-Prime Distribution
-- [`precision.t.test()`](https://metinbulus.github.io/pwrss/reference/precision.t.test.md)
-  : Precision Calculation for the Generic t-Test
-- [`precision.z.test()`](https://metinbulus.github.io/pwrss/reference/precision.z.test.md)
-  : Precision Calculation for the Generic z-Test
-
 ## Proportions
 
 Power analyses for one and two sample (independent and paired)
@@ -138,8 +121,6 @@ metrics
 
 - [`inflate.sample()`](https://metinbulus.github.io/pwrss/reference/inflate.sample.md)
   : Inflate Sample Size for Attrition
-- [`ci.to.probs()`](https://metinbulus.github.io/pwrss/reference/ci.to.probs.md)
-  : Conversion from CI levels to probabilities
 - [`d.to.cles()`](https://metinbulus.github.io/pwrss/reference/d.to.cles.md)
   [`cles.to.d()`](https://metinbulus.github.io/pwrss/reference/d.to.cles.md)
   : Conversion from Cohen's d to Common Language Effect Size
@@ -167,8 +148,6 @@ metrics
 - [`means.to.etasq()`](https://metinbulus.github.io/pwrss/reference/means.to.etasq.md)
   : Conversion from Means and Standard Deviations to Cohen's f and
   Eta-squared
-- [`probs.to.ci()`](https://metinbulus.github.io/pwrss/reference/probs.to.ci.md)
-  : Conversion from probabilities to CI levels
 - [`probs.to.h()`](https://metinbulus.github.io/pwrss/reference/probs.to.h.md)
   : Conversion from Probability Difference to Cohen's h
 - [`probs.to.w()`](https://metinbulus.github.io/pwrss/reference/probs.to.w.md)
@@ -180,8 +159,6 @@ metrics
 - [`z.to.cor()`](https://metinbulus.github.io/pwrss/reference/z.to.cor.md)
   : Conversion from a z-value to a correlation (inverse Fisher's
   z-transformation)
-- [`z.to.prob()`](https://metinbulus.github.io/pwrss/reference/z.to.prob.md)
-  : Conversion from z to probability
 
 ## Lambda Prime
 

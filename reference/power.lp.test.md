@@ -152,7 +152,7 @@ power.lp.test(ncp = 1.960, df = 100, alpha = 0.05,
 power.lp.test(power = 0.800, df = 100, alpha = 0.05,
               alternative = "two.sided", plot = FALSE)
 #> +--------------------------------------------------+
-#> |        MINIMUM DETECTABLE NCP CALCULATION        |
+#> |       MINIMUM DETECTABLE NCP CALCULATION         |
 #> +--------------------------------------------------+
 #> 
 #> Generic Lambda-Prime Distribution
@@ -252,7 +252,7 @@ power.lp.test(ncp = 1.960, df = 100, alpha = 0.05, alternative = "one.sided")
 power.lp.test(power = 0.800, df = 100, alpha = 0.05, alternative = "one.sided")
 
 #> +--------------------------------------------------+
-#> |        MINIMUM DETECTABLE NCP CALCULATION        |
+#> |       MINIMUM DETECTABLE NCP CALCULATION         |
 #> +--------------------------------------------------+
 #> 
 #> Generic Lambda-Prime Distribution
@@ -356,7 +356,7 @@ power.lp.test(power = 0.80, req.sign = "0", null.ncp = c(-3, 3),
               df = 100, alpha = 0.05, alternative = "two.one.sided", plot = FALSE)
 #> Warning: Target NCP ranges from -0.2157 to 0.2157 within the null bounds.
 #> +--------------------------------------------------+
-#> |        MINIMUM DETECTABLE NCP CALCULATION        |
+#> |       MINIMUM DETECTABLE NCP CALCULATION         |
 #> +--------------------------------------------------+
 #> 
 #> Generic Lambda-Prime Distribution
@@ -443,7 +443,7 @@ power.lp.test(power = 0.80, req.sign = "+", null.ncp = c(-1, 1),
               df = 100, alpha = 0.05, alternative = "two.one.sided")
 
 #> +--------------------------------------------------+
-#> |        MINIMUM DETECTABLE NCP CALCULATION        |
+#> |       MINIMUM DETECTABLE NCP CALCULATION         |
 #> +--------------------------------------------------+
 #> 
 #> Generic Lambda-Prime Distribution

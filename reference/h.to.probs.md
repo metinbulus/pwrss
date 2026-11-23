@@ -54,10 +54,7 @@ h and either prob1 or prob2 are required
 ## Examples
 
 ``` r
-h.to.probs(h = 0.1, prob1 = 0.56)
-#>     prob1     prob2         h 
-#> 0.5600000 0.5101442 0.1000000 
-h.to.probs(h = 0.1, prob2 = 0.50)
-#>     prob1     prob2         h 
-#> 0.5499167 0.5000000 0.1000000 
+probs.to.h(prob1 = 0.56, prob2 = 0.50)
+#>         h     prob1     prob2 
+#> 0.1202899 0.5600000 0.5000000 
 ```
