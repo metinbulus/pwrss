@@ -6,15 +6,17 @@
 
 CRAN release: 2026-10-14
 
-- Added around some examples to prevent the package failing at the
-  pretests on CRAN (it requires that examples run through within 5 secs)
+- Added `\donottest` around some examples to prevent the package failing
+  at the pretests on CRAN (it requires that examples run through within
+  5 secs)
 
 ## pwrss 1.3.2
 
 - Fixed a mistake in the calculation of the density function for lambda
-  prime, implemented more rigorous unit tests for the lambdap-functions
-  (comparing against the R-packages `MBESS` and `effectsize`)
-- Adjustments to cater for noLD being added as additional test in the
+  prime, implemented more rigorous unit tests for the
+  `lambdap`-functions (comparing against the R-packages `MBESS` and
+  `effectsize`)
+- Adjustments to cater for `noLD` being added as additional test in the
   CRAN package checks, and extended GitHub action R-CMD-check to include
   OS / R combinations recently added as additional test in the CRAN
   package checks

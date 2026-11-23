@@ -97,9 +97,12 @@ null hypothesis in the one-sample case).</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="probs.to.h.html">probs.to.h</a></span><span class="op">(</span>prob1 <span class="op">=</span> <span class="fl">0.56</span>, prob2 <span class="op">=</span> <span class="fl">0.50</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         h     prob1     prob2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.1202899 0.5600000 0.5000000 </span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">h.to.probs</span><span class="op">(</span>h <span class="op">=</span> <span class="fl">0.1</span>, prob1 <span class="op">=</span> <span class="fl">0.56</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     prob1     prob2         h </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.5600000 0.5101442 0.1000000 </span>
+<span class="r-in"><span><span class="fu">h.to.probs</span><span class="op">(</span>h <span class="op">=</span> <span class="fl">0.1</span>, prob2 <span class="op">=</span> <span class="fl">0.50</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     prob1     prob2         h </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.5499167 0.5000000 0.1000000 </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
