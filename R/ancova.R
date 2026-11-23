@@ -1068,7 +1068,7 @@ power.f.ancova.shieh <- function(mu.vector,
     stop("Provide a vector of means (`mu.vector`) with its length equal to the the product of `factor.levels`.", call. = FALSE)
   if (r.squared > 1 || r.squared < 0 || !is.numeric(r.squared) || length(r.squared) != 1)
     stop("R-squared (explanatory power of covariates) takes a value between 0 and 1.", call. = FALSE)
-  check.positive(k.covariates)
+  check.nonnegative(k.covariates)
   if (!is.null(power)) check.power(power)
   if (alpha > 1 || alpha < 0 || !is.numeric(alpha) || length(alpha) != 1)
     stop("Type 1 error rate (alpha) takes a value between 0 and 1.", call. = FALSE)
