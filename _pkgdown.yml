@@ -24,6 +24,7 @@ reference:
 
   - title: "Precision Calculations"
     desc: "Precision calculations for the core distributions"
+    contents:
       - precision.binom.test
       - precision.chisq.test
       - precision.f.test
