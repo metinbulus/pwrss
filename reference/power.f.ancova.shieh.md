@@ -236,8 +236,6 @@ power.f.ancova.shieh(mu.vector = c(0.20, 0.25, 0.15, 0.05), # marginal means
                      k.covariates = 1,
                      alpha = 0.05,
                      power = 0.80)
-#> Elements of `mu.vector`, `sd.vector`, `n.vector` or `p.vector` should follow this specific order:
-#> A1:B1  A1:B2  A2:B1  A2:B2  
 #> +--------------------------------------------------+
 #> |             SAMPLE SIZE CALCULATION              |
 #> +--------------------------------------------------+
