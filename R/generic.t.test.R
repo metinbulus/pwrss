@@ -234,4 +234,76 @@ power.t.test <- function(power = NULL, ncp = NULL, req.sign = "+", null.ncp = 0,
 
 } # end of power.t.test()
 
-power.t <- power.t.test
+
+#' Precision Calculation for the Generic t-Test
+#'
+#' @description
+#' TBA...
+#'
+#' @aliases precision.t
+#'
+#'
+#' @param statistic   observed test statistic (t)
+#' @param df          degrees of freedom
+#' @param probs       quantile probabilities, e.g., c(0.025, 0.975) for 95% CI
+#'                    (default: c(0.025, 0.25, 0.50, 0.75, 0.975))
+#'
+#' @return
+#'   \item{statistic}{observed test statistic.}
+#'   \item{df}{degrees of freedom.}
+#'   \item{probs}{quantile probabilities.}
+#'   \item{stat.at.probs}{values for the test statistic at the defined probabilities.}
+#'
+#' @examples
+#' # TBA ...
+#'
+#' @export precision.t.test
+precision.t.test <- function(statistic, df, probs = c(0.025, 0.25, 0.50, 0.75, 0.975)) {
+  check.numeric(statistic)
+  check.positive(df)
+  check.vector(probs, check.proportion)
+
+  find.ncp.t <- function(target) {
+
+    # Function whose root we want: pt(...) = target
+    objective <- function(ncp) {
+      value <- tryCatch(suppressWarnings(stats::pt(q = statistic, df = df, ncp = ncp)),
+                        error = function(e) NA_real_)
+      if (is.finite(value)) value - target else NA_real_
+    }
+
+    # the noncentrality parameter may be negative or positive; start searching around the observed t statistic
+    width <- 1
+    bracketed <- FALSE
+    for (i in seq_len(500L)) {
+      # the CDF decreases as ncp increases; a root is bracketed when: objective(lower) >= 0 and objective(upper) <= 0
+      value.at.lower <- objective(statistic - width)
+      value.at.upper <- objective(statistic + width)
+      if (is.finite(value.at.lower) && is.finite(value.at.upper) && value.at.lower >= 0 && value.at.upper <= 0) {
+        bracketed <- TRUE
+        break
+      } else {
+        width <- width * 2
+        if (!is.finite(width)) break
+      }
+    }
+    if (!bracketed) return(NA_real_)
+
+    tryCatch(stats::uniroot(objective, interval = statistic + width * c(-1, 1), tol = 1e-12, maxiter = 500L)$root,
+             error = function(e) NA_real_)
+
+  } # find.ncp.t
+
+  stat.at.probs <- vapply(1 - probs, function(target) find.ncp.t(target = target), numeric(1L))
+  if (any(abs(stat.at.probs) > 35, na.rm = TRUE))
+    warning("At least one confidence limit exceeds 35 in magnitude; base R noncentral-t probabilities may be inaccurate.",
+            call. = FALSE)
+
+  invisible(list(statistic = statistic, df = df, probs = probs, stat.at.probs = name_probs(stat.at.probs, probs)))
+
+} # precision.t.test()
+
+
+# aliases
+power.t     <- power.t.test
+precision.t <- precision.t.test

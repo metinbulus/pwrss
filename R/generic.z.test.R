@@ -221,4 +221,40 @@ power.z.test <- function(power = NULL, mean = NULL, sd = 1, null.mean = 0, null.
 
 } # end of power.z.test()
 
-power.z <- power.z.test
+
+#' Precision Calculation for the Generic z-Test
+#'
+#' @description
+#' TBA...
+#'
+#' @aliases precision.z
+#'
+#'
+#' @param statistic   observed test statistic (z)
+#' @param probs       quantile probabilities, e.g., c(0.025, 0.975) for 95% CI
+#'                    (default: c(0.025, 0.25, 0.50, 0.75, 0.975))
+#'
+#' @return
+#'   \item{statistic}{observed test statistic.}
+#'   \item{probs}{quantile probabilities.}
+#'   \item{stat.at.probs}{values for the test statistic at the defined probabilities.}
+#'
+#' @examples
+#' # TBA ...
+#'
+#' @export precision.z.test
+precision.z.test <- function(statistic, probs = c(0.025, 0.25, 0.50, 0.75, 0.975)) {
+  check.numeric(statistic)
+  check.vector(probs, check.proportion)
+
+  stat.at.probs <- tryCatch(stats::qnorm(p = probs, mean = statistic, sd = 1, lower.tail = TRUE),
+                            error = function(e) NA_real_)
+
+  invisible(list(statistic = statistic, probs = probs, stat.at.probs = name_probs(stat.at.probs, probs)))
+
+} # precision.z.test()
+
+
+# aliases
+power.z     <- power.z.test
+precision.z <- precision.z.test

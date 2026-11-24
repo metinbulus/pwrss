@@ -532,6 +532,79 @@ means.to.d <- function(mu1, mu2 = 0, sd1 = 1, sd2 = 1, n.ratio = 1, n2 = 1e10,
 
 } # means.to.d
 
+#' Conversion from z to probability
+#'
+#' @description
+#' Helper function to convert z scores into a probability.
+#'
+#'
+#' @param z            standard score
+#' @param null.prob    probability of success under null.
+#' @param n            integer; sample size.
+#' @param alternative  character; the direction or type of the hypothesis test:
+#'                     "two.sided", "one.sided", or "two.one.sided".
+#' @param std.error    character; whether to calculate standard error using
+#'                     "null" or "alternative" value. "null" by default.
+#' @param arcsine      logical; whether arcsine transformation should be
+#'                     applied. \code{FALSE} by default. Note that when
+#'                     \code{arcsine = TRUE}, any specification to
+#'                     \code{correct} and \code{std.error} will be ignored.
+#' @param correct      logical; whether Yate's continuity correction should be
+#'                     applied.
+#'
+#' @return
+#'   \item{prob}{probability of success under alternative.}
+#'   \item{null.sd}{standard deviation of the null distribution.}
+#'
+#' @examples
+#' # TBA...
+#'
+#' @export z.to.prob
+z.to.prob <- function(z, null.prob, n, alternative, arcsine, correct, std.error) {
+
+  solve.one.prob.noarcsine <- function(null.prob, z, k, n, alternative) {
+
+    A <- null.prob - k
+    B <- (z ^ 2) / n
+    discriminant <- B * (B + 4 * A * (1 - A))
+    if (discriminant < 0) return(NA)
+    candidates <- c((2 * A + B + sqrt(discriminant)) / (2 * (1 + B)),
+                    (2 * A + B - sqrt(discriminant)) / (2 * (1 + B)))
+    final.prob <- if (z >= 0) candidates[candidates > null.prob] else candidates[candidates < null.prob]
+    final.prob <- final.prob[final.prob >= 0 & final.prob <= 1]
+    if (length(final.prob) == 0) NA else final.prob[1]
+
+  } # solve.one.prob
+
+  if (arcsine) {
+
+    h <- z * sqrt(1 / n)
+    prob <- switch(alternative,
+                   `two.sided`     = h.to.probs(h = h, prob1 = NULL, prob2 = null.prob, verbose = FALSE)$prob1,
+                   `one.sided`     = h.to.probs(h = h, prob1 = NULL, prob2 = null.prob, verbose = FALSE)$prob1,
+                   `two.one.sided` = h.to.probs(h = h, prob1 = NULL, prob2 = null.prob, verbose = FALSE)$prob1)
+
+  } else {
+
+    if (correct) {
+      k <- switch(alternative, one.sided = sign(z) / (2 * n), two.sided = -1 / (2 * n), two.one.sided =  sign(z) * 1 / (2 * n))
+    } else {
+      k <- 0
+    }
+
+    prob <- switch(alternative,
+                   two.sided     = solve.one.prob.noarcsine(null.prob = null.prob, z = z, k = k, n = n),
+                   one.sided     = solve.one.prob.noarcsine(null.prob = null.prob, z = z, k = k, n = n),
+                   two.one.sided = solve.one.prob.noarcsine(null.prob = null.prob, z = z, k = k, n = n))
+
+  } # if arcsine
+
+  null.sd <- ifelse(std.error == "null" && alternative %in% c("two.sided", "one.sided"),
+                    sqrt((null.prob * (1 - null.prob)) / (prob * (1 - prob))), 1)
+
+  list(prob = prob, null.sd = null.sd)
+
+} # z.to.prob
 
 #' Conversion from Probability Difference to Cohen's h
 #'
@@ -1195,3 +1268,63 @@ means.to.etasq <- function(mu.vector, sd.vector, n.vector, k.covariates = 0, r.s
                  df1 = u, df2 = v, ncp = lambda))
 
 } # means.to.etasq
+
+#' Conversion from CI levels to probabilities
+#'
+#' @description
+#' Calculates a probability vector (lower and upper threshold of the CI) from
+#' a confidence interval (CI) level.
+#'
+#' @details
+#' Note that R has a partial matching feature which allows you to specify
+#' shortened versions of arguments, such as \code{ci} instead of
+#' \code{ci.level}.
+#'
+#' @param ci.level  CI level (default: 0.95)
+#'
+#' @return Probabilities (a numeric vector).
+#'
+#' @examples
+#' ci.to.probs()        # c(0.025, 0.975)
+#' ci.to.probs(0.99)    # c(0.005, 0.995)
+#' ci.to.probs(0.9999)  # c(0.00005, 0.99995)
+#'
+#' @export ci.to.probs
+ci.to.probs <- function(ci.level = 0.95) {
+  check.proportion(ci.level)
+
+  (1 - ci.level) / 2 + c(0, ci.level)
+}
+
+#' Conversion from probabilities to CI levels
+#'
+#' @description
+#' Calculates a confidence interval (CI) level from a probability vector (with
+#' the lower and upper threshold of the CI).
+#'
+#' @details
+#' Note that R has a partial matching feature which allows you to specify
+#' shortened versions of arguments, such as \code{p} or \code{prob} instead of
+#' \code{probs}. Please note that the conversion back takes the minimum and
+#' maximum value in `probs`. This permits you to submit vectors like those
+#' shown in the examples.
+#'
+#' @param probs     vector of probabilities to be converted into a CI level
+#'                  (default: c(0.025, 0.975)).
+#'
+#' @return CI level (a numerical value)
+#'
+#' @examples
+#' probs.to.ci(c(0.025, 0.5, 0.975))                 # 0.95
+#' probs.to.ci(c(0.005, 0.025, 0.5, 0.975, 0.995))   # 0.99
+#' probs.to.ci(c(0.025, 0.975, 0.5, 0.005, 0.995))   # 0.99
+#' # probs.to.ci(c(0.005, 0.025, 0.5, 0.975, 0.9995))  # -> would throw an error, since 0.005 != (1 - 0.9995)
+#'
+#' @export probs.to.ci
+probs.to.ci <- function(probs = c(0.025, 0.975)) {
+  check.vector(probs, check.proportion)
+  if (abs(log(min(probs) / (1 - max(probs)))) > (.Machine$double.eps / min(probs)))
+    stop("Minimum and maximum probabilities need to be equidistant from 0 and 1, respectively.", call. = FALSE)
+
+  max(probs) - min(probs)
+}

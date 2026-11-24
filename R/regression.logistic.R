@@ -353,8 +353,6 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
     ncp <- pwr.obj$ncp
     sd.ncp <- pwr.obj$sd.ncp
     vcf <- pwr.obj$vcf
-    var.beta0 <- pwr.obj$var.beta0
-    var.beta1 <- pwr.obj$var.beta1
 
   } else if (method == "hsieh") {
 
@@ -391,8 +389,6 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
     ncp <- ss.obj$ncp
     sd.ncp <- ss.obj$sd.ncp
     vcf <- ss.obj$vcf
-    var.beta0 <- NA
-    var.beta1 <- NA
 
   } # method
 
@@ -407,11 +403,11 @@ power.z.logistic <- function(prob = NULL, base.prob = NULL, odds.ratio = NULL,
                       dist = switch(distribution$dist,
                                     `normal` = "Normal",
                                     `poisson` = "Poisson",
+                                    `uniform` = "Uniform",
+                                    `exponential` = "Exponential",
                                     `bernoulli` = "Bernoulli",
                                     `binomial` = "Binomial",
-                                    `lognormal` = "Log-normal",
-                                    `uniform` = "Uniform",
-                                    `exponential` = "Exponential"),
+                                    `lognormal` = "Log-normal"),
                       alternative = alternative,
                       base.prob = base.prob,
                       odds.ratio = odds.ratio,
@@ -539,7 +535,7 @@ var.beta.logistic <- function(beta0, beta1, distribution) {
     i01 <- stats::integrate(var.func, dist.parms$min, dist.parms$max, 1, beta0,  beta1, 2)$value
     i11 <- stats::integrate(var.func, dist.parms$min, dist.parms$max, 2, beta0,  beta1, 2)$value
     var.beta1 <- i00 / (i00 * i11 - i01 ^ 2)
-  
+
   }
 
   list(var.beta0 = var.beta0, var.beta1 = var.beta1, distribution = distribution$dist,

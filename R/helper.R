@@ -153,3 +153,8 @@ get.parms4integrate <- function(distribution, prec = 1e-8) {
 isInt <- function(x) is.numeric(x) && !any(abs(x - round(x)) > .Machine$double.eps ^ (2 / 3))
 
 # lenInt <- function(n) ifelse(n <= 1, 1, ceiling(log10(abs(n))) + as.integer(n %% 10 == 0))
+
+name_probs <- function(x, probs) {
+# stats::setNames(x, paste0(round(probs * 100, max(-floor(min(log10(c(probs, 1 - probs)))) - 2, 1)), "%"))
+  stats::setNames(x, paste0(probs * 100, "%"))
+}
