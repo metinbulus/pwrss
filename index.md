@@ -150,7 +150,7 @@ power.t.test(ncp = NULL,     # calculate this
 
 ``` R
 #> +--------------------------------------------------+
-#> |       MINIMUM DETECTABLE NCP CALCULATION         |
+#> |        MINIMUM DETECTABLE NCP CALCULATION        |
 #> +--------------------------------------------------+
 #> 
 #> Generic t-Test
@@ -378,7 +378,7 @@ power.z.test(mean = NULL,   # calculate this
 
 ``` R
 #> +--------------------------------------------------+
-#> |       MINIMUM DETECTABLE NCP CALCULATION         |
+#> |        MINIMUM DETECTABLE NCP CALCULATION        |
 #> +--------------------------------------------------+
 #> 
 #> Generic z-Test
@@ -571,7 +571,7 @@ power.f.test(ncp = NULL,   # calculate this
              alpha = 0.05, # type 1 error rate
              plot = FALSE)
 #> +--------------------------------------------------+
-#> |       MINIMUM DETECTABLE NCP CALCULATION         |
+#> |        MINIMUM DETECTABLE NCP CALCULATION        |
 #> +--------------------------------------------------+
 #> 
 #> Generic F-Test
@@ -672,7 +672,7 @@ power.chisq.test(ncp = NULL,    # calculate this
                  alpha = 0.05,  # type 1 error rate
                  plot = FALSE)
 #> +--------------------------------------------------+
-#> |       MINIMUM DETECTABLE NCP CALCULATION         |
+#> |        MINIMUM DETECTABLE NCP CALCULATION        |
 #> +--------------------------------------------------+
 #> 
 #> Generic Chi-square Test
@@ -785,7 +785,7 @@ power.chisq.test(ncp = NULL,    # calculate this
                  alpha = 0.05,  # type 1 error rate
                  plot = FALSE)
 #> +--------------------------------------------------+
-#> |       MINIMUM DETECTABLE NCP CALCULATION         |
+#> |        MINIMUM DETECTABLE NCP CALCULATION        |
 #> +--------------------------------------------------+
 #> 
 #> Generic Chi-square Test

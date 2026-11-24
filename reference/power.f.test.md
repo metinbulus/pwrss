@@ -127,7 +127,7 @@ power.f.test(ncp = 1, df1 = 4, df2 = 100, alpha = 0.05)
 power.f.test(power = 0.80, df1 = 4, df2 = 100, alpha = 0.05)
 
 #> +--------------------------------------------------+
-#> |       MINIMUM DETECTABLE NCP CALCULATION         |
+#> |        MINIMUM DETECTABLE NCP CALCULATION        |
 #> +--------------------------------------------------+
 #> 
 #> Generic F-Test

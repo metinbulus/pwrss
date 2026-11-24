@@ -7,6 +7,7 @@
 <url><loc>https://metinbulus.github.io/pwrss/authors.html</loc></url>
 <url><loc>https://metinbulus.github.io/pwrss/index.html</loc></url>
 <url><loc>https://metinbulus.github.io/pwrss/news/index.html</loc></url>
+<url><loc>https://metinbulus.github.io/pwrss/reference/ci.to.probs.html</loc></url>
 <url><loc>https://metinbulus.github.io/pwrss/reference/cor.to.z.html</loc></url>
 <url><loc>https://metinbulus.github.io/pwrss/reference/cors.to.q.html</loc></url>
 <url><loc>https://metinbulus.github.io/pwrss/reference/d.to.cles.html</loc></url>
@@ -53,10 +54,18 @@
 <url><loc>https://metinbulus.github.io/pwrss/reference/power.z.twocors.html</loc></url>
 <url><loc>https://metinbulus.github.io/pwrss/reference/power.z.twocors.steiger.html</loc></url>
 <url><loc>https://metinbulus.github.io/pwrss/reference/power.z.twoprops.html</loc></url>
+<url><loc>https://metinbulus.github.io/pwrss/reference/precision.binom.test.html</loc></url>
+<url><loc>https://metinbulus.github.io/pwrss/reference/precision.chisq.test.html</loc></url>
+<url><loc>https://metinbulus.github.io/pwrss/reference/precision.f.test.html</loc></url>
+<url><loc>https://metinbulus.github.io/pwrss/reference/precision.lp.test.html</loc></url>
+<url><loc>https://metinbulus.github.io/pwrss/reference/precision.t.test.html</loc></url>
+<url><loc>https://metinbulus.github.io/pwrss/reference/precision.z.test.html</loc></url>
+<url><loc>https://metinbulus.github.io/pwrss/reference/probs.to.ci.html</loc></url>
 <url><loc>https://metinbulus.github.io/pwrss/reference/probs.to.h.html</loc></url>
 <url><loc>https://metinbulus.github.io/pwrss/reference/probs.to.w.html</loc></url>
 <url><loc>https://metinbulus.github.io/pwrss/reference/q.to.cors.html</loc></url>
 <url><loc>https://metinbulus.github.io/pwrss/reference/rsq.to.f.html</loc></url>
 <url><loc>https://metinbulus.github.io/pwrss/reference/z.to.cor.html</loc></url>
+<url><loc>https://metinbulus.github.io/pwrss/reference/z.to.prob.html</loc></url>
 </urlset>
 
