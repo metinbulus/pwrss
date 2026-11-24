@@ -803,7 +803,7 @@ factorial.contrasts <- function(factor.levels = c(3, 2),
 
   }
 
-  if (length(factor.levels) > 1 && verbose >= 0)
+  if (length(factor.levels) > 1 && verbose > 0)
     message("Elements of `mu.vector`, `sd.vector`, `n.vector` or `p.vector` should follow this specific order:\n",
             paste(means.cell.names, " "), "\n")
 
