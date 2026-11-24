@@ -803,7 +803,7 @@ factorial.contrasts <- function(factor.levels = c(3, 2),
 
   }
 
-  if (length(factor.levels) > 1 && verbose >= 0)
+  if (length(factor.levels) > 1 && verbose > 0)
     message("Elements of `mu.vector`, `sd.vector`, `n.vector` or `p.vector` should follow this specific order:\n",
             paste(means.cell.names, " "), "\n")
 
@@ -1068,7 +1068,7 @@ power.f.ancova.shieh <- function(mu.vector,
     stop("Provide a vector of means (`mu.vector`) with its length equal to the the product of `factor.levels`.", call. = FALSE)
   if (r.squared > 1 || r.squared < 0 || !is.numeric(r.squared) || length(r.squared) != 1)
     stop("R-squared (explanatory power of covariates) takes a value between 0 and 1.", call. = FALSE)
-  check.positive(k.covariates)
+  check.nonnegative(k.covariates)
   if (!is.null(power)) check.power(power)
   if (alpha > 1 || alpha < 0 || !is.numeric(alpha) || length(alpha) != 1)
     stop("Type 1 error rate (alpha) takes a value between 0 and 1.", call. = FALSE)
@@ -1117,37 +1117,23 @@ power.f.ancova.shieh <- function(mu.vector,
 
     f.alpha <- stats::qf(1 - alpha, df1 = df1, df2 = df2)
 
-    if (k.covariates > 1) {
+    if (k.covariates == 0) {
 
-      shape1 <- (df2 + 1) / 2
-      shape2 <- k.covariates / 2
-      mean.beta <- shape1 / (shape1 + shape2)
-      sd.beta <- sqrt((shape1 * shape2) / ((shape1 + shape2) ^ 2 * (shape1 + shape2 + 1)))
-      lower.beta <- max(0, mean.beta - 10 * sd.beta)
+      power <- stats::pf(f.alpha, df1, df2, n.total * gamma2, lower.tail = FALSE)
+      lambda <- if (calculate.lambda) n.total * gamma2 else NA
 
-      integrand <- function(x) {
-        stats::dbeta(x, shape1 = (df2 + 1) / 2, shape2 = k.covariates / 2) *
-        stats::pf(f.alpha, df1, df2, n.total * gamma2 * x, lower.tail = FALSE)
+    } else {
+    
+      a <- (df2 + 1) / 2
+      b <- k.covariates / 2
+      log.const <- log(2) - lbeta(a, b)
+
+      integrand <- function(u) {
+        exp(log.const + (2 * b - 1) * log(u) + (a - 1) * log1p(-u ^ 2)) *
+          stats::pf(f.alpha, df1, df2, n.total * gamma2 * (1 - u ^ 2), lower.tail = FALSE)
       }
-      power <- stats::integrate(integrand, lower = lower.beta, upper = 1)$value
-
-      lambda <- ifelse(calculate.lambda, n.total * gamma2 * (df2 + 1) / (df2 + 1 + k.covariates), NA)
-
-    } else if (k.covariates == 1) {
-
-      integrand <- function(x) {
-        stats::dt(x, (df2 + 1)) * stats::pf(f.alpha, df1, df2, n.total * gamma2 / (1 + (k.covariates / (df2 + 1)) * x ^ 2), lower.tail = FALSE)
-      }
-      power <- stats::integrate(integrand, lower = -10, upper = 10)$value
-
-      if (calculate.lambda) {
-        integrand <- function(x) {
-          stats::dt(x, df2) * n.total * gamma2 / (1 + (k.covariates / df2) * x ^ 2)
-        }
-        lambda <- stats::integrate(integrand, lower = -Inf, upper = Inf)$value
-      } else {
-        lambda <- NA
-      }
+      power  <- stats::integrate(integrand, lower = 0, upper = sqrt(max(1 - stats::qbeta(1e-12, a, b), 0)))$value
+      lambda <- if (calculate.lambda) n.total * gamma2 * (df2 + 1) / (df2 + 1 + k.covariates) else NA
 
     }
 
