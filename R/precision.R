@@ -374,7 +374,17 @@ precision <- precision.power
 
     if (x$parms$method == "signorini")
       stop("Precision calculations for `method` = 'signorini' are currently not supported.", call. = FALSE)
-
+    
+    # the Fisher information matrix integrals diverge for certain combination of effect size and distribution
+    if (x$distribution$dist == "exponential" && x$beta1 >= x$distribution$rate) 
+      stop("The specified regression coefficient and exponential predictor distribution imply an infinite marginal expected count. Precision bounds are not computed.",
+           call. = FALSE)
+    
+    # the Fisher information matrix integrals diverge for certain combination of effect size and distribution
+    if (x$distribution$dist == "lognormal" && x$beta1 > 0) 
+      stop("A positive regression coefficient with an unbounded lognormal predictor implies an infinite marginal expected count. Precision bounds are not computed.",
+           call. = FALSE)
+    
     var.obj <- var.beta.poisson(beta0 = x$beta0, beta1 = x$beta1, distribution = x$distribution)
 
     beta1 <- stat.at.probs * sqrt(var.obj$var.beta1 / (x$n * (1 - x$parms$r.squared.predictor) * x$parms$mean.exposure))
