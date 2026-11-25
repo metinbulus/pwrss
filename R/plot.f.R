@@ -3,7 +3,7 @@
 ############################
 
 # type = 1 for light red, 2 for light blue
-.plot.f.dist <- function(ncp = 1, df1, df2, xlim, type = 1, ticks = TRUE) {
+.plot.f.dist <- function(ncp = 1, df1, df2, xlim, ylim, type = 1, ticks = TRUE) {
 
 
   plot.window.dim <- grDevices::dev.size("cm")
@@ -12,9 +12,9 @@
   color <- grDevices::adjustcolor(ifelse(type == 1, 2, 4), alpha.f = 1)
 
   # mod of f dist
-  x.seq <- seq(xlim[1], xlim[2], length.out = 50)
-  y.max <- max(stats::df(x.seq, df1 = df1, df2 = df2, ncp = ncp))
-  ylim <- c(0, y.max + 0.05)
+  # x.seq <- seq(xlim[1], xlim[2], length.out = 50)
+  # y.max <- max(stats::df(x.seq, df1 = df1, df2 = df2, ncp = ncp))
+  # ylim <- c(0, y.max + 0.05)
 
   # plot central f distribution
   graphics::plot(function(x) stats::df(x, df1 = df1, df2 = df2, ncp = ncp),
@@ -94,11 +94,20 @@
   cex.label <- min(plot.window.dim[1] / 12, plot.window.dim[2] / 12)
 
   # plots
+  # .plot.f.dist(df1 = df1, df2 = df2, ncp = ncp,
+  #              xlim = xlim, type = 2, ticks = TRUE)
+  # graphics::par(new = TRUE)
+  # .plot.f.dist(df1 = df1, df2 = df2, ncp = null.ncp,
+  #              xlim = xlim, type = 1, ticks = FALSE)
+  x.seq <- seq(xlim[1], xlim[2], length.out = 500)
+  y.max <- max(stats::df(x.seq, df1 = df1, df2 = df2, ncp = ncp),
+               stats::df(x.seq, df1 = df1, df2 = df2, ncp = null.ncp))
+  ylim <- c(0, y.max * 1.10)
   .plot.f.dist(df1 = df1, df2 = df2, ncp = ncp,
-               xlim = xlim, type = 2, ticks = TRUE)
+               xlim = xlim, ylim = ylim, type = 2, ticks = TRUE)
   graphics::par(new = TRUE)
   .plot.f.dist(df1 = df1, df2 = df2, ncp = null.ncp,
-               xlim = xlim, type = 1, ticks = FALSE)
+               xlim = xlim, ylim = ylim, type = 1, ticks = FALSE)
 
   # mod of f dist
   x.seq <- seq(xlim[1], xlim[2], length.out = 50)
