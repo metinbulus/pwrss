@@ -28,6 +28,7 @@ shown in the examples.
 probs.to.ci(c(0.025, 0.5, 0.975))                 # 0.95
 probs.to.ci(c(0.005, 0.025, 0.5, 0.975, 0.995))   # 0.99
 probs.to.ci(c(0.025, 0.975, 0.5, 0.005, 0.995))   # 0.99
-# probs.to.ci(c(0.005, 0.025, 0.5, 0.975, 0.9995))  # -> would throw an error, since 0.005 != (1 - 0.9995)
+# probs.to.ci(c(0.005, 0.025, 0.5, 0.975, 0.9995))  
+# '-> would throw an error, since 0.005 != (1 - 0.9995)
 
 }
