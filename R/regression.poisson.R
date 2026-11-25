@@ -164,34 +164,52 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL, beta0 = NULL, b
   distribution <- ensure.distribution(distribution)
   check.logical(ceil.n, utf)
   verbose <- ensure.verbose(verbose)
-
-  if (all(check.not_null(base.rate, rate.ratio))) {
-    if (any(check.not_null(beta0, beta1)) && verbose >= 0)
-      message("Using `base.rate` and `rate.ratio`, ignoring any specifications to `beta0` or `beta1`.")
-    check.nonnegative(base.rate, rate.ratio)
-    beta0 <- log(base.rate)
-    beta1 <- log(rate.ratio)
-  } else if (all(check.not_null(beta0, beta1))) {
-    if (any(check.not_null(base.rate, rate.ratio)) && verbose >= 0)
-      message("Using `beta0` and `beta1`, ignoring any specifications to `base.rate` or `rate.ratio`.")
-    check.numeric(beta0, beta1)
-    base.rate <- exp(beta0)
-    rate.ratio <- exp(beta1)
-  } else if (all(check.not_null(base.rate, n, power))) { # calculate effect size
-    check.nonnegative(base.rate)
-    if (any(check.not_null(rate.ratio, beta0, beta1)) && verbose >= 0)
-      message("Calculating the effect size (`rate.ratio`), ignoring any specifications to `rate.ratio`, `beta0` or `beta1`.")
+  
+  ifelse(!is.null(power) & !is.null(n), req.es <- TRUE, req.es <- FALSE) 
+  
+  if(!req.es) {
+    
+    if (all(check.not_null(base.rate, rate.ratio))) {
+      if (any(check.not_null(beta0, beta1)) && verbose >= 0)
+        message("Using `base.rate` and `rate.ratio`, ignoring any specifications to `beta0` or `beta1`.")
+      check.nonnegative(base.rate, rate.ratio)
+      beta0 <- log(base.rate)
+      beta1 <- log(rate.ratio)
+    } else if (all(check.not_null(beta0, beta1))) {
+      if (any(check.not_null(base.rate, rate.ratio)) && verbose >= 0)
+        message("Using `beta0` and `beta1`, ignoring any specifications to `base.rate` or `rate.ratio`.")
+      check.numeric(beta0, beta1)
+      base.rate <- exp(beta0)
+      rate.ratio <- exp(beta1)
+    } else {
+      stop("Specify `base.rate` & `rate.ratio`\n  or `beta0` & `beta1`\n  or `base.rate` & `n` & `power` ",
+           "(the latter calculates `rate.ratio` as effect size).", call. = FALSE)
+    }
+    
+    if (!is.null(beta1) && beta0 == beta1)
+      stop("`beta0` / `base.rate` can not have the same value as `beta1` / `rate.ratio`.", call. = FALSE)
+    
+    ifelse(is.null(power),  requested <- "power",  requested <- "n")
+    # requested <- get.requested(es = list(base.rate, rate.ratio), n = n, power = power)
+    
+  } else { 
+    
+    if (all(check.not_null(base.rate))) {
+      check.nonnegative(base.rate)
+      beta0 <- log(base.rate)
+    } else if (all(check.not_null(beta0))) {
+      check.numeric(beta0)
+      base.rate <- exp(beta0)
+      beta0 <- log(base.rate)
+    } 
+    
     rate.ratio <- beta1 <- NULL
-    beta0 <- log(base.rate)
-  } else {
-    stop("Specify `base.rate` & `rate.ratio`\n  or `beta0` & `beta1`\n  or `base.rate` & `n` & `power` ",
-         "(the latter calculates `rate.ratio` as effect size).", call. = FALSE)
-  }
+    
+    requested <- "es"
+    # requested <- get.requested(es = list(base.rate, rate.ratio), n = n, power = power)
+    
+  } # if es requested 
 
-  if (!is.null(beta1) && beta0 == beta1)
-    stop("`beta0` / `base.rate` can not have the same value as `beta1` / `rate.ratio`.", call. = FALSE)
-
-  requested <- get.requested(es = list(base.rate, rate.ratio), n = n, power = power)
 
   pwr <- function(beta0, beta1, n, r.squared.predictor, alpha, alternative, method, distribution, mean.exposure) {
 #   vcf <- get.vcf(method = method, dist = distribution$dist)
@@ -245,14 +263,66 @@ power.z.poisson <- function(base.rate = NULL, rate.ratio = NULL, beta0 = NULL, b
     if (ceil.n) n <- ceiling(n)
 
   } else if (requested == "es") {
-
-    # reasonable bounds for beta1
-    var.obj <- var.beta.poisson(beta0 = beta0, beta1 = beta0, distribution = distribution, method = method)
-    bound.values <- c((log(min(1e-6)) - log(mean.exposure) - beta0) / c(var.obj$min.thresh, var.obj$max.thresh),
-                      (log(max(1e10)) - log(mean.exposure) - beta0) / c(var.obj$min.thresh, var.obj$max.thresh))
-    val.rng <- c(min(bound.values), 0, max(bound.values))[ifelse(check.pos_sign(req.sign), -1, -3)]
-
-    beta1 <-  try(stats::uniroot(function(beta1) min.pwr(beta1, n, power), interval = val.rng)$root)
+    
+    ############################################################################
+    # begin reasonable bounds for beta1 ########################################
+    ############################################################################
+    
+    dist.parms <- get.parms4integrate(distribution = distribution)
+    # lower and upper limits for the expected count
+    mean.lower <- 1e-6
+    mean.upper <- 1e10
+    # predictor boundaries (exclude zero to avoid division by zero)
+    x.bounds <- c(dist.parms$min, dist.parms$max)
+    x.bounds <- x.bounds[x.bounds != 0]
+    # baseline log expected count
+    log.base.mean <- beta0 + log(mean.exposure)
+    # candidate coefficient bounds at each predictor boundary
+    bound1 <- (log(mean.lower) - log.base.mean) / x.bounds
+    bound2 <- (log(mean.upper) - log.base.mean) / x.bounds
+    # intersection of permissible coefficient intervals
+    beta.lower <- max(pmin(bound1, bound2))
+    beta.upper <- min(pmax(bound1, bound2))
+    # select the interval according to the requested sign
+    val.rng <- if (check.pos_sign(req.sign)) {
+      c(0, beta.upper)
+    } else {
+      c(beta.lower, 0)
+    }
+   
+    if (beta.lower >= beta.upper)
+      stop("No admissible `rate.ratio`: the base rate is outside the supported range of expected counts.", call. = FALSE)
+    if (power <= alpha)
+      stop("`power` must be greater than `alpha`.", call. = FALSE)
+    
+    # edge of the admissible range in the requested direction
+    beta.edge <- if (check.pos_sign(req.sign)) beta.upper else beta.lower
+    
+    # power at 100 equally spaced beta1 values from 0 to the edge
+    beta.grid  <- seq(0, beta.edge, length.out = 100)
+    power.grid <- vapply(beta.grid, function(b1) {
+      pwr(beta0 = beta0, beta1 = b1, n = n, r.squared.predictor = r.squared.predictor,
+          alpha = alpha, alternative = alternative, method = method,
+          distribution = distribution, mean.exposure = mean.exposure)$power
+    }, numeric(1))
+    
+    # position of the first beta1 whose power reaches the target
+    first.above <- which(power.grid >= power)[1]
+    
+    if (is.na(first.above))
+      stop(sprintf("Design is not feasible: maximum achievable power is %.3f (at rate.ratio = %.4g).",
+                   max(power.grid), exp(beta.grid[which.max(power.grid)])), call. = FALSE)
+    
+    beta1.below <- beta.grid[first.above - 1]   # last grid value with power below the target
+    beta1.above <- beta.grid[first.above + 1]   # first grid value with power above the target
+    val.rng <- sort(c(beta1.below, beta1.above))
+    
+    ############################################################################
+    # end reasonable bounds for beta1 ##########################################
+    ############################################################################
+    
+    beta1 <-  try(stats::uniroot(function(beta1) min.pwr(beta1, n, power), interval = val.rng, tol = 1e-10)$root)
+    
     if (inherits(beta1, "try-error"))
       stop(sprintf("Design is not feasible. Try `req.sign` = \"%s\"", ifelse(check.pos_sign(req.sign), "-", "+")), call. = FALSE)
 
@@ -354,7 +424,7 @@ pwrss.z.poisreg <- pwrss.z.poisson
 var.beta.poisson <- function(beta0, beta1, distribution, method = "demidenko(vc)") {
 
   dist.parms <- get.parms4integrate(distribution = distribution)
-
+  
   if (method == "signorini") {
 
     if (distribution$dist == "normal") {
