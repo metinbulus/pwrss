@@ -52,8 +52,6 @@ power.chisq.test <- function(power = NULL, ncp = NULL, null.ncp = 0,
                              plot = TRUE, verbose = 1, utf = FALSE) {
 
   if (!is.null(power)) check.power(power)
-  if (!is.null(ncp)) check.positive(ncp)
-  check.nonnegative(null.ncp)
   if (!is.null(df)) check.positive(df)
   check.proportion(alpha)
   alternative <- match.arg(alternative)
@@ -61,10 +59,18 @@ power.chisq.test <- function(power = NULL, ncp = NULL, null.ncp = 0,
   verbose <- ensure.verbose(verbose)
   requested <- get.requested(es = ncp, n = df, power = power)
 
-  if (!is.null(ncp) && alternative == "less" && ncp > null.ncp)
-    stop("`ncp` should be less than or equal to `null.ncp`.", call. = FALSE)
-  if (!is.null(ncp) && alternative == "greater" && ncp < null.ncp)
-    stop("`ncp` should be greater than or equal to `null.ncp`.", call. = FALSE)
+  if (!is.null(ncp) && alternative == "less") {
+    if (ncp > null.ncp) stop("`ncp` should be less than or equal to `null.ncp`.", call. = FALSE)
+    check.positive(null.ncp)
+    check.nonnegative(ncp)
+  }
+   
+  if (!is.null(ncp) && alternative == "greater") {
+    if (ncp < null.ncp) stop("`ncp` should be greater than or equal to `null.ncp`.", call. = FALSE)
+    check.positive(ncp)
+    check.nonnegative(null.ncp)
+  }
+    
   if (!is.null(df) && df < 1)
     stop("Degrees of freedom can not be smaller than 1.", call. = FALSE)
 

@@ -47,19 +47,25 @@ power.f.test <- function(power = NULL, ncp = NULL, null.ncp = 0, df1, df2,
                          plot = TRUE, verbose = 1, utf = FALSE) {
 
   if (!is.null(power)) check.power(power)
-  if (!is.null(ncp)) check.positive(ncp)
-  check.nonnegative(null.ncp)
   check.positive(df1, df2)
   check.proportion(alpha)
   check.logical(plot, utf)
   alternative <- match.arg(alternative)
   verbose <- ensure.verbose(verbose)
   requested <- get.requested(es = ncp, n = NA, power = power)
+  
+  if (!is.null(ncp) && alternative == "less") {
+    if (ncp > null.ncp) stop("`ncp` should be less than or equal to `null.ncp`.", call. = FALSE)
+    check.positive(null.ncp)
+    check.nonnegative(ncp)
+  }
+  
+  if (!is.null(ncp) && alternative == "greater") {
+    if (ncp < null.ncp) stop("`ncp` should be greater than or equal to `null.ncp`.", call. = FALSE)
+    check.positive(ncp)
+    check.nonnegative(null.ncp)
+  }
 
-  if (!is.null(ncp) && alternative == "less" && ncp > null.ncp)
-    stop("`ncp` should be less than or equal to `null.ncp`.", call. = FALSE)
-  if (!is.null(ncp) && alternative == "greater" && ncp < null.ncp)
-    stop("`ncp` should be greater than or equal to `null.ncp`.", call. = FALSE)
   if (is.null(df1) || df1 < 1)
     stop("`df1` can not be NULL, and needs to be at least 1.", call. = FALSE)
   if (is.null(df2) || df2 < 3)
